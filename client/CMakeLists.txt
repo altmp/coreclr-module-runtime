@@ -29,7 +29,7 @@ add_library(${TARGET_NAME}-static STATIC
 
 #add_executable(${TARGET_NAME} ${PROJECT_SOURCE_FILES})
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE
+target_compile_definitions(${PROJECT_NAME}-static PRIVATE
         # Compliation
         -DCXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}"
         -D_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
