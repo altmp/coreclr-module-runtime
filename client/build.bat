@@ -11,5 +11,5 @@ IF NOT EXIST build\coreclr-client-module (
 
 cmake . -Bcmake-build-release
 cmake --build cmake-build-release --config RelWithDebInfo
-copy .\cmake-build-release\RelWithDebInfo\core_clr_client.dll .\build\coreclr-client-module\coreclr-client-module.dll
-copy .\cmake-build-release\RelWithDebInfo\core_clr_client.pdb .\build\coreclr-client-module\coreclr-client-module.pdb
+copy .\cmake-build-release\RelWithDebInfo\altv-client-csharp.dll .\build\coreclr-client-module\coreclr-client-module.dll
+copy .\cmake-build-release\RelWithDebInfo\altv-client-csharp.pdb .\build\coreclr-client-module\coreclr-client-module.pdb
