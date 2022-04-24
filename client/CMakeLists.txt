@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 3.8)
 
-#include(../cpp-sdk/CMakeLists.txt)
+set(SDK_PROJECT_NAME csharp-alt-sdk)
+include(../cpp-sdk/CMakeLists.txt)
 #include(../c-api/CMakeLists.txt)
 
 set(TARGET_NAME altv-client-csharp)
@@ -45,5 +46,5 @@ include_directories(${TARGET_NAME} PRIVATE
         "thirdparty"
 )
 
-#add_dependencies(${TARGET_NAME} alt-sdk)
+add_dependencies(${TARGET_NAME} csharp-alt-sdk)
 #add_dependencies(${TARGET_NAME} c-api)
