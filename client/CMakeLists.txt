@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.8)
 
-include(../cpp-sdk/CMakeLists.txt)
+#include(../cpp-sdk/CMakeLists.txt)
 include(../c-api/CMakeLists.txt)
 
 set(TARGET_NAME core_clr_client)
@@ -45,5 +45,5 @@ include_directories(${TARGET_NAME} PRIVATE
         "thirdparty"
 )
 
-add_dependencies(${TARGET_NAME} alt-sdk)
+#add_dependencies(${TARGET_NAME} alt-sdk)
 add_dependencies(${TARGET_NAME} c-api)
