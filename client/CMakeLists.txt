@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.8)
 #include(../cpp-sdk/CMakeLists.txt)
 #include(../c-api/CMakeLists.txt)
 
-set(TARGET_NAME core_clr_client)
+set(TARGET_NAME altv-client-csharp)
 
 project(${TARGET_NAME})
 message(${PROJECT_SOURCE_DIR})
