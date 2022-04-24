@@ -25,7 +25,7 @@ EXPORT alt::IScriptRuntime* CreateScriptRuntimeCSharp(ICore* core)
     }
 }
 
-EXPORT const char* GetType()
+/*EXPORT const char* GetType()
 {
     return "csharp";
 }
@@ -33,7 +33,7 @@ EXPORT const char* GetType()
 EXPORT char* GetSDKHash()
 {
     return ALT_SDK_VERSION;
-}
+}*/
 
 #ifdef DEBUG_CLIENT
 int main() {
