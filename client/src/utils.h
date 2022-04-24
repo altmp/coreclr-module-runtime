@@ -27,12 +27,14 @@ static inline bool is_base64(unsigned char c) {
 
 namespace utils
 {
+#ifdef DEBUG_CLIENT
     inline std::wstring get_current_dll_path()
     {
         wchar_t strDLLPath[MAX_PATH];
         GetModuleFileName((HINSTANCE)&__ImageBase, strDLLPath, MAX_PATH);
         return {strDLLPath, strDLLPath + wcslen(strDLLPath)};
     }
+#endif
 
     inline std::wstring string_to_wstring(const std::string& string)
     {
