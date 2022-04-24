@@ -7,7 +7,7 @@
 
 using namespace alt;
 
-EXPORT alt::IScriptRuntime* CreateScriptRuntime(ICore* core)
+EXPORT alt::IScriptRuntime* CreateScriptRuntimeCSharp(ICore* core)
 {
     ICore::SetInstance(core);
     try
