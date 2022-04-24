@@ -45,5 +45,5 @@ include_directories(${TARGET_NAME} PRIVATE
         "thirdparty"
 )
 
-add_dependencies(${TARGET_NAME} alt-sdk)
+add_dependencies(${TARGET_NAME} alt-sdk-coreclr)
 add_dependencies(${TARGET_NAME} c-api)
