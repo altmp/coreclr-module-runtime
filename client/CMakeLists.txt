@@ -46,10 +46,10 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 #        -DDEBUG_CLIENT
 )
 
-include_directories(${TARGET_NAME} PRIVATE
+include_directories(${TARGET_NAME}-static PRIVATE
         "src"
         "thirdparty"
 )
 
-add_dependencies(${TARGET_NAME} csharp-alt-sdk)
-#add_dependencies(${TARGET_NAME} c-api)
+add_dependencies(${TARGET_NAME}-static csharp-alt-sdk)
+#add_dependencies(${TARGET_NAME}-static c-api)
