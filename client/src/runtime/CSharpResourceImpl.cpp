@@ -135,6 +135,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 constArgs[i] = &args[i];
             }
             OnWebSocketEventDelegate(webSocketClientEvent->GetTarget().Get(), name.c_str(), constArgs, size);
+            break;
         }
 #pragma region Player Events
         case alt::CEvent::Type::SPAWNED: {
@@ -155,6 +156,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto playerLeaveVehicleEvent = (alt::CPlayerLeaveVehicleEvent *) ev;
             OnPlayerLeaveVehicleDelegate(playerLeaveVehicleEvent->GetTarget().Get(),
                                          playerLeaveVehicleEvent->GetSeat());
+            break;
         }
         case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT: {
             auto playerChangeVehicleSeatEvent = (alt::CPlayerChangeVehicleSeatEvent *) ev;
