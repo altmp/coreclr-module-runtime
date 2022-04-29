@@ -1,4 +1,4 @@
-﻿#define ALT_CLIENT_API
+#define ALT_CLIENT_API
 #include <exceptions/LoadException.h>
 #include "../../cpp-sdk/SDK.h"
 #include "runtime/CSharpScriptRuntime.h"
@@ -7,7 +7,11 @@
 
 using namespace alt;
 
+#ifdef ALTV_CSHARP_SHARED
+EXPORT alt::IScriptRuntime* CreateScriptRuntime(ICore* core)
+#else
 EXPORT alt::IScriptRuntime* CreateScriptRuntimeCSharp(ICore* core)
+#endif
 {
     ICore::SetInstance(core);
     try
@@ -25,7 +29,8 @@ EXPORT alt::IScriptRuntime* CreateScriptRuntimeCSharp(ICore* core)
     }
 }
 
-/*EXPORT const char* GetType()
+#ifdef ALTV_CSHARP_SHARED
+EXPORT const char* GetType()
 {
     return "csharp";
 }
@@ -33,7 +38,8 @@ EXPORT alt::IScriptRuntime* CreateScriptRuntimeCSharp(ICore* core)
 EXPORT char* GetSDKHash()
 {
     return ALT_SDK_VERSION;
-}*/
+}
+#endif
 
 #ifdef DEBUG_CLIENT
 int main() {
