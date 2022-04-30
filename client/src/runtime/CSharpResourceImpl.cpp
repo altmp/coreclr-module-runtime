@@ -36,7 +36,7 @@ bool CSharpResourceImpl::Stop()
     return res;
 }
 
-void* CSharpResourceImpl::  GetEntityPointer(alt::IEntity* entity) {
+void* CSharpResourceImpl::GetEntityPointer(alt::IEntity* entity) {
     if (entity != nullptr) {
         switch (entity->GetType()) {
             case alt::IBaseObject::Type::LOCAL_PLAYER:
@@ -135,6 +135,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 constArgs[i] = &args[i];
             }
             OnWebSocketEventDelegate(webSocketClientEvent->GetTarget().Get(), name.c_str(), constArgs, size);
+            break;
         }
 #pragma region Player Events
         case alt::CEvent::Type::SPAWNED: {
@@ -155,6 +156,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto playerLeaveVehicleEvent = (alt::CPlayerLeaveVehicleEvent *) ev;
             OnPlayerLeaveVehicleDelegate(playerLeaveVehicleEvent->GetTarget().Get(),
                                          playerLeaveVehicleEvent->GetSeat());
+            break;
         }
         case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT: {
             auto playerChangeVehicleSeatEvent = (alt::CPlayerChangeVehicleSeatEvent *) ev;
@@ -365,6 +367,38 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
             OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
             break;
         }
+        case alt::IBaseObject::Type::BLIP: {
+            OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::WEBVIEW: {
+            OnRemoveWebViewDelegate(dynamic_cast<alt::IWebView*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::CHECKPOINT: {
+            OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::WEBSOCKET_CLIENT: {
+            OnRemoveWebSocketClientDelegate(dynamic_cast<alt::IWebSocketClient*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::HTTP_CLIENT: {
+            OnRemoveHttpClientDelegate(dynamic_cast<alt::IHttpClient*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::AUDIO: {
+            OnRemoveAudioDelegate(dynamic_cast<alt::IAudio*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::RML_ELEMENT: {
+            OnRemoveRmlElementDelegate(dynamic_cast<alt::IRmlElement*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::RML_DOCUMENT: {
+            OnRemoveRmlDocumentDelegate(dynamic_cast<alt::IRmlDocument*>(object));
+            break;
+        }
     }
 }
 
@@ -429,4 +463,13 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnWindowFocusChangeDelegate = [](auto var) {};
     OnWindowResolutionChangeDelegate = [](auto var, auto var2) {};
+    
+    OnRemoveBlipDelegate = [](auto var) {};
+    OnRemoveWebViewDelegate = [](auto var) {};
+    OnRemoveCheckpointDelegate = [](auto var) {};
+    OnRemoveWebSocketClientDelegate = [](auto var) {};
+    OnRemoveHttpClientDelegate = [](auto var) {};
+    OnRemoveAudioDelegate = [](auto var) {};
+    OnRemoveRmlElementDelegate = [](auto var) {};
+    OnRemoveRmlDocumentDelegate = [](auto var) {};
 }

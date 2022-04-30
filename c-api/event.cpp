@@ -65,4 +65,13 @@ SetDelegate(TaskChange);
 
 SetDelegate(WindowFocusChange);
 SetDelegate(WindowResolutionChange);
+
+SetDelegate(RemoveBlip);
+SetDelegate(RemoveWebView);
+SetDelegate(RemoveCheckpoint);
+SetDelegate(RemoveWebSocketClient);
+SetDelegate(RemoveHttpClient);
+SetDelegate(RemoveAudio);
+SetDelegate(RemoveRmlElement);
+SetDelegate(RemoveRmlDocument);
 #endif

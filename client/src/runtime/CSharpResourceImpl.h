@@ -85,7 +85,15 @@ public:
     WindowFocusChangeDelegate_t OnWindowFocusChangeDelegate = nullptr;
     WindowResolutionChangeDelegate_t OnWindowResolutionChangeDelegate = nullptr;
     
-
+    RemoveBlipDelegate_t OnRemoveBlipDelegate = nullptr;
+    RemoveWebViewDelegate_t OnRemoveWebViewDelegate = nullptr;
+    RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate = nullptr;
+    RemoveWebSocketClientDelegate_t OnRemoveWebSocketClientDelegate = nullptr;
+    RemoveHttpClientDelegate_t OnRemoveHttpClientDelegate = nullptr;
+    RemoveAudioDelegate_t OnRemoveAudioDelegate = nullptr;
+    RemoveRmlElementDelegate_t OnRemoveRmlElementDelegate = nullptr;
+    RemoveRmlDocumentDelegate_t OnRemoveRmlDocumentDelegate = nullptr;
+    
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
     {

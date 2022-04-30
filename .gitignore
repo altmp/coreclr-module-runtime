@@ -1,3 +1,4 @@
 .DS_STORE
 cmake-build-*/
 .idea/
+build/

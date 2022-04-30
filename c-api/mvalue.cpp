@@ -370,6 +370,7 @@ void *MValueConst_GetEntity(alt::MValueConst *mValueConst, alt::IBaseObject::Typ
             type = entityPointer->GetType();
             switch (type) {
                 case alt::IBaseObject::Type::PLAYER:
+                case alt::IBaseObject::Type::LOCAL_PLAYER:
                     return dynamic_cast<alt::IPlayer *>(entityPointer);
                 case alt::IBaseObject::Type::VEHICLE:
                     return dynamic_cast<alt::IVehicle *>(entityPointer);
@@ -381,6 +382,18 @@ void *MValueConst_GetEntity(alt::MValueConst *mValueConst, alt::IBaseObject::Typ
                     return dynamic_cast<alt::IColShape *>(entityPointer);
                 case alt::IBaseObject::Type::CHECKPOINT:
                     return dynamic_cast<alt::ICheckpoint *>(entityPointer);
+                case alt::IBaseObject::Type::AUDIO:
+                    return dynamic_cast<alt::IAudio *>(entityPointer);
+                case alt::IBaseObject::Type::WEBVIEW:
+                    return dynamic_cast<alt::IWebView *>(entityPointer);
+                case alt::IBaseObject::Type::HTTP_CLIENT:
+                    return dynamic_cast<alt::IHttpClient *>(entityPointer);
+                case alt::IBaseObject::Type::RML_ELEMENT:
+                    return dynamic_cast<alt::IRmlElement *>(entityPointer);
+                case alt::IBaseObject::Type::RML_DOCUMENT:
+                    return dynamic_cast<alt::IRmlDocument *>(entityPointer);
+                case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
+                    return dynamic_cast<alt::IWebSocketClient *>(entityPointer);
                 default:
                     return nullptr;
             }

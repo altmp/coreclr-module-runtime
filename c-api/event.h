@@ -76,6 +76,15 @@ EXPORT_CLIENT void Event_SetTaskChangeDelegate(CSharpResourceImpl* resource, /**
 EXPORT_CLIENT void Event_SetWindowFocusChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WindowFocusChangeModuleDelegate */ WindowFocusChangeDelegate_t delegate);
 EXPORT_CLIENT void Event_SetWindowResolutionChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WindowResolutionChangeModuleDelegate */ WindowResolutionChangeDelegate_t delegate);
 
+EXPORT_CLIENT void Event_SetRemoveBlipDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveBlipModuleDelegate */ RemoveBlipDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveWebViewDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveWebViewModuleDelegate */ RemoveWebViewDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveCheckpointDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveCheckpointModuleDelegate */ RemoveCheckpointDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveWebSocketClientDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveWebSocketClientModuleDelegate */ RemoveWebSocketClientDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveHttpClientDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveHttpClientModuleDelegate */ RemoveHttpClientDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveAudioDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveAudioModuleDelegate */ RemoveAudioDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveRmlElementDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveRmlElementModuleDelegate */ RemoveRmlElementDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveRmlDocumentDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveRmlDocumentModuleDelegate */ RemoveRmlDocumentDelegate_t delegate);
+
 #endif
 
 #ifdef __cplusplus
