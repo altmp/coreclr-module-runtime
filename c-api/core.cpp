@@ -566,6 +566,13 @@ void Core_DeallocDiscordUser(ClrDiscordUser* user) {
 }
 
 
+void Core_Discord_GetOAuth2Token(alt::ICore* core, const char* appId, DiscordOAuth2TokenResultDelegate_t delegate) {
+    core->DiscordRequestOAuth2Token(appId, [&delegate](const bool result, const std::string& token) {
+        delegate(result, token.c_str());
+    });
+}
+
+
 void Core_WorldToScreen(alt::ICore* core, vector3_t in, vector2_t& out) {
     auto vec = core->WorldToScreen({ in.x, in.y, in.z });
     out.x = vec[0];

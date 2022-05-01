@@ -129,6 +129,9 @@ EXPORT_CLIENT uint8_t Core_IsCursorVisible(alt::ICore* core, alt::IResource* res
 EXPORT_CLIENT ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core);
 EXPORT_CLIENT void Core_DeallocDiscordUser(ClrDiscordUser* user);
 #endif
+    
+typedef void (* DiscordOAuth2TokenResultDelegate_t)(bool success, const char* token);
+EXPORT_CLIENT void Core_Discord_GetOAuth2Token(alt::ICore* core, const char* appId, /** ClientEvents.DiscordOAuth2TokenResultModuleDelegate */ DiscordOAuth2TokenResultDelegate_t delegate);
 
 EXPORT_CLIENT void Core_WorldToScreen(alt::ICore* core, vector3_t in, vector2_t& out);
 EXPORT_CLIENT void Core_ScreenToWorld(alt::ICore* core, vector2_t in, vector3_t& out);
