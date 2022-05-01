@@ -85,6 +85,15 @@ public:
     WindowFocusChangeDelegate_t OnWindowFocusChangeDelegate = nullptr;
     WindowResolutionChangeDelegate_t OnWindowResolutionChangeDelegate = nullptr;
     
+    CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
+    CreateWebViewDelegate_t OnCreateWebViewDelegate = nullptr;
+    CreateCheckpointDelegate_t OnCreateCheckpointDelegate = nullptr;
+    CreateWebSocketClientDelegate_t OnCreateWebSocketClientDelegate = nullptr;
+    CreateHttpClientDelegate_t OnCreateHttpClientDelegate = nullptr;
+    CreateAudioDelegate_t OnCreateAudioDelegate = nullptr;
+    CreateRmlElementDelegate_t OnCreateRmlElementDelegate = nullptr;
+    CreateRmlDocumentDelegate_t OnCreateRmlDocumentDelegate = nullptr;
+    
     RemoveBlipDelegate_t OnRemoveBlipDelegate = nullptr;
     RemoveWebViewDelegate_t OnRemoveWebViewDelegate = nullptr;
     RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate = nullptr;
