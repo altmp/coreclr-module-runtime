@@ -567,7 +567,7 @@ void Core_DeallocDiscordUser(ClrDiscordUser* user) {
 
 
 void Core_Discord_GetOAuth2Token(alt::ICore* core, const char* appId, DiscordOAuth2TokenResultDelegate_t delegate) {
-    core->DiscordRequestOAuth2Token(appId, [&delegate](const bool result, const std::string& token) {
+    core->DiscordRequestOAuth2Token(appId, [delegate](const bool result, const std::string& token) {
         delegate(result, token.c_str());
     });
 }
