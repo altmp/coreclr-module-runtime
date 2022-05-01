@@ -55,6 +55,8 @@ EXPORT_SHARED uint64_t Core_GetPlayerCount(alt::ICore* server);
 EXPORT_SHARED void Core_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size);
 EXPORT_SHARED uint64_t Core_GetVehicleCount(alt::ICore* server);
 EXPORT_SHARED void Core_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size);
+EXPORT_SHARED uint64_t Core_GetBlipCount(alt::ICore* core);
+EXPORT_SHARED void Core_GetBlips(alt::ICore* core, alt::IBlip* vehicles[], uint64_t size);
 EXPORT_SHARED void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
 EXPORT_SHARED alt::IResource* Core_GetResource(alt::ICore* core, const char* resourceName);
 EXPORT_SHARED alt::IResource** Core_GetAllResources(alt::ICore* core, uint32_t& size);
@@ -129,6 +131,9 @@ EXPORT_CLIENT uint8_t Core_IsCursorVisible(alt::ICore* core, alt::IResource* res
 EXPORT_CLIENT ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core);
 EXPORT_CLIENT void Core_DeallocDiscordUser(ClrDiscordUser* user);
 #endif
+    
+typedef void (* DiscordOAuth2TokenResultDelegate_t)(bool success, const char* token);
+EXPORT_CLIENT void Core_Discord_GetOAuth2Token(alt::ICore* core, const char* appId, /** ClientEvents.DiscordOAuth2TokenResultModuleDelegate */ DiscordOAuth2TokenResultDelegate_t delegate);
 
 EXPORT_CLIENT void Core_WorldToScreen(alt::ICore* core, vector3_t in, vector2_t& out);
 EXPORT_CLIENT void Core_ScreenToWorld(alt::ICore* core, vector2_t in, vector3_t& out);

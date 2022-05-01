@@ -76,6 +76,15 @@ EXPORT_CLIENT void Event_SetTaskChangeDelegate(CSharpResourceImpl* resource, /**
 EXPORT_CLIENT void Event_SetWindowFocusChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WindowFocusChangeModuleDelegate */ WindowFocusChangeDelegate_t delegate);
 EXPORT_CLIENT void Event_SetWindowResolutionChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WindowResolutionChangeModuleDelegate */ WindowResolutionChangeDelegate_t delegate);
 
+EXPORT_CLIENT void Event_SetCreateBlipDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateBlipModuleDelegate */ CreateBlipDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCreateWebViewDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateWebViewModuleDelegate */ CreateWebViewDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCreateCheckpointDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateCheckpointModuleDelegate */ CreateCheckpointDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCreateWebSocketClientDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateWebSocketClientModuleDelegate */ CreateWebSocketClientDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCreateHttpClientDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateHttpClientModuleDelegate */ CreateHttpClientDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCreateAudioDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateAudioModuleDelegate */ CreateAudioDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCreateRmlElementDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateRmlElementModuleDelegate */ CreateRmlElementDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCreateRmlDocumentDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateRmlDocumentModuleDelegate */ CreateRmlDocumentDelegate_t delegate);
+    
 EXPORT_CLIENT void Event_SetRemoveBlipDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveBlipModuleDelegate */ RemoveBlipDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemoveWebViewDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveWebViewModuleDelegate */ RemoveWebViewDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemoveCheckpointDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveCheckpointModuleDelegate */ RemoveCheckpointDelegate_t delegate);

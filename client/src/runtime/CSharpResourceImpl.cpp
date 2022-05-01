@@ -347,6 +347,38 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef
             OnCreatePlayerDelegate(player, player->GetID());
             break;
         }
+        case alt::IBaseObject::Type::BLIP: {
+            OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::WEBVIEW: {
+            OnCreateWebViewDelegate(dynamic_cast<alt::IWebView*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::CHECKPOINT: {
+            OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::WEBSOCKET_CLIENT: {
+            OnCreateWebSocketClientDelegate(dynamic_cast<alt::IWebSocketClient*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::HTTP_CLIENT: {
+            OnCreateHttpClientDelegate(dynamic_cast<alt::IHttpClient*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::AUDIO: {
+            OnCreateAudioDelegate(dynamic_cast<alt::IAudio*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::RML_ELEMENT: {
+            OnCreateRmlElementDelegate(dynamic_cast<alt::IRmlElement*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::RML_DOCUMENT: {
+            OnCreateRmlDocumentDelegate(dynamic_cast<alt::IRmlDocument*>(object));
+            break;
+        }
     }
 }
 
@@ -463,6 +495,15 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnWindowFocusChangeDelegate = [](auto var) {};
     OnWindowResolutionChangeDelegate = [](auto var, auto var2) {};
+    
+    OnCreateBlipDelegate = [](auto var) {};
+    OnCreateWebViewDelegate = [](auto var) {};
+    OnCreateCheckpointDelegate = [](auto var) {};
+    OnCreateWebSocketClientDelegate = [](auto var) {};
+    OnCreateHttpClientDelegate = [](auto var) {};
+    OnCreateAudioDelegate = [](auto var) {};
+    OnCreateRmlElementDelegate = [](auto var) {};
+    OnCreateRmlDocumentDelegate = [](auto var) {};
     
     OnRemoveBlipDelegate = [](auto var) {};
     OnRemoveWebViewDelegate = [](auto var) {};

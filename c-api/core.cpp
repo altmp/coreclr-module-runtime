@@ -153,6 +153,20 @@ void Core_GetVehicles(alt::ICore* core, alt::IVehicle* vehicles[], uint64_t size
     }
 }
 
+uint64_t Core_GetBlipCount(alt::ICore* core) {
+    return core->GetBlips().GetSize();
+}
+
+void Core_GetBlips(alt::ICore* core, alt::IBlip* Blips[], uint64_t size) {
+    auto BlipsArray = core->GetBlips();
+    if (BlipsArray.GetSize() < size) {
+        size = BlipsArray.GetSize();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        Blips[i] = BlipsArray[i].Get();
+    }
+}
+
 void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
     auto entityRef = core->GetEntityByID(id);
     auto entity = entityRef.Get();
@@ -563,6 +577,13 @@ ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core) {
 
 void Core_DeallocDiscordUser(ClrDiscordUser* user) {
     delete user;
+}
+
+
+void Core_Discord_GetOAuth2Token(alt::ICore* core, const char* appId, DiscordOAuth2TokenResultDelegate_t delegate) {
+    core->DiscordRequestOAuth2Token(appId, [delegate](const bool result, const std::string& token) {
+        delegate(result, token.c_str());
+    });
 }
 
 
