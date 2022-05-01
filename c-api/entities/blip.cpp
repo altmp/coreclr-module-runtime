@@ -314,4 +314,9 @@ void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
 uint32_t Blip_GetScriptID(alt::IBlip* blip) {
     return blip->GetScriptID();
 }
+
+uint8_t Blip_IsRemote(alt::IBlip* blip) {
+    return blip->IsRemote();
+}
+
 #endif
