@@ -1,6 +1,7 @@
 #include "core.h"
 #include "mvalue.h"
 #include "utils/strings.h"
+#include "data/config_node_data.h"
 #include <vector>
 
 void Core_LogInfo(alt::ICore* core, const char* str) {
@@ -473,6 +474,10 @@ void Core_SetPassword(alt::ICore* core, const char* value) {
 
 void Core_StopServer(alt::ICore* core) {
     core->StopServer();
+}
+
+ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core) {
+    return new ClrConfigNodeData(core->GetServerConfig());
 }
 #endif
 
