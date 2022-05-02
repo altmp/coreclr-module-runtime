@@ -7,6 +7,7 @@
 #endif
 
 #include "../../cpp-sdk/SDK.h"
+#include "data/config_node_data.h"
 #include "utils/export.h"
 
 #if ALT_SERVER_API
@@ -45,6 +46,7 @@ EXPORT_SERVER const char* Resource_GetPath(alt::IResource* resource, int32_t& si
 EXPORT_SERVER const char* Resource_GetMain(alt::IResource* resource, int32_t& size);
 EXPORT_SERVER void Resource_Start(alt::IResource* resource);
 EXPORT_SERVER void Resource_Stop(alt::IResource* resource);
+EXPORT_SERVER ClrConfigNodeData* Resource_GetConfig(alt::IResource* resource);
 
 EXPORT_CLIENT void Resource_GetFile(alt::IResource* resource, const char* path, int* bufferSize, void** buffer);
 EXPORT_CLIENT bool Resource_FileExists(alt::IResource* resource, const char* path);

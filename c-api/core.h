@@ -7,6 +7,7 @@
 #endif
 
 #include "../../cpp-sdk/SDK.h"
+#include "data/config_node_data.h"
 #include "data/types.h"
 #include "data/vehicle_model_info.h"
 #include "utils/export.h"
@@ -110,6 +111,7 @@ EXPORT_SERVER void Core_DeleteSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SERVER uint64_t Core_HashPassword(alt::ICore* core, const char* password);
 EXPORT_SERVER void Core_SetPassword(alt::ICore* core, const char* value);
 EXPORT_SERVER void Core_StopServer(alt::ICore* core);
+EXPORT_SERVER ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core);
 
 #ifdef ALT_CLIENT_API
 EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color);
