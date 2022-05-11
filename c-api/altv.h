@@ -29,6 +29,7 @@ EXPORT_SHARED const char* GetCApiVersion(int32_t &size);
 EXPORT_SHARED const char* GetSDKVersion(int32_t &size);
 
 EXPORT_CLIENT void FreeRmlElementArray(alt::IRmlElement** rmlElementArray);
+EXPORT_CLIENT void* Win_GetTaskDialog();
 
 #ifdef __cplusplus
 }

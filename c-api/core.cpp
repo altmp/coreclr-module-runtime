@@ -994,5 +994,9 @@ alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key) {
     return new alt::MValueConst(core->GetLocalMetaData(key));
 }
 
+const char* Core_GetClientPath(alt::ICore* core, int32_t& size) {
+    return AllocateString(core->GetClientPath(), size);
+}
+
 
 #endif
