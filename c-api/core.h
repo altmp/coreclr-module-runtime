@@ -252,6 +252,8 @@ EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* re
 EXPORT_CLIENT uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key);
 EXPORT_CLIENT alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key);
 
+EXPORT_CLIENT const char* Core_GetClientPath(alt::ICore* core, int32_t& size);
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,8 +1,12 @@
 #include "altv.h"
 
-#include <string.h>
 #include "version/version.h"
 #include "../cpp-sdk/version/version.h"
+
+#ifdef ALT_CLIENT_API
+#include "utils.h"
+#include <filesystem>
+#endif
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -91,4 +95,23 @@ const char* GetSDKVersion(int32_t &size) {
 void FreeRmlElementArray(alt::IRmlElement** rmlElementArray) {
     delete[] rmlElementArray;
 }
+
+void* Win_GetTaskDialog() {
+    char *pValue;
+    size_t len;
+    if (_dupenv_s(&pValue, &len, "windir")) return nullptr;
+    const std::string platform = sizeof(size_t) == 4 ? "x86" : "amd64";
+    const std::string prefix = platform + "_microsoft.windows.common-controls_6595b64144ccf1df_6.";
+    const std::filesystem::path winDir(pValue);
+    for (auto& dirEntry : std::filesystem::directory_iterator(winDir / "WinSxS")) {
+        auto filename = dirEntry.path().filename().string();
+        if (!dirEntry.is_directory() || !utils::has_prefix(filename, prefix)) continue;
+        auto path = (dirEntry.path() / "comctl32.dll").string();
+        auto lib = LoadLibraryEx(utils::string_to_wstring(path).c_str(), nullptr, 0);
+        return (void*) GetProcAddress(lib, "TaskDialogIndirect");
+    }
+
+    return nullptr;
+}
+
 #endif
