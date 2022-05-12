@@ -3,6 +3,7 @@
 //
 
 #include "resource.h"
+#include "data/config_node_data.h"
 #include "utils/strings.h"
 
 const char* Resource_GetName(alt::IResource* resource, int32_t& size) {
@@ -112,6 +113,11 @@ void Resource_Start(alt::IResource* resource) {
 void Resource_Stop(alt::IResource* resource) {
     resource->GetImpl()->Stop();
 }
+
+ClrConfigNodeData* Resource_GetConfig(alt::IResource* resource) {
+    return new ClrConfigNodeData(resource->GetConfig());
+}
+
 #endif
 
 #ifdef ALT_CLIENT_API

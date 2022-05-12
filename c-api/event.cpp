@@ -65,4 +65,22 @@ SetDelegate(TaskChange);
 
 SetDelegate(WindowFocusChange);
 SetDelegate(WindowResolutionChange);
+
+SetDelegate(CreateBlip);
+SetDelegate(CreateWebView);
+SetDelegate(CreateCheckpoint);
+SetDelegate(CreateWebSocketClient);
+SetDelegate(CreateHttpClient);
+SetDelegate(CreateAudio);
+SetDelegate(CreateRmlElement);
+SetDelegate(CreateRmlDocument);
+
+SetDelegate(RemoveBlip);
+SetDelegate(RemoveWebView);
+SetDelegate(RemoveCheckpoint);
+SetDelegate(RemoveWebSocketClient);
+SetDelegate(RemoveHttpClient);
+SetDelegate(RemoveAudio);
+SetDelegate(RemoveRmlElement);
+SetDelegate(RemoveRmlDocument);
 #endif

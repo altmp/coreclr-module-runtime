@@ -48,3 +48,21 @@ typedef void (* TaskChangeDelegate_t)(uint32_t oldTask, uint32_t newTask);
 
 typedef void (* WindowFocusChangeDelegate_t)(uint8_t state);
 typedef void (* WindowResolutionChangeDelegate_t)(vector2_t oldRes, vector2_t newRes);
+
+typedef void (* CreateBlipDelegate_t)(alt::IBlip*);
+typedef void (* CreateWebViewDelegate_t)(alt::IWebView*);
+typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint*);
+typedef void (* CreateWebSocketClientDelegate_t)(alt::IWebSocketClient*);
+typedef void (* CreateHttpClientDelegate_t)(alt::IHttpClient*);
+typedef void (* CreateAudioDelegate_t)(alt::IAudio*);
+typedef void (* CreateRmlElementDelegate_t)(alt::IRmlElement*);
+typedef void (* CreateRmlDocumentDelegate_t)(alt::IRmlDocument*);
+
+typedef void (* RemoveBlipDelegate_t)(alt::IBlip*);
+typedef void (* RemoveWebViewDelegate_t)(alt::IWebView*);
+typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint*);
+typedef void (* RemoveWebSocketClientDelegate_t)(alt::IWebSocketClient*);
+typedef void (* RemoveHttpClientDelegate_t)(alt::IHttpClient*);
+typedef void (* RemoveAudioDelegate_t)(alt::IAudio*);
+typedef void (* RemoveRmlElementDelegate_t)(alt::IRmlElement*);
+typedef void (* RemoveRmlDocumentDelegate_t)(alt::IRmlDocument*);

@@ -92,6 +92,7 @@ EXPORT_SERVER uint8_t Blip_IsAttached(alt::IBlip* blip);
 EXPORT_SERVER void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type);
 
 EXPORT_CLIENT uint32_t Blip_GetScriptID(alt::IBlip* blip);
+EXPORT_CLIENT uint8_t Blip_IsRemote(alt::IBlip* blip);
 
 #ifdef __cplusplus
 }
