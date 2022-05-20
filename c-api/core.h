@@ -7,6 +7,7 @@
 #endif
 
 #include "../../cpp-sdk/SDK.h"
+#include "data/config_node_data.h"
 #include "data/types.h"
 #include "data/vehicle_model_info.h"
 #include "utils/export.h"
@@ -55,6 +56,8 @@ EXPORT_SHARED uint64_t Core_GetPlayerCount(alt::ICore* server);
 EXPORT_SHARED void Core_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size);
 EXPORT_SHARED uint64_t Core_GetVehicleCount(alt::ICore* server);
 EXPORT_SHARED void Core_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size);
+EXPORT_SHARED uint64_t Core_GetBlipCount(alt::ICore* core);
+EXPORT_SHARED void Core_GetBlips(alt::ICore* core, alt::IBlip* vehicles[], uint64_t size);
 EXPORT_SHARED void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
 EXPORT_SHARED alt::IResource* Core_GetResource(alt::ICore* core, const char* resourceName);
 EXPORT_SHARED alt::IResource** Core_GetAllResources(alt::ICore* core, uint32_t& size);
@@ -108,6 +111,7 @@ EXPORT_SERVER void Core_DeleteSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SERVER uint64_t Core_HashPassword(alt::ICore* core, const char* password);
 EXPORT_SERVER void Core_SetPassword(alt::ICore* core, const char* value);
 EXPORT_SERVER void Core_StopServer(alt::ICore* core);
+EXPORT_SERVER ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core);
 
 #ifdef ALT_CLIENT_API
 EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color);
@@ -129,6 +133,9 @@ EXPORT_CLIENT uint8_t Core_IsCursorVisible(alt::ICore* core, alt::IResource* res
 EXPORT_CLIENT ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core);
 EXPORT_CLIENT void Core_DeallocDiscordUser(ClrDiscordUser* user);
 #endif
+    
+typedef void (* DiscordOAuth2TokenResultDelegate_t)(bool success, const char* token);
+EXPORT_CLIENT void Core_Discord_GetOAuth2Token(alt::ICore* core, const char* appId, /** ClientEvents.DiscordOAuth2TokenResultModuleDelegate */ DiscordOAuth2TokenResultDelegate_t delegate);
 
 EXPORT_CLIENT void Core_WorldToScreen(alt::ICore* core, vector3_t in, vector2_t& out);
 EXPORT_CLIENT void Core_ScreenToWorld(alt::ICore* core, vector2_t in, vector3_t& out);
@@ -244,6 +251,8 @@ EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* re
 
 EXPORT_CLIENT uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key);
 EXPORT_CLIENT alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key);
+
+EXPORT_CLIENT const char* Core_GetClientPath(alt::ICore* core, int32_t& size);
 
 #ifdef __cplusplus
 }

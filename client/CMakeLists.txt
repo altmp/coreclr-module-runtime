@@ -1,9 +1,10 @@
 cmake_minimum_required (VERSION 3.8)
 
+set(SDK_PROJECT_NAME csharp-alt-sdk)
 include(../cpp-sdk/CMakeLists.txt)
-include(../c-api/CMakeLists.txt)
+#include(../c-api/CMakeLists.txt)
 
-set(TARGET_NAME core_clr_client)
+set(TARGET_NAME altv-client-csharp)
 
 project(${TARGET_NAME})
 message(${PROJECT_SOURCE_DIR})
@@ -18,12 +19,17 @@ file(GLOB_RECURSE PROJECT_SOURCE_FILES
 )
 
 file(GLOB_RECURSE CAPI_FILES "../c-api/*.h" "../c-api/*.cpp")
-add_library(${TARGET_NAME} SHARED
+#add_library(${TARGET_NAME} SHARED
+#        "${PROJECT_SOURCE_FILES}" "${CAPI_FILES}"
+#)
+
+add_library(${TARGET_NAME}-static STATIC
         "${PROJECT_SOURCE_FILES}" "${CAPI_FILES}"
 )
+
 #add_executable(${TARGET_NAME} ${PROJECT_SOURCE_FILES})
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE
+target_compile_definitions(${PROJECT_NAME}-static PRIVATE
         # Compliation
         -DCXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}"
         -D_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
@@ -40,10 +46,10 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 #        -DDEBUG_CLIENT
 )
 
-include_directories(${TARGET_NAME} PRIVATE
+include_directories(${TARGET_NAME}-static PRIVATE
         "src"
         "thirdparty"
 )
 
-add_dependencies(${TARGET_NAME} alt-sdk)
-add_dependencies(${TARGET_NAME} c-api)
+add_dependencies(${TARGET_NAME}-static csharp-alt-sdk)
+#add_dependencies(${TARGET_NAME}-static c-api)

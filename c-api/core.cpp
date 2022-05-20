@@ -1,6 +1,7 @@
 #include "core.h"
 #include "mvalue.h"
 #include "utils/strings.h"
+#include "data/config_node_data.h"
 #include <vector>
 
 void Core_LogInfo(alt::ICore* core, const char* str) {
@@ -150,6 +151,20 @@ void Core_GetVehicles(alt::ICore* core, alt::IVehicle* vehicles[], uint64_t size
     }
     for (uint64_t i = 0; i < size; i++) {
         vehicles[i] = vehiclesArray[i].Get();
+    }
+}
+
+uint64_t Core_GetBlipCount(alt::ICore* core) {
+    return core->GetBlips().GetSize();
+}
+
+void Core_GetBlips(alt::ICore* core, alt::IBlip* Blips[], uint64_t size) {
+    auto BlipsArray = core->GetBlips();
+    if (BlipsArray.GetSize() < size) {
+        size = BlipsArray.GetSize();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        Blips[i] = BlipsArray[i].Get();
     }
 }
 
@@ -460,6 +475,10 @@ void Core_SetPassword(alt::ICore* core, const char* value) {
 void Core_StopServer(alt::ICore* core) {
     core->StopServer();
 }
+
+ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core) {
+    return new ClrConfigNodeData(core->GetServerConfig());
+}
 #endif
 
 #ifdef ALT_CLIENT_API
@@ -563,6 +582,13 @@ ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core) {
 
 void Core_DeallocDiscordUser(ClrDiscordUser* user) {
     delete user;
+}
+
+
+void Core_Discord_GetOAuth2Token(alt::ICore* core, const char* appId, DiscordOAuth2TokenResultDelegate_t delegate) {
+    core->DiscordRequestOAuth2Token(appId, [delegate](const bool result, const std::string& token) {
+        delegate(result, token.c_str());
+    });
 }
 
 
@@ -966,6 +992,10 @@ uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key) {
 
 alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key) {
     return new alt::MValueConst(core->GetLocalMetaData(key));
+}
+
+const char* Core_GetClientPath(alt::ICore* core, int32_t& size) {
+    return AllocateString(core->GetClientPath(), size);
 }
 
 

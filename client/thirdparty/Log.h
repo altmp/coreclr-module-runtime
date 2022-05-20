@@ -1,7 +1,7 @@
 #pragma once
 
 #include <sstream>
-#include "../../cpp-sdk/SDK.h"
+#include "../../cpp-sdk/ICore.h"
 
 class Log
 {
@@ -23,7 +23,7 @@ class Log
 
 public:
     Log(const Log&) = delete;
-    Log(Log&&)      = delete;
+    Log(Log&&) = delete;
     Log& operator=(const Log&) = delete;
 
     template<class T>
@@ -32,6 +32,13 @@ public:
         buf << val;
         return *this;
     }
+#if __cplusplus >= 202002L
+    Log& Put(const char8_t* val)
+    {
+        buf << (const char*)val;
+        return *this;
+    }
+#endif  // __cplusplus
     Log& Put(LogFn val)
     {
         return val(*this);
@@ -94,24 +101,14 @@ public:
 
     static Log& Endl(Log& log)
     {
-#ifdef DEBUG_CLIENT
         switch(log.type)
         {
-            case COLORED: case INFO: std::cout << log.buf.str() << std::endl; break;
-            case DEBUG: std::cout << "[DEBUG] " + log.buf.str() << std::endl; break;
-            case WARNING: std::cout << "[WARNING] " + log.buf.str() << std::endl; break;
-            case ERR: std::cout << "[ERROR] " + log.buf.str() << std::endl; break;
+            case INFO: alt::ICore::Instance().LogInfo(log.buf.str()); break;
+            case DEBUG: alt::ICore::Instance().LogDebug(log.buf.str().c_str()); break;
+            case WARNING: alt::ICore::Instance().LogWarning(log.buf.str().c_str()); break;
+            case ERR: alt::ICore::Instance().LogError(log.buf.str().c_str()); break;
+            case COLORED: alt::ICore::Instance().LogColored(log.buf.str().c_str()); break;
         }
-#else
-        switch(log.type)
-        {
-            case INFO: alt::ICore::Instance().LogInfo("[coreclr-module] " + log.buf.str()); break;
-            case DEBUG: alt::ICore::Instance().LogColored("[coreclr-module] ~g~[DEBUG] ~w~" + log.buf.str()); break;
-            case WARNING: alt::ICore::Instance().LogWarning("[coreclr-module] " + log.buf.str()); break;
-            case ERR: alt::ICore::Instance().LogError("[coreclr-module] " + log.buf.str()); break;
-            case COLORED: alt::ICore::Instance().LogColored("[coreclr-module] " + log.buf.str()); break;
-        }
-#endif
 
         log.buf.str("");
         return log;

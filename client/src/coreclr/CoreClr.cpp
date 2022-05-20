@@ -18,6 +18,12 @@ CoreClrDelegate_t load_resource_delegate = nullptr;
 CoreClrDelegate_t stop_resource_delegate = nullptr;
 CoreClrDelegate_t stop_runtime_delegate = nullptr;
 
+#if ALTV_CSHARP_SHARED
+#define DLL_NAME "coreclr-client-module"
+#else
+#define DLL_NAME "altv-client"
+#endif
+
 std::filesystem::path CoreClr::GetMainDirectoryPath() {
 #ifdef DEBUG_CLIENT
     const auto debugDllPath = filesystem::path(utils::wstring_to_string(utils::get_current_dll_path()));
@@ -108,7 +114,7 @@ void CoreClr::Initialize() {
 
     InitializeCoreclr();
 
-    typedef uint8_t (* initialize_method)(alt::ICore* ptr, uint8_t sandbox);
+    typedef uint8_t (* initialize_method)(alt::ICore* ptr, const char* dllName, uint8_t sandbox);
     initialize_method hostInitDelegate = nullptr;
 
     const int rc = _createDelegate(_runtimeHost, _domainId, "AltV.Net.Client.Host", "Entrypoint", "Initialize", (void **) &hostInitDelegate);
@@ -120,7 +126,7 @@ void CoreClr::Initialize() {
 
     Log::Info << "Executing method from Host dll" << Log::Endl;
 
-    const auto hostInitRc = hostInitDelegate(_core, sandbox);
+    const auto hostInitRc = hostInitDelegate(_core, DLL_NAME, sandbox);
     if (hostInitRc != 0) {
         throw std::runtime_error("Host dll initialization failed. Code: " + std::to_string(hostInitRc));
     }
