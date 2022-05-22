@@ -14,6 +14,7 @@
 #endif
 
 EXPORT bool altMain(alt::ICore* server) {
+    alt::ICore::SetInstance(server);
     auto* cSharpScriptRuntime = new CSharpScriptRuntime(server);
     server->RegisterScriptRuntime("csharp", cSharpScriptRuntime);
     return true;
