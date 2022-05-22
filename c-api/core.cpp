@@ -256,6 +256,10 @@ const char* Core_FileRead(alt::ICore* core, const char* path, int32_t& size) {
     return AllocateString(core->FileRead(path), size);
 }
 
+alt::ICore* Core_GetCoreInstance() {
+    return &alt::ICore::Instance();
+}
+
 #ifdef ALT_SERVER_API
 uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
     return core->SubscribeCommand(cmd, cb);

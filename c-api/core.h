@@ -76,6 +76,7 @@ EXPORT_SHARED uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SHARED void Core_TriggerLocalEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size);
 EXPORT_SHARED uint8_t Core_FileExists(alt::ICore* server, const char* path);
 EXPORT_SHARED const char* Core_FileRead(alt::ICore* server, const char* path, int32_t& size);
+EXPORT_SHARED alt::ICore* Core_GetCoreInstance();
 
 EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
 EXPORT_SERVER void Core_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
