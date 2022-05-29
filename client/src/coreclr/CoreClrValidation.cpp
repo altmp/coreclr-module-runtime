@@ -18,7 +18,7 @@ std::string CoreClr::GetBaseCdnUrl() const {
 
 inline const std::string host_dll_name = "AltV.Net.Client.Host.dll";
 
-bool CoreClr::ValidateRuntime(nlohmann::basic_json<> updateJson, Ref<alt::IHttpClient> httpClient) const {
+bool CoreClr::ValidateRuntime(nlohmann::json updateJson, Ref<alt::IHttpClient> httpClient) const {
     auto const runtimeDirectoryPath = GetRuntimeDirectoryPath();
     if (!fs::exists(runtimeDirectoryPath)) return false;
     
@@ -86,7 +86,7 @@ void CoreClr::DownloadRuntime(Ref<alt::IHttpClient> httpClient) const {
     }
 }
 
-bool CoreClr::ValidateHost(nlohmann::basic_json<> updateJson) const {
+bool CoreClr::ValidateHost(nlohmann::json updateJson) const {
     Log::Info << "Validating Host" << Log::Endl;
     
     static auto hostPath = GetDataDirectoryPath().append(host_dll_name);
@@ -150,7 +150,7 @@ std::string CoreClr::GetLatestNugetVersion(alt::Ref<alt::IHttpClient> httpClient
     throw std::runtime_error("Failed to find latest version of " + packageName + " for branch " + branch);
 }
 
-bool CoreClr::ValidateNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& package, const std::string& version, nlohmann::json::basic_json<> json) {
+bool CoreClr::ValidateNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& package, const std::string& version, nlohmann::json json) {
     if (!_nuget) _nuget.emplace(httpClient);
     Log::Info << "Validating NuGet package " << package << " " << version << Log::Endl;
     
