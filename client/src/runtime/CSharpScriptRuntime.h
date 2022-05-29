@@ -1,5 +1,5 @@
 #pragma once
-#include <coreclr/CoreCLR.h>
+#include <coreclr/CoreClr.h>
 #include "../../../cpp-sdk/SDK.h"
 
 class CSharpScriptRuntime : public alt::IScriptRuntime {
