@@ -39,9 +39,9 @@ private:
     unsigned int _domainId = 0;
     std::optional<NuGet> _nuget;
 
-    [[nodiscard]] bool ValidateRuntime(nlohmann::basic_json<> updateJson, alt::Ref<alt::IHttpClient> httpClient) const;
-    [[nodiscard]] bool ValidateHost(nlohmann::basic_json<> updateJson) const;
-    [[nodiscard]] bool ValidateNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& package, const std::string& version, nlohmann::json::basic_json<> json = nullptr);
+    [[nodiscard]] bool ValidateRuntime(nlohmann::json updateJson, alt::Ref<alt::IHttpClient> httpClient) const;
+    [[nodiscard]] bool ValidateHost(nlohmann::json updateJson) const;
+    [[nodiscard]] bool ValidateNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& package, const std::string& version, nlohmann::json json = nullptr);
     [[nodiscard]] bool ValidateNuGets(alt::Ref<alt::IHttpClient> httpClient);
     std::string GetLatestNugetVersion(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName);
     void DownloadRuntime(alt::Ref<alt::IHttpClient> httpClient) const;
