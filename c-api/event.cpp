@@ -50,6 +50,7 @@ SetDelegate(KeyUp);
 SetDelegate(KeyDown);
 
 SetDelegate(PlayerChangeVehicleSeat);
+SetDelegate(PlayerChangeAnimation);
 
 SetDelegate(ConnectionComplete);
 

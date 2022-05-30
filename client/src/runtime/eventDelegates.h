@@ -32,6 +32,7 @@ typedef void (* KeyUpDelegate_t)(uint32_t key);
 typedef void (* KeyDownDelegate_t)(uint32_t key);
 
 typedef void (* PlayerChangeVehicleSeatDelegate_t)(alt::IVehicle*, uint8_t oldSeat, uint8_t newSeat);
+typedef void (* PlayerChangeAnimationDelegate_t)(alt::IPlayer* player, uint32_t oldDict, uint32_t newDict, uint32_t oldName, uint32_t newName);
 
 typedef void (* ConnectionCompleteDelegate_t)();
 

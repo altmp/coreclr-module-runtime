@@ -68,6 +68,7 @@ public:
     KeyDownDelegate_t OnKeyDownDelegate = nullptr;
 
     PlayerChangeVehicleSeatDelegate_t OnPlayerChangeVehicleSeatDelegate = nullptr;
+    PlayerChangeAnimationDelegate_t OnPlayerChangeAnimationDelegate = nullptr;
 
     ConnectionCompleteDelegate_t OnConnectionCompleteDelegate = nullptr;
 
