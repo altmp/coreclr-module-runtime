@@ -60,6 +60,9 @@ EXPORT_SHARED void* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObj
 EXPORT_SHARED void Player_GetEntityAimOffset(alt::IPlayer* player, position_t &position);
 
 EXPORT_SHARED uint8_t Player_IsFlashlightActive(alt::IPlayer* player);
+EXPORT_SHARED uint8_t Player_IsSpawned(alt::IPlayer* player);
+EXPORT_SHARED uint32_t Player_GetCurrentAnimationDict(alt::IPlayer* player);
+EXPORT_SHARED uint32_t Player_GetCurrentAnimationName(alt::IPlayer* player);
 
 EXPORT_SERVER alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key);
 EXPORT_SERVER void Player_SetLocalMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val);
@@ -175,6 +178,11 @@ EXPORT_CLIENT alt::ILocalPlayer* Player_GetLocal();
 EXPORT_CLIENT alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* player);
 
 EXPORT_CLIENT uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer);
+
+EXPORT_CLIENT float LocalPlayer_GetCurrentWeaponRecoil(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT float LocalPlayer_GetCurrentWeaponSpread(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT float LocalPlayer_GetCurrentWeaponDamage(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT float LocalPlayer_GetCurrentWeaponRange(alt::ILocalPlayer* localPlayer);
 
 #ifdef __cplusplus
 }
