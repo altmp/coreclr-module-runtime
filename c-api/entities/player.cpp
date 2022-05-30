@@ -140,6 +140,18 @@ uint8_t Player_IsFlashlightActive(alt::IPlayer* player) {
     return player->IsFlashlightActive();
 }
 
+uint8_t Player_IsSpawned(alt::IPlayer* player) {
+    return player->IsSpawned();
+}
+
+uint32_t Player_GetCurrentAnimationDict(alt::IPlayer* player) {
+    return player->GetCurrentAnimationDict();
+}
+
+uint32_t Player_GetCurrentAnimationName(alt::IPlayer* player) {
+    return player->GetCurrentAnimationName();
+}
+
 #ifdef ALT_SERVER_API
 alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key) {
     return new alt::MValueConst(player->GetLocalMetaData(key));
@@ -555,5 +567,21 @@ alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* localPlayer) {
 
 uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer) {
     return localPlayer->GetCurrentAmmo();
+}
+
+float LocalPlayer_GetCurrentWeaponRecoil(alt::ILocalPlayer* localPlayer) {
+    return localPlayer->GetCurrentWeaponRecoil();
+}
+
+float LocalPlayer_GetCurrentWeaponSpread(alt::ILocalPlayer* localPlayer) {
+    return localPlayer->GetCurrentWeaponSpread();
+}
+
+float LocalPlayer_GetCurrentWeaponDamage(alt::ILocalPlayer* localPlayer) {
+    return localPlayer->GetCurrentWeaponDamage();
+}
+
+float LocalPlayer_GetCurrentWeaponRange(alt::ILocalPlayer* localPlayer) {
+    return localPlayer->GetCurrentWeaponRange();
 }
 #endif
