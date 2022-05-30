@@ -659,14 +659,14 @@ mz_bool mz_zip_reader_extract_file_to_file(mz_zip_archive *pZip, const char *pAr
 #endif
 
 // Ends archive reading, freeing all allocations, and closing the input archive file if mz_zip_reader_init_file() was used.
-mz_bool mz_zip_reader_end(mz_zip_archive *pZip);
+mz_bool mz_zip_reader_end_2(mz_zip_archive *pZip);
 
 // ZIP archive writing
 
 #ifndef MINIZ_NO_ARCHIVE_WRITING_APIS
 
 // Inits a ZIP archive writer.
-mz_bool mz_zip_writer_init(mz_zip_archive *pZip, mz_uint64 existing_size);
+mz_bool mz_zip_writer_init_2(mz_zip_archive *pZip, mz_uint64 existing_size);
 mz_bool mz_zip_writer_init_heap(mz_zip_archive *pZip, size_t size_to_reserve_at_beginning, size_t initial_allocation_size);
 
 #ifndef MINIZ_NO_STDIO
@@ -674,7 +674,7 @@ mz_bool mz_zip_writer_init_file(mz_zip_archive *pZip, const char *pFilename, mz_
 #endif
 
 // Converts a ZIP archive reader object into a writer object, to allow efficient in-place file appends to occur on an existing archive.
-// For archives opened using mz_zip_reader_init_file, pFilename must be the archive's filename so it can be reopened for writing. If the file can't be reopened, mz_zip_reader_end() will be called.
+// For archives opened using mz_zip_reader_init_file, pFilename must be the archive's filename so it can be reopened for writing. If the file can't be reopened, mz_zip_reader_end_2() will be called.
 // For archives opened using mz_zip_reader_init_mem, the memory block must be growable using the realloc callback (which defaults to realloc unless you've overridden it).
 // Finally, for archives opened using mz_zip_reader_init, the mz_zip_archive's user provided m_pWrite function cannot be NULL.
 // Note: In-place archive modification is not recommended unless you know what you're doing, because if execution stops or something goes wrong before
@@ -698,14 +698,14 @@ mz_bool mz_zip_writer_add_file(mz_zip_archive *pZip, const char *pArchive_name, 
 mz_bool mz_zip_writer_add_from_zip_reader_2(mz_zip_archive *pZip, mz_zip_archive *pSource_zip, mz_uint file_index);
 
 // Finalizes the archive by writing the central directory records followed by the end of central directory record.
-// After an archive is finalized, the only valid call on the mz_zip_archive struct is mz_zip_writer_end().
+// After an archive is finalized, the only valid call on the mz_zip_archive struct is mz_zip_writer_end_2().
 // An archive must be manually finalized by calling this function for it to be valid.
 mz_bool mz_zip_writer_finalize_archive_2(mz_zip_archive *pZip);
 mz_bool mz_zip_writer_finalize_heap_archive(mz_zip_archive *pZip, void **pBuf, size_t *pSize);
 
 // Ends archive writing, freeing all allocations, and closing the output file if mz_zip_writer_init_file() was used.
 // Note for the archive to be valid, it must have been finalized before ending.
-mz_bool mz_zip_writer_end(mz_zip_archive *pZip);
+mz_bool mz_zip_writer_end_2(mz_zip_archive *pZip);
 
 // Misc. high-level helper functions:
 
@@ -3326,7 +3326,7 @@ inline mz_bool mz_zip_reader_init(mz_zip_archive *pZip, mz_uint64 size, mz_uint3
   pZip->m_archive_size = size;
   if (!mz_zip_reader_read_central_dir(pZip, flags))
   {
-    mz_zip_reader_end(pZip);
+    mz_zip_reader_end_2(pZip);
     return MZ_FALSE;
   }
   return MZ_TRUE;
@@ -3355,7 +3355,7 @@ inline mz_bool mz_zip_reader_init_mem_2(mz_zip_archive *pZip, const void *pMem, 
   pZip->m_pState->m_mem_size = size;
   if (!mz_zip_reader_read_central_dir(pZip, flags))
   {
-    mz_zip_reader_end(pZip);
+    mz_zip_reader_end_2(pZip);
     return MZ_FALSE;
   }
   return MZ_TRUE;
@@ -3394,7 +3394,7 @@ inline mz_bool mz_zip_reader_init_file(mz_zip_archive *pZip, const char *pFilena
   pZip->m_archive_size = file_size;
   if (!mz_zip_reader_read_central_dir(pZip, flags))
   {
-    mz_zip_reader_end(pZip);
+    mz_zip_reader_end_2(pZip);
     return MZ_FALSE;
   }
   return MZ_TRUE;
@@ -3975,7 +3975,7 @@ inline mz_bool mz_zip_reader_extract_to_file(mz_zip_archive *pZip, mz_uint file_
 }
 #endif // #ifndef MINIZ_NO_STDIO
 
-inline mz_bool mz_zip_reader_end(mz_zip_archive *pZip)
+inline mz_bool mz_zip_reader_end_2(mz_zip_archive *pZip)
 {
   if ((!pZip) || (!pZip->m_pState) || (!pZip->m_pAlloc) || (!pZip->m_pFree) || (pZip->m_zip_mode != MZ_ZIP_MODE_READING))
     return MZ_FALSE;
@@ -4021,7 +4021,7 @@ inline void mz_write_le32(mz_uint8 *p, mz_uint32 v) { p[0] = (mz_uint8)v; p[1] =
 #define MZ_WRITE_LE16(p, v) mz_write_le16((mz_uint8 *)(p), (mz_uint16)(v))
 #define MZ_WRITE_LE32(p, v) mz_write_le32((mz_uint8 *)(p), (mz_uint32)(v))
 
-inline mz_bool mz_zip_writer_init(mz_zip_archive *pZip, mz_uint64 existing_size)
+inline mz_bool mz_zip_writer_init_2(mz_zip_archive *pZip, mz_uint64 existing_size)
 {
   if ((!pZip) || (pZip->m_pState) || (!pZip->m_pWrite) || (pZip->m_zip_mode != MZ_ZIP_MODE_INVALID))
     return MZ_FALSE;
@@ -4079,13 +4079,13 @@ inline mz_bool mz_zip_writer_init_heap(mz_zip_archive *pZip, size_t size_to_rese
 {
   pZip->m_pWrite = mz_zip_heap_write_func;
   pZip->m_pIO_opaque = pZip;
-  if (!mz_zip_writer_init(pZip, size_to_reserve_at_beginning))
+  if (!mz_zip_writer_init_2(pZip, size_to_reserve_at_beginning))
     return MZ_FALSE;
   if (0 != (initial_allocation_size = MZ_MAX(initial_allocation_size, size_to_reserve_at_beginning)))
   {
     if (NULL == (pZip->m_pState->m_pMem = pZip->m_pAlloc(pZip->m_pAlloc_opaque, 1, initial_allocation_size)))
     {
-      mz_zip_writer_end(pZip);
+      mz_zip_writer_end_2(pZip);
       return MZ_FALSE;
     }
     pZip->m_pState->m_mem_capacity = initial_allocation_size;
@@ -4108,11 +4108,11 @@ inline mz_bool mz_zip_writer_init_file(mz_zip_archive *pZip, const char *pFilena
   MZ_FILE *pFile;
   pZip->m_pWrite = mz_zip_file_write_func;
   pZip->m_pIO_opaque = pZip;
-  if (!mz_zip_writer_init(pZip, size_to_reserve_at_beginning))
+  if (!mz_zip_writer_init_2(pZip, size_to_reserve_at_beginning))
     return MZ_FALSE;
   if (NULL == (pFile = MZ_FOPEN(pFilename, "wb")))
   {
-    mz_zip_writer_end(pZip);
+    mz_zip_writer_end_2(pZip);
     return MZ_FALSE;
   }
   pZip->m_pState->m_pFile = pFile;
@@ -4124,7 +4124,7 @@ inline mz_bool mz_zip_writer_init_file(mz_zip_archive *pZip, const char *pFilena
       size_t n = (size_t)MZ_MIN(sizeof(buf), size_to_reserve_at_beginning);
       if (pZip->m_pWrite(pZip->m_pIO_opaque, cur_ofs, buf, n) != n)
       {
-        mz_zip_writer_end(pZip);
+        mz_zip_writer_end_2(pZip);
         return MZ_FALSE;
       }
       cur_ofs += n; size_to_reserve_at_beginning -= n;
@@ -4159,7 +4159,7 @@ inline mz_bool mz_zip_writer_init_from_reader(mz_zip_archive *pZip, const char *
     if (NULL == (pState->m_pFile = MZ_FREOPEN(pFilename, "r+b", pState->m_pFile)))
     {
       // The mz_zip_archive is now in a bogus state because pState->m_pFile is NULL, so just close it.
-      mz_zip_reader_end(pZip);
+      mz_zip_reader_end_2(pZip);
       return MZ_FALSE;
     }
 #endif // #ifdef MINIZ_NO_STDIO
@@ -4827,7 +4827,7 @@ inline mz_bool mz_zip_writer_finalize_heap_archive(mz_zip_archive *pZip, void **
   return MZ_TRUE;
 }
 
-inline mz_bool mz_zip_writer_end(mz_zip_archive *pZip)
+inline mz_bool mz_zip_writer_end_2(mz_zip_archive *pZip)
 {
   mz_zip_internal_state *pState;
   mz_bool status = MZ_TRUE;
@@ -4886,7 +4886,7 @@ inline mz_bool mz_zip_add_mem_to_archive_file_in_place(const char *pZip_filename
       return MZ_FALSE;
     if (!mz_zip_writer_init_from_reader(&zip_archive, pZip_filename))
     {
-      mz_zip_reader_end(&zip_archive);
+      mz_zip_reader_end_2(&zip_archive);
       return MZ_FALSE;
     }
   }
@@ -4894,7 +4894,7 @@ inline mz_bool mz_zip_add_mem_to_archive_file_in_place(const char *pZip_filename
   // Always finalize, even if adding failed for some reason, so we have a valid central directory. (This may not always succeed, but we can try.)
   if (!mz_zip_writer_finalize_archive_2(&zip_archive))
     status = MZ_FALSE;
-  if (!mz_zip_writer_end(&zip_archive))
+  if (!mz_zip_writer_end_2(&zip_archive))
     status = MZ_FALSE;
   if ((!status) && (created_new_archive))
   {
@@ -4924,7 +4924,7 @@ inline void *mz_zip_extract_archive_file_to_heap(const char *pZip_filename, cons
   if ((file_index = mz_zip_reader_locate_file_2(&zip_archive, pArchive_name, NULL, flags)) >= 0)
     p = mz_zip_reader_extract_to_heap(&zip_archive, file_index, pSize, flags);
 
-  mz_zip_reader_end(&zip_archive);
+  mz_zip_reader_end_2(&zip_archive);
   return p;
 }
 
@@ -5219,7 +5219,7 @@ public:
         
         if(archive_->m_zip_mode == MZ_ZIP_MODE_WRITING_HAS_BEEN_FINALIZED)
         {
-            mz_zip_writer_end(archive_.get());
+            mz_zip_writer_end_2(archive_.get());
         }
         
         if(archive_->m_zip_mode == MZ_ZIP_MODE_INVALID)
@@ -5240,7 +5240,7 @@ public:
         
         if(archive_->m_zip_mode == MZ_ZIP_MODE_WRITING_HAS_BEEN_FINALIZED)
         {
-            mz_zip_writer_end(archive_.get());
+            mz_zip_writer_end_2(archive_.get());
         }
         
         if(archive_->m_zip_mode == MZ_ZIP_MODE_INVALID)
@@ -5257,14 +5257,14 @@ public:
         switch(archive_->m_zip_mode)
         {
         case MZ_ZIP_MODE_READING:
-            mz_zip_reader_end(archive_.get());
+            mz_zip_reader_end_2(archive_.get());
             break;
         case MZ_ZIP_MODE_WRITING:
             mz_zip_writer_finalize_archive_2(archive_.get());
-            mz_zip_writer_end(archive_.get());
+            mz_zip_writer_end_2(archive_.get());
             break;
         case MZ_ZIP_MODE_WRITING_HAS_BEEN_FINALIZED:
-            mz_zip_writer_end(archive_.get());
+            mz_zip_writer_end_2(archive_.get());
             break;
         case MZ_ZIP_MODE_INVALID:
             break;
@@ -5280,7 +5280,7 @@ public:
         
         start_write();
         mz_zip_writer_finalize_archive_2(archive_.get());
-        mz_zip_writer_end(archive_.get());
+        mz_zip_writer_end_2(archive_.get());
     }
 
     bool has_file(const std::string &name)
@@ -5556,7 +5556,7 @@ private:
         
         if(archive_->m_zip_mode == MZ_ZIP_MODE_WRITING_HAS_BEEN_FINALIZED)
         {
-            mz_zip_writer_end(archive_.get());
+            mz_zip_writer_end_2(archive_.get());
         }
             
         if(!mz_zip_reader_init_mem_2(archive_.get(), buffer_.data(), buffer_.size(), 0))
@@ -5582,13 +5582,13 @@ private:
                     throw std::runtime_error("bad zip");
                 }
                 
-                mz_zip_reader_end(archive_.get());
+                mz_zip_reader_end_2(archive_.get());
                 
                 archive_->m_pWrite = &detail::write_callback;
                 archive_->m_pIO_opaque = &buffer_;
                 buffer_ = std::vector<char>();
                 
-                if(!mz_zip_writer_init(archive_.get(), 0))
+                if(!mz_zip_writer_init_2(archive_.get(), 0))
                 {
                     throw std::runtime_error("bad zip");
                 }
@@ -5601,11 +5601,11 @@ private:
                     }
                 }
                 
-                mz_zip_reader_end(&archive_copy);
+                mz_zip_reader_end_2(&archive_copy);
                 return;
             }
             case MZ_ZIP_MODE_WRITING_HAS_BEEN_FINALIZED:
-                mz_zip_writer_end(archive_.get());
+                mz_zip_writer_end_2(archive_.get());
                 break;
             case MZ_ZIP_MODE_INVALID:
             case MZ_ZIP_MODE_WRITING:
@@ -5615,7 +5615,7 @@ private:
         archive_->m_pWrite = &detail::write_callback;
         archive_->m_pIO_opaque = &buffer_;
 
-        if(!mz_zip_writer_init(archive_.get(), 0))
+        if(!mz_zip_writer_init_2(archive_.get(), 0))
         {
             throw std::runtime_error("bad zip");
         }
