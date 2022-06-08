@@ -3,7 +3,7 @@
 
 #include "natives.h"
 #include "../../c-api/data/types.h"
-#include <Log.h>
+#include "Log.h"
 #include <cstring>
 #include <stdlib.h>
 
@@ -14,7 +14,7 @@ void InitNatives() {
 }
 
 const char* AllocateString(const char* str) {
-	size_t stringSize = strnlen_s(str, 1000);
+	size_t stringSize = strlen(str);
 	char* writable = new char[stringSize + 1];
 	std::memcpy(writable, str, stringSize);
 	writable[stringSize] = '\0';
@@ -73,7 +73,7 @@ EXPORT int32_t Native_startNewScriptWithArgs(bool& success, const char* _scriptN
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_startNewScriptWithNameHash(bool& success, int32_t _scriptHash, int32_t _stackSize) {
+EXPORT int32_t Native_startNewScriptWithNameHash(bool& success, uint32_t _scriptHash, int32_t _stackSize) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEB1C67C3A5333A92);
 	ctx->Reset();
 	ctx->Push(_scriptHash);
@@ -86,7 +86,7 @@ EXPORT int32_t Native_startNewScriptWithNameHash(bool& success, int32_t _scriptH
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_startNewScriptWithNameHashAndArgs(bool& success, int32_t _scriptHash, int32_t& _args, int32_t _argCount, int32_t _stackSize) {
+EXPORT int32_t Native_startNewScriptWithNameHashAndArgs(bool& success, uint32_t _scriptHash, int32_t& _args, int32_t _argCount, int32_t _stackSize) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC4BB298BD441BE78);
 	ctx->Reset();
 	ctx->Push(_scriptHash);
@@ -560,7 +560,7 @@ EXPORT bool Native_appDeleteAppData(bool& success, const char* _appName) {
 EXPORT void Native_setDebugLinesAndSpheresDrawingActive(bool& success, bool _enabled) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x175B6BFC15CDD0C5);
 	ctx->Reset();
-	ctx->Push(_enabled);
+	ctx->Push((int32_t) _enabled);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -846,7 +846,7 @@ EXPORT void Native_drawBox(bool& success, float _x1, float _y1, float _z1, float
 EXPORT void Native_setBackfaceculling(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x23BA6B0C2AD7B0D3);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -995,7 +995,7 @@ EXPORT void Native_freeMemoryForHighQualityPhoto(bool& success) {
 EXPORT void Native__0x1BBC135A4D25EDDE(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1BBC135A4D25EDDE);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -1075,8 +1075,8 @@ EXPORT void Native_freeMemoryForLowQualityPhoto(bool& success) {
 EXPORT void Native_drawLowQualityPhotoToPhone(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1072F115DAB0717E);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -1337,13 +1337,13 @@ EXPORT void Native_drawMarker(bool& success, int32_t _type, float _posX, float _
 	ctx->Push(_green);
 	ctx->Push(_blue);
 	ctx->Push(_alpha);
-	ctx->Push(_bobUpAndDown);
-	ctx->Push(_faceCamera);
+	ctx->Push((int32_t) _bobUpAndDown);
+	ctx->Push((int32_t) _faceCamera);
 	ctx->Push(_p19);
-	ctx->Push(_rotate);
+	ctx->Push((int32_t) _rotate);
 	ctx->Push(SaveString(_textureDict));
 	ctx->Push(SaveString(_textureName));
-	ctx->Push(_drawOnEnts);
+	ctx->Push((int32_t) _drawOnEnts);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -1371,15 +1371,15 @@ EXPORT void Native_drawMarker2(bool& success, int32_t _type, float _posX, float 
 	ctx->Push(_green);
 	ctx->Push(_blue);
 	ctx->Push(_alpha);
-	ctx->Push(_bobUpAndDown);
-	ctx->Push(_faceCamera);
+	ctx->Push((int32_t) _bobUpAndDown);
+	ctx->Push((int32_t) _faceCamera);
 	ctx->Push(_p19);
-	ctx->Push(_rotate);
+	ctx->Push((int32_t) _rotate);
 	ctx->Push(SaveString(_textureDict));
 	ctx->Push(SaveString(_textureName));
-	ctx->Push(_drawOnEnts);
-	ctx->Push(_p24);
-	ctx->Push(_p25);
+	ctx->Push((int32_t) _drawOnEnts);
+	ctx->Push((int32_t) _p24);
+	ctx->Push((int32_t) _p25);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -1575,7 +1575,7 @@ EXPORT void Native_deleteCheckpoint(bool& success, int32_t _checkpoint) {
 EXPORT void Native_dontRenderInGameUi(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x22A249A53034450A);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -1586,7 +1586,7 @@ EXPORT void Native_dontRenderInGameUi(bool& success, bool _p0) {
 EXPORT void Native_forceRenderInGameUi(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDC459CFA0CCE245B);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -1598,7 +1598,7 @@ EXPORT void Native_requestStreamedTextureDict(bool& success, const char* _textur
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDFA2EF8E04127DD5);
 	ctx->Reset();
 	ctx->Push(SaveString(_textureDict));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -1640,7 +1640,7 @@ EXPORT void Native_drawRect(bool& success, float _x, float _y, float _width, flo
 	ctx->Push(_g);
 	ctx->Push(_b);
 	ctx->Push(_a);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -1651,7 +1651,7 @@ EXPORT void Native_drawRect(bool& success, float _x, float _y, float _width, flo
 EXPORT void Native_setScriptGfxDrawBehindPausemenu(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC6372ECD45D73BCD);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -1749,7 +1749,7 @@ EXPORT void Native_drawSprite(bool& success, const char* _textureDict, const cha
 	ctx->Push(_green);
 	ctx->Push(_blue);
 	ctx->Push(_alpha);
-	ctx->Push(_p11);
+	ctx->Push((int32_t) _p11);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -1842,7 +1842,7 @@ EXPORT void Native_setEntityIconVisibility(bool& success, int32_t _entity, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE0E8BEECCA96BA31);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2005,7 +2005,7 @@ EXPORT void Native_setBinkMovieUnk2(bool& success, int32_t _binkMovie, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF816F2933752322D);
 	ctx->Reset();
 	ctx->Push(_binkMovie);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2016,7 +2016,7 @@ EXPORT void Native_setBinkMovieUnk2(bool& success, int32_t _binkMovie, bool _p1)
 EXPORT void Native_setTvAudioFrontend(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x113D2C5DC57E1774);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2028,7 +2028,7 @@ EXPORT void Native_setBinkShouldSkip(bool& success, int32_t _binkMovie, bool _bS
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6805D58CAA427B72);
 	ctx->Reset();
 	ctx->Push(_binkMovie);
-	ctx->Push(_bShouldSkip);
+	ctx->Push((int32_t) _bShouldSkip);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2106,7 +2106,7 @@ EXPORT void Native_getActiveScreenResolution(bool& success, int32_t& _x, int32_t
 EXPORT float Native_getAspectRatio(bool& success, bool _b) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF1307EF624A80D87);
 	ctx->Reset();
-	ctx->Push(_b);
+	ctx->Push((int32_t) _b);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0.f;
@@ -2161,7 +2161,7 @@ EXPORT void Native__0xEFABC7722293DA7C(bool& success) {
 EXPORT void Native_setNightvision(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x18F621F7A5B1F85D);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2194,7 +2194,7 @@ EXPORT bool Native_getUsingnightvision(bool& success) {
 EXPORT void Native__0xEF398BEEE4EF45F9(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEF398BEEE4EF45F9);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2227,7 +2227,7 @@ EXPORT void Native__0x43FA7CBE20DAB219(bool& success, int32_t _p0) {
 EXPORT void Native_setNoiseoveride(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE787BF1C5CF823C9);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2333,7 +2333,7 @@ EXPORT void Native_disableOcclusionThisFrame(bool& success) {
 EXPORT void Native_setArtificialLightsState(bool& success, bool _state) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1268615ACE24D504);
 	ctx->Reset();
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2344,7 +2344,7 @@ EXPORT void Native_setArtificialLightsState(bool& success, bool _state) {
 EXPORT void Native_setArtificialLightsStateAffectsVehicles(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE2B187C0939B3D32);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2574,12 +2574,12 @@ EXPORT void Native_cascadeShadowsSetCascadeBounds(bool& success, int32_t _p0, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD2936CAB8B58FCBD);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	ctx->Push(_p4);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	ctx->Push(_p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -2635,7 +2635,7 @@ EXPORT void Native__0x259BA6D4E6F808F1(bool& success, int32_t _p0) {
 EXPORT void Native_cascadeShadowsEnableEntityTracker(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x80ECBC0C856D3B0B);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2646,7 +2646,7 @@ EXPORT void Native_cascadeShadowsEnableEntityTracker(bool& success, bool _toggle
 EXPORT void Native__0x25FC3E33A31AD0C9(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x25FC3E33A31AD0C9);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2678,7 +2678,7 @@ EXPORT void Native_cascadeShadowsClearShadowSampleType(bool& success) {
 EXPORT void Native_cascadeShadowsSetAircraftMode(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6DDBF9DFFC4AC080);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2689,7 +2689,7 @@ EXPORT void Native_cascadeShadowsSetAircraftMode(bool& success, bool _p0) {
 EXPORT void Native_cascadeShadowsSetDynamicDepthMode(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD39D13C9FEBF0511);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2711,7 +2711,7 @@ EXPORT void Native_cascadeShadowsSetDynamicDepthValue(bool& success, float _p0) 
 EXPORT void Native__0x0AE73D8DF3A762B2(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0AE73D8DF3A762B2);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2733,7 +2733,7 @@ EXPORT void Native__0xCA465D9CC0D231BA(bool& success, int32_t _p0) {
 EXPORT void Native_golfTrailSetEnabled(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA51C4B86B71652AE);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2752,7 +2752,7 @@ EXPORT void Native_golfTrailSetPath(bool& success, float _p0, float _p1, float _
 	ctx->Push(_p5);
 	ctx->Push(_p6);
 	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2810,7 +2810,7 @@ EXPORT void Native_golfTrailSetTessellation(bool& success, int32_t _p0, int32_t 
 EXPORT void Native__0xC0416B061F2B7E5E(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC0416B061F2B7E5E);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2855,7 +2855,7 @@ EXPORT void Native_golfTrailSetShaderParams(bool& success, float _p0, float _p1,
 EXPORT void Native_golfTrailSetFacing(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x06F761EA47C1D3ED);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -2890,7 +2890,7 @@ EXPORT vector3_t Native_golfTrailGetVisualControlPoint(bool& success, int32_t _p
 EXPORT void Native_setSeethrough(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7E08924259E08CE0);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3057,7 +3057,7 @@ EXPORT float Native__0xE59343E9E96529E7(bool& success) {
 EXPORT void Native__0x6A51F78772175A51(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6A51F78772175A51);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3068,7 +3068,7 @@ EXPORT void Native__0x6A51F78772175A51(bool& success, bool _toggle) {
 EXPORT void Native_togglePlayerDamageOverlay(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE63D7C6EECECB66B);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3146,7 +3146,7 @@ EXPORT bool Native_isScreenblurFadeRunning(bool& success) {
 EXPORT void Native_togglePausedRenderphases(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDFC252D8A3E15AB7);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3188,8 +3188,8 @@ EXPORT void Native__0x851CD923176EBA7C(bool& success) {
 EXPORT void Native_setHidofEnvBlurParams(bool& success, bool _p0, bool _p1, float _nearplaneOut, float _nearplaneIn, float _farplaneOut, float _farplaneIn) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBA3D65906822BED5);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_nearplaneOut);
 	ctx->Push(_nearplaneIn);
 	ctx->Push(_farplaneOut);
@@ -3215,7 +3215,7 @@ EXPORT void Native__0xB569F41F3E7E83A4(bool& success, int32_t _p0) {
 EXPORT bool Native__0x7AC24EAB6D74118D(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7AC24EAB6D74118D);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -3239,7 +3239,7 @@ EXPORT bool Native__0x27FEB5254759CDE3(bool& success, const char* _textureDict, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x27FEB5254759CDE3);
 	ctx->Reset();
 	ctx->Push(SaveString(_textureDict));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -3259,9 +3259,9 @@ EXPORT int32_t Native_startParticleFxNonLoopedAtCoord(bool& success, const char*
 	ctx->Push(_yRot);
 	ctx->Push(_zRot);
 	ctx->Push(_scale);
-	ctx->Push(_xAxis);
-	ctx->Push(_yAxis);
-	ctx->Push(_zAxis);
+	ctx->Push((int32_t) _xAxis);
+	ctx->Push((int32_t) _yAxis);
+	ctx->Push((int32_t) _zAxis);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -3281,10 +3281,10 @@ EXPORT bool Native_startNetworkedParticleFxNonLoopedAtCoord(bool& success, const
 	ctx->Push(_yRot);
 	ctx->Push(_zRot);
 	ctx->Push(_scale);
-	ctx->Push(_xAxis);
-	ctx->Push(_yAxis);
-	ctx->Push(_zAxis);
-	ctx->Push(_p11);
+	ctx->Push((int32_t) _xAxis);
+	ctx->Push((int32_t) _yAxis);
+	ctx->Push((int32_t) _zAxis);
+	ctx->Push((int32_t) _p11);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -3306,9 +3306,9 @@ EXPORT bool Native_startParticleFxNonLoopedOnPedBone(bool& success, const char* 
 	ctx->Push(_rotZ);
 	ctx->Push(_boneIndex);
 	ctx->Push(_scale);
-	ctx->Push(_axisX);
-	ctx->Push(_axisY);
-	ctx->Push(_axisZ);
+	ctx->Push((int32_t) _axisX);
+	ctx->Push((int32_t) _axisY);
+	ctx->Push((int32_t) _axisZ);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -3330,9 +3330,9 @@ EXPORT bool Native_startNetworkedParticleFxNonLoopedOnPedBone(bool& success, con
 	ctx->Push(_rotZ);
 	ctx->Push(_boneIndex);
 	ctx->Push(_scale);
-	ctx->Push(_axisX);
-	ctx->Push(_axisY);
-	ctx->Push(_axisZ);
+	ctx->Push((int32_t) _axisX);
+	ctx->Push((int32_t) _axisY);
+	ctx->Push((int32_t) _axisZ);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -3353,9 +3353,9 @@ EXPORT bool Native_startParticleFxNonLoopedOnEntity(bool& success, const char* _
 	ctx->Push(_rotY);
 	ctx->Push(_rotZ);
 	ctx->Push(_scale);
-	ctx->Push(_axisX);
-	ctx->Push(_axisY);
-	ctx->Push(_axisZ);
+	ctx->Push((int32_t) _axisX);
+	ctx->Push((int32_t) _axisY);
+	ctx->Push((int32_t) _axisZ);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -3376,9 +3376,9 @@ EXPORT bool Native_startNetworkedParticleFxNonLoopedOnEntity(bool& success, cons
 	ctx->Push(_rotY);
 	ctx->Push(_rotZ);
 	ctx->Push(_scale);
-	ctx->Push(_axisX);
-	ctx->Push(_axisY);
-	ctx->Push(_axisZ);
+	ctx->Push((int32_t) _axisX);
+	ctx->Push((int32_t) _axisY);
+	ctx->Push((int32_t) _axisZ);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -3400,9 +3400,9 @@ EXPORT bool Native_startNetworkedParticleFxNonLoopedOnEntityBone(bool& success, 
 	ctx->Push(_rotZ);
 	ctx->Push(_boneIndex);
 	ctx->Push(_scale);
-	ctx->Push(_axisX);
-	ctx->Push(_axisY);
-	ctx->Push(_axisZ);
+	ctx->Push((int32_t) _axisX);
+	ctx->Push((int32_t) _axisY);
+	ctx->Push((int32_t) _axisZ);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -3438,7 +3438,7 @@ EXPORT void Native_setParticleFxNonLoopedAlpha(bool& success, float _alpha) {
 EXPORT void Native__0x8CDE909A0370BB3A(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8CDE909A0370BB3A);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3457,10 +3457,10 @@ EXPORT int32_t Native_startParticleFxLoopedAtCoord(bool& success, const char* _e
 	ctx->Push(_yRot);
 	ctx->Push(_zRot);
 	ctx->Push(_scale);
-	ctx->Push(_xAxis);
-	ctx->Push(_yAxis);
-	ctx->Push(_zAxis);
-	ctx->Push(_p11);
+	ctx->Push((int32_t) _xAxis);
+	ctx->Push((int32_t) _yAxis);
+	ctx->Push((int32_t) _zAxis);
+	ctx->Push((int32_t) _p11);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -3482,9 +3482,9 @@ EXPORT int32_t Native_startParticleFxLoopedOnPedBone(bool& success, const char* 
 	ctx->Push(_zRot);
 	ctx->Push(_boneIndex);
 	ctx->Push(_scale);
-	ctx->Push(_xAxis);
-	ctx->Push(_yAxis);
-	ctx->Push(_zAxis);
+	ctx->Push((int32_t) _xAxis);
+	ctx->Push((int32_t) _yAxis);
+	ctx->Push((int32_t) _zAxis);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -3505,9 +3505,9 @@ EXPORT int32_t Native_startParticleFxLoopedOnEntity(bool& success, const char* _
 	ctx->Push(_yRot);
 	ctx->Push(_zRot);
 	ctx->Push(_scale);
-	ctx->Push(_xAxis);
-	ctx->Push(_yAxis);
-	ctx->Push(_zAxis);
+	ctx->Push((int32_t) _xAxis);
+	ctx->Push((int32_t) _yAxis);
+	ctx->Push((int32_t) _zAxis);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -3529,9 +3529,9 @@ EXPORT int32_t Native_startParticleFxLoopedOnEntityBone(bool& success, const cha
 	ctx->Push(_zRot);
 	ctx->Push(_boneIndex);
 	ctx->Push(_scale);
-	ctx->Push(_xAxis);
-	ctx->Push(_yAxis);
-	ctx->Push(_zAxis);
+	ctx->Push((int32_t) _xAxis);
+	ctx->Push((int32_t) _yAxis);
+	ctx->Push((int32_t) _zAxis);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -3552,9 +3552,9 @@ EXPORT int32_t Native_startNetworkedParticleFxLoopedOnEntity(bool& success, cons
 	ctx->Push(_yRot);
 	ctx->Push(_zRot);
 	ctx->Push(_scale);
-	ctx->Push(_xAxis);
-	ctx->Push(_yAxis);
-	ctx->Push(_zAxis);
+	ctx->Push((int32_t) _xAxis);
+	ctx->Push((int32_t) _yAxis);
+	ctx->Push((int32_t) _zAxis);
 	ctx->Push(_p12);
 	ctx->Push(_p13);
 	ctx->Push(_p14);
@@ -3580,9 +3580,9 @@ EXPORT int32_t Native_startNetworkedParticleFxLoopedOnEntityBone(bool& success, 
 	ctx->Push(_zRot);
 	ctx->Push(_boneIndex);
 	ctx->Push(_scale);
-	ctx->Push(_xAxis);
-	ctx->Push(_yAxis);
-	ctx->Push(_zAxis);
+	ctx->Push((int32_t) _xAxis);
+	ctx->Push((int32_t) _yAxis);
+	ctx->Push((int32_t) _zAxis);
 	ctx->Push(_p13);
 	ctx->Push(_p14);
 	ctx->Push(_p15);
@@ -3599,7 +3599,7 @@ EXPORT void Native_stopParticleFxLooped(bool& success, int32_t _ptfxHandle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8F75998877616996);
 	ctx->Reset();
 	ctx->Push(_ptfxHandle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3611,7 +3611,7 @@ EXPORT void Native_removeParticleFx(bool& success, int32_t _ptfxHandle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC401503DFE8D53CF);
 	ctx->Reset();
 	ctx->Push(_ptfxHandle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3691,7 +3691,7 @@ EXPORT void Native_setParticleFxLoopedEvolution(bool& success, int32_t _ptfxHand
 	ctx->Push(_ptfxHandle);
 	ctx->Push(SaveString(_propertyName));
 	ctx->Push(_amount);
-	ctx->Push(_noNetwork);
+	ctx->Push((int32_t) _noNetwork);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3706,7 +3706,7 @@ EXPORT void Native_setParticleFxLoopedColour(bool& success, int32_t _ptfxHandle,
 	ctx->Push(_r);
 	ctx->Push(_g);
 	ctx->Push(_b);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3753,7 +3753,7 @@ EXPORT void Native_setParticleFxLoopedFarClipDist(bool& success, int32_t _ptfxHa
 EXPORT void Native_setParticleFxCamInsideVehicle(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEEC4047028426510);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3765,7 +3765,7 @@ EXPORT void Native_setParticleFxCamInsideNonplayerVehicle(bool& success, int32_t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xACEE6F360FC1F6B6);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3808,7 +3808,7 @@ EXPORT void Native__0x908311265D42A820(bool& success, int32_t _p0) {
 EXPORT void Native__0xCFD16F0DB5A3535C(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCFD16F0DB5A3535C);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3819,7 +3819,7 @@ EXPORT void Native__0xCFD16F0DB5A3535C(bool& success, bool _toggle) {
 EXPORT void Native__0x5F6DF3D92271E8A1(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5F6DF3D92271E8A1);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3841,7 +3841,7 @@ EXPORT void Native__0x2B40A97646381508(bool& success, int32_t _p0) {
 EXPORT void Native_enableClownBloodVfx(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD821490579791273);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3852,7 +3852,7 @@ EXPORT void Native_enableClownBloodVfx(bool& success, bool _toggle) {
 EXPORT void Native_enableAlienBloodVfx(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9DCE1F0F78260875);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3885,7 +3885,7 @@ EXPORT void Native__0xBB90E12CAC1DAB25(bool& success, float _p0) {
 EXPORT void Native__0xCA4AE345A153D573(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCA4AE345A153D573);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3940,7 +3940,7 @@ EXPORT void Native__0x5DBF05DB5926D089(bool& success, int32_t _p0) {
 EXPORT void Native__0x9B079E5221D984D3(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9B079E5221D984D3);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -3985,7 +3985,7 @@ EXPORT void Native_resetParticleFxOverride(bool& success, const char* _name) {
 EXPORT void Native__0xA46B73FAA3460AE1(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA46B73FAA3460AE1);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -4116,9 +4116,9 @@ EXPORT int32_t Native_addDecal(bool& success, int32_t _decalType, float _posX, f
 	ctx->Push(_bCoef);
 	ctx->Push(_opacity);
 	ctx->Push(_timeout);
-	ctx->Push(_p17);
-	ctx->Push(_p18);
-	ctx->Push(_p19);
+	ctx->Push((int32_t) _p17);
+	ctx->Push((int32_t) _p18);
+	ctx->Push((int32_t) _p19);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -4374,7 +4374,7 @@ EXPORT bool Native_doesVehicleHaveCrewEmblem(bool& success, int32_t _vehicle, in
 EXPORT void Native__0x0E4299C549F0D1F1(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0E4299C549F0D1F1);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -4385,7 +4385,7 @@ EXPORT void Native__0x0E4299C549F0D1F1(bool& success, bool _toggle) {
 EXPORT void Native__0x02369D5C8A51FDCF(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x02369D5C8A51FDCF);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -4449,7 +4449,7 @@ EXPORT void Native_registerNoirScreenEffectThisFrame(bool& success) {
 EXPORT void Native_disableVehicleDistantlights(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC9F98AC1884E73A2);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -4460,7 +4460,7 @@ EXPORT void Native_disableVehicleDistantlights(bool& success, bool _toggle) {
 EXPORT void Native__0x03300B57FCAC6DDB(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x03300B57FCAC6DDB);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -4481,7 +4481,7 @@ EXPORT void Native__0x98EDF76A7271E4F2(bool& success) {
 EXPORT void Native_setForcePedFootstepsTracks(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAEEDAD1420C65CC0);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -4492,7 +4492,7 @@ EXPORT void Native_setForcePedFootstepsTracks(bool& success, bool _toggle) {
 EXPORT void Native_setForceVehicleTrails(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4CC7F0FEA5283FE0);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -4852,7 +4852,7 @@ EXPORT void Native_setScaleformMovieToUseSystemTime(bool& success, int32_t _scal
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6D8EB211944DCE08);
 	ctx->Reset();
 	ctx->Push(_scaleform);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -4876,7 +4876,7 @@ EXPORT void Native_setScaleformFitRendertarget(bool& success, int32_t _scaleform
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE6A9F00D4240B519);
 	ctx->Reset();
 	ctx->Push(_scaleformHandle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5196,7 +5196,7 @@ EXPORT void Native_scaleformMovieMethodAddParamFloat(bool& success, float _value
 EXPORT void Native_scaleformMovieMethodAddParamBool(bool& success, bool _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC58424BA936EB458);
 	ctx->Reset();
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5405,7 +5405,7 @@ EXPORT void Native_setTvChannelPlaylist(bool& success, int32_t _tvChannel, const
 	ctx->Reset();
 	ctx->Push(_tvChannel);
 	ctx->Push(SaveString(_playlistName));
-	ctx->Push(_restart);
+	ctx->Push((int32_t) _restart);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5450,7 +5450,7 @@ EXPORT bool Native_isPlaylistUnk(bool& success, int32_t _tvChannel, int32_t _p1)
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isTvPlaylistItemPlaying(bool& success, int32_t _videoCliphash) {
+EXPORT bool Native_isTvPlaylistItemPlaying(bool& success, uint32_t _videoCliphash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0AD973CA1E077B60);
 	ctx->Reset();
 	ctx->Push(_videoCliphash);
@@ -5465,7 +5465,7 @@ EXPORT bool Native_isTvPlaylistItemPlaying(bool& success, int32_t _videoCliphash
 EXPORT void Native_enableMovieKeyframeWait(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x74C180030FDE4B69);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5484,7 +5484,7 @@ EXPORT void Native__0xD1C55B110E4DF534(bool& success, int32_t _p0) {
 	success = true;
 }
 
-EXPORT int32_t Native__0x30432A0118736E00(bool& success) {
+EXPORT uint32_t Native__0x30432A0118736E00(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x30432A0118736E00);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -5492,13 +5492,13 @@ EXPORT int32_t Native__0x30432A0118736E00(bool& success) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_enableMovieSubtitles(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x873FA65C778AD970);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5559,7 +5559,7 @@ EXPORT void Native__0x7A42B2E236E71415(bool& success) {
 EXPORT void Native__0x108BE26959A9D9BB(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x108BE26959A9D9BB);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5570,7 +5570,7 @@ EXPORT void Native__0x108BE26959A9D9BB(bool& success, bool _toggle) {
 EXPORT void Native_terraingridActivate(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA356990E161C9E65);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5628,7 +5628,7 @@ EXPORT void Native_animpostfxPlay(bool& success, const char* _effectName, int32_
 	ctx->Reset();
 	ctx->Push(SaveString(_effectName));
 	ctx->Push(_duration);
-	ctx->Push(_looped);
+	ctx->Push((int32_t) _looped);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5697,7 +5697,7 @@ EXPORT void Native_playPedRingtone(bool& success, const char* _ringtoneName, int
 	ctx->Reset();
 	ctx->Push(SaveString(_ringtoneName));
 	ctx->Push(_ped);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5768,14 +5768,14 @@ EXPORT void Native_addLineToConversation(bool& success, int32_t _index, const ch
 	ctx->Push(SaveString(_p2));
 	ctx->Push(_p3);
 	ctx->Push(_p4);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_p9);
-	ctx->Push(_p10);
-	ctx->Push(_p11);
-	ctx->Push(_p12);
+	ctx->Push((int32_t) _p10);
+	ctx->Push((int32_t) _p11);
+	ctx->Push((int32_t) _p12);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5825,7 +5825,7 @@ EXPORT void Native__0x892B6AB8F33606F5(bool& success, int32_t _p0, int32_t _enti
 EXPORT void Native_setMicrophonePosition(bool& success, bool _p0, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, float _x3, float _y3, float _z3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB6AE90EDDE95C762);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_x1);
 	ctx->Push(_y1);
 	ctx->Push(_z1);
@@ -5845,7 +5845,7 @@ EXPORT void Native_setMicrophonePosition(bool& success, bool _p0, float _x1, flo
 EXPORT void Native__0x0B568201DD99F0EB(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0B568201DD99F0EB);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5856,7 +5856,7 @@ EXPORT void Native__0x0B568201DD99F0EB(bool& success, bool _p0) {
 EXPORT void Native__0x61631F5DF50D1C34(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x61631F5DF50D1C34);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5867,8 +5867,8 @@ EXPORT void Native__0x61631F5DF50D1C34(bool& success, bool _p0) {
 EXPORT void Native_startScriptPhoneConversation(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x252E5F915EABB675);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5879,8 +5879,8 @@ EXPORT void Native_startScriptPhoneConversation(bool& success, bool _p0, bool _p
 EXPORT void Native_preloadScriptPhoneConversation(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6004BCB0E226AAEA);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5891,10 +5891,10 @@ EXPORT void Native_preloadScriptPhoneConversation(bool& success, bool _p0, bool 
 EXPORT void Native_startScriptConversation(bool& success, bool _p0, bool _p1, bool _p2, bool _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6B17C62C9635D2DC);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5905,10 +5905,10 @@ EXPORT void Native_startScriptConversation(bool& success, bool _p0, bool _p1, bo
 EXPORT void Native_preloadScriptConversation(bool& success, bool _p0, bool _p1, bool _p2, bool _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3B3CAD6166916D87);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5973,7 +5973,7 @@ EXPORT int32_t Native_getCurrentScriptedConversationLine(bool& success) {
 EXPORT void Native_pauseScriptedConversation(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8530AD776CD72B12);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -5994,7 +5994,7 @@ EXPORT void Native_restartScriptedConversation(bool& success) {
 EXPORT int32_t Native_stopScriptedConversation(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD79DEEFB53455EBA);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -6060,7 +6060,7 @@ EXPORT int32_t Native__0xAA19F5572C38B564(bool& success, int32_t& _p0) {
 EXPORT void Native__0xB542DE8C3D1CB210(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB542DE8C3D1CB210);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -6093,7 +6093,7 @@ EXPORT bool Native_requestMissionAudioBank(bool& success, const char* _p0, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7345BDD95E62E0F2);
 	ctx->Reset();
 	ctx->Push(SaveString(_p0));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -6107,7 +6107,7 @@ EXPORT bool Native_requestAmbientAudioBank(bool& success, const char* _p0, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFE02FFBED8CA9D99);
 	ctx->Reset();
 	ctx->Push(SaveString(_p0));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -6121,7 +6121,7 @@ EXPORT bool Native_requestScriptAudioBank(bool& success, const char* _p0, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2F844A8B08D76685);
 	ctx->Reset();
 	ctx->Push(SaveString(_p0));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -6273,9 +6273,9 @@ EXPORT void Native_playSound(bool& success, int32_t _soundId, const char* _audio
 	ctx->Push(_soundId);
 	ctx->Push(SaveString(_audioName));
 	ctx->Push(SaveString(_audioRef));
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -6289,7 +6289,7 @@ EXPORT void Native_playSoundFrontend(bool& success, int32_t _soundId, const char
 	ctx->Push(_soundId);
 	ctx->Push(SaveString(_audioName));
 	ctx->Push(SaveString(_audioRef));
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -6316,7 +6316,7 @@ EXPORT void Native_playSoundFromEntity(bool& success, int32_t _soundId, const ch
 	ctx->Push(SaveString(_audioName));
 	ctx->Push(_entity);
 	ctx->Push(SaveString(_audioRef));
-	ctx->Push(_isNetwork);
+	ctx->Push((int32_t) _isNetwork);
 	ctx->Push(_p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -6350,9 +6350,9 @@ EXPORT void Native_playSoundFromCoord(bool& success, int32_t _soundId, const cha
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(SaveString(_audioRef));
-	ctx->Push(_isNetwork);
+	ctx->Push((int32_t) _isNetwork);
 	ctx->Push(_range);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -6441,7 +6441,7 @@ EXPORT void Native_overrideUnderwaterStream(bool& success, int32_t& _p0, bool _p
 	ctx->Reset();
 	auto ptr_p0 = _p0;
 	ctx->Push(&ptr_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -6509,7 +6509,7 @@ EXPORT void Native_playPedAmbientSpeechWithVoiceNative(bool& success, int32_t _p
 	ctx->Push(SaveString(_speechName));
 	ctx->Push(SaveString(_voiceName));
 	ctx->Push(SaveString(_speechParam));
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -6558,7 +6558,7 @@ EXPORT void Native_setPlayerAngry(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEA241BB04110F091);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -6624,7 +6624,7 @@ EXPORT void Native_setAmbientVoiceName(bool& success, int32_t _ped, const char* 
 	success = true;
 }
 
-EXPORT void Native_setAmbientVoiceNameHash(bool& success, int32_t _ped, int32_t _hash) {
+EXPORT void Native_setAmbientVoiceNameHash(bool& success, int32_t _ped, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9A53DED9921DE990);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -6636,7 +6636,7 @@ EXPORT void Native_setAmbientVoiceNameHash(bool& success, int32_t _ped, int32_t 
 	success = true;
 }
 
-EXPORT int32_t Native_getAmbientVoiceNameHash(bool& success, int32_t _ped) {
+EXPORT uint32_t Native_getAmbientVoiceNameHash(bool& success, int32_t _ped) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5E203DA2BA15D436);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -6645,7 +6645,7 @@ EXPORT int32_t Native_getAmbientVoiceNameHash(bool& success, int32_t _ped) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_setPedScream(bool& success, int32_t _ped) {
@@ -6672,7 +6672,7 @@ EXPORT void Native__0x1B7ABE26CBCBF8C7(bool& success, int32_t _ped, int32_t _p1,
 	success = true;
 }
 
-EXPORT void Native_setPedVoiceGroup(bool& success, int32_t _ped, int32_t _voiceGroupHash) {
+EXPORT void Native_setPedVoiceGroup(bool& success, int32_t _ped, uint32_t _voiceGroupHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7CDC8C3B89F661B3);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -6688,7 +6688,7 @@ EXPORT void Native_setPedAudioGender(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA5342D390CDA41D6);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -6770,7 +6770,7 @@ EXPORT bool Native_canPedSpeak(bool& success, int32_t _ped, const char* _speechN
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(SaveString(_speechName));
-	ctx->Push(_unk);
+	ctx->Push((int32_t) _unk);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -6795,7 +6795,7 @@ EXPORT void Native_setPedIsDrunk(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x95D2D383D5396B8A);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -6854,7 +6854,7 @@ EXPORT bool Native_isMobilePhoneRadioActive(bool& success) {
 EXPORT void Native_setMobilePhoneRadioState(bool& success, bool _state) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBF286C554784F3DF);
 	ctx->Reset();
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7022,7 +7022,7 @@ EXPORT void Native_setStaticEmitterEnabled(bool& success, const char* _emitterNa
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x399D2D3B33F1B8EB);
 	ctx->Reset();
 	ctx->Push(SaveString(_emitterName));
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7056,7 +7056,7 @@ EXPORT void Native_setRadioToStationIndex(bool& success, int32_t _radioStation) 
 EXPORT void Native_setFrontendRadioActive(bool& success, bool _active) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF7F26C6E9CC9EBB8);
 	ctx->Reset();
-	ctx->Push(_active);
+	ctx->Push((int32_t) _active);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7101,7 +7101,7 @@ EXPORT int32_t Native_getAudibleMusicTrackTextId(bool& success) {
 EXPORT void Native_playEndCreditsMusic(bool& success, bool _play) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCD536C4D33DCC900);
 	ctx->Reset();
-	ctx->Push(_play);
+	ctx->Push((int32_t) _play);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7144,7 +7144,7 @@ EXPORT void Native_unfreezeRadioStation(bool& success, const char* _radioStation
 EXPORT void Native_setRadioAutoUnfreeze(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC1AA9F53CE982990);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7166,7 +7166,7 @@ EXPORT void Native_setInitialPlayerStation(bool& success, const char* _radioStat
 EXPORT void Native_setUserRadioControlEnabled(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x19F21E63AE6EAE4E);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7217,7 +7217,7 @@ EXPORT void Native_setVehicleRadioLoud(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBB6F1CAEC68B0BCE);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7240,7 +7240,7 @@ EXPORT bool Native_isVehicleRadioLoud(bool& success, int32_t _vehicle) {
 EXPORT void Native_setMobileRadioEnabledDuringGameplay(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1098355A16064BB3);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7274,7 +7274,7 @@ EXPORT void Native_setVehicleRadioEnabled(bool& success, int32_t _vehicle, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3B988190C0AA6C0B);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7298,7 +7298,7 @@ EXPORT void Native_setCustomRadioTrackList(bool& success, const char* _radioStat
 	ctx->Reset();
 	ctx->Push(SaveString(_radioStation));
 	ctx->Push(SaveString(_trackListName));
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7328,7 +7328,7 @@ EXPORT int32_t Native_getNumUnlockedRadioStations(bool& success) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_findRadioStationIndex(bool& success, int32_t _stationNameHash) {
+EXPORT int32_t Native_findRadioStationIndex(bool& success, uint32_t _stationNameHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8D67489793FF428B);
 	ctx->Reset();
 	ctx->Push(_stationNameHash);
@@ -7344,7 +7344,7 @@ EXPORT void Native_setRadioStationMusicOnly(bool& success, const char* _radioSta
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x774BD811F656A122);
 	ctx->Reset();
 	ctx->Push(SaveString(_radioStation));
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7390,7 +7390,7 @@ EXPORT void Native_lockRadioStationTrackList(bool& success, const char* _radioSt
 EXPORT void Native_updateLsur(bool& success, bool _enableMixes) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x47AED84213A47510);
 	ctx->Reset();
-	ctx->Push(_enableMixes);
+	ctx->Push((int32_t) _enableMixes);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7402,7 +7402,7 @@ EXPORT void Native_lockRadioStation(bool& success, const char* _radioStationName
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x477D9DB48F889591);
 	ctx->Reset();
 	ctx->Push(SaveString(_radioStationName));
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7414,7 +7414,7 @@ EXPORT void Native_setRadioStationIsVisible(bool& success, const char* _radioSta
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4CAFEBFA21EC188D);
 	ctx->Reset();
 	ctx->Push(SaveString(_radioStation));
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7467,7 +7467,7 @@ EXPORT int32_t Native_getCurrentRadioStationHash(bool& success, const char* _rad
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native__0x34D66BC058019CE0(bool& success, const char* _radioStationName) {
+EXPORT uint32_t Native__0x34D66BC058019CE0(bool& success, const char* _radioStationName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x34D66BC058019CE0);
 	ctx->Reset();
 	ctx->Push(SaveString(_radioStationName));
@@ -7476,14 +7476,14 @@ EXPORT int32_t Native__0x34D66BC058019CE0(bool& success, const char* _radioStati
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native__0xF3365489E0DD50F9(bool& success, int32_t _vehicle, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF3365489E0DD50F9);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7495,8 +7495,8 @@ EXPORT void Native_setAmbientZoneState(bool& success, const char* _zoneName, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBDA07E5950085E46);
 	ctx->Reset();
 	ctx->Push(SaveString(_zoneName));
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7508,7 +7508,7 @@ EXPORT void Native_clearAmbientZoneState(bool& success, const char* _zoneName, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x218DD44AAAC964FF);
 	ctx->Reset();
 	ctx->Push(SaveString(_zoneName));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7521,8 +7521,8 @@ EXPORT void Native_setAmbientZoneListState(bool& success, int32_t& _p0, bool _p1
 	ctx->Reset();
 	auto ptr_p0 = _p0;
 	ctx->Push(&ptr_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7536,7 +7536,7 @@ EXPORT void Native_clearAmbientZoneListState(bool& success, int32_t& _p0, bool _
 	ctx->Reset();
 	auto ptr_p0 = _p0;
 	ctx->Push(&ptr_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7549,8 +7549,8 @@ EXPORT void Native_setAmbientZoneStatePersistent(bool& success, const char* _amb
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1D6650420CEC9D3B);
 	ctx->Reset();
 	ctx->Push(SaveString(_ambientZone));
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7562,8 +7562,8 @@ EXPORT void Native_setAmbientZoneListStatePersistent(bool& success, const char* 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF3638DAE8C4045E1);
 	ctx->Reset();
 	ctx->Push(SaveString(_ambientZone));
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7654,7 +7654,7 @@ EXPORT void Native_overrideVehHorn(bool& success, int32_t _vehicle, bool _overri
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3CDC1E622CCE0356);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_override);
+	ctx->Push((int32_t) _override);
 	ctx->Push(_hornHash);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -7678,7 +7678,7 @@ EXPORT bool Native_isHornActive(bool& success, int32_t _vehicle) {
 EXPORT void Native_setAggressiveHorns(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x395BF71085D1B1D9);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7689,7 +7689,7 @@ EXPORT void Native_setAggressiveHorns(bool& success, bool _toggle) {
 EXPORT void Native__0x02E93C796ABD3A97(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x02E93C796ABD3A97);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7700,8 +7700,8 @@ EXPORT void Native__0x02E93C796ABD3A97(bool& success, bool _p0) {
 EXPORT void Native__0x58BB377BEC7CD5F4(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x58BB377BEC7CD5F4);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7841,7 +7841,7 @@ EXPORT void Native_stopPedSpeaking(bool& success, int32_t _ped, bool _shaking) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9D64D7405520E3D3);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_shaking);
+	ctx->Push((int32_t) _shaking);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7853,8 +7853,8 @@ EXPORT void Native__0xF8AD2EED7C47E8FE(bool& success, int32_t _ped, bool _p1, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF8AD2EED7C47E8FE);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7878,7 +7878,7 @@ EXPORT void Native_disablePedPainAudio(bool& success, int32_t _ped, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA9A41C1E940FB0E8);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7925,7 +7925,7 @@ EXPORT void Native_setSirenWithNoDriver(bool& success, int32_t _vehicle, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1FEF0683B96EBCF2);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7937,7 +7937,7 @@ EXPORT void Native_setSirenKeepOn(bool& success, int32_t _vehicle, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF584CF8529B51434);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -7971,7 +7971,7 @@ EXPORT void Native_setHornEnabled(bool& success, int32_t _vehicle, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x76D683C108594D0E);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8007,7 +8007,7 @@ EXPORT void Native_useSirenAsHorn(bool& success, int32_t _vehicle, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFA932DE350266EF8);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8027,7 +8027,7 @@ EXPORT void Native_forceVehicleEngineAudio(bool& success, int32_t _vehicle, cons
 	success = true;
 }
 
-EXPORT void Native_preloadVehicleAudio(bool& success, int32_t _vehicleModel) {
+EXPORT void Native_preloadVehicleAudio(bool& success, uint32_t _vehicleModel) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCA4CEA6AE0000A7E);
 	ctx->Reset();
 	ctx->Push(_vehicleModel);
@@ -8114,7 +8114,7 @@ EXPORT void Native_enableVehicleFanbeltDamage(bool& success, int32_t _vehicle, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1C073274E065C6D2);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8126,7 +8126,7 @@ EXPORT void Native_enableVehicleExhaustPops(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2BE4BC731D039D5A);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8138,7 +8138,7 @@ EXPORT void Native_setVehicleBoostActive(bool& success, int32_t _vehicle, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4A04DE7CAB2739A1);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8150,7 +8150,7 @@ EXPORT void Native__0x6FDDAD856E36988A(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6FDDAD856E36988A);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8158,11 +8158,11 @@ EXPORT void Native__0x6FDDAD856E36988A(bool& success, int32_t _vehicle, bool _to
 	success = true;
 }
 
-EXPORT void Native_setScriptUpdateDoorAudio(bool& success, int32_t _doorHash, bool _toggle) {
+EXPORT void Native_setScriptUpdateDoorAudio(bool& success, uint32_t _doorHash, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x06C0023BED16DD6B);
 	ctx->Reset();
 	ctx->Push(_doorHash);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8198,7 +8198,7 @@ EXPORT void Native_enableStallWarningSounds(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC15907D667F7CFB2);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8220,7 +8220,7 @@ EXPORT bool Native_isGameInControlOfMusic(bool& success) {
 EXPORT void Native_setGpsActive(bool& success, bool _active) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3BD3F52BA9B1E4E8);
 	ctx->Reset();
-	ctx->Push(_active);
+	ctx->Push((int32_t) _active);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8264,7 +8264,7 @@ EXPORT bool Native_isMissionCompleteReadyForUi(bool& success) {
 EXPORT void Native_blockDeathJingle(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF154B8D1775B2DEC);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8484,7 +8484,7 @@ EXPORT void Native_clearAllBrokenGlass(bool& success) {
 EXPORT void Native__0x70B8EC8FC108A634(bool& success, bool _p0, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x70B8EC8FC108A634);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -8543,7 +8543,7 @@ EXPORT void Native_startAlarm(bool& success, const char* _alarmName, bool _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0355EF116C4C97B2);
 	ctx->Reset();
 	ctx->Push(SaveString(_alarmName));
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8555,7 +8555,7 @@ EXPORT void Native_stopAlarm(bool& success, const char* _alarmName, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA1CADDCD98415A41);
 	ctx->Reset();
 	ctx->Push(SaveString(_alarmName));
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8566,7 +8566,7 @@ EXPORT void Native_stopAlarm(bool& success, const char* _alarmName, bool _toggle
 EXPORT void Native_stopAllAlarms(bool& success, bool _stop) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2F794A877ADD4C92);
 	ctx->Reset();
-	ctx->Push(_stop);
+	ctx->Push((int32_t) _stop);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8586,7 +8586,7 @@ EXPORT bool Native_isAlarmPlaying(bool& success, const char* _alarmName) {
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_getVehicleDefaultHorn(bool& success, int32_t _vehicle) {
+EXPORT uint32_t Native_getVehicleDefaultHorn(bool& success, int32_t _vehicle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x02165D55000219AC);
 	ctx->Reset();
 	ctx->Push(_vehicle);
@@ -8595,10 +8595,10 @@ EXPORT int32_t Native_getVehicleDefaultHorn(bool& success, int32_t _vehicle) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getVehicleDefaultHornIgnoreMods(bool& success, int32_t _vehicle) {
+EXPORT uint32_t Native_getVehicleDefaultHornIgnoreMods(bool& success, int32_t _vehicle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xACB5DCCA1EC76840);
 	ctx->Reset();
 	ctx->Push(_vehicle);
@@ -8607,7 +8607,7 @@ EXPORT int32_t Native_getVehicleDefaultHornIgnoreMods(bool& success, int32_t _ve
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_resetPedAudioFlags(bool& success, int32_t _ped) {
@@ -8625,7 +8625,7 @@ EXPORT void Native_setPedAudioFootstepLoud(bool& success, int32_t _ped, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0653B735BFBDFE87);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8637,7 +8637,7 @@ EXPORT void Native_setPedAudioFootstepQuiet(bool& success, int32_t _ped, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x29DA3CA8D8B2692D);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8645,11 +8645,11 @@ EXPORT void Native_setPedAudioFootstepQuiet(bool& success, int32_t _ped, bool _t
 	success = true;
 }
 
-EXPORT void Native_overridePlayerGroundMaterial(bool& success, int32_t _hash, bool _toggle) {
+EXPORT void Native_overridePlayerGroundMaterial(bool& success, uint32_t _hash, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD2CC78CD3D0B50F9);
 	ctx->Reset();
 	ctx->Push(_hash);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8657,11 +8657,11 @@ EXPORT void Native_overridePlayerGroundMaterial(bool& success, int32_t _hash, bo
 	success = true;
 }
 
-EXPORT void Native__0xBF4DC1784BE94DFA(bool& success, int32_t _ped, bool _p1, int32_t _hash) {
+EXPORT void Native__0xBF4DC1784BE94DFA(bool& success, int32_t _ped, bool _p1, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBF4DC1784BE94DFA);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_hash);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -8670,11 +8670,11 @@ EXPORT void Native__0xBF4DC1784BE94DFA(bool& success, int32_t _ped, bool _p1, in
 	success = true;
 }
 
-EXPORT void Native_overrideMicrophoneSettings(bool& success, int32_t _hash, bool _toggle) {
+EXPORT void Native_overrideMicrophoneSettings(bool& success, uint32_t _hash, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75773E11BA459E90);
 	ctx->Reset();
 	ctx->Push(_hash);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8695,7 +8695,7 @@ EXPORT void Native_freezeMicrophone(bool& success) {
 EXPORT void Native_distantCopCarSirens(bool& success, bool _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x552369F549563AD5);
 	ctx->Reset();
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8707,7 +8707,7 @@ EXPORT void Native__0x43FA0DFC5DF87815(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x43FA0DFC5DF87815);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8729,7 +8729,7 @@ EXPORT void Native_setAudioFlag(bool& success, const char* _flagName, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB9EFD5C25018725A);
 	ctx->Reset();
 	ctx->Push(SaveString(_flagName));
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8896,7 +8896,7 @@ EXPORT void Native_unrequestTennisBanks(bool& success) {
 EXPORT void Native__0xBEF34B1D9624D5DD(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBEF34B1D9624D5DD);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -8960,7 +8960,7 @@ EXPORT void Native_setVehicleHornVariation(bool& success, int32_t _vehicle, int3
 	success = true;
 }
 
-EXPORT void Native_addScriptToRandomPed(bool& success, const char* _name, int32_t _model, float _p2, float _p3) {
+EXPORT void Native_addScriptToRandomPed(bool& success, const char* _name, uint32_t _model, float _p2, float _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4EE5367468A65CCC);
 	ctx->Reset();
 	ctx->Push(SaveString(_name));
@@ -8974,7 +8974,7 @@ EXPORT void Native_addScriptToRandomPed(bool& success, const char* _name, int32_
 	success = true;
 }
 
-EXPORT void Native_registerObjectScriptBrain(bool& success, const char* _scriptName, int32_t _modelHash, int32_t _p2, float _activationRange, int32_t _p4, int32_t _p5) {
+EXPORT void Native_registerObjectScriptBrain(bool& success, const char* _scriptName, uint32_t _modelHash, int32_t _p2, float _activationRange, int32_t _p4, int32_t _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0BE84C318BA6EC22);
 	ctx->Reset();
 	ctx->Push(SaveString(_scriptName));
@@ -9093,11 +9093,11 @@ EXPORT void Native__0x6E91B04E08773030(bool& success, const char* _action) {
 EXPORT void Native_renderScriptCams(bool& success, bool _render, bool _ease, int32_t _easeTime, bool _p3, bool _p4, int32_t _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x07E5B515DB0636FC);
 	ctx->Reset();
-	ctx->Push(_render);
-	ctx->Push(_ease);
+	ctx->Push((int32_t) _render);
+	ctx->Push((int32_t) _ease);
 	ctx->Push(_easeTime);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(_p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -9109,7 +9109,7 @@ EXPORT void Native_renderScriptCams(bool& success, bool _render, bool _ease, int
 EXPORT void Native_stopRenderingScriptCamsUsingCatchUp(bool& success, bool _render, float _p1, int32_t _p2, int32_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC819F3CBB62BF692);
 	ctx->Reset();
-	ctx->Push(_render);
+	ctx->Push((int32_t) _render);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
@@ -9124,7 +9124,7 @@ EXPORT int32_t Native_createCam(bool& success, const char* _camName, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC3981DCE61D9E13F);
 	ctx->Reset();
 	ctx->Push(SaveString(_camName));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -9144,7 +9144,7 @@ EXPORT int32_t Native_createCamWithParams(bool& success, const char* _camName, f
 	ctx->Push(_rotY);
 	ctx->Push(_rotZ);
 	ctx->Push(_fov);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -9154,11 +9154,11 @@ EXPORT int32_t Native_createCamWithParams(bool& success, const char* _camName, f
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_createCamera(bool& success, int32_t _camHash, bool _p1) {
+EXPORT int32_t Native_createCamera(bool& success, uint32_t _camHash, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5E3CF89C6BCCA67D);
 	ctx->Reset();
 	ctx->Push(_camHash);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -9167,7 +9167,7 @@ EXPORT int32_t Native_createCamera(bool& success, int32_t _camHash, bool _p1) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_createCameraWithParams(bool& success, int32_t _camHash, float _posX, float _posY, float _posZ, float _rotX, float _rotY, float _rotZ, float _fov, bool _p8, int32_t _p9) {
+EXPORT int32_t Native_createCameraWithParams(bool& success, uint32_t _camHash, float _posX, float _posY, float _posZ, float _rotX, float _rotY, float _rotZ, float _fov, bool _p8, int32_t _p9) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6ABFA3E16460F22D);
 	ctx->Reset();
 	ctx->Push(_camHash);
@@ -9178,7 +9178,7 @@ EXPORT int32_t Native_createCameraWithParams(bool& success, int32_t _camHash, fl
 	ctx->Push(_rotY);
 	ctx->Push(_rotZ);
 	ctx->Push(_fov);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -9192,7 +9192,7 @@ EXPORT void Native_destroyCam(bool& success, int32_t _cam, bool _bScriptHostCam)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x865908C81A2C22E9);
 	ctx->Reset();
 	ctx->Push(_cam);
-	ctx->Push(_bScriptHostCam);
+	ctx->Push((int32_t) _bScriptHostCam);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9203,7 +9203,7 @@ EXPORT void Native_destroyCam(bool& success, int32_t _cam, bool _bScriptHostCam)
 EXPORT void Native_destroyAllCams(bool& success, bool _bScriptHostCam) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8E5FB15663F79120);
 	ctx->Reset();
-	ctx->Push(_bScriptHostCam);
+	ctx->Push((int32_t) _bScriptHostCam);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9227,7 +9227,7 @@ EXPORT void Native_setCamActive(bool& success, int32_t _cam, bool _active) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x026FB97D0A425F84);
 	ctx->Reset();
 	ctx->Push(_cam);
-	ctx->Push(_active);
+	ctx->Push((int32_t) _active);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9511,7 +9511,7 @@ EXPORT void Native_setCamUseShallowDofMode(bool& success, int32_t _cam, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x16A96863A17552BB);
 	ctx->Reset();
 	ctx->Push(_cam);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9621,7 +9621,7 @@ EXPORT void Native_attachCamToEntity(bool& success, int32_t _cam, int32_t _entit
 	ctx->Push(_xOffset);
 	ctx->Push(_yOffset);
 	ctx->Push(_zOffset);
-	ctx->Push(_isRelative);
+	ctx->Push((int32_t) _isRelative);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9638,7 +9638,7 @@ EXPORT void Native_attachCamToPedBone(bool& success, int32_t _cam, int32_t _ped,
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_heading);
+	ctx->Push((int32_t) _heading);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9658,7 +9658,7 @@ EXPORT void Native_attachCamToPedBone2(bool& success, int32_t _cam, int32_t _ped
 	ctx->Push(_p6);
 	ctx->Push(_p7);
 	ctx->Push(_p8);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9691,14 +9691,14 @@ EXPORT void Native_attachCamToVehicleBone(bool& success, int32_t _cam, int32_t _
 	ctx->Push(_cam);
 	ctx->Push(_vehicle);
 	ctx->Push(_boneIndex);
-	ctx->Push(_relativeRotation);
+	ctx->Push((int32_t) _relativeRotation);
 	ctx->Push(_rotX);
 	ctx->Push(_rotY);
 	ctx->Push(_rotZ);
 	ctx->Push(_offsetX);
 	ctx->Push(_offsetY);
 	ctx->Push(_offsetZ);
-	ctx->Push(_fixedDirection);
+	ctx->Push((int32_t) _fixedDirection);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9721,7 +9721,7 @@ EXPORT void Native_setCamInheritRollVehicle(bool& success, int32_t _cam, bool _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x45F1DE9C34B93AE6);
 	ctx->Reset();
 	ctx->Push(_cam);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9751,7 +9751,7 @@ EXPORT void Native_pointCamAtEntity(bool& success, int32_t _cam, int32_t _entity
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9768,7 +9768,7 @@ EXPORT void Native_pointCamAtPedBone(bool& success, int32_t _cam, int32_t _ped, 
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9791,7 +9791,7 @@ EXPORT void Native_setCamAffectsAiming(bool& success, int32_t _cam, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8C1DC7770C51DC8D);
 	ctx->Reset();
 	ctx->Push(_cam);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9803,7 +9803,7 @@ EXPORT void Native__0x661B5C8654ADD825(bool& success, int32_t _cam, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x661B5C8654ADD825);
 	ctx->Reset();
 	ctx->Push(_cam);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9815,7 +9815,7 @@ EXPORT void Native__0xA2767257A320FC82(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA2767257A320FC82);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -9827,7 +9827,7 @@ EXPORT void Native__0x271017B9BA825366(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x271017B9BA825366);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -10154,7 +10154,7 @@ EXPORT void Native_stopCamShaking(bool& success, int32_t _cam, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBDECF64367884AC3);
 	ctx->Reset();
 	ctx->Push(_cam);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -10202,7 +10202,7 @@ EXPORT bool Native_isScriptGlobalShaking(bool& success) {
 EXPORT void Native_stopScriptGlobalShaking(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1C9D7949FA533490);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -10235,7 +10235,7 @@ EXPORT bool Native_playCamAnim(bool& success, int32_t _cam, const char* _animNam
 	ctx->Push(_xRot);
 	ctx->Push(_yRot);
 	ctx->Push(_zRot);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p9);
 	ctx->Push(_p10);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -10444,7 +10444,7 @@ EXPORT void Native_doScreenFadeOut(bool& success, int32_t _duration) {
 EXPORT void Native_setWidescreenBorders(bool& success, bool _p0, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDCD4EA924F42D01A);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -10617,7 +10617,7 @@ EXPORT void Native_setGameplayCamRawPitch(bool& success, float _pitch) {
 EXPORT void Native__0x469F2ECDEC046337(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x469F2ECDEC046337);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -10662,7 +10662,7 @@ EXPORT void Native_setGameplayCamShakeAmplitude(bool& success, float _amplitude)
 EXPORT void Native_stopGameplayCamShaking(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0EF93E9F3D08C178);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -10717,7 +10717,7 @@ EXPORT bool Native__0x705A276EBFF3133D(bool& success) {
 EXPORT void Native__0xDB90C6CCA48940F1(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDB90C6CCA48940F1);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -10851,8 +10851,8 @@ EXPORT bool Native_setFollowPedCamThisUpdate(bool& success, const char* _camName
 EXPORT void Native__0x271401846BD26E92(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x271401846BD26E92);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -10995,7 +10995,7 @@ EXPORT bool Native_isFollowVehicleCamActive(bool& success) {
 EXPORT void Native__0x91EF6EE6419E5B97(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x91EF6EE6419E5B97);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11006,8 +11006,8 @@ EXPORT void Native__0x91EF6EE6419E5B97(bool& success, bool _p0) {
 EXPORT void Native__0x9DFE13ECDC1EC196(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9DFE13ECDC1EC196);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11015,7 +11015,7 @@ EXPORT void Native__0x9DFE13ECDC1EC196(bool& success, bool _p0, bool _p1) {
 	success = true;
 }
 
-EXPORT bool Native__0x79C0E43EB9B944E2(bool& success, int32_t _hash) {
+EXPORT bool Native__0x79C0E43EB9B944E2(bool& success, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x79C0E43EB9B944E2);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -11274,7 +11274,7 @@ EXPORT void Native_setThirdPersonAimCamNearClipThisUpdate(bool& success, float _
 EXPORT void Native__0x4008EDF7D6E48175(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4008EDF7D6E48175);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11433,7 +11433,7 @@ EXPORT void Native_setGameplayPedHint(bool& success, int32_t _p0, float _x1, flo
 	ctx->Push(_x1);
 	ctx->Push(_y1);
 	ctx->Push(_z1);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(_p5);
 	ctx->Push(_p6);
 	ctx->Push(_p7);
@@ -11451,7 +11451,7 @@ EXPORT void Native_setGameplayVehicleHint(bool& success, int32_t _vehicle, float
 	ctx->Push(_offsetX);
 	ctx->Push(_offsetY);
 	ctx->Push(_offsetZ);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(_time);
 	ctx->Push(_easeInTime);
 	ctx->Push(_easeOutTime);
@@ -11469,7 +11469,7 @@ EXPORT void Native_setGameplayObjectHint(bool& success, int32_t _p0, float _p1, 
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(_p5);
 	ctx->Push(_p6);
 	ctx->Push(_p7);
@@ -11487,7 +11487,7 @@ EXPORT void Native_setGameplayEntityHint(bool& success, int32_t _entity, float _
 	ctx->Push(_xOffset);
 	ctx->Push(_yOffset);
 	ctx->Push(_zOffset);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(_p5);
 	ctx->Push(_p6);
 	ctx->Push(_p7);
@@ -11513,7 +11513,7 @@ EXPORT bool Native_isGameplayHintActive(bool& success) {
 EXPORT void Native_stopGameplayHint(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF46C581C61718916);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11524,7 +11524,7 @@ EXPORT void Native_stopGameplayHint(bool& success, bool _p0) {
 EXPORT void Native__0xCCD078C2665D2973(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCCD078C2665D2973);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11535,7 +11535,7 @@ EXPORT void Native__0xCCD078C2665D2973(bool& success, bool _p0) {
 EXPORT void Native__0x247ACBC4ABBC9D1C(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x247ACBC4ABBC9D1C);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11612,7 +11612,7 @@ EXPORT void Native_setGameplayHintAnimOffsety(bool& success, float _yOffset) {
 EXPORT void Native_setGameplayHintAnimCloseup(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE3433EADAAF7EE40);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11623,7 +11623,7 @@ EXPORT void Native_setGameplayHintAnimCloseup(bool& success, bool _toggle) {
 EXPORT void Native_setCinematicButtonActive(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x51669F7D1FB53D9F);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11679,7 +11679,7 @@ EXPORT void Native_setCinematicCamShakeAmplitude(bool& success, float _p0) {
 EXPORT void Native_stopCinematicCamShaking(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2238E588E588A6D7);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11775,7 +11775,7 @@ EXPORT bool Native_isCinematicShotActive(bool& success, int32_t _p0) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_stopCinematicShot(bool& success, int32_t _p0) {
+EXPORT void Native_stopCinematicShot(bool& success, uint32_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7660C6E75D3A078E);
 	ctx->Reset();
 	ctx->Push(_p0);
@@ -11789,7 +11789,7 @@ EXPORT void Native_stopCinematicShot(bool& success, int32_t _p0) {
 EXPORT void Native_forceCinematicRenderingThisUpdate(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA41BCD7213805AAC);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11810,7 +11810,7 @@ EXPORT void Native__0xDC9DA9E8789F5246(bool& success) {
 EXPORT void Native_setCinematicModeActive(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDCF0754AC3D6FD4E);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -11967,7 +11967,7 @@ EXPORT void Native_setGameplayCamVehicleCamera(bool& success, const char* _vehic
 	success = true;
 }
 
-EXPORT void Native_setGameplayCamVehicleCameraName(bool& success, int32_t _vehicleModel) {
+EXPORT void Native_setGameplayCamVehicleCameraName(bool& success, uint32_t _vehicleModel) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x11FA5D3479C7DD47);
 	ctx->Reset();
 	ctx->Push(_vehicleModel);
@@ -12026,7 +12026,7 @@ EXPORT void Native_setClockTime(bool& success, int32_t _hour, int32_t _minute, i
 EXPORT void Native_pauseClock(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4055E40BD2DBEC1D);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -12424,7 +12424,7 @@ EXPORT void Native_startCutsceneAtCoords(bool& success, float _x, float _y, floa
 EXPORT void Native_stopCutscene(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC7272775B4DC786E);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -12562,7 +12562,7 @@ EXPORT int32_t Native_getCutsceneSectionPlaying(bool& success) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getEntityIndexOfCutsceneEntity(bool& success, const char* _cutsceneEntName, int32_t _modelHash) {
+EXPORT int32_t Native_getEntityIndexOfCutsceneEntity(bool& success, const char* _cutsceneEntName, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0A2E9FDB9A8C62F6);
 	ctx->Reset();
 	ctx->Push(SaveString(_cutsceneEntName));
@@ -12610,7 +12610,7 @@ EXPORT int32_t Native__0x4FCD976DA686580C(bool& success, int32_t _p0) {
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_registerEntityForCutscene(bool& success, int32_t _cutscenePed, const char* _cutsceneEntName, int32_t _p2, int32_t _modelHash, int32_t _p4) {
+EXPORT void Native_registerEntityForCutscene(bool& success, int32_t _cutscenePed, const char* _cutsceneEntName, int32_t _p2, uint32_t _modelHash, int32_t _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE40C1C56DF95C2E8);
 	ctx->Reset();
 	ctx->Push(_cutscenePed);
@@ -12625,7 +12625,7 @@ EXPORT void Native_registerEntityForCutscene(bool& success, int32_t _cutscenePed
 	success = true;
 }
 
-EXPORT int32_t Native_getEntityIndexOfRegisteredEntity(bool& success, const char* _cutsceneEntName, int32_t _modelHash) {
+EXPORT int32_t Native_getEntityIndexOfRegisteredEntity(bool& success, const char* _cutsceneEntName, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC0741A26499654CD);
 	ctx->Reset();
 	ctx->Push(SaveString(_cutsceneEntName));
@@ -12638,7 +12638,7 @@ EXPORT int32_t Native_getEntityIndexOfRegisteredEntity(bool& success, const char
 	return ctx->ResultInt();
 }
 
-EXPORT void Native__0x7F96F23FA9B73327(bool& success, int32_t _modelHash) {
+EXPORT void Native__0x7F96F23FA9B73327(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7F96F23FA9B73327);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -12665,7 +12665,7 @@ EXPORT void Native_setCutsceneTriggerArea(bool& success, float _p0, float _p1, f
 	success = true;
 }
 
-EXPORT bool Native_canSetEnterStateForRegisteredEntity(bool& success, const char* _cutsceneEntName, int32_t _modelHash) {
+EXPORT bool Native_canSetEnterStateForRegisteredEntity(bool& success, const char* _cutsceneEntName, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x645D0B458D8E17B5);
 	ctx->Reset();
 	ctx->Push(SaveString(_cutsceneEntName));
@@ -12678,7 +12678,7 @@ EXPORT bool Native_canSetEnterStateForRegisteredEntity(bool& success, const char
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_canSetExitStateForRegisteredEntity(bool& success, const char* _cutsceneEntName, int32_t _modelHash) {
+EXPORT bool Native_canSetExitStateForRegisteredEntity(bool& success, const char* _cutsceneEntName, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4C6A6451C79E4662);
 	ctx->Reset();
 	ctx->Push(SaveString(_cutsceneEntName));
@@ -12694,7 +12694,7 @@ EXPORT bool Native_canSetExitStateForRegisteredEntity(bool& success, const char*
 EXPORT bool Native_canSetExitStateForCamera(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB2CBCD0930DFB420);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -12706,7 +12706,7 @@ EXPORT bool Native_canSetExitStateForCamera(bool& success, bool _p0) {
 EXPORT void Native__0xC61B86C9F61EB404(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC61B86C9F61EB404);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -12717,10 +12717,10 @@ EXPORT void Native__0xC61B86C9F61EB404(bool& success, bool _toggle) {
 EXPORT void Native_setCutsceneFadeValues(bool& success, bool _p0, bool _p1, bool _p2, bool _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8093F23ABACCC7D4);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -12731,10 +12731,10 @@ EXPORT void Native_setCutsceneFadeValues(bool& success, bool _p0, bool _p1, bool
 EXPORT void Native__0x20746F7B1032A3C7(bool& success, bool _p0, bool _p1, bool _p2, bool _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x20746F7B1032A3C7);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -12745,7 +12745,7 @@ EXPORT void Native__0x20746F7B1032A3C7(bool& success, bool _p0, bool _p1, bool _
 EXPORT void Native__0x06EE9048FD080382(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x06EE9048FD080382);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -12767,7 +12767,7 @@ EXPORT int32_t Native__0xA0FE76168A189DDB(bool& success) {
 EXPORT void Native__0x2F137B508DE238F2(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2F137B508DE238F2);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -12778,7 +12778,7 @@ EXPORT void Native__0x2F137B508DE238F2(bool& success, bool _p0) {
 EXPORT void Native__0xE36A98D8AB3D3C66(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE36A98D8AB3D3C66);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -12800,7 +12800,7 @@ EXPORT int32_t Native__0x5EDEF0CF8C1DAB3C(bool& success) {
 EXPORT void Native_setCutsceneCanBeSkipped(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x41FAA8FB2ECE8720);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -12818,7 +12818,7 @@ EXPORT void Native_registerSynchronisedScriptSpeech(bool& success) {
 	success = true;
 }
 
-EXPORT void Native_setCutscenePedComponentVariation(bool& success, const char* _cutsceneEntName, int32_t _p1, int32_t _p2, int32_t _p3, int32_t _modelHash) {
+EXPORT void Native_setCutscenePedComponentVariation(bool& success, const char* _cutsceneEntName, int32_t _p1, int32_t _p2, int32_t _p3, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBA01E7B6DEEFBBC9);
 	ctx->Reset();
 	ctx->Push(SaveString(_cutsceneEntName));
@@ -12833,7 +12833,7 @@ EXPORT void Native_setCutscenePedComponentVariation(bool& success, const char* _
 	success = true;
 }
 
-EXPORT void Native_setCutscenePedComponentVariationFromPed(bool& success, const char* _cutsceneEntName, int32_t _ped, int32_t _modelHash) {
+EXPORT void Native_setCutscenePedComponentVariationFromPed(bool& success, const char* _cutsceneEntName, int32_t _ped, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2A56C06EBEF2B0D9);
 	ctx->Reset();
 	ctx->Push(SaveString(_cutsceneEntName));
@@ -12846,7 +12846,7 @@ EXPORT void Native_setCutscenePedComponentVariationFromPed(bool& success, const 
 	success = true;
 }
 
-EXPORT bool Native_doesCutsceneEntityExist(bool& success, const char* _cutsceneEntName, int32_t _modelHash) {
+EXPORT bool Native_doesCutsceneEntityExist(bool& success, const char* _cutsceneEntName, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x499EF20C5DB25C59);
 	ctx->Reset();
 	ctx->Push(SaveString(_cutsceneEntName));
@@ -12859,7 +12859,7 @@ EXPORT bool Native_doesCutsceneEntityExist(bool& success, const char* _cutsceneE
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_setCutscenePedPropVariation(bool& success, const char* _cutsceneEntName, int32_t _p1, int32_t _p2, int32_t _p3, int32_t _modelHash) {
+EXPORT void Native_setCutscenePedPropVariation(bool& success, const char* _cutsceneEntName, int32_t _p1, int32_t _p2, int32_t _p3, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0546524ADE2E9723);
 	ctx->Reset();
 	ctx->Push(SaveString(_cutsceneEntName));
@@ -12977,7 +12977,7 @@ EXPORT bool Native_ugcCreateContent(bool& success, int32_t& _data, int32_t _data
 	ctx->Push(SaveString(_description));
 	ctx->Push(SaveString(_tagsCsv));
 	ctx->Push(SaveString(_contentTypeName));
-	ctx->Push(_publish);
+	ctx->Push((int32_t) _publish);
 	ctx->Push(_p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -12995,7 +12995,7 @@ EXPORT bool Native_ugcCreateMission(bool& success, const char* _contentName, con
 	ctx->Push(SaveString(_description));
 	ctx->Push(SaveString(_tagsCsv));
 	ctx->Push(SaveString(_contentTypeName));
-	ctx->Push(_publish);
+	ctx->Push((int32_t) _publish);
 	ctx->Push(_p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -13075,7 +13075,7 @@ EXPORT bool Native_datafileSelectUgcStats(bool& success, int32_t _p0, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9CB0BFA7A9342C3D);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -13195,14 +13195,14 @@ EXPORT bool Native_datafileStartSaveToCloud(bool& success, const char* _filename
 EXPORT bool Native_datafileUpdateSaveToCloud(bool& success, bool& _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4DFDD9EB705F8140);
 	ctx->Reset();
-	auto ptr_p0 = _p0;
+	auto ptr_p0 = (int32_t) _p0;
 	ctx->Push(&ptr_p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
 	}
 	success = true;
-	_p0 = ptr_p0;
+	_p0 = (bool) ptr_p0;
 	return ctx->ResultBool();
 }
 
@@ -13259,7 +13259,7 @@ EXPORT void Native_datadictSetBool(bool& success, int32_t& _objectData, const ch
 	auto ptr_objectData = _objectData;
 	ctx->Push(&ptr_objectData);
 	ctx->Push(SaveString(_key));
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -13486,7 +13486,7 @@ EXPORT void Native_dataarrayAddBool(bool& success, int32_t& _arrayData, bool _va
 	ctx->Reset();
 	auto ptr_arrayData = _arrayData;
 	ctx->Push(&ptr_arrayData);
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -13706,7 +13706,7 @@ EXPORT bool Native_decorSetBool(bool& success, int32_t _entity, const char* _pro
 	ctx->Reset();
 	ctx->Push(_entity);
 	ctx->Push(SaveString(_propertyName));
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -13854,7 +13854,7 @@ EXPORT bool Native__0x241FCA5B1AA14F75(bool& success) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isDlcPresent(bool& success, int32_t _dlcHash) {
+EXPORT bool Native_isDlcPresent(bool& success, uint32_t _dlcHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x812595A0644CE1DE);
 	ctx->Reset();
 	ctx->Push(_dlcHash);
@@ -13935,7 +13935,7 @@ EXPORT bool Native__0xC4637A6D03C24CC3(bool& success) {
 EXPORT bool Native_hasCloudRequestsFinished(bool& success, bool& _p0, int32_t _unused) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x46E2B844905BC5F0);
 	ctx->Reset();
-	auto ptr_p0 = _p0;
+	auto ptr_p0 = (int32_t) _p0;
 	ctx->Push(&ptr_p0);
 	ctx->Push(_unused);
 	if (!native->Invoke(ctx)) {
@@ -13943,7 +13943,7 @@ EXPORT bool Native_hasCloudRequestsFinished(bool& success, bool& _p0, int32_t _u
 		return false;
 	}
 	success = true;
-	_p0 = ptr_p0;
+	_p0 = (bool) ptr_p0;
 	return ctx->ResultBool();
 }
 
@@ -13983,7 +13983,7 @@ EXPORT bool Native_doesEntityBelongToThisScript(bool& success, int32_t _entity, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDDE6DF5AE89981D2);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -14072,7 +14072,7 @@ EXPORT bool Native_hasEntityBeenDamagedByEntity(bool& success, int32_t _entity1,
 	ctx->Reset();
 	ctx->Push(_entity1);
 	ctx->Push(_entity2);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -14134,7 +14134,7 @@ EXPORT bool Native_hasEntityCollidedWithAnything(bool& success, int32_t _entity)
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_getLastMaterialHitByEntity(bool& success, int32_t _entity) {
+EXPORT uint32_t Native_getLastMaterialHitByEntity(bool& success, int32_t _entity) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5C3D0A935F535C4C);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -14143,7 +14143,7 @@ EXPORT int32_t Native_getLastMaterialHitByEntity(bool& success, int32_t _entity)
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT vector3_t Native_getCollisionNormalOfLastHitForEntity(bool& success, int32_t _entity) {
@@ -14227,7 +14227,7 @@ EXPORT vector3_t Native_getEntityCoords(bool& success, int32_t _entity, bool _al
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3FEF770D40960D5A);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_alive);
+	ctx->Push((int32_t) _alive);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return { 0, 0, 0 };
@@ -14341,8 +14341,8 @@ EXPORT float Native_getEntityHeight(bool& success, int32_t _entity, float _X, fl
 	ctx->Push(_X);
 	ctx->Push(_Y);
 	ctx->Push(_Z);
-	ctx->Push(_atTop);
-	ctx->Push(_inWorldCoords);
+	ctx->Push((int32_t) _atTop);
+	ctx->Push((int32_t) _inWorldCoords);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0.f;
@@ -14394,7 +14394,7 @@ EXPORT void Native_getEntityMatrix(bool& success, int32_t _entity, vector3_t& _f
 	_position.z = converted_position.z;
 }
 
-EXPORT int32_t Native_getEntityModel(bool& success, int32_t _entity) {
+EXPORT uint32_t Native_getEntityModel(bool& success, int32_t _entity) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9F47B058362C84B5);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -14403,7 +14403,7 @@ EXPORT int32_t Native_getEntityModel(bool& success, int32_t _entity) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT vector3_t Native_getOffsetFromEntityGivenWorldCoords(bool& success, int32_t _entity, float _posX, float _posY, float _posZ) {
@@ -14543,7 +14543,7 @@ EXPORT vector3_t Native_getEntitySpeedVector(bool& success, int32_t _entity, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9A8D700A51CB7B0D);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_relative);
+	ctx->Push((int32_t) _relative);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return { 0, 0, 0 };
@@ -14747,8 +14747,8 @@ EXPORT bool Native_isEntityAtCoord(bool& success, int32_t _entity, float _xPos, 
 	ctx->Push(_xSize);
 	ctx->Push(_ySize);
 	ctx->Push(_zSize);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -14766,8 +14766,8 @@ EXPORT bool Native_isEntityAtEntity(bool& success, int32_t _entity1, int32_t _en
 	ctx->Push(_xSize);
 	ctx->Push(_ySize);
 	ctx->Push(_zSize);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _p6);
 	ctx->Push(_p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -14842,7 +14842,7 @@ EXPORT bool Native_isEntityDead(bool& success, int32_t _entity, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5F9532F3B5CC2551);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -14874,8 +14874,8 @@ EXPORT bool Native_isEntityInAngledArea(bool& success, int32_t _entity, float _x
 	ctx->Push(_y2);
 	ctx->Push(_z2);
 	ctx->Push(_width);
-	ctx->Push(_debug);
-	ctx->Push(_includeZ);
+	ctx->Push((int32_t) _debug);
+	ctx->Push((int32_t) _includeZ);
 	ctx->Push(_p10);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -14895,8 +14895,8 @@ EXPORT bool Native_isEntityInArea(bool& success, int32_t _entity, float _x1, flo
 	ctx->Push(_x2);
 	ctx->Push(_y2);
 	ctx->Push(_z2);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -14947,7 +14947,7 @@ EXPORT void Native__0x694E00132F2823ED(bool& success, int32_t _entity, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x694E00132F2823ED);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15007,7 +15007,7 @@ EXPORT bool Native_isEntityTouchingEntity(bool& success, int32_t _entity, int32_
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isEntityTouchingModel(bool& success, int32_t _entity, int32_t _modelHash) {
+EXPORT bool Native_isEntityTouchingModel(bool& success, int32_t _entity, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0F42323798A58C8C);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -15081,14 +15081,14 @@ EXPORT bool Native_isEntityOccluded(bool& success, int32_t _entity) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_wouldEntityBeOccluded(bool& success, int32_t _entityModelHash, float _x, float _y, float _z, bool _p4) {
+EXPORT bool Native_wouldEntityBeOccluded(bool& success, uint32_t _entityModelHash, float _x, float _y, float _z, bool _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEE5D2A122E09EC42);
 	ctx->Reset();
 	ctx->Push(_entityModelHash);
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -15117,10 +15117,10 @@ EXPORT void Native_applyForceToEntityCenterOfMass(bool& success, int32_t _entity
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_p5);
-	ctx->Push(_isDirectionRel);
-	ctx->Push(_isForceRel);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _isDirectionRel);
+	ctx->Push((int32_t) _isForceRel);
+	ctx->Push((int32_t) _p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15140,11 +15140,11 @@ EXPORT void Native_applyForceToEntity(bool& success, int32_t _entity, int32_t _f
 	ctx->Push(_offY);
 	ctx->Push(_offZ);
 	ctx->Push(_boneIndex);
-	ctx->Push(_isDirectionRel);
-	ctx->Push(_ignoreUpVec);
-	ctx->Push(_isForceRel);
-	ctx->Push(_p12);
-	ctx->Push(_p13);
+	ctx->Push((int32_t) _isDirectionRel);
+	ctx->Push((int32_t) _ignoreUpVec);
+	ctx->Push((int32_t) _isForceRel);
+	ctx->Push((int32_t) _p12);
+	ctx->Push((int32_t) _p13);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15164,12 +15164,12 @@ EXPORT void Native_attachEntityToEntity(bool& success, int32_t _entity1, int32_t
 	ctx->Push(_xRot);
 	ctx->Push(_yRot);
 	ctx->Push(_zRot);
-	ctx->Push(_p9);
-	ctx->Push(_useSoftPinning);
-	ctx->Push(_collision);
-	ctx->Push(_isPed);
+	ctx->Push((int32_t) _p9);
+	ctx->Push((int32_t) _useSoftPinning);
+	ctx->Push((int32_t) _collision);
+	ctx->Push((int32_t) _isPed);
 	ctx->Push(_vertexIndex);
-	ctx->Push(_fixedRot);
+	ctx->Push((int32_t) _fixedRot);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15184,8 +15184,8 @@ EXPORT void Native_attachEntityBoneToEntityBone(bool& success, int32_t _entity1,
 	ctx->Push(_entity2);
 	ctx->Push(_boneIndex1);
 	ctx->Push(_boneIndex2);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15200,8 +15200,8 @@ EXPORT void Native_attachEntityBoneToEntityBonePhysically(bool& success, int32_t
 	ctx->Push(_entity2);
 	ctx->Push(_boneIndex1);
 	ctx->Push(_boneIndex2);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15226,10 +15226,10 @@ EXPORT void Native_attachEntityToEntityPhysically(bool& success, int32_t _entity
 	ctx->Push(_yRot);
 	ctx->Push(_zRot);
 	ctx->Push(_breakForce);
-	ctx->Push(_fixedRot);
-	ctx->Push(_p15);
-	ctx->Push(_collision);
-	ctx->Push(_p17);
+	ctx->Push((int32_t) _fixedRot);
+	ctx->Push((int32_t) _p15);
+	ctx->Push((int32_t) _collision);
+	ctx->Push((int32_t) _p17);
 	ctx->Push(_p18);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -15290,8 +15290,8 @@ EXPORT void Native_detachEntity(bool& success, int32_t _entity, bool _dynamic, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x961AC54BF0613F5D);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_dynamic);
-	ctx->Push(_collision);
+	ctx->Push((int32_t) _dynamic);
+	ctx->Push((int32_t) _collision);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15303,7 +15303,7 @@ EXPORT void Native_freezeEntityPosition(bool& success, int32_t _entity, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x428CA6DBD1094446);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15315,7 +15315,7 @@ EXPORT void Native_setEntityCleanupByEngine(bool& success, int32_t _entity, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3910051CCECDB00C);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15330,9 +15330,9 @@ EXPORT bool Native_playEntityAnim(bool& success, int32_t _entity, const char* _a
 	ctx->Push(SaveString(_animName));
 	ctx->Push(SaveString(_animDict));
 	ctx->Push(_p3);
-	ctx->Push(_loop);
-	ctx->Push(_stayInAnim);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _loop);
+	ctx->Push((int32_t) _stayInAnim);
+	ctx->Push((int32_t) _p6);
 	ctx->Push(_delta);
 	ctx->Push(_bitset);
 	if (!native->Invoke(ctx)) {
@@ -15426,7 +15426,7 @@ EXPORT bool Native_stopSynchronizedEntityAnim(bool& success, int32_t _entity, fl
 	ctx->Reset();
 	ctx->Push(_entity);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -15435,7 +15435,7 @@ EXPORT bool Native_stopSynchronizedEntityAnim(bool& success, int32_t _entity, fl
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_hasAnimEventFired(bool& success, int32_t _entity, int32_t _actionHash) {
+EXPORT bool Native_hasAnimEventFired(bool& success, int32_t _entity, uint32_t _actionHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEAF4CD9EA3E7E922);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -15500,8 +15500,8 @@ EXPORT void Native_setEntityAsMissionEntity(bool& success, int32_t _entity, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAD738C3085FE7E11);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15565,7 +15565,7 @@ EXPORT void Native_setEntityCanBeDamaged(bool& success, int32_t _entity, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1760FFA8AB074D66);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15589,7 +15589,7 @@ EXPORT void Native_setEntityCanBeDamagedByRelationshipGroup(bool& success, int32
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE22D8FDE858B8119);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_bCanBeDamaged);
+	ctx->Push((int32_t) _bCanBeDamaged);
 	ctx->Push(_relGroup);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -15614,7 +15614,7 @@ EXPORT void Native_setEntityCanBeTargetedWithoutLos(bool& success, int32_t _enti
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD3997889736FD899);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15626,8 +15626,8 @@ EXPORT void Native_setEntityCollision(bool& success, int32_t _entity, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1A9205C1B9EE827F);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
-	ctx->Push(_keepPhysics);
+	ctx->Push((int32_t) _toggle);
+	ctx->Push((int32_t) _keepPhysics);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15651,8 +15651,8 @@ EXPORT void Native_setEntityCompletelyDisableCollision(bool& success, int32_t _e
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9EBC85ED0FFFE51C);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
-	ctx->Push(_keepPhysics);
+	ctx->Push((int32_t) _toggle);
+	ctx->Push((int32_t) _keepPhysics);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15667,10 +15667,10 @@ EXPORT void Native_setEntityCoords(bool& success, int32_t _entity, float _xPos, 
 	ctx->Push(_xPos);
 	ctx->Push(_yPos);
 	ctx->Push(_zPos);
-	ctx->Push(_xAxis);
-	ctx->Push(_yAxis);
-	ctx->Push(_zAxis);
-	ctx->Push(_clearArea);
+	ctx->Push((int32_t) _xAxis);
+	ctx->Push((int32_t) _yAxis);
+	ctx->Push((int32_t) _zAxis);
+	ctx->Push((int32_t) _clearArea);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15685,10 +15685,10 @@ EXPORT void Native_setEntityCoordsWithoutPlantsReset(bool& success, int32_t _ent
 	ctx->Push(_xPos);
 	ctx->Push(_yPos);
 	ctx->Push(_zPos);
-	ctx->Push(_alive);
-	ctx->Push(_deadFlag);
-	ctx->Push(_ragdollFlag);
-	ctx->Push(_clearArea);
+	ctx->Push((int32_t) _alive);
+	ctx->Push((int32_t) _deadFlag);
+	ctx->Push((int32_t) _ragdollFlag);
+	ctx->Push((int32_t) _clearArea);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15703,9 +15703,9 @@ EXPORT void Native_setEntityCoordsNoOffset(bool& success, int32_t _entity, float
 	ctx->Push(_xPos);
 	ctx->Push(_yPos);
 	ctx->Push(_zPos);
-	ctx->Push(_xAxis);
-	ctx->Push(_yAxis);
-	ctx->Push(_zAxis);
+	ctx->Push((int32_t) _xAxis);
+	ctx->Push((int32_t) _yAxis);
+	ctx->Push((int32_t) _zAxis);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15717,7 +15717,7 @@ EXPORT void Native_setEntityDynamic(bool& success, int32_t _entity, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1718DE8E3F2823CA);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15754,7 +15754,7 @@ EXPORT void Native_setEntityInvincible(bool& success, int32_t _entity, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3882114BDE571AD4);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15766,7 +15766,7 @@ EXPORT void Native_setEntityIsTargetPriority(bool& success, int32_t _entity, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEA02E132F5C68722);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -15779,7 +15779,7 @@ EXPORT void Native_setEntityLights(bool& success, int32_t _entity, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7CFBA6A80BDF3874);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15791,7 +15791,7 @@ EXPORT void Native_setEntityLoadCollisionFlag(bool& success, int32_t _entity, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0DC7CABAB1E9B67E);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -15828,7 +15828,7 @@ EXPORT void Native_setEntityOnlyDamagedByPlayer(bool& success, int32_t _entity, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x79F020FF9EDC0748);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15840,7 +15840,7 @@ EXPORT void Native_setEntityOnlyDamagedByRelationshipGroup(bool& success, int32_
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7022BD828FA0B082);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -15853,14 +15853,14 @@ EXPORT void Native_setEntityProofs(bool& success, int32_t _entity, bool _bulletP
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFAEE099C6F890BB8);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_bulletProof);
-	ctx->Push(_fireProof);
-	ctx->Push(_explosionProof);
-	ctx->Push(_collisionProof);
-	ctx->Push(_meleeProof);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
-	ctx->Push(_drownProof);
+	ctx->Push((int32_t) _bulletProof);
+	ctx->Push((int32_t) _fireProof);
+	ctx->Push((int32_t) _explosionProof);
+	ctx->Push((int32_t) _collisionProof);
+	ctx->Push((int32_t) _meleeProof);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _drownProof);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15872,35 +15872,35 @@ EXPORT bool Native_getEntityProofs(bool& success, int32_t _entity, bool& _bullet
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBE8CD9BE829BBEBF);
 	ctx->Reset();
 	ctx->Push(_entity);
-	auto ptr_bulletProof = _bulletProof;
+	auto ptr_bulletProof = (int32_t) _bulletProof;
 	ctx->Push(&ptr_bulletProof);
-	auto ptr_fireProof = _fireProof;
+	auto ptr_fireProof = (int32_t) _fireProof;
 	ctx->Push(&ptr_fireProof);
-	auto ptr_explosionProof = _explosionProof;
+	auto ptr_explosionProof = (int32_t) _explosionProof;
 	ctx->Push(&ptr_explosionProof);
-	auto ptr_collisionProof = _collisionProof;
+	auto ptr_collisionProof = (int32_t) _collisionProof;
 	ctx->Push(&ptr_collisionProof);
-	auto ptr_meleeProof = _meleeProof;
+	auto ptr_meleeProof = (int32_t) _meleeProof;
 	ctx->Push(&ptr_meleeProof);
-	auto ptr_steamProof = _steamProof;
+	auto ptr_steamProof = (int32_t) _steamProof;
 	ctx->Push(&ptr_steamProof);
-	auto ptr_p7 = _p7;
+	auto ptr_p7 = (int32_t) _p7;
 	ctx->Push(&ptr_p7);
-	auto ptr_drownProof = _drownProof;
+	auto ptr_drownProof = (int32_t) _drownProof;
 	ctx->Push(&ptr_drownProof);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
 	}
 	success = true;
-	_bulletProof = ptr_bulletProof;
-	_fireProof = ptr_fireProof;
-	_explosionProof = ptr_explosionProof;
-	_collisionProof = ptr_collisionProof;
-	_meleeProof = ptr_meleeProof;
-	_steamProof = ptr_steamProof;
-	_p7 = ptr_p7;
-	_drownProof = ptr_drownProof;
+	_bulletProof = (bool) ptr_bulletProof;
+	_fireProof = (bool) ptr_fireProof;
+	_explosionProof = (bool) ptr_explosionProof;
+	_collisionProof = (bool) ptr_collisionProof;
+	_meleeProof = (bool) ptr_meleeProof;
+	_steamProof = (bool) ptr_steamProof;
+	_p7 = (bool) ptr_p7;
+	_drownProof = (bool) ptr_drownProof;
 	return ctx->ResultBool();
 }
 
@@ -15923,7 +15923,7 @@ EXPORT void Native_setEntityRecordsCollisions(bool& success, int32_t _entity, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0A50A1EEDAD01E65);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15939,7 +15939,7 @@ EXPORT void Native_setEntityRotation(bool& success, int32_t _entity, float _pitc
 	ctx->Push(_roll);
 	ctx->Push(_yaw);
 	ctx->Push(_rotationOrder);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15951,8 +15951,8 @@ EXPORT void Native_setEntityVisible(bool& success, int32_t _entity, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEA1C610A04DB6BBB);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
-	ctx->Push(_unk);
+	ctx->Push((int32_t) _toggle);
+	ctx->Push((int32_t) _unk);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15964,7 +15964,7 @@ EXPORT void Native__0xC34BC448DA29F5E9(bool& success, int32_t _entity, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC34BC448DA29F5E9);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -15976,7 +15976,7 @@ EXPORT void Native__0xE66377CDDADA4810(bool& success, int32_t _entity, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE66377CDDADA4810);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16016,7 +16016,7 @@ EXPORT void Native_setEntityHasGravity(bool& success, int32_t _entity, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4A4722448F18EEF5);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16053,7 +16053,7 @@ EXPORT void Native_setEntityAlpha(bool& success, int32_t _entity, int32_t _alpha
 	ctx->Reset();
 	ctx->Push(_entity);
 	ctx->Push(_alphaLevel);
-	ctx->Push(_skin);
+	ctx->Push((int32_t) _skin);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16123,7 +16123,7 @@ EXPORT void Native_setEntityAlwaysPrerender(bool& success, int32_t _entity, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xACAD101E1FB66689);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16135,7 +16135,7 @@ EXPORT void Native_setEntityRenderScorched(bool& success, int32_t _entity, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x730F5F8D3F0F2050);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16166,7 +16166,7 @@ EXPORT void Native__0x78E8E3A640178255(bool& success, int32_t _entity) {
 	success = true;
 }
 
-EXPORT void Native_createModelSwap(bool& success, float _x, float _y, float _z, float _radius, int32_t _originalModel, int32_t _newModel, bool _p6) {
+EXPORT void Native_createModelSwap(bool& success, float _x, float _y, float _z, float _radius, uint32_t _originalModel, uint32_t _newModel, bool _p6) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x92C47782FDA8B2A3);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -16175,7 +16175,7 @@ EXPORT void Native_createModelSwap(bool& success, float _x, float _y, float _z, 
 	ctx->Push(_radius);
 	ctx->Push(_originalModel);
 	ctx->Push(_newModel);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16183,7 +16183,7 @@ EXPORT void Native_createModelSwap(bool& success, float _x, float _y, float _z, 
 	success = true;
 }
 
-EXPORT void Native_removeModelSwap(bool& success, float _x, float _y, float _z, float _radius, int32_t _originalModel, int32_t _newModel, bool _p6) {
+EXPORT void Native_removeModelSwap(bool& success, float _x, float _y, float _z, float _radius, uint32_t _originalModel, uint32_t _newModel, bool _p6) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x033C0F9A64E229AE);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -16192,7 +16192,7 @@ EXPORT void Native_removeModelSwap(bool& success, float _x, float _y, float _z, 
 	ctx->Push(_radius);
 	ctx->Push(_originalModel);
 	ctx->Push(_newModel);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16200,7 +16200,7 @@ EXPORT void Native_removeModelSwap(bool& success, float _x, float _y, float _z, 
 	success = true;
 }
 
-EXPORT void Native_createModelHide(bool& success, float _x, float _y, float _z, float _radius, int32_t _modelHash, bool _p5) {
+EXPORT void Native_createModelHide(bool& success, float _x, float _y, float _z, float _radius, uint32_t _modelHash, bool _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8A97BCA30A0CE478);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -16208,7 +16208,7 @@ EXPORT void Native_createModelHide(bool& success, float _x, float _y, float _z, 
 	ctx->Push(_z);
 	ctx->Push(_radius);
 	ctx->Push(_modelHash);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16216,7 +16216,7 @@ EXPORT void Native_createModelHide(bool& success, float _x, float _y, float _z, 
 	success = true;
 }
 
-EXPORT void Native_createModelHideExcludingScriptObjects(bool& success, float _x, float _y, float _z, float _radius, int32_t _modelHash, bool _p5) {
+EXPORT void Native_createModelHideExcludingScriptObjects(bool& success, float _x, float _y, float _z, float _radius, uint32_t _modelHash, bool _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3A52AE588830BF7F);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -16224,7 +16224,7 @@ EXPORT void Native_createModelHideExcludingScriptObjects(bool& success, float _x
 	ctx->Push(_z);
 	ctx->Push(_radius);
 	ctx->Push(_modelHash);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16232,7 +16232,7 @@ EXPORT void Native_createModelHideExcludingScriptObjects(bool& success, float _x
 	success = true;
 }
 
-EXPORT void Native_removeModelHide(bool& success, float _x, float _y, float _z, float _radius, int32_t _modelHash, bool _p5) {
+EXPORT void Native_removeModelHide(bool& success, float _x, float _y, float _z, float _radius, uint32_t _modelHash, bool _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD9E3006FB3CBD765);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -16240,7 +16240,7 @@ EXPORT void Native_removeModelHide(bool& success, float _x, float _y, float _z, 
 	ctx->Push(_z);
 	ctx->Push(_radius);
 	ctx->Push(_modelHash);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16248,7 +16248,7 @@ EXPORT void Native_removeModelHide(bool& success, float _x, float _y, float _z, 
 	success = true;
 }
 
-EXPORT void Native_createForcedObject(bool& success, float _x, float _y, float _z, int32_t _p3, int32_t _modelHash, bool _p5) {
+EXPORT void Native_createForcedObject(bool& success, float _x, float _y, float _z, int32_t _p3, uint32_t _modelHash, bool _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x150E808B375A385A);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -16256,7 +16256,7 @@ EXPORT void Native_createForcedObject(bool& success, float _x, float _y, float _
 	ctx->Push(_z);
 	ctx->Push(_p3);
 	ctx->Push(_modelHash);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16284,7 +16284,7 @@ EXPORT void Native_setEntityNoCollisionEntity(bool& success, int32_t _entity1, i
 	ctx->Reset();
 	ctx->Push(_entity1);
 	ctx->Push(_entity2);
-	ctx->Push(_thisFrameOnly);
+	ctx->Push((int32_t) _thisFrameOnly);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16296,7 +16296,7 @@ EXPORT void Native_setEntityMotionBlur(bool& success, int32_t _entity, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x295D82A8559F9150);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16308,7 +16308,7 @@ EXPORT void Native_setCanAutoVaultOnEntity(bool& success, int32_t _entity, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE12ABE5E3A389A6C);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16320,7 +16320,7 @@ EXPORT void Native_setCanClimbOnEntity(bool& success, int32_t _entity, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA80AE305E0A3044F);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16332,7 +16332,7 @@ EXPORT void Native__0xDC6F8601FAF2E893(bool& success, int32_t _entity, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDC6F8601FAF2E893);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16344,7 +16344,7 @@ EXPORT void Native_setEntityDecalsDisabled(bool& success, int32_t _entity, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2C2E3DC128F44309);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16356,7 +16356,7 @@ EXPORT void Native__0x1A092BB0C3808B96(bool& success, int32_t _entity, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1A092BB0C3808B96);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16465,7 +16465,7 @@ EXPORT void Native__0x36F32DE87082343E(bool& success, int32_t _p0, int32_t _p1) 
 	success = true;
 }
 
-EXPORT int32_t Native_getEntityPickup(bool& success, int32_t _entity, int32_t _modelHash) {
+EXPORT int32_t Native_getEntityPickup(bool& success, int32_t _entity, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1F922734E259BD26);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -16482,7 +16482,7 @@ EXPORT void Native__0xD7B80E7C3BEFC396(bool& success, int32_t _pickup, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD7B80E7C3BEFC396);
 	ctx->Reset();
 	ctx->Push(_pickup);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16490,7 +16490,7 @@ EXPORT void Native__0xD7B80E7C3BEFC396(bool& success, int32_t _pickup, bool _tog
 	success = true;
 }
 
-EXPORT void Native_setDecisionMaker(bool& success, int32_t _ped, int32_t _name) {
+EXPORT void Native_setDecisionMaker(bool& success, int32_t _ped, uint32_t _name) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB604A2942ADED0EE);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -16502,7 +16502,7 @@ EXPORT void Native_setDecisionMaker(bool& success, int32_t _ped, int32_t _name) 
 	success = true;
 }
 
-EXPORT void Native_clearDecisionMakerEventResponse(bool& success, int32_t _name, int32_t _eventType) {
+EXPORT void Native_clearDecisionMakerEventResponse(bool& success, uint32_t _name, int32_t _eventType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4FC9381A7AEE8968);
 	ctx->Reset();
 	ctx->Push(_name);
@@ -16514,7 +16514,7 @@ EXPORT void Native_clearDecisionMakerEventResponse(bool& success, int32_t _name,
 	success = true;
 }
 
-EXPORT void Native_blockDecisionMakerEvent(bool& success, int32_t _name, int32_t _eventType) {
+EXPORT void Native_blockDecisionMakerEvent(bool& success, uint32_t _name, int32_t _eventType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE42FCDFD0E4196F7);
 	ctx->Reset();
 	ctx->Push(_name);
@@ -16526,7 +16526,7 @@ EXPORT void Native_blockDecisionMakerEvent(bool& success, int32_t _name, int32_t
 	success = true;
 }
 
-EXPORT void Native_unblockDecisionMakerEvent(bool& success, int32_t _name, int32_t _eventType) {
+EXPORT void Native_unblockDecisionMakerEvent(bool& success, uint32_t _name, int32_t _eventType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD7CD9CF34F2C99E8);
 	ctx->Reset();
 	ctx->Push(_name);
@@ -16599,7 +16599,7 @@ EXPORT bool Native_removeShockingEvent(bool& success, int32_t _event) {
 EXPORT void Native_removeAllShockingEvents(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEAABE8FDFA21274C);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16676,7 +16676,7 @@ EXPORT bool Native_getTattooShopDlcItemData(bool& success, int32_t _characterTyp
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native__0x10144267DD22866C(bool& success, int32_t _overlayHash, int32_t _p1, int32_t _character) {
+EXPORT int32_t Native__0x10144267DD22866C(bool& success, uint32_t _overlayHash, int32_t _p1, int32_t _character) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x10144267DD22866C);
 	ctx->Reset();
 	ctx->Push(_overlayHash);
@@ -16737,7 +16737,7 @@ EXPORT int32_t Native_setupShopPedApparelQueryTu(bool& success, int32_t _charact
 	ctx->Push(_character);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	ctx->Push(_p4);
 	ctx->Push(_componentId);
 	if (!native->Invoke(ctx)) {
@@ -16762,7 +16762,7 @@ EXPORT void Native_getShopPedQueryComponent(bool& success, int32_t _componentId,
 	_outComponent = ptr_outComponent;
 }
 
-EXPORT int32_t Native__0x96E2929292A4DB77(bool& success, int32_t _componentHash) {
+EXPORT int32_t Native__0x96E2929292A4DB77(bool& success, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x96E2929292A4DB77);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16774,7 +16774,7 @@ EXPORT int32_t Native__0x96E2929292A4DB77(bool& success, int32_t _componentHash)
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_getShopPedComponent(bool& success, int32_t _componentHash, int32_t& _outComponent) {
+EXPORT void Native_getShopPedComponent(bool& success, uint32_t _componentHash, int32_t& _outComponent) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x74C0E2A57EC66760);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16802,7 +16802,7 @@ EXPORT void Native_getShopPedQueryProp(bool& success, int32_t _componentId, int3
 	_outProp = ptr_outProp;
 }
 
-EXPORT int32_t Native__0x6CEBE002E58DEE97(bool& success, int32_t _componentHash) {
+EXPORT int32_t Native__0x6CEBE002E58DEE97(bool& success, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6CEBE002E58DEE97);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16814,7 +16814,7 @@ EXPORT int32_t Native__0x6CEBE002E58DEE97(bool& success, int32_t _componentHash)
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_getShopPedProp(bool& success, int32_t _componentHash, int32_t& _outProp) {
+EXPORT void Native_getShopPedProp(bool& success, uint32_t _componentHash, int32_t& _outProp) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5D5CAFF661DDF6FC);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16828,7 +16828,7 @@ EXPORT void Native_getShopPedProp(bool& success, int32_t _componentHash, int32_t
 	_outProp = ptr_outProp;
 }
 
-EXPORT int32_t Native_getHashNameForComponent(bool& success, int32_t _entity, int32_t _componentId, int32_t _drawableVariant, int32_t _textureVariant) {
+EXPORT uint32_t Native_getHashNameForComponent(bool& success, int32_t _entity, int32_t _componentId, int32_t _drawableVariant, int32_t _textureVariant) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0368B3A838070348);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -16840,10 +16840,10 @@ EXPORT int32_t Native_getHashNameForComponent(bool& success, int32_t _entity, in
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getHashNameForProp(bool& success, int32_t _entity, int32_t _componentId, int32_t _propIndex, int32_t _propTextureIndex) {
+EXPORT uint32_t Native_getHashNameForProp(bool& success, int32_t _entity, int32_t _componentId, int32_t _propIndex, int32_t _propTextureIndex) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5D6160275CAEC8DD);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -16855,10 +16855,10 @@ EXPORT int32_t Native_getHashNameForProp(bool& success, int32_t _entity, int32_t
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getItemVariantsCount(bool& success, int32_t _componentHash) {
+EXPORT int32_t Native_getItemVariantsCount(bool& success, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC17AD0E5752BECDA);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16870,7 +16870,7 @@ EXPORT int32_t Native_getItemVariantsCount(bool& success, int32_t _componentHash
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getShopPedApparelVariantPropCount(bool& success, int32_t _propHash) {
+EXPORT int32_t Native_getShopPedApparelVariantPropCount(bool& success, uint32_t _propHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD40AAC51E8E4C663);
 	ctx->Reset();
 	ctx->Push(_propHash);
@@ -16882,7 +16882,7 @@ EXPORT int32_t Native_getShopPedApparelVariantPropCount(bool& success, int32_t _
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_getVariantComponent(bool& success, int32_t _componentHash, int32_t _unkVariantComponentIndex, int32_t& _nameHash, int32_t& _enumValue, int32_t& _componentType) {
+EXPORT void Native_getVariantComponent(bool& success, uint32_t _componentHash, int32_t _unkVariantComponentIndex, uint32_t& _nameHash, int32_t& _enumValue, int32_t& _componentType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6E11F282F11863B6);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16903,7 +16903,7 @@ EXPORT void Native_getVariantComponent(bool& success, int32_t _componentHash, in
 	_componentType = ptr_componentType;
 }
 
-EXPORT void Native_getVariantProp(bool& success, int32_t _componentHash, int32_t _unkVariantPropIndex, int32_t& _nameHash, int32_t& _enumValue, int32_t& _anchorPoint) {
+EXPORT void Native_getVariantProp(bool& success, uint32_t _componentHash, int32_t _unkVariantPropIndex, uint32_t& _nameHash, int32_t& _enumValue, int32_t& _anchorPoint) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD81B7F27BC773E66);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16924,7 +16924,7 @@ EXPORT void Native_getVariantProp(bool& success, int32_t _componentHash, int32_t
 	_anchorPoint = ptr_anchorPoint;
 }
 
-EXPORT int32_t Native_getShopPedApparelForcedComponentCount(bool& success, int32_t _componentHash) {
+EXPORT int32_t Native_getShopPedApparelForcedComponentCount(bool& success, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC6B9DB42C04DD8C3);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16936,7 +16936,7 @@ EXPORT int32_t Native_getShopPedApparelForcedComponentCount(bool& success, int32
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getShopPedApparelForcedPropCount(bool& success, int32_t _componentHash) {
+EXPORT int32_t Native_getShopPedApparelForcedPropCount(bool& success, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x017568A8182D98A6);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16948,7 +16948,7 @@ EXPORT int32_t Native_getShopPedApparelForcedPropCount(bool& success, int32_t _c
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_getForcedComponent(bool& success, int32_t _componentHash, int32_t _forcedComponentIndex, int32_t& _nameHash, int32_t& _enumValue, int32_t& _componentType) {
+EXPORT void Native_getForcedComponent(bool& success, uint32_t _componentHash, int32_t _forcedComponentIndex, uint32_t& _nameHash, int32_t& _enumValue, int32_t& _componentType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6C93ED8C2F74859B);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16969,7 +16969,7 @@ EXPORT void Native_getForcedComponent(bool& success, int32_t _componentHash, int
 	_componentType = ptr_componentType;
 }
 
-EXPORT void Native_getForcedProp(bool& success, int32_t _componentHash, int32_t _forcedPropIndex, int32_t& _nameHash, int32_t& _enumValue, int32_t& _anchorPoint) {
+EXPORT void Native_getForcedProp(bool& success, uint32_t _componentHash, int32_t _forcedPropIndex, uint32_t& _nameHash, int32_t& _enumValue, int32_t& _anchorPoint) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE1CA84EBF72E691D);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -16990,7 +16990,7 @@ EXPORT void Native_getForcedProp(bool& success, int32_t _componentHash, int32_t 
 	_anchorPoint = ptr_anchorPoint;
 }
 
-EXPORT bool Native_isTagRestricted(bool& success, int32_t _componentHash, int32_t _restrictionTagHash, int32_t _componentId) {
+EXPORT bool Native_isTagRestricted(bool& success, uint32_t _componentHash, uint32_t _restrictionTagHash, int32_t _componentId) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x341DE7ED1D2A1BFD);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -17008,7 +17008,7 @@ EXPORT int32_t Native_setupShopPedOutfitQuery(bool& success, int32_t _character,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF3FBE2D50A6A8C28);
 	ctx->Reset();
 	ctx->Push(_character);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -17057,7 +17057,7 @@ EXPORT int32_t Native_getShopPedOutfitLocate(bool& success, int32_t _p0) {
 	return ctx->ResultInt();
 }
 
-EXPORT bool Native_getShopPedOutfitPropVariant(bool& success, int32_t _outfitHash, int32_t _unkVariantIndex, int32_t& _outPropVariant) {
+EXPORT bool Native_getShopPedOutfitPropVariant(bool& success, uint32_t _outfitHash, int32_t _unkVariantIndex, int32_t& _outPropVariant) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA9F9C2E0FDE11CBB);
 	ctx->Reset();
 	ctx->Push(_outfitHash);
@@ -17073,7 +17073,7 @@ EXPORT bool Native_getShopPedOutfitPropVariant(bool& success, int32_t _outfitHas
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_getShopPedOutfitComponentVariant(bool& success, int32_t _outfitHash, int32_t _unkVariantIndex, int32_t& _outComponentVariant) {
+EXPORT bool Native_getShopPedOutfitComponentVariant(bool& success, uint32_t _outfitHash, int32_t _unkVariantIndex, int32_t& _outComponentVariant) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x19F2A026EDF0013F);
 	ctx->Reset();
 	ctx->Push(_outfitHash);
@@ -17100,7 +17100,7 @@ EXPORT int32_t Native_getNumDlcVehicles(bool& success) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getDlcVehicleModel(bool& success, int32_t _dlcVehicleIndex) {
+EXPORT uint32_t Native_getDlcVehicleModel(bool& success, int32_t _dlcVehicleIndex) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xECC01B7C5763333C);
 	ctx->Reset();
 	ctx->Push(_dlcVehicleIndex);
@@ -17109,7 +17109,7 @@ EXPORT int32_t Native_getDlcVehicleModel(bool& success, int32_t _dlcVehicleIndex
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT bool Native_getDlcVehicleData(bool& success, int32_t _dlcVehicleIndex, int32_t& _outData) {
@@ -17247,7 +17247,7 @@ EXPORT bool Native_getDlcWeaponComponentDataSp(bool& success, int32_t _dlcWeapon
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isContentItemLocked(bool& success, int32_t _itemHash) {
+EXPORT bool Native_isContentItemLocked(bool& success, uint32_t _itemHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD4D7B033C3AA243C);
 	ctx->Reset();
 	ctx->Push(_itemHash);
@@ -17259,7 +17259,7 @@ EXPORT bool Native_isContentItemLocked(bool& success, int32_t _itemHash) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isDlcVehicleMod(bool& success, int32_t _hash) {
+EXPORT bool Native_isDlcVehicleMod(bool& success, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0564B9FF9631B82C);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -17271,7 +17271,7 @@ EXPORT bool Native_isDlcVehicleMod(bool& success, int32_t _hash) {
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_getDlcVehicleModLockHash(bool& success, int32_t _hash) {
+EXPORT uint32_t Native_getDlcVehicleModLockHash(bool& success, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC098810437312FFF);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -17280,10 +17280,10 @@ EXPORT int32_t Native_getDlcVehicleModLockHash(bool& success, int32_t _hash) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT void Native_loadContentChangeSetGroup(bool& success, int32_t _hash) {
+EXPORT void Native_loadContentChangeSetGroup(bool& success, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6BEDF5769AC2DC07);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -17294,7 +17294,7 @@ EXPORT void Native_loadContentChangeSetGroup(bool& success, int32_t _hash) {
 	success = true;
 }
 
-EXPORT void Native_unloadContentChangeSetGroup(bool& success, int32_t _hash) {
+EXPORT void Native_unloadContentChangeSetGroup(bool& success, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3C1978285B036B25);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -17312,7 +17312,7 @@ EXPORT int32_t Native_startScriptFire(bool& success, float _X, float _Y, float _
 	ctx->Push(_Y);
 	ctx->Push(_Z);
 	ctx->Push(_maxChildren);
-	ctx->Push(_isGasFire);
+	ctx->Push((int32_t) _isGasFire);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -17434,10 +17434,10 @@ EXPORT void Native_addExplosion(bool& success, float _x, float _y, float _z, int
 	ctx->Push(_z);
 	ctx->Push(_explosionType);
 	ctx->Push(_damageScale);
-	ctx->Push(_isAudible);
-	ctx->Push(_isInvisible);
+	ctx->Push((int32_t) _isAudible);
+	ctx->Push((int32_t) _isInvisible);
 	ctx->Push(_cameraShake);
-	ctx->Push(_noDamage);
+	ctx->Push((int32_t) _noDamage);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -17454,8 +17454,8 @@ EXPORT void Native_addOwnedExplosion(bool& success, int32_t _ped, float _x, floa
 	ctx->Push(_z);
 	ctx->Push(_explosionType);
 	ctx->Push(_damageScale);
-	ctx->Push(_isAudible);
-	ctx->Push(_isInvisible);
+	ctx->Push((int32_t) _isAudible);
+	ctx->Push((int32_t) _isInvisible);
 	ctx->Push(_cameraShake);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -17464,7 +17464,7 @@ EXPORT void Native_addOwnedExplosion(bool& success, int32_t _ped, float _x, floa
 	success = true;
 }
 
-EXPORT void Native_addExplosionWithUserVfx(bool& success, float _x, float _y, float _z, int32_t _explosionType, int32_t _explosionFx, float _damageScale, bool _isAudible, bool _isInvisible, float _cameraShake) {
+EXPORT void Native_addExplosionWithUserVfx(bool& success, float _x, float _y, float _z, int32_t _explosionType, uint32_t _explosionFx, float _damageScale, bool _isAudible, bool _isInvisible, float _cameraShake) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x36DD3FE58B5E5212);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -17473,8 +17473,8 @@ EXPORT void Native_addExplosionWithUserVfx(bool& success, float _x, float _y, fl
 	ctx->Push(_explosionType);
 	ctx->Push(_explosionFx);
 	ctx->Push(_damageScale);
-	ctx->Push(_isAudible);
-	ctx->Push(_isInvisible);
+	ctx->Push((int32_t) _isAudible);
+	ctx->Push((int32_t) _isInvisible);
 	ctx->Push(_cameraShake);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -17656,7 +17656,7 @@ EXPORT bool Native_busyspinnerIsDisplaying(bool& success) {
 EXPORT void Native__0x9245E81072704B8A(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9245E81072704B8A);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -17688,7 +17688,7 @@ EXPORT void Native_setMouseCursorSprite(bool& success, int32_t _spriteId) {
 EXPORT void Native_setMouseCursorVisibleInMenus(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x98215325A695E78A);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -17731,7 +17731,7 @@ EXPORT bool Native__0x632B2940C67F4EA9(bool& success, int32_t _scaleformHandle, 
 EXPORT void Native_thefeedOnlyShowTooltips(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6F1554B0CC2089FA);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -17942,7 +17942,7 @@ EXPORT void Native_thefeedSetAnimpostfxCount(bool& success, int32_t _count) {
 EXPORT void Native_thefeedSetAnimpostfxSound(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4A0C7C9BB10ABB36);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -17983,7 +17983,7 @@ EXPORT void Native_thefeedClearFrozenPost(bool& success) {
 EXPORT void Native_thefeedSetFlushAnimpostfx(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBAE4F9B97CD43B30);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -18029,9 +18029,9 @@ EXPORT int32_t Native_endTextCommandThefeedPostStats(bool& success, const char* 
 	ctx->Reset();
 	ctx->Push(SaveString(_statTitle));
 	ctx->Push(_iconEnum);
-	ctx->Push(_stepVal);
+	ctx->Push((int32_t) _stepVal);
 	ctx->Push(_barValue);
-	ctx->Push(_isImportant);
+	ctx->Push((int32_t) _isImportant);
 	ctx->Push(SaveString(_pictureTextureDict));
 	ctx->Push(SaveString(_pictureTextureName));
 	if (!native->Invoke(ctx)) {
@@ -18047,7 +18047,7 @@ EXPORT int32_t Native_endTextCommandThefeedPostMessagetext(bool& success, const 
 	ctx->Reset();
 	ctx->Push(SaveString(_txdName));
 	ctx->Push(SaveString(_textureName));
-	ctx->Push(_flash);
+	ctx->Push((int32_t) _flash);
 	ctx->Push(_iconType);
 	ctx->Push(SaveString(_sender));
 	ctx->Push(SaveString(_subject));
@@ -18064,7 +18064,7 @@ EXPORT int32_t Native_endTextCommandThefeedPostMessagetextGxtEntry(bool& success
 	ctx->Reset();
 	ctx->Push(SaveString(_txdName));
 	ctx->Push(SaveString(_textureName));
-	ctx->Push(_flash);
+	ctx->Push((int32_t) _flash);
 	ctx->Push(_iconType);
 	ctx->Push(SaveString(_sender));
 	ctx->Push(SaveString(_subject));
@@ -18081,7 +18081,7 @@ EXPORT int32_t Native_endTextCommandThefeedPostMessagetextTu(bool& success, cons
 	ctx->Reset();
 	ctx->Push(SaveString(_txdName));
 	ctx->Push(SaveString(_textureName));
-	ctx->Push(_flash);
+	ctx->Push((int32_t) _flash);
 	ctx->Push(_iconType);
 	ctx->Push(SaveString(_sender));
 	ctx->Push(SaveString(_subject));
@@ -18099,7 +18099,7 @@ EXPORT int32_t Native_endTextCommandThefeedPostMessagetextWithCrewTag(bool& succ
 	ctx->Reset();
 	ctx->Push(SaveString(_txdName));
 	ctx->Push(SaveString(_textureName));
-	ctx->Push(_flash);
+	ctx->Push((int32_t) _flash);
 	ctx->Push(_iconType);
 	ctx->Push(SaveString(_sender));
 	ctx->Push(SaveString(_subject));
@@ -18118,7 +18118,7 @@ EXPORT int32_t Native_endTextCommandThefeedPostMessagetextWithCrewTagAndAddition
 	ctx->Reset();
 	ctx->Push(SaveString(_txdName));
 	ctx->Push(SaveString(_textureName));
-	ctx->Push(_flash);
+	ctx->Push((int32_t) _flash);
 	ctx->Push(_iconType1);
 	ctx->Push(SaveString(_sender));
 	ctx->Push(SaveString(_subject));
@@ -18137,8 +18137,8 @@ EXPORT int32_t Native_endTextCommandThefeedPostMessagetextWithCrewTagAndAddition
 EXPORT int32_t Native_endTextCommandThefeedPostTicker(bool& success, bool _blink, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2ED7843F8F801023);
 	ctx->Reset();
-	ctx->Push(_blink);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _blink);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -18150,8 +18150,8 @@ EXPORT int32_t Native_endTextCommandThefeedPostTicker(bool& success, bool _blink
 EXPORT int32_t Native_endTextCommandThefeedPostTickerForced(bool& success, bool _blink, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x44FA03975424A0EE);
 	ctx->Reset();
-	ctx->Push(_blink);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _blink);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -18163,8 +18163,8 @@ EXPORT int32_t Native_endTextCommandThefeedPostTickerForced(bool& success, bool 
 EXPORT int32_t Native_endTextCommandThefeedPostTickerWithTokens(bool& success, bool _blink, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x378E809BF61EC840);
 	ctx->Reset();
-	ctx->Push(_blink);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _blink);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -18192,13 +18192,13 @@ EXPORT int32_t Native_endTextCommandThefeedPostAward(bool& success, const char* 
 EXPORT int32_t Native_endTextCommandThefeedPostCrewtag(bool& success, bool _p0, bool _p1, int32_t& _p2, int32_t _p3, bool _isLeader, bool _unk0, int32_t _clanDesc, int32_t _R, int32_t _G, int32_t _B) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x97C9E4E7024A8F2C);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	auto ptr_p2 = _p2;
 	ctx->Push(&ptr_p2);
 	ctx->Push(_p3);
-	ctx->Push(_isLeader);
-	ctx->Push(_unk0);
+	ctx->Push((int32_t) _isLeader);
+	ctx->Push((int32_t) _unk0);
 	ctx->Push(_clanDesc);
 	ctx->Push(_R);
 	ctx->Push(_G);
@@ -18215,13 +18215,13 @@ EXPORT int32_t Native_endTextCommandThefeedPostCrewtag(bool& success, bool _p0, 
 EXPORT int32_t Native_endTextCommandThefeedPostCrewtagWithGameName(bool& success, bool _p0, bool _p1, int32_t& _p2, int32_t _p3, bool _isLeader, bool _unk0, int32_t _clanDesc, const char* _playerName, int32_t _R, int32_t _G, int32_t _B) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x137BC35589E34E1E);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	auto ptr_p2 = _p2;
 	ctx->Push(&ptr_p2);
 	ctx->Push(_p3);
-	ctx->Push(_isLeader);
-	ctx->Push(_unk0);
+	ctx->Push((int32_t) _isLeader);
+	ctx->Push((int32_t) _unk0);
 	ctx->Push(_clanDesc);
 	ctx->Push(SaveString(_playerName));
 	ctx->Push(_R);
@@ -18285,8 +18285,8 @@ EXPORT int32_t Native_endTextCommandThefeedPostUnlockTuWithColor(bool& success, 
 EXPORT int32_t Native_endTextCommandThefeedPostMpticker(bool& success, bool _blink, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF020C96915705B3A);
 	ctx->Reset();
-	ctx->Push(_blink);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _blink);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -18301,8 +18301,8 @@ EXPORT int32_t Native_endTextCommandThefeedPostCrewRankup(bool& success, const c
 	ctx->Push(SaveString(_p0));
 	ctx->Push(SaveString(_p1));
 	ctx->Push(SaveString(_p2));
-	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -18381,7 +18381,7 @@ EXPORT void Native_endTextCommandPrint(bool& success, int32_t _duration, bool _d
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9D77056A530643F6);
 	ctx->Reset();
 	ctx->Push(_duration);
-	ctx->Push(_drawImmediately);
+	ctx->Push((int32_t) _drawImmediately);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -18449,7 +18449,7 @@ EXPORT void Native_beginTextCommandGetWidth(bool& success, const char* _text) {
 EXPORT float Native_endTextCommandGetWidth(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x85F061DA64ED2F67);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0.f;
@@ -18497,8 +18497,8 @@ EXPORT void Native_endTextCommandDisplayHelp(bool& success, int32_t _p0, bool _l
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x238FFE5C7B0498A6);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_loop);
-	ctx->Push(_beep);
+	ctx->Push((int32_t) _loop);
+	ctx->Push((int32_t) _beep);
 	ctx->Push(_shape);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -18566,7 +18566,7 @@ EXPORT void Native_beginTextCommandObjective(bool& success, const char* _p0) {
 EXPORT void Native_endTextCommandObjective(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCFDBDF5AE59BA0F4);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -18651,7 +18651,7 @@ EXPORT void Native_addTextComponentSubstringTextLabel(bool& success, const char*
 	success = true;
 }
 
-EXPORT void Native_addTextComponentSubstringTextLabelHashKey(bool& success, int32_t _gxtEntryHash) {
+EXPORT void Native_addTextComponentSubstringTextLabelHashKey(bool& success, uint32_t _gxtEntryHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x17299B63C7683A2B);
 	ctx->Reset();
 	ctx->Push(_gxtEntryHash);
@@ -18700,7 +18700,7 @@ EXPORT void Native_addTextComponentFormattedInteger(bool& success, int32_t _valu
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0E4C749FF9DE9CC4);
 	ctx->Reset();
 	ctx->Push(_value);
-	ctx->Push(_commaSeparated);
+	ctx->Push((int32_t) _commaSeparated);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -18911,7 +18911,7 @@ EXPORT void Native_clearAdditionalText(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2A179DF17CCF04CD);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19016,7 +19016,7 @@ EXPORT int32_t Native_getLengthOfLiteralStringInBytes(bool& success, const char*
 	return ctx->ResultInt();
 }
 
-EXPORT const char* Native_getStreetNameFromHashKey(bool& success, int32_t _hash) {
+EXPORT const char* Native_getStreetNameFromHashKey(bool& success, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD0EF8A959B8A4CB9);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -19064,7 +19064,7 @@ EXPORT bool Native_isSubtitlePreferenceSwitchedOn(bool& success) {
 EXPORT void Native_displayHud(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA6294919E56FF02A);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19095,7 +19095,7 @@ EXPORT void Native_displayHudWhenPausedThisFrame(bool& success) {
 EXPORT void Native_displayRadar(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA0EBB943C300E693);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19106,7 +19106,7 @@ EXPORT void Native_displayRadar(bool& success, bool _toggle) {
 EXPORT void Native__0xCD74233600C4EA6B(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCD74233600C4EA6B);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19194,7 +19194,7 @@ EXPORT void Native_setBlipRoute(bool& success, int32_t _blip, bool _enabled) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4F7D8A9BFB0B43E9);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_enabled);
+	ctx->Push((int32_t) _enabled);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19227,7 +19227,7 @@ EXPORT void Native_setBlipRouteColour(bool& success, int32_t _blip, int32_t _col
 EXPORT void Native__0x2790F4B17D098E26(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2790F4B17D098E26);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19260,7 +19260,7 @@ EXPORT void Native__0xD1942374085C8469(bool& success, int32_t _p0) {
 EXPORT void Native_addNextMessageToPreviousBriefs(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x60296AF4BA14ABC5);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19415,7 +19415,7 @@ EXPORT void Native_replaceHudColourWithRgba(bool& success, int32_t _hudColorInde
 EXPORT void Native_setAbilityBarVisibilityInMultiplayer(bool& success, bool _visible) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1DFEDD15019315A9);
 	ctx->Reset();
-	ctx->Push(_visible);
+	ctx->Push((int32_t) _visible);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19426,7 +19426,7 @@ EXPORT void Native_setAbilityBarVisibilityInMultiplayer(bool& success, bool _vis
 EXPORT void Native_setAllowAbilityBarInMultiplayer(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x889329C80FE5963C);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19460,7 +19460,7 @@ EXPORT void Native_setAbilityBarValue(bool& success, float _p0, float _p1) {
 EXPORT void Native_flashWantedDisplay(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA18AFB39081B6A1F);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19471,7 +19471,7 @@ EXPORT void Native_flashWantedDisplay(bool& success, bool _p0) {
 EXPORT void Native__0xBA8D65C1C65702E5(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBA8D65C1C65702E5);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19521,7 +19521,7 @@ EXPORT void Native_setTextColour(bool& success, int32_t _red, int32_t _green, in
 EXPORT void Native_setTextCentre(bool& success, bool _align) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC02F4DBFB51D988B);
 	ctx->Reset();
-	ctx->Push(_align);
+	ctx->Push((int32_t) _align);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19532,7 +19532,7 @@ EXPORT void Native_setTextCentre(bool& success, bool _align) {
 EXPORT void Native_setTextRightJustify(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6B3C4650BC8BEE47);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19577,7 +19577,7 @@ EXPORT void Native_setTextLeading(bool& success, int32_t _p0) {
 EXPORT void Native_setTextProportional(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x038C1F517D7FDCF8);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -19672,7 +19672,7 @@ EXPORT bool Native_registerNamedRendertarget(bool& success, const char* _name, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x57D9C12635E25CE3);
 	ctx->Reset();
 	ctx->Push(SaveString(_name));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -19705,7 +19705,7 @@ EXPORT bool Native_releaseNamedRendertarget(bool& success, const char* _name) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_linkNamedRendertarget(bool& success, int32_t _modelHash) {
+EXPORT void Native_linkNamedRendertarget(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF6C09E276AEB3F2D);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -19728,7 +19728,7 @@ EXPORT int32_t Native_getNamedRendertargetRenderId(bool& success, const char* _n
 	return ctx->ResultInt();
 }
 
-EXPORT bool Native_isNamedRendertargetLinked(bool& success, int32_t _modelHash) {
+EXPORT bool Native_isNamedRendertargetLinked(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x113750538FA31298);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -19743,7 +19743,7 @@ EXPORT bool Native_isNamedRendertargetLinked(bool& success, int32_t _modelHash) 
 EXPORT void Native_clearHelp(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8DFCED7A656F8802);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20039,7 +20039,7 @@ EXPORT void Native_triggerSonarBlip(bool& success, float _posX, float _posY, flo
 EXPORT void Native_allowSonarBlips(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x60734CC207C9833C);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20343,7 +20343,7 @@ EXPORT void Native_setBlipHiddenOnLegend(bool& success, int32_t _blip, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x54318C915D27E4CE);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20355,7 +20355,7 @@ EXPORT void Native_setBlipHighDetail(bool& success, int32_t _blip, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE2590BC29220CEBB);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20367,7 +20367,7 @@ EXPORT void Native_setBlipAsMissionCreatorBlip(bool& success, int32_t _blip, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x24AC0137444F9FD5);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20412,7 +20412,7 @@ EXPORT bool Native_isHoveringOverMissionCreatorBlip(bool& success) {
 EXPORT void Native_showStartMissionInstructionalButton(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF1A6C18B35BCADE6);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20446,7 +20446,7 @@ EXPORT void Native_setBlipFlashes(bool& success, int32_t _blip, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB14552383D39CE3E);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20458,7 +20458,7 @@ EXPORT void Native_setBlipFlashesAlternate(bool& success, int32_t _blip, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2E8D9498C56DD0D1);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20482,7 +20482,7 @@ EXPORT void Native_setBlipAsShortRange(bool& success, int32_t _blip, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBE8BE4FE60E27B72);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20568,7 +20568,7 @@ EXPORT void Native_setBlipAsFriendly(bool& success, int32_t _blip, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6F6F290102C02AB4);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20614,7 +20614,7 @@ EXPORT void Native_showHeightOnBlip(bool& success, int32_t _blip, bool _toggle) 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75A16C3DA34F1245);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20626,7 +20626,7 @@ EXPORT void Native_showTickOnBlip(bool& success, int32_t _blip, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x74513EA3E505181E);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20638,7 +20638,7 @@ EXPORT void Native_showHeadingIndicatorOnBlip(bool& success, int32_t _blip, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5FBCA48327B914DF);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20650,7 +20650,7 @@ EXPORT void Native_showOutlineIndicatorOnBlip(bool& success, int32_t _blip, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB81656BC81FE24D1);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20662,7 +20662,7 @@ EXPORT void Native_showFriendIndicatorOnBlip(bool& success, int32_t _blip, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x23C3EB807312F01A);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20674,7 +20674,7 @@ EXPORT void Native_showCrewIndicatorOnBlip(bool& success, int32_t _blip, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDCFB5D4DB8BF367E);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20686,7 +20686,7 @@ EXPORT void Native_setBlipDisplayIndicatorOnBlip(bool& success, int32_t _blip, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC4278F70131BAA6D);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20722,7 +20722,7 @@ EXPORT void Native_setBlipAsMinimalOnEdge(bool& success, int32_t _blip, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2B6D467DAB714E8D);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20734,7 +20734,7 @@ EXPORT void Native_setRadiusBlipEdge(bool& success, int32_t _blip, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x25615540D894B814);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20811,7 +20811,7 @@ EXPORT void Native_setBlipBright(bool& success, int32_t _blip, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB203913733F27884);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20823,7 +20823,7 @@ EXPORT void Native_setBlipShowCone(bool& success, int32_t _blip, bool _toggle, i
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x13127EC3665E8EE1);
 	ctx->Reset();
 	ctx->Push(_blip);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -20887,7 +20887,7 @@ EXPORT int32_t Native_setMinimapComponent(bool& success, int32_t _componentId, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75A9A10948D1DEA6);
 	ctx->Reset();
 	ctx->Push(_componentId);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_overrideColor);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -20900,7 +20900,7 @@ EXPORT int32_t Native_setMinimapComponent(bool& success, int32_t _componentId, b
 EXPORT void Native_setMinimapSonarEnabled(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6B50FC8749632EC1);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20932,7 +20932,7 @@ EXPORT int32_t Native_getMainPlayerBlipId(bool& success) {
 EXPORT void Native__0x41350B4FC28E3941(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x41350B4FC28E3941);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20950,7 +20950,7 @@ EXPORT void Native_hideLoadingOnFadeThisFrame(bool& success) {
 	success = true;
 }
 
-EXPORT void Native_setRadarAsInteriorThisFrame(bool& success, int32_t _interior, float _x, float _y, int32_t _z, int32_t _zoom) {
+EXPORT void Native_setRadarAsInteriorThisFrame(bool& success, uint32_t _interior, float _x, float _y, int32_t _z, int32_t _zoom) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x59E727A1C9D3E31A);
 	ctx->Reset();
 	ctx->Push(_interior);
@@ -20968,7 +20968,7 @@ EXPORT void Native_setRadarAsInteriorThisFrame(bool& success, int32_t _interior,
 EXPORT void Native_setInteriorZoomLevelIncreased(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x504DFE62A1692296);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20979,7 +20979,7 @@ EXPORT void Native_setInteriorZoomLevelIncreased(bool& success, bool _toggle) {
 EXPORT void Native_setInteriorZoomLevelDecreased(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7EC8ABA5E74B3D7A);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21056,7 +21056,7 @@ EXPORT void Native_hideMinimapInteriorMapThisFrame(bool& success) {
 EXPORT void Native_setToggleMinimapHeistIsland(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5E1460624D194A38);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21098,7 +21098,7 @@ EXPORT void Native_setWidescreenFormat(bool& success, int32_t _p0) {
 EXPORT void Native_displayAreaName(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x276B6CE369C33678);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21109,7 +21109,7 @@ EXPORT void Native_displayAreaName(bool& success, bool _toggle) {
 EXPORT void Native_displayCash(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x96DEC8D5430208B7);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21120,7 +21120,7 @@ EXPORT void Native_displayCash(bool& success, bool _toggle) {
 EXPORT void Native__0x170F541E1CADD1DE(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x170F541E1CADD1DE);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21143,7 +21143,7 @@ EXPORT void Native_setPlayerCashChange(bool& success, int32_t _cash, int32_t _ba
 EXPORT void Native_displayAmmoThisFrame(bool& success, bool _display) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA5E78BA2B1331C55);
 	ctx->Reset();
-	ctx->Push(_display);
+	ctx->Push((int32_t) _display);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21174,7 +21174,7 @@ EXPORT void Native_hideHudAndRadarThisFrame(bool& success) {
 EXPORT void Native__0xE67C6DFD386EA5E7(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE67C6DFD386EA5E7);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21269,7 +21269,7 @@ EXPORT void Native_displayHelpTextThisFrame(bool& success, const char* _message,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x960C9FF8F616E41C);
 	ctx->Reset();
 	ctx->Push(SaveString(_message));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21280,7 +21280,7 @@ EXPORT void Native_displayHelpTextThisFrame(bool& success, const char* _message,
 EXPORT void Native_hudForceWeaponWheel(bool& success, bool _show) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEB354E5376BC81A7);
 	ctx->Reset();
-	ctx->Push(_show);
+	ctx->Push((int32_t) _show);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21308,7 +21308,7 @@ EXPORT void Native_blockWeaponWheelThisFrame(bool& success) {
 	success = true;
 }
 
-EXPORT int32_t Native_hudWeaponWheelGetSelectedHash(bool& success) {
+EXPORT uint32_t Native_hudWeaponWheelGetSelectedHash(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA48931185F0536FE);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -21316,10 +21316,10 @@ EXPORT int32_t Native_hudWeaponWheelGetSelectedHash(bool& success) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT void Native_hudSetWeaponWheelTopSlot(bool& success, int32_t _weaponHash) {
+EXPORT void Native_hudSetWeaponWheelTopSlot(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x72C1056D678BB7D8);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -21330,7 +21330,7 @@ EXPORT void Native_hudSetWeaponWheelTopSlot(bool& success, int32_t _weaponHash) 
 	success = true;
 }
 
-EXPORT int32_t Native_hudWeaponWheelGetSlotHash(bool& success, int32_t _weaponTypeIndex) {
+EXPORT uint32_t Native_hudWeaponWheelGetSlotHash(bool& success, int32_t _weaponTypeIndex) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA13E93403F26C812);
 	ctx->Reset();
 	ctx->Push(_weaponTypeIndex);
@@ -21339,13 +21339,13 @@ EXPORT int32_t Native_hudWeaponWheelGetSlotHash(bool& success, int32_t _weaponTy
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_hudWeaponWheelIgnoreControlInput(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x14C9FDCC41F81F63);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21378,7 +21378,7 @@ EXPORT void Native_clearGpsFlags(bool& success) {
 EXPORT void Native_setRaceTrackRender(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1EAC5F91BCBC5073);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21400,8 +21400,8 @@ EXPORT void Native_startGpsCustomRoute(bool& success, int32_t _hudColor, bool _d
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDB34E8D56FC13B08);
 	ctx->Reset();
 	ctx->Push(_hudColor);
-	ctx->Push(_displayOnFoot);
-	ctx->Push(_followPlayer);
+	ctx->Push((int32_t) _displayOnFoot);
+	ctx->Push((int32_t) _followPlayer);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21425,7 +21425,7 @@ EXPORT void Native_addPointToGpsCustomRoute(bool& success, float _x, float _y, f
 EXPORT void Native_setGpsCustomRouteRender(bool& success, bool _toggle, int32_t _radarThickness, int32_t _mapThickness) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x900086F371220B6F);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_radarThickness);
 	ctx->Push(_mapThickness);
 	if (!native->Invoke(ctx)) {
@@ -21449,8 +21449,8 @@ EXPORT void Native_startGpsMultiRoute(bool& success, int32_t _hudColor, bool _ro
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3D3D15AF7BCAAF83);
 	ctx->Reset();
 	ctx->Push(_hudColor);
-	ctx->Push(_routeFromPlayer);
-	ctx->Push(_displayOnFoot);
+	ctx->Push((int32_t) _routeFromPlayer);
+	ctx->Push((int32_t) _displayOnFoot);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21474,7 +21474,7 @@ EXPORT void Native_addPointToGpsMultiRoute(bool& success, float _x, float _y, fl
 EXPORT void Native_setGpsMultiRouteRender(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3DDA37128DD1ACA8);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21505,7 +21505,7 @@ EXPORT void Native_clearGpsPlayerWaypoint(bool& success) {
 EXPORT void Native_setGpsFlashes(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x320D0E0D936A0E9B);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21548,7 +21548,7 @@ EXPORT void Native_flashMinimapDisplayWithColor(bool& success, int32_t _hudColor
 EXPORT void Native_toggleStealthRadar(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6AFDFB93754950C7);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21559,7 +21559,7 @@ EXPORT void Native_toggleStealthRadar(bool& success, bool _toggle) {
 EXPORT void Native_setMinimapInSpectatorMode(bool& success, bool _toggle, int32_t _ped) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1A5CD7752DD28CD3);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_ped);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -21571,7 +21571,7 @@ EXPORT void Native_setMinimapInSpectatorMode(bool& success, bool _toggle, int32_
 EXPORT void Native_setMissionName(bool& success, bool _p0, const char* _name) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5F28ECF5FC84772F);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(SaveString(_name));
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -21583,7 +21583,7 @@ EXPORT void Native_setMissionName(bool& success, bool _p0, const char* _name) {
 EXPORT void Native_setMissionName2(bool& success, bool _p0, const char* _name) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE45087D85F468BC2);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(SaveString(_name));
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -21595,7 +21595,7 @@ EXPORT void Native_setMissionName2(bool& success, bool _p0, const char* _name) {
 EXPORT void Native__0x817B86108EB94E51(bool& success, bool _p0, int32_t& _p1, int32_t& _p2, int32_t& _p3, int32_t& _p4, int32_t& _p5, int32_t& _p6, int32_t& _p7, int32_t& _p8) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x817B86108EB94E51);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	auto ptr_p1 = _p1;
 	ctx->Push(&ptr_p1);
 	auto ptr_p2 = _p2;
@@ -21630,7 +21630,7 @@ EXPORT void Native__0x817B86108EB94E51(bool& success, bool _p0, int32_t& _p1, in
 EXPORT void Native_setMinimapBlockWaypoint(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x58FADDED207897DC);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21641,7 +21641,7 @@ EXPORT void Native_setMinimapBlockWaypoint(bool& success, bool _toggle) {
 EXPORT void Native_setMinimapInPrologue(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9133955F1A2DA957);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21652,7 +21652,7 @@ EXPORT void Native_setMinimapInPrologue(bool& success, bool _toggle) {
 EXPORT void Native_setMinimapHideFow(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF8DEE0A5600CBB93);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21688,7 +21688,7 @@ EXPORT bool Native_getMinimapFowCoordinateIsRevealed(bool& success, float _x, fl
 EXPORT void Native__0x62E849B7EB28E770(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x62E849B7EB28E770);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21777,7 +21777,7 @@ EXPORT void Native_setMinimapAltitudeIndicatorLevel(bool& success, float _altitu
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD201F3FF917A506D);
 	ctx->Reset();
 	ctx->Push(_altitude);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -21791,7 +21791,7 @@ EXPORT void Native_setHealthHudDisplayValues(bool& success, int32_t _health, int
 	ctx->Reset();
 	ctx->Push(_health);
 	ctx->Push(_capacity);
-	ctx->Push(_wasAdded);
+	ctx->Push((int32_t) _wasAdded);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -21824,8 +21824,8 @@ EXPORT void Native_setMaxArmourHudDisplay(bool& success, int32_t _maximumValue) 
 EXPORT void Native_setBigmapActive(bool& success, bool _toggleBigMap, bool _showFullMap) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x231C8F89D0539D8F);
 	ctx->Reset();
-	ctx->Push(_toggleBigMap);
-	ctx->Push(_showFullMap);
+	ctx->Push((int32_t) _toggleBigMap);
+	ctx->Push((int32_t) _showFullMap);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -22104,7 +22104,7 @@ EXPORT void Native_clearFloatingHelp(bool& success, int32_t _hudIndex, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x50085246ABD3FEFA);
 	ctx->Reset();
 	ctx->Push(_hudIndex);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -22117,8 +22117,8 @@ EXPORT void Native_createMpGamerTagWithCrewColor(bool& success, int32_t _player,
 	ctx->Reset();
 	ctx->Push(_player);
 	ctx->Push(SaveString(_username));
-	ctx->Push(_pointedClanTag);
-	ctx->Push(_isRockstarClan);
+	ctx->Push((int32_t) _pointedClanTag);
+	ctx->Push((int32_t) _isRockstarClan);
 	ctx->Push(SaveString(_clanTag));
 	ctx->Push(_clanFlag);
 	ctx->Push(_r);
@@ -22147,8 +22147,8 @@ EXPORT int32_t Native_createFakeMpGamerTag(bool& success, int32_t _ped, const ch
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(SaveString(_username));
-	ctx->Push(_pointedClanTag);
-	ctx->Push(_isRockstarClan);
+	ctx->Push((int32_t) _pointedClanTag);
+	ctx->Push((int32_t) _isRockstarClan);
 	ctx->Push(SaveString(_clanTag));
 	ctx->Push(_clanFlag);
 	if (!native->Invoke(ctx)) {
@@ -22199,7 +22199,7 @@ EXPORT void Native_setMpGamerTagVisibility(bool& success, int32_t _gamerTagId, i
 	ctx->Reset();
 	ctx->Push(_gamerTagId);
 	ctx->Push(_component);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -22212,7 +22212,7 @@ EXPORT void Native_setMpGamerTagEnabled(bool& success, int32_t _gamerTagId, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEE76FF7E6A0166B0);
 	ctx->Reset();
 	ctx->Push(_gamerTagId);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -22224,7 +22224,7 @@ EXPORT void Native_setMpGamerTagIcons(bool& success, int32_t _gamerTagId, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA67F9C46D612B6F1);
 	ctx->Reset();
 	ctx->Push(_gamerTagId);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -22236,7 +22236,7 @@ EXPORT void Native_setMpGamerHealthBarDisplay(bool& success, int32_t _gamerTagId
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD29EC58C2F6B5014);
 	ctx->Reset();
 	ctx->Push(_gamerTagId);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -22417,11 +22417,11 @@ EXPORT void Native_setWarningMessage(bool& success, const char* _titleMsg, int32
 	ctx->Push(SaveString(_titleMsg));
 	ctx->Push(_flags);
 	ctx->Push(SaveString(_promptMsg));
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	ctx->Push(_p4);
 	ctx->Push(SaveString(_p5));
 	ctx->Push(SaveString(_p6));
-	ctx->Push(_showBackground);
+	ctx->Push((int32_t) _showBackground);
 	ctx->Push(_p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -22437,13 +22437,13 @@ EXPORT void Native_setWarningMessageWithHeader(bool& success, const char* _entry
 	ctx->Push(SaveString(_entryLine1));
 	ctx->Push(_instructionalKey);
 	ctx->Push(SaveString(_entryLine2));
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(_p5);
 	auto ptr_showBackground = _showBackground;
 	ctx->Push(&ptr_showBackground);
 	auto ptr_p7 = _p7;
 	ctx->Push(&ptr_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -22461,12 +22461,12 @@ EXPORT void Native_setWarningMessageWithHeaderAndSubstringFlags(bool& success, c
 	ctx->Push(SaveString(_entryLine1));
 	ctx->Push(_instructionalKey);
 	ctx->Push(SaveString(_entryLine2));
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(_p5);
 	ctx->Push(_additionalIntInfo);
 	ctx->Push(SaveString(_additionalTextInfoLine1));
 	ctx->Push(SaveString(_additionalTextInfoLine2));
-	ctx->Push(_showBackground);
+	ctx->Push((int32_t) _showBackground);
 	ctx->Push(_errorCode);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -22482,13 +22482,13 @@ EXPORT void Native_setWarningMessageWithHeaderUnk(bool& success, const char* _en
 	ctx->Push(SaveString(_entryLine1));
 	ctx->Push(_flags);
 	ctx->Push(SaveString(_entryLine2));
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(_p5);
 	auto ptr_p6 = _p6;
 	ctx->Push(&ptr_p6);
 	auto ptr_p7 = _p7;
 	ctx->Push(&ptr_p7);
-	ctx->Push(_showBg);
+	ctx->Push((int32_t) _showBg);
 	ctx->Push(_p9);
 	ctx->Push(_p10);
 	if (!native->Invoke(ctx)) {
@@ -22508,12 +22508,12 @@ EXPORT void Native_setWarningMessageWithAlert(bool& success, const char* _labelT
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	ctx->Push(SaveString(_labelMessage2));
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	ctx->Push(_p6);
 	ctx->Push(_p7);
 	ctx->Push(SaveString(_p8));
 	ctx->Push(SaveString(_p9));
-	ctx->Push(_background);
+	ctx->Push((int32_t) _background);
 	ctx->Push(_errorCode);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -22522,7 +22522,7 @@ EXPORT void Native_setWarningMessageWithAlert(bool& success, const char* _labelT
 	success = true;
 }
 
-EXPORT int32_t Native_getWarningMessageTitleHash(bool& success) {
+EXPORT uint32_t Native_getWarningMessageTitleHash(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x81DF9ABA6C83DFF9);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -22530,7 +22530,7 @@ EXPORT int32_t Native_getWarningMessageTitleHash(bool& success) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT bool Native_setWarningMessageListRow(bool& success, int32_t _index, const char* _name, int32_t _cash, int32_t _rp, int32_t _lvl, int32_t _colour) {
@@ -22596,7 +22596,7 @@ EXPORT void Native_clearDynamicPauseMenuErrorMessage(bool& success) {
 EXPORT void Native_raceGalleryFullscreen(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5354C5BA2EA868A4);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -22664,7 +22664,7 @@ EXPORT int32_t Native_getNorthRadarBlip(bool& success) {
 EXPORT void Native_displayPlayerNameTagsOnBlips(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x82CEDC33687E1F50);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -22692,11 +22692,11 @@ EXPORT void Native__0xBF4F34A85CA2970C(bool& success) {
 	success = true;
 }
 
-EXPORT void Native_activateFrontendMenu(bool& success, int32_t _menuhash, bool _togglePause, int32_t _component) {
+EXPORT void Native_activateFrontendMenu(bool& success, uint32_t _menuhash, bool _togglePause, int32_t _component) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEF01D36B9C9D0C7B);
 	ctx->Reset();
 	ctx->Push(_menuhash);
-	ctx->Push(_togglePause);
+	ctx->Push((int32_t) _togglePause);
 	ctx->Push(_component);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -22705,7 +22705,7 @@ EXPORT void Native_activateFrontendMenu(bool& success, int32_t _menuhash, bool _
 	success = true;
 }
 
-EXPORT void Native_restartFrontendMenu(bool& success, int32_t _menuHash, int32_t _p1) {
+EXPORT void Native_restartFrontendMenu(bool& success, uint32_t _menuHash, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x10706DC6AD2D49C0);
 	ctx->Reset();
 	ctx->Push(_menuHash);
@@ -22717,7 +22717,7 @@ EXPORT void Native_restartFrontendMenu(bool& success, int32_t _menuHash, int32_t
 	success = true;
 }
 
-EXPORT int32_t Native_getCurrentFrontendMenuVersion(bool& success) {
+EXPORT uint32_t Native_getCurrentFrontendMenuVersion(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2309595AD6145265);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -22725,13 +22725,13 @@ EXPORT int32_t Native_getCurrentFrontendMenuVersion(bool& success) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_setPauseMenuActive(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDF47FC56C71569CF);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -22772,7 +22772,7 @@ EXPORT void Native_allowPauseMenuWhenDeadThisFrame(bool& success) {
 EXPORT void Native_setFrontendActive(bool& success, bool _active) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x745711A75AB09277);
 	ctx->Reset();
-	ctx->Push(_active);
+	ctx->Push((int32_t) _active);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -22879,7 +22879,7 @@ EXPORT void Native__0x2DE6C5E2E996F178(bool& success, int32_t _p0) {
 	success = true;
 }
 
-EXPORT void Native_pauseMenuActivateContext(bool& success, int32_t _contextHash) {
+EXPORT void Native_pauseMenuActivateContext(bool& success, uint32_t _contextHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDD564BDD0472C936);
 	ctx->Reset();
 	ctx->Push(_contextHash);
@@ -22890,7 +22890,7 @@ EXPORT void Native_pauseMenuActivateContext(bool& success, int32_t _contextHash)
 	success = true;
 }
 
-EXPORT void Native_pauseMenuDeactivateContext(bool& success, int32_t _contextHash) {
+EXPORT void Native_pauseMenuDeactivateContext(bool& success, uint32_t _contextHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x444D8CF241EC25C5);
 	ctx->Reset();
 	ctx->Push(_contextHash);
@@ -22901,7 +22901,7 @@ EXPORT void Native_pauseMenuDeactivateContext(bool& success, int32_t _contextHas
 	success = true;
 }
 
-EXPORT bool Native_pauseMenuIsContextActive(bool& success, int32_t _contextHash) {
+EXPORT bool Native_pauseMenuIsContextActive(bool& success, uint32_t _contextHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x84698AB38D0C6636);
 	ctx->Reset();
 	ctx->Push(_contextHash);
@@ -22991,7 +22991,7 @@ EXPORT void Native__0x4895BDEA16E7C080(bool& success, int32_t _p0) {
 EXPORT void Native_pauseMenuSetBusySpinner(bool& success, bool _p0, int32_t _p1, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC78E239AC5B2DDB9);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
@@ -23004,7 +23004,7 @@ EXPORT void Native_pauseMenuSetBusySpinner(bool& success, bool _p0, int32_t _p1,
 EXPORT void Native__0xF06EBB91A81E09E3(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF06EBB91A81E09E3);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23195,7 +23195,7 @@ EXPORT bool Native__0xCA6B2F7CE32AB653(bool& success, int32_t _p0, int32_t& _p1,
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_getMenuPedMaskedIntStat(bool& success, int32_t _p0, int32_t& _p1, int32_t _p2, int32_t _p3) {
+EXPORT bool Native_getMenuPedMaskedIntStat(bool& success, uint32_t _p0, int32_t& _p1, int32_t _p2, int32_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x90A6526CF0381030);
 	ctx->Reset();
 	ctx->Push(_p0);
@@ -23261,7 +23261,7 @@ EXPORT bool Native__0x8F08017F9D7C47BD(bool& success, int32_t _p0, int32_t& _p1,
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_getMenuPedBoolStat(bool& success, int32_t _p0, int32_t& _p1) {
+EXPORT bool Native_getMenuPedBoolStat(bool& success, uint32_t _p0, int32_t& _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x052991E59076E4E4);
 	ctx->Reset();
 	ctx->Push(_p0);
@@ -23301,7 +23301,7 @@ EXPORT void Native_givePedToPauseMenu(bool& success, int32_t _ped, int32_t _p1) 
 EXPORT void Native_setPauseMenuPedLighting(bool& success, bool _state) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3CA6050692BC61B0);
 	ctx->Reset();
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23312,7 +23312,7 @@ EXPORT void Native_setPauseMenuPedLighting(bool& success, bool _state) {
 EXPORT void Native_setPauseMenuPedSleepState(bool& success, bool _state) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xECF128344E9FF9F1);
 	ctx->Reset();
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23397,7 +23397,7 @@ EXPORT bool Native_isSocialClubActive(bool& success) {
 EXPORT void Native__0x1185A8087587322C(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1185A8087587322C);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23426,7 +23426,7 @@ EXPORT void Native__0x577599CCED639CA2(bool& success, int32_t _p0) {
 	success = true;
 }
 
-EXPORT void Native_overrideMultiplayerChatPrefix(bool& success, int32_t _gxtEntryHash) {
+EXPORT void Native_overrideMultiplayerChatPrefix(bool& success, uint32_t _gxtEntryHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6A1738B4323FE2D9);
 	ctx->Reset();
 	ctx->Push(_gxtEntryHash);
@@ -23484,7 +23484,7 @@ EXPORT void Native_overrideMultiplayerChatColour(bool& success, int32_t _p0, int
 EXPORT void Native_setTextChatUnk(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1DB21A44B09E8BA3);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23495,7 +23495,7 @@ EXPORT void Native_setTextChatUnk(bool& success, bool _p0) {
 EXPORT void Native_flagPlayerContextInTournament(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCEF214315D276FD1);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23507,7 +23507,7 @@ EXPORT void Native_setPedHasAiBlip(bool& success, int32_t _ped, bool _hasCone) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD30C50DF888D58B5);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_hasCone);
+	ctx->Push((int32_t) _hasCone);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23519,7 +23519,7 @@ EXPORT void Native_setPedHasAiBlipWithColor(bool& success, int32_t _ped, bool _h
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB13DCB4C6FAAD238);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_hasCone);
+	ctx->Push((int32_t) _hasCone);
 	ctx->Push(_color);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -23556,7 +23556,7 @@ EXPORT void Native_setPedAiBlipHasCone(bool& success, int32_t _ped, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3EED80DFF7325CAA);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23568,7 +23568,7 @@ EXPORT void Native_setPedAiBlipForcedOn(bool& success, int32_t _ped, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0C4BBF625CA98C4E);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23648,7 +23648,7 @@ EXPORT void Native_setDirectorModeClearTriggeredFlag(bool& success) {
 EXPORT void Native_setPlayerIsInDirectorMode(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x808519373FD336A3);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23659,7 +23659,7 @@ EXPORT void Native_setPlayerIsInDirectorMode(bool& success, bool _toggle) {
 EXPORT void Native__0x04655F9D075D0AE5(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x04655F9D075D0AE5);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -23689,7 +23689,7 @@ EXPORT float Native_getInteriorHeading(bool& success, int32_t _interior) {
 	return ctx->ResultFloat();
 }
 
-EXPORT void Native_getInteriorInfo(bool& success, int32_t _interior, vector3_t& _position, int32_t& _nameHash) {
+EXPORT void Native_getInteriorInfo(bool& success, int32_t _interior, vector3_t& _position, uint32_t& _nameHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x252BDC06B73FA6EA);
 	ctx->Reset();
 	ctx->Push(_interior);
@@ -23770,7 +23770,7 @@ EXPORT void Native_clearRoomForEntity(bool& success, int32_t _entity) {
 	success = true;
 }
 
-EXPORT void Native_forceRoomForEntity(bool& success, int32_t _entity, int32_t _interior, int32_t _roomHashKey) {
+EXPORT void Native_forceRoomForEntity(bool& success, int32_t _entity, int32_t _interior, uint32_t _roomHashKey) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x52923C4710DD9907);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -23783,7 +23783,7 @@ EXPORT void Native_forceRoomForEntity(bool& success, int32_t _entity, int32_t _i
 	success = true;
 }
 
-EXPORT int32_t Native_getRoomKeyFromEntity(bool& success, int32_t _entity) {
+EXPORT uint32_t Native_getRoomKeyFromEntity(bool& success, int32_t _entity) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x47C2A06D4F5F424B);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -23792,10 +23792,10 @@ EXPORT int32_t Native_getRoomKeyFromEntity(bool& success, int32_t _entity) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getKeyForEntityInRoom(bool& success, int32_t _entity) {
+EXPORT uint32_t Native_getKeyForEntityInRoom(bool& success, int32_t _entity) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x399685DB942336BC);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -23804,7 +23804,7 @@ EXPORT int32_t Native_getKeyForEntityInRoom(bool& success, int32_t _entity) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT int32_t Native_getInteriorFromEntity(bool& success, int32_t _entity) {
@@ -23854,7 +23854,7 @@ EXPORT void Native__0x38C1CB1CB119A016(bool& success, int32_t _p0, int32_t _p1) 
 	success = true;
 }
 
-EXPORT void Native_forceRoomForGameViewport(bool& success, int32_t _interiorID, int32_t _roomHashKey) {
+EXPORT void Native_forceRoomForGameViewport(bool& success, int32_t _interiorID, uint32_t _roomHashKey) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x920D853F3E17F1DA);
 	ctx->Reset();
 	ctx->Push(_interiorID);
@@ -23877,7 +23877,7 @@ EXPORT void Native__0xAF348AFCB575A441(bool& success, const char* _roomName) {
 	success = true;
 }
 
-EXPORT void Native__0x405DC2AEF6AF95B9(bool& success, int32_t _roomHashKey) {
+EXPORT void Native__0x405DC2AEF6AF95B9(bool& success, uint32_t _roomHashKey) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x405DC2AEF6AF95B9);
 	ctx->Reset();
 	ctx->Push(_roomHashKey);
@@ -23888,7 +23888,7 @@ EXPORT void Native__0x405DC2AEF6AF95B9(bool& success, int32_t _roomHashKey) {
 	success = true;
 }
 
-EXPORT int32_t Native_getRoomKeyForGameViewport(bool& success) {
+EXPORT uint32_t Native_getRoomKeyForGameViewport(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA6575914D2A0B450);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -23896,7 +23896,7 @@ EXPORT int32_t Native_getRoomKeyForGameViewport(bool& success) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_clearRoomForGameViewport(bool& success) {
@@ -24007,7 +24007,7 @@ EXPORT int32_t Native_getInteriorAtCoordsWithType(bool& success, float _x, float
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getInteriorAtCoordsWithTypehash(bool& success, float _x, float _y, float _z, int32_t _typeHash) {
+EXPORT int32_t Native_getInteriorAtCoordsWithTypehash(bool& success, float _x, float _y, float _z, uint32_t _typeHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF0F77ADB9F67E79D);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -24132,7 +24132,7 @@ EXPORT void Native_refreshInterior(bool& success, int32_t _interior) {
 	success = true;
 }
 
-EXPORT void Native_enableExteriorCullModelThisFrame(bool& success, int32_t _mapObjectHash) {
+EXPORT void Native_enableExteriorCullModelThisFrame(bool& success, uint32_t _mapObjectHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA97F257D0151A6AB);
 	ctx->Reset();
 	ctx->Push(_mapObjectHash);
@@ -24143,7 +24143,7 @@ EXPORT void Native_enableExteriorCullModelThisFrame(bool& success, int32_t _mapO
 	success = true;
 }
 
-EXPORT void Native_enableScriptCullModelThisFrame(bool& success, int32_t _mapObjectHash) {
+EXPORT void Native_enableScriptCullModelThisFrame(bool& success, uint32_t _mapObjectHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x50C375537449F369);
 	ctx->Reset();
 	ctx->Push(_mapObjectHash);
@@ -24158,7 +24158,7 @@ EXPORT void Native_disableInterior(bool& success, int32_t _interior, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6170941419D7D8EC);
 	ctx->Reset();
 	ctx->Push(_interior);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24182,7 +24182,7 @@ EXPORT void Native_capInterior(bool& success, int32_t _interior, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD9175F941610DB54);
 	ctx->Reset();
 	ctx->Push(_interior);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24205,7 +24205,7 @@ EXPORT bool Native_isInteriorCapped(bool& success, int32_t _interior) {
 EXPORT void Native__0x9E6542F0CE8E70A3(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9E6542F0CE8E70A3);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24217,7 +24217,7 @@ EXPORT void Native__0x7241CCB7D020DB69(bool& success, int32_t _entity, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7241CCB7D020DB69);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24228,7 +24228,7 @@ EXPORT void Native__0x7241CCB7D020DB69(bool& success, int32_t _entity, bool _tog
 EXPORT int32_t Native_createItemset(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x35AD299F50D91B24);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -24359,7 +24359,7 @@ EXPORT bool Native_loadingscreenGetLoadFreemode(bool& success) {
 EXPORT void Native_loadingscreenSetLoadFreemode(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB0C56BD3D808D863);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24381,7 +24381,7 @@ EXPORT bool Native_loadingscreenGetLoadFreemodeWithEventName(bool& success) {
 EXPORT void Native_loadingscreenSetLoadFreemodeWithEventName(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFC309E94546FCDB5);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24403,7 +24403,7 @@ EXPORT bool Native_loadingscreenIsLoadingFreemode(bool& success) {
 EXPORT void Native_loadingscreenSetIsLoadingFreemode(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC7E7181C09F33B69);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24414,7 +24414,7 @@ EXPORT void Native_loadingscreenSetIsLoadingFreemode(bool& success, bool _toggle
 EXPORT void Native__0xFA1E0E893D915215(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFA1E0E893D915215);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24503,7 +24503,7 @@ EXPORT void Native_setTimeScale(bool& success, float _timeScale) {
 EXPORT void Native_setMissionFlag(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC4301E5121A0ED73);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24525,7 +24525,7 @@ EXPORT bool Native_getMissionFlag(bool& success) {
 EXPORT void Native_setRandomEventFlag(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x971927086CFD2158);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24669,7 +24669,7 @@ EXPORT bool Native_hasResumedFromSuspend(bool& success) {
 EXPORT void Native__0x65D2EBB47E1CEC21(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x65D2EBB47E1CEC21);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24680,7 +24680,7 @@ EXPORT void Native__0x65D2EBB47E1CEC21(bool& success, bool _toggle) {
 EXPORT void Native__0x6F2135B6129620C1(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6F2135B6129620C1);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -24707,7 +24707,7 @@ EXPORT bool Native_getBaseElementMetadata(bool& success, int32_t& _p0, int32_t& 
 	auto ptr_p1 = _p1;
 	ctx->Push(&ptr_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -24718,7 +24718,7 @@ EXPORT bool Native_getBaseElementMetadata(bool& success, int32_t& _p0, int32_t& 
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_getPrevWeatherTypeHashName(bool& success) {
+EXPORT uint32_t Native_getPrevWeatherTypeHashName(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x564B884A05EC45A3);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -24726,10 +24726,10 @@ EXPORT int32_t Native_getPrevWeatherTypeHashName(bool& success) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getNextWeatherTypeHashName(bool& success) {
+EXPORT uint32_t Native_getNextWeatherTypeHashName(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x711327CD09C8F162);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -24737,7 +24737,7 @@ EXPORT int32_t Native_getNextWeatherTypeHashName(bool& success) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT bool Native_isPrevWeatherType(bool& success, const char* _weatherType) {
@@ -24840,7 +24840,7 @@ EXPORT void Native__0x0CF97F497FE7D048(bool& success, float _p0) {
 	success = true;
 }
 
-EXPORT void Native_getWeatherTypeTransition(bool& success, int32_t& _weatherType1, int32_t& _weatherType2, float& _percentWeather2) {
+EXPORT void Native_getWeatherTypeTransition(bool& success, uint32_t& _weatherType1, uint32_t& _weatherType2, float& _percentWeather2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF3BBE884A14BB413);
 	ctx->Reset();
 	auto ptr_weatherType1 = _weatherType1;
@@ -24859,7 +24859,7 @@ EXPORT void Native_getWeatherTypeTransition(bool& success, int32_t& _weatherType
 	_percentWeather2 = ptr_percentWeather2;
 }
 
-EXPORT void Native_setWeatherTypeTransition(bool& success, int32_t _weatherType1, int32_t _weatherType2, float _percentWeather2) {
+EXPORT void Native_setWeatherTypeTransition(bool& success, uint32_t _weatherType1, uint32_t _weatherType2, float _percentWeather2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x578C752848ECFA0C);
 	ctx->Reset();
 	ctx->Push(_weatherType1);
@@ -25338,8 +25338,8 @@ EXPORT bool Native_getGroundZFor3dCoord(bool& success, float _x, float _y, float
 	ctx->Push(_z);
 	auto ptr_groundZ = _groundZ;
 	ctx->Push(&ptr_groundZ);
-	ctx->Push(_ignoreWater);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _ignoreWater);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -25379,8 +25379,8 @@ EXPORT bool Native_getGroundZFor3dCoord2(bool& success, float _x, float _y, floa
 	ctx->Push(_z);
 	auto ptr_groundZ = _groundZ;
 	ctx->Push(&ptr_groundZ);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -25460,7 +25460,7 @@ EXPORT float Native_getDistanceBetweenCoords(bool& success, float _x1, float _y1
 	ctx->Push(_x2);
 	ctx->Push(_y2);
 	ctx->Push(_z2);
-	ctx->Push(_useZ);
+	ctx->Push((int32_t) _useZ);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0.f;
@@ -25509,7 +25509,7 @@ EXPORT float Native__0x7F8F6405F4777AF6(bool& success, float _p0, float _p1, flo
 	ctx->Push(_p6);
 	ctx->Push(_p7);
 	ctx->Push(_p8);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0.f;
@@ -25530,7 +25530,7 @@ EXPORT vector3_t Native__0x21C235BC64831E5A(bool& success, float _p0, float _p1,
 	ctx->Push(_p6);
 	ctx->Push(_p7);
 	ctx->Push(_p8);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return { 0, 0, 0 };
@@ -25619,7 +25619,7 @@ EXPORT void Native_clearBit(bool& success, int32_t& _address, int32_t _offset) {
 	_address = ptr_address;
 }
 
-EXPORT int32_t Native_getHashKey(bool& success, const char* _string) {
+EXPORT uint32_t Native_getHashKey(bool& success, const char* _string) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD24D37CC275948CC);
 	ctx->Reset();
 	ctx->Push(SaveString(_string));
@@ -25628,7 +25628,7 @@ EXPORT int32_t Native_getHashKey(bool& success, const char* _string) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_slerpNearQuaternion(bool& success, float _t, float _x, float _y, float _z, float _w, float _x1, float _y1, float _z1, float _w1, float& _outX, float& _outY, float& _outZ, float& _outW) {
@@ -25671,13 +25671,13 @@ EXPORT bool Native_isAreaOccupied(bool& success, float _p0, float _p1, float _p2
 	ctx->Push(_p3);
 	ctx->Push(_p4);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
-	ctx->Push(_p9);
-	ctx->Push(_p10);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
+	ctx->Push((int32_t) _p9);
+	ctx->Push((int32_t) _p10);
 	ctx->Push(_p11);
-	ctx->Push(_p12);
+	ctx->Push((int32_t) _p12);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -25717,13 +25717,13 @@ EXPORT bool Native_isPositionOccupied(bool& success, float _x, float _y, float _
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_range);
-	ctx->Push(_p4);
-	ctx->Push(_checkVehicles);
-	ctx->Push(_checkPeds);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _checkVehicles);
+	ctx->Push((int32_t) _checkPeds);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_ignoreEntity);
-	ctx->Push(_p10);
+	ctx->Push((int32_t) _p10);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -25757,10 +25757,10 @@ EXPORT void Native_clearArea(bool& success, float _X, float _Y, float _Z, float 
 	ctx->Push(_Y);
 	ctx->Push(_Z);
 	ctx->Push(_radius);
-	ctx->Push(_p4);
-	ctx->Push(_ignoreCopCars);
-	ctx->Push(_ignoreObjects);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _ignoreCopCars);
+	ctx->Push((int32_t) _ignoreObjects);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -25775,10 +25775,10 @@ EXPORT void Native_clearAreaLeaveVehicleHealth(bool& success, float _x, float _y
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_radius);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -25793,12 +25793,12 @@ EXPORT void Native_clearAreaOfVehicles(bool& success, float _x, float _y, float 
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_radius);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
+	ctx->Push((int32_t) _p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -25816,11 +25816,11 @@ EXPORT void Native_clearAngledAreaOfVehicles(bool& success, float _x1, float _y1
 	ctx->Push(_y2);
 	ctx->Push(_z2);
 	ctx->Push(_width);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
-	ctx->Push(_p9);
-	ctx->Push(_p10);
-	ctx->Push(_p11);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
+	ctx->Push((int32_t) _p9);
+	ctx->Push((int32_t) _p10);
+	ctx->Push((int32_t) _p11);
 	ctx->Push(_p12);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -25902,7 +25902,7 @@ EXPORT void Native__0x7EC6F9A478A6A512(bool& success) {
 EXPORT void Native_setSaveMenuActive(bool& success, bool _ignoreVehicle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC9BF75D28165FF77);
 	ctx->Reset();
-	ctx->Push(_ignoreVehicle);
+	ctx->Push((int32_t) _ignoreVehicle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -25924,7 +25924,7 @@ EXPORT int32_t Native__0x397BAA01068BAA96(bool& success) {
 EXPORT void Native_setCreditsActive(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB938B7E6D3C0620C);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -25935,7 +25935,7 @@ EXPORT void Native_setCreditsActive(bool& success, bool _toggle) {
 EXPORT void Native__0xB51B9AB9EF81868C(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB51B9AB9EF81868C);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -25995,7 +25995,7 @@ EXPORT void Native_disableHospitalRestart(bool& success, int32_t _hospitalIndex,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC8535819C450EBA8);
 	ctx->Reset();
 	ctx->Push(_hospitalIndex);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26023,7 +26023,7 @@ EXPORT void Native_disablePoliceRestart(bool& success, int32_t _policeIndex, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x23285DED6EBD7EA3);
 	ctx->Reset();
 	ctx->Push(_policeIndex);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26058,7 +26058,7 @@ EXPORT void Native_clearRestartCustomPosition(bool& success) {
 EXPORT void Native_pauseDeathArrestRestart(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2C2B3493FBF51C71);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26069,7 +26069,7 @@ EXPORT void Native_pauseDeathArrestRestart(bool& success, bool _toggle) {
 EXPORT void Native_ignoreNextRestart(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x21FFB63D8C615361);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26080,7 +26080,7 @@ EXPORT void Native_ignoreNextRestart(bool& success, bool _toggle) {
 EXPORT void Native_setFadeOutAfterDeath(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4A18E01DF2C87B86);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26091,7 +26091,7 @@ EXPORT void Native_setFadeOutAfterDeath(bool& success, bool _toggle) {
 EXPORT void Native_setFadeOutAfterArrest(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1E0B4DC0D990A4E7);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26102,7 +26102,7 @@ EXPORT void Native_setFadeOutAfterArrest(bool& success, bool _toggle) {
 EXPORT void Native_setFadeInAfterDeathArrest(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDA66D2796BA33F12);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26113,7 +26113,7 @@ EXPORT void Native_setFadeInAfterDeathArrest(bool& success, bool _toggle) {
 EXPORT void Native_setFadeInAfterLoad(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF3D78F59DFE18D79);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26145,8 +26145,8 @@ EXPORT void Native_setSaveHouse(bool& success, int32_t _p0, bool _p1, bool _p2) 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4F548CABEAE553BC);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26157,12 +26157,12 @@ EXPORT void Native_setSaveHouse(bool& success, int32_t _p0, bool _p1, bool _p2) 
 EXPORT bool Native_overrideSaveHouse(bool& success, bool _p0, float _p1, float _p2, float _p3, float _p4, bool _p5, float _p6, float _p7) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1162EA8AE9D24EEA);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	ctx->Push(_p6);
 	ctx->Push(_p7);
 	if (!native->Invoke(ctx)) {
@@ -26180,9 +26180,9 @@ EXPORT bool Native__0xA4A0065E39C9F25C(bool& success, vector3_t& _p0, float& _p1
 	ctx->Push(&converted_p0);
 	auto ptr_p1 = _p1;
 	ctx->Push(&ptr_p1);
-	auto ptr_fadeInAfterLoad = _fadeInAfterLoad;
+	auto ptr_fadeInAfterLoad = (int32_t) _fadeInAfterLoad;
 	ctx->Push(&ptr_fadeInAfterLoad);
-	auto ptr_p3 = _p3;
+	auto ptr_p3 = (int32_t) _p3;
 	ctx->Push(&ptr_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -26193,8 +26193,8 @@ EXPORT bool Native__0xA4A0065E39C9F25C(bool& success, vector3_t& _p0, float& _p1
 	_p0.y = converted_p0.y;
 	_p0.z = converted_p0.z;
 	_p1 = ptr_p1;
-	_fadeInAfterLoad = ptr_fadeInAfterLoad;
-	_p3 = ptr_p3;
+	_fadeInAfterLoad = (bool) ptr_fadeInAfterLoad;
+	_p3 = (bool) ptr_p3;
 	return ctx->ResultBool();
 }
 
@@ -26405,7 +26405,7 @@ EXPORT bool Native_isMemoryCardInUse(bool& success) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_shootSingleBulletBetweenCoords(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, int32_t _damage, bool _p7, int32_t _weaponHash, int32_t _ownerPed, bool _isAudible, bool _isInvisible, float _speed) {
+EXPORT void Native_shootSingleBulletBetweenCoords(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, int32_t _damage, bool _p7, uint32_t _weaponHash, int32_t _ownerPed, bool _isAudible, bool _isInvisible, float _speed) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x867654CBC7606F2C);
 	ctx->Reset();
 	ctx->Push(_x1);
@@ -26415,11 +26415,11 @@ EXPORT void Native_shootSingleBulletBetweenCoords(bool& success, float _x1, floa
 	ctx->Push(_y2);
 	ctx->Push(_z2);
 	ctx->Push(_damage);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p7);
 	ctx->Push(_weaponHash);
 	ctx->Push(_ownerPed);
-	ctx->Push(_isAudible);
-	ctx->Push(_isInvisible);
+	ctx->Push((int32_t) _isAudible);
+	ctx->Push((int32_t) _isInvisible);
 	ctx->Push(_speed);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -26428,7 +26428,7 @@ EXPORT void Native_shootSingleBulletBetweenCoords(bool& success, float _x1, floa
 	success = true;
 }
 
-EXPORT void Native_shootSingleBulletBetweenCoordsIgnoreEntity(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, int32_t _damage, bool _p7, int32_t _weaponHash, int32_t _ownerPed, bool _isAudible, bool _isInvisible, float _speed, int32_t _entity, int32_t _p14) {
+EXPORT void Native_shootSingleBulletBetweenCoordsIgnoreEntity(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, int32_t _damage, bool _p7, uint32_t _weaponHash, int32_t _ownerPed, bool _isAudible, bool _isInvisible, float _speed, int32_t _entity, int32_t _p14) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE3A7742E0B7A2F8B);
 	ctx->Reset();
 	ctx->Push(_x1);
@@ -26438,11 +26438,11 @@ EXPORT void Native_shootSingleBulletBetweenCoordsIgnoreEntity(bool& success, flo
 	ctx->Push(_y2);
 	ctx->Push(_z2);
 	ctx->Push(_damage);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p7);
 	ctx->Push(_weaponHash);
 	ctx->Push(_ownerPed);
-	ctx->Push(_isAudible);
-	ctx->Push(_isInvisible);
+	ctx->Push((int32_t) _isAudible);
+	ctx->Push((int32_t) _isInvisible);
 	ctx->Push(_speed);
 	ctx->Push(_entity);
 	ctx->Push(_p14);
@@ -26453,7 +26453,7 @@ EXPORT void Native_shootSingleBulletBetweenCoordsIgnoreEntity(bool& success, flo
 	success = true;
 }
 
-EXPORT void Native_shootSingleBulletBetweenCoordsIgnoreEntityNew(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, int32_t _damage, bool _p7, int32_t _weaponHash, int32_t _ownerPed, bool _isAudible, bool _isInvisible, float _speed, int32_t _entity, bool _p14, bool _p15, bool _p16, bool _p17, int32_t _p18, int32_t _p19, int32_t _p20) {
+EXPORT void Native_shootSingleBulletBetweenCoordsIgnoreEntityNew(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, int32_t _damage, bool _p7, uint32_t _weaponHash, int32_t _ownerPed, bool _isAudible, bool _isInvisible, float _speed, int32_t _entity, bool _p14, bool _p15, bool _p16, bool _p17, int32_t _p18, int32_t _p19, int32_t _p20) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBFE5756E7407064A);
 	ctx->Reset();
 	ctx->Push(_x1);
@@ -26463,17 +26463,17 @@ EXPORT void Native_shootSingleBulletBetweenCoordsIgnoreEntityNew(bool& success, 
 	ctx->Push(_y2);
 	ctx->Push(_z2);
 	ctx->Push(_damage);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p7);
 	ctx->Push(_weaponHash);
 	ctx->Push(_ownerPed);
-	ctx->Push(_isAudible);
-	ctx->Push(_isInvisible);
+	ctx->Push((int32_t) _isAudible);
+	ctx->Push((int32_t) _isInvisible);
 	ctx->Push(_speed);
 	ctx->Push(_entity);
-	ctx->Push(_p14);
-	ctx->Push(_p15);
-	ctx->Push(_p16);
-	ctx->Push(_p17);
+	ctx->Push((int32_t) _p14);
+	ctx->Push((int32_t) _p15);
+	ctx->Push((int32_t) _p16);
+	ctx->Push((int32_t) _p17);
 	ctx->Push(_p18);
 	ctx->Push(_p19);
 	ctx->Push(_p20);
@@ -26484,7 +26484,7 @@ EXPORT void Native_shootSingleBulletBetweenCoordsIgnoreEntityNew(bool& success, 
 	success = true;
 }
 
-EXPORT void Native_getModelDimensions(bool& success, int32_t _modelHash, vector3_t& _minimum, vector3_t& _maximum) {
+EXPORT void Native_getModelDimensions(bool& success, uint32_t _modelHash, vector3_t& _minimum, vector3_t& _maximum) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x03E8D3D5F549087A);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -26543,7 +26543,7 @@ EXPORT bool Native_isBitSet(bool& success, int32_t _address, int32_t _offset) {
 EXPORT void Native_usingMissionCreator(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF14878FC50BEC6EE);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26554,7 +26554,7 @@ EXPORT void Native_usingMissionCreator(bool& success, bool _toggle) {
 EXPORT void Native_allowMissionCreatorWarp(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDEA36202FC3382DF);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26565,7 +26565,7 @@ EXPORT void Native_allowMissionCreatorWarp(bool& success, bool _toggle) {
 EXPORT void Native_setMinigameInProgress(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x19E00D7322C6F85B);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26647,7 +26647,7 @@ EXPORT int32_t Native_compareStrings(bool& success, const char* _str1, const cha
 	ctx->Reset();
 	ctx->Push(SaveString(_str1));
 	ctx->Push(SaveString(_str2));
-	ctx->Push(_matchCase);
+	ctx->Push((int32_t) _matchCase);
 	ctx->Push(_maxLength);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -26707,7 +26707,7 @@ EXPORT bool Native_isProjectileInArea(bool& success, float _x1, float _y1, float
 	ctx->Push(_x2);
 	ctx->Push(_y2);
 	ctx->Push(_z2);
-	ctx->Push(_ownedByPlayer);
+	ctx->Push((int32_t) _ownedByPlayer);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26726,7 +26726,7 @@ EXPORT bool Native_isProjectileTypeInArea(bool& success, float _x1, float _y1, f
 	ctx->Push(_y2);
 	ctx->Push(_z2);
 	ctx->Push(_type);
-	ctx->Push(_ownedByPlayer);
+	ctx->Push((int32_t) _ownedByPlayer);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26746,7 +26746,7 @@ EXPORT bool Native_isProjectileTypeInAngledArea(bool& success, float _x1, float 
 	ctx->Push(_z2);
 	ctx->Push(_width);
 	ctx->Push(_p7);
-	ctx->Push(_ownedByPlayer);
+	ctx->Push((int32_t) _ownedByPlayer);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26755,7 +26755,7 @@ EXPORT bool Native_isProjectileTypeInAngledArea(bool& success, float _x1, float 
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isProjectileTypeWithinDistance(bool& success, float _x, float _y, float _z, int32_t _projectileHash, float _radius, bool _ownedByPlayer) {
+EXPORT bool Native_isProjectileTypeWithinDistance(bool& success, float _x, float _y, float _z, uint32_t _projectileHash, float _radius, bool _ownedByPlayer) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x34318593248C8FB2);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -26763,7 +26763,7 @@ EXPORT bool Native_isProjectileTypeWithinDistance(bool& success, float _x, float
 	ctx->Push(_z);
 	ctx->Push(_projectileHash);
 	ctx->Push(_radius);
-	ctx->Push(_ownedByPlayer);
+	ctx->Push((int32_t) _ownedByPlayer);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26772,7 +26772,7 @@ EXPORT bool Native_isProjectileTypeWithinDistance(bool& success, float _x, float
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_getCoordsOfProjectileTypeInArea(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, int32_t _projectileHash, vector3_t& _projectilePos, bool _ownedByPlayer) {
+EXPORT bool Native_getCoordsOfProjectileTypeInArea(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, uint32_t _projectileHash, vector3_t& _projectilePos, bool _ownedByPlayer) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8D7A43EC6A5FEA45);
 	ctx->Reset();
 	ctx->Push(_x1);
@@ -26784,7 +26784,7 @@ EXPORT bool Native_getCoordsOfProjectileTypeInArea(bool& success, float _x1, flo
 	ctx->Push(_projectileHash);
 	alt::INative::Vector3 converted_projectilePos { _projectilePos.x, 0, _projectilePos.y, 0, _projectilePos.z };
 	ctx->Push(&converted_projectilePos);
-	ctx->Push(_ownedByPlayer);
+	ctx->Push((int32_t) _ownedByPlayer);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26796,7 +26796,7 @@ EXPORT bool Native_getCoordsOfProjectileTypeInArea(bool& success, float _x1, flo
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_getCoordsOfProjectileTypeWithinDistance(bool& success, int32_t _ped, int32_t _weaponHash, float _distance, vector3_t& _outCoords, bool _p4) {
+EXPORT bool Native_getCoordsOfProjectileTypeWithinDistance(bool& success, int32_t _ped, uint32_t _weaponHash, float _distance, vector3_t& _outCoords, bool _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDFB4138EEFED7B81);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -26804,7 +26804,7 @@ EXPORT bool Native_getCoordsOfProjectileTypeWithinDistance(bool& success, int32_
 	ctx->Push(_distance);
 	alt::INative::Vector3 converted_outCoords { _outCoords.x, 0, _outCoords.y, 0, _outCoords.z };
 	ctx->Push(&converted_outCoords);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26816,7 +26816,7 @@ EXPORT bool Native_getCoordsOfProjectileTypeWithinDistance(bool& success, int32_
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_getProjectileNearPed(bool& success, int32_t _ped, int32_t _weaponHash, float _distance, vector3_t& _outCoords, int32_t& _outProjectile, bool _p5) {
+EXPORT bool Native_getProjectileNearPed(bool& success, int32_t _ped, uint32_t _weaponHash, float _distance, vector3_t& _outCoords, int32_t& _outProjectile, bool _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x82FDE6A57EE4EE44);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -26826,7 +26826,7 @@ EXPORT bool Native_getProjectileNearPed(bool& success, int32_t _ped, int32_t _we
 	ctx->Push(&converted_outCoords);
 	auto ptr_outProjectile = _outProjectile;
 	ctx->Push(&ptr_outProjectile);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26849,7 +26849,7 @@ EXPORT bool Native_isBulletInAngledArea(bool& success, float _x1, float _y1, flo
 	ctx->Push(_y2);
 	ctx->Push(_z2);
 	ctx->Push(_width);
-	ctx->Push(_ownedByPlayer);
+	ctx->Push((int32_t) _ownedByPlayer);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26865,7 +26865,7 @@ EXPORT bool Native_isBulletInArea(bool& success, float _x, float _y, float _z, f
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_radius);
-	ctx->Push(_ownedByPlayer);
+	ctx->Push((int32_t) _ownedByPlayer);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26883,7 +26883,7 @@ EXPORT bool Native_isBulletInBox(bool& success, float _x1, float _y1, float _z1,
 	ctx->Push(_x2);
 	ctx->Push(_y2);
 	ctx->Push(_z2);
-	ctx->Push(_ownedByPlayer);
+	ctx->Push((int32_t) _ownedByPlayer);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26899,8 +26899,8 @@ EXPORT bool Native_hasBulletImpactedInArea(bool& success, float _x, float _y, fl
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -26918,8 +26918,8 @@ EXPORT bool Native_hasBulletImpactedInBox(bool& success, float _p0, float _p1, f
 	ctx->Push(_p3);
 	ctx->Push(_p4);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -27126,7 +27126,7 @@ EXPORT int32_t Native_addStuntJumpAngled(bool& success, float _x1, float _y1, fl
 EXPORT void Native__0xFB80AB299D2EE1BD(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFB80AB299D2EE1BD);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27170,7 +27170,7 @@ EXPORT void Native_disableStuntJumpSet(bool& success, int32_t _p0) {
 EXPORT void Native_setStuntJumpsCanTrigger(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD79185689F8FD5DF);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27235,7 +27235,7 @@ EXPORT void Native_cancelStuntJump(bool& success) {
 EXPORT void Native_setGamePaused(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x577D1284D6873711);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27246,7 +27246,7 @@ EXPORT void Native_setGamePaused(bool& success, bool _toggle) {
 EXPORT void Native_setThisScriptCanBePaused(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAA391C728106F7AF);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27257,7 +27257,7 @@ EXPORT void Native_setThisScriptCanBePaused(bool& success, bool _toggle) {
 EXPORT void Native_setThisScriptCanRemoveBlipsCreatedByAnyScript(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB98236CAAECEF897);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27265,7 +27265,7 @@ EXPORT void Native_setThisScriptCanRemoveBlipsCreatedByAnyScript(bool& success, 
 	success = true;
 }
 
-EXPORT bool Native_hasButtonCombinationJustBeenEntered(bool& success, int32_t _hash, int32_t _amount) {
+EXPORT bool Native_hasButtonCombinationJustBeenEntered(bool& success, uint32_t _hash, int32_t _amount) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x071E2A839DE82D90);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -27278,7 +27278,7 @@ EXPORT bool Native_hasButtonCombinationJustBeenEntered(bool& success, int32_t _h
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_hasCheatStringJustBeenEntered(bool& success, int32_t _hash) {
+EXPORT bool Native_hasCheatStringJustBeenEntered(bool& success, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x557E43C447E700A8);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -27293,7 +27293,7 @@ EXPORT bool Native_hasCheatStringJustBeenEntered(bool& success, int32_t _hash) {
 EXPORT void Native__0xFA3FFB0EEBC288A3(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFA3FFB0EEBC288A3);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27372,7 +27372,7 @@ EXPORT void Native_startSaveData(bool& success, int32_t& _p0, int32_t _p1, bool 
 	auto ptr_p0 = _p0;
 	ctx->Push(&ptr_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27394,7 +27394,7 @@ EXPORT void Native_stopSaveData(bool& success) {
 EXPORT int32_t Native_getSizeOfSaveData(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA09F896CE912481F);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -27614,7 +27614,7 @@ EXPORT void Native_enableDispatchService(bool& success, int32_t _dispatchService
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDC0F817884CDD856);
 	ctx->Reset();
 	ctx->Push(_dispatchService);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27626,7 +27626,7 @@ EXPORT void Native_blockDispatchServiceResourceCreation(bool& success, int32_t _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9B2BD3773123EA2F);
 	ctx->Reset();
 	ctx->Push(_dispatchService);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27770,8 +27770,8 @@ EXPORT int32_t Native_addPopMultiplierArea(bool& success, float _x1, float _y1, 
 	ctx->Push(_z2);
 	ctx->Push(_p6);
 	ctx->Push(_p7);
-	ctx->Push(_p8);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p8);
+	ctx->Push((int32_t) _p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -27796,7 +27796,7 @@ EXPORT void Native_removePopMultiplierArea(bool& success, int32_t _id, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB129E447A2EDA4BF);
 	ctx->Reset();
 	ctx->Push(_id);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27825,8 +27825,8 @@ EXPORT int32_t Native_addPopMultiplierSphere(bool& success, float _x, float _y, 
 	ctx->Push(_radius);
 	ctx->Push(_pedMultiplier);
 	ctx->Push(_vehicleMultiplier);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -27851,7 +27851,7 @@ EXPORT void Native_removePopMultiplierSphere(bool& success, int32_t _id, bool _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE6869BECDD8F2403);
 	ctx->Reset();
 	ctx->Push(_id);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27863,8 +27863,8 @@ EXPORT void Native_enableTennisMode(bool& success, int32_t _ped, bool _toggle, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x28A04B411933F8A6);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _toggle);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27892,7 +27892,7 @@ EXPORT void Native_playTennisSwingAnim(bool& success, int32_t _ped, const char* 
 	ctx->Push(SaveString(_animName));
 	ctx->Push(_p3);
 	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -27944,7 +27944,7 @@ EXPORT void Native_playTennisDiveAnim(bool& success, int32_t _ped, int32_t _p1, 
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28146,7 +28146,7 @@ EXPORT void Native_clearTacticalAnalysisPoints(bool& success) {
 EXPORT void Native_setRiotModeEnabled(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2587A48BC88DFADF);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28239,11 +28239,11 @@ EXPORT void Native_nextOnscreenKeyboardResultWillDisplayUsingTheseFonts(bool& su
 	success = true;
 }
 
-EXPORT void Native_removeStealthKill(bool& success, int32_t _hash, bool _p1) {
+EXPORT void Native_removeStealthKill(bool& success, uint32_t _hash, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA6A12939F16D85BE);
 	ctx->Reset();
 	ctx->Push(_hash);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28255,7 +28255,7 @@ EXPORT void Native__0x1EAE0A6E978894A2(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1EAE0A6E978894A2);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28598,7 +28598,7 @@ EXPORT int32_t Native_getPowerSavingModeDuration(bool& success) {
 EXPORT void Native_setPlayerIsInAnimalForm(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4EBB7E87AA0DBED4);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28620,7 +28620,7 @@ EXPORT bool Native_getIsPlayerInAnimalForm(bool& success) {
 EXPORT void Native_setPlayerRockstarEditorDisabled(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9D8D44ADBBA61EF2);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28752,7 +28752,7 @@ EXPORT void Native_getMobilePhonePosition(bool& success, vector3_t& _position) {
 EXPORT void Native_scriptIsMovingMobilePhoneOffscreen(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF511F759238A5122);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28774,7 +28774,7 @@ EXPORT bool Native_canPhoneBeSeenOnScreen(bool& success) {
 EXPORT void Native_setMobilePhoneUnk(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x375A706A5C2FD084);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28796,7 +28796,7 @@ EXPORT void Native_cellCamMoveFinger(bool& success, int32_t _direction) {
 EXPORT void Native_cellCamSetLean(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x44E44169EF70138E);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28807,8 +28807,8 @@ EXPORT void Native_cellCamSetLean(bool& success, bool _toggle) {
 EXPORT void Native_cellCamActivate(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFDE8F069C542D126);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28819,7 +28819,7 @@ EXPORT void Native_cellCamActivate(bool& success, bool _p0, bool _p1) {
 EXPORT void Native_cellCamDisableThisFrame(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x015C49A93E3E086E);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -28969,8 +28969,8 @@ EXPORT void Native_networkDeleteCharacter(bool& success, int32_t _characterSlot,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x05A50AF38947EB8D);
 	ctx->Reset();
 	ctx->Push(_characterSlot);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29056,7 +29056,7 @@ EXPORT void Native_networkRefundCash(bool& success, int32_t _index, const char* 
 	ctx->Push(_index);
 	ctx->Push(SaveString(_context));
 	ctx->Push(SaveString(_reason));
-	ctx->Push(_unk);
+	ctx->Push((int32_t) _unk);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29070,9 +29070,9 @@ EXPORT void Native_networkDeductCash(bool& success, int32_t _amount, const char*
 	ctx->Push(_amount);
 	ctx->Push(SaveString(_p1));
 	ctx->Push(SaveString(_p2));
-	ctx->Push(_p3);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29084,8 +29084,8 @@ EXPORT bool Native_networkMoneyCanBet(bool& success, int32_t _amount, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x81404F3DC124FE5B);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -29106,7 +29106,7 @@ EXPORT bool Native_networkCanBet(bool& success, int32_t _amount) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkCasinoCanUseGamblingType(bool& success, int32_t _hash) {
+EXPORT bool Native_networkCasinoCanUseGamblingType(bool& success, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x158C16F5E4CF41F8);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -29337,7 +29337,7 @@ EXPORT void Native_networkEarnFromChallengeWin(bool& success, int32_t _p0, int32
 	ctx->Push(_p0);
 	auto ptr_p1 = _p1;
 	ctx->Push(&ptr_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29364,7 +29364,7 @@ EXPORT void Native_networkEarnFromBounty(bool& success, int32_t _amount, int32_t
 	_p2 = ptr_p2;
 }
 
-EXPORT void Native_networkEarnFromImportExport(bool& success, int32_t _amount, int32_t _modelHash) {
+EXPORT void Native_networkEarnFromImportExport(bool& success, int32_t _amount, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF92A014A634442D6);
 	ctx->Reset();
 	ctx->Push(_amount);
@@ -29387,7 +29387,7 @@ EXPORT void Native_networkEarnFromHoldups(bool& success, int32_t _amount) {
 	success = true;
 }
 
-EXPORT void Native_networkEarnFromProperty(bool& success, int32_t _amount, int32_t _propertyName) {
+EXPORT void Native_networkEarnFromProperty(bool& success, int32_t _amount, uint32_t _propertyName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x849648349D77F5C5);
 	ctx->Reset();
 	ctx->Push(_amount);
@@ -29779,9 +29779,9 @@ EXPORT bool Native_networkCanSpendMoney(bool& success, int32_t _p0, bool _p1, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAB3CAA6B422164DA);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	ctx->Push(_p4);
 	ctx->Push(_p5);
 	if (!native->Invoke(ctx)) {
@@ -29796,9 +29796,9 @@ EXPORT bool Native_networkCanSpendMoney2(bool& success, int32_t _p0, bool _p1, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7303E27CC6532080);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	auto ptr_p4 = _p4;
 	ctx->Push(&ptr_p4);
 	ctx->Push(_p5);
@@ -29812,19 +29812,19 @@ EXPORT bool Native_networkCanSpendMoney2(bool& success, int32_t _p0, bool _p1, b
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_networkBuyItem(bool& success, int32_t _amount, int32_t _item, int32_t _p2, int32_t _p3, bool _p4, const char* _item_name, int32_t _p6, int32_t _p7, int32_t _p8, bool _p9) {
+EXPORT void Native_networkBuyItem(bool& success, int32_t _amount, uint32_t _item, int32_t _p2, int32_t _p3, bool _p4, const char* _item_name, int32_t _p6, int32_t _p7, int32_t _p8, bool _p9) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF0077C797F66A355);
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(_item);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(SaveString(_item_name));
 	ctx->Push(_p6);
 	ctx->Push(_p7);
 	ctx->Push(_p8);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29836,8 +29836,8 @@ EXPORT void Native_networkSpentTaxi(bool& success, int32_t _amount, bool _p1, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x17C3A7D31EAE39F9);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29849,8 +29849,8 @@ EXPORT void Native_networkPayEmployeeWage(bool& success, int32_t _p0, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5FD5ED82CBBE9989);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29862,8 +29862,8 @@ EXPORT void Native_networkPayUtilityBill(bool& success, int32_t _amount, bool _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAFE08B35EC0C9EAE);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29876,8 +29876,8 @@ EXPORT void Native_networkPayMatchEntryFee(bool& success, int32_t _amount, const
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(SaveString(_matchId));
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29891,8 +29891,8 @@ EXPORT void Native_networkSpentBetting(bool& success, int32_t _amount, int32_t _
 	ctx->Push(_amount);
 	ctx->Push(_p1);
 	ctx->Push(SaveString(_matchId));
-	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29917,9 +29917,9 @@ EXPORT void Native_networkSpentInStripclub(bool& success, int32_t _p0, bool _p1,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEE99784E4467689C);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29931,8 +29931,8 @@ EXPORT void Native_networkBuyHealthcare(bool& success, int32_t _cost, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD9B067E55253E3DD);
 	ctx->Reset();
 	ctx->Push(_cost);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29944,8 +29944,8 @@ EXPORT void Native_networkBuyAirstrike(bool& success, int32_t _cost, bool _p1, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x763B4BD305338F19);
 	ctx->Reset();
 	ctx->Push(_cost);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29958,8 +29958,8 @@ EXPORT void Native_networkBuyBackupGang(bool& success, int32_t _p0, int32_t _p1,
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29971,8 +29971,8 @@ EXPORT void Native_networkBuyHeliStrike(bool& success, int32_t _cost, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x81AA4610E3FD3A69);
 	ctx->Reset();
 	ctx->Push(_cost);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29984,8 +29984,8 @@ EXPORT void Native_networkSpentAmmoDrop(bool& success, int32_t _p0, bool _p1, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB162DC95C0A3317B);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29998,8 +29998,8 @@ EXPORT void Native_networkBuyBounty(bool& success, int32_t _amount, int32_t _vic
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(_victim);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30007,13 +30007,13 @@ EXPORT void Native_networkBuyBounty(bool& success, int32_t _amount, int32_t _vic
 	success = true;
 }
 
-EXPORT void Native_networkBuyProperty(bool& success, int32_t _cost, int32_t _propertyName, bool _p2, bool _p3) {
+EXPORT void Native_networkBuyProperty(bool& success, int32_t _cost, uint32_t _propertyName, bool _p2, bool _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x650A08A280870AF6);
 	ctx->Reset();
 	ctx->Push(_cost);
 	ctx->Push(_propertyName);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30025,8 +30025,8 @@ EXPORT void Native_networkBuySmokes(bool& success, int32_t _p0, bool _p1, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75AF80E61248EEBD);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30038,8 +30038,8 @@ EXPORT void Native_networkSpentHeliPickup(bool& success, int32_t _p0, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7BF1D73DB2ECA492);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30051,8 +30051,8 @@ EXPORT void Native_networkSpentBoatPickup(bool& success, int32_t _p0, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x524EE43A37232C00);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30064,8 +30064,8 @@ EXPORT void Native_networkSpentBullShark(bool& success, int32_t _p0, bool _p1, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA6DD8458CE24012C);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30077,8 +30077,8 @@ EXPORT void Native_networkSpentCashDrop(bool& success, int32_t _amount, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x289016EC778D60E0);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30090,8 +30090,8 @@ EXPORT void Native_networkSpentHireMugger(bool& success, int32_t _p0, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE404BFB981665BF0);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30103,8 +30103,8 @@ EXPORT void Native_networkSpentRobbedByMugger(bool& success, int32_t _amount, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x995A65F15F581359);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30116,8 +30116,8 @@ EXPORT void Native_networkSpentHireMercenary(bool& success, int32_t _p0, bool _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE7B80E2BF9D80BD6);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30131,8 +30131,8 @@ EXPORT void Native_networkSpentBuyWantedlevel(bool& success, int32_t _p0, int32_
 	ctx->Push(_p0);
 	auto ptr_p1 = _p1;
 	ctx->Push(&ptr_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30145,8 +30145,8 @@ EXPORT void Native_networkSpentBuyOfftheradar(bool& success, int32_t _p0, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA628A745E2275C5D);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30158,8 +30158,8 @@ EXPORT void Native_networkSpentBuyRevealPlayers(bool& success, int32_t _p0, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6E176F1B18BC0637);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30173,8 +30173,8 @@ EXPORT void Native_networkSpentCarwash(bool& success, int32_t _p0, int32_t _p1, 
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30187,8 +30187,8 @@ EXPORT void Native_networkSpentCinema(bool& success, int32_t _p0, int32_t _p1, b
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30200,8 +30200,8 @@ EXPORT void Native_networkSpentTelescope(bool& success, int32_t _p0, bool _p1, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7FE61782AD94CC09);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30213,8 +30213,8 @@ EXPORT void Native_networkSpentHoldups(bool& success, int32_t _p0, bool _p1, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD9B86B9872039763);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30226,8 +30226,8 @@ EXPORT void Native_networkSpentBuyPassiveMode(bool& success, int32_t _p0, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6D3A430D1A809179);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30239,8 +30239,8 @@ EXPORT void Native_networkSpentBankInterest(bool& success, int32_t _p0, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCA230C9682556CF1);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30252,8 +30252,8 @@ EXPORT void Native_networkSpentProstitutes(bool& success, int32_t _p0, bool _p1,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB21B89501CFAC79E);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30265,8 +30265,8 @@ EXPORT void Native_networkSpentArrestBail(bool& success, int32_t _p0, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x812F5488B1B2A299);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30274,15 +30274,15 @@ EXPORT void Native_networkSpentArrestBail(bool& success, int32_t _p0, bool _p1, 
 	success = true;
 }
 
-EXPORT void Native_networkSpentPayVehicleInsurancePremium(bool& success, int32_t _amount, int32_t _vehicleModel, int32_t& _gamerHandle, bool _notBankrupt, bool _hasTheMoney) {
+EXPORT void Native_networkSpentPayVehicleInsurancePremium(bool& success, int32_t _amount, uint32_t _vehicleModel, int32_t& _gamerHandle, bool _notBankrupt, bool _hasTheMoney) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9FF28D88C766E3E8);
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(_vehicleModel);
 	auto ptr_gamerHandle = _gamerHandle;
 	ctx->Push(&ptr_gamerHandle);
-	ctx->Push(_notBankrupt);
-	ctx->Push(_hasTheMoney);
+	ctx->Push((int32_t) _notBankrupt);
+	ctx->Push((int32_t) _hasTheMoney);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30297,8 +30297,8 @@ EXPORT void Native_networkSpentCallPlayer(bool& success, int32_t _p0, int32_t& _
 	ctx->Push(_p0);
 	auto ptr_p1 = _p1;
 	ctx->Push(&ptr_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30311,8 +30311,8 @@ EXPORT void Native_networkSpentBounty(bool& success, int32_t _p0, bool _p1, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x29B260B84947DFCC);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30324,8 +30324,8 @@ EXPORT void Native_networkSpentFromRockstar(bool& success, int32_t _p0, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6A445B64ED7ABEB5);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30367,8 +30367,8 @@ EXPORT void Native_networkSpentPlayerHealthcare(bool& success, int32_t _p0, int3
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30380,8 +30380,8 @@ EXPORT void Native_networkSpentNoCops(bool& success, int32_t _p0, bool _p1, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD5BB406F4E04019F);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30393,8 +30393,8 @@ EXPORT void Native_networkSpentRequestJob(bool& success, int32_t _p0, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8204DA7934DF3155);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30406,8 +30406,8 @@ EXPORT void Native_networkSpentRequestHeist(bool& success, int32_t _p0, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9D26502BB97BFE62);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30420,8 +30420,8 @@ EXPORT void Native_networkBuyFairgroundRide(bool& success, int32_t _amount, int3
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30445,8 +30445,8 @@ EXPORT void Native_networkSpentJobSkip(bool& success, int32_t _amount, const cha
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(SaveString(_matchId));
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30458,8 +30458,8 @@ EXPORT bool Native_networkSpentBoss(bool& success, int32_t _amount, bool _p1, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFFBE02CD385356BD);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -30498,8 +30498,8 @@ EXPORT void Native_networkSpentMoveYacht(bool& success, int32_t _amount, bool _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE7DF4E0545DFB56E);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30520,14 +30520,14 @@ EXPORT void Native_networkSpentRenameOrganization(bool& success, int32_t _p0, in
 	success = true;
 }
 
-EXPORT void Native_networkBuyContraband(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, bool _p3, bool _p4) {
+EXPORT void Native_networkBuyContraband(bool& success, int32_t _p0, int32_t _p1, uint32_t _p2, bool _p3, bool _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x30FD873ECE50E9F6);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30693,8 +30693,8 @@ EXPORT void Native_networkSpentPurchaseWarehouse(bool& success, int32_t _amount,
 	ctx->Push(_amount);
 	auto ptr_data = _data;
 	ctx->Push(&ptr_data);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30978,8 +30978,8 @@ EXPORT void Native_networkSpentHangarUtilityCharges(bool& success, int32_t _amou
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB18AC2ECBB15CB6A);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30991,8 +30991,8 @@ EXPORT void Native_networkSpentHangarStaffCharges(bool& success, int32_t _amount
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB1F1346FD57685D7);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31056,7 +31056,7 @@ EXPORT void Native_networkSpentUpgradeBunker(bool& success, int32_t _p0, int32_t
 	success = true;
 }
 
-EXPORT void Native_networkEarnFromSellBunker(bool& success, int32_t _amount, int32_t _bunkerHash) {
+EXPORT void Native_networkEarnFromSellBunker(bool& success, int32_t _amount, uint32_t _bunkerHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9251B6ABF2D0A5B4);
 	ctx->Reset();
 	ctx->Push(_amount);
@@ -31072,8 +31072,8 @@ EXPORT void Native_networkSpentBallisticEquipment(bool& success, int32_t _amount
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5D97630A8A0EF123);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31227,7 +31227,7 @@ EXPORT void Native_networkSpentCasinoHeistSkipMission(bool& success, int32_t _p0
 	success = true;
 }
 
-EXPORT void Native_networkEarnFromSellBase(bool& success, int32_t _amount, int32_t _baseNameHash) {
+EXPORT void Native_networkEarnFromSellBase(bool& success, int32_t _amount, uint32_t _baseNameHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0E1E2FF3F4EC11AA);
 	ctx->Reset();
 	ctx->Push(_amount);
@@ -31287,7 +31287,7 @@ EXPORT void Native_networkEarnFromDarChallenge(bool& success, int32_t _amount, i
 	success = true;
 }
 
-EXPORT void Native_networkEarnFromDoomsdayFinaleBonus(bool& success, int32_t _amount, int32_t _vehicleHash) {
+EXPORT void Native_networkEarnFromDoomsdayFinaleBonus(bool& success, int32_t _amount, uint32_t _vehicleHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x128A747F4A230952);
 	ctx->Reset();
 	ctx->Push(_amount);
@@ -31341,8 +31341,8 @@ EXPORT void Native_networkSpentGangopsStartStrand(bool& success, int32_t _type, 
 	ctx->Reset();
 	ctx->Push(_type);
 	ctx->Push(_amount);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31354,8 +31354,8 @@ EXPORT void Native_networkSpentGangopsTripSkip(bool& success, int32_t _amount, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5ECE6FD7B4EC8D6A);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31551,8 +31551,8 @@ EXPORT void Native_networkSpentRdrhatchetBonus(bool& success, int32_t _amount, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE284D46FFDB82E36);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31566,8 +31566,8 @@ EXPORT void Native_networkSpentNightclubEntryFee(bool& success, int32_t _player,
 	ctx->Push(_player);
 	ctx->Push(_amount);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31580,8 +31580,8 @@ EXPORT void Native_networkSpentNightclubBarDrink(bool& success, int32_t _amount,
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31593,8 +31593,8 @@ EXPORT void Native_networkSpentBountyHunterMission(bool& success, int32_t _amoun
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1BEA0CD93470BB1F);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31607,8 +31607,8 @@ EXPORT void Native_networkSpentRehireDj(bool& success, int32_t _amount, int32_t 
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31621,8 +31621,8 @@ EXPORT void Native_networkSpentArenaJoinSpectator(bool& success, int32_t _amount
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31658,8 +31658,8 @@ EXPORT void Native_networkSpentMakeItRain(bool& success, int32_t _amount, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE5F5A060439C2F5D);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31671,8 +31671,8 @@ EXPORT void Native_networkSpentBuyArena(bool& success, int32_t _amount, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x40D5DA9550B7CB46);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(SaveString(_p3));
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -31685,8 +31685,8 @@ EXPORT void Native_networkSpentUpgradeArena(bool& success, int32_t _amount, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x037ABB06825D7AB1);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(SaveString(_p3));
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -31700,8 +31700,8 @@ EXPORT void Native_networkSpentArenaSpectatorBox(bool& success, int32_t _amount,
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31714,7 +31714,7 @@ EXPORT void Native_networkSpentSpinTheWheelPayment(bool& success, int32_t _amoun
 	ctx->Reset();
 	ctx->Push(_amount);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31737,8 +31737,8 @@ EXPORT void Native_networkSpentArenaPremium(bool& success, int32_t _amount, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x619496D837EFD920);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -31808,8 +31808,8 @@ EXPORT void Native_networkSpentCasinoMembership(bool& success, int32_t _amount, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFBBE0570EDF39D46);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -31822,8 +31822,8 @@ EXPORT void Native_networkSpentBuyCasino(bool& success, int32_t _amount, bool _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x34A6FC4D06C4DA0F);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	auto ptr_data = _data;
 	ctx->Push(&ptr_data);
 	if (!native->Invoke(ctx)) {
@@ -31838,8 +31838,8 @@ EXPORT void Native_networkSpentUpgradeCasino(bool& success, int32_t _amount, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4740D62BC1B4EBEA);
 	ctx->Reset();
 	ctx->Push(_amount);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	auto ptr_data = _data;
 	ctx->Push(&ptr_data);
 	if (!native->Invoke(ctx)) {
@@ -31944,7 +31944,7 @@ EXPORT void Native_networkEarnFromCasinoMissionParticipation(bool& success, int3
 	success = true;
 }
 
-EXPORT void Native_networkEarnFromCasinoAward(bool& success, int32_t _amount, int32_t _hash) {
+EXPORT void Native_networkEarnFromCasinoAward(bool& success, int32_t _amount, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x973A9781A34F8DEB);
 	ctx->Reset();
 	ctx->Push(_amount);
@@ -32332,8 +32332,8 @@ EXPORT void Native_networkSpentCarclub(bool& success, int32_t _p0, bool _p1, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x925227803A0EAA1B);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -32516,7 +32516,7 @@ EXPORT void Native_networkSpentFromBank(bool& success, int32_t _p0, int32_t _p1,
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -32772,7 +32772,7 @@ EXPORT bool Native_netGameserverCatalogItemExists(bool& success, const char* _na
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_netGameserverCatalogItemExistsHash(bool& success, int32_t _hash) {
+EXPORT bool Native_netGameserverCatalogItemExistsHash(bool& success, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x247F0F73A182EA0B);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -32784,12 +32784,12 @@ EXPORT bool Native_netGameserverCatalogItemExistsHash(bool& success, int32_t _ha
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_netGameserverGetPrice(bool& success, int32_t _itemHash, int32_t _categoryHash, bool _p2) {
+EXPORT int32_t Native_netGameserverGetPrice(bool& success, uint32_t _itemHash, uint32_t _categoryHash, bool _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC27009422FCCA88D);
 	ctx->Reset();
 	ctx->Push(_itemHash);
 	ctx->Push(_categoryHash);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -32982,8 +32982,8 @@ EXPORT bool Native_netGameserverIsSessionRefreshPending(bool& success) {
 EXPORT bool Native_netGameserverGetBalance(bool& success, bool _inventory, bool _playerbalance) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x35A1B3E1D1315CFA);
 	ctx->Reset();
-	ctx->Push(_inventory);
-	ctx->Push(_playerbalance);
+	ctx->Push((int32_t) _inventory);
+	ctx->Push((int32_t) _playerbalance);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -33008,7 +33008,7 @@ EXPORT bool Native_netGameserverGetTransactionManagerData(bool& success, int32_t
 	ctx->Reset();
 	auto ptr_p0 = _p0;
 	ctx->Push(&ptr_p0);
-	auto ptr_p1 = _p1;
+	auto ptr_p1 = (int32_t) _p1;
 	ctx->Push(&ptr_p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -33016,11 +33016,11 @@ EXPORT bool Native_netGameserverGetTransactionManagerData(bool& success, int32_t
 	}
 	success = true;
 	_p0 = ptr_p0;
-	_p1 = ptr_p1;
+	_p1 = (bool) ptr_p1;
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_netGameserverBasketStart(bool& success, int32_t& _transactionId, int32_t _categoryHash, int32_t _actionHash, int32_t _flags) {
+EXPORT bool Native_netGameserverBasketStart(bool& success, int32_t& _transactionId, uint32_t _categoryHash, uint32_t _actionHash, int32_t _flags) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x279F08B1A4B29B7E);
 	ctx->Reset();
 	auto ptr_transactionId = _transactionId;
@@ -33112,7 +33112,7 @@ EXPORT bool Native_netGameserverCheckoutStart(bool& success, int32_t _transactio
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_netGameserverBeginService(bool& success, int32_t& _transactionId, int32_t _categoryHash, int32_t _itemHash, int32_t _actionTypeHash, int32_t _value, int32_t _flags) {
+EXPORT bool Native_netGameserverBeginService(bool& success, int32_t& _transactionId, uint32_t _categoryHash, uint32_t _itemHash, uint32_t _actionTypeHash, int32_t _value, int32_t _flags) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3C5FD37B5499582E);
 	ctx->Reset();
 	auto ptr_transactionId = _transactionId;
@@ -33143,11 +33143,11 @@ EXPORT bool Native_netGameserverEndService(bool& success, int32_t _transactionId
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_netGameserverDeleteCharacterSlot(bool& success, int32_t _slot, bool _transfer, int32_t _reason) {
+EXPORT bool Native_netGameserverDeleteCharacterSlot(bool& success, int32_t _slot, bool _transfer, uint32_t _reason) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x51F1A8E48C3D2F6D);
 	ctx->Reset();
 	ctx->Push(_slot);
-	ctx->Push(_transfer);
+	ctx->Push((int32_t) _transfer);
 	ctx->Push(_reason);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -33466,7 +33466,7 @@ EXPORT bool Native__0x78321BEA235FD8CD(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x78321BEA235FD8CD);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -33480,7 +33480,7 @@ EXPORT bool Native_networkCheckUserContentPrivileges(bool& success, int32_t _p0,
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -33494,7 +33494,7 @@ EXPORT bool Native_networkCheckCommunicationPrivileges(bool& success, int32_t _p
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -33688,7 +33688,7 @@ EXPORT int32_t Native__0x8B4FFC790CA131EF(bool& success, int32_t _p0, int32_t _p
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_networkTransitionTrack(bool& success, int32_t _hash, int32_t _p1, int32_t _p2, int32_t _state, int32_t _p4) {
+EXPORT void Native_networkTransitionTrack(bool& success, uint32_t _hash, int32_t _p1, int32_t _p2, int32_t _state, int32_t _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC3BFED92026A2AAD);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -33776,7 +33776,7 @@ EXPORT bool Native_networkSessionFriendMatchmaking(bool& success, int32_t _p0, i
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_maxPlayers);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -33792,7 +33792,7 @@ EXPORT bool Native_networkSessionCrewMatchmaking(bool& success, int32_t _p0, int
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_maxPlayers);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -33821,7 +33821,7 @@ EXPORT bool Native_networkSessionHost(bool& success, int32_t _p0, int32_t _maxPl
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_maxPlayers);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -33903,8 +33903,8 @@ EXPORT bool Native_networkSessionIsPrivate(bool& success) {
 EXPORT bool Native_networkSessionEnd(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA02E59562D711006);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -34055,7 +34055,7 @@ EXPORT void Native__0x4811BBAC21C5FCD5(bool& success, int32_t _p0) {
 EXPORT void Native__0x5539C3EBF104A53A(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5539C3EBF104A53A);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34077,7 +34077,7 @@ EXPORT void Native__0x702BC4D605522539(bool& success, int32_t _p0) {
 EXPORT void Native_networkSessionSetMatchmakingPropertyId(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3F52E880AAF6C8CA);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34131,7 +34131,7 @@ EXPORT void Native__0x1153FA02A659051C(bool& success) {
 EXPORT void Native_networkSessionValidateJoin(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC19F6C8E7865A6FF);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34473,7 +34473,7 @@ EXPORT bool Native__0xBDB6F89C729CF388(bool& success) {
 EXPORT void Native_networkSuppressInvite(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA0682D67EF1FBA3D);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34484,7 +34484,7 @@ EXPORT void Native_networkSuppressInvite(bool& success, bool _toggle) {
 EXPORT void Native_networkBlockInvites(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x34F9E9049454A7A0);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34495,7 +34495,7 @@ EXPORT void Native_networkBlockInvites(bool& success, bool _toggle) {
 EXPORT void Native_networkBlockJoinQueueInvites(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCFEB8AF24FC1D0BB);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34516,7 +34516,7 @@ EXPORT void Native__0xF814FEC6A19FD6E0(bool& success) {
 EXPORT void Native_networkBlockKickedPlayers(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6B07B9CE4D390375);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34527,7 +34527,7 @@ EXPORT void Native_networkBlockKickedPlayers(bool& success, bool _p0) {
 EXPORT void Native_networkSetScriptReadyForEvents(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7AC752103856FB20);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34657,7 +34657,7 @@ EXPORT int32_t Native__0x4C9034162368E206(bool& success) {
 EXPORT void Native_networkSessionMarkVisible(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x271CC6AB59EBF9A5);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34679,7 +34679,7 @@ EXPORT bool Native_networkSessionIsVisible(bool& success) {
 EXPORT void Native_networkSessionBlockJoinRequests(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA73667484D7037C3);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34691,7 +34691,7 @@ EXPORT void Native_networkSessionChangeSlots(bool& success, int32_t _p0, bool _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB4AB419E0D86ACAE);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34746,7 +34746,7 @@ EXPORT void Native_networkSessionVoiceConnectToPlayer(bool& success, int32_t& _p
 EXPORT void Native_networkSessionVoiceRespondToRequest(bool& success, bool _p0, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7F8413B7FC2AA6B9);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -34817,7 +34817,7 @@ EXPORT bool Native_networkSendTextMessage(bool& success, const char* _message, i
 EXPORT void Native_networkSetActivitySpectator(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75138790B4359A74);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -34861,7 +34861,7 @@ EXPORT void Native_networkSetActivitySpectatorMax(bool& success, int32_t _maxSpe
 EXPORT int32_t Native_networkGetActivityPlayerNum(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x73E2B500410DA5A2);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -34892,8 +34892,8 @@ EXPORT bool Native_networkHostTransition(bool& success, int32_t _p0, int32_t _p1
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	ctx->Push(_p4);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _p6);
 	ctx->Push(_p7);
 	ctx->Push(_p8);
 	ctx->Push(_p9);
@@ -35049,7 +35049,7 @@ EXPORT int32_t Native__0x617F49C2668E6155(bool& success) {
 EXPORT void Native__0x261E97AD7BCF3D40(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x261E97AD7BCF3D40);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -35060,7 +35060,7 @@ EXPORT void Native__0x261E97AD7BCF3D40(bool& success, bool _p0) {
 EXPORT void Native__0x39917E1B4CB0F911(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x39917E1B4CB0F911);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -35155,7 +35155,7 @@ EXPORT bool Native_networkLaunchTransition(bool& success) {
 EXPORT void Native__0xA2E9C1AB8A92E8CD(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA2E9C1AB8A92E8CD);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -35179,7 +35179,7 @@ EXPORT void Native_networkBailTransition(bool& success, int32_t _p0, int32_t _p1
 EXPORT bool Native_networkDoTransitionToGame(bool& success, bool _p0, int32_t _maxPlayers) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3E9BB38102A589B0);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_maxPlayers);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -35192,9 +35192,9 @@ EXPORT bool Native_networkDoTransitionToGame(bool& success, bool _p0, int32_t _m
 EXPORT bool Native_networkDoTransitionToNewGame(bool& success, bool _p0, int32_t _maxPlayers, bool _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4665F51EFED00034);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_maxPlayers);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -35209,9 +35209,9 @@ EXPORT bool Native_networkDoTransitionToFreemode(bool& success, int32_t& _p0, in
 	auto ptr_p0 = _p0;
 	ctx->Push(&ptr_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_players);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -35229,9 +35229,9 @@ EXPORT bool Native_networkDoTransitionToNewFreemode(bool& success, int32_t& _p0,
 	auto ptr_p1 = _p1;
 	ctx->Push(&ptr_p1);
 	ctx->Push(_players);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -35285,7 +35285,7 @@ EXPORT void Native_networkApplyTransitionParameterString(bool& success, int32_t 
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(SaveString(_string));
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -35301,7 +35301,7 @@ EXPORT bool Native_networkSendTransitionGamerInstruction(bool& success, int32_t&
 	ctx->Push(SaveString(_p1));
 	ctx->Push(_p2);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -35486,8 +35486,8 @@ EXPORT bool Native_networkIsTransitionOpenToMatchmaking(bool& success) {
 EXPORT void Native_networkSetTransitionVisibilityLock(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0C978FDA19692C2C);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -35532,7 +35532,7 @@ EXPORT void Native_networkChangeTransitionSlots(bool& success, int32_t _p0, int3
 EXPORT void Native__0x973D76AA760A6CB6(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x973D76AA760A6CB6);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -35618,7 +35618,7 @@ EXPORT bool Native_networkIsActivitySession(bool& success) {
 EXPORT void Native__0x4A9FDE3A5A6D0437(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4A9FDE3A5A6D0437);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -36306,7 +36306,7 @@ EXPORT bool Native_networkPlayerIsBadsport(bool& success) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_triggerScriptCrcCheckOnPlayer(bool& success, int32_t _player, int32_t _p1, int32_t _scriptHash) {
+EXPORT bool Native_triggerScriptCrcCheckOnPlayer(bool& success, int32_t _player, int32_t _p1, uint32_t _scriptHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x46FB3ED415C7641C);
 	ctx->Reset();
 	ctx->Push(_player);
@@ -36388,7 +36388,7 @@ EXPORT void Native_networkSetThisScriptIsNetworkScript(bool& success, int32_t _m
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1CA59E306ECB80A5);
 	ctx->Reset();
 	ctx->Push(_maxNumMissionParticipants);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_instanceId);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -36401,7 +36401,7 @@ EXPORT bool Native_networkIsThisScriptMarked(bool& success, int32_t _p0, bool _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD1110739EEADB592);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -36685,7 +36685,7 @@ EXPORT bool Native_networkIsScriptActive(bool& success, const char* _scriptName,
 	ctx->Reset();
 	ctx->Push(SaveString(_scriptName));
 	ctx->Push(_player);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -36695,12 +36695,12 @@ EXPORT bool Native_networkIsScriptActive(bool& success, const char* _scriptName,
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkIsScriptActiveByHash(bool& success, int32_t _scriptHash, int32_t _p1, bool _p2, int32_t _p3) {
+EXPORT bool Native_networkIsScriptActiveByHash(bool& success, uint32_t _scriptHash, int32_t _p1, bool _p2, int32_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDA7DE67F5FE5EE13);
 	ctx->Reset();
 	ctx->Push(_scriptHash);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -36749,7 +36749,7 @@ EXPORT int32_t Native_networkGetInstanceIdOfThisScript(bool& success) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_networkGetPositionHashOfThisScript(bool& success) {
+EXPORT uint32_t Native_networkGetPositionHashOfThisScript(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x257ED0FADF750BCF);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -36757,7 +36757,7 @@ EXPORT int32_t Native_networkGetPositionHashOfThisScript(bool& success) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT bool Native_networkIsPlayerAParticipantOnScript(bool& success, int32_t _player1, const char* _script, int32_t _player2) {
@@ -36829,7 +36829,7 @@ EXPORT int32_t Native__0x2DA41ED6E1FCD7A5(bool& success, int32_t _p0, int32_t _p
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_networkGetDestroyerOfNetworkId(bool& success, int32_t _netId, int32_t& _weaponHash) {
+EXPORT int32_t Native_networkGetDestroyerOfNetworkId(bool& success, int32_t _netId, uint32_t& _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7A1ADEEF01740A24);
 	ctx->Reset();
 	ctx->Push(_netId);
@@ -36871,7 +36871,7 @@ EXPORT int32_t Native__0x83660B734994124D(bool& success, int32_t _p0, int32_t _p
 	return ctx->ResultInt();
 }
 
-EXPORT bool Native_networkGetDestroyerOfEntity(bool& success, int32_t _p0, int32_t _p1, int32_t& _weaponHash) {
+EXPORT bool Native_networkGetDestroyerOfEntity(bool& success, int32_t _p0, int32_t _p1, uint32_t& _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4CACA84440FA26F6);
 	ctx->Reset();
 	ctx->Push(_p0);
@@ -36887,7 +36887,7 @@ EXPORT bool Native_networkGetDestroyerOfEntity(bool& success, int32_t _p0, int32
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_networkGetEntityKillerOfPlayer(bool& success, int32_t _player, int32_t& _weaponHash) {
+EXPORT int32_t Native_networkGetEntityKillerOfPlayer(bool& success, int32_t _player, uint32_t& _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x42B2DAA6B596F5F8);
 	ctx->Reset();
 	ctx->Push(_player);
@@ -36909,8 +36909,8 @@ EXPORT void Native_networkResurrectLocalPlayer(bool& success, float _x, float _y
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_heading);
-	ctx->Push(_unk);
-	ctx->Push(_changetime);
+	ctx->Push((int32_t) _unk);
+	ctx->Push((int32_t) _changetime);
 	ctx->Push(_p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -36945,7 +36945,7 @@ EXPORT void Native_networkDisableInvincibleFlashing(bool& success, int32_t _play
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9DD368BF06983221);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -36967,7 +36967,7 @@ EXPORT void Native_networkPedForceGameStateUpdate(bool& success, int32_t _ped) {
 EXPORT void Native_networkSetLocalPlayerSyncLookAt(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x524FF0AEFF9C3973);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -37165,7 +37165,7 @@ EXPORT bool Native_networkHasControlOfPickup(bool& success, int32_t _pickup) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkHasControlOfDoor(bool& success, int32_t _doorHash) {
+EXPORT bool Native_networkHasControlOfDoor(bool& success, uint32_t _doorHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCB3C68ADB06195DF);
 	ctx->Reset();
 	ctx->Push(_doorHash);
@@ -37177,7 +37177,7 @@ EXPORT bool Native_networkHasControlOfDoor(bool& success, int32_t _doorHash) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkIsDoorNetworked(bool& success, int32_t _doorHash) {
+EXPORT bool Native_networkIsDoorNetworked(bool& success, uint32_t _doorHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC01E93FAC20C3346);
 	ctx->Reset();
 	ctx->Push(_doorHash);
@@ -37332,7 +37332,7 @@ EXPORT void Native_networkHandleFromPlayer(bool& success, int32_t _player, int32
 	_gamerHandle = ptr_gamerHandle;
 }
 
-EXPORT int32_t Native_networkHashFromPlayerHandle(bool& success, int32_t _player) {
+EXPORT uint32_t Native_networkHashFromPlayerHandle(bool& success, int32_t _player) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBC1D768F2F5D6C05);
 	ctx->Reset();
 	ctx->Push(_player);
@@ -37341,10 +37341,10 @@ EXPORT int32_t Native_networkHashFromPlayerHandle(bool& success, int32_t _player
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_networkHashFromGamerHandle(bool& success, int32_t& _gamerHandle) {
+EXPORT uint32_t Native_networkHashFromGamerHandle(bool& success, int32_t& _gamerHandle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x58575AC3CF2CA8EC);
 	ctx->Reset();
 	auto ptr_gamerHandle = _gamerHandle;
@@ -37355,7 +37355,7 @@ EXPORT int32_t Native_networkHashFromGamerHandle(bool& success, int32_t& _gamerH
 	}
 	success = true;
 	_gamerHandle = ptr_gamerHandle;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_networkHandleFromFriend(bool& success, int32_t _friendIndex, int32_t& _gamerHandle, int32_t _gamerHandleSize) {
@@ -37791,7 +37791,7 @@ EXPORT bool Native_networkIsFriendIndexOnline(bool& success, int32_t _friendInde
 EXPORT void Native_networkSetPlayerIsPassive(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1B857666604B1A74);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -37869,7 +37869,7 @@ EXPORT bool Native_networkHasHeadset(bool& success) {
 EXPORT void Native__0x7D395EA61622E116(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7D395EA61622E116);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38165,7 +38165,7 @@ EXPORT float Native_networkGetTalkerProximity(bool& success) {
 EXPORT void Native_networkSetVoiceActive(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBABEC9E69A91C57B);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38176,7 +38176,7 @@ EXPORT void Native_networkSetVoiceActive(bool& success, bool _toggle) {
 EXPORT void Native__0xCFEB46DCD7D8D5EB(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCFEB46DCD7D8D5EB);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38187,7 +38187,7 @@ EXPORT void Native__0xCFEB46DCD7D8D5EB(bool& success, bool _p0) {
 EXPORT void Native_networkOverrideTransitionChat(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAF66059A131AA269);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38198,7 +38198,7 @@ EXPORT void Native_networkOverrideTransitionChat(bool& success, bool _p0) {
 EXPORT void Native_networkSetTeamOnlyChat(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD5B4883AC32F24C3);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38234,7 +38234,7 @@ EXPORT void Native_networkOverrideTeamRestrictions(bool& success, int32_t _team,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6F697A66CE78674E);
 	ctx->Reset();
 	ctx->Push(_team);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38245,7 +38245,7 @@ EXPORT void Native_networkOverrideTeamRestrictions(bool& success, int32_t _team,
 EXPORT void Native_networkSetOverrideSpectatorMode(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x70DA3BF8DACD3210);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38256,7 +38256,7 @@ EXPORT void Native_networkSetOverrideSpectatorMode(bool& success, bool _toggle) 
 EXPORT void Native__0x3C5C1E2C2FF814B1(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3C5C1E2C2FF814B1);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38267,7 +38267,7 @@ EXPORT void Native__0x3C5C1E2C2FF814B1(bool& success, bool _toggle) {
 EXPORT void Native__0x9D7AFCBF21C51712(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9D7AFCBF21C51712);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38278,7 +38278,7 @@ EXPORT void Native__0x9D7AFCBF21C51712(bool& success, bool _toggle) {
 EXPORT void Native_networkSetNoSpectatorChat(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF46A1E03E8755980);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38289,7 +38289,7 @@ EXPORT void Native_networkSetNoSpectatorChat(bool& success, bool _toggle) {
 EXPORT void Native__0x6A5D89D7769A40D8(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6A5D89D7769A40D8);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38301,7 +38301,7 @@ EXPORT void Native_networkOverrideChatRestrictions(bool& success, int32_t _playe
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3039AE5AD2C9C0C4);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38313,7 +38313,7 @@ EXPORT void Native_networkOverrideSendRestrictions(bool& success, int32_t _playe
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x97DD4C5944CC2E6A);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38324,7 +38324,7 @@ EXPORT void Native_networkOverrideSendRestrictions(bool& success, int32_t _playe
 EXPORT void Native_networkOverrideSendRestrictionsAll(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x57B192B4D4AD23D5);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38336,7 +38336,7 @@ EXPORT void Native_networkOverrideReceiveRestrictions(bool& success, int32_t _pl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDDF73E2B1FEC5AB4);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38347,7 +38347,7 @@ EXPORT void Native_networkOverrideReceiveRestrictions(bool& success, int32_t _pl
 EXPORT void Native_networkOverrideReceiveRestrictionsAll(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0FF2862B61A58AF9);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38441,7 +38441,7 @@ EXPORT void Native__0xADB57E5B663CCA8B(bool& success, int32_t _p0, float& _p1, f
 EXPORT void Native__0x8EF52ACAECC51D9C(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8EF52ACAECC51D9C);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38484,7 +38484,7 @@ EXPORT bool Native_shutdownAndLoadMostRecentSave(bool& success) {
 EXPORT void Native_networkSetFriendlyFireOption(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF808475FA571D823);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38536,8 +38536,8 @@ EXPORT void Native_networkLeavePedBehindBeforeWarp(bool& success, int32_t _playe
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38549,7 +38549,7 @@ EXPORT void Native_networkLeavePedBehindBeforeCutscene(bool& success, int32_t _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBF22E0F32968E967);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38983,7 +38983,7 @@ EXPORT void Native_setNetworkIdCanMigrate(bool& success, int32_t _netId, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x299EEB23175895FC);
 	ctx->Reset();
 	ctx->Push(_netId);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38995,7 +38995,7 @@ EXPORT void Native_setNetworkIdExistsOnAllMachines(bool& success, int32_t _netId
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE05E81A888FA63C8);
 	ctx->Reset();
 	ctx->Push(_netId);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39008,7 +39008,7 @@ EXPORT void Native_setNetworkIdAlwaysExistsForPlayer(bool& success, int32_t _net
 	ctx->Reset();
 	ctx->Push(_netId);
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39032,7 +39032,7 @@ EXPORT void Native_networkSetEntityCanBlend(bool& success, int32_t _entity, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD830567D88A1E873);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39056,7 +39056,7 @@ EXPORT void Native_networkSetEntityInvisibleToNetwork(bool& success, int32_t _en
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF1CA12B18AEF5298);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39068,8 +39068,8 @@ EXPORT void Native_setNetworkIdVisibleInCutscene(bool& success, int32_t _netId, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA6928482543022B4);
 	ctx->Reset();
 	ctx->Push(_netId);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39105,7 +39105,7 @@ EXPORT void Native__0x76B3F29D3F967692(bool& success, int32_t _p0, int32_t _p1) 
 EXPORT void Native_setNetworkCutsceneEntities(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAAA553E7DD28A457);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39117,7 +39117,7 @@ EXPORT void Native__0x3FA36981311FA4FF(bool& success, int32_t _netId, bool _stat
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3FA36981311FA4FF);
 	ctx->Reset();
 	ctx->Push(_netId);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39140,8 +39140,8 @@ EXPORT bool Native_isNetworkIdOwnedByParticipant(bool& success, int32_t _netId) 
 EXPORT void Native_setLocalPlayerVisibleInCutscene(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD1065D68947E7B6E);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39152,7 +39152,7 @@ EXPORT void Native_setLocalPlayerVisibleInCutscene(bool& success, bool _p0, bool
 EXPORT void Native_setLocalPlayerInvisibleLocally(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE5F773C1A1D9D168);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39163,7 +39163,7 @@ EXPORT void Native_setLocalPlayerInvisibleLocally(bool& success, bool _p0) {
 EXPORT void Native_setLocalPlayerVisibleLocally(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7619364C82D3BF14);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39175,7 +39175,7 @@ EXPORT void Native_setPlayerInvisibleLocally(bool& success, int32_t _player, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x12B37D54667DB0B8);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39187,7 +39187,7 @@ EXPORT void Native_setPlayerVisibleLocally(bool& success, int32_t _player, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFAA10F1FAFB11AF2);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39198,7 +39198,7 @@ EXPORT void Native_setPlayerVisibleLocally(bool& success, int32_t _player, bool 
 EXPORT void Native_fadeOutLocalPlayer(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x416DBD4CD6ED8DD2);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39210,8 +39210,8 @@ EXPORT void Native_networkFadeOutEntity(bool& success, int32_t _entity, bool _no
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDE564951F95E09ED);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_normal);
-	ctx->Push(_slow);
+	ctx->Push((int32_t) _normal);
+	ctx->Push((int32_t) _slow);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39223,7 +39223,7 @@ EXPORT void Native_networkFadeInEntity(bool& success, int32_t _entity, bool _sta
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1F4ED342ACEFE62D);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -39272,8 +39272,8 @@ EXPORT void Native_setEntityVisibleInCutscene(bool& success, int32_t _p0, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE0031D3C8F36AB82);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39319,7 +39319,7 @@ EXPORT void Native_activateDamageTrackerOnNetworkId(bool& success, int32_t _netI
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD45B1FFCCD52FF19);
 	ctx->Reset();
 	ctx->Push(_netID);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39343,7 +39343,7 @@ EXPORT void Native_activateDamageTrackerOnPlayer(bool& success, int32_t _player,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBEC0816FF5ACBCDA);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39526,7 +39526,7 @@ EXPORT bool Native_canRegisterMissionEntities(bool& success, int32_t _ped_amt, i
 EXPORT int32_t Native_getNumReservedMissionObjects(bool& success, bool _p0, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAA81B5F10BC43AC2);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -39539,7 +39539,7 @@ EXPORT int32_t Native_getNumReservedMissionObjects(bool& success, bool _p0, int3
 EXPORT int32_t Native_getNumReservedMissionPeds(bool& success, bool _p0, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1F13D5AE5CB17E17);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -39552,7 +39552,7 @@ EXPORT int32_t Native_getNumReservedMissionPeds(bool& success, bool _p0, int32_t
 EXPORT int32_t Native_getNumReservedMissionVehicles(bool& success, bool _p0, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCF3A965906452031);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -39565,7 +39565,7 @@ EXPORT int32_t Native_getNumReservedMissionVehicles(bool& success, bool _p0, int
 EXPORT int32_t Native_getNumCreatedMissionObjects(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x12B6281B6C6706C0);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -39577,7 +39577,7 @@ EXPORT int32_t Native_getNumCreatedMissionObjects(bool& success, bool _p0) {
 EXPORT int32_t Native_getNumCreatedMissionPeds(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCB215C4B56A7FAE7);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -39589,7 +39589,7 @@ EXPORT int32_t Native_getNumCreatedMissionPeds(bool& success, bool _p0) {
 EXPORT int32_t Native_getNumCreatedMissionVehicles(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0CD9AB83489430EA);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -39832,7 +39832,7 @@ EXPORT void Native_convertPosixTime(bool& success, int32_t _posixTime, int32_t& 
 EXPORT void Native_networkSetInSpectatorMode(bool& success, bool _toggle, int32_t _playerPed) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x423DE3854BB50894);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_playerPed);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -39844,9 +39844,9 @@ EXPORT void Native_networkSetInSpectatorMode(bool& success, bool _toggle, int32_
 EXPORT void Native_networkSetInSpectatorModeExtended(bool& success, bool _toggle, int32_t _playerPed, bool _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x419594E137637120);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_playerPed);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39857,7 +39857,7 @@ EXPORT void Native_networkSetInSpectatorModeExtended(bool& success, bool _toggle
 EXPORT void Native_networkSetInFreeCamMode(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFC18DB55AE19E046);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39868,7 +39868,7 @@ EXPORT void Native_networkSetInFreeCamMode(bool& success, bool _toggle) {
 EXPORT void Native_networkSetChoiceMigrateOptions(bool& success, bool _toggle, int32_t _player) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5C707A667DF8B9FA);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_player);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -39891,8 +39891,8 @@ EXPORT bool Native_networkIsInSpectatorMode(bool& success) {
 EXPORT void Native_networkSetInMpCutscene(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9CA5DE655269FEC4);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39951,7 +39951,7 @@ EXPORT void Native_setNetworkVehicleAsGhost(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6274C4712850841E);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39975,7 +39975,7 @@ EXPORT void Native_setNetworkEnableVehiclePositionCorrection(bool& success, int3
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x838DA0936A24ED4D);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39986,8 +39986,8 @@ EXPORT void Native_setNetworkEnableVehiclePositionCorrection(bool& success, int3
 EXPORT void Native_setLocalPlayerAsGhost(bool& success, bool _toggle, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5FFE9B4144F9712F);
 	ctx->Reset();
-	ctx->Push(_toggle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _toggle);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -40010,7 +40010,7 @@ EXPORT bool Native_isEntityGhostedToLocalPlayer(bool& success, int32_t _entity) 
 EXPORT void Native__0x13F1FCB111B820B0(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x13F1FCB111B820B0);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -40022,7 +40022,7 @@ EXPORT void Native_setRelationshipToPlayer(bool& success, int32_t _player, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA7C511FA1C5BDA38);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -40055,7 +40055,7 @@ EXPORT void Native_networkSetEntityGhostedWithOwner(bool& success, int32_t _enti
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4BA166079D658ED4);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -40066,7 +40066,7 @@ EXPORT void Native_networkSetEntityGhostedWithOwner(bool& success, int32_t _enti
 EXPORT void Native__0xD7B6C73CAD419BCF(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD7B6C73CAD419BCF);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -40089,7 +40089,7 @@ EXPORT bool Native__0x7EF7649B64D7FF10(bool& success, int32_t _entity) {
 EXPORT void Native_usePlayerColourInsteadOfTeamColour(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x77758139EC9B66C7);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -40107,8 +40107,8 @@ EXPORT int32_t Native_networkCreateSynchronisedScene(bool& success, float _x, fl
 	ctx->Push(_yRot);
 	ctx->Push(_zRot);
 	ctx->Push(_rotationOrder);
-	ctx->Push(_useOcclusionPortal);
-	ctx->Push(_looped);
+	ctx->Push((int32_t) _useOcclusionPortal);
+	ctx->Push((int32_t) _looped);
 	ctx->Push(_p9);
 	ctx->Push(_animTime);
 	ctx->Push(_p11);
@@ -40177,7 +40177,7 @@ EXPORT void Native_networkAddEntityToSynchronisedScene(bool& success, int32_t _e
 	success = true;
 }
 
-EXPORT void Native__0x45F35C0EDC33B03B(bool& success, int32_t _netScene, int32_t _modelHash, float _x, float _y, float _z, float _p5, const char* _p6, float _p7, float _p8, int32_t _flags) {
+EXPORT void Native__0x45F35C0EDC33B03B(bool& success, int32_t _netScene, uint32_t _modelHash, float _x, float _y, float _z, float _p5, const char* _p6, float _p7, float _p8, int32_t _flags) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x45F35C0EDC33B03B);
 	ctx->Reset();
 	ctx->Push(_netScene);
@@ -40484,8 +40484,8 @@ EXPORT void Native_networkConcealPlayer(bool& success, int32_t _player, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBBDF066252829606);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _toggle);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -40509,7 +40509,7 @@ EXPORT void Native_networkConcealEntity(bool& success, int32_t _entity, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1632BE0AC1E62876);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -40696,7 +40696,7 @@ EXPORT void Native_networkUseHighPrecisionBlending(bool& success, int32_t _netID
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2B1813ABA29016C5);
 	ctx->Reset();
 	ctx->Push(_netID);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -40839,7 +40839,7 @@ EXPORT bool Native_networkAccessTunableBool(bool& success, const char* _tunableC
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkDoesTunableExistHash(bool& success, int32_t _tunableContext, int32_t _tunableName) {
+EXPORT bool Native_networkDoesTunableExistHash(bool& success, uint32_t _tunableContext, uint32_t _tunableName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE4E53E1419D81127);
 	ctx->Reset();
 	ctx->Push(_tunableContext);
@@ -40863,7 +40863,7 @@ EXPORT bool Native_networkAllocateTunablesRegistrationDataMap(bool& success) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkAccessTunableIntHash(bool& success, int32_t _tunableContext, int32_t _tunableName, int32_t& _value) {
+EXPORT bool Native_networkAccessTunableIntHash(bool& success, uint32_t _tunableContext, uint32_t _tunableName, int32_t& _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x40FCE03E50E8DBE8);
 	ctx->Reset();
 	ctx->Push(_tunableContext);
@@ -40879,7 +40879,7 @@ EXPORT bool Native_networkAccessTunableIntHash(bool& success, int32_t _tunableCo
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkRegisterTunableIntHash(bool& success, int32_t _contextHash, int32_t _nameHash, int32_t& _value) {
+EXPORT bool Native_networkRegisterTunableIntHash(bool& success, uint32_t _contextHash, uint32_t _nameHash, int32_t& _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3A8B55FDA4C8DDEF);
 	ctx->Reset();
 	ctx->Push(_contextHash);
@@ -40895,7 +40895,7 @@ EXPORT bool Native_networkRegisterTunableIntHash(bool& success, int32_t _context
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkAccessTunableFloatHash(bool& success, int32_t _tunableContext, int32_t _tunableName, float& _value) {
+EXPORT bool Native_networkAccessTunableFloatHash(bool& success, uint32_t _tunableContext, uint32_t _tunableName, float& _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x972BC203BBC4C4D5);
 	ctx->Reset();
 	ctx->Push(_tunableContext);
@@ -40911,7 +40911,7 @@ EXPORT bool Native_networkAccessTunableFloatHash(bool& success, int32_t _tunable
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkRegisterTunableFloatHash(bool& success, int32_t _contextHash, int32_t _nameHash, float& _value) {
+EXPORT bool Native_networkRegisterTunableFloatHash(bool& success, uint32_t _contextHash, uint32_t _nameHash, float& _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1950DAE9848A4739);
 	ctx->Reset();
 	ctx->Push(_contextHash);
@@ -40927,7 +40927,7 @@ EXPORT bool Native_networkRegisterTunableFloatHash(bool& success, int32_t _conte
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkAccessTunableBoolHash(bool& success, int32_t _tunableContext, int32_t _tunableName) {
+EXPORT bool Native_networkAccessTunableBoolHash(bool& success, uint32_t _tunableContext, uint32_t _tunableName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEA16B69D93D71A45);
 	ctx->Reset();
 	ctx->Push(_tunableContext);
@@ -40940,28 +40940,28 @@ EXPORT bool Native_networkAccessTunableBoolHash(bool& success, int32_t _tunableC
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkRegisterTunableBoolHash(bool& success, int32_t _contextHash, int32_t _nameHash, bool& _value) {
+EXPORT bool Native_networkRegisterTunableBoolHash(bool& success, uint32_t _contextHash, uint32_t _nameHash, bool& _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x697F508861875B42);
 	ctx->Reset();
 	ctx->Push(_contextHash);
 	ctx->Push(_nameHash);
-	auto ptr_value = _value;
+	auto ptr_value = (int32_t) _value;
 	ctx->Push(&ptr_value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
 	}
 	success = true;
-	_value = ptr_value;
+	_value = (bool) ptr_value;
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_networkTryAccessTunableBoolHash(bool& success, int32_t _tunableContext, int32_t _tunableName, bool _defaultValue) {
+EXPORT bool Native_networkTryAccessTunableBoolHash(bool& success, uint32_t _tunableContext, uint32_t _tunableName, bool _defaultValue) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC7420099936CE286);
 	ctx->Reset();
 	ctx->Push(_tunableContext);
 	ctx->Push(_tunableName);
-	ctx->Push(_defaultValue);
+	ctx->Push((int32_t) _defaultValue);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -40970,7 +40970,7 @@ EXPORT bool Native_networkTryAccessTunableBoolHash(bool& success, int32_t _tunab
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_networkGetContentModifierListId(bool& success, int32_t _contentHash) {
+EXPORT int32_t Native_networkGetContentModifierListId(bool& success, uint32_t _contentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x187382F8A3E0A6C3);
 	ctx->Reset();
 	ctx->Push(_contentHash);
@@ -41043,7 +41043,7 @@ EXPORT void Native_networkSetVehicleWheelsDestructible(bool& success, int32_t _e
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x890E2C5ABED7236D);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -41055,7 +41055,7 @@ EXPORT void Native__0x38B7C51AB1EDC7D8(bool& success, int32_t _entity, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x38B7C51AB1EDC7D8);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -41079,9 +41079,9 @@ EXPORT void Native_networkExplodeVehicle(bool& success, int32_t _vehicle, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x301A42153C9AD707);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_isAudible);
-	ctx->Push(_isInvisible);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _isAudible);
+	ctx->Push((int32_t) _isInvisible);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -41187,7 +41187,7 @@ EXPORT void Native__0x367EF5E2F439B4C6(bool& success, int32_t _p0) {
 EXPORT void Native__0x94538037EE44F5CF(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x94538037EE44F5CF);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -41362,7 +41362,7 @@ EXPORT bool Native_isCommerceStoreOpen(bool& success) {
 EXPORT void Native_setStoreEnabled(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9641A9FF718E9C5E);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -41446,7 +41446,7 @@ EXPORT bool Native__0x59328EB08C5CEB2B(bool& success) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native__0xFAE628F1E9ADB239(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
+EXPORT void Native__0xFAE628F1E9ADB239(bool& success, uint32_t _p0, int32_t _p1, uint32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFAE628F1E9ADB239);
 	ctx->Reset();
 	ctx->Push(_p0);
@@ -41701,7 +41701,7 @@ EXPORT bool Native__0x692D58DF40657E8C(bool& success, int32_t _p0, int32_t _p1, 
 	ctx->Push(_p2);
 	ctx->Push(SaveString(_p3));
 	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -41714,7 +41714,7 @@ EXPORT bool Native_ugcQueryByContentId(bool& success, const char* _contentId, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x158EC424F35EC469);
 	ctx->Reset();
 	ctx->Push(SaveString(_contentId));
-	ctx->Push(_latestVersion);
+	ctx->Push((int32_t) _latestVersion);
 	ctx->Push(SaveString(_contentTypeName));
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -41730,7 +41730,7 @@ EXPORT bool Native_ugcQueryByContentIds(bool& success, int32_t& _data, int32_t _
 	auto ptr_data = _data;
 	ctx->Push(&ptr_data);
 	ctx->Push(_count);
-	ctx->Push(_latestVersion);
+	ctx->Push((int32_t) _latestVersion);
 	ctx->Push(SaveString(_contentTypeName));
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -42016,7 +42016,7 @@ EXPORT int32_t Native_ugcGetContentTotal(bool& success) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_ugcGetContentHash(bool& success) {
+EXPORT uint32_t Native_ugcGetContentHash(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3A17A27D75C74887);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -42024,7 +42024,7 @@ EXPORT int32_t Native_ugcGetContentHash(bool& success) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_ugcClearQueryResults(bool& success) {
@@ -42466,7 +42466,7 @@ EXPORT bool Native_ugcSetBookmarked(bool& success, const char* _contentId, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x274A1519DFC1094F);
 	ctx->Reset();
 	ctx->Push(SaveString(_contentId));
-	ctx->Push(_bookmarked);
+	ctx->Push((int32_t) _bookmarked);
 	ctx->Push(SaveString(_contentTypeName));
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -42481,7 +42481,7 @@ EXPORT bool Native_ugcSetDeleted(bool& success, int32_t& _p0, bool _p1, const ch
 	ctx->Reset();
 	auto ptr_p0 = _p0;
 	ctx->Push(&ptr_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(SaveString(_p2));
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -42621,7 +42621,7 @@ EXPORT void Native_ugcClearOfflineQuery(bool& success) {
 EXPORT void Native_ugcSetQueryDataFromOffline(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF98DDE0A8ED09323);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -42632,7 +42632,7 @@ EXPORT void Native_ugcSetQueryDataFromOffline(bool& success, bool _p0) {
 EXPORT void Native__0xFD75DABC0957BF33(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFD75DABC0957BF33);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -42729,7 +42729,7 @@ EXPORT int32_t Native_textureDownloadRequest(bool& success, int32_t& _gamerHandl
 	ctx->Push(&ptr_gamerHandle);
 	ctx->Push(SaveString(_filePath));
 	ctx->Push(SaveString(_name));
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -42744,7 +42744,7 @@ EXPORT int32_t Native_titleTextureDownloadRequest(bool& success, const char* _fi
 	ctx->Reset();
 	ctx->Push(SaveString(_filePath));
 	ctx->Push(SaveString(_name));
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -42761,7 +42761,7 @@ EXPORT int32_t Native_ugcTextureDownloadRequest(bool& success, const char* _p0, 
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	ctx->Push(SaveString(_p4));
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -43038,7 +43038,7 @@ EXPORT void Native_networkUpdatePlayerScars(bool& success) {
 EXPORT void Native_networkDisableLeaveRemotePedBehind(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC505036A35AFD01B);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43050,7 +43050,7 @@ EXPORT void Native_networkAllowLocalEntityAttachment(bool& success, int32_t _ent
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x267C78C60E806B9A);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43303,16 +43303,16 @@ EXPORT void Native_networkUgcNav(bool& success, int32_t _p0, int32_t _p1) {
 	success = true;
 }
 
-EXPORT int32_t Native_createObject(bool& success, int32_t _modelHash, float _x, float _y, float _z, bool _isNetwork, bool _bScriptHostObj, bool _dynamic) {
+EXPORT int32_t Native_createObject(bool& success, uint32_t _modelHash, float _x, float _y, float _z, bool _isNetwork, bool _bScriptHostObj, bool _dynamic) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x509D5878EB39E842);
 	ctx->Reset();
 	ctx->Push(_modelHash);
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_isNetwork);
-	ctx->Push(_bScriptHostObj);
-	ctx->Push(_dynamic);
+	ctx->Push((int32_t) _isNetwork);
+	ctx->Push((int32_t) _bScriptHostObj);
+	ctx->Push((int32_t) _dynamic);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -43321,16 +43321,16 @@ EXPORT int32_t Native_createObject(bool& success, int32_t _modelHash, float _x, 
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_createObjectNoOffset(bool& success, int32_t _modelHash, float _x, float _y, float _z, bool _isNetwork, bool _bScriptHostObj, bool _dynamic) {
+EXPORT int32_t Native_createObjectNoOffset(bool& success, uint32_t _modelHash, float _x, float _y, float _z, bool _isNetwork, bool _bScriptHostObj, bool _dynamic) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9A294B2138ABB884);
 	ctx->Reset();
 	ctx->Push(_modelHash);
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_isNetwork);
-	ctx->Push(_bScriptHostObj);
-	ctx->Push(_dynamic);
+	ctx->Push((int32_t) _isNetwork);
+	ctx->Push((int32_t) _bScriptHostObj);
+	ctx->Push((int32_t) _dynamic);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -43382,7 +43382,7 @@ EXPORT bool Native__0xAFE24E4D29249E4A(bool& success, int32_t _object, float _p1
 	ctx->Push(_object);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -43401,7 +43401,7 @@ EXPORT bool Native_slideObject(bool& success, int32_t _object, float _toX, float
 	ctx->Push(_speedX);
 	ctx->Push(_speedY);
 	ctx->Push(_speedZ);
-	ctx->Push(_collision);
+	ctx->Push((int32_t) _collision);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -43414,7 +43414,7 @@ EXPORT void Native_setObjectTargettable(bool& success, int32_t _object, bool _ta
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8A7391690F5AFD81);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_targettable);
+	ctx->Push((int32_t) _targettable);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43426,7 +43426,7 @@ EXPORT void Native_setObjectForceVehiclesToAvoid(bool& success, int32_t _object,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x77F33F2CCF64B3AA);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43434,7 +43434,7 @@ EXPORT void Native_setObjectForceVehiclesToAvoid(bool& success, int32_t _object,
 	success = true;
 }
 
-EXPORT int32_t Native_getClosestObjectOfType(bool& success, float _x, float _y, float _z, float _radius, int32_t _modelHash, bool _isMission, bool _p6, bool _p7) {
+EXPORT int32_t Native_getClosestObjectOfType(bool& success, float _x, float _y, float _z, float _radius, uint32_t _modelHash, bool _isMission, bool _p6, bool _p7) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE143FA2249364369);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -43442,9 +43442,9 @@ EXPORT int32_t Native_getClosestObjectOfType(bool& success, float _x, float _y, 
 	ctx->Push(_z);
 	ctx->Push(_radius);
 	ctx->Push(_modelHash);
-	ctx->Push(_isMission);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _isMission);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -43466,7 +43466,7 @@ EXPORT bool Native_hasObjectBeenBroken(bool& success, int32_t _object, int32_t _
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_hasClosestObjectOfTypeBeenBroken(bool& success, float _p0, float _p1, float _p2, float _p3, int32_t _modelHash, int32_t _p5) {
+EXPORT bool Native_hasClosestObjectOfTypeBeenBroken(bool& success, float _p0, float _p1, float _p2, float _p3, uint32_t _modelHash, int32_t _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x761B0E69AC4D007E);
 	ctx->Reset();
 	ctx->Push(_p0);
@@ -43483,7 +43483,7 @@ EXPORT bool Native_hasClosestObjectOfTypeBeenBroken(bool& success, float _p0, fl
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_hasClosestObjectOfTypeBeenCompletelyDestroyed(bool& success, float _x, float _y, float _z, float _radius, int32_t _modelHash, bool _p5) {
+EXPORT bool Native_hasClosestObjectOfTypeBeenCompletelyDestroyed(bool& success, float _x, float _y, float _z, float _radius, uint32_t _modelHash, bool _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x46494A2475701343);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -43491,7 +43491,7 @@ EXPORT bool Native_hasClosestObjectOfTypeBeenCompletelyDestroyed(bool& success, 
 	ctx->Push(_z);
 	ctx->Push(_radius);
 	ctx->Push(_modelHash);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -43531,7 +43531,7 @@ EXPORT vector3_t Native_getObjectOffsetFromCoords(bool& success, float _xPos, fl
 	return { resultVec.x, resultVec.y, resultVec.z };
 }
 
-EXPORT int32_t Native_getCoordsAndRotationOfClosestObjectOfType(bool& success, float _x, float _y, float _z, float _radius, int32_t _modelHash, vector3_t& _outPosition, vector3_t& _outRotation, int32_t _rotationOrder) {
+EXPORT int32_t Native_getCoordsAndRotationOfClosestObjectOfType(bool& success, float _x, float _y, float _z, float _radius, uint32_t _modelHash, vector3_t& _outPosition, vector3_t& _outRotation, int32_t _rotationOrder) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x163F8B586BC95F2A);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -43558,16 +43558,16 @@ EXPORT int32_t Native_getCoordsAndRotationOfClosestObjectOfType(bool& success, f
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_setStateOfClosestDoorOfType(bool& success, int32_t _type, float _x, float _y, float _z, bool _locked, float _heading, bool _p6) {
+EXPORT void Native_setStateOfClosestDoorOfType(bool& success, uint32_t _type, float _x, float _y, float _z, bool _locked, float _heading, bool _p6) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF82D8F1926A02C3D);
 	ctx->Reset();
 	ctx->Push(_type);
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_locked);
+	ctx->Push((int32_t) _locked);
 	ctx->Push(_heading);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43575,14 +43575,14 @@ EXPORT void Native_setStateOfClosestDoorOfType(bool& success, int32_t _type, flo
 	success = true;
 }
 
-EXPORT void Native_getStateOfClosestDoorOfType(bool& success, int32_t _type, float _x, float _y, float _z, bool& _locked, float& _heading) {
+EXPORT void Native_getStateOfClosestDoorOfType(bool& success, uint32_t _type, float _x, float _y, float _z, bool& _locked, float& _heading) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEDC1A5B84AEF33FF);
 	ctx->Reset();
 	ctx->Push(_type);
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	auto ptr_locked = _locked;
+	auto ptr_locked = (int32_t) _locked;
 	ctx->Push(&ptr_locked);
 	auto ptr_heading = _heading;
 	ctx->Push(&ptr_heading);
@@ -43591,18 +43591,18 @@ EXPORT void Native_getStateOfClosestDoorOfType(bool& success, int32_t _type, flo
 		return ;
 	}
 	success = true;
-	_locked = ptr_locked;
+	_locked = (bool) ptr_locked;
 	_heading = ptr_heading;
 }
 
-EXPORT void Native_doorControl(bool& success, int32_t _modelHash, float _x, float _y, float _z, bool _locked, float _xRotMult, float _yRotMult, float _zRotMult) {
+EXPORT void Native_doorControl(bool& success, uint32_t _modelHash, float _x, float _y, float _z, bool _locked, float _xRotMult, float _yRotMult, float _zRotMult) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9B12F9A24FABEDB0);
 	ctx->Reset();
 	ctx->Push(_modelHash);
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_locked);
+	ctx->Push((int32_t) _locked);
 	ctx->Push(_xRotMult);
 	ctx->Push(_yRotMult);
 	ctx->Push(_zRotMult);
@@ -43624,7 +43624,7 @@ EXPORT void Native__0x006E4B040ED37EC3(bool& success, int32_t _p0) {
 	success = true;
 }
 
-EXPORT void Native_addDoorToSystem(bool& success, int32_t _doorHash, int32_t _modelHash, float _x, float _y, float _z, bool _p5, bool _scriptDoor, bool _isLocal) {
+EXPORT void Native_addDoorToSystem(bool& success, uint32_t _doorHash, uint32_t _modelHash, float _x, float _y, float _z, bool _p5, bool _scriptDoor, bool _isLocal) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6F8838D03D1DC226);
 	ctx->Reset();
 	ctx->Push(_doorHash);
@@ -43632,9 +43632,9 @@ EXPORT void Native_addDoorToSystem(bool& success, int32_t _doorHash, int32_t _mo
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_p5);
-	ctx->Push(_scriptDoor);
-	ctx->Push(_isLocal);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _scriptDoor);
+	ctx->Push((int32_t) _isLocal);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43642,7 +43642,7 @@ EXPORT void Native_addDoorToSystem(bool& success, int32_t _doorHash, int32_t _mo
 	success = true;
 }
 
-EXPORT void Native_removeDoorFromSystem(bool& success, int32_t _doorHash) {
+EXPORT void Native_removeDoorFromSystem(bool& success, uint32_t _doorHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x464D8E1427156FE4);
 	ctx->Reset();
 	ctx->Push(_doorHash);
@@ -43653,13 +43653,13 @@ EXPORT void Native_removeDoorFromSystem(bool& success, int32_t _doorHash) {
 	success = true;
 }
 
-EXPORT void Native_doorSystemSetDoorState(bool& success, int32_t _doorHash, int32_t _state, bool _requestDoor, bool _forceUpdate) {
+EXPORT void Native_doorSystemSetDoorState(bool& success, uint32_t _doorHash, int32_t _state, bool _requestDoor, bool _forceUpdate) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6BAB9442830C7F53);
 	ctx->Reset();
 	ctx->Push(_doorHash);
 	ctx->Push(_state);
-	ctx->Push(_requestDoor);
-	ctx->Push(_forceUpdate);
+	ctx->Push((int32_t) _requestDoor);
+	ctx->Push((int32_t) _forceUpdate);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43667,7 +43667,7 @@ EXPORT void Native_doorSystemSetDoorState(bool& success, int32_t _doorHash, int3
 	success = true;
 }
 
-EXPORT int32_t Native_doorSystemGetDoorState(bool& success, int32_t _doorHash) {
+EXPORT int32_t Native_doorSystemGetDoorState(bool& success, uint32_t _doorHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x160AA1B32F6139B8);
 	ctx->Reset();
 	ctx->Push(_doorHash);
@@ -43679,7 +43679,7 @@ EXPORT int32_t Native_doorSystemGetDoorState(bool& success, int32_t _doorHash) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_doorSystemGetDoorPendingState(bool& success, int32_t _doorHash) {
+EXPORT int32_t Native_doorSystemGetDoorPendingState(bool& success, uint32_t _doorHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4BC2854478F3A749);
 	ctx->Reset();
 	ctx->Push(_doorHash);
@@ -43691,13 +43691,13 @@ EXPORT int32_t Native_doorSystemGetDoorPendingState(bool& success, int32_t _door
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_doorSystemSetAutomaticRate(bool& success, int32_t _doorHash, float _rate, bool _requestDoor, bool _forceUpdate) {
+EXPORT void Native_doorSystemSetAutomaticRate(bool& success, uint32_t _doorHash, float _rate, bool _requestDoor, bool _forceUpdate) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x03C27E13B42A0E82);
 	ctx->Reset();
 	ctx->Push(_doorHash);
 	ctx->Push(_rate);
-	ctx->Push(_requestDoor);
-	ctx->Push(_forceUpdate);
+	ctx->Push((int32_t) _requestDoor);
+	ctx->Push((int32_t) _forceUpdate);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43705,13 +43705,13 @@ EXPORT void Native_doorSystemSetAutomaticRate(bool& success, int32_t _doorHash, 
 	success = true;
 }
 
-EXPORT void Native_doorSystemSetAutomaticDistance(bool& success, int32_t _doorHash, float _distance, bool _requestDoor, bool _forceUpdate) {
+EXPORT void Native_doorSystemSetAutomaticDistance(bool& success, uint32_t _doorHash, float _distance, bool _requestDoor, bool _forceUpdate) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9BA001CB45CBF627);
 	ctx->Reset();
 	ctx->Push(_doorHash);
 	ctx->Push(_distance);
-	ctx->Push(_requestDoor);
-	ctx->Push(_forceUpdate);
+	ctx->Push((int32_t) _requestDoor);
+	ctx->Push((int32_t) _forceUpdate);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43719,13 +43719,13 @@ EXPORT void Native_doorSystemSetAutomaticDistance(bool& success, int32_t _doorHa
 	success = true;
 }
 
-EXPORT void Native_doorSystemSetOpenRatio(bool& success, int32_t _doorHash, float _ajar, bool _requestDoor, bool _forceUpdate) {
+EXPORT void Native_doorSystemSetOpenRatio(bool& success, uint32_t _doorHash, float _ajar, bool _requestDoor, bool _forceUpdate) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB6E6FBA95C7324AC);
 	ctx->Reset();
 	ctx->Push(_doorHash);
 	ctx->Push(_ajar);
-	ctx->Push(_requestDoor);
-	ctx->Push(_forceUpdate);
+	ctx->Push((int32_t) _requestDoor);
+	ctx->Push((int32_t) _forceUpdate);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43745,7 +43745,7 @@ EXPORT int32_t Native__0xE851471AEFC3374F(bool& success, int32_t _p0) {
 	return ctx->ResultInt();
 }
 
-EXPORT float Native_doorSystemGetOpenRatio(bool& success, int32_t _doorHash) {
+EXPORT float Native_doorSystemGetOpenRatio(bool& success, uint32_t _doorHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x65499865FCA6E5EC);
 	ctx->Reset();
 	ctx->Push(_doorHash);
@@ -43757,13 +43757,13 @@ EXPORT float Native_doorSystemGetOpenRatio(bool& success, int32_t _doorHash) {
 	return ctx->ResultFloat();
 }
 
-EXPORT void Native_doorSystemSetSpringRemoved(bool& success, int32_t _doorHash, bool _removed, bool _requestDoor, bool _forceUpdate) {
+EXPORT void Native_doorSystemSetSpringRemoved(bool& success, uint32_t _doorHash, bool _removed, bool _requestDoor, bool _forceUpdate) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC485E07E4F0B7958);
 	ctx->Reset();
 	ctx->Push(_doorHash);
-	ctx->Push(_removed);
-	ctx->Push(_requestDoor);
-	ctx->Push(_forceUpdate);
+	ctx->Push((int32_t) _removed);
+	ctx->Push((int32_t) _requestDoor);
+	ctx->Push((int32_t) _forceUpdate);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43771,11 +43771,11 @@ EXPORT void Native_doorSystemSetSpringRemoved(bool& success, int32_t _doorHash, 
 	success = true;
 }
 
-EXPORT void Native_doorSystemSetHoldOpen(bool& success, int32_t _doorHash, bool _toggle) {
+EXPORT void Native_doorSystemSetHoldOpen(bool& success, uint32_t _doorHash, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD9B71952F78A2640);
 	ctx->Reset();
 	ctx->Push(_doorHash);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43783,11 +43783,11 @@ EXPORT void Native_doorSystemSetHoldOpen(bool& success, int32_t _doorHash, bool 
 	success = true;
 }
 
-EXPORT void Native__0xA85A21582451E951(bool& success, int32_t _doorHash, bool _p1) {
+EXPORT void Native__0xA85A21582451E951(bool& success, uint32_t _doorHash, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA85A21582451E951);
 	ctx->Reset();
 	ctx->Push(_doorHash);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43795,7 +43795,7 @@ EXPORT void Native__0xA85A21582451E951(bool& success, int32_t _doorHash, bool _p
 	success = true;
 }
 
-EXPORT bool Native_isDoorRegisteredWithSystem(bool& success, int32_t _doorHash) {
+EXPORT bool Native_isDoorRegisteredWithSystem(bool& success, uint32_t _doorHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC153C43EA202C8C1);
 	ctx->Reset();
 	ctx->Push(_doorHash);
@@ -43807,7 +43807,7 @@ EXPORT bool Native_isDoorRegisteredWithSystem(bool& success, int32_t _doorHash) 
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isDoorClosed(bool& success, int32_t _doorHash) {
+EXPORT bool Native_isDoorClosed(bool& success, uint32_t _doorHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC531EE8A1145A149);
 	ctx->Reset();
 	ctx->Push(_doorHash);
@@ -43822,7 +43822,7 @@ EXPORT bool Native_isDoorClosed(bool& success, int32_t _doorHash) {
 EXPORT void Native__0xC7F29CA00F46350E(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC7F29CA00F46350E);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43852,7 +43852,7 @@ EXPORT bool Native_doorSystemGetIsPhysicsLoaded(bool& success, int32_t _p0) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_doorSystemFindExistingDoor(bool& success, float _x, float _y, float _z, int32_t _modelHash, int32_t& _outDoorHash) {
+EXPORT bool Native_doorSystemFindExistingDoor(bool& success, float _x, float _y, float _z, uint32_t _modelHash, uint32_t& _outDoorHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x589F80B325CC82C5);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -43870,11 +43870,11 @@ EXPORT bool Native_doorSystemFindExistingDoor(bool& success, float _x, float _y,
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isGarageEmpty(bool& success, int32_t _garageHash, bool _p1, int32_t _p2) {
+EXPORT bool Native_isGarageEmpty(bool& success, uint32_t _garageHash, bool _p1, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x90E47239EA1980B8);
 	ctx->Reset();
 	ctx->Push(_garageHash);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -43884,7 +43884,7 @@ EXPORT bool Native_isGarageEmpty(bool& success, int32_t _garageHash, bool _p1, i
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isPlayerEntirelyInsideGarage(bool& success, int32_t _garageHash, int32_t _player, float _p2, int32_t _p3) {
+EXPORT bool Native_isPlayerEntirelyInsideGarage(bool& success, uint32_t _garageHash, int32_t _player, float _p2, int32_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x024A60DEB0EA69F0);
 	ctx->Reset();
 	ctx->Push(_garageHash);
@@ -43899,7 +43899,7 @@ EXPORT bool Native_isPlayerEntirelyInsideGarage(bool& success, int32_t _garageHa
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isPlayerPartiallyInsideGarage(bool& success, int32_t _garageHash, int32_t _player, int32_t _p2) {
+EXPORT bool Native_isPlayerPartiallyInsideGarage(bool& success, uint32_t _garageHash, int32_t _player, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1761DC5D8471CBAA);
 	ctx->Reset();
 	ctx->Push(_garageHash);
@@ -43913,13 +43913,13 @@ EXPORT bool Native_isPlayerPartiallyInsideGarage(bool& success, int32_t _garageH
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_areEntitiesEntirelyInsideGarage(bool& success, int32_t _garageHash, bool _p1, bool _p2, bool _p3, int32_t _p4) {
+EXPORT bool Native_areEntitiesEntirelyInsideGarage(bool& success, uint32_t _garageHash, bool _p1, bool _p2, bool _p3, int32_t _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x85B6C850546FDDE2);
 	ctx->Reset();
 	ctx->Push(_garageHash);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	ctx->Push(_p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -43929,13 +43929,13 @@ EXPORT bool Native_areEntitiesEntirelyInsideGarage(bool& success, int32_t _garag
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isAnyEntityEntirelyInsideGarage(bool& success, int32_t _garageHash, bool _p1, bool _p2, bool _p3, int32_t _p4) {
+EXPORT bool Native_isAnyEntityEntirelyInsideGarage(bool& success, uint32_t _garageHash, bool _p1, bool _p2, bool _p3, int32_t _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x673ED815D6E323B7);
 	ctx->Reset();
 	ctx->Push(_garageHash);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	ctx->Push(_p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -43945,7 +43945,7 @@ EXPORT bool Native_isAnyEntityEntirelyInsideGarage(bool& success, int32_t _garag
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isObjectEntirelyInsideGarage(bool& success, int32_t _garageHash, int32_t _entity, float _p2, int32_t _p3) {
+EXPORT bool Native_isObjectEntirelyInsideGarage(bool& success, uint32_t _garageHash, int32_t _entity, float _p2, int32_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x372EF6699146A1E4);
 	ctx->Reset();
 	ctx->Push(_garageHash);
@@ -43960,7 +43960,7 @@ EXPORT bool Native_isObjectEntirelyInsideGarage(bool& success, int32_t _garageHa
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isObjectPartiallyInsideGarage(bool& success, int32_t _garageHash, int32_t _entity, int32_t _p2) {
+EXPORT bool Native_isObjectPartiallyInsideGarage(bool& success, uint32_t _garageHash, int32_t _entity, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF0EED5A6BC7B237A);
 	ctx->Reset();
 	ctx->Push(_garageHash);
@@ -43974,11 +43974,11 @@ EXPORT bool Native_isObjectPartiallyInsideGarage(bool& success, int32_t _garageH
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_clearGarageArea(bool& success, int32_t _garageHash, bool _isNetwork) {
+EXPORT void Native_clearGarageArea(bool& success, uint32_t _garageHash, bool _isNetwork) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDA05194260CDCDF9);
 	ctx->Reset();
 	ctx->Push(_garageHash);
-	ctx->Push(_isNetwork);
+	ctx->Push((int32_t) _isNetwork);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -43986,14 +43986,14 @@ EXPORT void Native_clearGarageArea(bool& success, int32_t _garageHash, bool _isN
 	success = true;
 }
 
-EXPORT void Native_clearObjectsInsideGarage(bool& success, int32_t _garageHash, bool _vehicles, bool _peds, bool _objects, bool _isNetwork) {
+EXPORT void Native_clearObjectsInsideGarage(bool& success, uint32_t _garageHash, bool _vehicles, bool _peds, bool _objects, bool _isNetwork) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x190428512B240692);
 	ctx->Reset();
 	ctx->Push(_garageHash);
-	ctx->Push(_vehicles);
-	ctx->Push(_peds);
-	ctx->Push(_objects);
-	ctx->Push(_isNetwork);
+	ctx->Push((int32_t) _vehicles);
+	ctx->Push((int32_t) _peds);
+	ctx->Push((int32_t) _objects);
+	ctx->Push((int32_t) _isNetwork);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44005,7 +44005,7 @@ EXPORT void Native__0x659F9D71F52843F8(bool& success, int32_t _id, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x659F9D71F52843F8);
 	ctx->Reset();
 	ctx->Push(_id);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44013,11 +44013,11 @@ EXPORT void Native__0x659F9D71F52843F8(bool& success, int32_t _id, bool _toggle)
 	success = true;
 }
 
-EXPORT void Native_enableSavingInGarage(bool& success, int32_t _garageHash, bool _toggle) {
+EXPORT void Native_enableSavingInGarage(bool& success, uint32_t _garageHash, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF2E1A7133DD356A6);
 	ctx->Reset();
 	ctx->Push(_garageHash);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44035,7 +44035,7 @@ EXPORT void Native__0x66A49D021870FE88(bool& success) {
 	success = true;
 }
 
-EXPORT bool Native_doesObjectOfTypeExistAtCoords(bool& success, float _x, float _y, float _z, float _radius, int32_t _hash, bool _p5) {
+EXPORT bool Native_doesObjectOfTypeExistAtCoords(bool& success, float _x, float _y, float _z, float _radius, uint32_t _hash, bool _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBFA48E2FF417213F);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -44043,7 +44043,7 @@ EXPORT bool Native_doesObjectOfTypeExistAtCoords(bool& success, float _x, float 
 	ctx->Push(_z);
 	ctx->Push(_radius);
 	ctx->Push(_hash);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -44065,8 +44065,8 @@ EXPORT bool Native_isPointInAngledArea(bool& success, float _xPos, float _yPos, 
 	ctx->Push(_y2);
 	ctx->Push(_z2);
 	ctx->Push(_width);
-	ctx->Push(_debug);
-	ctx->Push(_includeZ);
+	ctx->Push((int32_t) _debug);
+	ctx->Push((int32_t) _includeZ);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -44079,7 +44079,7 @@ EXPORT void Native_setObjectAllowLowLodBuoyancy(bool& success, int32_t _object, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4D89D607CB3DD1D2);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44113,7 +44113,7 @@ EXPORT float Native_getObjectFragmentDamageHealth(bool& success, int32_t _p0, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB6FBFD079B8D0596);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0.f;
@@ -44126,7 +44126,7 @@ EXPORT void Native_setActivateObjectPhysicsAsSoonAsItIsUnfrozen(bool& success, i
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x406137F8EF90EAF5);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44141,7 +44141,7 @@ EXPORT bool Native_isAnyObjectNearPoint(bool& success, float _x, float _y, float
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_range);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -44150,7 +44150,7 @@ EXPORT bool Native_isAnyObjectNearPoint(bool& success, float _x, float _y, float
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isObjectNearPoint(bool& success, int32_t _objectHash, float _x, float _y, float _z, float _range) {
+EXPORT bool Native_isObjectNearPoint(bool& success, uint32_t _objectHash, float _x, float _y, float _z, float _range) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8C90FE4B381BA60A);
 	ctx->Reset();
 	ctx->Push(_objectHash);
@@ -44182,7 +44182,7 @@ EXPORT void Native_breakObjectFragmentChild(bool& success, int32_t _p0, int32_t 
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44241,7 +44241,7 @@ EXPORT void Native__0xC6033D32241F6FB5(bool& success, int32_t _object, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC6033D32241F6FB5);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44253,7 +44253,7 @@ EXPORT void Native__0xEB6F1A9B5510A5D2(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEB6F1A9B5510A5D2);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44264,7 +44264,7 @@ EXPORT void Native__0xEB6F1A9B5510A5D2(bool& success, int32_t _p0, bool _p1) {
 EXPORT void Native_setUnkGlobalBoolRelatedToDamage(bool& success, bool _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xABDABF4E1EDECBFA);
 	ctx->Reset();
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44276,7 +44276,7 @@ EXPORT void Native_setCreateWeaponObjectLightSource(bool& success, int32_t _obje
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBCE595371A5FBAAF);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44348,7 +44348,7 @@ EXPORT float Native_getRayfireMapObjectAnimPhase(bool& success, int32_t _object)
 	return ctx->ResultFloat();
 }
 
-EXPORT int32_t Native_createPickup(bool& success, int32_t _pickupHash, float _posX, float _posY, float _posZ, int32_t _p4, int32_t _value, bool _p6, int32_t _modelHash) {
+EXPORT int32_t Native_createPickup(bool& success, uint32_t _pickupHash, float _posX, float _posY, float _posZ, int32_t _p4, int32_t _value, bool _p6, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFBA08C503DD5FA58);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
@@ -44357,7 +44357,7 @@ EXPORT int32_t Native_createPickup(bool& success, int32_t _pickupHash, float _po
 	ctx->Push(_posZ);
 	ctx->Push(_p4);
 	ctx->Push(_value);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	ctx->Push(_modelHash);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -44367,7 +44367,7 @@ EXPORT int32_t Native_createPickup(bool& success, int32_t _pickupHash, float _po
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_createPickupRotate(bool& success, int32_t _pickupHash, float _posX, float _posY, float _posZ, float _rotX, float _rotY, float _rotZ, int32_t _flag, int32_t _amount, int32_t _p9, bool _p10, int32_t _modelHash) {
+EXPORT int32_t Native_createPickupRotate(bool& success, uint32_t _pickupHash, float _posX, float _posY, float _posZ, float _rotX, float _rotY, float _rotZ, int32_t _flag, int32_t _amount, int32_t _p9, bool _p10, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x891804727E0A98B7);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
@@ -44380,7 +44380,7 @@ EXPORT int32_t Native_createPickupRotate(bool& success, int32_t _pickupHash, flo
 	ctx->Push(_flag);
 	ctx->Push(_amount);
 	ctx->Push(_p9);
-	ctx->Push(_p10);
+	ctx->Push((int32_t) _p10);
 	ctx->Push(_modelHash);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -44412,7 +44412,7 @@ EXPORT void Native__0x826D1EE4D1CAFC78(bool& success, int32_t _p0, int32_t _p1) 
 	success = true;
 }
 
-EXPORT int32_t Native_createAmbientPickup(bool& success, int32_t _pickupHash, float _posX, float _posY, float _posZ, int32_t _flags, int32_t _value, int32_t _modelHash, bool _p7, bool _p8) {
+EXPORT int32_t Native_createAmbientPickup(bool& success, uint32_t _pickupHash, float _posX, float _posY, float _posZ, int32_t _flags, int32_t _value, uint32_t _modelHash, bool _p7, bool _p8) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x673966A0C0FD7171);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
@@ -44422,8 +44422,8 @@ EXPORT int32_t Native_createAmbientPickup(bool& success, int32_t _pickupHash, fl
 	ctx->Push(_flags);
 	ctx->Push(_value);
 	ctx->Push(_modelHash);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -44432,7 +44432,7 @@ EXPORT int32_t Native_createAmbientPickup(bool& success, int32_t _pickupHash, fl
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_createNonNetworkedAmbientPickup(bool& success, int32_t _pickupHash, float _posX, float _posY, float _posZ, int32_t _flags, int32_t _value, int32_t _modelHash, bool _p7, bool _p8) {
+EXPORT int32_t Native_createNonNetworkedAmbientPickup(bool& success, uint32_t _pickupHash, float _posX, float _posY, float _posZ, int32_t _flags, int32_t _value, uint32_t _modelHash, bool _p7, bool _p8) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9C93764223E29C50);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
@@ -44442,8 +44442,8 @@ EXPORT int32_t Native_createNonNetworkedAmbientPickup(bool& success, int32_t _pi
 	ctx->Push(_flags);
 	ctx->Push(_value);
 	ctx->Push(_modelHash);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -44464,14 +44464,14 @@ EXPORT void Native__0x1E3F1B1B891A2AAA(bool& success, int32_t _p0, int32_t _p1) 
 	success = true;
 }
 
-EXPORT int32_t Native_createPortablePickup(bool& success, int32_t _pickupHash, float _x, float _y, float _z, bool _placeOnGround, int32_t _modelHash) {
+EXPORT int32_t Native_createPortablePickup(bool& success, uint32_t _pickupHash, float _x, float _y, float _z, bool _placeOnGround, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2EAF1FDB2FB55698);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_placeOnGround);
+	ctx->Push((int32_t) _placeOnGround);
 	ctx->Push(_modelHash);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -44481,14 +44481,14 @@ EXPORT int32_t Native_createPortablePickup(bool& success, int32_t _pickupHash, f
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_createNonNetworkedPortablePickup(bool& success, int32_t _pickupHash, float _x, float _y, float _z, bool _placeOnGround, int32_t _modelHash) {
+EXPORT int32_t Native_createNonNetworkedPortablePickup(bool& success, uint32_t _pickupHash, float _x, float _y, float _z, bool _placeOnGround, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x125494B98A21AAF7);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_placeOnGround);
+	ctx->Push((int32_t) _placeOnGround);
 	ctx->Push(_modelHash);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -44525,7 +44525,7 @@ EXPORT void Native_hidePickup(bool& success, int32_t _pickupObject, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x867458251D47CCB2);
 	ctx->Reset();
 	ctx->Push(_pickupObject);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44533,7 +44533,7 @@ EXPORT void Native_hidePickup(bool& success, int32_t _pickupObject, bool _toggle
 	success = true;
 }
 
-EXPORT void Native_setMaxNumPortablePickupsCarriedByPlayer(bool& success, int32_t _modelHash, int32_t _p1) {
+EXPORT void Native_setMaxNumPortablePickupsCarriedByPlayer(bool& success, uint32_t _modelHash, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0BF3B3BD47D79C08);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -44548,7 +44548,7 @@ EXPORT void Native_setMaxNumPortablePickupsCarriedByPlayer(bool& success, int32_
 EXPORT void Native_setLocalPlayerCanCollectPortablePickups(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x78857FC65CADB909);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44622,7 +44622,7 @@ EXPORT void Native__0x8DCA505A5C196F05(bool& success, int32_t _p0, int32_t _p1) 
 	success = true;
 }
 
-EXPORT void Native_removeAllPickupsOfType(bool& success, int32_t _pickupHash) {
+EXPORT void Native_removeAllPickupsOfType(bool& success, uint32_t _pickupHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x27F9D613092159CF);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
@@ -44656,7 +44656,7 @@ EXPORT void Native_removePickup(bool& success, int32_t _pickup) {
 	success = true;
 }
 
-EXPORT void Native_createMoneyPickups(bool& success, float _x, float _y, float _z, int32_t _value, int32_t _amount, int32_t _model) {
+EXPORT void Native_createMoneyPickups(bool& success, float _x, float _y, float _z, int32_t _value, int32_t _amount, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0589B5E791CE9B2B);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -44732,7 +44732,7 @@ EXPORT bool Native_isObjectAPickup(bool& success, int32_t _object) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_doesPickupOfTypeExistInArea(bool& success, int32_t _pickupHash, float _x, float _y, float _z, float _radius) {
+EXPORT bool Native_doesPickupOfTypeExistInArea(bool& success, uint32_t _pickupHash, float _x, float _y, float _z, float _radius) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF9C36251F6E48E33);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
@@ -44771,12 +44771,12 @@ EXPORT void Native_forcePickupRegenerate(bool& success, int32_t _p0) {
 	success = true;
 }
 
-EXPORT void Native_toggleUsePickupsForPlayer(bool& success, int32_t _player, int32_t _pickupHash, bool _toggle) {
+EXPORT void Native_toggleUsePickupsForPlayer(bool& success, int32_t _player, uint32_t _pickupHash, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x616093EC6B139DD9);
 	ctx->Reset();
 	ctx->Push(_player);
 	ctx->Push(_pickupHash);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44784,11 +44784,11 @@ EXPORT void Native_toggleUsePickupsForPlayer(bool& success, int32_t _player, int
 	success = true;
 }
 
-EXPORT void Native_setLocalPlayerCanUsePickupsWithThisModel(bool& success, int32_t _modelHash, bool _toggle) {
+EXPORT void Native_setLocalPlayerCanUsePickupsWithThisModel(bool& success, uint32_t _modelHash, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x88EAEC617CD26926);
 	ctx->Reset();
 	ctx->Push(_modelHash);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44796,7 +44796,7 @@ EXPORT void Native_setLocalPlayerCanUsePickupsWithThisModel(bool& success, int32
 	success = true;
 }
 
-EXPORT void Native__0xFDC07C58E8AAB715(bool& success, int32_t _pickupHash) {
+EXPORT void Native__0xFDC07C58E8AAB715(bool& success, uint32_t _pickupHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFDC07C58E8AAB715);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
@@ -44812,7 +44812,7 @@ EXPORT void Native_setTeamPickupObject(bool& success, int32_t _object, int32_t _
 	ctx->Reset();
 	ctx->Push(_object);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44824,8 +44824,8 @@ EXPORT void Native_preventCollectionOfPortablePickup(bool& success, int32_t _obj
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x92AEFB5F6E294023);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44862,7 +44862,7 @@ EXPORT void Native__0xA08FE5E49BDC39DD(bool& success, int32_t _p0, float _p1, bo
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -44942,7 +44942,7 @@ EXPORT float Native_getPickupGenerationRangeMultiplier(bool& success) {
 EXPORT void Native__0x31F924B53EADDF65(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x31F924B53EADDF65);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45037,7 +45037,7 @@ EXPORT void Native__0x4C134B4DF76025D0(bool& success, int32_t _pickup, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4C134B4DF76025D0);
 	ctx->Reset();
 	ctx->Push(_pickup);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45049,7 +45049,7 @@ EXPORT void Native__0xAA059C615DE9DD03(bool& success, int32_t _pickup, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAA059C615DE9DD03);
 	ctx->Reset();
 	ctx->Push(_pickup);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45119,7 +45119,7 @@ EXPORT void Native__0xBFFE53AE7E67FCDC(bool& success, int32_t _pickup, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBFFE53AE7E67FCDC);
 	ctx->Reset();
 	ctx->Push(_pickup);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45131,7 +45131,7 @@ EXPORT void Native__0xD05A3241B9A86F19(bool& success, int32_t _entity, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD05A3241B9A86F19);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45143,7 +45143,7 @@ EXPORT void Native__0xB2D0BDE54F0E8E5A(bool& success, int32_t _object, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB2D0BDE54F0E8E5A);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45151,7 +45151,7 @@ EXPORT void Native__0xB2D0BDE54F0E8E5A(bool& success, int32_t _object, bool _tog
 	success = true;
 }
 
-EXPORT int32_t Native_getWeaponTypeFromPickupType(bool& success, int32_t _pickupHash) {
+EXPORT uint32_t Native_getWeaponTypeFromPickupType(bool& success, uint32_t _pickupHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x08F96CA6C551AD51);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
@@ -45160,10 +45160,10 @@ EXPORT int32_t Native_getWeaponTypeFromPickupType(bool& success, int32_t _pickup
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getPickupHashFromWeapon(bool& success, int32_t _weaponHash) {
+EXPORT uint32_t Native_getPickupHashFromWeapon(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD6429A016084F1A5);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -45172,7 +45172,7 @@ EXPORT int32_t Native_getPickupHashFromWeapon(bool& success, int32_t _weaponHash
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT bool Native_isPickupWeaponObjectValid(bool& success, int32_t _object) {
@@ -45211,7 +45211,7 @@ EXPORT void Native_setObjectTextureVariation(bool& success, int32_t _object, int
 	success = true;
 }
 
-EXPORT bool Native_setTextureVariationOfClosestObjectOfType(bool& success, float _x, float _y, float _z, float _radius, int32_t _modelHash, int32_t _textureVariation) {
+EXPORT bool Native_setTextureVariationOfClosestObjectOfType(bool& success, float _x, float _y, float _z, float _radius, uint32_t _modelHash, int32_t _textureVariation) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF12E33034D887F66);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -45232,7 +45232,7 @@ EXPORT int32_t Native_setObjectLightColor(bool& success, int32_t _object, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5F048334B4A4E774);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_r);
 	ctx->Push(_g);
 	ctx->Push(_b);
@@ -45260,7 +45260,7 @@ EXPORT void Native__0x3B2FD68DB5F8331C(bool& success, int32_t _object, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3B2FD68DB5F8331C);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45292,7 +45292,7 @@ EXPORT void Native_setObjectStuntPropDuration(bool& success, int32_t _object, fl
 	success = true;
 }
 
-EXPORT int32_t Native_getPickupHash(bool& success, int32_t _pickupHash) {
+EXPORT uint32_t Native_getPickupHash(bool& success, uint32_t _pickupHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5EAAD83F8CFB4575);
 	ctx->Reset();
 	ctx->Push(_pickupHash);
@@ -45301,7 +45301,7 @@ EXPORT int32_t Native_getPickupHash(bool& success, int32_t _pickupHash) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_setForceObjectThisFrame(bool& success, float _x, float _y, float _z, float _p3) {
@@ -45356,7 +45356,7 @@ EXPORT void Native_setEnableArenaPropPhysics(bool& success, int32_t _object, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x911024442F4898F0);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -45369,7 +45369,7 @@ EXPORT void Native_setEnableArenaPropPhysicsOnPed(bool& success, int32_t _object
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB20834A7DD3D8896);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_p2);
 	ctx->Push(_ped);
 	if (!native->Invoke(ctx)) {
@@ -45383,7 +45383,7 @@ EXPORT void Native__0x734E1714D077DA9A(bool& success, int32_t _object, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x734E1714D077DA9A);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45395,7 +45395,7 @@ EXPORT void Native__0x1A6CBB06E2D0D79D(bool& success, int32_t _object, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1A6CBB06E2D0D79D);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45433,7 +45433,7 @@ EXPORT void Native__0x1C57C94A6446492A(bool& success, int32_t _object, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1C57C94A6446492A);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45445,7 +45445,7 @@ EXPORT void Native__0xB5B7742424BD4445(bool& success, int32_t _object, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB5B7742424BD4445);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45547,7 +45547,7 @@ EXPORT float Native_getControlNormal(bool& success, int32_t _padIndex, int32_t _
 EXPORT void Native__0x5B73C77D9EB66E24(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5B73C77D9EB66E24);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45738,7 +45738,7 @@ EXPORT const char* Native_getControlInstructionalButton(bool& success, int32_t _
 	ctx->Reset();
 	ctx->Push(_padIndex);
 	ctx->Push(_control);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return nullptr;
@@ -45752,7 +45752,7 @@ EXPORT const char* Native_getControlGroupInstructionalButton(bool& success, int3
 	ctx->Reset();
 	ctx->Push(_padIndex);
 	ctx->Push(_controlGroup);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return nullptr;
@@ -45928,7 +45928,7 @@ EXPORT bool Native_getAllowMovementWhileZoomed(bool& success) {
 EXPORT void Native_setPlayerpadShakesWhenControllerDisabled(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x798FDEB5B1575088);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45953,7 +45953,7 @@ EXPORT void Native_disableControlAction(bool& success, int32_t _padIndex, int32_
 	ctx->Reset();
 	ctx->Push(_padIndex);
 	ctx->Push(_control);
-	ctx->Push(_disable);
+	ctx->Push((int32_t) _disable);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -45966,7 +45966,7 @@ EXPORT void Native_enableControlAction(bool& success, int32_t _padIndex, int32_t
 	ctx->Reset();
 	ctx->Push(_padIndex);
 	ctx->Push(_control);
-	ctx->Push(_enable);
+	ctx->Push((int32_t) _enable);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -46050,8 +46050,8 @@ EXPORT void Native_setRoadsInArea(bool& success, float _x1, float _y1, float _z1
 	ctx->Push(_x2);
 	ctx->Push(_y2);
 	ctx->Push(_z2);
-	ctx->Push(_nodeEnabled);
-	ctx->Push(_unknown2);
+	ctx->Push((int32_t) _nodeEnabled);
+	ctx->Push((int32_t) _unknown2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -46069,9 +46069,9 @@ EXPORT void Native_setRoadsInAngledArea(bool& success, float _x1, float _y1, flo
 	ctx->Push(_y2);
 	ctx->Push(_z2);
 	ctx->Push(_width);
-	ctx->Push(_unknown1);
-	ctx->Push(_unknown2);
-	ctx->Push(_unknown3);
+	ctx->Push((int32_t) _unknown1);
+	ctx->Push((int32_t) _unknown2);
+	ctx->Push((int32_t) _unknown3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -46088,7 +46088,7 @@ EXPORT void Native_setPedPathsInArea(bool& success, float _x1, float _y1, float 
 	ctx->Push(_x2);
 	ctx->Push(_y2);
 	ctx->Push(_z2);
-	ctx->Push(_unknown);
+	ctx->Push((int32_t) _unknown);
 	ctx->Push(_p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -46103,7 +46103,7 @@ EXPORT bool Native_getSafeCoordForPed(bool& success, float _x, float _y, float _
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_onGround);
+	ctx->Push((int32_t) _onGround);
 	alt::INative::Vector3 converted_outPosition { _outPosition.x, 0, _outPosition.y, 0, _outPosition.z };
 	ctx->Push(&converted_outPosition);
 	ctx->Push(_flags);
@@ -46401,7 +46401,7 @@ EXPORT int32_t Native_getClosestRoad(bool& success, float _x, float _y, float _z
 	ctx->Push(&ptr_p8);
 	auto ptr_p9 = _p9;
 	ctx->Push(&ptr_p9);
-	ctx->Push(_p10);
+	ctx->Push((int32_t) _p10);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -46422,7 +46422,7 @@ EXPORT int32_t Native_getClosestRoad(bool& success, float _x, float _y, float _z
 EXPORT void Native_setAllPathsCacheBoundingstruct(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x228E5C6AD4D74BFD);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -46558,9 +46558,9 @@ EXPORT bool Native_getRandomVehicleNode(bool& success, float _x, float _y, float
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_radius);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _p6);
 	alt::INative::Vector3 converted_outPosition { _outPosition.x, 0, _outPosition.y, 0, _outPosition.z };
 	ctx->Push(&converted_outPosition);
 	auto ptr_nodeId = _nodeId;
@@ -46577,7 +46577,7 @@ EXPORT bool Native_getRandomVehicleNode(bool& success, float _x, float _y, float
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_getStreetNameAtCoord(bool& success, float _x, float _y, float _z, int32_t& _streetName, int32_t& _crossingRoad) {
+EXPORT void Native_getStreetNameAtCoord(bool& success, float _x, float _y, float _z, uint32_t& _streetName, uint32_t& _crossingRoad) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2EB41072B4C1E4C0);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -46602,7 +46602,7 @@ EXPORT int32_t Native_generateDirectionsToCoord(bool& success, float _x, float _
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	auto ptr_direction = _direction;
 	ctx->Push(&ptr_direction);
 	auto ptr_p5 = _p5;
@@ -46623,7 +46623,7 @@ EXPORT int32_t Native_generateDirectionsToCoord(bool& success, float _x, float _
 EXPORT void Native_setIgnoreNoGpsFlag(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x72751156E7678833);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -46634,7 +46634,7 @@ EXPORT void Native_setIgnoreNoGpsFlag(bool& success, bool _toggle) {
 EXPORT void Native_setIgnoreSecondaryRouteNodes(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1FC289A0C3FF470F);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -46895,7 +46895,7 @@ EXPORT int32_t Native_addNavmeshBlockingObject(bool& success, float _p0, float _
 	ctx->Push(_p4);
 	ctx->Push(_p5);
 	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p7);
 	ctx->Push(_p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -47020,7 +47020,7 @@ EXPORT float Native_calculateTravelDistanceBetweenPoints(bool& success, float _x
 	return ctx->ResultFloat();
 }
 
-EXPORT int32_t Native_createPed(bool& success, int32_t _pedType, int32_t _modelHash, float _x, float _y, float _z, float _heading, bool _isNetwork, bool _bScriptHostPed) {
+EXPORT int32_t Native_createPed(bool& success, int32_t _pedType, uint32_t _modelHash, float _x, float _y, float _z, float _heading, bool _isNetwork, bool _bScriptHostPed) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD49F9B0955C367DE);
 	ctx->Reset();
 	ctx->Push(_pedType);
@@ -47029,8 +47029,8 @@ EXPORT int32_t Native_createPed(bool& success, int32_t _pedType, int32_t _modelH
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_heading);
-	ctx->Push(_isNetwork);
-	ctx->Push(_bScriptHostPed);
+	ctx->Push((int32_t) _isNetwork);
+	ctx->Push((int32_t) _bScriptHostPed);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -47056,9 +47056,9 @@ EXPORT int32_t Native_clonePed(bool& success, int32_t _ped, bool _isNetwork, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEF29A16337FACADB);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_isNetwork);
-	ctx->Push(_bScriptHostPed);
-	ctx->Push(_copyHeadBlendFlag);
+	ctx->Push((int32_t) _isNetwork);
+	ctx->Push((int32_t) _bScriptHostPed);
+	ctx->Push((int32_t) _copyHeadBlendFlag);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -47071,10 +47071,10 @@ EXPORT int32_t Native_clonePedEx(bool& success, int32_t _ped, bool _isNetwork, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x668FD40BCBA5DE48);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_isNetwork);
-	ctx->Push(_bScriptHostPed);
-	ctx->Push(_copyHeadBlendFlag);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _isNetwork);
+	ctx->Push((int32_t) _bScriptHostPed);
+	ctx->Push((int32_t) _copyHeadBlendFlag);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -47100,7 +47100,7 @@ EXPORT void Native_clonePedToTargetEx(bool& success, int32_t _ped, int32_t _targ
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_targetPed);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -47113,7 +47113,7 @@ EXPORT bool Native_isPedInVehicle(bool& success, int32_t _ped, int32_t _vehicle,
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_vehicle);
-	ctx->Push(_atGetIn);
+	ctx->Push((int32_t) _atGetIn);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -47122,7 +47122,7 @@ EXPORT bool Native_isPedInVehicle(bool& success, int32_t _ped, int32_t _vehicle,
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isPedInModel(bool& success, int32_t _ped, int32_t _modelHash) {
+EXPORT bool Native_isPedInModel(bool& success, int32_t _ped, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x796D90EFB19AA332);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -47139,7 +47139,7 @@ EXPORT bool Native_isPedInAnyVehicle(bool& success, int32_t _ped, bool _atGetIn)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x997ABD671D25CA0B);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_atGetIn);
+	ctx->Push((int32_t) _atGetIn);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -47205,7 +47205,7 @@ EXPORT bool Native_isPedDeadOrDying(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3317DEDB88C95038);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -47262,15 +47262,15 @@ EXPORT bool Native_isPedAPlayer(bool& success, int32_t _ped) {
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_createPedInsideVehicle(bool& success, int32_t _vehicle, int32_t _pedType, int32_t _modelHash, int32_t _seat, bool _isNetwork, bool _bScriptHostPed) {
+EXPORT int32_t Native_createPedInsideVehicle(bool& success, int32_t _vehicle, int32_t _pedType, uint32_t _modelHash, int32_t _seat, bool _isNetwork, bool _bScriptHostPed) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7DD959874C1FD534);
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_pedType);
 	ctx->Push(_modelHash);
 	ctx->Push(_seat);
-	ctx->Push(_isNetwork);
-	ctx->Push(_bScriptHostPed);
+	ctx->Push((int32_t) _isNetwork);
+	ctx->Push((int32_t) _bScriptHostPed);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -47350,8 +47350,8 @@ EXPORT bool Native_isPedShootingInArea(bool& success, int32_t _ped, float _x1, f
 	ctx->Push(_x2);
 	ctx->Push(_y2);
 	ctx->Push(_z2);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -47369,8 +47369,8 @@ EXPORT bool Native_isAnyPedShootingInArea(bool& success, float _x1, float _y1, f
 	ctx->Push(_x2);
 	ctx->Push(_y2);
 	ctx->Push(_z2);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -47426,7 +47426,7 @@ EXPORT void Native__0x87DDEB611B329A9C(bool& success, float _multiplier) {
 	success = true;
 }
 
-EXPORT bool Native_isPedModel(bool& success, int32_t _ped, int32_t _modelHash) {
+EXPORT bool Native_isPedModel(bool& success, int32_t _ped, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC9D55B1A358A5BF7);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -47439,7 +47439,7 @@ EXPORT bool Native_isPedModel(bool& success, int32_t _ped, int32_t _modelHash) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_explodePedHead(bool& success, int32_t _ped, int32_t _weaponHash) {
+EXPORT void Native_explodePedHead(bool& success, int32_t _ped, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2D05CED3A38D0F3A);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -47505,7 +47505,7 @@ EXPORT void Native_setPedAllowVehiclesOverride(bool& success, int32_t _ped, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3C028C636A414ED9);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -47516,7 +47516,7 @@ EXPORT void Native_setPedAllowVehiclesOverride(bool& success, int32_t _ped, bool
 EXPORT bool Native_canCreateRandomPed(bool& success, bool _unk) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3E8349C08E4B82E4);
 	ctx->Reset();
-	ctx->Push(_unk);
+	ctx->Push((int32_t) _unk);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -47543,7 +47543,7 @@ EXPORT int32_t Native_createRandomPedAsDriver(bool& success, int32_t _vehicle, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9B62392B474F44A0);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_returnHandle);
+	ctx->Push((int32_t) _returnHandle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -47589,7 +47589,7 @@ EXPORT void Native_setPedCanBeDraggedOut(bool& success, int32_t _ped, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC1670E958EEE24E5);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -47600,7 +47600,7 @@ EXPORT void Native_setPedCanBeDraggedOut(bool& success, int32_t _ped, bool _togg
 EXPORT void Native__0xF2BEBCDFAFDAA19E(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF2BEBCDFAFDAA19E);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -47636,7 +47636,7 @@ EXPORT int32_t Native_getVehiclePedIsIn(bool& success, int32_t _ped, bool _inclu
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9A9112A0FE9A4713);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_includeLastVehicle);
+	ctx->Push((int32_t) _includeLastVehicle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -47826,7 +47826,7 @@ EXPORT void Native__0xFF4803BC019852D9(bool& success, float _p0, int32_t _p1) {
 EXPORT void Native_setAmbientPedsDropMoney(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6B0E6172C9A4D902);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -47837,7 +47837,7 @@ EXPORT void Native_setAmbientPedsDropMoney(bool& success, bool _p0) {
 EXPORT void Native__0x9911F4A24485F653(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9911F4A24485F653);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -47849,7 +47849,7 @@ EXPORT void Native_setPedSuffersCriticalHits(bool& success, int32_t _ped, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEBD76F2359F190AC);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -47861,7 +47861,7 @@ EXPORT void Native__0xAFC976FD0580C7B3(bool& success, int32_t _ped, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAFC976FD0580C7B3);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48009,7 +48009,7 @@ EXPORT void Native_setPedDiesInWater(bool& success, int32_t _ped, bool _toggle) 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x56CEF0AC79073BDE);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48021,7 +48021,7 @@ EXPORT void Native_setPedDiesInSinkingVehicle(bool& success, int32_t _ped, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD718A22995E2B4BC);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48045,7 +48045,7 @@ EXPORT void Native_setPedStayInVehicleWhenJacked(bool& success, int32_t _ped, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEDF4079F9D54C9A1);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48057,7 +48057,7 @@ EXPORT void Native_setPedCanBeShotInVehicle(bool& success, int32_t _ped, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC7EF1BA83230BA07);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48137,7 +48137,7 @@ EXPORT void Native__0x2F3C3D9F50681DE4(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2F3C3D9F50681DE4);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48149,7 +48149,7 @@ EXPORT void Native_setPedCanBeTargetted(bool& success, int32_t _ped, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x63F58F7C80513AAD);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48162,7 +48162,7 @@ EXPORT void Native_setPedCanBeTargettedByTeam(bool& success, int32_t _ped, int32
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_team);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48175,7 +48175,7 @@ EXPORT void Native_setPedCanBeTargettedByPlayer(bool& success, int32_t _ped, int
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48187,7 +48187,7 @@ EXPORT void Native__0x061CB768363D6424(bool& success, int32_t _ped, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x061CB768363D6424);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48199,7 +48199,7 @@ EXPORT void Native__0xFD325494792302D7(bool& success, int32_t _ped, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFD325494792302D7);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48416,8 +48416,8 @@ EXPORT int32_t Native_createParachuteBagObject(bool& success, int32_t _ped, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8C4F3BF23B6237DB);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -48430,7 +48430,7 @@ EXPORT void Native_setPedDucking(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x030983CA930B692D);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48478,7 +48478,7 @@ EXPORT void Native_setPedHighlyPerceptive(bool& success, int32_t _ped, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x52D59AB61DDC05DD);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48638,7 +48638,7 @@ EXPORT void Native_setPedStealthMovement(bool& success, int32_t _ped, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x88CBB5CEB96B7BD2);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(SaveString(_action));
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -48700,7 +48700,7 @@ EXPORT void Native_setPedCanTeleportToGroupLeader(bool& success, int32_t _pedHan
 	ctx->Reset();
 	ctx->Push(_pedHandle);
 	ctx->Push(_groupHandle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -48919,7 +48919,7 @@ EXPORT bool Native_isPedInCover(bool& success, int32_t _ped, bool _exceptUseWeap
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x60DFD0691A170B88);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_exceptUseWeapon);
+	ctx->Push((int32_t) _exceptUseWeapon);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -48968,7 +48968,7 @@ EXPORT int32_t Native_setPedPinnedDown(bool& success, int32_t _ped, bool _pinned
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAAD6D1ACF08F4612);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_pinned);
+	ctx->Push((int32_t) _pinned);
 	ctx->Push(_i);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -49014,7 +49014,7 @@ EXPORT int32_t Native_getPedSourceOfDeath(bool& success, int32_t _ped) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getPedCauseOfDeath(bool& success, int32_t _ped) {
+EXPORT uint32_t Native_getPedCauseOfDeath(bool& success, int32_t _ped) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x16FFE42AB2D2DC59);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -49023,7 +49023,7 @@ EXPORT int32_t Native_getPedCauseOfDeath(bool& success, int32_t _ped) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT int32_t Native_getPedTimeOfDeath(bool& success, int32_t _ped) {
@@ -49066,7 +49066,7 @@ EXPORT int32_t Native__0x336B3D200AB007CB(bool& success, int32_t _p0, float _p1,
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_setPedRelationshipGroupDefaultHash(bool& success, int32_t _ped, int32_t _hash) {
+EXPORT void Native_setPedRelationshipGroupDefaultHash(bool& success, int32_t _ped, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xADB3F206518799E8);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -49078,7 +49078,7 @@ EXPORT void Native_setPedRelationshipGroupDefaultHash(bool& success, int32_t _pe
 	success = true;
 }
 
-EXPORT void Native_setPedRelationshipGroupHash(bool& success, int32_t _ped, int32_t _hash) {
+EXPORT void Native_setPedRelationshipGroupHash(bool& success, int32_t _ped, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC80A74AC829DDD92);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -49090,7 +49090,7 @@ EXPORT void Native_setPedRelationshipGroupHash(bool& success, int32_t _ped, int3
 	success = true;
 }
 
-EXPORT void Native_setRelationshipBetweenGroups(bool& success, int32_t _relationship, int32_t _group1, int32_t _group2) {
+EXPORT void Native_setRelationshipBetweenGroups(bool& success, int32_t _relationship, uint32_t _group1, uint32_t _group2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBF25EB89375A37AD);
 	ctx->Reset();
 	ctx->Push(_relationship);
@@ -49103,7 +49103,7 @@ EXPORT void Native_setRelationshipBetweenGroups(bool& success, int32_t _relation
 	success = true;
 }
 
-EXPORT void Native_clearRelationshipBetweenGroups(bool& success, int32_t _relationship, int32_t _group1, int32_t _group2) {
+EXPORT void Native_clearRelationshipBetweenGroups(bool& success, int32_t _relationship, uint32_t _group1, uint32_t _group2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5E29243FB56FC6D4);
 	ctx->Reset();
 	ctx->Push(_relationship);
@@ -49116,7 +49116,7 @@ EXPORT void Native_clearRelationshipBetweenGroups(bool& success, int32_t _relati
 	success = true;
 }
 
-EXPORT int32_t Native_addRelationshipGroup(bool& success, const char* _name, int32_t& _groupHash) {
+EXPORT int32_t Native_addRelationshipGroup(bool& success, const char* _name, uint32_t& _groupHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF372BC22FCB88606);
 	ctx->Reset();
 	ctx->Push(SaveString(_name));
@@ -49131,7 +49131,7 @@ EXPORT int32_t Native_addRelationshipGroup(bool& success, const char* _name, int
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_removeRelationshipGroup(bool& success, int32_t _groupHash) {
+EXPORT void Native_removeRelationshipGroup(bool& success, uint32_t _groupHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB6BA2444AB393DA2);
 	ctx->Reset();
 	ctx->Push(_groupHash);
@@ -49142,7 +49142,7 @@ EXPORT void Native_removeRelationshipGroup(bool& success, int32_t _groupHash) {
 	success = true;
 }
 
-EXPORT bool Native_doesRelationshipGroupExist(bool& success, int32_t _groupHash) {
+EXPORT bool Native_doesRelationshipGroupExist(bool& success, uint32_t _groupHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCC6E3B6BB69501F1);
 	ctx->Reset();
 	ctx->Push(_groupHash);
@@ -49167,7 +49167,7 @@ EXPORT int32_t Native_getRelationshipBetweenPeds(bool& success, int32_t _ped1, i
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getPedRelationshipGroupDefaultHash(bool& success, int32_t _ped) {
+EXPORT uint32_t Native_getPedRelationshipGroupDefaultHash(bool& success, int32_t _ped) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x42FDD0F017B1E38E);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -49176,10 +49176,10 @@ EXPORT int32_t Native_getPedRelationshipGroupDefaultHash(bool& success, int32_t 
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getPedRelationshipGroupHash(bool& success, int32_t _ped) {
+EXPORT uint32_t Native_getPedRelationshipGroupHash(bool& success, int32_t _ped) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7DBDD04862D95F04);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -49188,10 +49188,10 @@ EXPORT int32_t Native_getPedRelationshipGroupHash(bool& success, int32_t _ped) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getRelationshipBetweenGroups(bool& success, int32_t _group1, int32_t _group2) {
+EXPORT int32_t Native_getRelationshipBetweenGroups(bool& success, uint32_t _group1, uint32_t _group2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9E6B70061662AE5C);
 	ctx->Reset();
 	ctx->Push(_group1);
@@ -49204,11 +49204,11 @@ EXPORT int32_t Native_getRelationshipBetweenGroups(bool& success, int32_t _group
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_setRelationshipGroupDontAffectWantedLevel(bool& success, int32_t _group, bool _p1) {
+EXPORT void Native_setRelationshipGroupDontAffectWantedLevel(bool& success, uint32_t _group, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5615E0C5EB2BC6E2);
 	ctx->Reset();
 	ctx->Push(_group);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49216,7 +49216,7 @@ EXPORT void Native_setRelationshipGroupDontAffectWantedLevel(bool& success, int3
 	success = true;
 }
 
-EXPORT void Native__0xAD27D957598E49E9(bool& success, int32_t _ped, int32_t _p1, float _p2, int32_t _hash, int32_t _p4, int32_t _p5) {
+EXPORT void Native__0xAD27D957598E49E9(bool& success, int32_t _ped, int32_t _p1, float _p2, uint32_t _hash, int32_t _p4, int32_t _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAD27D957598E49E9);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -49236,7 +49236,7 @@ EXPORT void Native_setPedCanBeTargetedWithoutLos(bool& success, int32_t _ped, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4328652AE5769C71);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49286,7 +49286,7 @@ EXPORT bool Native_getPedEventData(bool& success, int32_t _ped, int32_t _eventTy
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_setPedFiringPattern(bool& success, int32_t _ped, int32_t _patternHash) {
+EXPORT void Native_setPedFiringPattern(bool& success, int32_t _ped, uint32_t _patternHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9AC577F5A12AD8A9);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -49466,7 +49466,7 @@ EXPORT void Native_setPedGravity(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9FF447B6B6AD960A);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49479,7 +49479,7 @@ EXPORT void Native_applyDamageToPed(bool& success, int32_t _ped, int32_t _damage
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_damageAmount);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -49488,7 +49488,7 @@ EXPORT void Native_applyDamageToPed(bool& success, int32_t _ped, int32_t _damage
 	success = true;
 }
 
-EXPORT int32_t Native_getTimeOfLastPedWeaponDamage(bool& success, int32_t _ped, int32_t _weaponHash) {
+EXPORT int32_t Native_getTimeOfLastPedWeaponDamage(bool& success, int32_t _ped, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x36B77BB84687C318);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -49505,7 +49505,7 @@ EXPORT void Native_setPedAllowedToDuck(bool& success, int32_t _ped, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDA1F1B7BE1A8766F);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49517,7 +49517,7 @@ EXPORT void Native_setPedNeverLeavesGroup(bool& success, int32_t _ped, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3DBFC55D5C9BB447);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49541,7 +49541,7 @@ EXPORT void Native_setPedAsCop(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBB03C38DD3FB7FFD);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49725,7 +49725,7 @@ EXPORT void Native_setPedKeepTask(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x971D38760FBC02EF);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49737,7 +49737,7 @@ EXPORT void Native__0x49E50BDB8BA4DAB2(bool& success, int32_t _ped, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x49E50BDB8BA4DAB2);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49787,7 +49787,7 @@ EXPORT void Native_setPedDiesInVehicle(bool& success, int32_t _ped, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2A30922C90C9B42C);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49798,7 +49798,7 @@ EXPORT void Native_setPedDiesInVehicle(bool& success, int32_t _ped, bool _toggle
 EXPORT void Native_setCreateRandomCops(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x102E68B2024D536D);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49809,7 +49809,7 @@ EXPORT void Native_setCreateRandomCops(bool& success, bool _toggle) {
 EXPORT void Native_setCreateRandomCopsNotOnScenarios(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8A4986851C4EF6E7);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49820,7 +49820,7 @@ EXPORT void Native_setCreateRandomCopsNotOnScenarios(bool& success, bool _toggle
 EXPORT void Native_setCreateRandomCopsOnScenarios(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x444CB7D7DBE6973D);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49843,7 +49843,7 @@ EXPORT void Native_setPedAsEnemy(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x02A0C9720B854BFA);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49855,8 +49855,8 @@ EXPORT void Native_setPedCanSmashGlass(bool& success, int32_t _ped, bool _p1, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1CCE141467FF42A2);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49904,7 +49904,7 @@ EXPORT void Native_setEnableHandcuffs(bool& success, int32_t _ped, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDF1AF8B5D56542FA);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49916,7 +49916,7 @@ EXPORT void Native_setEnableBoundAnkles(bool& success, int32_t _ped, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC52E0F855C58FC2E);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49928,7 +49928,7 @@ EXPORT void Native_setEnableScuba(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF99F62004024D506);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49940,8 +49940,8 @@ EXPORT void Native_setCanAttackFriendly(bool& success, int32_t _ped, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB3B1CB349FF9C75D);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _toggle);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -49977,7 +49977,7 @@ EXPORT void Native_setPedGetOutUpsideDownVehicle(bool& success, int32_t _ped, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBC0ED94165A48BC2);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -50113,7 +50113,7 @@ EXPORT void Native__0x80054D7FCC70EEC6(bool& success, int32_t _ped) {
 	success = true;
 }
 
-EXPORT void Native_setPedInVehicleContext(bool& success, int32_t _ped, int32_t _context) {
+EXPORT void Native_setPedInVehicleContext(bool& success, int32_t _ped, uint32_t _context) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x530071295899A8C6);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -50157,7 +50157,7 @@ EXPORT void Native_setPedAlternateWalkAnim(bool& success, int32_t _ped, const ch
 	ctx->Push(SaveString(_animDict));
 	ctx->Push(SaveString(_animName));
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -50185,7 +50185,7 @@ EXPORT void Native_setPedAlternateMovementAnim(bool& success, int32_t _ped, int3
 	ctx->Push(SaveString(_animDictionary));
 	ctx->Push(SaveString(_animationName));
 	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -50488,7 +50488,7 @@ EXPORT void Native_setPedHeadBlendData(bool& success, int32_t _ped, int32_t _sha
 	ctx->Push(_shapeMix);
 	ctx->Push(_skinMix);
 	ctx->Push(_thirdMix);
-	ctx->Push(_isParent);
+	ctx->Push((int32_t) _isParent);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -50786,7 +50786,7 @@ EXPORT bool Native_isPedBodyBlemishValid(bool& success, int32_t _colorId) {
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native__0xC56FBF2F228E1DAC(bool& success, int32_t _modelHash, int32_t _p1, int32_t _p2) {
+EXPORT int32_t Native__0xC56FBF2F228E1DAC(bool& success, uint32_t _modelHash, int32_t _p1, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC56FBF2F228E1DAC);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -50982,7 +50982,7 @@ EXPORT void Native_setPedPropIndex(bool& success, int32_t _ped, int32_t _compone
 	ctx->Push(_componentId);
 	ctx->Push(_drawableId);
 	ctx->Push(_TextureId);
-	ctx->Push(_attach);
+	ctx->Push((int32_t) _attach);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -50994,10 +50994,10 @@ EXPORT void Native_knockOffPedProp(bool& success, int32_t _ped, bool _p1, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6FD7816A36615F48);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51101,7 +51101,7 @@ EXPORT void Native_setBlockingOfNonTemporaryEvents(bool& success, int32_t _ped, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9F8AA94D6D97DBF4);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51174,12 +51174,12 @@ EXPORT bool Native_getClosestPed(bool& success, float _x, float _y, float _z, fl
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_radius);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	auto ptr_outPed = _outPed;
 	ctx->Push(&ptr_outPed);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_pedType);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -51193,7 +51193,7 @@ EXPORT bool Native_getClosestPed(bool& success, float _x, float _y, float _z, fl
 EXPORT void Native_setScenarioPedsToBeReturnedByNextCommand(bool& success, bool _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x14F19A8782C8071E);
 	ctx->Reset();
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51205,13 +51205,13 @@ EXPORT bool Native__0x03EA03AF85A85CB7(bool& success, int32_t _ped, bool _p1, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x03EA03AF85A85CB7);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
 	ctx->Push(_p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -51276,9 +51276,9 @@ EXPORT bool Native_setPedToRagdoll(bool& success, int32_t _ped, int32_t _time1, 
 	ctx->Push(_time1);
 	ctx->Push(_time2);
 	ctx->Push(_ragdollType);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -51316,7 +51316,7 @@ EXPORT void Native_setPedRagdollOnCollision(bool& success, int32_t _ped, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF0A4F1BBF4FA7497);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51374,7 +51374,7 @@ EXPORT void Native_setPedCanRagdoll(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB128377056A54E2A);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51453,8 +51453,8 @@ EXPORT void Native_setPedAngledDefensiveArea(bool& success, int32_t _ped, float 
 	ctx->Push(_p5);
 	ctx->Push(_p6);
 	ctx->Push(_p7);
-	ctx->Push(_p8);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p8);
+	ctx->Push((int32_t) _p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51470,8 +51470,8 @@ EXPORT void Native_setPedSphereDefensiveArea(bool& success, int32_t _ped, float 
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_radius);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51488,7 +51488,7 @@ EXPORT void Native_setPedDefensiveSphereAttachedToPed(bool& success, int32_t _pe
 	ctx->Push(_yOffset);
 	ctx->Push(_zOffset);
 	ctx->Push(_radius);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51505,7 +51505,7 @@ EXPORT void Native_setPedDefensiveSphereAttachedToVehicle(bool& success, int32_t
 	ctx->Push(_yOffset);
 	ctx->Push(_zOffset);
 	ctx->Push(_radius);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51525,8 +51525,8 @@ EXPORT void Native_setPedDefensiveAreaAttachedToPed(bool& success, int32_t _ped,
 	ctx->Push(_p6);
 	ctx->Push(_p7);
 	ctx->Push(_p8);
-	ctx->Push(_p9);
-	ctx->Push(_p10);
+	ctx->Push((int32_t) _p9);
+	ctx->Push((int32_t) _p10);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51541,7 +51541,7 @@ EXPORT void Native_setPedDefensiveAreaDirection(bool& success, int32_t _ped, flo
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51553,7 +51553,7 @@ EXPORT void Native_removePedDefensiveArea(bool& success, int32_t _ped, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x74D4E028107450A9);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51565,7 +51565,7 @@ EXPORT vector3_t Native_getPedDefensiveAreaPosition(bool& success, int32_t _ped,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3C06B8786DD94CD1);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return { 0, 0, 0 };
@@ -51579,7 +51579,7 @@ EXPORT bool Native_isPedDefensiveAreaActive(bool& success, int32_t _ped, bool _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBA63D9FE45412247);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -51649,7 +51649,7 @@ EXPORT vector3_t Native_getPedExtractedDisplacement(bool& success, int32_t _ped,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE0AF41401ADF87E3);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_worldSpace);
+	ctx->Push((int32_t) _worldSpace);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return { 0, 0, 0 };
@@ -51663,7 +51663,7 @@ EXPORT void Native_setPedDiesWhenInjured(bool& success, int32_t _ped, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5BA7919BED300023);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51675,7 +51675,7 @@ EXPORT void Native_setPedEnableWeaponBlocking(bool& success, int32_t _ped, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x97A790315D3831FD);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51687,7 +51687,7 @@ EXPORT void Native__0xF9ACF4A08098EA25(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF9ACF4A08098EA25);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51782,7 +51782,7 @@ EXPORT void Native_applyPedDamageDecal(bool& success, int32_t _ped, int32_t _dam
 	ctx->Push(_scale);
 	ctx->Push(_alpha);
 	ctx->Push(_unkVariation);
-	ctx->Push(_fadeIn);
+	ctx->Push((int32_t) _fadeIn);
 	ctx->Push(SaveString(_decalName));
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -51833,7 +51833,7 @@ EXPORT void Native_hidePedBloodDamageByZone(bool& success, int32_t _ped, int32_t
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51870,7 +51870,7 @@ EXPORT void Native__0x2B694AFCF64E6994(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2B694AFCF64E6994);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -51935,7 +51935,7 @@ EXPORT void Native_setPedSweat(bool& success, int32_t _ped, float _sweat) {
 	success = true;
 }
 
-EXPORT void Native_addPedDecorationFromHashes(bool& success, int32_t _ped, int32_t _collection, int32_t _overlay) {
+EXPORT void Native_addPedDecorationFromHashes(bool& success, int32_t _ped, uint32_t _collection, uint32_t _overlay) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5F5D1665E352A839);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -51948,7 +51948,7 @@ EXPORT void Native_addPedDecorationFromHashes(bool& success, int32_t _ped, int32
 	success = true;
 }
 
-EXPORT void Native_addPedDecorationFromHashesInCorona(bool& success, int32_t _ped, int32_t _collection, int32_t _overlay) {
+EXPORT void Native_addPedDecorationFromHashesInCorona(bool& success, int32_t _ped, uint32_t _collection, uint32_t _overlay) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5619BFA07CFD7833);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -51961,7 +51961,7 @@ EXPORT void Native_addPedDecorationFromHashesInCorona(bool& success, int32_t _pe
 	success = true;
 }
 
-EXPORT int32_t Native_getPedDecorationZoneFromHashes(bool& success, int32_t _collection, int32_t _overlay) {
+EXPORT int32_t Native_getPedDecorationZoneFromHashes(bool& success, uint32_t _collection, uint32_t _overlay) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9FD452BFBE7A7A8B);
 	ctx->Reset();
 	ctx->Push(_collection);
@@ -52028,7 +52028,7 @@ EXPORT vector3_t Native_getPedBoneCoords(bool& success, int32_t _ped, int32_t _b
 EXPORT void Native_createNmMessage(bool& success, bool _startImmediately, int32_t _messageId) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x418EF2A1BCE56685);
 	ctx->Reset();
-	ctx->Push(_startImmediately);
+	ctx->Push((int32_t) _startImmediately);
 	ctx->Push(_messageId);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -52057,10 +52057,10 @@ EXPORT int32_t Native_addScenarioBlockingArea(bool& success, float _x1, float _y
 	ctx->Push(_x2);
 	ctx->Push(_y2);
 	ctx->Push(_z2);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
+	ctx->Push((int32_t) _p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -52083,7 +52083,7 @@ EXPORT void Native_removeScenarioBlockingArea(bool& success, int32_t _p0, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x31D16B74C6E29D66);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52167,7 +52167,7 @@ EXPORT void Native__0x9A77DFD295E29B09(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9A77DFD295E29B09);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52246,7 +52246,7 @@ EXPORT void Native__0x425AECF167663F48(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x425AECF167663F48);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52258,7 +52258,7 @@ EXPORT void Native__0x5B6010B3CBC29095(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5B6010B3CBC29095);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52270,7 +52270,7 @@ EXPORT void Native__0xCEDA60A74219D064(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCEDA60A74219D064);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52343,7 +52343,7 @@ EXPORT void Native_setPedCanPlayGestureAnims(bool& success, int32_t _ped, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBAF20C5432058024);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52355,8 +52355,8 @@ EXPORT void Native_setPedCanPlayVisemeAnims(bool& success, int32_t _ped, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF833DDBA3B104D43);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _toggle);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52368,7 +52368,7 @@ EXPORT void Native_setPedCanPlayInjuredAnims(bool& success, int32_t _ped, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x33A60D8BDD6E508C);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52380,7 +52380,7 @@ EXPORT void Native_setPedCanPlayAmbientAnims(bool& success, int32_t _ped, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6373D1349925A70E);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52392,7 +52392,7 @@ EXPORT void Native_setPedCanPlayAmbientBaseAnims(bool& success, int32_t _ped, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0EB0585D15254740);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52415,7 +52415,7 @@ EXPORT void Native_setPedCanArmIk(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6C3B4D6D13B4C841);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52427,7 +52427,7 @@ EXPORT void Native_setPedCanHeadIk(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC11C18092C5530DC);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52439,7 +52439,7 @@ EXPORT void Native_setPedCanLegIk(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x73518ECE2485412B);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52451,7 +52451,7 @@ EXPORT void Native_setPedCanTorsoIk(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF2B7106D37947CE0);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52463,7 +52463,7 @@ EXPORT void Native_setPedCanTorsoReactIk(bool& success, int32_t _ped, bool _p1) 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF5846EDB26A98A24);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52475,7 +52475,7 @@ EXPORT void Native__0x6647C5F6F5792496(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6647C5F6F5792496);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52487,7 +52487,7 @@ EXPORT void Native_setPedCanUseAutoConversationLookat(bool& success, int32_t _pe
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEC4686EC06434678);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52561,7 +52561,7 @@ EXPORT void Native__0xA660FAF550EB37E5(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA660FAF550EB37E5);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52574,7 +52574,7 @@ EXPORT void Native_setPedConfigFlag(bool& success, int32_t _ped, int32_t _flagId
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_flagId);
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52587,7 +52587,7 @@ EXPORT void Native_setPedResetFlag(bool& success, int32_t _ped, int32_t _flagId,
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_flagId);
-	ctx->Push(_doReset);
+	ctx->Push((int32_t) _doReset);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52600,7 +52600,7 @@ EXPORT bool Native_getPedConfigFlag(bool& success, int32_t _ped, int32_t _flagId
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_flagId);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -52638,7 +52638,7 @@ EXPORT void Native_setPedCanEvasiveDive(bool& success, int32_t _ped, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6B7A646C242A7059);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52668,7 +52668,7 @@ EXPORT void Native_setPedShootsAtCoord(bool& success, int32_t _ped, float _x, fl
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52676,11 +52676,11 @@ EXPORT void Native_setPedShootsAtCoord(bool& success, int32_t _ped, float _x, fl
 	success = true;
 }
 
-EXPORT void Native_setPedModelIsSuppressed(bool& success, int32_t _modelHash, bool _toggle) {
+EXPORT void Native_setPedModelIsSuppressed(bool& success, uint32_t _modelHash, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE163A4BCE4DE6F11);
 	ctx->Reset();
 	ctx->Push(_modelHash);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52702,7 +52702,7 @@ EXPORT void Native_setPedCanBeTargetedWhenInjured(bool& success, int32_t _ped, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x638C03B0F9878F57);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52714,7 +52714,7 @@ EXPORT void Native_setPedGeneratesDeadBodyEvents(bool& success, int32_t _ped, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7FB17BA2E7DECA5B);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52726,7 +52726,7 @@ EXPORT void Native_blockPedDeadBodyShockingEvents(bool& success, int32_t _ped, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE43A13C9E4CCCBCF);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52750,7 +52750,7 @@ EXPORT void Native_setPedCanRagdollFromPlayerImpact(bool& success, int32_t _ped,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDF993EE5E90ABA25);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52762,7 +52762,7 @@ EXPORT void Native_givePedHelmet(bool& success, int32_t _ped, bool _cannotRemove
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x54C7C4A94367717E);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_cannotRemove);
+	ctx->Push((int32_t) _cannotRemove);
 	ctx->Push(_helmetFlag);
 	ctx->Push(_textureIndex);
 	if (!native->Invoke(ctx)) {
@@ -52776,7 +52776,7 @@ EXPORT void Native_removePedHelmet(bool& success, int32_t _ped, bool _instantly)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA7B2458D0AD6DED8);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_instantly);
+	ctx->Push((int32_t) _instantly);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52800,7 +52800,7 @@ EXPORT void Native_setPedHelmet(bool& success, int32_t _ped, bool _canWearHelmet
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x560A43136EB58105);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_canWearHelmet);
+	ctx->Push((int32_t) _canWearHelmet);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52825,7 +52825,7 @@ EXPORT void Native_setPedHelmetPropIndex(bool& success, int32_t _ped, int32_t _p
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_propIndex);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52837,7 +52837,7 @@ EXPORT void Native_setPedHelmetUnk(bool& success, int32_t _ped, bool _p1, int32_
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3F7325574E41B44D);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
@@ -52934,7 +52934,7 @@ EXPORT void Native_setPedToLoadCover(bool& success, int32_t _ped, bool _toggle) 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x332B562EEDA62399);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52946,7 +52946,7 @@ EXPORT void Native_setPedCanCowerInCover(bool& success, int32_t _ped, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCB7553CDCEF4A735);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52958,7 +52958,7 @@ EXPORT void Native_setPedCanPeekInCover(bool& success, int32_t _ped, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC514825C507E3736);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52970,7 +52970,7 @@ EXPORT void Native_setPedPlaysHeadOnHornAnimWhenDiesInVehicle(bool& success, int
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x94D94BF1A75AED3D);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52994,7 +52994,7 @@ EXPORT void Native_setPedMotionBlur(bool& success, int32_t _ped, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0A986918B102B448);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53006,7 +53006,7 @@ EXPORT void Native_setPedCanSwitchWeapon(bool& success, int32_t _ped, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xED7F7EFE9FABF340);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53018,7 +53018,7 @@ EXPORT void Native_setPedDiesInstantlyInWater(bool& success, int32_t _ped, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEEB64139BA29A7CF);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53126,7 +53126,7 @@ EXPORT void Native_setPedCombatAttributes(bool& success, int32_t _ped, int32_t _
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_attributeId);
-	ctx->Push(_enabled);
+	ctx->Push((int32_t) _enabled);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53247,7 +53247,7 @@ EXPORT void Native_setPedFleeAttributes(bool& success, int32_t _ped, int32_t _at
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_attributeFlags);
-	ctx->Push(_enable);
+	ctx->Push((int32_t) _enable);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53271,7 +53271,7 @@ EXPORT void Native__0x2016C603D6B8987C(bool& success, int32_t _ped, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2016C603D6B8987C);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53283,7 +53283,7 @@ EXPORT void Native_setPedSteersAroundPeds(bool& success, int32_t _ped, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x46F2193B3AD1D891);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53295,7 +53295,7 @@ EXPORT void Native_setPedSteersAroundObjects(bool& success, int32_t _ped, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1509C089ADC208BF);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53307,7 +53307,7 @@ EXPORT void Native_setPedSteersAroundVehicles(bool& success, int32_t _ped, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEB6FB9D48DDE23EC);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53319,7 +53319,7 @@ EXPORT void Native__0xA9B61A329BFDCBEA(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA9B61A329BFDCBEA);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53342,7 +53342,7 @@ EXPORT void Native_setPedBlocksPathingWhenDead(bool& success, int32_t _ped, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x576594E8D64375E2);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53380,8 +53380,8 @@ EXPORT void Native_forcePedAiAndAnimationUpdate(bool& success, int32_t _ped, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2208438012482A1A);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53420,7 +53420,7 @@ EXPORT void Native_requestPedVehicleVisibilityTracking(bool& success, int32_t _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2BC338A7B21F4608);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53432,7 +53432,7 @@ EXPORT void Native__0xCD018C591F94CB43(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCD018C591F94CB43);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53444,7 +53444,7 @@ EXPORT void Native__0x75BA1CB3B7D40CAF(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75BA1CB3B7D40CAF);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53598,7 +53598,7 @@ EXPORT void Native_setEnablePedEnveffScale(bool& success, int32_t _ped, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD2C5AA0C0E8D0F1E);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53696,7 +53696,7 @@ EXPORT void Native_setPedAoBlobRendering(bool& success, int32_t _ped, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2B5AA717A181FB4C);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53734,7 +53734,7 @@ EXPORT int32_t Native_createSynchronizedScene(bool& success, float _x, float _y,
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_createSynchronizedScene2(bool& success, float _x, float _y, float _z, float _radius, int32_t _object) {
+EXPORT int32_t Native_createSynchronizedScene2(bool& success, float _x, float _y, float _z, float _radius, uint32_t _object) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x62EC273D00187DCA);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -53772,7 +53772,7 @@ EXPORT void Native_setSynchronizedSceneOrigin(bool& success, int32_t _sceneID, f
 	ctx->Push(_roll);
 	ctx->Push(_pitch);
 	ctx->Push(_yaw);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53832,7 +53832,7 @@ EXPORT void Native_setSynchronizedSceneLooped(bool& success, int32_t _sceneID, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD9A897A4C6C2974F);
 	ctx->Reset();
 	ctx->Push(_sceneID);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53856,7 +53856,7 @@ EXPORT void Native_setSynchronizedSceneHoldLastFrame(bool& success, int32_t _sce
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x394B9CD12435C981);
 	ctx->Reset();
 	ctx->Push(_sceneID);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -53911,14 +53911,14 @@ EXPORT void Native_disposeSynchronizedScene(bool& success, int32_t _scene) {
 	success = true;
 }
 
-EXPORT bool Native_forcePedMotionState(bool& success, int32_t _ped, int32_t _motionStateHash, bool _p2, int32_t _p3, bool _p4) {
+EXPORT bool Native_forcePedMotionState(bool& success, int32_t _ped, uint32_t _motionStateHash, bool _p2, int32_t _p3, bool _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF28965D04F570DCA);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_motionStateHash);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -54065,7 +54065,7 @@ EXPORT void Native_setPedUsingActionMode(bool& success, int32_t _ped, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD75ACCF5E0FB5367);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	ctx->Push(SaveString(_action));
 	if (!native->Invoke(ctx)) {
@@ -54502,7 +54502,7 @@ EXPORT void Native_setPedCanLosePropsOnDamage(bool& success, int32_t _ped, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE861D0B05C7662B8);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -54515,7 +54515,7 @@ EXPORT void Native_setForceFootstepUpdate(bool& success, int32_t _ped, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x129466ED55140F8D);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -54527,7 +54527,7 @@ EXPORT void Native_setForceStepType(bool& success, int32_t _ped, bool _p1, int32
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCB968B53FC7F916D);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_type);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
@@ -54557,7 +54557,7 @@ EXPORT void Native_setPedCanPlayInCarIdles(bool& success, int32_t _ped, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x820E9892A77E97CD);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -54684,7 +54684,7 @@ EXPORT void Native_setEnableScubaGearLight(bool& success, int32_t _ped, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEE2476B9EE4A094F);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -54719,7 +54719,7 @@ EXPORT void Native__0xFAB944D4D481ACCB(bool& success, int32_t _ped, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFAB944D4D481ACCB);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -54741,11 +54741,11 @@ EXPORT int32_t Native_addRope(bool& success, float _x, float _y, float _z, float
 	ctx->Push(_maxLength);
 	ctx->Push(_minLength);
 	ctx->Push(_windingSpeed);
-	ctx->Push(_p11);
-	ctx->Push(_p12);
-	ctx->Push(_rigid);
+	ctx->Push((int32_t) _p11);
+	ctx->Push((int32_t) _p12);
+	ctx->Push((int32_t) _rigid);
 	ctx->Push(_p14);
-	ctx->Push(_breakWhenShot);
+	ctx->Push((int32_t) _breakWhenShot);
 	auto ptr_unkPtr = _unkPtr;
 	ctx->Push(&ptr_unkPtr);
 	if (!native->Invoke(ctx)) {
@@ -54800,7 +54800,7 @@ EXPORT void Native__0xA1AE736541B0FCA3(bool& success, int32_t& _ropeId, bool _p1
 	ctx->Reset();
 	auto ptr_ropeId = _ropeId;
 	ctx->Push(&ptr_ropeId);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -54814,7 +54814,7 @@ EXPORT void Native_ropeDrawShadowEnabled(bool& success, int32_t& _ropeId, bool _
 	ctx->Reset();
 	auto ptr_ropeId = _ropeId;
 	ctx->Push(&ptr_ropeId);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -54887,8 +54887,8 @@ EXPORT void Native_attachEntitiesToRope(bool& success, int32_t _ropeId, int32_t 
 	ctx->Push(_ent2_y);
 	ctx->Push(_ent2_z);
 	ctx->Push(_length);
-	ctx->Push(_p10);
-	ctx->Push(_p11);
+	ctx->Push((int32_t) _p10);
+	ctx->Push((int32_t) _p11);
 	auto ptr_p12 = _p12;
 	ctx->Push(&ptr_p12);
 	auto ptr_p13 = _p13;
@@ -54910,7 +54910,7 @@ EXPORT void Native_attachRopeToEntity(bool& success, int32_t _ropeId, int32_t _e
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -54957,7 +54957,7 @@ EXPORT void Native__0x36CCB9BE67B970FD(bool& success, int32_t _ropeId, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x36CCB9BE67B970FD);
 	ctx->Reset();
 	ctx->Push(_ropeId);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55132,8 +55132,8 @@ EXPORT void Native__0xB1B6216CA2E7B55E(bool& success, int32_t _p0, bool _p1, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB1B6216CA2E7B55E);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55281,7 +55281,7 @@ EXPORT void Native_breakEntityGlass(bool& success, int32_t _entity, float _p1, f
 	ctx->Push(_p7);
 	ctx->Push(_p8);
 	ctx->Push(_p9);
-	ctx->Push(_p10);
+	ctx->Push((int32_t) _p10);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55305,7 +55305,7 @@ EXPORT void Native_setDisableBreaking(bool& success, int32_t _object, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5CEC1A84620E7D5B);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55328,7 +55328,7 @@ EXPORT void Native_setDisableFragDamage(bool& success, int32_t _object, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x01BA3AED21C16CFB);
 	ctx->Reset();
 	ctx->Push(_object);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55340,7 +55340,7 @@ EXPORT void Native_setEntityProofUnk(bool& success, int32_t _entity, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x15F944730C832252);
 	ctx->Reset();
 	ctx->Push(_entity);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55351,7 +55351,7 @@ EXPORT void Native_setEntityProofUnk(bool& success, int32_t _entity, bool _toggl
 EXPORT void Native__0x9EBD751E5787BAF2(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9EBD751E5787BAF2);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55362,7 +55362,7 @@ EXPORT void Native__0x9EBD751E5787BAF2(bool& success, bool _p0) {
 EXPORT void Native_setLaunchControlEnabled(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAA6A6098851C396F);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55394,7 +55394,7 @@ EXPORT int32_t Native_getPlayerPedScriptIndex(bool& success, int32_t _player) {
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_setPlayerModel(bool& success, int32_t _player, int32_t _model) {
+EXPORT void Native_setPlayerModel(bool& success, int32_t _player, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x00A1CADD00108836);
 	ctx->Reset();
 	ctx->Push(_player);
@@ -55411,8 +55411,8 @@ EXPORT void Native_changePlayerPed(bool& success, int32_t _player, int32_t _ped,
 	ctx->Reset();
 	ctx->Push(_player);
 	ctx->Push(_ped);
-	ctx->Push(_p2);
-	ctx->Push(_resetDamage);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _resetDamage);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55530,8 +55530,8 @@ EXPORT void Native_setPlayerWantedCentrePosition(bool& success, int32_t _player,
 	ctx->Push(_player);
 	alt::INative::Vector3 converted_position { _position.x, 0, _position.y, 0, _position.z };
 	ctx->Push(&converted_position);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55559,7 +55559,7 @@ EXPORT void Native_setPlayerWantedLevel(bool& success, int32_t _player, int32_t 
 	ctx->Reset();
 	ctx->Push(_player);
 	ctx->Push(_wantedLevel);
-	ctx->Push(_disableNoMission);
+	ctx->Push((int32_t) _disableNoMission);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55572,7 +55572,7 @@ EXPORT void Native_setPlayerWantedLevelNoDrop(bool& success, int32_t _player, in
 	ctx->Reset();
 	ctx->Push(_player);
 	ctx->Push(_wantedLevel);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55584,7 +55584,7 @@ EXPORT void Native_setPlayerWantedLevelNow(bool& success, int32_t _player, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE0A7D1E497FFCD6F);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55632,7 +55632,7 @@ EXPORT void Native_setDispatchCopsForPlayer(bool& success, int32_t _player, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDB172424876553F4);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55692,7 +55692,7 @@ EXPORT void Native_setPlayerControl(bool& success, int32_t _player, bool _bHasCo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8D32347D6D4C40A2);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_bHasControl);
+	ctx->Push((int32_t) _bHasControl);
 	ctx->Push(_flags);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -55727,7 +55727,7 @@ EXPORT void Native_setMaxWantedLevel(bool& success, int32_t _maxWantedLevel) {
 EXPORT void Native_setPoliceRadarBlips(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x43286D561B72B8BF);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55739,7 +55739,7 @@ EXPORT void Native_setPoliceIgnorePlayer(bool& success, int32_t _player, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x32C62AA929C2DA6A);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55763,7 +55763,7 @@ EXPORT void Native_setEveryoneIgnorePlayer(bool& success, int32_t _player, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8EEDA153AD141BA4);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55775,7 +55775,7 @@ EXPORT void Native_setAllRandomPedsFlee(bool& success, int32_t _player, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x056E0FE8534C2949);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55798,7 +55798,7 @@ EXPORT void Native__0xDE45D1A1EF45EE61(bool& success, int32_t _player, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDE45D1A1EF45EE61);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -55832,7 +55832,7 @@ EXPORT void Native_setIgnoreLowPriorityShockingEvents(bool& success, int32_t _pl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x596976B02B6B5700);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56141,7 +56141,7 @@ EXPORT void Native_setPlayerCanDoDriveBy(bool& success, int32_t _player, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6E8834B52EC20C77);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56153,7 +56153,7 @@ EXPORT void Native_setPlayerCanBeHassledByGangs(bool& success, int32_t _player, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD5E460AD7020A246);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56165,7 +56165,7 @@ EXPORT void Native_setPlayerCanUseCover(bool& success, int32_t _player, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD465A8599DFF6814);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56200,7 +56200,7 @@ EXPORT void Native_setPlayerSprint(bool& success, int32_t _player, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA01B8075D8B92DF4);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56355,7 +56355,7 @@ EXPORT bool Native_isPlayerBeingArrested(bool& success, int32_t _player, bool _a
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x388A47C51ABDAC8E);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_atArresting);
+	ctx->Push((int32_t) _atArresting);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -56669,7 +56669,7 @@ EXPORT bool Native_isPlayerLoggingInNp(bool& success) {
 EXPORT void Native_displaySystemSigninUi(bool& success, bool _unk) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x94DD7888C10A979E);
 	ctx->Reset();
-	ctx->Push(_unk);
+	ctx->Push((int32_t) _unk);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56692,7 +56692,7 @@ EXPORT void Native_setPlayerInvincible(bool& success, int32_t _player, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x239528EACDC3E7DE);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56728,7 +56728,7 @@ EXPORT void Native_setPlayerInvincibleKeepRagdollEnabled(bool& success, int32_t 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6BC97F4F4BB3C04B);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56740,7 +56740,7 @@ EXPORT void Native__0xCAC57395B151135F(bool& success, int32_t _player, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCAC57395B151135F);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56752,7 +56752,7 @@ EXPORT void Native_removePlayerHelmet(bool& success, int32_t _player, bool _p2) 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF3AC26D3CC576528);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56764,7 +56764,7 @@ EXPORT void Native_givePlayerRagdollControl(bool& success, int32_t _player, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3C49C870E66F0A28);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56776,7 +56776,7 @@ EXPORT void Native_setPlayerLockon(bool& success, int32_t _player, bool _toggle)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5C8B2F450EE4328E);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56956,7 +56956,7 @@ EXPORT void Native_setPlayerForcedAim(bool& success, int32_t _player, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0FEE4F80AC44A726);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56968,7 +56968,7 @@ EXPORT void Native_setPlayerForcedZoom(bool& success, int32_t _player, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75E7D505F2B15902);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56980,7 +56980,7 @@ EXPORT void Native_setPlayerForceSkipAimIntro(bool& success, int32_t _player, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7651BC64AE59E128);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -56992,7 +56992,7 @@ EXPORT void Native_disablePlayerFiring(bool& success, int32_t _player, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5E6CC07646BBEAB8);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -57014,7 +57014,7 @@ EXPORT void Native_setDisableAmbientMeleeMove(bool& success, int32_t _player, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2E8AABFA40A84F8C);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -57123,8 +57123,8 @@ EXPORT void Native_specialAbilityChargeSmall(bool& success, int32_t _player, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2E7B9B683481687D);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -57137,8 +57137,8 @@ EXPORT void Native_specialAbilityChargeMedium(bool& success, int32_t _player, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF113E3AA9BC54613);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -57151,8 +57151,8 @@ EXPORT void Native_specialAbilityChargeLarge(bool& success, int32_t _player, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF733F45FA4497D93);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -57179,7 +57179,7 @@ EXPORT void Native_specialAbilityChargeAbsolute(bool& success, int32_t _player, 
 	ctx->Reset();
 	ctx->Push(_player);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -57193,7 +57193,7 @@ EXPORT void Native_specialAbilityChargeNormalized(bool& success, int32_t _player
 	ctx->Reset();
 	ctx->Push(_player);
 	ctx->Push(_normalizedValue);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -57206,7 +57206,7 @@ EXPORT void Native_specialAbilityFillMeter(bool& success, int32_t _player, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3DACA8DDC6FD4980);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -57219,7 +57219,7 @@ EXPORT void Native_specialAbilityDepleteMeter(bool& success, int32_t _player, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1D506DBBBC51E64B);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -57228,7 +57228,7 @@ EXPORT void Native_specialAbilityDepleteMeter(bool& success, int32_t _player, bo
 	success = true;
 }
 
-EXPORT void Native_specialAbilityLock(bool& success, int32_t _playerModel, int32_t _p1) {
+EXPORT void Native_specialAbilityLock(bool& success, uint32_t _playerModel, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6A09D0D590A47D13);
 	ctx->Reset();
 	ctx->Push(_playerModel);
@@ -57240,7 +57240,7 @@ EXPORT void Native_specialAbilityLock(bool& success, int32_t _playerModel, int32
 	success = true;
 }
 
-EXPORT void Native_specialAbilityUnlock(bool& success, int32_t _playerModel, int32_t _p1) {
+EXPORT void Native_specialAbilityUnlock(bool& success, uint32_t _playerModel, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF145F3BE2EFA9A3B);
 	ctx->Reset();
 	ctx->Push(_playerModel);
@@ -57252,7 +57252,7 @@ EXPORT void Native_specialAbilityUnlock(bool& success, int32_t _playerModel, int
 	success = true;
 }
 
-EXPORT bool Native_isSpecialAbilityUnlocked(bool& success, int32_t _playerModel) {
+EXPORT bool Native_isSpecialAbilityUnlocked(bool& success, uint32_t _playerModel) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC6017F6A6CDFA694);
 	ctx->Reset();
 	ctx->Push(_playerModel);
@@ -57294,7 +57294,7 @@ EXPORT void Native_enableSpecialAbility(bool& success, int32_t _player, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x181EC197DAEFE121);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -57385,9 +57385,9 @@ EXPORT void Native_startPlayerTeleport(bool& success, int32_t _player, float _x,
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_heading);
-	ctx->Push(_p5);
-	ctx->Push(_findCollisionLand);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _findCollisionLand);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -57529,7 +57529,7 @@ EXPORT void Native_setPlayerMeleeWeaponDamageModifier(bool& success, int32_t _pl
 	ctx->Reset();
 	ctx->Push(_player);
 	ctx->Push(_modifier);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -57714,7 +57714,7 @@ EXPORT void Native_setPlayerCanLeaveParachuteSmokeTrail(bool& success, int32_t _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF401B182DBA8AF53);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_enabled);
+	ctx->Push((int32_t) _enabled);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -57812,8 +57812,8 @@ EXPORT void Native_simulatePlayerInputGait(bool& success, int32_t _player, float
 	ctx->Push(_amount);
 	ctx->Push(_gaitType);
 	ctx->Push(_speed);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -57836,7 +57836,7 @@ EXPORT void Native_setAutoGiveParachuteWhenEnterPlane(bool& success, int32_t _pl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9F343285A00B4BB6);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -57848,7 +57848,7 @@ EXPORT void Native_setAutoGiveScubaGearWhenExitVehicle(bool& success, int32_t _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD2B315B6689D537D);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -57895,7 +57895,7 @@ EXPORT void Native_setPlayerSimulateAiming(bool& success, int32_t _player, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC54C95DA968EC5B5);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -57994,7 +57994,7 @@ EXPORT bool Native__0xBC0753C9CA14B506(bool& success, int32_t _player, int32_t _
 	ctx->Reset();
 	ctx->Push(_player);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -58054,7 +58054,7 @@ EXPORT void Native_setPlayerLeavePedBehind(bool& success, int32_t _player, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFF300C7649724A0B);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -58069,7 +58069,7 @@ EXPORT void Native_setPlayerParachuteVariationOverride(bool& success, int32_t _p
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -58088,7 +58088,7 @@ EXPORT void Native_clearPlayerParachuteVariationOverride(bool& success, int32_t 
 	success = true;
 }
 
-EXPORT void Native_setPlayerParachuteModelOverride(bool& success, int32_t _player, int32_t _model) {
+EXPORT void Native_setPlayerParachuteModelOverride(bool& success, int32_t _player, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x977DB4641F6FC3DB);
 	ctx->Reset();
 	ctx->Push(_player);
@@ -58100,7 +58100,7 @@ EXPORT void Native_setPlayerParachuteModelOverride(bool& success, int32_t _playe
 	success = true;
 }
 
-EXPORT void Native_setPlayerReserveParachuteModelOverride(bool& success, int32_t _player, int32_t _model) {
+EXPORT void Native_setPlayerReserveParachuteModelOverride(bool& success, int32_t _player, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0764486AEDE748DB);
 	ctx->Reset();
 	ctx->Push(_player);
@@ -58112,7 +58112,7 @@ EXPORT void Native_setPlayerReserveParachuteModelOverride(bool& success, int32_t
 	success = true;
 }
 
-EXPORT int32_t Native_getPlayerParachuteModelOverride(bool& success, int32_t _player) {
+EXPORT uint32_t Native_getPlayerParachuteModelOverride(bool& success, int32_t _player) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC219887CA3E65C41);
 	ctx->Reset();
 	ctx->Push(_player);
@@ -58121,10 +58121,10 @@ EXPORT int32_t Native_getPlayerParachuteModelOverride(bool& success, int32_t _pl
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getPlayerReserveParachuteModelOverride(bool& success, int32_t _player) {
+EXPORT uint32_t Native_getPlayerReserveParachuteModelOverride(bool& success, int32_t _player) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x37FAAA68DCA9D08D);
 	ctx->Reset();
 	ctx->Push(_player);
@@ -58133,7 +58133,7 @@ EXPORT int32_t Native_getPlayerReserveParachuteModelOverride(bool& success, int3
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_clearPlayerParachuteModelOverride(bool& success, int32_t _player) {
@@ -58158,7 +58158,7 @@ EXPORT void Native_clearPlayerReserveParachuteModelOverride(bool& success, int32
 	success = true;
 }
 
-EXPORT void Native_setPlayerParachutePackModelOverride(bool& success, int32_t _player, int32_t _model) {
+EXPORT void Native_setPlayerParachutePackModelOverride(bool& success, int32_t _player, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDC80A4C2F18A2B64);
 	ctx->Reset();
 	ctx->Push(_player);
@@ -58195,7 +58195,7 @@ EXPORT void Native_disablePlayerVehicleRewards(bool& success, int32_t _player) {
 EXPORT void Native__0x2F7CEB6520288061(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2F7CEB6520288061);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -58207,7 +58207,7 @@ EXPORT void Native_setPlayerBluetoothState(bool& success, int32_t _player, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5DC40A8869C22141);
 	ctx->Reset();
 	ctx->Push(_player);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -58550,7 +58550,7 @@ EXPORT int32_t Native__0x4282E08174868BE3(bool& success) {
 EXPORT bool Native__0x33D47E85B476ABCD(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x33D47E85B476ABCD);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -58563,7 +58563,7 @@ EXPORT void Native__0x7E2BD3EF6C205F09(bool& success, const char* _p0, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7E2BD3EF6C205F09);
 	ctx->Reset();
 	ctx->Push(SaveString(_p0));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -58595,7 +58595,7 @@ EXPORT void Native__0x5AD3932DAEB1E5D3(bool& success) {
 EXPORT void Native__0xE058175F8EAFE79A(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE058175F8EAFE79A);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -58670,7 +58670,7 @@ EXPORT bool Native_doesScriptExist(bool& success, const char* _scriptName) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_requestScriptWithNameHash(bool& success, int32_t _scriptHash) {
+EXPORT void Native_requestScriptWithNameHash(bool& success, uint32_t _scriptHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD62A67D26D9653E6);
 	ctx->Reset();
 	ctx->Push(_scriptHash);
@@ -58681,7 +58681,7 @@ EXPORT void Native_requestScriptWithNameHash(bool& success, int32_t _scriptHash)
 	success = true;
 }
 
-EXPORT void Native_setScriptWithNameHashAsNoLongerNeeded(bool& success, int32_t _scriptHash) {
+EXPORT void Native_setScriptWithNameHashAsNoLongerNeeded(bool& success, uint32_t _scriptHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC5BC038960E9DB27);
 	ctx->Reset();
 	ctx->Push(_scriptHash);
@@ -58692,7 +58692,7 @@ EXPORT void Native_setScriptWithNameHashAsNoLongerNeeded(bool& success, int32_t 
 	success = true;
 }
 
-EXPORT bool Native_hasScriptWithNameHashLoaded(bool& success, int32_t _scriptHash) {
+EXPORT bool Native_hasScriptWithNameHashLoaded(bool& success, uint32_t _scriptHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5F0F0C783EB16C04);
 	ctx->Reset();
 	ctx->Push(_scriptHash);
@@ -58704,7 +58704,7 @@ EXPORT bool Native_hasScriptWithNameHashLoaded(bool& success, int32_t _scriptHas
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_doesScriptWithNameHashExist(bool& success, int32_t _scriptHash) {
+EXPORT bool Native_doesScriptWithNameHashExist(bool& success, uint32_t _scriptHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF86AA3C56BA31381);
 	ctx->Reset();
 	ctx->Push(_scriptHash);
@@ -58793,7 +58793,7 @@ EXPORT void Native_terminateThisThread(bool& success) {
 	success = true;
 }
 
-EXPORT int32_t Native_getNumberOfReferencesOfScriptWithNameHash(bool& success, int32_t _scriptHash) {
+EXPORT int32_t Native_getNumberOfReferencesOfScriptWithNameHash(bool& success, uint32_t _scriptHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2C83A9DA6BFFC4F9);
 	ctx->Reset();
 	ctx->Push(_scriptHash);
@@ -58816,7 +58816,7 @@ EXPORT const char* Native_getThisScriptName(bool& success) {
 	return AllocateString(ctx->ResultString());
 }
 
-EXPORT int32_t Native_getHashOfThisScriptName(bool& success) {
+EXPORT uint32_t Native_getHashOfThisScriptName(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8A1C8B1738FFE87E);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -58824,7 +58824,7 @@ EXPORT int32_t Native_getHashOfThisScriptName(bool& success) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT int32_t Native_getNumberOfEvents(bool& success, int32_t _eventGroup) {
@@ -58911,7 +58911,7 @@ EXPORT void Native_shutdownLoadingScreen(bool& success) {
 EXPORT void Native_setNoLoadingScreen(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5262CC1995D07E09);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -58961,7 +58961,7 @@ EXPORT void Native__0x760910B49D2B98EA(bool& success) {
 	success = true;
 }
 
-EXPORT void Native_bgStartContextHash(bool& success, int32_t _contextHash) {
+EXPORT void Native_bgStartContextHash(bool& success, uint32_t _contextHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75B18E49607874C7);
 	ctx->Reset();
 	ctx->Push(_contextHash);
@@ -58972,7 +58972,7 @@ EXPORT void Native_bgStartContextHash(bool& success, int32_t _contextHash) {
 	success = true;
 }
 
-EXPORT void Native_bgEndContextHash(bool& success, int32_t _contextHash) {
+EXPORT void Native_bgEndContextHash(bool& success, uint32_t _contextHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x107E5CC7CA942BC1);
 	ctx->Reset();
 	ctx->Push(_contextHash);
@@ -59031,7 +59031,7 @@ EXPORT int32_t Native__0x22E21FBCFC88C149(bool& success, int32_t _scriptIndex, c
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native__0x829CD22E043A2577(bool& success, int32_t _p0) {
+EXPORT int32_t Native__0x829CD22E043A2577(bool& success, uint32_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x829CD22E043A2577);
 	ctx->Reset();
 	ctx->Push(_p0);
@@ -59205,7 +59205,7 @@ EXPORT int32_t Native_getShapeTestResult(bool& success, int32_t _shapeTestHandle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3D87450E15D98694);
 	ctx->Reset();
 	ctx->Push(_shapeTestHandle);
-	auto ptr_hit = _hit;
+	auto ptr_hit = (int32_t) _hit;
 	ctx->Push(&ptr_hit);
 	alt::INative::Vector3 converted_endCoords { _endCoords.x, 0, _endCoords.y, 0, _endCoords.z };
 	ctx->Push(&converted_endCoords);
@@ -59218,7 +59218,7 @@ EXPORT int32_t Native_getShapeTestResult(bool& success, int32_t _shapeTestHandle
 		return 0;
 	}
 	success = true;
-	_hit = ptr_hit;
+	_hit = (bool) ptr_hit;
 	_endCoords.x = converted_endCoords.x;
 	_endCoords.y = converted_endCoords.y;
 	_endCoords.z = converted_endCoords.z;
@@ -59229,11 +59229,11 @@ EXPORT int32_t Native_getShapeTestResult(bool& success, int32_t _shapeTestHandle
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getShapeTestResultIncludingMaterial(bool& success, int32_t _shapeTestHandle, bool& _hit, vector3_t& _endCoords, vector3_t& _surfaceNormal, int32_t& _materialHash, int32_t& _entityHit) {
+EXPORT int32_t Native_getShapeTestResultIncludingMaterial(bool& success, int32_t _shapeTestHandle, bool& _hit, vector3_t& _endCoords, vector3_t& _surfaceNormal, uint32_t& _materialHash, int32_t& _entityHit) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x65287525D951F6BE);
 	ctx->Reset();
 	ctx->Push(_shapeTestHandle);
-	auto ptr_hit = _hit;
+	auto ptr_hit = (int32_t) _hit;
 	ctx->Push(&ptr_hit);
 	alt::INative::Vector3 converted_endCoords { _endCoords.x, 0, _endCoords.y, 0, _endCoords.z };
 	ctx->Push(&converted_endCoords);
@@ -59248,7 +59248,7 @@ EXPORT int32_t Native_getShapeTestResultIncludingMaterial(bool& success, int32_t
 		return 0;
 	}
 	success = true;
-	_hit = ptr_hit;
+	_hit = (bool) ptr_hit;
 	_endCoords.x = converted_endCoords.x;
 	_endCoords.y = converted_endCoords.y;
 	_endCoords.z = converted_endCoords.z;
@@ -59282,7 +59282,7 @@ EXPORT int32_t Native_scInboxGetTotalNumMessages(bool& success) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_scInboxGetMessageTypeAtIndex(bool& success, int32_t _msgIndex) {
+EXPORT uint32_t Native_scInboxGetMessageTypeAtIndex(bool& success, int32_t _msgIndex) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBB8EA16ECBC976C4);
 	ctx->Reset();
 	ctx->Push(_msgIndex);
@@ -59291,7 +59291,7 @@ EXPORT int32_t Native_scInboxGetMessageTypeAtIndex(bool& success, int32_t _msgIn
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT bool Native_scInboxGetMessageIsReadAtIndex(bool& success, int32_t _msgIndex) {
@@ -59569,7 +59569,7 @@ EXPORT int32_t Native__0x07DBD622D9533857(bool& success, int32_t _p0) {
 EXPORT void Native_setHandleRockstarMessageViaScript(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBFA0A56A817C6C7D);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -59599,7 +59599,7 @@ EXPORT const char* Native_rockstarMessageGetString(bool& success) {
 	return AllocateString(ctx->ResultString());
 }
 
-EXPORT bool Native_scPresenceAttrSetInt(bool& success, int32_t _attrHash, int32_t _value) {
+EXPORT bool Native_scPresenceAttrSetInt(bool& success, uint32_t _attrHash, int32_t _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1F1E9682483697C7);
 	ctx->Reset();
 	ctx->Push(_attrHash);
@@ -59612,7 +59612,7 @@ EXPORT bool Native_scPresenceAttrSetInt(bool& success, int32_t _attrHash, int32_
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_scPresenceAttrSetFloat(bool& success, int32_t _attrHash, float _value) {
+EXPORT bool Native_scPresenceAttrSetFloat(bool& success, uint32_t _attrHash, float _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC4C4575F62534A24);
 	ctx->Reset();
 	ctx->Push(_attrHash);
@@ -59625,7 +59625,7 @@ EXPORT bool Native_scPresenceAttrSetFloat(bool& success, int32_t _attrHash, floa
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_scPresenceAttrSetString(bool& success, int32_t _attrHash, const char* _value) {
+EXPORT bool Native_scPresenceAttrSetString(bool& success, uint32_t _attrHash, const char* _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x287F1F75D2803595);
 	ctx->Reset();
 	ctx->Push(_attrHash);
@@ -60373,7 +60373,7 @@ EXPORT bool Native_statSave(bool& success, int32_t _p0, bool _p1, int32_t _p2, i
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE07BCA305B82D2FD);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
@@ -60480,7 +60480,7 @@ EXPORT int32_t Native__0xE496A53BA5F50A56(bool& success, int32_t _p0) {
 EXPORT void Native_statSetBlockSaves(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF434A10BA01C37D0);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -60554,12 +60554,12 @@ EXPORT int32_t Native__0xC0E0D686DDFC6EAE(bool& success) {
 	return ctx->ResultInt();
 }
 
-EXPORT bool Native_statSetInt(bool& success, int32_t _statName, int32_t _value, bool _save) {
+EXPORT bool Native_statSetInt(bool& success, uint32_t _statName, int32_t _value, bool _save) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB3271D7AB655B441);
 	ctx->Reset();
 	ctx->Push(_statName);
 	ctx->Push(_value);
-	ctx->Push(_save);
+	ctx->Push((int32_t) _save);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -60568,12 +60568,12 @@ EXPORT bool Native_statSetInt(bool& success, int32_t _statName, int32_t _value, 
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statSetFloat(bool& success, int32_t _statName, float _value, bool _save) {
+EXPORT bool Native_statSetFloat(bool& success, uint32_t _statName, float _value, bool _save) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4851997F37FE9B3C);
 	ctx->Reset();
 	ctx->Push(_statName);
 	ctx->Push(_value);
-	ctx->Push(_save);
+	ctx->Push((int32_t) _save);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -60582,12 +60582,12 @@ EXPORT bool Native_statSetFloat(bool& success, int32_t _statName, float _value, 
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statSetBool(bool& success, int32_t _statName, bool _value, bool _save) {
+EXPORT bool Native_statSetBool(bool& success, uint32_t _statName, bool _value, bool _save) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4B33C4243DE0C432);
 	ctx->Reset();
 	ctx->Push(_statName);
-	ctx->Push(_value);
-	ctx->Push(_save);
+	ctx->Push((int32_t) _value);
+	ctx->Push((int32_t) _save);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -60596,12 +60596,12 @@ EXPORT bool Native_statSetBool(bool& success, int32_t _statName, bool _value, bo
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statSetGxtLabel(bool& success, int32_t _statName, const char* _value, bool _save) {
+EXPORT bool Native_statSetGxtLabel(bool& success, uint32_t _statName, const char* _value, bool _save) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x17695002FD8B2AE0);
 	ctx->Reset();
 	ctx->Push(_statName);
 	ctx->Push(SaveString(_value));
-	ctx->Push(_save);
+	ctx->Push((int32_t) _save);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -60610,14 +60610,14 @@ EXPORT bool Native_statSetGxtLabel(bool& success, int32_t _statName, const char*
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statSetDate(bool& success, int32_t _statName, int32_t& _value, int32_t _numFields, bool _save) {
+EXPORT bool Native_statSetDate(bool& success, uint32_t _statName, int32_t& _value, int32_t _numFields, bool _save) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2C29BFB64F4FCBE4);
 	ctx->Reset();
 	ctx->Push(_statName);
 	auto ptr_value = _value;
 	ctx->Push(&ptr_value);
 	ctx->Push(_numFields);
-	ctx->Push(_save);
+	ctx->Push((int32_t) _save);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -60627,12 +60627,12 @@ EXPORT bool Native_statSetDate(bool& success, int32_t _statName, int32_t& _value
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statSetString(bool& success, int32_t _statName, const char* _value, bool _save) {
+EXPORT bool Native_statSetString(bool& success, uint32_t _statName, const char* _value, bool _save) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA87B2335D12531D7);
 	ctx->Reset();
 	ctx->Push(_statName);
 	ctx->Push(SaveString(_value));
-	ctx->Push(_save);
+	ctx->Push((int32_t) _save);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -60641,14 +60641,14 @@ EXPORT bool Native_statSetString(bool& success, int32_t _statName, const char* _
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statSetPos(bool& success, int32_t _statName, float _x, float _y, float _z, bool _save) {
+EXPORT bool Native_statSetPos(bool& success, uint32_t _statName, float _x, float _y, float _z, bool _save) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDB283FDE680FE72E);
 	ctx->Reset();
 	ctx->Push(_statName);
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_save);
+	ctx->Push((int32_t) _save);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -60657,14 +60657,14 @@ EXPORT bool Native_statSetPos(bool& success, int32_t _statName, float _x, float 
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statSetMaskedInt(bool& success, int32_t _statName, int32_t _p1, int32_t _p2, int32_t _p3, bool _save) {
+EXPORT bool Native_statSetMaskedInt(bool& success, uint32_t _statName, int32_t _p1, int32_t _p2, int32_t _p3, bool _save) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7BBB1B54583ED410);
 	ctx->Reset();
 	ctx->Push(_statName);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
-	ctx->Push(_save);
+	ctx->Push((int32_t) _save);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -60673,12 +60673,12 @@ EXPORT bool Native_statSetMaskedInt(bool& success, int32_t _statName, int32_t _p
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statSetUserId(bool& success, int32_t _statName, const char* _value, bool _save) {
+EXPORT bool Native_statSetUserId(bool& success, uint32_t _statName, const char* _value, bool _save) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8CDDF1E452BABE11);
 	ctx->Reset();
 	ctx->Push(_statName);
 	ctx->Push(SaveString(_value));
-	ctx->Push(_save);
+	ctx->Push((int32_t) _save);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -60687,11 +60687,11 @@ EXPORT bool Native_statSetUserId(bool& success, int32_t _statName, const char* _
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statSetCurrentPosixTime(bool& success, int32_t _statName, bool _p1) {
+EXPORT bool Native_statSetCurrentPosixTime(bool& success, uint32_t _statName, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC2F84B7F9C4D0C61);
 	ctx->Reset();
 	ctx->Push(_statName);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -60700,7 +60700,7 @@ EXPORT bool Native_statSetCurrentPosixTime(bool& success, int32_t _statName, boo
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statGetInt(bool& success, int32_t _statHash, int32_t& _outValue, int32_t _p2) {
+EXPORT bool Native_statGetInt(bool& success, uint32_t _statHash, int32_t& _outValue, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x767FBC2AC802EF3D);
 	ctx->Reset();
 	ctx->Push(_statHash);
@@ -60716,7 +60716,7 @@ EXPORT bool Native_statGetInt(bool& success, int32_t _statHash, int32_t& _outVal
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statGetFloat(bool& success, int32_t _statHash, float& _outValue, int32_t _p2) {
+EXPORT bool Native_statGetFloat(bool& success, uint32_t _statHash, float& _outValue, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD7AE6C9C9C6AC54C);
 	ctx->Reset();
 	ctx->Push(_statHash);
@@ -60732,11 +60732,11 @@ EXPORT bool Native_statGetFloat(bool& success, int32_t _statHash, float& _outVal
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statGetBool(bool& success, int32_t _statHash, bool& _outValue, int32_t _p2) {
+EXPORT bool Native_statGetBool(bool& success, uint32_t _statHash, bool& _outValue, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x11B5E6D2AE73F48E);
 	ctx->Reset();
 	ctx->Push(_statHash);
-	auto ptr_outValue = _outValue;
+	auto ptr_outValue = (int32_t) _outValue;
 	ctx->Push(&ptr_outValue);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
@@ -60744,11 +60744,11 @@ EXPORT bool Native_statGetBool(bool& success, int32_t _statHash, bool& _outValue
 		return false;
 	}
 	success = true;
-	_outValue = ptr_outValue;
+	_outValue = (bool) ptr_outValue;
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statGetDate(bool& success, int32_t _statHash, int32_t& _p1, int32_t _p2, int32_t _p3) {
+EXPORT bool Native_statGetDate(bool& success, uint32_t _statHash, int32_t& _p1, int32_t _p2, int32_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8B0FACEFC36C824B);
 	ctx->Reset();
 	ctx->Push(_statHash);
@@ -60765,7 +60765,7 @@ EXPORT bool Native_statGetDate(bool& success, int32_t _statHash, int32_t& _p1, i
 	return ctx->ResultBool();
 }
 
-EXPORT const char* Native_statGetString(bool& success, int32_t _statHash, int32_t _p1) {
+EXPORT const char* Native_statGetString(bool& success, uint32_t _statHash, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE50384ACC2C3DB74);
 	ctx->Reset();
 	ctx->Push(_statHash);
@@ -60830,7 +60830,7 @@ EXPORT const char* Native_statGetUserId(bool& success, int32_t _p0) {
 	return AllocateString(ctx->ResultString());
 }
 
-EXPORT const char* Native_statGetLicensePlate(bool& success, int32_t _statName) {
+EXPORT const char* Native_statGetLicensePlate(bool& success, uint32_t _statName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5473D4195058B2E4);
 	ctx->Reset();
 	ctx->Push(_statName);
@@ -60842,7 +60842,7 @@ EXPORT const char* Native_statGetLicensePlate(bool& success, int32_t _statName) 
 	return AllocateString(ctx->ResultString());
 }
 
-EXPORT bool Native_statSetLicensePlate(bool& success, int32_t _statName, const char* _str) {
+EXPORT bool Native_statSetLicensePlate(bool& success, uint32_t _statName, const char* _str) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x69FF13266D7296DA);
 	ctx->Reset();
 	ctx->Push(_statName);
@@ -60855,7 +60855,7 @@ EXPORT bool Native_statSetLicensePlate(bool& success, int32_t _statName, const c
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_statIncrement(bool& success, int32_t _statName, float _value) {
+EXPORT void Native_statIncrement(bool& success, uint32_t _statName, float _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9B5A68C6489E9909);
 	ctx->Reset();
 	ctx->Push(_statName);
@@ -60889,7 +60889,7 @@ EXPORT bool Native__0xB1D2BB1E1631F5B1(bool& success) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native__0xBED9F5693F34ED17(bool& success, int32_t _statName, int32_t _p1, float& _outValue) {
+EXPORT bool Native__0xBED9F5693F34ED17(bool& success, uint32_t _statName, int32_t _p1, float& _outValue) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBED9F5693F34ED17);
 	ctx->Reset();
 	ctx->Push(_statName);
@@ -60927,7 +60927,7 @@ EXPORT void Native__0xA78B8FA58200DA56(bool& success, int32_t _p0) {
 	success = true;
 }
 
-EXPORT int32_t Native_statGetNumberOfDays(bool& success, int32_t _statName) {
+EXPORT int32_t Native_statGetNumberOfDays(bool& success, uint32_t _statName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE0E854F5280FB769);
 	ctx->Reset();
 	ctx->Push(_statName);
@@ -60939,7 +60939,7 @@ EXPORT int32_t Native_statGetNumberOfDays(bool& success, int32_t _statName) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_statGetNumberOfHours(bool& success, int32_t _statName) {
+EXPORT int32_t Native_statGetNumberOfHours(bool& success, uint32_t _statName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF2D4B2FE415AAFC3);
 	ctx->Reset();
 	ctx->Push(_statName);
@@ -60951,7 +60951,7 @@ EXPORT int32_t Native_statGetNumberOfHours(bool& success, int32_t _statName) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_statGetNumberOfMinutes(bool& success, int32_t _statName) {
+EXPORT int32_t Native_statGetNumberOfMinutes(bool& success, uint32_t _statName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7583B4BE4C5A41B5);
 	ctx->Reset();
 	ctx->Push(_statName);
@@ -60963,7 +60963,7 @@ EXPORT int32_t Native_statGetNumberOfMinutes(bool& success, int32_t _statName) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_statGetNumberOfSeconds(bool& success, int32_t _statName) {
+EXPORT int32_t Native_statGetNumberOfSeconds(bool& success, uint32_t _statName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2CE056FF3723F00B);
 	ctx->Reset();
 	ctx->Push(_statName);
@@ -61021,72 +61021,72 @@ EXPORT int32_t Native_statGetPackedIntMask(bool& success, int32_t _p0) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getPackedBoolStatKey(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character) {
+EXPORT uint32_t Native_getPackedBoolStatKey(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x80C75307B1C42837);
 	ctx->Reset();
 	ctx->Push(_index);
-	ctx->Push(_spStat);
-	ctx->Push(_charStat);
+	ctx->Push((int32_t) _spStat);
+	ctx->Push((int32_t) _charStat);
 	ctx->Push(_character);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getPackedIntStatKey(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character) {
+EXPORT uint32_t Native_getPackedIntStatKey(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x61E111E323419E07);
 	ctx->Reset();
 	ctx->Push(_index);
-	ctx->Push(_spStat);
-	ctx->Push(_charStat);
+	ctx->Push((int32_t) _spStat);
+	ctx->Push((int32_t) _charStat);
 	ctx->Push(_character);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getPackedTuBoolStatKey(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character) {
+EXPORT uint32_t Native_getPackedTuBoolStatKey(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC4BB08EE7907471E);
 	ctx->Reset();
 	ctx->Push(_index);
-	ctx->Push(_spStat);
-	ctx->Push(_charStat);
+	ctx->Push((int32_t) _spStat);
+	ctx->Push((int32_t) _charStat);
 	ctx->Push(_character);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getPackedTuIntStatKey(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character) {
+EXPORT uint32_t Native_getPackedTuIntStatKey(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD16C2AD6B8E32854);
 	ctx->Reset();
 	ctx->Push(_index);
-	ctx->Push(_spStat);
-	ctx->Push(_charStat);
+	ctx->Push((int32_t) _spStat);
+	ctx->Push((int32_t) _charStat);
 	ctx->Push(_character);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getNgstatBoolHash(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character, const char* _section) {
+EXPORT uint32_t Native_getNgstatBoolHash(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character, const char* _section) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBA52FF538ED2BC71);
 	ctx->Reset();
 	ctx->Push(_index);
-	ctx->Push(_spStat);
-	ctx->Push(_charStat);
+	ctx->Push((int32_t) _spStat);
+	ctx->Push((int32_t) _charStat);
 	ctx->Push(_character);
 	ctx->Push(SaveString(_section));
 	if (!native->Invoke(ctx)) {
@@ -61094,15 +61094,15 @@ EXPORT int32_t Native_getNgstatBoolHash(bool& success, int32_t _index, bool _spS
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getNgstatIntHash(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character, const char* _section) {
+EXPORT uint32_t Native_getNgstatIntHash(bool& success, int32_t _index, bool _spStat, bool _charStat, int32_t _character, const char* _section) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2B4CDCA6F07FF3DA);
 	ctx->Reset();
 	ctx->Push(_index);
-	ctx->Push(_spStat);
-	ctx->Push(_charStat);
+	ctx->Push((int32_t) _spStat);
+	ctx->Push((int32_t) _charStat);
 	ctx->Push(_character);
 	ctx->Push(SaveString(_section));
 	if (!native->Invoke(ctx)) {
@@ -61110,10 +61110,10 @@ EXPORT int32_t Native_getNgstatIntHash(bool& success, int32_t _index, bool _spSt
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT bool Native_statGetBoolMasked(bool& success, int32_t _statName, int32_t _mask, int32_t _p2) {
+EXPORT bool Native_statGetBoolMasked(bool& success, uint32_t _statName, int32_t _mask, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x10FE3F1B79F9B071);
 	ctx->Reset();
 	ctx->Push(_statName);
@@ -61127,13 +61127,13 @@ EXPORT bool Native_statGetBoolMasked(bool& success, int32_t _statName, int32_t _
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_statSetBoolMasked(bool& success, int32_t _statName, bool _value, int32_t _mask, bool _save) {
+EXPORT bool Native_statSetBoolMasked(bool& success, uint32_t _statName, bool _value, int32_t _mask, bool _save) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5BC62EC1937B9E5B);
 	ctx->Reset();
 	ctx->Push(_statName);
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	ctx->Push(_mask);
-	ctx->Push(_save);
+	ctx->Push((int32_t) _save);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -61167,7 +61167,7 @@ EXPORT void Native_playstatsNpcInvite(bool& success, int32_t& _p0) {
 	_p0 = ptr_p0;
 }
 
-EXPORT void Native_playstatsAwardXp(bool& success, int32_t _amount, int32_t _type, int32_t _category) {
+EXPORT void Native_playstatsAwardXp(bool& success, int32_t _amount, uint32_t _type, uint32_t _category) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x46F917F6B4128FE4);
 	ctx->Reset();
 	ctx->Push(_amount);
@@ -61235,7 +61235,7 @@ EXPORT void Native_playstatsMissionStarted(bool& success, int32_t& _p0, int32_t 
 	ctx->Push(&ptr_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -61251,9 +61251,9 @@ EXPORT void Native_playstatsMissionOver(bool& success, int32_t& _p0, int32_t _p1
 	ctx->Push(&ptr_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -61450,7 +61450,7 @@ EXPORT void Native_playstatsAcquiredHiddenPackage(bool& success, int32_t _p0) {
 	success = true;
 }
 
-EXPORT void Native_playstatsWebsiteVisited(bool& success, int32_t _scaleformHash, int32_t _p1) {
+EXPORT void Native_playstatsWebsiteVisited(bool& success, uint32_t _scaleformHash, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDDF24D535060F811);
 	ctx->Reset();
 	ctx->Push(_scaleformHash);
@@ -61516,7 +61516,7 @@ EXPORT void Native_playstatsClothChange(bool& success, int32_t _p0, int32_t _p1,
 	success = true;
 }
 
-EXPORT void Native_playstatsWeaponModeChange(bool& success, int32_t _weaponHash, int32_t _componentHashTo, int32_t _componentHashFrom) {
+EXPORT void Native_playstatsWeaponModeChange(bool& success, uint32_t _weaponHash, uint32_t _componentHashTo, uint32_t _componentHashFrom) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE95C8A1875A02CA4);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -61662,7 +61662,7 @@ EXPORT void Native__0xD1032E482629049E(bool& success, int32_t _p0) {
 	success = true;
 }
 
-EXPORT void Native_playstatsHeistSaveCheat(bool& success, int32_t _hash, int32_t _p1) {
+EXPORT void Native_playstatsHeistSaveCheat(bool& success, uint32_t _hash, int32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF4FF020A08BC8863);
 	ctx->Reset();
 	ctx->Push(_hash);
@@ -61698,7 +61698,7 @@ EXPORT void Native_playstatsAwardBadsport(bool& success, int32_t _id) {
 	success = true;
 }
 
-EXPORT void Native_playstatsPegasaircraft(bool& success, int32_t _modelHash) {
+EXPORT void Native_playstatsPegasaircraft(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9572BD4DD6B72122);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -61978,7 +61978,7 @@ EXPORT bool Native_leaderboards2ReadFriendsByRow(bool& success, int32_t& _p0, in
 	auto ptr_p1 = _p1;
 	ctx->Push(&ptr_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	ctx->Push(_p4);
 	ctx->Push(_p5);
 	if (!native->Invoke(ctx)) {
@@ -62328,7 +62328,7 @@ EXPORT bool Native_leaderboardsGetCacheDataRow(bool& success, int32_t _p0, int32
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_updateStatInt(bool& success, int32_t _statHash, int32_t _value, int32_t _p2) {
+EXPORT void Native_updateStatInt(bool& success, uint32_t _statHash, int32_t _value, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x11FF1C80276097ED);
 	ctx->Reset();
 	ctx->Push(_statHash);
@@ -62341,7 +62341,7 @@ EXPORT void Native_updateStatInt(bool& success, int32_t _statHash, int32_t _valu
 	success = true;
 }
 
-EXPORT void Native_updateStatFloat(bool& success, int32_t _statHash, float _value, int32_t _p2) {
+EXPORT void Native_updateStatFloat(bool& success, uint32_t _statHash, float _value, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x30A6614C1F7799B8);
 	ctx->Reset();
 	ctx->Push(_statHash);
@@ -62635,7 +62635,7 @@ EXPORT int32_t Native_statGetCancelSaveMigrationStatus(bool& success) {
 	return ctx->ResultInt();
 }
 
-EXPORT bool Native_statSaveMigrationConsumeContentUnlock(bool& success, int32_t _contentId, const char* _srcPlatform, const char* _srcGamerHandle) {
+EXPORT bool Native_statSaveMigrationConsumeContentUnlock(bool& success, uint32_t _contentId, const char* _srcPlatform, const char* _srcGamerHandle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3270F67EED31FBC1);
 	ctx->Reset();
 	ctx->Push(_contentId);
@@ -63244,7 +63244,7 @@ EXPORT void Native_hiredLimo(bool& success, int32_t _p0, int32_t _p1) {
 	success = true;
 }
 
-EXPORT void Native_orderedBossVehicle(bool& success, int32_t _p0, int32_t _p1, int32_t _vehicleHash) {
+EXPORT void Native_orderedBossVehicle(bool& success, int32_t _p0, int32_t _p1, uint32_t _vehicleHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCEA553E35C2246E1);
 	ctx->Reset();
 	ctx->Push(_p0);
@@ -63781,7 +63781,7 @@ EXPORT void Native_playstatsArenaWarsEnded(bool& success, int32_t& _data) {
 EXPORT void Native_playstatsPassiveMode(bool& success, bool _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x35EEC6C2BC821A71);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
@@ -64339,7 +64339,7 @@ EXPORT void Native_setInteriorActive(bool& success, int32_t _interiorID, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE37B76C387BE28ED);
 	ctx->Reset();
 	ctx->Push(_interiorID);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -64347,7 +64347,7 @@ EXPORT void Native_setInteriorActive(bool& success, int32_t _interiorID, bool _t
 	success = true;
 }
 
-EXPORT void Native_requestModel(bool& success, int32_t _model) {
+EXPORT void Native_requestModel(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x963D27A58DF860AC);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -64358,7 +64358,7 @@ EXPORT void Native_requestModel(bool& success, int32_t _model) {
 	success = true;
 }
 
-EXPORT void Native_requestMenuPedModel(bool& success, int32_t _model) {
+EXPORT void Native_requestMenuPedModel(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA0261AEF7ACFC51E);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -64369,7 +64369,7 @@ EXPORT void Native_requestMenuPedModel(bool& success, int32_t _model) {
 	success = true;
 }
 
-EXPORT bool Native_hasModelLoaded(bool& success, int32_t _model) {
+EXPORT bool Native_hasModelLoaded(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x98A4EB5D89A0C952);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -64393,7 +64393,7 @@ EXPORT void Native_requestModelsInRoom(bool& success, int32_t _interior, const c
 	success = true;
 }
 
-EXPORT void Native_setModelAsNoLongerNeeded(bool& success, int32_t _model) {
+EXPORT void Native_setModelAsNoLongerNeeded(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE532F5D78798DAAB);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -64404,7 +64404,7 @@ EXPORT void Native_setModelAsNoLongerNeeded(bool& success, int32_t _model) {
 	success = true;
 }
 
-EXPORT bool Native_isModelInCdimage(bool& success, int32_t _model) {
+EXPORT bool Native_isModelInCdimage(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x35B9E0803292B641);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -64416,7 +64416,7 @@ EXPORT bool Native_isModelInCdimage(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isModelValid(bool& success, int32_t _model) {
+EXPORT bool Native_isModelValid(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC0296A2EDF545E92);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -64428,7 +64428,7 @@ EXPORT bool Native_isModelValid(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isModelAPed(bool& success, int32_t _model) {
+EXPORT bool Native_isModelAPed(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75816577FEA6DAD5);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -64440,7 +64440,7 @@ EXPORT bool Native_isModelAPed(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isModelAVehicle(bool& success, int32_t _model) {
+EXPORT bool Native_isModelAVehicle(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x19AAC8F07BFEC53E);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -64465,7 +64465,7 @@ EXPORT void Native_requestCollisionAtCoord(bool& success, float _x, float _y, fl
 	success = true;
 }
 
-EXPORT void Native_requestCollisionForModel(bool& success, int32_t _model) {
+EXPORT void Native_requestCollisionForModel(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x923CB32A3B874FCB);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -64476,7 +64476,7 @@ EXPORT void Native_requestCollisionForModel(bool& success, int32_t _model) {
 	success = true;
 }
 
-EXPORT bool Native_hasCollisionForModelLoaded(bool& success, int32_t _model) {
+EXPORT bool Native_hasCollisionForModelLoaded(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x22CCA434E368F03A);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -64652,7 +64652,7 @@ EXPORT bool Native_isIplActive(bool& success, const char* _iplName) {
 EXPORT void Native_setStreaming(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6E0C692677008888);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -64685,7 +64685,7 @@ EXPORT int32_t Native_getGlobalWaterType(bool& success) {
 EXPORT void Native_setGamePausesForStreaming(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x717CD6E6FAEBBEDC);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -64696,7 +64696,7 @@ EXPORT void Native_setGamePausesForStreaming(bool& success, bool _toggle) {
 EXPORT void Native_setReducePedModelBudget(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x77B5F9A36BF96710);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -64707,7 +64707,7 @@ EXPORT void Native_setReducePedModelBudget(bool& success, bool _toggle) {
 EXPORT void Native_setReduceVehicleModelBudget(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x80C527893080CCF3);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -64718,7 +64718,7 @@ EXPORT void Native_setReduceVehicleModelBudget(bool& success, bool _toggle) {
 EXPORT void Native_setDitchPoliceModels(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x42CBE54462D92634);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -64888,7 +64888,7 @@ EXPORT void Native_setMapdatacullboxEnabled(bool& success, const char* _name, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAF12610C644A35C9);
 	ctx->Reset();
 	ctx->Push(SaveString(_name));
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -65421,7 +65421,7 @@ EXPORT void Native__0x472397322E92A856(bool& success) {
 EXPORT void Native_setRenderHdOnly(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x40AEFD1A244741F2);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -65579,7 +65579,7 @@ EXPORT void Native__0xBEB2D9A1D9A8F55A(bool& success, int32_t _p0, int32_t _p1, 
 EXPORT void Native__0x20C6C7E4EB082A7F(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x20C6C7E4EB082A7F);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -65642,7 +65642,7 @@ EXPORT void Native_shutdownCreatorBudget(bool& success) {
 	success = true;
 }
 
-EXPORT bool Native_addModelToCreatorBudget(bool& success, int32_t _modelHash) {
+EXPORT bool Native_addModelToCreatorBudget(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0BC3144DEB678666);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -65654,7 +65654,7 @@ EXPORT bool Native_addModelToCreatorBudget(bool& success, int32_t _modelHash) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_removeModelFromCreatorBudget(bool& success, int32_t _modelHash) {
+EXPORT void Native_removeModelFromCreatorBudget(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF086AD9354FAC3A3);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -65680,7 +65680,7 @@ EXPORT void Native_setIslandHopperEnabled(bool& success, const char* _name, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9A9D1BA639675CF1);
 	ctx->Reset();
 	ctx->Push(SaveString(_name));
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -65716,7 +65716,7 @@ EXPORT void Native_taskJump(bool& success, int32_t _ped, bool _unused, int32_t _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0AE4086104E067B1);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_unused);
+	ctx->Push((int32_t) _unused);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
@@ -65745,7 +65745,7 @@ EXPORT void Native_taskHandsUp(bool& success, int32_t _ped, int32_t _duration, i
 	ctx->Push(_duration);
 	ctx->Push(_facingPed);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -65826,7 +65826,7 @@ EXPORT void Native_taskSkyDive(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x601736CFE536B0A0);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -65838,8 +65838,8 @@ EXPORT void Native_taskParachute(bool& success, int32_t _ped, bool _p1, bool _p2
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD2F1C53C97EE81AB);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -65899,7 +65899,7 @@ EXPORT void Native_taskRappelFromHeli(bool& success, int32_t _ped, float _p1) {
 	success = true;
 }
 
-EXPORT void Native_taskVehicleDriveToCoord(bool& success, int32_t _ped, int32_t _vehicle, float _x, float _y, float _z, float _speed, int32_t _p6, int32_t _vehicleModel, int32_t _drivingMode, float _stopRange, float _p10) {
+EXPORT void Native_taskVehicleDriveToCoord(bool& success, int32_t _ped, int32_t _vehicle, float _x, float _y, float _z, float _speed, int32_t _p6, uint32_t _vehicleModel, int32_t _drivingMode, float _stopRange, float _p10) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE2A2AA2F659D77A7);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -65963,7 +65963,7 @@ EXPORT void Native_taskFollowToOffsetOfEntity(bool& success, int32_t _ped, int32
 	ctx->Push(_movementSpeed);
 	ctx->Push(_timeout);
 	ctx->Push(_stoppingRange);
-	ctx->Push(_persistFollowing);
+	ctx->Push((int32_t) _persistFollowing);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66081,8 +66081,8 @@ EXPORT void Native_taskSmartFleeCoord(bool& success, int32_t _ped, float _x, flo
 	ctx->Push(_z);
 	ctx->Push(_distance);
 	ctx->Push(_time);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66097,8 +66097,8 @@ EXPORT void Native_taskSmartFleePed(bool& success, int32_t _ped, int32_t _fleeTa
 	ctx->Push(_fleeTarget);
 	ctx->Push(_distance);
 	ctx->Push(_fleeTime);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66185,7 +66185,7 @@ EXPORT void Native_taskVehiclePark(bool& success, int32_t _ped, int32_t _vehicle
 	ctx->Push(_heading);
 	ctx->Push(_mode);
 	ctx->Push(_radius);
-	ctx->Push(_keepEngineOn);
+	ctx->Push((int32_t) _keepEngineOn);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66193,7 +66193,7 @@ EXPORT void Native_taskVehiclePark(bool& success, int32_t _ped, int32_t _vehicle
 	success = true;
 }
 
-EXPORT void Native_taskStealthKill(bool& success, int32_t _killer, int32_t _target, int32_t _actionType, float _p3, int32_t _p4) {
+EXPORT void Native_taskStealthKill(bool& success, int32_t _killer, int32_t _target, uint32_t _actionType, float _p3, int32_t _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAA5DC05579D60BD9);
 	ctx->Reset();
 	ctx->Push(_killer);
@@ -66233,7 +66233,7 @@ EXPORT void Native_taskFollowNavMeshToCoord(bool& success, int32_t _ped, float _
 	ctx->Push(_speed);
 	ctx->Push(_timeout);
 	ctx->Push(_stoppingRange);
-	ctx->Push(_persistFollowing);
+	ctx->Push((int32_t) _persistFollowing);
 	ctx->Push(_unk);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -66268,7 +66268,7 @@ EXPORT void Native_setPedPathCanUseClimbovers(bool& success, int32_t _ped, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8E06A6FE76C9EFF4);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_Toggle);
+	ctx->Push((int32_t) _Toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66280,7 +66280,7 @@ EXPORT void Native_setPedPathCanUseLadders(bool& success, int32_t _ped, bool _To
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x77A5B103C87F476E);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_Toggle);
+	ctx->Push((int32_t) _Toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66292,7 +66292,7 @@ EXPORT void Native_setPedPathCanDropFromHeight(bool& success, int32_t _ped, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE361C5C71C431A4F);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_Toggle);
+	ctx->Push((int32_t) _Toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66316,7 +66316,7 @@ EXPORT void Native_setPedPathMayEnterWater(bool& success, int32_t _ped, bool _ma
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF35425A4204367EC);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_mayEnterWater);
+	ctx->Push((int32_t) _mayEnterWater);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66328,7 +66328,7 @@ EXPORT void Native_setPedPathPreferToAvoidWater(bool& success, int32_t _ped, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x38FE1EC73743793C);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_avoidWater);
+	ctx->Push((int32_t) _avoidWater);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66340,7 +66340,7 @@ EXPORT void Native_setPedPathAvoidFire(bool& success, int32_t _ped, bool _avoidF
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4455517B28441E60);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_avoidFire);
+	ctx->Push((int32_t) _avoidFire);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66365,7 +66365,7 @@ EXPORT int32_t Native_getNavmeshRouteDistanceRemaining(bool& success, int32_t _p
 	ctx->Push(_ped);
 	auto ptr_distanceRemaining = _distanceRemaining;
 	ctx->Push(&ptr_distanceRemaining);
-	auto ptr_isPathReady = _isPathReady;
+	auto ptr_isPathReady = (int32_t) _isPathReady;
 	ctx->Push(&ptr_isPathReady);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -66373,7 +66373,7 @@ EXPORT int32_t Native_getNavmeshRouteDistanceRemaining(bool& success, int32_t _p
 	}
 	success = true;
 	_distanceRemaining = ptr_distanceRemaining;
-	_isPathReady = ptr_isPathReady;
+	_isPathReady = (bool) ptr_isPathReady;
 	return ctx->ResultInt();
 }
 
@@ -66410,7 +66410,7 @@ EXPORT void Native_taskGoToCoordAnyMeans(bool& success, int32_t _ped, float _x, 
 	ctx->Push(_z);
 	ctx->Push(_speed);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	ctx->Push(_walkingStyle);
 	ctx->Push(_p8);
 	if (!native->Invoke(ctx)) {
@@ -66429,7 +66429,7 @@ EXPORT void Native_taskGoToCoordAnyMeansExtraParams(bool& success, int32_t _ped,
 	ctx->Push(_z);
 	ctx->Push(_speed);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	ctx->Push(_walkingStyle);
 	ctx->Push(_p8);
 	ctx->Push(_p9);
@@ -66452,7 +66452,7 @@ EXPORT void Native_taskGoToCoordAnyMeansExtraParamsWithCruiseSpeed(bool& success
 	ctx->Push(_z);
 	ctx->Push(_speed);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	ctx->Push(_walkingStyle);
 	ctx->Push(_p8);
 	ctx->Push(_p9);
@@ -66478,9 +66478,9 @@ EXPORT void Native_taskPlayAnim(bool& success, int32_t _ped, const char* _animDi
 	ctx->Push(_duration);
 	ctx->Push(_flag);
 	ctx->Push(_playbackRate);
-	ctx->Push(_lockX);
-	ctx->Push(_lockY);
-	ctx->Push(_lockZ);
+	ctx->Push((int32_t) _lockX);
+	ctx->Push((int32_t) _lockY);
+	ctx->Push((int32_t) _lockZ);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66577,7 +66577,7 @@ EXPORT void Native_stopAnimPlayback(bool& success, int32_t _ped, int32_t _p1, bo
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66592,7 +66592,7 @@ EXPORT void Native_setAnimWeight(bool& success, int32_t _p0, float _p1, int32_t 
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66606,7 +66606,7 @@ EXPORT void Native_setAnimPlaybackTime(bool& success, int32_t _entity, float _p1
 	ctx->Push(_entity);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66620,7 +66620,7 @@ EXPORT void Native_setAnimRate(bool& success, int32_t _p0, float _p1, int32_t _p
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66632,9 +66632,9 @@ EXPORT void Native_setAnimLooped(bool& success, int32_t _p0, bool _p1, int32_t _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x70033C3CC29A1FF4);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66651,8 +66651,8 @@ EXPORT void Native_taskPlayPhoneGestureAnimation(bool& success, int32_t _ped, co
 	ctx->Push(SaveString(_boneMaskType));
 	ctx->Push(_p4);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66829,7 +66829,7 @@ EXPORT void Native_setSequenceToRepeat(bool& success, int32_t _taskSequenceId, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x58C70CF3A41E4AE7);
 	ctx->Reset();
 	ctx->Push(_taskSequenceId);
-	ctx->Push(_repeat);
+	ctx->Push((int32_t) _repeat);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66862,7 +66862,7 @@ EXPORT bool Native_getIsTaskActive(bool& success, int32_t _ped, int32_t _taskInd
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_getScriptTaskStatus(bool& success, int32_t _ped, int32_t _taskHash) {
+EXPORT int32_t Native_getScriptTaskStatus(bool& success, int32_t _ped, uint32_t _taskHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x77F1BEB8863288D5);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -66900,13 +66900,13 @@ EXPORT void Native_taskLeaveAnyVehicle(bool& success, int32_t _ped, int32_t _p1,
 	success = true;
 }
 
-EXPORT void Native_taskAimGunScripted(bool& success, int32_t _ped, int32_t _scriptTask, bool _p2, bool _p3) {
+EXPORT void Native_taskAimGunScripted(bool& success, int32_t _ped, uint32_t _scriptTask, bool _p2, bool _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7A192BE16D373D00);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_scriptTask);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66923,8 +66923,8 @@ EXPORT void Native_taskAimGunScriptedWithTarget(bool& success, int32_t _p0, int3
 	ctx->Push(_p3);
 	ctx->Push(_p4);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66940,7 +66940,7 @@ EXPORT void Native_updateTaskAimGunScriptedTarget(bool& success, int32_t _p0, in
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66966,7 +66966,7 @@ EXPORT void Native_taskAimGunAtEntity(bool& success, int32_t _ped, int32_t _enti
 	ctx->Push(_ped);
 	ctx->Push(_entity);
 	ctx->Push(_duration);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -66995,8 +66995,8 @@ EXPORT void Native_taskAimGunAtCoord(bool& success, int32_t _ped, float _x, floa
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_time);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p5);
+	ctx->Push((int32_t) _p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -67004,7 +67004,7 @@ EXPORT void Native_taskAimGunAtCoord(bool& success, int32_t _ped, float _x, floa
 	success = true;
 }
 
-EXPORT void Native_taskShootAtCoord(bool& success, int32_t _ped, float _x, float _y, float _z, int32_t _duration, int32_t _firingPattern) {
+EXPORT void Native_taskShootAtCoord(bool& success, int32_t _ped, float _x, float _y, float _z, int32_t _duration, uint32_t _firingPattern) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x46A6CC01E0826106);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -67093,7 +67093,7 @@ EXPORT void Native_taskGotoEntityOffsetXy(bool& success, int32_t _p0, int32_t _o
 	ctx->Push(_p4);
 	ctx->Push(_p5);
 	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -67141,7 +67141,7 @@ EXPORT void Native_taskVehicleMission(bool& success, int32_t _driver, int32_t _v
 	ctx->Push(_p5);
 	ctx->Push(_p6);
 	ctx->Push(_p7);
-	ctx->Push(_DriveAgainstTraffic);
+	ctx->Push((int32_t) _DriveAgainstTraffic);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -67160,7 +67160,7 @@ EXPORT void Native_taskVehicleMissionPedTarget(bool& success, int32_t _ped, int3
 	ctx->Push(_drivingStyle);
 	ctx->Push(_minDistance);
 	ctx->Push(_p7);
-	ctx->Push(_DriveAgainstTraffic);
+	ctx->Push((int32_t) _DriveAgainstTraffic);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -67181,7 +67181,7 @@ EXPORT void Native_taskVehicleMissionCoorsTarget(bool& success, int32_t _ped, in
 	ctx->Push(_p7);
 	ctx->Push(_p8);
 	ctx->Push(_p9);
-	ctx->Push(_DriveAgainstTraffic);
+	ctx->Push((int32_t) _DriveAgainstTraffic);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -67259,7 +67259,7 @@ EXPORT void Native_setTaskVehicleChaseBehaviorFlag(bool& success, int32_t _ped, 
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_flag);
-	ctx->Push(_set);
+	ctx->Push((int32_t) _set);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -67500,7 +67500,7 @@ EXPORT void Native_taskBoatMission(bool& success, int32_t _pedDriver, int32_t _b
 	success = true;
 }
 
-EXPORT void Native_taskDriveBy(bool& success, int32_t _driverPed, int32_t _targetPed, int32_t _targetVehicle, float _targetX, float _targetY, float _targetZ, float _distanceToShoot, int32_t _pedAccuracy, bool _p8, int32_t _firingPattern) {
+EXPORT void Native_taskDriveBy(bool& success, int32_t _driverPed, int32_t _targetPed, int32_t _targetVehicle, float _targetX, float _targetY, float _targetZ, float _distanceToShoot, int32_t _pedAccuracy, bool _p8, uint32_t _firingPattern) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2F8AF0E82773A171);
 	ctx->Reset();
 	ctx->Push(_driverPed);
@@ -67511,7 +67511,7 @@ EXPORT void Native_taskDriveBy(bool& success, int32_t _driverPed, int32_t _targe
 	ctx->Push(_targetZ);
 	ctx->Push(_distanceToShoot);
 	ctx->Push(_pedAccuracy);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_firingPattern);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -67657,7 +67657,7 @@ EXPORT void Native_taskWarpPedIntoVehicle(bool& success, int32_t _ped, int32_t _
 	success = true;
 }
 
-EXPORT void Native_taskShootAtEntity(bool& success, int32_t _entity, int32_t _target, int32_t _duration, int32_t _firingPattern) {
+EXPORT void Native_taskShootAtEntity(bool& success, int32_t _entity, int32_t _target, int32_t _duration, uint32_t _firingPattern) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x08DA95E8298AE772);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -67675,7 +67675,7 @@ EXPORT void Native_taskClimb(bool& success, int32_t _ped, bool _unused) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x89D9FCC2435112F1);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_unused);
+	ctx->Push((int32_t) _unused);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -67802,7 +67802,7 @@ EXPORT void Native_taskGotoEntityAiming(bool& success, int32_t _ped, int32_t _ta
 	success = true;
 }
 
-EXPORT void Native_taskSetDecisionMaker(bool& success, int32_t _ped, int32_t _p1) {
+EXPORT void Native_taskSetDecisionMaker(bool& success, int32_t _ped, uint32_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEB8517DDA73720DA);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -67883,7 +67883,7 @@ EXPORT int32_t Native_addCoverPoint(bool& success, float _p0, float _p1, float _
 	ctx->Push(_p4);
 	ctx->Push(_p5);
 	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -67966,7 +67966,7 @@ EXPORT void Native_taskSeekCoverFromPos(bool& success, int32_t _ped, float _x, f
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_duration);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -67980,7 +67980,7 @@ EXPORT void Native_taskSeekCoverFromPed(bool& success, int32_t _ped, int32_t _ta
 	ctx->Push(_ped);
 	ctx->Push(_target);
 	ctx->Push(_duration);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -67997,7 +67997,7 @@ EXPORT void Native_taskSeekCoverToCoverPoint(bool& success, int32_t _p0, int32_t
 	ctx->Push(_p3);
 	ctx->Push(_p4);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68016,7 +68016,7 @@ EXPORT void Native_taskSeekCoverToCoords(bool& success, int32_t _ped, float _x1,
 	ctx->Push(_y2);
 	ctx->Push(_z2);
 	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p8);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68032,12 +68032,12 @@ EXPORT void Native_taskPutPedDirectlyIntoCover(bool& success, int32_t _ped, floa
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_timeout);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	ctx->Push(_p6);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_p9);
-	ctx->Push(_p10);
+	ctx->Push((int32_t) _p10);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68068,7 +68068,7 @@ EXPORT void Native_taskPutPedDirectlyIntoMelee(bool& success, int32_t _ped, int3
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68079,8 +68079,8 @@ EXPORT void Native_taskPutPedDirectlyIntoMelee(bool& success, int32_t _ped, int3
 EXPORT void Native_taskToggleDuck(bool& success, bool _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAC96609B9995EDF8);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p0);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68094,7 +68094,7 @@ EXPORT void Native_taskGuardCurrentPosition(bool& success, int32_t _p0, float _p
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68201,10 +68201,10 @@ EXPORT void Native_addCoverBlockingArea(bool& success, float _playerX, float _pl
 	ctx->Push(_radiusX);
 	ctx->Push(_radiusY);
 	ctx->Push(_radiusZ);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
+	ctx->Push((int32_t) _p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68261,7 +68261,7 @@ EXPORT void Native_taskStartScenarioInPlace(bool& success, int32_t _ped, const c
 	ctx->Push(_ped);
 	ctx->Push(SaveString(_scenarioName));
 	ctx->Push(_unkDelay);
-	ctx->Push(_playEnterAnim);
+	ctx->Push((int32_t) _playEnterAnim);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68279,8 +68279,8 @@ EXPORT void Native_taskStartScenarioAtPosition(bool& success, int32_t _ped, cons
 	ctx->Push(_z);
 	ctx->Push(_heading);
 	ctx->Push(_duration);
-	ctx->Push(_sittingScenario);
-	ctx->Push(_teleport);
+	ctx->Push((int32_t) _sittingScenario);
+	ctx->Push((int32_t) _teleport);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68359,7 +68359,7 @@ EXPORT bool Native_doesScenarioExistInArea(bool& success, float _x, float _y, fl
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_radius);
-	ctx->Push(_b);
+	ctx->Push((int32_t) _b);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -68377,7 +68377,7 @@ EXPORT bool Native_doesScenarioOfTypeExistInArea(bool& success, float _p0, float
 	auto ptr_p3 = _p3;
 	ctx->Push(&ptr_p3);
 	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -68394,7 +68394,7 @@ EXPORT bool Native_isScenarioOccupied(bool& success, float _p0, float _p1, float
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -68456,7 +68456,7 @@ EXPORT void Native_setScenarioGroupEnabled(bool& success, const char* _scenarioG
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x02C8E5B49848664E);
 	ctx->Reset();
 	ctx->Push(SaveString(_scenarioGroup));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68511,7 +68511,7 @@ EXPORT void Native_setScenarioTypeEnabled(bool& success, const char* _scenarioTy
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEB47EC4E34FB7EE1);
 	ctx->Reset();
 	ctx->Push(SaveString(_scenarioType));
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68557,8 +68557,8 @@ EXPORT void Native_setPedCanPlayAmbientIdles(bool& success, int32_t _ped, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8FD89A6240813FD0);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68629,7 +68629,7 @@ EXPORT void Native_taskSwapWeapon(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA21C51255B205245);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68641,7 +68641,7 @@ EXPORT void Native_taskReloadWeapon(bool& success, int32_t _ped, bool _unused) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x62D2916F56B9CD2D);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_unused);
+	ctx->Push((int32_t) _unused);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68768,8 +68768,8 @@ EXPORT void Native_taskPatrol(bool& success, int32_t _ped, const char* _p1, int3
 	ctx->Push(_ped);
 	ctx->Push(SaveString(_p1));
 	ctx->Push(_p2);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68886,7 +68886,7 @@ EXPORT void Native_taskVehicleGotoNavmesh(bool& success, int32_t _ped, int32_t _
 	success = true;
 }
 
-EXPORT void Native_taskGoToCoordWhileAimingAtCoord(bool& success, int32_t _ped, float _x, float _y, float _z, float _aimAtX, float _aimAtY, float _aimAtZ, float _moveSpeed, bool _p8, float _p9, float _p10, bool _p11, int32_t _flags, bool _p13, int32_t _firingPattern) {
+EXPORT void Native_taskGoToCoordWhileAimingAtCoord(bool& success, int32_t _ped, float _x, float _y, float _z, float _aimAtX, float _aimAtY, float _aimAtZ, float _moveSpeed, bool _p8, float _p9, float _p10, bool _p11, int32_t _flags, bool _p13, uint32_t _firingPattern) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x11315AB3385B8AC0);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -68897,12 +68897,12 @@ EXPORT void Native_taskGoToCoordWhileAimingAtCoord(bool& success, int32_t _ped, 
 	ctx->Push(_aimAtY);
 	ctx->Push(_aimAtZ);
 	ctx->Push(_moveSpeed);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_p9);
 	ctx->Push(_p10);
-	ctx->Push(_p11);
+	ctx->Push((int32_t) _p11);
 	ctx->Push(_flags);
-	ctx->Push(_p13);
+	ctx->Push((int32_t) _p13);
 	ctx->Push(_firingPattern);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -68920,12 +68920,12 @@ EXPORT void Native_taskGoToCoordWhileAimingAtEntity(bool& success, int32_t _p0, 
 	ctx->Push(_p3);
 	ctx->Push(_p4);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	ctx->Push(_p7);
 	ctx->Push(_p8);
-	ctx->Push(_p9);
+	ctx->Push((int32_t) _p9);
 	ctx->Push(_p10);
-	ctx->Push(_p11);
+	ctx->Push((int32_t) _p11);
 	ctx->Push(_p12);
 	ctx->Push(_p13);
 	if (!native->Invoke(ctx)) {
@@ -68935,7 +68935,7 @@ EXPORT void Native_taskGoToCoordWhileAimingAtEntity(bool& success, int32_t _p0, 
 	success = true;
 }
 
-EXPORT void Native_taskGoToCoordAndAimAtHatedEntitiesNearCoord(bool& success, int32_t _pedHandle, float _goToLocationX, float _goToLocationY, float _goToLocationZ, float _focusLocationX, float _focusLocationY, float _focusLocationZ, float _speed, bool _shootAtEnemies, float _distanceToStopAt, float _noRoadsDistance, bool _unkTrue, int32_t _unkFlag, int32_t _aimingFlag, int32_t _firingPattern) {
+EXPORT void Native_taskGoToCoordAndAimAtHatedEntitiesNearCoord(bool& success, int32_t _pedHandle, float _goToLocationX, float _goToLocationY, float _goToLocationZ, float _focusLocationX, float _focusLocationY, float _focusLocationZ, float _speed, bool _shootAtEnemies, float _distanceToStopAt, float _noRoadsDistance, bool _unkTrue, int32_t _unkFlag, int32_t _aimingFlag, uint32_t _firingPattern) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA55547801EB331FC);
 	ctx->Reset();
 	ctx->Push(_pedHandle);
@@ -68946,10 +68946,10 @@ EXPORT void Native_taskGoToCoordAndAimAtHatedEntitiesNearCoord(bool& success, in
 	ctx->Push(_focusLocationY);
 	ctx->Push(_focusLocationZ);
 	ctx->Push(_speed);
-	ctx->Push(_shootAtEnemies);
+	ctx->Push((int32_t) _shootAtEnemies);
 	ctx->Push(_distanceToStopAt);
 	ctx->Push(_noRoadsDistance);
-	ctx->Push(_unkTrue);
+	ctx->Push((int32_t) _unkTrue);
 	ctx->Push(_unkFlag);
 	ctx->Push(_aimingFlag);
 	ctx->Push(_firingPattern);
@@ -68969,11 +68969,11 @@ EXPORT void Native_taskGoToEntityWhileAimingAtCoord(bool& success, int32_t _p0, 
 	ctx->Push(_p3);
 	ctx->Push(_p4);
 	ctx->Push(_p5);
-	ctx->Push(_p6);
+	ctx->Push((int32_t) _p6);
 	ctx->Push(_p7);
 	ctx->Push(_p8);
-	ctx->Push(_p9);
-	ctx->Push(_p10);
+	ctx->Push((int32_t) _p9);
+	ctx->Push((int32_t) _p10);
 	ctx->Push(_p11);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -68982,18 +68982,18 @@ EXPORT void Native_taskGoToEntityWhileAimingAtCoord(bool& success, int32_t _p0, 
 	success = true;
 }
 
-EXPORT void Native_taskGoToEntityWhileAimingAtEntity(bool& success, int32_t _ped, int32_t _entityToWalkTo, int32_t _entityToAimAt, float _speed, bool _shootatEntity, float _p5, float _p6, bool _p7, bool _p8, int32_t _firingPattern) {
+EXPORT void Native_taskGoToEntityWhileAimingAtEntity(bool& success, int32_t _ped, int32_t _entityToWalkTo, int32_t _entityToAimAt, float _speed, bool _shootatEntity, float _p5, float _p6, bool _p7, bool _p8, uint32_t _firingPattern) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x97465886D35210E9);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_entityToWalkTo);
 	ctx->Push(_entityToAimAt);
 	ctx->Push(_speed);
-	ctx->Push(_shootatEntity);
+	ctx->Push((int32_t) _shootatEntity);
 	ctx->Push(_p5);
 	ctx->Push(_p6);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p7);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_firingPattern);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -69209,8 +69209,8 @@ EXPORT void Native_waypointPlaybackPause(bool& success, int32_t _p0, bool _p1, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0F342546AA06FED5);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -69222,7 +69222,7 @@ EXPORT void Native_waypointPlaybackResume(bool& success, int32_t _p0, bool _p1, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x244F70C84C547D2D);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
@@ -69237,7 +69237,7 @@ EXPORT void Native_waypointPlaybackOverrideSpeed(bool& success, int32_t _p0, flo
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -69260,7 +69260,7 @@ EXPORT void Native_useWaypointRecordingAsAssistedMovementRoute(bool& success, co
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5A353B8E6B1095B5);
 	ctx->Reset();
 	ctx->Push(SaveString(_name));
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
@@ -69275,7 +69275,7 @@ EXPORT void Native_waypointPlaybackStartAimingAtPed(bool& success, int32_t _p0, 
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -69290,7 +69290,7 @@ EXPORT void Native_waypointPlaybackStartAimingAtCoord(bool& success, int32_t _p0
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -69303,7 +69303,7 @@ EXPORT void Native_waypointPlaybackStartShootingAtPed(bool& success, int32_t _p0
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -69319,7 +69319,7 @@ EXPORT void Native_waypointPlaybackStartShootingAtCoord(bool& success, int32_t _
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(_p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -69407,7 +69407,7 @@ EXPORT void Native_taskVehicleFollowWaypointRecording(bool& success, int32_t _pe
 	ctx->Push(_p5);
 	ctx->Push(_p6);
 	ctx->Push(_p7);
-	ctx->Push(_p8);
+	ctx->Push((int32_t) _p8);
 	ctx->Push(_p9);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -69501,7 +69501,7 @@ EXPORT void Native_taskSetBlockingOfNonTemporaryEvents(bool& success, int32_t _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x90D2156198831D69);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -69509,12 +69509,12 @@ EXPORT void Native_taskSetBlockingOfNonTemporaryEvents(bool& success, int32_t _p
 	success = true;
 }
 
-EXPORT void Native_taskForceMotionState(bool& success, int32_t _ped, int32_t _state, bool _p2) {
+EXPORT void Native_taskForceMotionState(bool& success, int32_t _ped, uint32_t _state, bool _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4F056E1AFFEF17AB);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_state);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -69528,7 +69528,7 @@ EXPORT void Native_taskMoveNetworkByName(bool& success, int32_t _ped, const char
 	ctx->Push(_ped);
 	ctx->Push(SaveString(_task));
 	ctx->Push(_multiplier);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	ctx->Push(SaveString(_animDict));
 	ctx->Push(_flags);
 	if (!native->Invoke(ctx)) {
@@ -69551,7 +69551,7 @@ EXPORT void Native_taskMoveNetworkAdvancedByName(bool& success, int32_t _ped, co
 	ctx->Push(_p7);
 	ctx->Push(_p8);
 	ctx->Push(_p9);
-	ctx->Push(_p10);
+	ctx->Push((int32_t) _p10);
 	ctx->Push(SaveString(_animDict));
 	ctx->Push(_flags);
 	if (!native->Invoke(ctx)) {
@@ -69569,7 +69569,7 @@ EXPORT void Native_taskMoveNetworkByNameWithInitParams(bool& success, int32_t _p
 	auto ptr_data = _data;
 	ctx->Push(&ptr_data);
 	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p4);
 	ctx->Push(SaveString(_animDict));
 	ctx->Push(_flags);
 	if (!native->Invoke(ctx)) {
@@ -69723,7 +69723,7 @@ EXPORT void Native_setTaskMoveNetworkSignalBool(bool& success, int32_t _ped, con
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(SaveString(_signalName));
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -69774,7 +69774,7 @@ EXPORT int32_t Native__0x0FFB3C758E8C07B9(bool& success, int32_t _ped, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0FFB3C758E8C07B9);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -70056,7 +70056,7 @@ EXPORT bool Native_isPedCuffed(bool& success, int32_t _ped) {
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_createVehicle(bool& success, int32_t _modelHash, float _x, float _y, float _z, float _heading, bool _isNetwork, bool _bScriptHostVeh, bool _p7) {
+EXPORT int32_t Native_createVehicle(bool& success, uint32_t _modelHash, float _x, float _y, float _z, float _heading, bool _isNetwork, bool _bScriptHostVeh, bool _p7) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAF35D0D2583051B0);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -70064,9 +70064,9 @@ EXPORT int32_t Native_createVehicle(bool& success, int32_t _modelHash, float _x,
 	ctx->Push(_y);
 	ctx->Push(_z);
 	ctx->Push(_heading);
-	ctx->Push(_isNetwork);
-	ctx->Push(_bScriptHostVeh);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _isNetwork);
+	ctx->Push((int32_t) _bScriptHostVeh);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -70092,8 +70092,8 @@ EXPORT void Native__0x7D6F9A3EF26136A0(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7D6F9A3EF26136A0);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _toggle);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70105,8 +70105,8 @@ EXPORT void Native_setVehicleCanBeLockedOn(bool& success, int32_t _vehicle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1DDA078D12879EEE);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_canBeLockedOn);
-	ctx->Push(_unk);
+	ctx->Push((int32_t) _canBeLockedOn);
+	ctx->Push((int32_t) _unk);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70118,7 +70118,7 @@ EXPORT void Native_setVehicleAllowNoPassengersLockon(bool& success, int32_t _veh
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5D14D4154BFE7B2C);
 	ctx->Reset();
 	ctx->Push(_veh);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70162,7 +70162,7 @@ EXPORT void Native__0x407DC5E97DB1A4D3(bool& success, int32_t _p0, int32_t _p1) 
 	success = true;
 }
 
-EXPORT bool Native_isVehicleModel(bool& success, int32_t _vehicle, int32_t _model) {
+EXPORT bool Native_isVehicleModel(bool& success, int32_t _vehicle, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x423E8DE37D934D89);
 	ctx->Reset();
 	ctx->Push(_vehicle);
@@ -70187,7 +70187,7 @@ EXPORT bool Native_doesScriptVehicleGeneratorExist(bool& success, int32_t _vehic
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_createScriptVehicleGenerator(bool& success, float _x, float _y, float _z, float _heading, float _p4, float _p5, int32_t _modelHash, int32_t _p7, int32_t _p8, int32_t _p9, int32_t _p10, bool _p11, bool _p12, bool _p13, bool _p14, bool _p15, int32_t _p16) {
+EXPORT int32_t Native_createScriptVehicleGenerator(bool& success, float _x, float _y, float _z, float _heading, float _p4, float _p5, uint32_t _modelHash, int32_t _p7, int32_t _p8, int32_t _p9, int32_t _p10, bool _p11, bool _p12, bool _p13, bool _p14, bool _p15, int32_t _p16) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9DEF883114668116);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -70201,11 +70201,11 @@ EXPORT int32_t Native_createScriptVehicleGenerator(bool& success, float _x, floa
 	ctx->Push(_p8);
 	ctx->Push(_p9);
 	ctx->Push(_p10);
-	ctx->Push(_p11);
-	ctx->Push(_p12);
-	ctx->Push(_p13);
-	ctx->Push(_p14);
-	ctx->Push(_p15);
+	ctx->Push((int32_t) _p11);
+	ctx->Push((int32_t) _p12);
+	ctx->Push((int32_t) _p13);
+	ctx->Push((int32_t) _p14);
+	ctx->Push((int32_t) _p15);
 	ctx->Push(_p16);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -70230,7 +70230,7 @@ EXPORT void Native_setScriptVehicleGenerator(bool& success, int32_t _vehicleGene
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD9D620E0AC6DC4B0);
 	ctx->Reset();
 	ctx->Push(_vehicleGenerator);
-	ctx->Push(_enabled);
+	ctx->Push((int32_t) _enabled);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70247,8 +70247,8 @@ EXPORT void Native_setAllVehicleGeneratorsActiveInArea(bool& success, float _x1,
 	ctx->Push(_x2);
 	ctx->Push(_y2);
 	ctx->Push(_z2);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70269,7 +70269,7 @@ EXPORT void Native_setAllVehicleGeneratorsActive(bool& success) {
 EXPORT void Native_setAllLowPriorityVehicleGeneratorsActive(bool& success, bool _active) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x608207E7A8FB787C);
 	ctx->Reset();
-	ctx->Push(_active);
+	ctx->Push((int32_t) _active);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70318,9 +70318,9 @@ EXPORT int32_t Native_setVehicleUseCutsceneWheelCompression(bool& success, int32
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE023E8AC4EF7C117);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -70399,7 +70399,7 @@ EXPORT int32_t Native_getVehicleMaxNumberOfPassengers(bool& success, int32_t _ve
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getVehicleModelNumberOfSeats(bool& success, int32_t _modelHash) {
+EXPORT int32_t Native_getVehicleModelNumberOfSeats(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2AD93716F184EDA4);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -70485,7 +70485,7 @@ EXPORT void Native_setParkedVehicleDensityMultiplierThisFrame(bool& success, flo
 EXPORT void Native_setDisableRandomTrainsThisFrame(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD4B8E3D1917BC86B);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70507,7 +70507,7 @@ EXPORT void Native_setAmbientVehicleRangeMultiplierThisFrame(bool& success, floa
 EXPORT void Native_setFarDrawVehicles(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x26324F33423F3CC3);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70555,7 +70555,7 @@ EXPORT void Native_setVehicleHasMutedSirens(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD8050E0EB60CF274);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70568,7 +70568,7 @@ EXPORT void Native_setVehicleDoorsLockedForPlayer(bool& success, int32_t _vehicl
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_player);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70593,7 +70593,7 @@ EXPORT void Native_setVehicleDoorsLockedForAllPlayers(bool& success, int32_t _ve
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA2F80B8D040727CC);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70605,7 +70605,7 @@ EXPORT void Native_setVehicleDoorsLockedForNonScriptPlayers(bool& success, int32
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9737A37136F07E75);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70618,7 +70618,7 @@ EXPORT void Native_setVehicleDoorsLockedForTeam(bool& success, int32_t _vehicle,
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_team);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70630,7 +70630,7 @@ EXPORT void Native_setVehicleDoorsLockedForUnk(bool& success, int32_t _vehicle, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x203B527D1B77904C);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70653,8 +70653,8 @@ EXPORT void Native_explodeVehicle(bool& success, int32_t _vehicle, bool _isAudib
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBA71116ADF5B514C);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_isAudible);
-	ctx->Push(_isInvisible);
+	ctx->Push((int32_t) _isAudible);
+	ctx->Push((int32_t) _isInvisible);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70666,8 +70666,8 @@ EXPORT void Native_setVehicleOutOfControl(bool& success, int32_t _vehicle, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF19D095E42D430CC);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_killDriver);
-	ctx->Push(_explodeOnImpact);
+	ctx->Push((int32_t) _killDriver);
+	ctx->Push((int32_t) _explodeOnImpact);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70680,7 +70680,7 @@ EXPORT void Native_setVehicleTimedExplosion(bool& success, int32_t _vehicle, int
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70734,7 +70734,7 @@ EXPORT void Native_setTaxiLights(bool& success, int32_t _vehicle, bool _state) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x598803E85E8448D9);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70784,7 +70784,7 @@ EXPORT void Native_setVehicleFullbeam(bool& success, int32_t _vehicle, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8B7FD87F0DDB421E);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70796,7 +70796,7 @@ EXPORT void Native_setVehicleIsRacing(bool& success, int32_t _vehicle, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x07116E24E9D1929D);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70946,7 +70946,7 @@ EXPORT void Native_setCanResprayVehicle(bool& success, int32_t _vehicle, bool _s
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x52BBA29D5EC69356);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70970,7 +70970,7 @@ EXPORT void Native__0x1B212B26DD3C04DF(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1B212B26DD3C04DF);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70982,7 +70982,7 @@ EXPORT void Native_forceSubmarineSurfaceMode(bool& success, int32_t _vehicle, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x33506883545AC0DF);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71006,7 +71006,7 @@ EXPORT void Native_setSubmarineCrushDepths(bool& success, int32_t _vehicle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC59872A5134879C7);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_depth1);
 	ctx->Push(_depth2);
 	ctx->Push(_depth3);
@@ -71057,7 +71057,7 @@ EXPORT void Native_setBoatAnchor(bool& success, int32_t _vehicle, bool _toggle) 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75DBEC174AEEAD10);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71093,7 +71093,7 @@ EXPORT void Native_setBoatFrozenWhenAnchored(bool& success, int32_t _vehicle, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE3EBAAE484798530);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71105,7 +71105,7 @@ EXPORT void Native__0xB28B1FE5BFADD7F5(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB28B1FE5BFADD7F5);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71141,7 +71141,7 @@ EXPORT void Native_setBoatSinksWhenWrecked(bool& success, int32_t _vehicle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8F719973E1445BA2);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71164,7 +71164,7 @@ EXPORT void Native_setVehicleSiren(bool& success, int32_t _vehicle, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF4924635A19EB37D);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71200,7 +71200,7 @@ EXPORT void Native_setVehicleStrong(bool& success, int32_t _vehicle, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3E8C8727991A8A0B);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71241,7 +71241,7 @@ EXPORT bool Native_isVehicleSeatFree(bool& success, int32_t _vehicle, int32_t _s
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_seatIndex);
-	ctx->Push(_isTaskRunning);
+	ctx->Push((int32_t) _isTaskRunning);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -71255,7 +71255,7 @@ EXPORT int32_t Native_getPedInVehicleSeat(bool& success, int32_t _vehicle, int32
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_seatIndex);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -71281,17 +71281,17 @@ EXPORT bool Native_getVehicleLightsState(bool& success, int32_t _vehicle, bool& 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB91B4C20085BD12F);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	auto ptr_lightsOn = _lightsOn;
+	auto ptr_lightsOn = (int32_t) _lightsOn;
 	ctx->Push(&ptr_lightsOn);
-	auto ptr_highbeamsOn = _highbeamsOn;
+	auto ptr_highbeamsOn = (int32_t) _highbeamsOn;
 	ctx->Push(&ptr_highbeamsOn);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
 	}
 	success = true;
-	_lightsOn = ptr_lightsOn;
-	_highbeamsOn = ptr_highbeamsOn;
+	_lightsOn = (bool) ptr_lightsOn;
+	_highbeamsOn = (bool) ptr_highbeamsOn;
 	return ctx->ResultBool();
 }
 
@@ -71300,7 +71300,7 @@ EXPORT bool Native_isVehicleTyreBurst(bool& success, int32_t _vehicle, int32_t _
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_wheelID);
-	ctx->Push(_completely);
+	ctx->Push((int32_t) _completely);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -71339,7 +71339,7 @@ EXPORT void Native_bringVehicleToHalt(bool& success, int32_t _vehicle, float _di
 	ctx->Push(_vehicle);
 	ctx->Push(_distance);
 	ctx->Push(_duration);
-	ctx->Push(_unknown);
+	ctx->Push((int32_t) _unknown);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71363,7 +71363,7 @@ EXPORT void Native__0x9849DE24FCF23CCC(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9849DE24FCF23CCC);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71495,7 +71495,7 @@ EXPORT void Native__0x8AA9180DE2FEDD45(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8AA9180DE2FEDD45);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71507,7 +71507,7 @@ EXPORT void Native_setBoatDisableAvoidance(bool& success, int32_t _vehicle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0A6A279F3AA4FD70);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71566,7 +71566,7 @@ EXPORT void Native_setVehicleTyreBurst(bool& success, int32_t _vehicle, int32_t 
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_index);
-	ctx->Push(_onRim);
+	ctx->Push((int32_t) _onRim);
 	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -71579,7 +71579,7 @@ EXPORT void Native_setVehicleDoorsShut(bool& success, int32_t _vehicle, bool _cl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x781B3D62BB013EF5);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_closeInstantly);
+	ctx->Push((int32_t) _closeInstantly);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71591,7 +71591,7 @@ EXPORT void Native_setVehicleTyresCanBurst(bool& success, int32_t _vehicle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEB9DC3C7D8596C46);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71615,7 +71615,7 @@ EXPORT void Native_setVehicleWheelsCanBreak(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x29B18B4FD460CA8F);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_enabled);
+	ctx->Push((int32_t) _enabled);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71628,8 +71628,8 @@ EXPORT void Native_setVehicleDoorOpen(bool& success, int32_t _vehicle, int32_t _
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_doorId);
-	ctx->Push(_loose);
-	ctx->Push(_openInstantly);
+	ctx->Push((int32_t) _loose);
+	ctx->Push((int32_t) _openInstantly);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71642,7 +71642,7 @@ EXPORT void Native__0x3B458DDB57038F08(bool& success, int32_t _vehicle, int32_t 
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_doorId);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71773,7 +71773,7 @@ EXPORT void Native_setVehicleUsePlayerLightSettings(bool& success, int32_t _vehi
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC45C27EF50F36ADC);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71797,7 +71797,7 @@ EXPORT void Native_setVehicleAlarm(bool& success, int32_t _vehicle, bool _state)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCDE5E70C1DDB954C);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71832,7 +71832,7 @@ EXPORT void Native_setVehicleInteriorlight(bool& success, int32_t _vehicle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBC2042F090AF6AD3);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -71844,7 +71844,7 @@ EXPORT void Native__0x8821196D91FA2DE5(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8821196D91FA2DE5);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72043,7 +72043,7 @@ EXPORT int32_t Native_getVehicleNumberPlateTextIndex(bool& success, int32_t _veh
 EXPORT void Native_setRandomTrains(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x80D9F74197EA47D9);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72058,7 +72058,7 @@ EXPORT int32_t Native_createMissionTrain(bool& success, int32_t _unkVariation, f
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_direction);
+	ctx->Push((int32_t) _direction);
 	ctx->Push(_p5);
 	ctx->Push(_p6);
 	if (!native->Invoke(ctx)) {
@@ -72073,7 +72073,7 @@ EXPORT void Native_switchTrainTrack(bool& success, int32_t _trackId, bool _state
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFD813BB7DB977F20);
 	ctx->Reset();
 	ctx->Push(_trackId);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72141,7 +72141,7 @@ EXPORT void Native_setTrainCruiseSpeed(bool& success, int32_t _train, float _spe
 EXPORT void Native_setRandomBoats(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x84436EC293B1415F);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72152,7 +72152,7 @@ EXPORT void Native_setRandomBoats(bool& success, bool _toggle) {
 EXPORT void Native_setRandomBoatsInMp(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDA5E12F728DB30CA);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72163,7 +72163,7 @@ EXPORT void Native_setRandomBoatsInMp(bool& success, bool _toggle) {
 EXPORT void Native_setGarbageTrucks(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2AFD795EEAC8D30D);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72346,7 +72346,7 @@ EXPORT void Native_startPlaybackRecordedVehicle(bool& success, int32_t _vehicle,
 	ctx->Push(_vehicle);
 	ctx->Push(_recording);
 	ctx->Push(SaveString(_script));
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72374,7 +72374,7 @@ EXPORT void Native_forcePlaybackRecordedVehicleUpdate(bool& success, int32_t _ve
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1F2E4E06DEA8992B);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72519,7 +72519,7 @@ EXPORT void Native_setPlaybackToUseAiTryToRevertBackLater(bool& success, int32_t
 	ctx->Push(_vehicle);
 	ctx->Push(_time);
 	ctx->Push(_drivingStyle);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72574,7 +72574,7 @@ EXPORT void Native__0x063AE2B2CC273588(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x063AE2B2CC273588);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72586,7 +72586,7 @@ EXPORT void Native_explodeVehicleInCutscene(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x786A4EB67B01BF0B);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72600,9 +72600,9 @@ EXPORT void Native_addVehicleStuckCheckWithWarp(bool& success, int32_t _p0, floa
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
+	ctx->Push((int32_t) _p5);
 	ctx->Push(_p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -72611,11 +72611,11 @@ EXPORT void Native_addVehicleStuckCheckWithWarp(bool& success, int32_t _p0, floa
 	success = true;
 }
 
-EXPORT void Native_setVehicleModelIsSuppressed(bool& success, int32_t _model, bool _suppressed) {
+EXPORT void Native_setVehicleModelIsSuppressed(bool& success, uint32_t _model, bool _suppressed) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0FC2D89AC25A5814);
 	ctx->Reset();
 	ctx->Push(_model);
-	ctx->Push(_suppressed);
+	ctx->Push((int32_t) _suppressed);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72623,7 +72623,7 @@ EXPORT void Native_setVehicleModelIsSuppressed(bool& success, int32_t _model, bo
 	success = true;
 }
 
-EXPORT int32_t Native_getRandomVehicleInSphere(bool& success, float _x, float _y, float _z, float _radius, int32_t _modelHash, int32_t _flags) {
+EXPORT int32_t Native_getRandomVehicleInSphere(bool& success, float _x, float _y, float _z, float _radius, uint32_t _modelHash, int32_t _flags) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x386F6CE5BAF6091C);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -72676,7 +72676,7 @@ EXPORT int32_t Native_getRandomVehicleBackBumperInSphere(bool& success, float _p
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getClosestVehicle(bool& success, float _x, float _y, float _z, float _radius, int32_t _modelHash, int32_t _flags) {
+EXPORT int32_t Native_getClosestVehicle(bool& success, float _x, float _y, float _z, float _radius, uint32_t _modelHash, int32_t _flags) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF73EB622C4F1689B);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -72736,7 +72736,7 @@ EXPORT void Native_setMissionTrainAsNoLongerNeeded(bool& success, int32_t& _trai
 	ctx->Reset();
 	auto ptr_train = _train;
 	ctx->Push(&ptr_train);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72759,7 +72759,7 @@ EXPORT void Native_setMissionTrainCoords(bool& success, int32_t _train, float _x
 	success = true;
 }
 
-EXPORT bool Native_isThisModelABoat(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelABoat(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x45A9187928F4B9E3);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72771,7 +72771,7 @@ EXPORT bool Native_isThisModelABoat(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isThisModelAJetski(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelAJetski(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9537097412CF75FE);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72783,7 +72783,7 @@ EXPORT bool Native_isThisModelAJetski(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isThisModelAPlane(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelAPlane(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA0948AB42D7BA0DE);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72795,7 +72795,7 @@ EXPORT bool Native_isThisModelAPlane(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isThisModelAHeli(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelAHeli(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDCE4334788AF94EA);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72807,7 +72807,7 @@ EXPORT bool Native_isThisModelAHeli(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isThisModelACar(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelACar(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7F6DB52EEFC96DF8);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72819,7 +72819,7 @@ EXPORT bool Native_isThisModelACar(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isThisModelATrain(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelATrain(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAB935175B22E822B);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72831,7 +72831,7 @@ EXPORT bool Native_isThisModelATrain(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isThisModelABike(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelABike(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB50C0B0CEDC6CE84);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72843,7 +72843,7 @@ EXPORT bool Native_isThisModelABike(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isThisModelABicycle(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelABicycle(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBF94DD42F63BDED2);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72855,7 +72855,7 @@ EXPORT bool Native_isThisModelABicycle(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isThisModelAQuadbike(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelAQuadbike(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x39DAC362EE65FA28);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72867,7 +72867,7 @@ EXPORT bool Native_isThisModelAQuadbike(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isThisModelAnAmphibiousCar(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelAnAmphibiousCar(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x633F6F44A537EBB6);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72879,7 +72879,7 @@ EXPORT bool Native_isThisModelAnAmphibiousCar(bool& success, int32_t _model) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isThisModelAnAmphibiousQuadbike(bool& success, int32_t _model) {
+EXPORT bool Native_isThisModelAnAmphibiousQuadbike(bool& success, uint32_t _model) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA1A9FC1C76A6730D);
 	ctx->Reset();
 	ctx->Push(_model);
@@ -72931,7 +72931,7 @@ EXPORT void Native_setVehicleCanBeTargetted(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3750146A28097A82);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72943,7 +72943,7 @@ EXPORT void Native__0xDBC631F109350B8C(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDBC631F109350B8C);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72955,7 +72955,7 @@ EXPORT void Native_setVehicleCanBeVisiblyDamaged(bool& success, int32_t _vehicle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4C7028F78FFD3681);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72967,7 +72967,7 @@ EXPORT void Native_setVehicleHasUnbreakableLights(bool& success, int32_t _vehicl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1AA8A837D2169D94);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72979,7 +72979,7 @@ EXPORT void Native__0x2311DD7159F00582(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2311DD7159F00582);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73052,9 +73052,9 @@ EXPORT void Native_setVehicleEngineOn(bool& success, int32_t _vehicle, bool _val
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2497C4717C8B881E);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_value);
-	ctx->Push(_instantly);
-	ctx->Push(_disableAutoStart);
+	ctx->Push((int32_t) _value);
+	ctx->Push((int32_t) _instantly);
+	ctx->Push((int32_t) _disableAutoStart);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73066,7 +73066,7 @@ EXPORT void Native_setVehicleUndriveable(bool& success, int32_t _vehicle, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8ABA6AF54B942B95);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73078,7 +73078,7 @@ EXPORT void Native_setVehicleProvidesCover(bool& success, int32_t _vehicle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5AFEEDD9BB2899D7);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73105,9 +73105,9 @@ EXPORT void Native_setVehicleDoorLatched(bool& success, int32_t _vehicle, int32_
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_doorId);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73146,7 +73146,7 @@ EXPORT void Native_setVehicleDoorShut(bool& success, int32_t _vehicle, int32_t _
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_doorId);
-	ctx->Push(_closeInstantly);
+	ctx->Push((int32_t) _closeInstantly);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73159,7 +73159,7 @@ EXPORT void Native_setVehicleDoorBroken(bool& success, int32_t _vehicle, int32_t
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_doorId);
-	ctx->Push(_deleteDoor);
+	ctx->Push((int32_t) _deleteDoor);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73171,7 +73171,7 @@ EXPORT void Native_setVehicleCanBreak(bool& success, int32_t _vehicle, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x59BF8C3D52C92F66);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73301,7 +73301,7 @@ EXPORT void Native_setVehicleIsConsideredByPlayer(bool& success, int32_t _vehicl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x31B927BBC44156CD);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73313,7 +73313,7 @@ EXPORT void Native__0xBE5C1255A1830FF5(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBE5C1255A1830FF5);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73325,7 +73325,7 @@ EXPORT void Native__0x9BECD4B9FEF3F8A6(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9BECD4B9FEF3F8A6);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73337,7 +73337,7 @@ EXPORT void Native__0x88BC673CA9E0AE99(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x88BC673CA9E0AE99);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73349,7 +73349,7 @@ EXPORT void Native__0xE851E480B814D4BA(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE851E480B814D4BA);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73357,10 +73357,10 @@ EXPORT void Native__0xE851E480B814D4BA(bool& success, int32_t _vehicle, bool _p1
 	success = true;
 }
 
-EXPORT void Native_getRandomVehicleModelInMemory(bool& success, bool _p0, int32_t& _modelHash, int32_t& _successIndicator) {
+EXPORT void Native_getRandomVehicleModelInMemory(bool& success, bool _p0, uint32_t& _modelHash, int32_t& _successIndicator) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x055BF0AC0C34F4FD);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	auto ptr_modelHash = _modelHash;
 	ctx->Push(&ptr_modelHash);
 	auto ptr_successIndicator = _successIndicator;
@@ -73417,7 +73417,7 @@ EXPORT void Native_setVehicleDoorCanBreak(bool& success, int32_t _vehicle, int32
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_doorId);
-	ctx->Push(_isBreakable);
+	ctx->Push((int32_t) _isBreakable);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73429,7 +73429,7 @@ EXPORT bool Native_isVehicleBumperBouncing(bool& success, int32_t _vehicle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x27B926779DEB502D);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_frontBumper);
+	ctx->Push((int32_t) _frontBumper);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -73442,7 +73442,7 @@ EXPORT bool Native_isVehicleBumperBrokenOff(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x468056A6BB6F3846);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_front);
+	ctx->Push((int32_t) _front);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -73480,7 +73480,7 @@ EXPORT bool Native_isVehicleOnAllWheels(bool& success, int32_t _vehicle) {
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_getVehicleModelMonetaryValue(bool& success, int32_t _vehicleModel) {
+EXPORT int32_t Native_getVehicleModelMonetaryValue(bool& success, uint32_t _vehicleModel) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5873C14A52D74236);
 	ctx->Reset();
 	ctx->Push(_vehicleModel);
@@ -73492,7 +73492,7 @@ EXPORT int32_t Native_getVehicleModelMonetaryValue(bool& success, int32_t _vehic
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getVehicleLayoutHash(bool& success, int32_t _vehicle) {
+EXPORT uint32_t Native_getVehicleLayoutHash(bool& success, int32_t _vehicle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x28D37D4F71AC5C58);
 	ctx->Reset();
 	ctx->Push(_vehicle);
@@ -73501,7 +73501,7 @@ EXPORT int32_t Native_getVehicleLayoutHash(bool& success, int32_t _vehicle) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT int32_t Native__0xA01BC64DD4BFBBAC(bool& success, int32_t _vehicle, int32_t _p1) {
@@ -73521,7 +73521,7 @@ EXPORT void Native_setRenderTrainAsDerailed(bool& success, int32_t _train, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x317B11A312DF5534);
 	ctx->Reset();
 	ctx->Push(_train);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73647,7 +73647,7 @@ EXPORT void Native_setVehicleCanEngineOperateOnFire(bool& success, int32_t _vehi
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x206BC5DC9D1AC70A);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73659,7 +73659,7 @@ EXPORT void Native_setVehicleCanLeakOil(bool& success, int32_t _vehicle, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x51BB2D88D31A914B);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73671,7 +73671,7 @@ EXPORT void Native_setVehicleCanLeakPetrol(bool& success, int32_t _vehicle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x192547247864DFDD);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73683,7 +73683,7 @@ EXPORT void Native_setDisableVehiclePetrolTankFires(bool& success, int32_t _vehi
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x465BF26AB9684352);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73695,7 +73695,7 @@ EXPORT void Native_setDisableVehiclePetrolTankDamage(bool& success, int32_t _veh
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x37C8252A7C92D017);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73707,7 +73707,7 @@ EXPORT void Native_setDisableVehicleEngineFires(bool& success, int32_t _vehicle,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x91A0BD635321F145);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73719,7 +73719,7 @@ EXPORT void Native__0xC50CE861B55EAB8B(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC50CE861B55EAB8B);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73731,7 +73731,7 @@ EXPORT void Native__0x6EBFB22D646FFC18(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6EBFB22D646FFC18);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73743,7 +73743,7 @@ EXPORT void Native_setDisablePretendOccupants(bool& success, int32_t _vehicle, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x25367DE49D64CF16);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73798,7 +73798,7 @@ EXPORT void Native_setVehicleExtra(bool& success, int32_t _vehicle, int32_t _ext
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_extraId);
-	ctx->Push(_disable);
+	ctx->Push((int32_t) _disable);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73836,7 +73836,7 @@ EXPORT void Native_setConvertibleRoof(bool& success, int32_t _vehicle, bool _p1)
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF39C4F538B5124C2);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73848,7 +73848,7 @@ EXPORT void Native_lowerConvertibleRoof(bool& success, int32_t _vehicle, bool _i
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDED51F703D0FA83D);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_instantlyLower);
+	ctx->Push((int32_t) _instantlyLower);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73860,7 +73860,7 @@ EXPORT void Native_raiseConvertibleRoof(bool& success, int32_t _vehicle, bool _i
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8F5FB35D7E88FC70);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_instantlyRaise);
+	ctx->Push((int32_t) _instantlyRaise);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73884,7 +73884,7 @@ EXPORT bool Native_isVehicleAConvertible(bool& success, int32_t _vehicle, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x52F357A30698BCCE);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -73897,7 +73897,7 @@ EXPORT void Native_transformVehicleToSubmarine(bool& success, int32_t _vehicle, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBE4C854FFDB6EEBE);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_noAnimation);
+	ctx->Push((int32_t) _noAnimation);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73909,7 +73909,7 @@ EXPORT void Native_transformSubmarineToVehicle(bool& success, int32_t _vehicle, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2A69FFD1B42BFF9E);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_noAnimation);
+	ctx->Push((int32_t) _noAnimation);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -73950,7 +73950,7 @@ EXPORT void Native_setVehicleDamage(bool& success, int32_t _vehicle, float _xOff
 	ctx->Push(_zOffset);
 	ctx->Push(_damage);
 	ctx->Push(_radius);
-	ctx->Push(_focusOnModel);
+	ctx->Push((int32_t) _focusOnModel);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74060,7 +74060,7 @@ EXPORT bool Native_isVehicleDriveable(bool& success, int32_t _vehicle, bool _isO
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4C241E39B23DF959);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_isOnFireCheck);
+	ctx->Push((int32_t) _isOnFireCheck);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -74073,7 +74073,7 @@ EXPORT void Native_setVehicleHasBeenOwnedByPlayer(bool& success, int32_t _vehicl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2B5F9D2AF1F1722D);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_owned);
+	ctx->Push((int32_t) _owned);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74085,7 +74085,7 @@ EXPORT void Native_setVehicleNeedsToBeHotwired(bool& success, int32_t _vehicle, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFBA550EA44404EE6);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74097,7 +74097,7 @@ EXPORT void Native__0x9F3F689B814F2599(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9F3F689B814F2599);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74109,7 +74109,7 @@ EXPORT void Native__0x4E74E62E0A97E901(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4E74E62E0A97E901);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74117,13 +74117,13 @@ EXPORT void Native__0x4E74E62E0A97E901(bool& success, int32_t _vehicle, bool _p1
 	success = true;
 }
 
-EXPORT void Native_startVehicleHorn(bool& success, int32_t _vehicle, int32_t _duration, int32_t _mode, bool _forever) {
+EXPORT void Native_startVehicleHorn(bool& success, int32_t _vehicle, int32_t _duration, uint32_t _mode, bool _forever) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9C8C6504B5B63D2C);
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_duration);
 	ctx->Push(_mode);
-	ctx->Push(_forever);
+	ctx->Push((int32_t) _forever);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74135,7 +74135,7 @@ EXPORT void Native_setVehicleSilent(bool& success, int32_t _vehicle, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9D44FCCE98450843);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74147,7 +74147,7 @@ EXPORT void Native_setVehicleHasStrongAxles(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x92F0CF722BC4202F);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74155,7 +74155,7 @@ EXPORT void Native_setVehicleHasStrongAxles(bool& success, int32_t _vehicle, boo
 	success = true;
 }
 
-EXPORT const char* Native_getDisplayNameFromVehicleModel(bool& success, int32_t _modelHash) {
+EXPORT const char* Native_getDisplayNameFromVehicleModel(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB215AAC32D25D019);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -74167,7 +74167,7 @@ EXPORT const char* Native_getDisplayNameFromVehicleModel(bool& success, int32_t 
 	return AllocateString(ctx->ResultString());
 }
 
-EXPORT const char* Native_getMakeNameFromVehicleModel(bool& success, int32_t _modelHash) {
+EXPORT const char* Native_getMakeNameFromVehicleModel(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF7AF4F159FF99F97);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -74308,7 +74308,7 @@ EXPORT void Native_resetVehicleWheels(bool& success, int32_t _vehicle, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x21D2E5662C1F6FED);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74320,9 +74320,9 @@ EXPORT bool Native_isHeliPartBroken(bool& success, int32_t _vehicle, bool _p1, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBC74B4BE25EB6C8A);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -74395,7 +74395,7 @@ EXPORT void Native_setHeliTailExplodeThrowDashboard(bool& success, int32_t _vehi
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3EC8BF18AA453FE9);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74419,7 +74419,7 @@ EXPORT void Native_setVehicleExplodesOnHighExplosionDamage(bool& success, int32_
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x71B0892EC081D60A);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74443,7 +74443,7 @@ EXPORT void Native__0x3441CAD2F2231923(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3441CAD2F2231923);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74455,7 +74455,7 @@ EXPORT void Native_setVehicleDisableTowing(bool& success, int32_t _vehicle, bool
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2B6747FAA9DB9D6B);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74548,7 +74548,7 @@ EXPORT bool Native_isVehicleHighDetail(bool& success, int32_t _vehicle) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_requestVehicleAsset(bool& success, int32_t _vehicleHash, int32_t _vehicleAsset) {
+EXPORT void Native_requestVehicleAsset(bool& success, uint32_t _vehicleHash, int32_t _vehicleAsset) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x81A15811460FAB3A);
 	ctx->Reset();
 	ctx->Push(_vehicleHash);
@@ -74600,7 +74600,7 @@ EXPORT void Native_attachVehicleToTowTruck(bool& success, int32_t _towTruck, int
 	ctx->Reset();
 	ctx->Push(_towTruck);
 	ctx->Push(_vehicle);
-	ctx->Push(_rear);
+	ctx->Push((int32_t) _rear);
 	ctx->Push(_hookOffsetX);
 	ctx->Push(_hookOffsetY);
 	ctx->Push(_hookOffsetZ);
@@ -74664,7 +74664,7 @@ EXPORT int32_t Native_setVehicleAutomaticallyAttaches(bool& success, int32_t _ve
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8BA6F76BC53A1493);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -74679,7 +74679,7 @@ EXPORT void Native_setVehicleBulldozerArmPosition(bool& success, int32_t _vehicl
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_position);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74692,7 +74692,7 @@ EXPORT void Native_setVehicleTankTurretPosition(bool& success, int32_t _vehicle,
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_position);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74791,7 +74791,7 @@ EXPORT void Native_setDisableVehicleFlightNozzlePosition(bool& success, int32_t 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCE2B43770B655F8F);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74831,7 +74831,7 @@ EXPORT void Native_setVehicleBurnout(bool& success, int32_t _vehicle, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFB8794444A7D60FB);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74855,7 +74855,7 @@ EXPORT void Native_setVehicleReduceGrip(bool& success, int32_t _vehicle, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x222FF6A823D122E2);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74880,7 +74880,7 @@ EXPORT void Native_setVehicleIndicatorLights(bool& success, int32_t _vehicle, in
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_turnSignal);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74892,7 +74892,7 @@ EXPORT void Native_setVehicleBrakeLights(bool& success, int32_t _vehicle, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x92B35082E0B42F66);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74904,7 +74904,7 @@ EXPORT void Native_setVehicleHandbrake(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x684785568EF26A22);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74916,7 +74916,7 @@ EXPORT void Native_setVehicleBrake(bool& success, int32_t _vehicle, bool _toggle
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE4E2FD323574965C);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74948,7 +74948,7 @@ EXPORT bool Native_hasFilledVehiclePopulation(bool& success) {
 EXPORT void Native__0x51DB102F4A3BA5E0(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x51DB102F4A3BA5E0);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74986,7 +74986,7 @@ EXPORT void Native_setVehicleUsesLargeRearRamp(bool& success, int32_t _vehicle, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCAC66558B944DA67);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -74998,7 +74998,7 @@ EXPORT void Native_setVehicleRudderBroken(bool& success, int32_t _vehicle, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x09606148B6C71DEF);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -75010,7 +75010,7 @@ EXPORT void Native_setConvertibleRoofLatchState(bool& success, int32_t _vehicle,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1A78AD3D8240536F);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -75066,7 +75066,7 @@ EXPORT float Native_getVehicleAcceleration(bool& success, int32_t _vehicle) {
 	return ctx->ResultFloat();
 }
 
-EXPORT float Native_getVehicleModelEstimatedMaxSpeed(bool& success, int32_t _modelHash) {
+EXPORT float Native_getVehicleModelEstimatedMaxSpeed(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF417C2502FFFED43);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -75078,7 +75078,7 @@ EXPORT float Native_getVehicleModelEstimatedMaxSpeed(bool& success, int32_t _mod
 	return ctx->ResultFloat();
 }
 
-EXPORT float Native_getVehicleModelMaxBraking(bool& success, int32_t _modelHash) {
+EXPORT float Native_getVehicleModelMaxBraking(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDC53FD41B4ED944C);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -75090,7 +75090,7 @@ EXPORT float Native_getVehicleModelMaxBraking(bool& success, int32_t _modelHash)
 	return ctx->ResultFloat();
 }
 
-EXPORT float Native_getVehicleModelMaxBrakingMaxMods(bool& success, int32_t _modelHash) {
+EXPORT float Native_getVehicleModelMaxBrakingMaxMods(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBFBA3BA79CFF7EBF);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -75102,7 +75102,7 @@ EXPORT float Native_getVehicleModelMaxBrakingMaxMods(bool& success, int32_t _mod
 	return ctx->ResultFloat();
 }
 
-EXPORT float Native_getVehicleModelMaxTraction(bool& success, int32_t _modelHash) {
+EXPORT float Native_getVehicleModelMaxTraction(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x539DE94D44FDFD0D);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -75114,7 +75114,7 @@ EXPORT float Native_getVehicleModelMaxTraction(bool& success, int32_t _modelHash
 	return ctx->ResultFloat();
 }
 
-EXPORT float Native_getVehicleModelAcceleration(bool& success, int32_t _modelHash) {
+EXPORT float Native_getVehicleModelAcceleration(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8C044C5C84505B6A);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -75126,7 +75126,7 @@ EXPORT float Native_getVehicleModelAcceleration(bool& success, int32_t _modelHas
 	return ctx->ResultFloat();
 }
 
-EXPORT float Native_getVehicleModelEstimatedAgility(bool& success, int32_t _modelHash) {
+EXPORT float Native_getVehicleModelEstimatedAgility(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x53409B5163D5B846);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -75138,7 +75138,7 @@ EXPORT float Native_getVehicleModelEstimatedAgility(bool& success, int32_t _mode
 	return ctx->ResultFloat();
 }
 
-EXPORT float Native_getVehicleModelMaxKnots(bool& success, int32_t _modelHash) {
+EXPORT float Native_getVehicleModelMaxKnots(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC6AD107DDC9054CC);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -75150,7 +75150,7 @@ EXPORT float Native_getVehicleModelMaxKnots(bool& success, int32_t _modelHash) {
 	return ctx->ResultFloat();
 }
 
-EXPORT float Native_getVehicleModelMoveResistance(bool& success, int32_t _modelHash) {
+EXPORT float Native_getVehicleModelMoveResistance(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5AA3F878A178C4FC);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -75230,7 +75230,7 @@ EXPORT int32_t Native_addRoadNodeSpeedZone(bool& success, float _x, float _y, fl
 	ctx->Push(_z);
 	ctx->Push(_radius);
 	ctx->Push(_speed);
-	ctx->Push(_p5);
+	ctx->Push((int32_t) _p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -75301,8 +75301,8 @@ EXPORT void Native_setVehicleSearchlight(bool& success, int32_t _heli, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x14E85C5EE7A4D542);
 	ctx->Reset();
 	ctx->Push(_heli);
-	ctx->Push(_toggle);
-	ctx->Push(_canBeUsedByAI);
+	ctx->Push((int32_t) _toggle);
+	ctx->Push((int32_t) _canBeUsedByAI);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -75328,8 +75328,8 @@ EXPORT bool Native_isVehicleSeatAccessible(bool& success, int32_t _ped, int32_t 
 	ctx->Push(_ped);
 	ctx->Push(_vehicle);
 	ctx->Push(_seatIndex);
-	ctx->Push(_side);
-	ctx->Push(_onEnter);
+	ctx->Push((int32_t) _side);
+	ctx->Push((int32_t) _onEnter);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -75441,7 +75441,7 @@ EXPORT int32_t Native_getNumModColors(bool& success, int32_t _paintType, bool _p
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA551BE18C11A476D);
 	ctx->Reset();
 	ctx->Push(_paintType);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -75518,7 +75518,7 @@ EXPORT const char* Native_getVehicleModColor1Name(bool& success, int32_t _vehicl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB45085B721EFD38C);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return nullptr;
@@ -75557,7 +75557,7 @@ EXPORT void Native_setVehicleMod(bool& success, int32_t _vehicle, int32_t _modTy
 	ctx->Push(_vehicle);
 	ctx->Push(_modType);
 	ctx->Push(_modIndex);
-	ctx->Push(_customTires);
+	ctx->Push((int32_t) _customTires);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -75621,7 +75621,7 @@ EXPORT void Native_toggleVehicleMod(bool& success, int32_t _vehicle, int32_t _mo
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_modType);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -75696,7 +75696,7 @@ EXPORT int32_t Native_getVehicleModModifierValue(bool& success, int32_t _vehicle
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getVehicleModIdentifierHash(bool& success, int32_t _vehicle, int32_t _modType, int32_t _modIndex) {
+EXPORT uint32_t Native_getVehicleModIdentifierHash(bool& success, int32_t _vehicle, int32_t _modType, int32_t _modIndex) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4593CF82AA179706);
 	ctx->Reset();
 	ctx->Push(_vehicle);
@@ -75707,7 +75707,7 @@ EXPORT int32_t Native_getVehicleModIdentifierHash(bool& success, int32_t _vehicl
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native_preloadVehicleMod(bool& success, int32_t _p0, int32_t _modType, int32_t _p2) {
@@ -75847,7 +75847,7 @@ EXPORT int32_t Native__0xEEBFC7A7EFDC35B4(bool& success, int32_t _vehicle) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getVehicleCauseOfDestruction(bool& success, int32_t _vehicle) {
+EXPORT uint32_t Native_getVehicleCauseOfDestruction(bool& success, int32_t _vehicle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE495D1EF4C91FD20);
 	ctx->Reset();
 	ctx->Push(_vehicle);
@@ -75856,7 +75856,7 @@ EXPORT int32_t Native_getVehicleCauseOfDestruction(bool& success, int32_t _vehic
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT void Native__0x5EE5632F47AE9695(bool& success, int32_t _vehicle, float _health) {
@@ -75935,7 +75935,7 @@ EXPORT void Native__0x1CF38D529D7441D9(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1CF38D529D7441D9);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -75947,7 +75947,7 @@ EXPORT void Native__0x1F9FB66F3A3842D2(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1F9FB66F3A3842D2);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -75959,7 +75959,7 @@ EXPORT void Native__0x59C3757B3B7408E8(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x59C3757B3B7408E8);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -76025,7 +76025,7 @@ EXPORT void Native__0x0AD9E8F87FF7C16F(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0AD9E8F87FF7C16F);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76037,7 +76037,7 @@ EXPORT void Native_setVehicleIsWanted(bool& success, int32_t _vehicle, bool _sta
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF7EC25A3EBEEC726);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76061,7 +76061,7 @@ EXPORT void Native_getBoatBoomPositionRatio2(bool& success, int32_t _vehicle, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC1F981A6F74F0C23);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76073,7 +76073,7 @@ EXPORT void Native_getBoatBoomPositionRatio3(bool& success, int32_t _vehicle, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0F3B4D4E43177236);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76097,8 +76097,8 @@ EXPORT void Native_disablePlaneAileron(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x23428FC53C60919C);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76122,7 +76122,7 @@ EXPORT void Native_setVehicleUseAlternateHandling(bool& success, int32_t _vehicl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1D97D1E3A70A649F);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76147,7 +76147,7 @@ EXPORT void Native__0xAB04325045427AAE(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAB04325045427AAE);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76202,7 +76202,7 @@ EXPORT void Native_setVehicleHasBeenDrivenFlag(bool& success, int32_t _vehicle, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x02398B627547189C);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76238,7 +76238,7 @@ EXPORT void Native_setVehicleCanSaveInGarage(bool& success, int32_t _vehicle, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x428BACCDF5E26EAD);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76274,7 +76274,7 @@ EXPORT void Native__0x4D9D109F63FEE1D4(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4D9D109F63FEE1D4);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76286,7 +76286,7 @@ EXPORT void Native_setVehicleGeneratesEngineShockingEvents(bool& success, int32_
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x279D50DE5652D935);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76361,7 +76361,7 @@ EXPORT void Native_setForceHdVehicle(bool& success, int32_t _vehicle, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x97CE68CB032583F0);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76420,7 +76420,7 @@ EXPORT void Native_setVehicleGravity(bool& success, int32_t _vehicle, bool _togg
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x89F149B6131E57DA);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76431,7 +76431,7 @@ EXPORT void Native_setVehicleGravity(bool& success, int32_t _vehicle, bool _togg
 EXPORT void Native_setEnableVehicleSlipstreaming(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE6C0C80B8C867537);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76478,7 +76478,7 @@ EXPORT void Native_setVehicleInactiveDuringPlayback(bool& success, int32_t _vehi
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x06582AFF74894C75);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76490,7 +76490,7 @@ EXPORT void Native_setVehicleActiveDuringPlayback(bool& success, int32_t _p0, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDFFCEF48E511DB48);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76514,7 +76514,7 @@ EXPORT void Native_setVehicleEngineCanDegrade(bool& success, int32_t _vehicle, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x983765856F2564F9);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76586,7 +76586,7 @@ EXPORT void Native_setVehicleCanDeformWheels(bool& success, int32_t _vehicle, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0CDDA42F9E360CA6);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76610,7 +76610,7 @@ EXPORT void Native_setVehicleIsStolen(bool& success, int32_t _vehicle, bool _isS
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x67B2C79AA7FF5738);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_isStolen);
+	ctx->Push((int32_t) _isStolen);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76763,7 +76763,7 @@ EXPORT void Native_setCargobobHookCanDetach(bool& success, int32_t _cargobob, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x571FEB383F629926);
 	ctx->Reset();
 	ctx->Push(_cargobob);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76850,7 +76850,7 @@ EXPORT void Native_setPickupRopeLengthForCargobob(bool& success, int32_t _cargob
 	ctx->Push(_cargobob);
 	ctx->Push(_length1);
 	ctx->Push(_length2);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -76911,7 +76911,7 @@ EXPORT void Native_setCargobobPickupMagnetActive(bool& success, int32_t _cargobo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9A665550F8DA349B);
 	ctx->Reset();
 	ctx->Push(_cargobob);
-	ctx->Push(_isActive);
+	ctx->Push((int32_t) _isActive);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77007,8 +77007,8 @@ EXPORT void Native__0x9BDDC73CC6A115D4(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9BDDC73CC6A115D4);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77020,7 +77020,7 @@ EXPORT void Native__0x56EB5E94318D3FB6(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x56EB5E94318D3FB6);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77044,7 +77044,7 @@ EXPORT void Native__0x2C4A1590ABF43E8B(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2C4A1590ABF43E8B);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77052,10 +77052,10 @@ EXPORT void Native__0x2C4A1590ABF43E8B(bool& success, int32_t _vehicle, bool _p1
 	success = true;
 }
 
-EXPORT void Native_disableVehicleWeapon(bool& success, bool _disabled, int32_t _weaponHash, int32_t _vehicle, int32_t _owner) {
+EXPORT void Native_disableVehicleWeapon(bool& success, bool _disabled, uint32_t _weaponHash, int32_t _vehicle, int32_t _owner) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF4FC6A6F67D8D856);
 	ctx->Reset();
-	ctx->Push(_disabled);
+	ctx->Push((int32_t) _disabled);
 	ctx->Push(_weaponHash);
 	ctx->Push(_vehicle);
 	ctx->Push(_owner);
@@ -77066,7 +77066,7 @@ EXPORT void Native_disableVehicleWeapon(bool& success, bool _disabled, int32_t _
 	success = true;
 }
 
-EXPORT bool Native_isVehicleWeaponDisabled(bool& success, int32_t _weaponHash, int32_t _vehicle, int32_t _owner) {
+EXPORT bool Native_isVehicleWeaponDisabled(bool& success, uint32_t _weaponHash, int32_t _vehicle, int32_t _owner) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x563B65A643ED072E);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -77084,7 +77084,7 @@ EXPORT void Native__0xE05DD0E9707003A3(bool& success, int32_t _p0, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE05DD0E9707003A3);
 	ctx->Reset();
 	ctx->Push(_p0);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77096,7 +77096,7 @@ EXPORT void Native_setVehicleActiveForPedNavigation(bool& success, int32_t _vehi
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x21115BCD6E44656A);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77116,7 +77116,7 @@ EXPORT int32_t Native_getVehicleClass(bool& success, int32_t _vehicle) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getVehicleClassFromName(bool& success, int32_t _modelHash) {
+EXPORT int32_t Native_getVehicleClassFromName(bool& success, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDEDF1C8BD47C2200);
 	ctx->Reset();
 	ctx->Push(_modelHash);
@@ -77143,7 +77143,7 @@ EXPORT void Native_setVehicleCanBeUsedByFleeingPeds(bool& success, int32_t _vehi
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x300504B23BD3B711);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77167,7 +77167,7 @@ EXPORT void Native_setVehicleDropsMoneyWhenBlownUp(bool& success, int32_t _vehic
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x068F64F2470F9656);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77179,7 +77179,7 @@ EXPORT void Native_setVehicleJetEngineOn(bool& success, int32_t _vehicle, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB8FBC8B1330CA9B4);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77199,7 +77199,7 @@ EXPORT void Native__0x6A973569BA094650(bool& success, int32_t _vehicle, int32_t 
 	success = true;
 }
 
-EXPORT void Native_setVehicleHandlingHashForAi(bool& success, int32_t _vehicle, int32_t _hash) {
+EXPORT void Native_setVehicleHandlingHashForAi(bool& success, int32_t _vehicle, uint32_t _hash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x10655FAB9915623D);
 	ctx->Reset();
 	ctx->Push(_vehicle);
@@ -77263,7 +77263,7 @@ EXPORT void Native_setVehicleWheelsCanBreakOffWhenBlowUp(bool& success, int32_t 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA37B9A517B133349);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77275,7 +77275,7 @@ EXPORT bool Native__0xF78F94D60248C737(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF78F94D60248C737);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -77300,7 +77300,7 @@ EXPORT void Native__0x5E569EC46EC21CAE(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5E569EC46EC21CAE);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77335,7 +77335,7 @@ EXPORT void Native__0x41062318F23ED854(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x41062318F23ED854);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77388,7 +77388,7 @@ EXPORT void Native_setVehicleForceAfterburner(bool& success, int32_t _vehicle, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB055A34527CB8FD7);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77400,7 +77400,7 @@ EXPORT void Native_setDisableVehicleWindowCollisions(bool& success, int32_t _veh
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1087BC8EC540DAEB);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77412,7 +77412,7 @@ EXPORT void Native__0x4AD280EB48B2D8E6(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4AD280EB48B2D8E6);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_togle);
+	ctx->Push((int32_t) _togle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77424,7 +77424,7 @@ EXPORT void Native__0xB68CFAF83A02768D(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB68CFAF83A02768D);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77458,7 +77458,7 @@ EXPORT void Native__0xCF9159024555488C(bool& success, int32_t _p0) {
 EXPORT void Native_setDistantCarsEnabled(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF796359A959DF65D);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77517,7 +77517,7 @@ EXPORT void Native_setVehicleNeonLightEnabled(bool& success, int32_t _vehicle, i
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_index);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77541,7 +77541,7 @@ EXPORT bool Native_isVehicleNeonLightEnabled(bool& success, int32_t _vehicle, in
 EXPORT void Native__0x35E0654F4BAD7971(bool& success, bool _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x35E0654F4BAD7971);
 	ctx->Reset();
-	ctx->Push(_p0);
+	ctx->Push((int32_t) _p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77553,7 +77553,7 @@ EXPORT void Native_disableVehicleNeonLights(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x83F813570FF519DE);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77565,7 +77565,7 @@ EXPORT void Native_setDisableSuperdummyMode(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB088E9A47AE6EDD5);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77680,7 +77680,7 @@ EXPORT void Native__0xA7DCDF4DED40A8F4(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA7DCDF4DED40A8F4);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77722,7 +77722,7 @@ EXPORT void Native__0xC361AA040D6637A8(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC361AA040D6637A8);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77734,7 +77734,7 @@ EXPORT void Native_setVehicleKersAllowed(bool& success, int32_t _vehicle, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x99C82F8A139F3E4E);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77758,7 +77758,7 @@ EXPORT void Native__0xE16142B94664DEFD(bool& success, int32_t _vehicle, bool _p1
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE16142B94664DEFD);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -77957,7 +77957,7 @@ EXPORT void Native_setVehicleControlsInverted(bool& success, int32_t _vehicle, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5B91B229243351A8);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78101,7 +78101,7 @@ EXPORT void Native_setVehicleRocketBoostActive(bool& success, int32_t _vehicle, 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x81E1552E35DC3839);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_active);
+	ctx->Push((int32_t) _active);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78171,7 +78171,7 @@ EXPORT void Native_setUseHigherVehicleJumpForce(bool& success, int32_t _vehicle,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF06A16CA55D138D8);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78183,7 +78183,7 @@ EXPORT void Native__0xB2E0C0D6922D31F2(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB2E0C0D6922D31F2);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78245,7 +78245,7 @@ EXPORT void Native_setVehicleParachuteActive(bool& success, int32_t _vehicle, bo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0BFFB028B3DD0A97);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_active);
+	ctx->Push((int32_t) _active);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78269,7 +78269,7 @@ EXPORT void Native_setVehicleReceivesRampDamage(bool& success, int32_t _vehicle,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x28D034A93FE31BF5);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78335,7 +78335,7 @@ EXPORT void Native__0x41290B40FA63E6DA(bool& success, int32_t _p0) {
 	success = true;
 }
 
-EXPORT void Native_setVehicleParachuteModel(bool& success, int32_t _vehicle, int32_t _modelHash) {
+EXPORT void Native_setVehicleParachuteModel(bool& success, int32_t _vehicle, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4D610C6B56031351);
 	ctx->Reset();
 	ctx->Push(_vehicle);
@@ -78501,7 +78501,7 @@ EXPORT void Native_setOppressorTransformState(bool& success, int32_t _vehicle, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x544996C0081ABDEB);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_state);
+	ctx->Push((int32_t) _state);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78559,7 +78559,7 @@ EXPORT void Native__0x8235F1BEAD557629(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8235F1BEAD557629);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78599,7 +78599,7 @@ EXPORT void Native_setCargobobHookCanAttach(bool& success, int32_t _vehicle, boo
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x94A68DA412C4007D);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78693,7 +78693,7 @@ EXPORT void Native__0x97841634EF7DF1D6(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x97841634EF7DF1D6);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78729,7 +78729,7 @@ EXPORT void Native_setVehicleHoverTransformEnabled(bool& success, int32_t _vehic
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF1211889DF15A763);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78741,7 +78741,7 @@ EXPORT void Native_setVehicleHoverTransformActive(bool& success, int32_t _vehicl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2D55FE374D5FDB91);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78778,8 +78778,8 @@ EXPORT void Native_setDeployHeliStubWings(bool& success, int32_t _vehicle, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB251E0B33E58B424);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_deploy);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _deploy);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78803,7 +78803,7 @@ EXPORT void Native__0xAA653AE61924B0A0(bool& success, int32_t _vehicle, bool _to
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAA653AE61924B0A0);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78816,7 +78816,7 @@ EXPORT void Native_setVehicleTurretUnk(bool& success, int32_t _vehicle, int32_t 
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_index);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78875,7 +78875,7 @@ EXPORT void Native_setUnkBool0x102ForSubmarineVehicleTask(bool& success, int32_t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x41B9FB92EDED32A6);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_value);
+	ctx->Push((int32_t) _value);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78886,7 +78886,7 @@ EXPORT void Native_setUnkBool0x102ForSubmarineVehicleTask(bool& success, int32_t
 EXPORT void Native__0x36DE109527A2C0C4(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x36DE109527A2C0C4);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78897,7 +78897,7 @@ EXPORT void Native__0x36DE109527A2C0C4(bool& success, bool _toggle) {
 EXPORT void Native__0x82E0AC411E41A5B4(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x82E0AC411E41A5B4);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78908,7 +78908,7 @@ EXPORT void Native__0x82E0AC411E41A5B4(bool& success, bool _toggle) {
 EXPORT void Native__0x99A05839C46CE316(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x99A05839C46CE316);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78955,7 +78955,7 @@ EXPORT int32_t Native_getLastRammedVehicle(bool& success, int32_t _vehicle) {
 EXPORT void Native_setDisableVehicleUnk(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x143921E45EC44D62);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78967,11 +78967,11 @@ EXPORT void Native_setVehicleNitroEnabled(bool& success, int32_t _vehicle, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC8E9B6B71B8E660D);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_level);
 	ctx->Push(_power);
 	ctx->Push(_rechargeTime);
-	ctx->Push(_disableSound);
+	ctx->Push((int32_t) _disableSound);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78983,7 +78983,7 @@ EXPORT void Native_setVehicleWheelsDealDamage(bool& success, int32_t _vehicle, b
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2970EAA18FD5E42F);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -78994,7 +78994,7 @@ EXPORT void Native_setVehicleWheelsDealDamage(bool& success, int32_t _vehicle, b
 EXPORT void Native_setDisableVehicleUnk2(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x211E95CE9903940C);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79005,7 +79005,7 @@ EXPORT void Native_setDisableVehicleUnk2(bool& success, bool _toggle) {
 EXPORT void Native__0x5BBCF35BF6E456F7(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5BBCF35BF6E456F7);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79029,7 +79029,7 @@ EXPORT void Native_hideVehicleTombstone(bool& success, int32_t _vehicle, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAE71FB656C600587);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79052,7 +79052,7 @@ EXPORT bool Native_getIsVehicleEmpDisabled(bool& success, int32_t _vehicle) {
 EXPORT void Native__0x8F0D5BA1C2CC91D7(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8F0D5BA1C2CC91D7);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79141,7 +79141,7 @@ EXPORT void Native_setReduceDriftVehicleSuspension(bool& success, int32_t _vehic
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3A375167F5782A65);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_enable);
+	ctx->Push((int32_t) _enable);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79153,7 +79153,7 @@ EXPORT void Native_setDriftTyresEnabled(bool& success, int32_t _vehicle, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5AC79C98C5C17F05);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79177,7 +79177,7 @@ EXPORT void Native_networkUseHighPrecisionVehicleBlending(bool& success, int32_t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEC0C1D4922AF9754);
 	ctx->Reset();
 	ctx->Push(_vehicle);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79365,7 +79365,7 @@ EXPORT void Native_resetDeepOceanScaler(bool& success) {
 EXPORT void Native_enableLaserSightRendering(bool& success, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC8B46D7727D864AA);
 	ctx->Reset();
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79373,7 +79373,7 @@ EXPORT void Native_enableLaserSightRendering(bool& success, bool _toggle) {
 	success = true;
 }
 
-EXPORT int32_t Native_getWeaponComponentTypeModel(bool& success, int32_t _componentHash) {
+EXPORT uint32_t Native_getWeaponComponentTypeModel(bool& success, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0DB57B41EC1DB083);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -79382,10 +79382,10 @@ EXPORT int32_t Native_getWeaponComponentTypeModel(bool& success, int32_t _compon
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getWeapontypeModel(bool& success, int32_t _weaponHash) {
+EXPORT uint32_t Native_getWeapontypeModel(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF46CDC33180FDA94);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -79394,10 +79394,10 @@ EXPORT int32_t Native_getWeapontypeModel(bool& success, int32_t _weaponHash) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getWeapontypeSlot(bool& success, int32_t _weaponHash) {
+EXPORT uint32_t Native_getWeapontypeSlot(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4215460B9B8B7FA0);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -79406,10 +79406,10 @@ EXPORT int32_t Native_getWeapontypeSlot(bool& success, int32_t _weaponHash) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getWeapontypeGroup(bool& success, int32_t _weaponHash) {
+EXPORT uint32_t Native_getWeapontypeGroup(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC3287EE3050FB74C);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -79418,10 +79418,10 @@ EXPORT int32_t Native_getWeapontypeGroup(bool& success, int32_t _weaponHash) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getWeaponComponentVariantExtraComponentCount(bool& success, int32_t _componentHash) {
+EXPORT int32_t Native_getWeaponComponentVariantExtraComponentCount(bool& success, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6558AC7C17BFEF58);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -79433,7 +79433,7 @@ EXPORT int32_t Native_getWeaponComponentVariantExtraComponentCount(bool& success
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getWeaponComponentVariantExtraComponentModel(bool& success, int32_t _componentHash, int32_t _extraComponentIndex) {
+EXPORT uint32_t Native_getWeaponComponentVariantExtraComponentModel(bool& success, uint32_t _componentHash, int32_t _extraComponentIndex) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4D1CB8DC40208A17);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -79443,15 +79443,15 @@ EXPORT int32_t Native_getWeaponComponentVariantExtraComponentModel(bool& success
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT void Native_setCurrentPedWeapon(bool& success, int32_t _ped, int32_t _weaponHash, bool _bForceInHand) {
+EXPORT void Native_setCurrentPedWeapon(bool& success, int32_t _ped, uint32_t _weaponHash, bool _bForceInHand) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xADF692B254977C0C);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_weaponHash);
-	ctx->Push(_bForceInHand);
+	ctx->Push((int32_t) _bForceInHand);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79459,13 +79459,13 @@ EXPORT void Native_setCurrentPedWeapon(bool& success, int32_t _ped, int32_t _wea
 	success = true;
 }
 
-EXPORT bool Native_getCurrentPedWeapon(bool& success, int32_t _ped, int32_t& _weaponHash, bool _p2) {
+EXPORT bool Native_getCurrentPedWeapon(bool& success, int32_t _ped, uint32_t& _weaponHash, bool _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3A87E44BB9A01D54);
 	ctx->Reset();
 	ctx->Push(_ped);
 	auto ptr_weaponHash = _weaponHash;
 	ctx->Push(&ptr_weaponHash);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -79488,20 +79488,20 @@ EXPORT int32_t Native_getCurrentPedWeaponEntityIndex(bool& success, int32_t _ped
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getBestPedWeapon(bool& success, int32_t _ped, bool _p1) {
+EXPORT uint32_t Native_getBestPedWeapon(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8483E98E8B888AE2);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT bool Native_setCurrentPedVehicleWeapon(bool& success, int32_t _ped, int32_t _weaponHash) {
+EXPORT bool Native_setCurrentPedVehicleWeapon(bool& success, int32_t _ped, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75C55983C2C39DAA);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79514,7 +79514,7 @@ EXPORT bool Native_setCurrentPedVehicleWeapon(bool& success, int32_t _ped, int32
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_getCurrentPedVehicleWeapon(bool& success, int32_t _ped, int32_t& _weaponHash) {
+EXPORT bool Native_getCurrentPedVehicleWeapon(bool& success, int32_t _ped, uint32_t& _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1017582BCD3832DC);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79553,7 +79553,7 @@ EXPORT bool Native_isPedArmed(bool& success, int32_t _ped, int32_t _typeFlags) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isWeaponValid(bool& success, int32_t _weaponHash) {
+EXPORT bool Native_isWeaponValid(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x937C71165CF334B3);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -79565,12 +79565,12 @@ EXPORT bool Native_isWeaponValid(bool& success, int32_t _weaponHash) {
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_hasPedGotWeapon(bool& success, int32_t _ped, int32_t _weaponHash, bool _p2) {
+EXPORT bool Native_hasPedGotWeapon(bool& success, int32_t _ped, uint32_t _weaponHash, bool _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8DECB02F88F428BC);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_weaponHash);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return false;
@@ -79591,7 +79591,7 @@ EXPORT bool Native_isPedWeaponReadyToShoot(bool& success, int32_t _ped) {
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_getPedWeapontypeInSlot(bool& success, int32_t _ped, int32_t _weaponSlot) {
+EXPORT uint32_t Native_getPedWeapontypeInSlot(bool& success, int32_t _ped, uint32_t _weaponSlot) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEFFED78E9011134D);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79601,10 +79601,10 @@ EXPORT int32_t Native_getPedWeapontypeInSlot(bool& success, int32_t _ped, int32_
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getAmmoInPedWeapon(bool& success, int32_t _ped, int32_t _weaponhash) {
+EXPORT int32_t Native_getAmmoInPedWeapon(bool& success, int32_t _ped, uint32_t _weaponhash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x015A522136D7F951);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79617,7 +79617,7 @@ EXPORT int32_t Native_getAmmoInPedWeapon(bool& success, int32_t _ped, int32_t _w
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_addAmmoToPed(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _ammo) {
+EXPORT void Native_addAmmoToPed(bool& success, int32_t _ped, uint32_t _weaponHash, int32_t _ammo) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x78F0424C34306220);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79630,13 +79630,13 @@ EXPORT void Native_addAmmoToPed(bool& success, int32_t _ped, int32_t _weaponHash
 	success = true;
 }
 
-EXPORT void Native_setPedAmmo(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _ammo, bool _p3) {
+EXPORT void Native_setPedAmmo(bool& success, int32_t _ped, uint32_t _weaponHash, int32_t _ammo, bool _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x14E56BC5B5DB6A19);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_weaponHash);
 	ctx->Push(_ammo);
-	ctx->Push(_p3);
+	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79644,11 +79644,11 @@ EXPORT void Native_setPedAmmo(bool& success, int32_t _ped, int32_t _weaponHash, 
 	success = true;
 }
 
-EXPORT void Native_setPedInfiniteAmmo(bool& success, int32_t _ped, bool _toggle, int32_t _weaponHash) {
+EXPORT void Native_setPedInfiniteAmmo(bool& success, int32_t _ped, bool _toggle, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3EDCB0505123623B);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	ctx->Push(_weaponHash);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -79661,7 +79661,7 @@ EXPORT void Native_setPedInfiniteAmmoClip(bool& success, int32_t _ped, bool _tog
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x183DADC6AA953186);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79681,14 +79681,14 @@ EXPORT void Native__0x24C024BA8379A70A(bool& success, int32_t _p0, int32_t _p1) 
 	success = true;
 }
 
-EXPORT void Native_giveWeaponToPed(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _ammoCount, bool _isHidden, bool _bForceInHand) {
+EXPORT void Native_giveWeaponToPed(bool& success, int32_t _ped, uint32_t _weaponHash, int32_t _ammoCount, bool _isHidden, bool _bForceInHand) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBF0FD6E56C964FCB);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_weaponHash);
 	ctx->Push(_ammoCount);
-	ctx->Push(_isHidden);
-	ctx->Push(_bForceInHand);
+	ctx->Push((int32_t) _isHidden);
+	ctx->Push((int32_t) _bForceInHand);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79696,13 +79696,13 @@ EXPORT void Native_giveWeaponToPed(bool& success, int32_t _ped, int32_t _weaponH
 	success = true;
 }
 
-EXPORT void Native_giveDelayedWeaponToPed(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _ammoCount, bool _bForceInHand) {
+EXPORT void Native_giveDelayedWeaponToPed(bool& success, int32_t _ped, uint32_t _weaponHash, int32_t _ammoCount, bool _bForceInHand) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB282DC6EBD803C75);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_weaponHash);
 	ctx->Push(_ammoCount);
-	ctx->Push(_bForceInHand);
+	ctx->Push((int32_t) _bForceInHand);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79714,7 +79714,7 @@ EXPORT void Native_removeAllPedWeapons(bool& success, int32_t _ped, bool _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF25DF915FA38C5F3);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79722,7 +79722,7 @@ EXPORT void Native_removeAllPedWeapons(bool& success, int32_t _ped, bool _p1) {
 	success = true;
 }
 
-EXPORT void Native_removeWeaponFromPed(bool& success, int32_t _ped, int32_t _weaponHash) {
+EXPORT void Native_removeWeaponFromPed(bool& success, int32_t _ped, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4899CB088EDF59B8);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79738,7 +79738,7 @@ EXPORT void Native_hidePedWeaponForScriptedCutscene(bool& success, int32_t _ped,
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6F6981D2253C208F);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79750,10 +79750,10 @@ EXPORT void Native_setPedCurrentWeaponVisible(bool& success, int32_t _ped, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0725A4CCFDED9A70);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_visible);
-	ctx->Push(_deselectWeapon);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
+	ctx->Push((int32_t) _visible);
+	ctx->Push((int32_t) _deselectWeapon);
+	ctx->Push((int32_t) _p3);
+	ctx->Push((int32_t) _p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79765,7 +79765,7 @@ EXPORT void Native_setPedDropsWeaponsWhenDead(bool& success, int32_t _ped, bool 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x476AE72C1D19D1A8);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -79773,7 +79773,7 @@ EXPORT void Native_setPedDropsWeaponsWhenDead(bool& success, int32_t _ped, bool 
 	success = true;
 }
 
-EXPORT bool Native_hasPedBeenDamagedByWeapon(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _weaponType) {
+EXPORT bool Native_hasPedBeenDamagedByWeapon(bool& success, int32_t _ped, uint32_t _weaponHash, int32_t _weaponType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2D343D2219CD027A);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79798,7 +79798,7 @@ EXPORT void Native_clearPedLastWeaponDamage(bool& success, int32_t _ped) {
 	success = true;
 }
 
-EXPORT bool Native_hasEntityBeenDamagedByWeapon(bool& success, int32_t _entity, int32_t _weaponHash, int32_t _weaponType) {
+EXPORT bool Native_hasEntityBeenDamagedByWeapon(bool& success, int32_t _entity, uint32_t _weaponHash, int32_t _weaponType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x131D401334815E94);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -79834,7 +79834,7 @@ EXPORT void Native_setPedDropsWeapon(bool& success, int32_t _ped) {
 	success = true;
 }
 
-EXPORT void Native_setPedDropsInventoryWeapon(bool& success, int32_t _ped, int32_t _weaponHash, float _xOffset, float _yOffset, float _zOffset, int32_t _ammoCount) {
+EXPORT void Native_setPedDropsInventoryWeapon(bool& success, int32_t _ped, uint32_t _weaponHash, float _xOffset, float _yOffset, float _zOffset, int32_t _ammoCount) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x208A1888007FC0E6);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79850,12 +79850,12 @@ EXPORT void Native_setPedDropsInventoryWeapon(bool& success, int32_t _ped, int32
 	success = true;
 }
 
-EXPORT int32_t Native_getMaxAmmoInClip(bool& success, int32_t _ped, int32_t _weaponHash, bool _p2) {
+EXPORT int32_t Native_getMaxAmmoInClip(bool& success, int32_t _ped, uint32_t _weaponHash, bool _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA38DCFFCEA8962FA);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_weaponHash);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -79864,7 +79864,7 @@ EXPORT int32_t Native_getMaxAmmoInClip(bool& success, int32_t _ped, int32_t _wea
 	return ctx->ResultInt();
 }
 
-EXPORT bool Native_getAmmoInClip(bool& success, int32_t _ped, int32_t _weaponHash, int32_t& _ammo) {
+EXPORT bool Native_getAmmoInClip(bool& success, int32_t _ped, uint32_t _weaponHash, int32_t& _ammo) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2E1202248937775C);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79880,7 +79880,7 @@ EXPORT bool Native_getAmmoInClip(bool& success, int32_t _ped, int32_t _weaponHas
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_setAmmoInClip(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _ammo) {
+EXPORT bool Native_setAmmoInClip(bool& success, int32_t _ped, uint32_t _weaponHash, int32_t _ammo) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDCD2A934D65CB497);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79894,7 +79894,7 @@ EXPORT bool Native_setAmmoInClip(bool& success, int32_t _ped, int32_t _weaponHas
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_getMaxAmmo(bool& success, int32_t _ped, int32_t _weaponHash, int32_t& _ammo) {
+EXPORT bool Native_getMaxAmmo(bool& success, int32_t _ped, uint32_t _weaponHash, int32_t& _ammo) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDC16122C7A20C933);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79910,7 +79910,7 @@ EXPORT bool Native_getMaxAmmo(bool& success, int32_t _ped, int32_t _weaponHash, 
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_getMaxAmmoByType(bool& success, int32_t _ped, int32_t _ammoTypeHash, int32_t& _ammo) {
+EXPORT bool Native_getMaxAmmoByType(bool& success, int32_t _ped, uint32_t _ammoTypeHash, int32_t& _ammo) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x585847C5E4E11709);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79926,7 +79926,7 @@ EXPORT bool Native_getMaxAmmoByType(bool& success, int32_t _ped, int32_t _ammoTy
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_addAmmoToPedByType(bool& success, int32_t _ped, int32_t _ammoTypeHash, int32_t _ammo) {
+EXPORT void Native_addAmmoToPedByType(bool& success, int32_t _ped, uint32_t _ammoTypeHash, int32_t _ammo) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2472622CE1F2D45F);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79939,7 +79939,7 @@ EXPORT void Native_addAmmoToPedByType(bool& success, int32_t _ped, int32_t _ammo
 	success = true;
 }
 
-EXPORT void Native_setPedAmmoByType(bool& success, int32_t _ped, int32_t _ammoTypeHash, int32_t _ammo) {
+EXPORT void Native_setPedAmmoByType(bool& success, int32_t _ped, uint32_t _ammoTypeHash, int32_t _ammo) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5FD1E1F011E76D7E);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79952,7 +79952,7 @@ EXPORT void Native_setPedAmmoByType(bool& success, int32_t _ped, int32_t _ammoTy
 	success = true;
 }
 
-EXPORT int32_t Native_getPedAmmoByType(bool& success, int32_t _ped, int32_t _ammoTypeHash) {
+EXPORT int32_t Native_getPedAmmoByType(bool& success, int32_t _ped, uint32_t _ammoTypeHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x39D22031557946C1);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79988,7 +79988,7 @@ EXPORT void Native_setPickupAmmoAmountScaler(bool& success, float _p0) {
 	success = true;
 }
 
-EXPORT int32_t Native_getPedAmmoTypeFromWeapon(bool& success, int32_t _ped, int32_t _weaponHash) {
+EXPORT uint32_t Native_getPedAmmoTypeFromWeapon(bool& success, int32_t _ped, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7FEAD38B326B9F74);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -79998,10 +79998,10 @@ EXPORT int32_t Native_getPedAmmoTypeFromWeapon(bool& success, int32_t _ped, int3
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT int32_t Native_getPedAmmoTypeFromWeapon2(bool& success, int32_t _ped, int32_t _weaponHash) {
+EXPORT uint32_t Native_getPedAmmoTypeFromWeapon2(bool& success, int32_t _ped, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF489B44DD5AF4BD9);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80011,7 +80011,7 @@ EXPORT int32_t Native_getPedAmmoTypeFromWeapon2(bool& success, int32_t _ped, int
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 EXPORT bool Native_getPedLastWeaponImpactCoord(bool& success, int32_t _ped, vector3_t& _coords) {
@@ -80031,12 +80031,12 @@ EXPORT bool Native_getPedLastWeaponImpactCoord(bool& success, int32_t _ped, vect
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_setPedGadget(bool& success, int32_t _ped, int32_t _gadgetHash, bool _p2) {
+EXPORT void Native_setPedGadget(bool& success, int32_t _ped, uint32_t _gadgetHash, bool _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD0D7B1E680ED4A1A);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_gadgetHash);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -80044,7 +80044,7 @@ EXPORT void Native_setPedGadget(bool& success, int32_t _ped, int32_t _gadgetHash
 	success = true;
 }
 
-EXPORT bool Native_getIsPedGadgetEquipped(bool& success, int32_t _ped, int32_t _gadgetHash) {
+EXPORT bool Native_getIsPedGadgetEquipped(bool& success, int32_t _ped, uint32_t _gadgetHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF731332072F5156C);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80057,7 +80057,7 @@ EXPORT bool Native_getIsPedGadgetEquipped(bool& success, int32_t _ped, int32_t _
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_getSelectedPedWeapon(bool& success, int32_t _ped) {
+EXPORT uint32_t Native_getSelectedPedWeapon(bool& success, int32_t _ped) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0A6DB4965674D243);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80066,15 +80066,15 @@ EXPORT int32_t Native_getSelectedPedWeapon(bool& success, int32_t _ped) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-EXPORT void Native_explodeProjectiles(bool& success, int32_t _ped, int32_t _weaponHash, bool _p2) {
+EXPORT void Native_explodeProjectiles(bool& success, int32_t _ped, uint32_t _weaponHash, bool _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFC4BD125DE7611E4);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_weaponHash);
-	ctx->Push(_p2);
+	ctx->Push((int32_t) _p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -80082,11 +80082,11 @@ EXPORT void Native_explodeProjectiles(bool& success, int32_t _ped, int32_t _weap
 	success = true;
 }
 
-EXPORT void Native_removeAllProjectilesOfType(bool& success, int32_t _weaponHash, bool _explode) {
+EXPORT void Native_removeAllProjectilesOfType(bool& success, uint32_t _weaponHash, bool _explode) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFC52E0F37E446528);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
-	ctx->Push(_explode);
+	ctx->Push((int32_t) _explode);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -80118,7 +80118,7 @@ EXPORT float Native_getMaxRangeOfCurrentPedWeapon(bool& success, int32_t _ped) {
 	return ctx->ResultFloat();
 }
 
-EXPORT bool Native_hasVehicleGotProjectileAttached(bool& success, int32_t _driver, int32_t _vehicle, int32_t _weaponHash, int32_t _p3) {
+EXPORT bool Native_hasVehicleGotProjectileAttached(bool& success, int32_t _driver, int32_t _vehicle, uint32_t _weaponHash, int32_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x717C8481234E3B88);
 	ctx->Reset();
 	ctx->Push(_driver);
@@ -80133,7 +80133,7 @@ EXPORT bool Native_hasVehicleGotProjectileAttached(bool& success, int32_t _drive
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_giveWeaponComponentToPed(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _componentHash) {
+EXPORT void Native_giveWeaponComponentToPed(bool& success, int32_t _ped, uint32_t _weaponHash, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD966D51AA5B28BB9);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80146,7 +80146,7 @@ EXPORT void Native_giveWeaponComponentToPed(bool& success, int32_t _ped, int32_t
 	success = true;
 }
 
-EXPORT void Native_removeWeaponComponentFromPed(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _componentHash) {
+EXPORT void Native_removeWeaponComponentFromPed(bool& success, int32_t _ped, uint32_t _weaponHash, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1E8BE90C74FB4C09);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80159,7 +80159,7 @@ EXPORT void Native_removeWeaponComponentFromPed(bool& success, int32_t _ped, int
 	success = true;
 }
 
-EXPORT bool Native_hasPedGotWeaponComponent(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _componentHash) {
+EXPORT bool Native_hasPedGotWeaponComponent(bool& success, int32_t _ped, uint32_t _weaponHash, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC593212475FAE340);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80173,7 +80173,7 @@ EXPORT bool Native_hasPedGotWeaponComponent(bool& success, int32_t _ped, int32_t
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_isPedWeaponComponentActive(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _componentHash) {
+EXPORT bool Native_isPedWeaponComponentActive(bool& success, int32_t _ped, uint32_t _weaponHash, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0D78DE0572D3969E);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80211,7 +80211,7 @@ EXPORT bool Native_makePedReload(bool& success, int32_t _ped) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_requestWeaponAsset(bool& success, int32_t _weaponHash, int32_t _p1, int32_t _p2) {
+EXPORT void Native_requestWeaponAsset(bool& success, uint32_t _weaponHash, int32_t _p1, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5443438F033E29C3);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80224,7 +80224,7 @@ EXPORT void Native_requestWeaponAsset(bool& success, int32_t _weaponHash, int32_
 	success = true;
 }
 
-EXPORT bool Native_hasWeaponAssetLoaded(bool& success, int32_t _weaponHash) {
+EXPORT bool Native_hasWeaponAssetLoaded(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x36E353271F0E90EE);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80236,7 +80236,7 @@ EXPORT bool Native_hasWeaponAssetLoaded(bool& success, int32_t _weaponHash) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_removeWeaponAsset(bool& success, int32_t _weaponHash) {
+EXPORT void Native_removeWeaponAsset(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAA08EF13F341C8FC);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80247,7 +80247,7 @@ EXPORT void Native_removeWeaponAsset(bool& success, int32_t _weaponHash) {
 	success = true;
 }
 
-EXPORT int32_t Native_createWeaponObject(bool& success, int32_t _weaponHash, int32_t _ammoCount, float _x, float _y, float _z, bool _showWorldModel, float _scale, int32_t _p7, int32_t _p8, int32_t _p9) {
+EXPORT int32_t Native_createWeaponObject(bool& success, uint32_t _weaponHash, int32_t _ammoCount, float _x, float _y, float _z, bool _showWorldModel, float _scale, int32_t _p7, int32_t _p8, int32_t _p9) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9541D3CF0D398F36);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80255,7 +80255,7 @@ EXPORT int32_t Native_createWeaponObject(bool& success, int32_t _weaponHash, int
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
-	ctx->Push(_showWorldModel);
+	ctx->Push((int32_t) _showWorldModel);
 	ctx->Push(_scale);
 	ctx->Push(_p7);
 	ctx->Push(_p8);
@@ -80268,7 +80268,7 @@ EXPORT int32_t Native_createWeaponObject(bool& success, int32_t _weaponHash, int
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_giveWeaponComponentToWeaponObject(bool& success, int32_t _weaponObject, int32_t _addonHash) {
+EXPORT void Native_giveWeaponComponentToWeaponObject(bool& success, int32_t _weaponObject, uint32_t _addonHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x33E179436C0B31DB);
 	ctx->Reset();
 	ctx->Push(_weaponObject);
@@ -80292,7 +80292,7 @@ EXPORT void Native_removeWeaponComponentFromWeaponObject(bool& success, int32_t 
 	success = true;
 }
 
-EXPORT bool Native_hasWeaponGotWeaponComponent(bool& success, int32_t _weapon, int32_t _addonHash) {
+EXPORT bool Native_hasWeaponGotWeaponComponent(bool& success, int32_t _weapon, uint32_t _addonHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x76A18844E743BF91);
 	ctx->Reset();
 	ctx->Push(_weapon);
@@ -80317,7 +80317,7 @@ EXPORT void Native_giveWeaponObjectToPed(bool& success, int32_t _weaponObject, i
 	success = true;
 }
 
-EXPORT bool Native_doesWeaponTakeWeaponComponent(bool& success, int32_t _weaponHash, int32_t _componentHash) {
+EXPORT bool Native_doesWeaponTakeWeaponComponent(bool& success, uint32_t _weaponHash, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5CEE3DF569CECAB0);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80334,7 +80334,7 @@ EXPORT int32_t Native_getWeaponObjectFromPed(bool& success, int32_t _ped, bool _
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCAE1DC9A0E22A16D);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_p1);
+	ctx->Push((int32_t) _p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -80343,7 +80343,7 @@ EXPORT int32_t Native_getWeaponObjectFromPed(bool& success, int32_t _ped, bool _
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_giveLoadoutToPed(bool& success, int32_t _ped, int32_t _loadoutHash) {
+EXPORT void Native_giveLoadoutToPed(bool& success, int32_t _ped, uint32_t _loadoutHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x68F8BE6AF5CDF8A6);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80355,7 +80355,7 @@ EXPORT void Native_giveLoadoutToPed(bool& success, int32_t _ped, int32_t _loadou
 	success = true;
 }
 
-EXPORT void Native_setPedWeaponTintIndex(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _tintIndex) {
+EXPORT void Native_setPedWeaponTintIndex(bool& success, int32_t _ped, uint32_t _weaponHash, int32_t _tintIndex) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x50969B9B89ED5738);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80368,7 +80368,7 @@ EXPORT void Native_setPedWeaponTintIndex(bool& success, int32_t _ped, int32_t _w
 	success = true;
 }
 
-EXPORT int32_t Native_getPedWeaponTintIndex(bool& success, int32_t _ped, int32_t _weaponHash) {
+EXPORT int32_t Native_getPedWeaponTintIndex(bool& success, int32_t _ped, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2B9EEDC07BD06B9F);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80405,7 +80405,7 @@ EXPORT int32_t Native_getWeaponObjectTintIndex(bool& success, int32_t _weapon) {
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_getWeaponTintCount(bool& success, int32_t _weaponHash) {
+EXPORT int32_t Native_getWeaponTintCount(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5DCF6C5CAB2E9BF7);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80417,7 +80417,7 @@ EXPORT int32_t Native_getWeaponTintCount(bool& success, int32_t _weaponHash) {
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_setPedWeaponLiveryColor(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _camoComponentHash, int32_t _colorIndex) {
+EXPORT void Native_setPedWeaponLiveryColor(bool& success, int32_t _ped, uint32_t _weaponHash, uint32_t _camoComponentHash, int32_t _colorIndex) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9FE5633880ECD8ED);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80431,7 +80431,7 @@ EXPORT void Native_setPedWeaponLiveryColor(bool& success, int32_t _ped, int32_t 
 	success = true;
 }
 
-EXPORT int32_t Native_getPedWeaponLiveryColor(bool& success, int32_t _ped, int32_t _weaponHash, int32_t _camoComponentHash) {
+EXPORT int32_t Native_getPedWeaponLiveryColor(bool& success, int32_t _ped, uint32_t _weaponHash, uint32_t _camoComponentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF0A60040BE558F2D);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80445,7 +80445,7 @@ EXPORT int32_t Native_getPedWeaponLiveryColor(bool& success, int32_t _ped, int32
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_setWeaponObjectLiveryColor(bool& success, int32_t _weaponObject, int32_t _camoComponentHash, int32_t _colorIndex) {
+EXPORT void Native_setWeaponObjectLiveryColor(bool& success, int32_t _weaponObject, uint32_t _camoComponentHash, int32_t _colorIndex) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5DA825A85D0EA6E6);
 	ctx->Reset();
 	ctx->Push(_weaponObject);
@@ -80458,7 +80458,7 @@ EXPORT void Native_setWeaponObjectLiveryColor(bool& success, int32_t _weaponObje
 	success = true;
 }
 
-EXPORT int32_t Native_getWeaponObjectLiveryColor(bool& success, int32_t _weaponObject, int32_t _camoComponentHash) {
+EXPORT int32_t Native_getWeaponObjectLiveryColor(bool& success, int32_t _weaponObject, uint32_t _camoComponentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB3EA4FEABF41464B);
 	ctx->Reset();
 	ctx->Push(_weaponObject);
@@ -80471,7 +80471,7 @@ EXPORT int32_t Native_getWeaponObjectLiveryColor(bool& success, int32_t _weaponO
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native__0xA2C9AC24B4061285(bool& success, int32_t _ped, int32_t _weaponHash) {
+EXPORT int32_t Native__0xA2C9AC24B4061285(bool& success, int32_t _ped, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA2C9AC24B4061285);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80496,7 +80496,7 @@ EXPORT void Native__0x977CA98939E82E4B(bool& success, int32_t _weaponObject, int
 	success = true;
 }
 
-EXPORT bool Native_getWeaponHudStats(bool& success, int32_t _weaponHash, int32_t& _outData) {
+EXPORT bool Native_getWeaponHudStats(bool& success, uint32_t _weaponHash, int32_t& _outData) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD92C739EE34C9EBA);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80511,7 +80511,7 @@ EXPORT bool Native_getWeaponHudStats(bool& success, int32_t _weaponHash, int32_t
 	return ctx->ResultBool();
 }
 
-EXPORT bool Native_getWeaponComponentHudStats(bool& success, int32_t _componentHash, int32_t& _outData) {
+EXPORT bool Native_getWeaponComponentHudStats(bool& success, uint32_t _componentHash, int32_t& _outData) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB3CAF387AE12E9F8);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -80526,7 +80526,7 @@ EXPORT bool Native_getWeaponComponentHudStats(bool& success, int32_t _componentH
 	return ctx->ResultBool();
 }
 
-EXPORT float Native_getWeaponDamage(bool& success, int32_t _weaponHash, int32_t _componentHash) {
+EXPORT float Native_getWeaponDamage(bool& success, uint32_t _weaponHash, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3133B907D8B32053);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80539,7 +80539,7 @@ EXPORT float Native_getWeaponDamage(bool& success, int32_t _weaponHash, int32_t 
 	return ctx->ResultFloat();
 }
 
-EXPORT int32_t Native_getWeaponClipSize(bool& success, int32_t _weaponHash) {
+EXPORT int32_t Native_getWeaponClipSize(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x583BE370B1EC6EB4);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80551,7 +80551,7 @@ EXPORT int32_t Native_getWeaponClipSize(bool& success, int32_t _weaponHash) {
 	return ctx->ResultInt();
 }
 
-EXPORT float Native_getWeaponTimeBetweenShots(bool& success, int32_t _weaponHash) {
+EXPORT float Native_getWeaponTimeBetweenShots(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x065D2AACAD8CF7A4);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80600,7 +80600,7 @@ EXPORT void Native_requestWeaponHighDetailModel(bool& success, int32_t _weaponOb
 	success = true;
 }
 
-EXPORT void Native_setWeaponDamageModifierThisFrame(bool& success, int32_t _weaponHash, float _damageMultiplier) {
+EXPORT void Native_setWeaponDamageModifierThisFrame(bool& success, uint32_t _weaponHash, float _damageMultiplier) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4757F00BC6323CFE);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80612,7 +80612,7 @@ EXPORT void Native_setWeaponDamageModifierThisFrame(bool& success, int32_t _weap
 	success = true;
 }
 
-EXPORT void Native_setWeaponExplosionRadiusMultiplier(bool& success, int32_t _weaponHash, float _multiplier) {
+EXPORT void Native_setWeaponExplosionRadiusMultiplier(bool& success, uint32_t _weaponHash, float _multiplier) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4AE5AC8B852D642C);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80676,7 +80676,7 @@ EXPORT void Native_setFlashLightEnabled(bool& success, int32_t _ped, bool _toggl
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x988DB6FE9B3AC000);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -80684,7 +80684,7 @@ EXPORT void Native_setFlashLightEnabled(bool& success, int32_t _ped, bool _toggl
 	success = true;
 }
 
-EXPORT void Native_setWeaponAnimationOverride(bool& success, int32_t _ped, int32_t _animStyle) {
+EXPORT void Native_setWeaponAnimationOverride(bool& success, int32_t _ped, uint32_t _animStyle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1055AC3A667F09D9);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -80696,7 +80696,7 @@ EXPORT void Native_setWeaponAnimationOverride(bool& success, int32_t _ped, int32
 	success = true;
 }
 
-EXPORT int32_t Native_getWeaponDamageType(bool& success, int32_t _weaponHash) {
+EXPORT int32_t Native_getWeaponDamageType(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3BE0BB12D25FB305);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80719,7 +80719,7 @@ EXPORT void Native__0xE4DCEC7FD5B739A5(bool& success, int32_t _ped) {
 	success = true;
 }
 
-EXPORT bool Native_canUseWeaponOnParachute(bool& success, int32_t _weaponHash) {
+EXPORT bool Native_canUseWeaponOnParachute(bool& success, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBC7BE5ABC0879F74);
 	ctx->Reset();
 	ctx->Push(_weaponHash);
@@ -80731,7 +80731,7 @@ EXPORT bool Native_canUseWeaponOnParachute(bool& success, int32_t _weaponHash) {
 	return ctx->ResultBool();
 }
 
-EXPORT int32_t Native_createAirDefenseSphere(bool& success, float _x, float _y, float _z, float _radius, float _p4, float _p5, float _p6, int32_t _weaponHash) {
+EXPORT int32_t Native_createAirDefenseSphere(bool& success, float _x, float _y, float _z, float _radius, float _p4, float _p5, float _p6, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x91EF34584710BE99);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -80750,7 +80750,7 @@ EXPORT int32_t Native_createAirDefenseSphere(bool& success, float _x, float _y, 
 	return ctx->ResultInt();
 }
 
-EXPORT int32_t Native_createAirDefenseArea(bool& success, float _p0, float _p1, float _p2, float _p3, float _p4, float _p5, float _p6, float _p7, float _p8, float _p9, int32_t _weaponHash) {
+EXPORT int32_t Native_createAirDefenseArea(bool& success, float _p0, float _p1, float _p2, float _p3, float _p4, float _p5, float _p6, float _p7, float _p8, float _p9, uint32_t _weaponHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9DA58CDBF6BDBC08);
 	ctx->Reset();
 	ctx->Push(_p0);
@@ -80799,7 +80799,7 @@ EXPORT void Native_setPlayerAirDefenseZoneFlag(bool& success, int32_t _player, i
 	ctx->Reset();
 	ctx->Push(_player);
 	ctx->Push(_zoneId);
-	ctx->Push(_enable);
+	ctx->Push((int32_t) _enable);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -80851,12 +80851,12 @@ EXPORT bool Native_doesAirDefenseZoneExist(bool& success, int32_t _zoneId) {
 	return ctx->ResultBool();
 }
 
-EXPORT void Native_setCanPedEquipWeapon(bool& success, int32_t _ped, int32_t _weaponHash, bool _toggle) {
+EXPORT void Native_setCanPedEquipWeapon(bool& success, int32_t _ped, uint32_t _weaponHash, bool _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB4771B9AAF4E68E4);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_weaponHash);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -80868,7 +80868,7 @@ EXPORT void Native_setCanPedEquipAllWeapons(bool& success, int32_t _ped, bool _t
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEFF296097FF1E509);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -80932,7 +80932,7 @@ EXPORT void Native_setZoneEnabled(bool& success, int32_t _zoneId, bool _toggle) 
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBA5ECEEA120E5611);
 	ctx->Reset();
 	ctx->Push(_zoneId);
-	ctx->Push(_toggle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -80952,7 +80952,7 @@ EXPORT int32_t Native_getZoneScumminess(bool& success, int32_t _zoneId) {
 	return ctx->ResultInt();
 }
 
-EXPORT void Native_overridePopscheduleVehicleModel(bool& success, int32_t _scheduleId, int32_t _vehicleHash) {
+EXPORT void Native_overridePopscheduleVehicleModel(bool& success, int32_t _scheduleId, uint32_t _vehicleHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5F7D596BAC2E7777);
 	ctx->Reset();
 	ctx->Push(_scheduleId);
@@ -80975,7 +80975,7 @@ EXPORT void Native_clearPopscheduleOverrideVehicleModel(bool& success, int32_t _
 	success = true;
 }
 
-EXPORT int32_t Native_getHashOfMapAreaAtCoords(bool& success, float _x, float _y, float _z) {
+EXPORT uint32_t Native_getHashOfMapAreaAtCoords(bool& success, float _x, float _y, float _z) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7EE64D51E8498728);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -80986,7 +80986,7 @@ EXPORT int32_t Native_getHashOfMapAreaAtCoords(bool& success, float _x, float _y
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
 
