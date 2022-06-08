@@ -1022,9 +1022,10 @@ void Core_GetFocusOverrideOffset(alt::ICore* core, vector3_t& offset) {
     offset.z = vec[2];
 }
 
-void* Core_GetFocusOverrideEntity(alt::ICore* core) {
+void* Core_GetFocusOverrideEntity(alt::ICore* core, uint8_t& type) {
     auto entity = core->GetFocusOverrideEntity().Get();
     if (entity == nullptr) return nullptr;
+    type = (uint8_t) entity->GetType();
     switch (entity->GetType()) {
         case alt::IBaseObject::Type::PLAYER:
         case alt::IBaseObject::Type::LOCAL_PLAYER:
