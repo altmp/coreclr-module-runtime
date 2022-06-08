@@ -23,6 +23,7 @@ EXPORT_SHARED uint16_t Vehicle_GetID(alt::IVehicle* vehicle);
 EXPORT_SHARED alt::IEntity* Vehicle_GetEntity(alt::IVehicle* vehicle);
 
 EXPORT_SHARED uint8_t Vehicle_GetWheelsCount(alt::IVehicle* vehicle);
+EXPORT_SHARED int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle);
 
 EXPORT_SERVER alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle);
 EXPORT_SERVER uint8_t Vehicle_GetDriverID(alt::IVehicle* vehicle, uint16_t& id);
@@ -148,7 +149,6 @@ EXPORT_SERVER void Vehicle_LoadGameStateFromBase64(alt::IVehicle* vehicle, const
 EXPORT_SERVER int32_t Vehicle_GetEngineHealth(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetEngineHealth(alt::IVehicle* vehicle, int32_t health);
 
-EXPORT_SERVER int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetPetrolTankHealth(alt::IVehicle* vehicle, int32_t health);
 
 EXPORT_SERVER uint8_t Vehicle_IsWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId);

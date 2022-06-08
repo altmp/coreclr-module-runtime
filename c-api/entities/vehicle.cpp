@@ -13,6 +13,10 @@ uint8_t Vehicle_GetWheelsCount(alt::IVehicle* vehicle) {
     return vehicle->GetWheelsCount();
 }
 
+int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle) {
+    return vehicle->GetPetrolTankHealth();
+}
+
 
 #ifdef ALT_SERVER_API
 alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
@@ -438,10 +442,6 @@ void Vehicle_SetEngineHealth(alt::IVehicle* vehicle, int32_t health) {
     vehicle->SetEngineHealth(health);
 }
 
-
-int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle) {
-    return vehicle->GetPetrolTankHealth();
-}
 
 void Vehicle_SetPetrolTankHealth(alt::IVehicle* vehicle, int32_t health) {
     vehicle->SetPetrolTankHealth(health);
