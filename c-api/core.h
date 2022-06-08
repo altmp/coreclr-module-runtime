@@ -254,6 +254,14 @@ EXPORT_CLIENT uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key);
 EXPORT_CLIENT alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key);
 
 EXPORT_CLIENT const char* Core_GetClientPath(alt::ICore* core, int32_t& size);
+    
+EXPORT_CLIENT uint8_t Core_IsFocusOverriden(alt::ICore* core);
+EXPORT_CLIENT void Core_GetFocusOverridePos(alt::ICore* core, vector3_t& pos);
+EXPORT_CLIENT void Core_GetFocusOverrideOffset(alt::ICore* core, vector3_t& offset);
+EXPORT_CLIENT void* Core_GetFocusOverrideEntity(alt::ICore* core);
+EXPORT_CLIENT void Core_OverrideFocusPosition(alt::ICore* core, vector3_t pos, vector3_t offset);
+EXPORT_CLIENT void Core_OverrideFocusEntity(alt::ICore* core, alt::IEntity* entity);
+EXPORT_CLIENT void Core_ClearFocusOverride(alt::ICore* core);
 
 #ifdef __cplusplus
 }
