@@ -6,7 +6,7 @@
 #include <zip_file.hpp>
 
 #include "CoreClr.h"
-#include "../../cpp-sdk/SDK.h"
+#include "cpp-sdk/SDK.h"
 
 using namespace alt;
 namespace fs = std::filesystem;

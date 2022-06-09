@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <json.hpp>
-#include "../../../cpp-sdk/SDK.h"
+#include "cpp-sdk/SDK.h"
 
 class NuGet {
 public:

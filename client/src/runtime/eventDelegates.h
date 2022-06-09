@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../cpp-sdk/ICore.h"
+#include "cpp-sdk/ICore.h"
 #include "../../../c-api/data/types.h"
 
 typedef void (* TickDelegate_t)();

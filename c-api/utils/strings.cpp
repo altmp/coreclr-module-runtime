@@ -3,7 +3,7 @@
 //
 
 #include "strings.h"
-#include "../../cpp-sdk/types/Array.h"
+#include "cpp-sdk/types/Array.h"
 
 const char* AllocateString(const std::string& str, int32_t& size) {
     size_t stringSize = str.size();

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <combaseapi.h>
-#include "../../cpp-sdk/SDK.h"
+#include "cpp-sdk/SDK.h"
 #include <string>
 #include <codecvt>
 #include <future>

@@ -2,7 +2,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include "utils.h"
-#include "../../../cpp-sdk/ICore.h"
+#include "cpp-sdk/ICore.h"
 #include <coreclr.h>
 #include <filesystem>
 #include <optional>

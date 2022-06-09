@@ -1,7 +1,7 @@
 #pragma once
 
 #include <sstream>
-#include "../../cpp-sdk/ICore.h"
+#include "cpp-sdk/ICore.h"
 
 class Log
 {

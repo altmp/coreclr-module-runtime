@@ -1,5 +1,5 @@
 #pragma once
-#include "../../cpp-sdk/SDK.h"
+#include "cpp-sdk/SDK.h"
 
 #define EXPORT_CLIENT EXPORT
 #define EXPORT_SHARED EXPORT

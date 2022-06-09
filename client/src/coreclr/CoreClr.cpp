@@ -1,7 +1,7 @@
 // ReSharper disable CppClangTidyClangDiagnosticCastFunctionType
 #include "CoreClr.h"
 #include <future>
-#include "../../../cpp-sdk/SDK.h"
+#include "cpp-sdk/SDK.h"
 #include <string>
 #include <sstream>
 #include <filesystem>
