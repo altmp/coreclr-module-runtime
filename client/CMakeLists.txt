@@ -44,6 +44,6 @@ else()
     target_compile_definitions(${PROJECT_NAME}-static PRIVATE 
         ${CSHARP_MODULE_DEFS}
     )
-    include_directories(${TARGET_NAME}-static PRIVATE "src" "thirdparty")
+    include_directories(${TARGET_NAME}-static PRIVATE "src" "thirdparty" ${ALTV_CSHARP_CPP_SDK})
     add_dependencies(${TARGET_NAME}-static csharp-alt-sdk)
 endif()
