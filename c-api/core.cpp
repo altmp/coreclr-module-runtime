@@ -261,6 +261,10 @@ alt::ICore* Core_GetCoreInstance() {
     return &alt::ICore::Instance();
 }
 
+void Core_ToggleEvent(alt::ICore* core, uint8_t event, uint8_t state) {
+    return core->ToggleEvent((alt::CEvent::Type) event, state);
+}
+
 #ifdef ALT_SERVER_API
 uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
     return core->SubscribeCommand(cmd, cb);
