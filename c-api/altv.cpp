@@ -1,7 +1,7 @@
 #include "altv.h"
 
 #include "version/version.h"
-#include "../cpp-sdk/version/version.h"
+#include "cpp-sdk/version/version.h"
 
 #ifdef ALT_CLIENT_API
 #include "utils.h"

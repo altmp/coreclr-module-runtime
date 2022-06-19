@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../cpp-sdk/ICore.h"
+#include "cpp-sdk/ICore.h"
 
 struct ClrVehicleModelInfo {
     char* title = nullptr;

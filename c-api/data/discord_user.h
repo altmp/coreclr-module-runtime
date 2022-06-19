@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "../../cpp-sdk/IDiscordManager.h"
+#include "cpp-sdk/IDiscordManager.h"
 
 struct ClrDiscordUser {
     char* id = nullptr;
