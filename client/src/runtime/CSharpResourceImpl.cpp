@@ -10,7 +10,7 @@
 #include <iomanip>
 #include "natives.h"
 #include "exceptions/LoadException.h"
-#include "../../cpp-sdk/events/CPlayerChangeAnimationEvent.h"
+#include "cpp-sdk/events/CPlayerChangeAnimationEvent.h"
 
 using namespace std;
 
