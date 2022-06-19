@@ -178,11 +178,7 @@ EXPORT_CLIENT alt::ILocalPlayer* Player_GetLocal();
 EXPORT_CLIENT alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* player);
 
 EXPORT_CLIENT uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer);
-
-EXPORT_CLIENT float LocalPlayer_GetCurrentWeaponRecoil(alt::ILocalPlayer* localPlayer);
-EXPORT_CLIENT float LocalPlayer_GetCurrentWeaponSpread(alt::ILocalPlayer* localPlayer);
-EXPORT_CLIENT float LocalPlayer_GetCurrentWeaponDamage(alt::ILocalPlayer* localPlayer);
-EXPORT_CLIENT float LocalPlayer_GetCurrentWeaponRange(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT alt::IWeaponData* LocalPlayer_GetCurrentWeaponData(alt::ILocalPlayer* localPlayer);
 
 #ifdef __cplusplus
 }

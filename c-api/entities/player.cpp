@@ -569,19 +569,10 @@ uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer) {
     return localPlayer->GetCurrentAmmo();
 }
 
-float LocalPlayer_GetCurrentWeaponRecoil(alt::ILocalPlayer* localPlayer) {
-    return localPlayer->GetCurrentWeaponRecoil();
+alt::IWeaponData* LocalPlayer_GetCurrentWeaponData(alt::ILocalPlayer* localPlayer) {
+    const auto data = localPlayer->GetCurrentWeaponData().Get();
+    data->AddRef();
+    return data;
 }
 
-float LocalPlayer_GetCurrentWeaponSpread(alt::ILocalPlayer* localPlayer) {
-    return localPlayer->GetCurrentWeaponSpread();
-}
-
-float LocalPlayer_GetCurrentWeaponDamage(alt::ILocalPlayer* localPlayer) {
-    return localPlayer->GetCurrentWeaponDamage();
-}
-
-float LocalPlayer_GetCurrentWeaponRange(alt::ILocalPlayer* localPlayer) {
-    return localPlayer->GetCurrentWeaponRange();
-}
 #endif
