@@ -181,8 +181,27 @@ bool CoreClr::ValidateNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::st
     }
 
     Log::Info << "Needed hash was " << neededHash.str() << " actual hash was " << fileHash << Log::Endl;
-
-    return neededHash.str() == fileHash;
+    
+    if (neededHash.str() != fileHash) {
+        Log::Error << "Failed to validate NuGet " << package << " " << version << Log::Endl;
+        return false;
+    }
+    
+    const auto dependencyGroup = json["dependencyGroups"][0];
+    if (!dependencyGroup.contains("dependencies")) return true;
+    
+    const auto dependencies = dependencyGroup["dependencies"];
+    for (auto it = dependencies.begin(); it != dependencies.end(); ++it) {
+        auto id = it.value()["id"].get<std::string>();
+        utils::to_lower(id);
+        
+        if (!utils::has_prefix(id, "altv.")) continue;
+        if (!ValidateNuGet(httpClient, id, version)) {
+            return false;
+        }
+    }
+    
+    return true;
 }
 
 
@@ -194,30 +213,17 @@ bool CoreClr::ValidateNuGets(alt::Ref<alt::IHttpClient> httpClient) {
     const auto version = GetLatestNugetVersion(httpClient, "altv.net.client");
     const auto catalog = _nuget->GetCatalog("altv.net.client", version);
     if (!ValidateNuGet(httpClient, "altv.net.client", version, catalog)) {
-        Log::Error << "Failed to validate NuGet altv.net.client " << version << Log::Endl;
         return false;
-    }
-    const auto dependencyGroup = catalog["dependencyGroups"][0];
-    if (!dependencyGroup.contains("dependencies")) return true;
-    
-    const auto dependencies = dependencyGroup["dependencies"];
-    for (auto it = dependencies.begin(); it != dependencies.end(); ++it) {
-        auto id = it.value()["id"].get<std::string>();
-        utils::to_lower(id);
-        
-        if (!utils::has_prefix(id, "altv.")) continue;
-        if (!ValidateNuGet(httpClient, id, version)) {
-            Log::Error << "Failed to validate NuGet " << id << " " << version << Log::Endl;
-            return false;
-        }
     }
 
     return true;
 }
 
-void CoreClr::DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName, const std::string& version) {
+void CoreClr::DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName, const std::string& version, nlohmann::json json) {
     if (!_nuget) _nuget.emplace(httpClient);
     Log::Info << "Downloading NuGet package " << packageName << " " << version << Log::Endl;
+    
+    if (json == nullptr) json = _nuget->GetCatalog(packageName, version);
     
     auto librariesDirectoryPath = GetLibrariesDirectoryPath();
     if (!fs::exists(librariesDirectoryPath)) fs::create_directories(librariesDirectoryPath);
@@ -226,19 +232,8 @@ void CoreClr::DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::st
     std::ofstream file(nupkgPath, std::ios::binary);
     file.write(content.data(), content.size());
     file.close();
-}
-
-void CoreClr::DownloadNuGets(alt::Ref<alt::IHttpClient> httpClient) {
-    if (!_nuget) _nuget.emplace(httpClient);
     
-    const auto librariesDirectoryPath = GetLibrariesDirectoryPath();
-    if (!fs::exists(librariesDirectoryPath)) fs::create_directories(librariesDirectoryPath);
-    
-    const auto version = GetLatestNugetVersion(httpClient, "altv.net.client");
-    const auto catalog = _nuget->GetCatalog("altv.net.client", version);
-    DownloadNuGet(httpClient, "altv.net.client", version);
-    
-    const auto dependencyGroup = catalog["dependencyGroups"][0];
+    const auto dependencyGroup = json["dependencyGroups"][0];
     if (!dependencyGroup.contains("dependencies")) return;
     
     const auto dependencies = dependencyGroup["dependencies"];
@@ -249,6 +244,17 @@ void CoreClr::DownloadNuGets(alt::Ref<alt::IHttpClient> httpClient) {
         if (!utils::has_prefix(id, "altv.")) continue;
         DownloadNuGet(httpClient, id, version);
     }
+}
+
+void CoreClr::DownloadNuGets(alt::Ref<alt::IHttpClient> httpClient) {
+    if (!_nuget) _nuget.emplace(httpClient);
+    
+    const auto librariesDirectoryPath = GetLibrariesDirectoryPath();
+    if (!fs::exists(librariesDirectoryPath)) fs::create_directories(librariesDirectoryPath);
+    
+    const auto version = GetLatestNugetVersion(httpClient, "altv.net.client");
+    const auto catalog = _nuget->GetCatalog("altv.net.client", version);
+    DownloadNuGet(httpClient, "altv.net.client", version, catalog);
 }
 
 void CoreClr::Update() {
