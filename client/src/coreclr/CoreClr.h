@@ -46,7 +46,7 @@ private:
     std::string GetLatestNugetVersion(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName);
     void DownloadRuntime(alt::Ref<alt::IHttpClient> httpClient) const;
     void DownloadHost(alt::Ref<alt::IHttpClient> httpClient) const;
-    void DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName, const std::string& version);
+    void DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName, const std::string& version, nlohmann::json json = nullptr);
     void DownloadNuGets(alt::Ref<alt::IHttpClient> httpClient);
     
     void InitializeCoreclr();

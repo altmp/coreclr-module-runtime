@@ -269,6 +269,13 @@ EXPORT_CLIENT uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle);
 EXPORT_CLIENT float Vehicle_GetWheelSpeed(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_GetSpeedVector(alt::IVehicle* vehicle, vector3_t& vector);
 
+EXPORT_CLIENT float Vehicle_GetEngineTemperature(alt::IVehicle* vehicle);
+EXPORT_CLIENT float Vehicle_GetFuelLevel(alt::IVehicle* vehicle);
+EXPORT_CLIENT float Vehicle_GetOilLevel(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetEngineTemperature(alt::IVehicle* vehicle, float value);
+EXPORT_CLIENT void Vehicle_SetFuelLevel(alt::IVehicle* vehicle, float value);
+EXPORT_CLIENT void Vehicle_SetOilLevel(alt::IVehicle* vehicle, float value);
+
 EXPORT_CLIENT uint8_t Vehicle_Handling_GetByModelHash(alt::ICore* core, uint32_t modelHash, alt::IHandlingData*& handling);
 EXPORT_CLIENT void Vehicle_GetHandling(alt::IVehicle* vehicle, alt::IHandlingData*& handling);
 EXPORT_CLIENT void Vehicle_ReplaceHandling(alt::IVehicle* vehicle);

@@ -846,6 +846,30 @@ void Vehicle_GetSpeedVector(alt::IVehicle* vehicle, vector3_t& vector) {
     vector.y = speed[1];
     vector.z = speed[2];
 }
+    
+float Vehicle_GetEngineTemperature(alt::IVehicle* vehicle) {
+    return vehicle->GetEngineTemperature();
+}
+
+float Vehicle_GetFuelLevel(alt::IVehicle* vehicle) {
+    return vehicle->GetFuelLevel();
+}
+
+float Vehicle_GetOilLevel(alt::IVehicle* vehicle) {
+    return vehicle->GetOilLevel();
+}
+
+void Vehicle_SetEngineTemperature(alt::IVehicle* vehicle, float value) {
+    vehicle->SetEngineTemperature(value);
+}
+
+void Vehicle_SetFuelLevel(alt::IVehicle* vehicle, float value) {
+    vehicle->SetFuelLevel(value);
+}
+
+void Vehicle_SetOilLevel(alt::IVehicle* vehicle, float value) {
+    vehicle->SetOilLevel(value);
+}
 
 
 void Vehicle_GetHandling(alt::IVehicle* vehicle, alt::IHandlingData*& handling) {
