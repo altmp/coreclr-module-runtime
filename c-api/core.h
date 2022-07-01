@@ -197,6 +197,8 @@ EXPORT_CLIENT void Core_SetConfigFlag(alt::ICore* core, const char* flag, uint8_
 EXPORT_CLIENT uint8_t Core_AreGameControlsEnabled(alt::ICore* core);
 EXPORT_CLIENT void Core_ToggleGameControls(alt::ICore* core, alt::IResource* resource, uint8_t state);
 EXPORT_CLIENT void Core_ToggleRmlControls(alt::ICore* core, uint8_t state);
+EXPORT_CLIENT uint8_t Core_AreRmlControlsEnabled(alt::ICore* core);
+EXPORT_CLIENT uint8_t Core_AreVoiceControlsEnabled(alt::ICore* core);
 EXPORT_CLIENT void Core_ToggleVoiceControls(alt::ICore* core, uint8_t state);
 
 EXPORT_CLIENT void Core_GetCursorPos(alt::ICore* core, vector2_t& out, uint8_t normalized);
