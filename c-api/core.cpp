@@ -1054,5 +1054,8 @@ void Core_ClearFocusOverride(alt::ICore* core) {
 }
 
 
+void Core_LoadDefaultIpls(alt::ICore* core) {
+    core->LoadDefaultIpls();
+}
 
 #endif

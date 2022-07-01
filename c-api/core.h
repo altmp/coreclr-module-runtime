@@ -263,6 +263,7 @@ EXPORT_CLIENT void* Core_GetFocusOverrideEntity(alt::ICore* core, uint8_t& type)
 EXPORT_CLIENT void Core_OverrideFocusPosition(alt::ICore* core, vector3_t pos, vector3_t offset);
 EXPORT_CLIENT void Core_OverrideFocusEntity(alt::ICore* core, alt::IEntity* entity);
 EXPORT_CLIENT void Core_ClearFocusOverride(alt::ICore* core);
+EXPORT_CLIENT void Core_LoadDefaultIpls(alt::ICore* core);
 
 #ifdef __cplusplus
 }
