@@ -800,6 +800,31 @@ uint8_t Vehicle_GetBoatAnchor(alt::IVehicle* vehicle) {
 void Vehicle_SetBoatAnchor(alt::IVehicle* vehicle, uint8_t state) {
   vehicle->SetBoatAnchorActive(state);
 }
+
+
+uint8_t Vehicle_GetLightState(alt::IVehicle* vehicle) {
+    return vehicle->GetLightState();
+}
+
+void Vehicle_SetLightState(alt::IVehicle* vehicle, uint8_t value) {
+    vehicle->SetLightState(value);
+}
+    
+uint8_t Vehicle_HasTimedExplosion(alt::IVehicle* vehicle) {
+    return vehicle->HasTimedExplosion();
+}
+
+alt::IPlayer* Vehicle_GetTimedExplosionCulprit(alt::IVehicle* vehicle) {
+    return vehicle->GetTimedExplosionCulprit().Get();
+}
+
+uint32_t Vehicle_GetTimedExplosionTime(alt::IVehicle* vehicle) {
+    return vehicle->GetTimedExplosionTime();
+}
+
+void Vehicle_SetTimedExplosion(alt::IVehicle* vehicle, uint8_t state, alt::IPlayer* culprit, uint32_t time) {
+    vehicle->SetTimedExplosion(state, culprit, time);
+}
 #endif
 
 #ifdef ALT_CLIENT_API

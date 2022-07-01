@@ -152,6 +152,15 @@ uint32_t Player_GetCurrentAnimationName(alt::IPlayer* player) {
     return player->GetCurrentAnimationName();
 }
 
+float Player_GetForwardSpeed(alt::IPlayer* player) {
+    return player->GetForwardSpeed();
+}
+
+float Player_GetStrafeSpeed(alt::IPlayer* player) {
+    return player->GetStrafeSpeed();
+}
+EXPORT_SHARED float Player_GetStrafeSpeed(alt::IPlayer* player);
+
 #ifdef ALT_SERVER_API
 alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key) {
     return new alt::MValueConst(player->GetLocalMetaData(key));
@@ -522,6 +531,11 @@ void Player_SetHairHighlightColor(alt::IPlayer* player, uint8_t hairHighlightCol
 
 uint8_t Player_GetHairHighlightColor(alt::IPlayer* player) {
     return player->GetHairHighlightColor();
+}
+
+
+const char* Player_GetDiscordId(alt::IPlayer* player, int32_t& size) {
+    return AllocateString(player->GetDiscordId(), size);
 }
 #endif
 

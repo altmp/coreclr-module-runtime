@@ -254,6 +254,14 @@ EXPORT_SERVER void Vehicle_SetTrainLinkedToForwardId(alt::IVehicle* vehicle, alt
 EXPORT_SERVER uint8_t Vehicle_GetBoatAnchor(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetBoatAnchor(alt::IVehicle* vehicle, uint8_t state);
 
+EXPORT_SERVER uint8_t Vehicle_GetLightState(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetLightState(alt::IVehicle* vehicle, uint8_t value);
+    
+EXPORT_SERVER uint8_t Vehicle_HasTimedExplosion(alt::IVehicle* vehicle);
+EXPORT_SERVER alt::IPlayer* Vehicle_GetTimedExplosionCulprit(alt::IVehicle* vehicle);
+EXPORT_SERVER uint32_t Vehicle_GetTimedExplosionTime(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetTimedExplosion(alt::IVehicle* vehicle, uint8_t state, alt::IPlayer* culprit, uint32_t time);
+
 
 EXPORT_CLIENT uint16_t Vehicle_GetGear(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetGear(alt::IVehicle* vehicle, uint16_t value);
