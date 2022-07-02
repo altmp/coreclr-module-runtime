@@ -2,7 +2,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include "utils.h"
-#include "../../../cpp-sdk/ICore.h"
+#include "cpp-sdk/ICore.h"
 #include <coreclr.h>
 #include <filesystem>
 #include <optional>
@@ -39,14 +39,14 @@ private:
     unsigned int _domainId = 0;
     std::optional<NuGet> _nuget;
 
-    [[nodiscard]] bool ValidateRuntime(nlohmann::basic_json<> updateJson, alt::Ref<alt::IHttpClient> httpClient) const;
-    [[nodiscard]] bool ValidateHost(nlohmann::basic_json<> updateJson) const;
-    [[nodiscard]] bool ValidateNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& package, const std::string& version, nlohmann::json::basic_json<> json = nullptr);
+    [[nodiscard]] bool ValidateRuntime(nlohmann::json updateJson, alt::Ref<alt::IHttpClient> httpClient) const;
+    [[nodiscard]] bool ValidateHost(nlohmann::json updateJson) const;
+    [[nodiscard]] bool ValidateNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& package, const std::string& version, nlohmann::json json = nullptr);
     [[nodiscard]] bool ValidateNuGets(alt::Ref<alt::IHttpClient> httpClient);
     std::string GetLatestNugetVersion(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName);
     void DownloadRuntime(alt::Ref<alt::IHttpClient> httpClient) const;
     void DownloadHost(alt::Ref<alt::IHttpClient> httpClient) const;
-    void DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName, const std::string& version);
+    void DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName, const std::string& version, nlohmann::json json = nullptr);
     void DownloadNuGets(alt::Ref<alt::IHttpClient> httpClient);
     
     void InitializeCoreclr();

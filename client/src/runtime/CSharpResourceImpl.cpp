@@ -10,6 +10,7 @@
 #include <iomanip>
 #include "natives.h"
 #include "exceptions/LoadException.h"
+#include "cpp-sdk/events/CPlayerChangeAnimationEvent.h"
 
 using namespace std;
 
@@ -163,6 +164,15 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             OnPlayerChangeVehicleSeatDelegate(playerChangeVehicleSeatEvent->GetTarget().Get(),
                                          playerChangeVehicleSeatEvent->GetOldSeat(),
                                          playerChangeVehicleSeatEvent->GetNewSeat());
+            break;
+        }
+        case alt::CEvent::Type::PLAYER_CHANGE_ANIMATION_EVENT: {
+            auto playerAnimationChangeEvent = (alt::CPlayerChangeAnimationEvent *) ev;
+            auto oldDict = playerAnimationChangeEvent->GetOldAnimationDict();
+            auto oldName = playerAnimationChangeEvent->GetOldAnimationName();
+            auto newDict = playerAnimationChangeEvent->GetNewAnimationDict();
+            auto newName = playerAnimationChangeEvent->GetNewAnimationName();
+            OnPlayerChangeAnimationDelegate(playerAnimationChangeEvent->GetTarget().Get(), oldDict, newDict, oldName, newName);
             break;
         }
 #pragma endregion
@@ -478,6 +488,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnKeyDownDelegate = [](auto var) {};
 
     OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerChangeAnimationDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
 
     OnConnectionCompleteDelegate = []() {};
 

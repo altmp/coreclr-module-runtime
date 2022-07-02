@@ -6,7 +6,7 @@
 #pragma clang diagnostic ignored "-Wswitch"
 #endif
 
-#include "../../cpp-sdk/SDK.h"
+#include "cpp-sdk/SDK.h"
 #include "data/config_node_data.h"
 #include "utils/export.h"
 

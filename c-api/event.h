@@ -6,7 +6,7 @@
 #pragma clang diagnostic ignored "-Wswitch"
 #endif
 
-#include "../../cpp-sdk/SDK.h"
+#include "cpp-sdk/SDK.h"
 #include "data/types.h"
 #include "utils/export.h"
 
@@ -60,7 +60,8 @@ EXPORT_CLIENT void Event_SetKeyUpDelegate(CSharpResourceImpl* resource, /** Clie
 EXPORT_CLIENT void Event_SetKeyDownDelegate(CSharpResourceImpl* resource, /** ClientEvents.KeyDownModuleDelegate */ KeyDownDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetPlayerChangeVehicleSeatDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerChangeVehicleSeatModuleDelegate */ PlayerChangeVehicleSeatDelegate_t delegate);
-
+EXPORT_CLIENT void Event_SetPlayerChangeAnimationDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerChangeAnimationModuleDelegate */ PlayerChangeAnimationDelegate_t delegate);
+    
 EXPORT_CLIENT void Event_SetConnectionCompleteDelegate(CSharpResourceImpl* resource, /** ClientEvents.ConnectionCompleteModuleDelegate */ ConnectionCompleteDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetGlobalMetaChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.GlobalMetaChangeModuleDelegate */ GlobalMetaChangeDelegate_t delegate);

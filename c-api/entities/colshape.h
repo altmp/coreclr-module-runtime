@@ -6,7 +6,7 @@
 #pragma clang diagnostic ignored "-Wswitch"
 #endif
 
-#include "../../cpp-sdk/SDK.h"
+#include "cpp-sdk/SDK.h"
 #include "../data/types.h"
 #include "../utils/export.h"
 
@@ -22,6 +22,7 @@ extern "C"
 EXPORT_SHARED alt::IWorldObject* ColShape_GetWorldObject(alt::IColShape* colShape);
 
 EXPORT_SHARED uint8_t ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity);
+EXPORT_SHARED uint8_t ColShape_IsEntityIdIn(alt::IColShape* colShape, uint16_t id);
 EXPORT_SHARED uint8_t ColShape_IsPointIn(alt::IColShape* colShape, vector3_t point);
 
 EXPORT_SERVER uint8_t ColShape_GetColShapeType(alt::IColShape* colShape);

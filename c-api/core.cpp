@@ -175,6 +175,7 @@ void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
     type = (uint8_t) entity->GetType();
     switch (entity->GetType()) {
         case alt::IBaseObject::Type::PLAYER:
+        case alt::IBaseObject::Type::LOCAL_PLAYER:
             return dynamic_cast<alt::IPlayer*>(entity);
         case alt::IBaseObject::Type::VEHICLE:
             return dynamic_cast<alt::IVehicle*>(entity);
@@ -258,6 +259,10 @@ const char* Core_FileRead(alt::ICore* core, const char* path, int32_t& size) {
 
 alt::ICore* Core_GetCoreInstance() {
     return &alt::ICore::Instance();
+}
+
+void Core_ToggleEvent(alt::ICore* core, uint8_t event, uint8_t state) {
+    return core->ToggleEvent((alt::CEvent::Type) event, state);
 }
 
 #ifdef ALT_SERVER_API
@@ -789,7 +794,15 @@ void Core_ToggleGameControls(alt::ICore* core, alt::IResource* resource, uint8_t
 }
 
 void Core_ToggleRmlControls(alt::ICore* core, uint8_t state) {
-    core->ToggleRmlControl(state);
+    core->ToggleRmlControls(state);
+}
+
+uint8_t Core_AreRmlControlsEnabled(alt::ICore* core) {
+    return core->AreRmlControlsEnabled();
+}
+
+uint8_t Core_AreVoiceControlsEnabled(alt::ICore* core) {
+    return core->AreVoiceControlsEnabled();
 }
 
 void Core_ToggleVoiceControls(alt::ICore* core, uint8_t state) {
@@ -1002,5 +1015,55 @@ const char* Core_GetClientPath(alt::ICore* core, int32_t& size) {
     return AllocateString(core->GetClientPath(), size);
 }
 
+
+uint8_t Core_IsFocusOverriden(alt::ICore* core) {
+    return core->IsFocusOverriden();
+}
+
+void Core_GetFocusOverridePos(alt::ICore* core, vector3_t& pos) {
+    auto vec = core->GetFocusOverridePos();
+    pos.x = vec[0];
+    pos.y = vec[1];
+    pos.z = vec[2];
+}
+
+void Core_GetFocusOverrideOffset(alt::ICore* core, vector3_t& offset) {
+    auto vec = core->GetFocusOverrideOffset();
+    offset.x = vec[0];
+    offset.y = vec[1];
+    offset.z = vec[2];
+}
+
+void* Core_GetFocusOverrideEntity(alt::ICore* core, uint8_t& type) {
+    auto entity = core->GetFocusOverrideEntity().Get();
+    if (entity == nullptr) return nullptr;
+    type = (uint8_t) entity->GetType();
+    switch (entity->GetType()) {
+        case alt::IBaseObject::Type::PLAYER:
+        case alt::IBaseObject::Type::LOCAL_PLAYER:
+            return dynamic_cast<alt::IPlayer*>(entity);
+        case alt::IBaseObject::Type::VEHICLE:
+            return dynamic_cast<alt::IVehicle*>(entity);
+        default:
+            return nullptr;
+    }
+}
+
+void Core_OverrideFocusPosition(alt::ICore* core, vector3_t pos, vector3_t offset) {
+    core->OverrideFocusPosition({ pos.x, pos.y, pos.z }, { offset.x, offset.y, offset.z });
+}
+
+void Core_OverrideFocusEntity(alt::ICore* core, alt::IEntity* entity) {
+    core->OverrideFocusEntity(entity);
+}
+
+void Core_ClearFocusOverride(alt::ICore* core) {
+    core->ClearFocusOverride();
+}
+
+
+void Core_LoadDefaultIpls(alt::ICore* core) {
+    core->LoadDefaultIpls();
+}
 
 #endif

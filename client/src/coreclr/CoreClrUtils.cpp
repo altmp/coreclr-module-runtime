@@ -1,6 +1,6 @@
 ﻿#include <filesystem>
 
-#include "CoreCLR.h"
+#include "CoreClr.h"
 
 #ifdef WIN32
 #define LIST_SEPARATOR ";"
