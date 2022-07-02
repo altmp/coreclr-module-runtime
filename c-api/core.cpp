@@ -794,7 +794,15 @@ void Core_ToggleGameControls(alt::ICore* core, alt::IResource* resource, uint8_t
 }
 
 void Core_ToggleRmlControls(alt::ICore* core, uint8_t state) {
-    core->ToggleRmlControl(state);
+    core->ToggleRmlControls(state);
+}
+
+uint8_t Core_AreRmlControlsEnabled(alt::ICore* core) {
+    return core->AreRmlControlsEnabled();
+}
+
+uint8_t Core_AreVoiceControlsEnabled(alt::ICore* core) {
+    return core->AreVoiceControlsEnabled();
 }
 
 void Core_ToggleVoiceControls(alt::ICore* core, uint8_t state) {
@@ -1054,5 +1062,8 @@ void Core_ClearFocusOverride(alt::ICore* core) {
 }
 
 
+void Core_LoadDefaultIpls(alt::ICore* core) {
+    core->LoadDefaultIpls();
+}
 
 #endif
