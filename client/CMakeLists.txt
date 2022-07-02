@@ -27,8 +27,11 @@ set(CSHARP_MODULE_DEFS
 file(GLOB_RECURSE PROJECT_SOURCE_FILES "src/*.h" "src/*.cpp")
 file(GLOB_RECURSE CAPI_FILES "../c-api/*.h" "../c-api/*.cpp")
 
-if(DYNAMIC_BUILD)
+if(WIN32 AND (MSVC OR CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
+    add_definitions(/MP)
+endif()
 
+if(DYNAMIC_BUILD)
     set(SDK_PROJECT_NAME csharp-alt-sdk)
     include(../cpp-sdk/CMakeLists.txt)
     
