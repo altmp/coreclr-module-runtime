@@ -175,6 +175,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             OnPlayerChangeAnimationDelegate(playerAnimationChangeEvent->GetTarget().Get(), oldDict, newDict, oldName, newName);
             break;
         }
+        case alt::CEvent::Type::PLAYER_CHANGE_INTERIOR_EVENT: {
+            auto playerChangeInteriorEvent = (alt::CPlayerChangeInteriorEvent *) ev;
+            auto oldInteriorLocation = playerChangeInteriorEvent->GetOldInteriorLocation();
+            auto newInteriorLocation = playerChangeInteriorEvent->GetNewInteriorLocation();
+            OnPlayerChangeInteriorDelegate(playerChangeInteriorEvent->GetTarget().Get(), oldInteriorLocation, newInteriorLocation);
+            break;
+        }
 #pragma endregion
 #pragma region Entity events
         case alt::CEvent::Type::GAME_ENTITY_CREATE: {
@@ -489,6 +496,7 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerChangeAnimationDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+    OnPlayerChangeInteriorDelegate = [](auto var, auto var2, auto var3) {};
 
     OnConnectionCompleteDelegate = []() {};
 

@@ -1,6 +1,7 @@
 #include "CSharpResourceImpl.h"
 #include "../../cpp-sdk/events/CPlayerRequestControlEvent.h"
 #include "../../cpp-sdk/events/CPlayerChangeAnimationEvent.h"
+#include "../../cpp-sdk/events/CPlayerChangeInteriorEvent.h"
 
 CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource)
         : alt::IResource::Impl() {
@@ -359,6 +360,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                 animationEvent->GetNewAnimationDict(),
                 animationEvent->GetOldAnimationName(),
                 animationEvent->GetNewAnimationName());
+        }
+        break;
+        case alt::CEvent::Type::PLAYER_CHANGE_INTERIOR_EVENT: {
+            auto interiorEvent = (alt::CPlayerChangeInteriorEvent*) ev;
+            OnPlayerChangeInteriorDelegate(interiorEvent->GetTarget().Get(),
+                interiorEvent->GetOldInteriorLocation(),
+                interiorEvent->GetNewInteriorLocation());
         }
         break;
         case alt::CEvent::Type::CONSOLE_COMMAND_EVENT: {
@@ -826,6 +834,10 @@ void CSharpResourceImpl_SetPlayerRequestControlDelegate(CSharpResourceImpl* reso
 
 void CSharpResourceImpl_SetPlayerChangeAnimationDelegate(CSharpResourceImpl* resource, PlayerChangeAnimationDelegate_t delegate) {
     resource->OnPlayerChangeAnimationDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(CSharpResourceImpl* resource, PlayerChangeInteriorDelegate_t delegate) {
+    resource->OnPlayerChangeInteriorDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files) {
