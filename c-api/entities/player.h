@@ -63,6 +63,8 @@ EXPORT_SHARED uint8_t Player_IsFlashlightActive(alt::IPlayer* player);
 EXPORT_SHARED uint8_t Player_IsSpawned(alt::IPlayer* player);
 EXPORT_SHARED uint32_t Player_GetCurrentAnimationDict(alt::IPlayer* player);
 EXPORT_SHARED uint32_t Player_GetCurrentAnimationName(alt::IPlayer* player);
+
+EXPORT_SHARED uint32_t GetInteriorLocation((alt::IPlayer* player);
     
 EXPORT_SHARED float Player_GetForwardSpeed(alt::IPlayer* player);
 EXPORT_SHARED float Player_GetStrafeSpeed(alt::IPlayer* player);
