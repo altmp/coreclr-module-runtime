@@ -61,6 +61,7 @@ EXPORT_CLIENT void Event_SetKeyDownDelegate(CSharpResourceImpl* resource, /** Cl
 
 EXPORT_CLIENT void Event_SetPlayerChangeVehicleSeatDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerChangeVehicleSeatModuleDelegate */ PlayerChangeVehicleSeatDelegate_t delegate);
 EXPORT_CLIENT void Event_SetPlayerChangeAnimationDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerChangeAnimationModuleDelegate */ PlayerChangeAnimationDelegate_t delegate);
+EXPORT_CLIENT void Event_SetPlayerChangeInteriorDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerChangeInteriorModuleDelegate */ PlayerChangeInteriorDelegate_t delegate);
     
 EXPORT_CLIENT void Event_SetConnectionCompleteDelegate(CSharpResourceImpl* resource, /** ClientEvents.ConnectionCompleteModuleDelegate */ ConnectionCompleteDelegate_t delegate);
 
