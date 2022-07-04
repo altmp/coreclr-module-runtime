@@ -167,7 +167,7 @@ EXPORT_SERVER uint8_t Player_GetHairColor(alt::IPlayer* player);
 EXPORT_SERVER void Player_SetHairHighlightColor(alt::IPlayer* player, uint8_t hairHighlightColor);
 EXPORT_SERVER uint8_t Player_GetHairHighlightColor(alt::IPlayer* player);
     
-EXPORT_SERVER uint8_t Player_GetDiscordId(alt::IPlayer* player);
+EXPORT_SERVER const char* Player_GetDiscordId(alt::IPlayer* player, int32_t& size);
 
 EXPORT_CLIENT uint8_t Player_IsTalking(alt::IPlayer* player);
 EXPORT_CLIENT float Player_GetMicLevel(alt::IPlayer* player);
