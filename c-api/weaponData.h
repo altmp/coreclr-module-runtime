@@ -41,6 +41,7 @@ EXPORT_CLIENT float WeaponData_GetDamage(alt::IWeaponData* weaponData);
 EXPORT_CLIENT uint32_t WeaponData_GetClipSize(alt::IWeaponData* weaponData);
 EXPORT_CLIENT float WeaponData_GetTimeBetweenShots(alt::IWeaponData* weaponData);
 EXPORT_CLIENT float WeaponData_GetHeadshotDamageModifier(alt::IWeaponData* weaponData);
+EXPORT_CLIENT float WeaponData_GetPlayerDamageModifier(alt::IWeaponData* weaponData);
 EXPORT_CLIENT void WeaponData_SetRecoilShakeAmplitude(alt::IWeaponData* weaponData, float val);
 EXPORT_CLIENT void WeaponData_SetRecoilAccuracyMax(alt::IWeaponData* weaponData, float val);
 EXPORT_CLIENT void WeaponData_SetRecoilAccuracyToAllowHeadshotPlayer(alt::IWeaponData* weaponData, float val);
@@ -52,6 +53,7 @@ EXPORT_CLIENT void WeaponData_SetAccuracySpread(alt::IWeaponData* weaponData, fl
 EXPORT_CLIENT void WeaponData_SetRange(alt::IWeaponData* weaponData, float val);
 EXPORT_CLIENT void WeaponData_SetDamage(alt::IWeaponData* weaponData, float val);
 EXPORT_CLIENT void WeaponData_SetHeadshotDamageModifier(alt::IWeaponData* weaponData, float val);
+EXPORT_CLIENT void WeaponData_SetPlayerDamageModifier(alt::IWeaponData* weaponData, float val);
 EXPORT_CLIENT void WeaponData_Dispose(alt::IWeaponData* weaponData);
 EXPORT_CLIENT uint8_t WeaponData_GetByWeaponHash(alt::ICore* core, uint32_t modelHash, alt::IWeaponData*& weaponData);
 
