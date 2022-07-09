@@ -62,6 +62,10 @@ float WeaponData_GetHeadshotDamageModifier(alt::IWeaponData* weaponData) {
     return weaponData->GetHeadshotDamageModifier();
 }
 
+float WeaponData_GetPlayerDamageModifier(alt::IWeaponData* weaponData) {
+    return weaponData->GetPlayerDamageModifier();
+}
+
 void WeaponData_SetRecoilShakeAmplitude(alt::IWeaponData* weaponData, float val) {
     weaponData->SetRecoilShakeAmplitude(val);
 }
@@ -104,6 +108,10 @@ void WeaponData_SetDamage(alt::IWeaponData* weaponData, float val) {
 
 void WeaponData_SetHeadshotDamageModifier(alt::IWeaponData* weaponData, float val) {
     weaponData->SetHeadshotDamageModifier(val);
+}
+
+void WeaponData_SetPlayerDamageModifier(alt::IWeaponData* weaponData, float val) {
+    weaponData->SetPlayerDamageModifier(val);
 }
 
 void WeaponData_Dispose(alt::IWeaponData* weaponData) {
