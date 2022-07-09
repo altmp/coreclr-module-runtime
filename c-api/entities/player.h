@@ -63,8 +63,6 @@ EXPORT_SHARED uint8_t Player_IsFlashlightActive(alt::IPlayer* player);
 EXPORT_SHARED uint8_t Player_IsSpawned(alt::IPlayer* player);
 EXPORT_SHARED uint32_t Player_GetCurrentAnimationDict(alt::IPlayer* player);
 EXPORT_SHARED uint32_t Player_GetCurrentAnimationName(alt::IPlayer* player);
-
-EXPORT_SHARED uint32_t Player_GetInteriorLocation(alt::IPlayer* player);
     
 EXPORT_SHARED float Player_GetForwardSpeed(alt::IPlayer* player);
 EXPORT_SHARED float Player_GetStrafeSpeed(alt::IPlayer* player);
@@ -168,6 +166,8 @@ EXPORT_SERVER uint8_t Player_GetHairColor(alt::IPlayer* player);
 
 EXPORT_SERVER void Player_SetHairHighlightColor(alt::IPlayer* player, uint8_t hairHighlightColor);
 EXPORT_SERVER uint8_t Player_GetHairHighlightColor(alt::IPlayer* player);
+    
+EXPORT_SERVER uint32_t Player_GetInteriorLocation(alt::IPlayer* player);
     
 EXPORT_SERVER const char* Player_GetDiscordId(alt::IPlayer* player, int32_t& size);
 
