@@ -342,6 +342,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 
 void CSharpResourceImpl::OnTick()
 {
+    auto scope = resource->PushNativesScope();
     OnTickDelegate();
 }
 
