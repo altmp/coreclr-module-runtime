@@ -262,8 +262,8 @@ EXPORT_SERVER alt::IPlayer* Vehicle_GetTimedExplosionCulprit(alt::IVehicle* vehi
 EXPORT_SERVER uint32_t Vehicle_GetTimedExplosionTime(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetTimedExplosion(alt::IVehicle* vehicle, uint8_t state, alt::IPlayer* culprit, uint32_t time);
 
-EXPORT_SERVER bool Vehicle_IsTowingDisabled(alt::IVehicle* vehicle);
-EXPORT_SERVER void Vehicle_SetDisableTowing(alt::IVehicle* vehicle, bool state);
+EXPORT_SERVER uint8_t Vehicle_IsTowingDisabled(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetDisableTowing(alt::IVehicle* vehicle, uint8_t state);
 
 EXPORT_SERVER float Vehicle_GetRocketRefuelSpeed(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetRocketRefuelSpeed(alt::IVehicle* vehicle, float rocketRefuleSpeed);
@@ -277,14 +277,14 @@ EXPORT_SERVER void Vehicle_SetCounterMeasureCount(alt::IVehicle* vehicle, uint32
 EXPORT_SERVER float Vehicle_GetScriptMaxSpeed(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetScriptMaxSpeed(alt::IVehicle* vehicle, float scriptMaxSpeed);
 
-EXPORT_SERVER bool Vehicle_GetWeaponsDisabled(alt::IVehicle* vehicle);
-EXPORT_SERVER void Vehicle_SetWeaponsDisabled(alt::IVehicle* vehicle, bool state);
+EXPORT_SERVER uint8_t Vehicle_GetWeaponsDisabled(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetWeaponsDisabled(alt::IVehicle* vehicle, uint8_t state);
 
 EXPORT_SERVER int32_t Vehicle_GetWeaponCapacity(alt::IVehicle* vehicle, uint8_t index);
 EXPORT_SERVER void Vehicle_SetWeaponCapacity(alt::IVehicle* vehicle, uint8_t index, int32_t state);
 
-EXPORT_SERVER bool Vehicle_GetHybridExtraActive(alt::IVehicle* vehicle);
-EXPORT_SERVER void Vehicle_SetHybridExtraActive(alt::IVehicle* vehicle, bool state);
+EXPORT_SERVER uint8_t Vehicle_GetHybridExtraActive(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetHybridExtraActive(alt::IVehicle* vehicle, uint8_t state);
 
 EXPORT_SERVER uint8_t Vehicle_GetHybridExtraState(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t state);
