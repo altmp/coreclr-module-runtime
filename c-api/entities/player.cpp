@@ -492,7 +492,7 @@ void Player_GetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id, rgba_t &h
 void Player_SetHeadBlendData(alt::IPlayer* player, uint32_t shapeFirstID, uint32_t shapeSecondID, uint32_t shapeThirdID,
                              uint32_t skinFirstID, uint32_t skinSecondID, uint32_t skinThirdID,
                              float shapeMix, float skinMix, float thirdMix) {
-    return player->SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID, skinThirdID, shapeMix, skinMix, thirdMix);
+    player->SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID, skinThirdID, shapeMix, skinMix, thirdMix);
 }
 
 void Player_GetHeadBlendData(alt::IPlayer* player, head_blend_data_t &headBlendData) {
@@ -518,7 +518,7 @@ uint16_t Player_GetEyeColor(alt::IPlayer* player) {
 }
 
 void Player_SetHairColor(alt::IPlayer* player, uint8_t hairColor) {
-    return player->SetHairColor(hairColor);
+    player->SetHairColor(hairColor);
 }
 
 uint8_t Player_GetHairColor(alt::IPlayer* player) {
@@ -526,7 +526,7 @@ uint8_t Player_GetHairColor(alt::IPlayer* player) {
 }
 
 void Player_SetHairHighlightColor(alt::IPlayer* player, uint8_t hairHighlightColor) {
-    return player->SetHairHighlightColor(hairHighlightColor);
+    player->SetHairHighlightColor(hairHighlightColor);
 }
 
 uint8_t Player_GetHairHighlightColor(alt::IPlayer* player) {
@@ -539,6 +539,14 @@ const char* Player_GetDiscordId(alt::IPlayer* player, int32_t& size) {
 
 uint32_t Player_GetInteriorLocation(alt::IPlayer* player) {
     return player->GetInteriorLocation();
+}
+
+uint32_t Player_GetLastDamagedBodyPart(alt::IPlayer* player) {
+    return player->GetLastDamagedBodyPart();
+}
+
+void Player_SetLastDamagedBodyPart(alt::IPlayer* player, uint8_t bodyPart) {
+    player->SetLastDamagedBodyPart(bodyPart);
 }
 
 #endif
