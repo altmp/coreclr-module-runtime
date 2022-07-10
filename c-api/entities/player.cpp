@@ -545,7 +545,7 @@ uint32_t Player_GetLastDamagedBodyPart(alt::IPlayer* player) {
     return player->GetLastDamagedBodyPart();
 }
 
-void Player_SetLastDamagedBodyPart(alt::IPlayer* player, uint8_t bodyPart) {
+void Player_SetLastDamagedBodyPart(alt::IPlayer* player, uint32_t bodyPart) {
     player->SetLastDamagedBodyPart(bodyPart);
 }
 
