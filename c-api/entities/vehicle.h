@@ -262,6 +262,39 @@ EXPORT_SERVER alt::IPlayer* Vehicle_GetTimedExplosionCulprit(alt::IVehicle* vehi
 EXPORT_SERVER uint32_t Vehicle_GetTimedExplosionTime(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetTimedExplosion(alt::IVehicle* vehicle, uint8_t state, alt::IPlayer* culprit, uint32_t time);
 
+EXPORT_SERVER bool Vehicle_IsTowingDisabled(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetDisableTowing(alt::IVehicle* vehicle, bool state);
+
+EXPORT_SERVER float Vehicle_GetRocketRefuelSpeed(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetRocketRefuelSpeed(alt::IVehicle* vehicle, float rocketRefuleSpeed);
+
+EXPORT_SERVER uint32_t Vehicle_GetBombCount(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetBombCount(alt::IVehicle* vehicle, uint32_t bombCount);
+
+EXPORT_SERVER uint32_t Vehicle_GetCounterMeasureCount(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetCounterMeasureCount(alt::IVehicle* vehicle, uint32_t counterMeasureCount);
+
+EXPORT_SERVER float Vehicle_GetScriptMaxSpeed(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetScriptMaxSpeed(alt::IVehicle* vehicle, float scriptMaxSpeed);
+
+EXPORT_SERVER bool Vehicle_GetWeaponsDisabled(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetWeaponsDisabled(alt::IVehicle* vehicle, bool state);
+
+EXPORT_SERVER int32_t Vehicle_GetWeaponCapacity(alt::IVehicle* vehicle, uint8_t index);
+EXPORT_SERVER void Vehicle_SetWeaponCapacity(alt::IVehicle* vehicle, uint8_t index, int32_t state);
+
+EXPORT_SERVER bool Vehicle_GetHybridExtraActive(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetHybridExtraActive(alt::IVehicle* vehicle, bool state);
+
+EXPORT_SERVER uint8_t Vehicle_GetHybridExtraState(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t state);
+
+EXPORT_SERVER float Vehicle_GetDamageModifier(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetDamageModifier(alt::IVehicle* vehicle, float state);
+
+EXPORT_SERVER float Vehicle_GetDamageMultiplier(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetDamageMultiplier(alt::IVehicle* vehicle, float state);
+
 
 EXPORT_CLIENT uint16_t Vehicle_GetGear(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetGear(alt::IVehicle* vehicle, uint16_t value);

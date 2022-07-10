@@ -825,6 +825,95 @@ uint32_t Vehicle_GetTimedExplosionTime(alt::IVehicle* vehicle) {
 void Vehicle_SetTimedExplosion(alt::IVehicle* vehicle, uint8_t state, alt::IPlayer* culprit, uint32_t time) {
     vehicle->SetTimedExplosion(state, culprit, time);
 }
+
+bool Vehicle_IsTowingDisabled(alt::IVehicle* vehicle) {
+    return vehicle->IsTowingDisabled();
+}
+
+void Vehicle_SetDisableTowing(alt::IVehicle* vehicle, bool state) {
+    vehicle->SetDisableTowing(state);
+}
+
+float Vehicle_GetRocketRefuelSpeed(alt::IVehicle* vehicle) {
+    return vehicle->GetRocketRefuelSpeed();
+}
+
+void Vehicle_SetRocketRefuelSpeed(alt::IVehicle* vehicle, float rocketRefuleSpeed) {
+    vehicle->SetRocketRefuelSpeed(rocketRefuleSpeed);
+}
+
+uint32_t Vehicle_GetBombCount(alt::IVehicle* vehicle) {
+    return vehicle->GetBombCount();
+}
+
+void Vehicle_SetBombCount(alt::IVehicle* vehicle, uint32_t bombCount) {
+    vehicle->SetBombCount(bombCount);
+}
+
+uint32_t Vehicle_GetCounterMeasureCount(alt::IVehicle* vehicle) {
+    return vehicle->GetCounterMeasureCount();
+}
+
+void Vehicle_SetCounterMeasureCount(alt::IVehicle* vehicle, uint32_t counterMeasureCount) {
+    vehicle->SetCounterMeasureCount(counterMeasureCount);
+}
+
+float Vehicle_GetScriptMaxSpeed(alt::IVehicle* vehicle) {
+    return vehicle->GetScriptMaxSpeed();
+}
+
+void Vehicle_SetScriptMaxSpeed(alt::IVehicle* vehicle, float scriptMaxSpeed) {
+    vehicle->SetScriptMaxSpeed(scriptMaxSpeed);
+}
+
+bool Vehicle_GetWeaponsDisabled(alt::IVehicle* vehicle) {
+    return vehicle->GetWeaponsDisabled();
+}
+
+void Vehicle_SetWeaponsDisabled(alt::IVehicle* vehicle, bool state) {
+    vehicle->SetWeaponsDisabled(state);
+}
+
+int32_t Vehicle_GetWeaponCapacity(alt::IVehicle* vehicle, uint8_t index) {
+    return vehicle->GetWeaponCapacity(index);
+}
+
+void Vehicle_SetWeaponCapacity(alt::IVehicle* vehicle, uint8_t index, int32_t state) {
+    vehicle->SetWeaponCapacity(index, state);
+}
+
+bool Vehicle_GetHybridExtraActive(alt::IVehicle* vehicle) {
+    return vehicle->GetHybridExtraActive();
+}
+
+void Vehicle_SetHybridExtraActive(alt::IVehicle* vehicle, bool state) {
+    vehicle->SetHybridExtraActive(state);
+}
+
+uint8_t Vehicle_GetHybridExtraState(alt::IVehicle* vehicle) {
+    return vehicle->GetHybridExtraState();
+}
+
+void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetHybridExtraState(state);
+}
+
+float Vehicle_GetDamageModifier(alt::IVehicle* vehicle) {
+    return vehicle->GetDamageModifier();
+}
+
+void Vehicle_SetDamageModifier(alt::IVehicle* vehicle, float state) {
+    vehicle->SetDamageModifier(state);
+}
+
+float Vehicle_GetDamageMultiplier(alt::IVehicle* vehicle) {
+    return vehicle->GetDamageMultiplier();
+}
+
+void Vehicle_SetDamageMultiplier(alt::IVehicle* vehicle, float state) {
+    vehicle->SetDamageMultiplier(state);
+}
+
 #endif
 
 #ifdef ALT_CLIENT_API
