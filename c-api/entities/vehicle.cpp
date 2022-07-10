@@ -826,11 +826,11 @@ void Vehicle_SetTimedExplosion(alt::IVehicle* vehicle, uint8_t state, alt::IPlay
     vehicle->SetTimedExplosion(state, culprit, time);
 }
 
-bool Vehicle_IsTowingDisabled(alt::IVehicle* vehicle) {
+uint8_t Vehicle_IsTowingDisabled(alt::IVehicle* vehicle) {
     return vehicle->IsTowingDisabled();
 }
 
-void Vehicle_SetDisableTowing(alt::IVehicle* vehicle, bool state) {
+void Vehicle_SetDisableTowing(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetDisableTowing(state);
 }
 
@@ -866,11 +866,11 @@ void Vehicle_SetScriptMaxSpeed(alt::IVehicle* vehicle, float scriptMaxSpeed) {
     vehicle->SetScriptMaxSpeed(scriptMaxSpeed);
 }
 
-bool Vehicle_GetWeaponsDisabled(alt::IVehicle* vehicle) {
+uint8_t Vehicle_GetWeaponsDisabled(alt::IVehicle* vehicle) {
     return vehicle->GetWeaponsDisabled();
 }
 
-void Vehicle_SetWeaponsDisabled(alt::IVehicle* vehicle, bool state) {
+void Vehicle_SetWeaponsDisabled(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetWeaponsDisabled(state);
 }
 
@@ -882,11 +882,11 @@ void Vehicle_SetWeaponCapacity(alt::IVehicle* vehicle, uint8_t index, int32_t st
     vehicle->SetWeaponCapacity(index, state);
 }
 
-bool Vehicle_GetHybridExtraActive(alt::IVehicle* vehicle) {
+uint8_t Vehicle_GetHybridExtraActive(alt::IVehicle* vehicle) {
     return vehicle->GetHybridExtraActive();
 }
 
-void Vehicle_SetHybridExtraActive(alt::IVehicle* vehicle, bool state) {
+void Vehicle_SetHybridExtraActive(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetHybridExtraActive(state);
 }
 
