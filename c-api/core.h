@@ -268,6 +268,8 @@ EXPORT_CLIENT void Core_OverrideFocusEntity(alt::ICore* core, alt::IEntity* enti
 EXPORT_CLIENT void Core_ClearFocusOverride(alt::ICore* core);
 EXPORT_CLIENT void Core_LoadDefaultIpls(alt::ICore* core);
 
+EXPORT_CLIENT uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos);
+
 #ifdef __cplusplus
 }
 #endif

@@ -1070,4 +1070,8 @@ void Core_LoadDefaultIpls(alt::ICore* core) {
     core->LoadDefaultIpls();
 }
 
+uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos) {
+    return core->IsPointOnScreen({ pos.x, pos.y, pos.z });
+}
+
 #endif
