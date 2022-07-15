@@ -2,7 +2,9 @@
 #include <exceptions/LoadException.h>
 #include "cpp-sdk/SDK.h"
 #include "runtime/CSharpScriptRuntime.h"
+#ifdef ALTV_CSHARP_SHARED
 #include "cpp-sdk/version/version.h"
+#endif
 #include <Log.h>
 
 using namespace alt;
