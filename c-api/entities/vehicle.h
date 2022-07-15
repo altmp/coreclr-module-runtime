@@ -6,7 +6,7 @@
 #pragma clang diagnostic ignored "-Wswitch"
 #endif
 
-#include "../../cpp-sdk/SDK.h"
+#include "cpp-sdk/SDK.h"
 #include "../data/types.h"
 #include "../utils/export.h"
 
@@ -23,6 +23,7 @@ EXPORT_SHARED uint16_t Vehicle_GetID(alt::IVehicle* vehicle);
 EXPORT_SHARED alt::IEntity* Vehicle_GetEntity(alt::IVehicle* vehicle);
 
 EXPORT_SHARED uint8_t Vehicle_GetWheelsCount(alt::IVehicle* vehicle);
+EXPORT_SHARED int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle);
 
 EXPORT_SERVER alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle);
 EXPORT_SERVER uint8_t Vehicle_GetDriverID(alt::IVehicle* vehicle, uint16_t& id);
@@ -148,7 +149,6 @@ EXPORT_SERVER void Vehicle_LoadGameStateFromBase64(alt::IVehicle* vehicle, const
 EXPORT_SERVER int32_t Vehicle_GetEngineHealth(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetEngineHealth(alt::IVehicle* vehicle, int32_t health);
 
-EXPORT_SERVER int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetPetrolTankHealth(alt::IVehicle* vehicle, int32_t health);
 
 EXPORT_SERVER uint8_t Vehicle_IsWheelBurst(alt::IVehicle* vehicle, uint8_t wheelId);
@@ -254,6 +254,14 @@ EXPORT_SERVER void Vehicle_SetTrainLinkedToForwardId(alt::IVehicle* vehicle, alt
 EXPORT_SERVER uint8_t Vehicle_GetBoatAnchor(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetBoatAnchor(alt::IVehicle* vehicle, uint8_t state);
 
+EXPORT_SERVER uint8_t Vehicle_GetLightState(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetLightState(alt::IVehicle* vehicle, uint8_t value);
+    
+EXPORT_SERVER uint8_t Vehicle_HasTimedExplosion(alt::IVehicle* vehicle);
+EXPORT_SERVER alt::IPlayer* Vehicle_GetTimedExplosionCulprit(alt::IVehicle* vehicle);
+EXPORT_SERVER uint32_t Vehicle_GetTimedExplosionTime(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetTimedExplosion(alt::IVehicle* vehicle, uint8_t state, alt::IPlayer* culprit, uint32_t time);
+
 
 EXPORT_CLIENT uint16_t Vehicle_GetGear(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetGear(alt::IVehicle* vehicle, uint16_t value);
@@ -268,6 +276,13 @@ EXPORT_CLIENT float Vehicle_GetRPM(alt::IVehicle* vehicle);
 EXPORT_CLIENT uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle);
 EXPORT_CLIENT float Vehicle_GetWheelSpeed(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_GetSpeedVector(alt::IVehicle* vehicle, vector3_t& vector);
+
+EXPORT_CLIENT float Vehicle_GetEngineTemperature(alt::IVehicle* vehicle);
+EXPORT_CLIENT float Vehicle_GetFuelLevel(alt::IVehicle* vehicle);
+EXPORT_CLIENT float Vehicle_GetOilLevel(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetEngineTemperature(alt::IVehicle* vehicle, float value);
+EXPORT_CLIENT void Vehicle_SetFuelLevel(alt::IVehicle* vehicle, float value);
+EXPORT_CLIENT void Vehicle_SetOilLevel(alt::IVehicle* vehicle, float value);
 
 EXPORT_CLIENT uint8_t Vehicle_Handling_GetByModelHash(alt::ICore* core, uint32_t modelHash, alt::IHandlingData*& handling);
 EXPORT_CLIENT void Vehicle_GetHandling(alt::IVehicle* vehicle, alt::IHandlingData*& handling);
@@ -406,6 +421,7 @@ EXPORT_CLIENT uint32_t Vehicle_Handling_GetHandlingFlags(alt::IHandlingData* han
 EXPORT_CLIENT void Vehicle_Handling_SetHandlingFlags(alt::IHandlingData* handling, uint32_t value);
 EXPORT_CLIENT uint32_t Vehicle_Handling_GetDamageFlags(alt::IHandlingData* handling);
 EXPORT_CLIENT void Vehicle_Handling_SetDamageFlags(alt::IHandlingData* handling, uint32_t value);
+EXPORT_CLIENT void Vehicle_Handling_Dispose(alt::IHandlingData* handling);
 
 #ifdef __cplusplus
 }

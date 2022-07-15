@@ -30,7 +30,7 @@ std::vector<std::string> NuGet::GetPackageVersions(const std::string& package) {
     return json["versions"].get<std::vector<std::string>>();
 }
 
-nlohmann::basic_json<> NuGet::GetCatalog(const std::string& package, const std::string& version) {
+nlohmann::json NuGet::GetCatalog(const std::string& package, const std::string& version) {
     static std::string url = GetIndexUrl("RegistrationsBaseUrl");
     const auto data = utils::download_file_sync(_httpClient.Get(), url + package + "/" + version + ".json");
     if (data.statusCode != 200) {
