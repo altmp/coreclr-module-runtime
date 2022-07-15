@@ -10,6 +10,8 @@
 #include <iomanip>
 #include "natives.h"
 #include "exceptions/LoadException.h"
+#include "cpp-sdk/events/CPlayerChangeAnimationEvent.h"
+#include "cpp-sdk/events/CPlayerChangeInteriorEvent.h"
 
 using namespace std;
 
@@ -163,6 +165,22 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             OnPlayerChangeVehicleSeatDelegate(playerChangeVehicleSeatEvent->GetTarget().Get(),
                                          playerChangeVehicleSeatEvent->GetOldSeat(),
                                          playerChangeVehicleSeatEvent->GetNewSeat());
+            break;
+        }
+        case alt::CEvent::Type::PLAYER_CHANGE_ANIMATION_EVENT: {
+            auto playerAnimationChangeEvent = (alt::CPlayerChangeAnimationEvent *) ev;
+            auto oldDict = playerAnimationChangeEvent->GetOldAnimationDict();
+            auto oldName = playerAnimationChangeEvent->GetOldAnimationName();
+            auto newDict = playerAnimationChangeEvent->GetNewAnimationDict();
+            auto newName = playerAnimationChangeEvent->GetNewAnimationName();
+            OnPlayerChangeAnimationDelegate(playerAnimationChangeEvent->GetTarget().Get(), oldDict, newDict, oldName, newName);
+            break;
+        }
+        case alt::CEvent::Type::PLAYER_CHANGE_INTERIOR_EVENT: {
+            auto playerChangeInteriorEvent = (alt::CPlayerChangeInteriorEvent *) ev;
+            auto oldInteriorLocation = playerChangeInteriorEvent->GetOldInteriorLocation();
+            auto newInteriorLocation = playerChangeInteriorEvent->GetNewInteriorLocation();
+            OnPlayerChangeInteriorDelegate(playerChangeInteriorEvent->GetTarget().Get(), oldInteriorLocation, newInteriorLocation);
             break;
         }
 #pragma endregion
@@ -325,6 +343,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 
 void CSharpResourceImpl::OnTick()
 {
+    auto scope = resource->PushNativesScope();
     OnTickDelegate();
 }
 
@@ -478,6 +497,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnKeyDownDelegate = [](auto var) {};
 
     OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerChangeAnimationDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+    OnPlayerChangeInteriorDelegate = [](auto var, auto var2, auto var3) {};
 
     OnConnectionCompleteDelegate = []() {};
 

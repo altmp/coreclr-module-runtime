@@ -1,4 +1,4 @@
 #pragma once
-#include "../../cpp-sdk/SDK.h"
+#include "cpp-sdk/SDK.h"
 
 void InitNatives();

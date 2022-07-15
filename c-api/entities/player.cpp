@@ -140,6 +140,27 @@ uint8_t Player_IsFlashlightActive(alt::IPlayer* player) {
     return player->IsFlashlightActive();
 }
 
+uint8_t Player_IsSpawned(alt::IPlayer* player) {
+    return player->IsSpawned();
+}
+
+uint32_t Player_GetCurrentAnimationDict(alt::IPlayer* player) {
+    return player->GetCurrentAnimationDict();
+}
+
+uint32_t Player_GetCurrentAnimationName(alt::IPlayer* player) {
+    return player->GetCurrentAnimationName();
+}
+
+float Player_GetForwardSpeed(alt::IPlayer* player) {
+    return player->GetForwardSpeed();
+}
+
+float Player_GetStrafeSpeed(alt::IPlayer* player) {
+    return player->GetStrafeSpeed();
+}
+EXPORT_SHARED float Player_GetStrafeSpeed(alt::IPlayer* player);
+
 #ifdef ALT_SERVER_API
 alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key) {
     return new alt::MValueConst(player->GetLocalMetaData(key));
@@ -511,6 +532,15 @@ void Player_SetHairHighlightColor(alt::IPlayer* player, uint8_t hairHighlightCol
 uint8_t Player_GetHairHighlightColor(alt::IPlayer* player) {
     return player->GetHairHighlightColor();
 }
+
+const char* Player_GetDiscordId(alt::IPlayer* player, int32_t& size) {
+    return AllocateString(player->GetDiscordId(), size);
+}
+
+uint32_t Player_GetInteriorLocation(alt::IPlayer* player) {
+    return player->GetInteriorLocation();
+}
+
 #endif
 
 #if ALT_CLIENT_API
@@ -556,4 +586,11 @@ alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* localPlayer) {
 uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer) {
     return localPlayer->GetCurrentAmmo();
 }
+
+alt::IWeaponData* LocalPlayer_GetCurrentWeaponData(alt::ILocalPlayer* localPlayer) {
+    const auto data = localPlayer->GetCurrentWeaponData().Get();
+    data->AddRef();
+    return data;
+}
+
 #endif
