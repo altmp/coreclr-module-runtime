@@ -605,4 +605,8 @@ uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer, uint32_t weap
     return localPlayer->GetWeaponAmmo(weaponHash);
 }
 
+uint8_t LocalPlayer_HasWeapon(alt::ILocalPlayer* localPlayer, uint32_t weaponHash) {
+    return localPlayer->HasWeapon(weaponHash);
+}
+
 #endif
