@@ -1,6 +1,7 @@
 #include "player.h"
 
 #include "../utils/strings.h"
+#include "../utils/uint.h"
 
 uint16_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();
@@ -607,6 +608,11 @@ uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer, uint32_t weap
 
 uint8_t LocalPlayer_HasWeapon(alt::ILocalPlayer* localPlayer, uint32_t weaponHash) {
     return localPlayer->HasWeapon(weaponHash);
+}
+
+void LocalPlayer_GetWeapons(alt::ILocalPlayer* localPlayer, const uint32_t*& weapons, uint32_t& size) {
+    auto arr = localPlayer->GetWeapons();
+    weapons = AllocateUInt32Array(arr, size);
 }
 
 #endif
