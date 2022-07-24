@@ -615,4 +615,9 @@ void LocalPlayer_GetWeapons(alt::ILocalPlayer* localPlayer, const uint32_t*& wea
     weapons = AllocateUInt32Array(arr, size);
 }
 
+void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlayer, uint32_t weaponHash, const uint32_t*& weaponComponents, uint32_t& size) {
+    auto arr = localPlayer->GetWeaponComponents(weaponHash);
+    weaponComponents = AllocateUInt32Array(arr, size);
+}
+
 #endif
