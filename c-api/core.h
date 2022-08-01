@@ -274,7 +274,7 @@ EXPORT_CLIENT void Core_LoadDefaultIpls(alt::ICore* core);
 EXPORT_CLIENT uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos);
 
 EXPORT_CLIENT alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, bool noOffset = false, bool dynamic = false);
-EXPORT_SHARED alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size);
+EXPORT_CLIENT alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size);
 
 #ifdef __cplusplus
 }
