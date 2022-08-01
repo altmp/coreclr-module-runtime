@@ -1083,13 +1083,16 @@ void Core_ClearFocusOverride(alt::ICore* core) {
     core->ClearFocusOverride();
 }
 
-
 void Core_LoadDefaultIpls(alt::ICore* core) {
     core->LoadDefaultIpls();
 }
 
 uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos) {
     return core->IsPointOnScreen({ pos.x, pos.y, pos.z });
+}
+
+alt::IObject Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, bool noOffset = false, bool dynamic = false) {
+    return core->CreateObject(modelHash, position, rot, noOffset, dynamic).Get();
 }
 
 #endif
