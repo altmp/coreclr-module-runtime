@@ -117,6 +117,9 @@ EXPORT_SERVER void Core_StopServer(alt::ICore* core);
 EXPORT_SERVER ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core);
 
 #ifdef ALT_CLIENT_API
+EXPORT_CLIENT uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path);
+EXPORT_CLIENT const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, const char* path, int32_t& size);
+    
 EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color);
 #endif
 EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position);

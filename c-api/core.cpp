@@ -495,6 +495,24 @@ ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core) {
 #endif
 
 #ifdef ALT_CLIENT_API
+uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path) {
+    const auto resolvedPath = core->Resolve(resource, path, "");
+    if (resolvedPath.pkg == nullptr) return false;
+    return resolvedPath.pkg->FileExists(resolvedPath.fileName);
+}
+
+const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, const char* path, int32_t& size) {
+    const auto resolvedPath = core->Resolve(resource, path, "");
+    if (resolvedPath.pkg == nullptr) return nullptr;
+    alt::IPackage::File* file = resolvedPath.pkg->OpenFile(resolvedPath.fileName);
+    if (file == nullptr) return nullptr;
+    std::string data(resolvedPath.pkg->GetFileSize(file), 0);
+    resolvedPath.pkg->ReadFile(file, data.data(), data.size());
+    resolvedPath.pkg->CloseFile(file);
+    return AllocateString(data, size);
+}
+
+
 alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position) {
     alt::Position pos;
     pos.x = position.x;
