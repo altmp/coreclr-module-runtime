@@ -31,17 +31,12 @@ EXPORT_SHARED void Object_SetAlpha(alt::IObject* object, uint8_t alpha);
 EXPORT_SHARED void Object_ResetAlpha(alt::IObject* object);
 
 EXPORT_SHARED uint8_t Object_IsDynamic(alt::IObject* object);
-EXPORT_SHARED void Object_SetDynamic(alt::IObject* object, uint8_t dynamic);
 
 EXPORT_SHARED uint16_t Object_GetLodDistance(alt::IObject* object);
 EXPORT_SHARED void Object_SetLodDistance(alt::IObject* object, uint16_t distance);
 
 EXPORT_SHARED uint8_t Object_HasGravity(alt::IObject* object);
 EXPORT_SHARED void Object_ToggleGravity(alt::IObject* object, uint8_t toggle);
-
-EXPORT_SHARED uint8_t Object_IsOnFire(alt::IObject* object);
-EXPORT_SHARED uint32_t Object_StartFire(alt::IObject* object);
-EXPORT_SHARED void Object_StopFire(alt::IObject* object);
 
 EXPORT_CLIENT uint8_t Object_IsRemote(alt::IObject* object);
 

@@ -20,10 +20,6 @@ uint8_t Object_IsDynamic(alt::IObject* object) {
     return object->IsDynamic();
 }
 
-void Object_SetDynamic(alt::IObject* object, uint8_t dynamic) {
-    object->SetDynamic(dynamic);
-}
-
 uint16_t Object_GetLodDistance(alt::IObject* object) {
     return object->GetLodDistance();
 }
@@ -38,18 +34,6 @@ uint8_t Object_HasGravity(alt::IObject* object) {
 
 void Object_ToggleGravity(alt::IObject* object, uint8_t toggle) {
     object->ToggleGravity(toggle);
-}
-
-uint8_t Object_IsOnFire(alt::IObject* object) {
-    return object->IsOnFire();
-}
-
-uint32_t Object_StartFire(alt::IObject* object) {
-    return object->StartFire();
-}
-
-void Object_StopFire(alt::IObject* object) {
-    object->StopFire();
 }
 
 #ifdef ALT_CLIENT_API
