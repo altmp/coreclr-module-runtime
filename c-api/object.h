@@ -25,6 +25,9 @@
 extern "C"
 {
 #endif
+
+EXPORT_SHARED uint16_t Object_GetID(alt::IObject* object);
+EXPORT_SHARED alt::IEntity* Object_GetEntity(alt::IObject* object);
     
 EXPORT_SHARED uint8_t Object_GetAlpha(alt::IObject* object);
 EXPORT_SHARED void Object_SetAlpha(alt::IObject* object, uint8_t alpha);

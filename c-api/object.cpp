@@ -4,6 +4,14 @@
 
 #include "object.h"
 
+uint16_t Object_GetID(alt::IObject* object) {
+    return object->GetID();
+}
+
+alt::IEntity* Object_GetEntity(alt::IObject* object) {
+    return dynamic_cast<alt::IEntity*>(object);
+}
+
 uint8_t Object_GetAlpha(alt::IObject* object) {
     return object->GetAlpha();
 }
