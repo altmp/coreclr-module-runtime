@@ -1091,7 +1091,7 @@ uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos) {
     return core->IsPointOnScreen({ pos.x, pos.y, pos.z });
 }
 
-alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, bool noOffset = false, bool dynamic = false) {
+alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, uint8_t noOffset = false, uint8_t dynamic = false) {
     return core->CreateObject(modelHash, position, rot, noOffset, dynamic).Get();
 }
 
