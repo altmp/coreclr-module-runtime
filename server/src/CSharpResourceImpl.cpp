@@ -2,6 +2,7 @@
 #include "../../cpp-sdk/events/CPlayerRequestControlEvent.h"
 #include "../../cpp-sdk/events/CPlayerChangeAnimationEvent.h"
 #include "../../cpp-sdk/events/CPlayerChangeInteriorEvent.h"
+#include "../../c-api/utils/entity.h"
 
 CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource)
         : alt::IResource::Impl() {
