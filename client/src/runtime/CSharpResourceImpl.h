@@ -28,8 +28,6 @@ public:
     bool Start() override;
     bool Stop() override;
 
-    void* GetEntityPointer(alt::IEntity* entity);
-
     bool OnEvent(const alt::CEvent* event) override;
     void OnTick() override;
 

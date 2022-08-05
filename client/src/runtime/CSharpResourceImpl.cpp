@@ -11,6 +11,7 @@
 #include "natives.h"
 #include "exceptions/LoadException.h"
 #include "cpp-sdk/events/CPlayerChangeAnimationEvent.h"
+#include "../c-api/utils/entity.h"
 
 using namespace std;
 
@@ -35,21 +36,6 @@ bool CSharpResourceImpl::Stop()
     auto res = CoreClr::StopResource(resource);
     ResetDelegates();
     return res;
-}
-
-void* CSharpResourceImpl::GetEntityPointer(alt::IEntity* entity) {
-    if (entity != nullptr) {
-        switch (entity->GetType()) {
-            case alt::IBaseObject::Type::LOCAL_PLAYER:
-            case alt::IBaseObject::Type::PLAYER:
-                return dynamic_cast<alt::IPlayer*>(entity);
-            case alt::IBaseObject::Type::VEHICLE:
-                return dynamic_cast<alt::IVehicle*>(entity);
-            default:
-                return nullptr;
-        }
-    }
-    return nullptr;
 }
 
 bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
