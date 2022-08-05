@@ -7,14 +7,14 @@
 #endif
 
 #include "cpp-sdk/SDK.h"
-#include "data/types.h"
-#include "data/invoker.h"
-#include "utils/export.h"
+#include "../data/types.h"
+#include "../data/invoker.h"
+#include "../utils/export.h"
 
 #ifdef ALT_SERVER_API
 #include <CSharpResourceImpl.h>
 #elif ALT_CLIENT_API
-#include "../client/src/runtime/CSharpResourceImpl.h"
+#include "../../client/src/runtime/CSharpResourceImpl.h"
 #endif
 
 #ifdef __clang__
