@@ -183,6 +183,9 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 case alt::IBaseObject::Type::VEHICLE:
                     ptr = dynamic_cast<alt::IVehicle *>(entity);
                     break;
+                case alt::IBaseObject::Type::OBJECT:
+                    ptr = dynamic_cast<alt::IObject *>(entity);
+                    break;
                 default:
                     ptr = nullptr;
             }
@@ -202,6 +205,9 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                     break;
                 case alt::IBaseObject::Type::VEHICLE:
                     ptr = dynamic_cast<alt::IVehicle *>(entity);
+                    break;
+                case alt::IBaseObject::Type::OBJECT:
+                    ptr = dynamic_cast<alt::IObject *>(entity);
                     break;
                 default:
                     ptr = nullptr;
@@ -381,6 +387,11 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef
         }
         case alt::IBaseObject::Type::RML_DOCUMENT: {
             OnCreateRmlDocumentDelegate(dynamic_cast<alt::IRmlDocument*>(object));
+            break;
+        }
+        case alt::IBaseObject::Type::OBJECT: {
+            auto altObject = dynamic_cast<alt::IObject*>(object);
+            OnCreateObjectDelegate(altObject, altObject->GetID());
             break;
         }
     }
