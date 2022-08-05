@@ -93,7 +93,7 @@ void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint8_t*& entityT
 
             entityTypeArr[i] = (uint8_t) baseObject->GetType();
             switch (baseObject->GetType()) {
-                case alt::IBaseObject::Type::PLAYER:
+                case alt::IBaseObject::Type::LOCAL_PLAYER:
                      entityArr[i] = dynamic_cast<alt::IPlayer*>(baseObject);
                      break;
                 case alt::IBaseObject::Type::VEHICLE:
