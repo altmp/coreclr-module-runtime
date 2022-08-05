@@ -1,5 +1,6 @@
 #include "audio.h"
 #include "../utils/strings.h"
+#include "../utils/entity.h"
 
 #ifdef ALT_CLIENT_API
 alt::IBaseObject* Audio_GetBaseObject(alt::IAudio* audio) {
@@ -91,15 +92,8 @@ void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint8_t*& entityT
 
             if (baseObject == nullptr) continue;
 
-            entityTypeArr[i] = (uint8_t) baseObject->GetType();
-            switch (baseObject->GetType()) {
-                case alt::IBaseObject::Type::PLAYER:
-                     entityArr[i] = dynamic_cast<alt::IPlayer*>(baseObject);
-                     break;
-                case alt::IBaseObject::Type::VEHICLE:
-                    entityArr[i] = dynamic_cast<alt::IVehicle*>(baseObject);
-                    break;
-            }
+            auto entityPtr = GetEntityPointer(baseObject);
+            if (entityPtr != nullptr) entityArr[i] = entityPtr;
         } else if (mValue->GetType() == alt::IMValue::Type::UINT) {
             auto valueRef = dynamic_cast<const alt::IMValueUInt*>(mValue.Get())->Value();
             scriptIdArr[i] = valueRef;
