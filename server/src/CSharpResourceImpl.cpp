@@ -37,6 +37,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnTickDelegate = []() {};
     OnCreatePlayerDelegate = [](auto var, auto var2) {};
     OnRemovePlayerDelegate = [](auto var) {};
+    OnCreateObjectDelegate = [](auto var, auto var2) {};
+    OnRemoveObjectDelegate = [](auto var) {};
     OnCreateVehicleDelegate = [](auto var, auto var2) {};
     OnRemoveVehicleDelegate = [](auto var) {};
     OnCreateBlipDelegate = [](auto var) {};
@@ -552,6 +554,11 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef
             case alt::IBaseObject::Type::CHECKPOINT:
                 OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
                 break;
+            case alt::IBaseObject::Type::OBJECT: {
+                auto altObject = dynamic_cast<alt::IObject*>(object);
+                OnCreateObjectDelegate(altObject, altObject->GetID());
+                break;
+            }
         }
     }
 }
@@ -577,6 +584,9 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
                 break;
             case alt::IBaseObject::Type::CHECKPOINT:
                 OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                break;
+            case alt::IBaseObject::Type::OBJECT:
+                OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
                 break;
         }
     }
@@ -702,6 +712,16 @@ void CSharpResourceImpl_SetCreatePlayerDelegate(CSharpResourceImpl* resource,
 void CSharpResourceImpl_SetRemovePlayerDelegate(CSharpResourceImpl* resource,
                                                 RemovePlayerDelegate_t delegate) {
     resource->OnRemovePlayerDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreateObjectDelegate(CSharpResourceImpl* resource,
+                                                CreateObjectDelegate_t delegate) {
+    resource->OnCreateObjectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemoveObjectDelegate(CSharpResourceImpl* resource,
+                                                RemoveObjectDelegate_t delegate) {
+    resource->OnRemoveObjectDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetCreateVehicleDelegate(CSharpResourceImpl* resource,

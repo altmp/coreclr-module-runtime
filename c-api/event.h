@@ -40,6 +40,9 @@ EXPORT_CLIENT void Event_SetRmlEventDelegate(CSharpResourceImpl* resource,  /** 
 EXPORT_CLIENT void Event_SetCreatePlayerDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreatePlayerModuleDelegate */ CreatePlayerDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemovePlayerDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemovePlayerModuleDelegate */ RemovePlayerDelegate_t delegate);
 
+EXPORT_CLIENT void Event_SetCreateObjectDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateObjectModuleDelegate */ CreateObjectDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveObjectDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemoveObjectModuleDelegate */ RemoveObjectDelegate_t delegate);
+
 EXPORT_CLIENT void Event_SetCreateVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateVehicleModuleDelegate */ CreateVehicleDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemoveVehicleModuleDelegate */ RemoveVehicleDelegate_t delegate);
 

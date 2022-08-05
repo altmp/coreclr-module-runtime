@@ -130,6 +130,10 @@ typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, uint16_t id);
 
 typedef void (* RemovePlayerDelegate_t)(alt::IPlayer* player);
 
+typedef void (* CreateObjectDelegate_t)(alt::IObject* Object, uint16_t id);
+
+typedef void (* RemoveObjectDelegate_t)(alt::IObject* Object);
+
 typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, uint16_t id);
 
 typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle* vehicle);
@@ -276,6 +280,10 @@ public:
     CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
 
     RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
+    
+    CreateObjectDelegate_t OnCreateObjectDelegate = nullptr;
+    
+    RemoveObjectDelegate_t OnRemoveObjectDelegate = nullptr;
 
     CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
 
@@ -373,6 +381,9 @@ public:
                 case alt::IBaseObject::Type::CHECKPOINT:
                     this->cSharpResource->OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
                     break;
+                case alt::IBaseObject::Type::OBJECT:
+                    this->cSharpResource->OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
+                    break;
             }
         }
         delete this;
@@ -450,6 +461,12 @@ EXPORT void CSharpResourceImpl_SetCreatePlayerDelegate(CSharpResourceImpl* resou
 
 EXPORT void CSharpResourceImpl_SetRemovePlayerDelegate(CSharpResourceImpl* resource,
                                                        RemovePlayerDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreateObjectDelegate(CSharpResourceImpl* resource,
+                                                       CreateObjectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemoveObjectDelegate(CSharpResourceImpl* resource,
+                                                       RemoveObjectDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetCreateVehicleDelegate(CSharpResourceImpl* resource,
                                                         CreateVehicleDelegate_t delegate);

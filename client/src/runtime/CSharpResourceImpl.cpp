@@ -446,6 +446,10 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef
             OnRemoveRmlDocumentDelegate(dynamic_cast<alt::IRmlDocument*>(object));
             break;
         }
+        case alt::IBaseObject::Type::OBJECT: {
+            OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
+            break;
+        }
     }
 }
 
@@ -473,6 +477,9 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnCreatePlayerDelegate = [](auto var, auto var2) {};
     OnRemovePlayerDelegate = [](auto var) {};
+
+    OnCreateObjectDelegate = [](auto var, auto var2) {};
+    OnRemoveObjectDelegate = [](auto var) {};
 
     OnCreateVehicleDelegate = [](auto var, auto var2) {};
     OnRemoveVehicleDelegate = [](auto var) {};
