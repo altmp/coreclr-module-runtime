@@ -1091,8 +1091,8 @@ uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos) {
     return core->IsPointOnScreen({ pos.x, pos.y, pos.z });
 }
 
-alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, uint8_t noOffset, uint8_t dynamic) {
-    return core->CreateObject(modelHash, position, rot, noOffset, dynamic).Get();
+alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t pos, vector3_t rot, uint8_t noOffset, uint8_t dynamic) {
+    return core->CreateObject(modelHash, { pos.x, pos.y, pos.z }, { rot.x, rot.y, rot.z }, noOffset, dynamic).Get();
 }
 
 alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size) {
@@ -1100,7 +1100,7 @@ alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size) {
     size = vector.size();
     auto out = new alt::IObject*[size];
     for (auto i = 0; i < size; i++) {
-        out[i] = vector[i];
+        out[i] = vector[i].Get();
     }
 
     return out;

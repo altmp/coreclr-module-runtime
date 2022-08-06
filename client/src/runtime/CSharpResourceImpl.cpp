@@ -11,7 +11,7 @@
 #include "natives.h"
 #include "exceptions/LoadException.h"
 #include "cpp-sdk/events/CPlayerChangeAnimationEvent.h"
-#include "../c-api/utils/entity.h"
+#include "../../c-api/utils/entity.h"
 
 using namespace std;
 
