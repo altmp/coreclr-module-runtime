@@ -1,6 +1,6 @@
 #include "entity.h"
 
-void* GetEntityPointer(alt::IEntity* entity) {
+void* GetEntityPointer(alt::IBaseObject* entity) {
     if (entity != nullptr) {
         switch (entity->GetType()) {
             case alt::IBaseObject::Type::LOCAL_PLAYER:
