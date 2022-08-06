@@ -30,6 +30,9 @@ SetDelegate(WebSocketEvent);
 SetDelegate(CreatePlayer);
 SetDelegate(RemovePlayer);
 
+SetDelegate(CreateObject);
+SetDelegate(RemoveObject);
+
 SetDelegate(CreateVehicle);
 SetDelegate(RemoveVehicle);
 

@@ -47,6 +47,9 @@ public:
     CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
     RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
 
+    CreateObjectDelegate_t OnCreateObjectDelegate = nullptr;
+    RemoveObjectDelegate_t OnRemoveObjectDelegate = nullptr;
+
     CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
     RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
 

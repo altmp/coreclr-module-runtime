@@ -13,6 +13,9 @@ typedef void (* RmlEventDelegate_t)(alt::IRmlElement*, const char* name, alt::IM
 typedef void (* CreatePlayerDelegate_t)(alt::IPlayer*, uint16_t id);
 typedef void (* RemovePlayerDelegate_t)(alt::IPlayer*);
 
+typedef void (* CreateObjectDelegate_t)(alt::IObject*, uint16_t id);
+typedef void (* RemoveObjectDelegate_t)(alt::IObject*);
+
 typedef void (* CreateVehicleDelegate_t)(alt::IVehicle*, uint16_t id);
 typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle*);
 

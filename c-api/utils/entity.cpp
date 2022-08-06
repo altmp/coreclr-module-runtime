@@ -8,6 +8,8 @@ void* GetEntityPointer(alt::IEntity* entity) {
                 return dynamic_cast<alt::IPlayer*>(entity);
             case alt::IBaseObject::Type::VEHICLE:
                 return dynamic_cast<alt::IVehicle*>(entity);
+            case alt::IBaseObject::Type::OBJECT:
+                return dynamic_cast<alt::IObject*>(entity);
             default:
                 return nullptr;
         }
