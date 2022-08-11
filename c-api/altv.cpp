@@ -1,7 +1,7 @@
 #include "altv.h"
 
 #include "version/version.h"
-#if defined ALTV_CSHARP_SHARED || defined ALTV_SERVER_API
+#if defined ALTV_CSHARP_SHARED || defined ALT_SERVER_API
 #include "cpp-sdk/version/version.h"
 #endif
 
