@@ -1,7 +1,9 @@
 #include "altv.h"
 
 #include "version/version.h"
+#if defined ALTV_CSHARP_SHARED || defined ALTV_SERVER_API
 #include "cpp-sdk/version/version.h"
+#endif
 
 #ifdef ALT_CLIENT_API
 #include "utils.h"
@@ -88,7 +90,11 @@ const char* GetCApiVersion(int32_t &size) {
 }
 
 const char* GetSDKVersion(int32_t &size) {
+#ifdef ALT_SDK_VERSION
     return AllocateString(ALT_SDK_VERSION, size);
+#else
+    return AllocateString("", 0);
+#endif
 }
 
 #ifdef ALT_CLIENT_API
