@@ -93,7 +93,7 @@ const char* GetSDKVersion(int32_t &size) {
 #ifdef ALT_SDK_VERSION
     return AllocateString(ALT_SDK_VERSION, size);
 #else
-    return AllocateString("", 0);
+    return AllocateString("", size);
 #endif
 }
 
