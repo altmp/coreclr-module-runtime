@@ -54,6 +54,18 @@ void Object_Detach(alt::IObject* object) {
     object->Detach();
 }
 
+uint8_t Object_IsCollisionEnabled(alt::IObject* object) {
+    return object->IsCollisionEnabled();
+}
+
+void Object_ToggleCollision(alt::IObject* object, uint8_t toggle, uint8_t keepPhysics) {
+    object->ToggleCollision(toggle, keepPhysics);
+}
+
+void Object_PlaceOnGroundProperly(alt::IObject* object) {
+    object->PlaceOnGroundProperly();
+}
+
 #ifdef ALT_CLIENT_API
 
 uint8_t Object_IsRemote(alt::IObject* object) {
