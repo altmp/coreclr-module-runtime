@@ -87,6 +87,8 @@ public:
 
     WindowFocusChangeDelegate_t OnWindowFocusChangeDelegate = nullptr;
     WindowResolutionChangeDelegate_t OnWindowResolutionChangeDelegate = nullptr;
+
+    PlayerWeaponShootDelegate_t OnPlayerWeaponShootDelegate = nullptr;
     
     CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
     CreateWebViewDelegate_t OnCreateWebViewDelegate = nullptr;

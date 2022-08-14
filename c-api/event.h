@@ -99,6 +99,8 @@ EXPORT_CLIENT void Event_SetRemoveAudioDelegate(CSharpResourceImpl* resource, /*
 EXPORT_CLIENT void Event_SetRemoveRmlElementDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveRmlElementModuleDelegate */ RemoveRmlElementDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemoveRmlDocumentDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveRmlDocumentModuleDelegate */ RemoveRmlDocumentDelegate_t delegate);
 
+EXPORT_CLIENT voide Event_SetPlayerWeaponShootDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponShootDelegate */ PlayerWeaponShootDelegate_t delegate);
+
 #endif
 
 #ifdef __cplusplus
