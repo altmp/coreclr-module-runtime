@@ -11,6 +11,7 @@
 #include "natives.h"
 #include "exceptions/LoadException.h"
 #include "cpp-sdk/events/CPlayerChangeAnimationEvent.h"
+#include "cpp-sdk/events/CPlayerWeaponShootEvent.h"
 #include "../../c-api/utils/entity.h"
 
 using namespace std;
@@ -166,6 +167,15 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto oldInteriorLocation = playerChangeInteriorEvent->GetOldInteriorLocation();
             auto newInteriorLocation = playerChangeInteriorEvent->GetNewInteriorLocation();
             OnPlayerChangeInteriorDelegate(playerChangeInteriorEvent->GetTarget().Get(), oldInteriorLocation, newInteriorLocation);
+            break;
+        }
+        case alt::CEvent::Type::PLAYER_WEAPON_SHOOT_EVENT: {
+            auto playerWeaponShootEvent = (alt::CPlayerWeaponShootEvent *) ev;
+            OnPlayerWeaponShootDelegate(
+                playerWeaponShootEvent->GetTarget().Get(), 
+                playerWeaponShootEvent->GetWeapon(),
+                playerWeaponShootEvent->GetTotalAmmo(),
+                playerWeaponShootEvent->GetAmmoInClip());
             break;
         }
 #pragma endregion
@@ -519,6 +529,8 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnWindowFocusChangeDelegate = [](auto var) {};
     OnWindowResolutionChangeDelegate = [](auto var, auto var2) {};
+
+    OnPlayerWeaponShootDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     
     OnCreateBlipDelegate = [](auto var) {};
     OnCreateWebViewDelegate = [](auto var) {};
