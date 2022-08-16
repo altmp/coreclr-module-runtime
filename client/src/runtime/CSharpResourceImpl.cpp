@@ -172,7 +172,6 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         case alt::CEvent::Type::PLAYER_WEAPON_SHOOT_EVENT: {
             auto playerWeaponShootEvent = (alt::CPlayerWeaponShootEvent *) ev;
             OnPlayerWeaponShootDelegate(
-                playerWeaponShootEvent->GetTarget().Get(), 
                 playerWeaponShootEvent->GetWeapon(),
                 playerWeaponShootEvent->GetTotalAmmo(),
                 playerWeaponShootEvent->GetAmmoInClip());
@@ -530,7 +529,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnWindowFocusChangeDelegate = [](auto var) {};
     OnWindowResolutionChangeDelegate = [](auto var, auto var2) {};
 
-    OnPlayerWeaponShootDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnPlayerWeaponShootDelegate = [](auto var, auto var2, auto var3) {};
     
     OnCreateBlipDelegate = [](auto var) {};
     OnCreateWebViewDelegate = [](auto var) {};
