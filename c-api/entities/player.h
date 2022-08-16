@@ -169,7 +169,7 @@ EXPORT_SERVER uint8_t Player_GetHairHighlightColor(alt::IPlayer* player);
     
 EXPORT_SERVER uint32_t Player_GetInteriorLocation(alt::IPlayer* player);
     
-EXPORT_SERVER const char* Player_GetDiscordId(alt::IPlayer* player, int32_t& size);
+EXPORT_SERVER int64_t Player_GetDiscordId(alt::IPlayer* player);
 
 EXPORT_SERVER uint32_t Player_GetLastDamagedBodyPart(alt::IPlayer* player);
 EXPORT_SERVER void Player_SetLastDamagedBodyPart(alt::IPlayer* player, uint32_t bodyPart);
