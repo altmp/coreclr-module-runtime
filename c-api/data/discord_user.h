@@ -28,7 +28,6 @@ struct ClrDiscordUser {
     }
 
     ~ClrDiscordUser() {
-        delete[] id;
         delete[] username;
         delete[] discriminator;
         delete[] avatar;
