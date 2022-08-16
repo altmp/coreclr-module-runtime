@@ -4,7 +4,7 @@
 #include "cpp-sdk/IDiscordManager.h"
 
 struct ClrDiscordUser {
-    char* id = nullptr;
+    int64_t id = 0;
     char* username = nullptr;
     char* discriminator = nullptr;
     char* avatar = nullptr;
@@ -12,9 +12,7 @@ struct ClrDiscordUser {
     ClrDiscordUser() = default;
 
     ClrDiscordUser(alt::IDiscordManager* discordManager) {
-        auto idStr = discordManager->GetUserID();
-        id = new char[idStr.length() + 1];
-        strcpy(id, idStr.c_str());
+        id = discordManager->GetUserID();
 
         auto usernameStr = discordManager->GetUsername();
         username = new char[usernameStr.length() + 1];

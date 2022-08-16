@@ -534,8 +534,8 @@ uint8_t Player_GetHairHighlightColor(alt::IPlayer* player) {
     return player->GetHairHighlightColor();
 }
 
-const char* Player_GetDiscordId(alt::IPlayer* player, int32_t& size) {
-    return AllocateString(player->GetDiscordId(), size);
+int64_t Player_GetDiscordId(alt::IPlayer* player) {
+    returnplayer->GetDiscordId();
 }
 
 uint32_t Player_GetInteriorLocation(alt::IPlayer* player) {
