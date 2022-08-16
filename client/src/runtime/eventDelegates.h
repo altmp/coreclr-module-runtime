@@ -54,7 +54,7 @@ typedef void (* TaskChangeDelegate_t)(uint32_t oldTask, uint32_t newTask);
 typedef void (* WindowFocusChangeDelegate_t)(uint8_t state);
 typedef void (* WindowResolutionChangeDelegate_t)(vector2_t oldRes, vector2_t newRes);
 
-typedef void (* PlayerWeaponShootDelegate_t)(alt::IPlayer* player, uint32_t weapon, uint16_t totalAmmo, uint16_t ammoInClip);
+typedef void (* PlayerWeaponShootDelegate_t)(uint32_t weapon, uint16_t totalAmmo, uint16_t ammoInClip);
 
 typedef void (* CreateBlipDelegate_t)(alt::IBlip*);
 typedef void (* CreateWebViewDelegate_t)(alt::IWebView*);
