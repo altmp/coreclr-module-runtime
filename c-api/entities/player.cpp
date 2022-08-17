@@ -535,7 +535,7 @@ uint8_t Player_GetHairHighlightColor(alt::IPlayer* player) {
 }
 
 int64_t Player_GetDiscordId(alt::IPlayer* player) {
-    returnplayer->GetDiscordId();
+    return player->GetDiscordId();
 }
 
 uint32_t Player_GetInteriorLocation(alt::IPlayer* player) {
