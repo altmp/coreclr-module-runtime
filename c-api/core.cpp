@@ -366,7 +366,15 @@ ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* core, uint32_t hash) {
     return new ClrVehicleModelInfo(core->GetVehicleModelByHash(hash));
 }
 
+ClrPedModelInfo* Core_GetPedModelInfo(alt::ICore* core, uint32_t hash) {
+    return new ClrPedModelInfo(core->GetPedModelByHash(hash));
+}
+
 void Core_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo) {
+    delete modelInfo;
+}
+
+void Core_DeallocPedModelInfo(ClrPedModelInfo* modelInfo) {
     delete modelInfo;
 }
 

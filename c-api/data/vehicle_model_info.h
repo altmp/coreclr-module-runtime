@@ -18,6 +18,9 @@ struct ClrVehicleModelInfo {
     uint16_t defaultExtras;
     bool modkits[2];
 
+	alt::BoneInfo* bones;
+    uint32_t boneSize;
+
     ClrVehicleModelInfo() = default;
 
     ClrVehicleModelInfo(alt::VehicleModelInfo info) :
@@ -41,6 +44,13 @@ struct ClrVehicleModelInfo {
 
         title = new char[info.title.length() + 1];
         strcpy(title, info.title.c_str());
+
+        auto vehModelBones = info.bones;
+        boneSize = vehModelBones.size();
+        bones = new alt::BoneInfo[boneSize];
+        for (auto i = 0; i < boneSize; i++) {
+            bones[i] = vehModelBones[i];
+        }
     }
 
     ~ClrVehicleModelInfo() {
