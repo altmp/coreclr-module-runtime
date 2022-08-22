@@ -17,8 +17,8 @@ struct ClrVehicleModelInfo {
     uint16_t extras;
     uint16_t defaultExtras;
     bool modkits[2];
-
-	alt::BoneInfo* bones;
+    
+    alt::BoneInfo* bones;
     uint32_t boneSize;
 
     ClrVehicleModelInfo() = default;

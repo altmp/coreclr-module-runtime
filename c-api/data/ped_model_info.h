@@ -5,8 +5,8 @@
 struct ClrPedModelInfo {
     char* name = nullptr;
     uint32_t hash;
-
-	alt::BoneInfo* bones;
+        
+    alt::BoneInfo* bones;
     uint32_t boneSize;
 
     ClrPedModelInfo() = default;
