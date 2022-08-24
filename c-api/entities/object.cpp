@@ -50,8 +50,8 @@ void Object_AttachToEntity(alt::IObject* object, alt::IEntity* entity, int16_t b
     object->AttachToEntity(entity, bone, position, rotation, useSoftPinning, collision, fixedRot);
 }
 
-void Object_Detach(alt::IObject* object) {
-    object->Detach();
+void Object_Detach(alt::IObject* object, uint8_t dynamic) {
+    object->Detach(dynamic);
 }
 
 uint8_t Object_IsCollisionEnabled(alt::IObject* object) {
