@@ -70,6 +70,10 @@ void Object_SetPositionFrozen(alt::IObject* object, uint8_t toggle) {
     object->SetPositionFrozen(toggle);
 }
 
+void Object_ActivatePhysics(alt::IObject* object) {
+    object->ActivatePhysics();
+}
+
 #ifdef ALT_CLIENT_API
 
 uint8_t Object_IsRemote(alt::IObject* object) {
