@@ -66,6 +66,10 @@ void Object_PlaceOnGroundProperly(alt::IObject* object) {
     object->PlaceOnGroundProperly();
 }
 
+void Object_SetPositionFrozen(alt::IObject* object, uint8_t toggle) {
+    object->SetPositionFrozen(toggle);
+}
+
 #ifdef ALT_CLIENT_API
 
 uint8_t Object_IsRemote(alt::IObject* object) {
