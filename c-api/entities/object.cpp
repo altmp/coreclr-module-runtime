@@ -74,6 +74,14 @@ void Object_ActivatePhysics(alt::IObject* object) {
     object->ActivatePhysics();
 }
 
+uint8_t Object_GetTextureVariation(alt::IObject* object) {
+    return object->GetTextureVariation();
+}
+
+void Object_SetTextureVariation(alt::IObject* object, uint8_t variation) {
+    object->SetTextureVariation(variation);
+}
+
 #ifdef ALT_CLIENT_API
 
 uint8_t Object_IsRemote(alt::IObject* object) {
