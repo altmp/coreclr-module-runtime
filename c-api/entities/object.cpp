@@ -82,6 +82,10 @@ void Object_SetTextureVariation(alt::IObject* object, uint8_t variation) {
     object->SetTextureVariation(variation);
 }
 
+uint8_t Object_IsGameObject(alt::IObject* object) {
+    return object->IsGameObject();
+}
+
 #ifdef ALT_CLIENT_API
 
 uint8_t Object_IsRemote(alt::IObject* object) {
