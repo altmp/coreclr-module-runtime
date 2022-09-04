@@ -82,8 +82,8 @@ void Object_SetTextureVariation(alt::IObject* object, uint8_t variation) {
     object->SetTextureVariation(variation);
 }
 
-uint8_t Object_IsGameObject(alt::IObject* object) {
-    return object->IsGameObject();
+uint8_t Object_IsWorldObject(alt::IObject* object) {
+    return object->IsWorldObject();
 }
 
 #ifdef ALT_CLIENT_API

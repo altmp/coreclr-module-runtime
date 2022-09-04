@@ -1104,11 +1104,22 @@ alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t 
 }
 
 alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size) {
-    auto vector = core->GetObjects();
-    size = vector.size();
+    auto objects = core->GetObjects();
+    size = objects.size();
     auto out = new alt::IObject*[size];
     for (auto i = 0; i < size; i++) {
-        out[i] = vector[i].Get();
+        out[i] = objects[i].Get();
+    }
+
+    return out;
+}
+
+alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size) {
+    auto worldObjects = core->GetWorldObjects();
+    size = worldObjects.size();
+    auto out = new alt::IObject*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = worldObjects[i].Get();
     }
 
     return out;
