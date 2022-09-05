@@ -69,6 +69,10 @@ void FreeResourceArray(alt::IResource** resourceArray) {
     delete[] resourceArray;
 }
 
+void FreeObjectArray(alt::IObject** objectArray) {
+    delete[] objectArray;
+}
+
 void FreeMValueConstArray(alt::MValueConst** mValueConstArray) {
     delete[] mValueConstArray;
 }
