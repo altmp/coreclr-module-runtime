@@ -21,6 +21,7 @@ EXPORT_SHARED void FreeVoidPointerArray(/** nint */void** voidPointerArray);
 EXPORT_SHARED void FreeString(const char* string);
 EXPORT_SHARED void FreeStringArray(const char** stringArray, uint32_t size);
 EXPORT_SHARED void FreeResourceArray(alt::IResource** resourceArray);
+EXPORT_SHARED void FreeObjectArray(alt::IObject** objectArray);
 EXPORT_SHARED void FreeMValueConstArray(alt::MValueConst** mvalueConstArray);
 EXPORT_SHARED const char* GetVersionStatic(int32_t &size);
 EXPORT_SHARED const char* GetBranchStatic(int32_t &size);
