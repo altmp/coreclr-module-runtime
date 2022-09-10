@@ -179,8 +179,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         }
         case alt::CEvent::Type::PLAYER_WEAPON_CHANGE: {
             auto playerWeaponChangeEvent = ((alt::CPlayerWeaponChangeEvent*) (ev));
-            OnPlayerWeaponChangeDelegate(playerWeaponChangeEvent->GetTarget().Get(),
-                                         playerWeaponChangeEvent->GetOldWeapon(),
+            OnPlayerWeaponChangeDelegate(playerWeaponChangeEvent->GetOldWeapon(),
                                          playerWeaponChangeEvent->GetNewWeapon());
             break;
         }
@@ -538,7 +537,7 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnPlayerWeaponShootDelegate = [](auto var, auto var2, auto var3) {};
 
-    OnPlayerWeaponChangeDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerWeaponChangeDelegate = [](auto var, auto var2) {};
     
     OnCreateBlipDelegate = [](auto var) {};
     OnCreateWebViewDelegate = [](auto var) {};
