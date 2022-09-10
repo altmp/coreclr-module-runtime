@@ -177,6 +177,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 playerWeaponShootEvent->GetAmmoInClip());
             break;
         }
+        case alt::CEvent::Type::PLAYER_WEAPON_CHANGE: {
+            auto playerWeaponChangeEvent = ((alt::CPlayerWeaponChangeEvent*) (ev));
+            OnPlayerWeaponChangeDelegate(playerWeaponChangeEvent->GetTarget().Get(),
+                                         playerWeaponChangeEvent->GetOldWeapon(),
+                                         playerWeaponChangeEvent->GetNewWeapon());
+            break;
+        }
 #pragma endregion
 #pragma region Entity events
         case alt::CEvent::Type::GAME_ENTITY_CREATE: {
@@ -530,6 +537,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnWindowResolutionChangeDelegate = [](auto var, auto var2) {};
 
     OnPlayerWeaponShootDelegate = [](auto var, auto var2, auto var3) {};
+
+    OnPlayerWeaponChangeDelegate = [](auto var, auto var2, auto var3) {};
     
     OnCreateBlipDelegate = [](auto var) {};
     OnCreateWebViewDelegate = [](auto var) {};
