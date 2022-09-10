@@ -101,6 +101,8 @@ EXPORT_CLIENT void Event_SetRemoveRmlDocumentDelegate(CSharpResourceImpl* resour
 
 EXPORT_CLIENT void Event_SetPlayerWeaponShootDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponShootModuleDelegate */ PlayerWeaponShootDelegate_t delegate);
 
+EXPORT_CLIENT void Event_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponChangeModuleDelegate */ PlayerWeaponChangeDelegate_t delegate);
+
 #endif
 
 #ifdef __cplusplus
