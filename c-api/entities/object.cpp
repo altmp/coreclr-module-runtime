@@ -50,6 +50,12 @@ void Object_AttachToEntity(alt::IObject* object, alt::IEntity* entity, int16_t b
     object->AttachToEntity(entity, bone, position, rotation, useSoftPinning, collision, fixedRot);
 }
 
+void Object_AttachToEntity(alt::IObject* object, uint32_t scriptId, int16_t bone, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot) {
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    object->AttachToEntity(scriptId, bone, position, rotation, useSoftPinning, collision, fixedRot);
+}
+
 void Object_Detach(alt::IObject* object, uint8_t dynamic) {
     object->Detach(dynamic);
 }

@@ -42,6 +42,7 @@ EXPORT_SHARED uint8_t Object_HasGravity(alt::IObject* object);
 EXPORT_SHARED void Object_ToggleGravity(alt::IObject* object, uint8_t toggle);
 
 EXPORT_SHARED void Object_AttachToEntity(alt::IObject* object, alt::IEntity* entity, int16_t bone, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot);
+EXPORT_SHARED void Object_AttachToEntity(alt::IObject* object, uint32_t scriptId, int16_t bone, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot);
 EXPORT_SHARED void Object_Detach(alt::IObject* object, uint8_t dynamic);
 
 EXPORT_SHARED uint8_t Object_IsCollisionEnabled(alt::IObject* object);
