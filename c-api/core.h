@@ -119,6 +119,8 @@ EXPORT_SERVER void Core_SetPassword(alt::ICore* core, const char* value);
 EXPORT_SERVER void Core_StopServer(alt::ICore* core);
 EXPORT_SERVER ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core);
 
+EXPORT_SERVER void Core_SetWorldProfiler(alt::ICore* core, uint8_t state);
+
 #ifdef ALT_CLIENT_API
 EXPORT_CLIENT uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path);
 EXPORT_CLIENT const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, const char* path, int32_t& size);
