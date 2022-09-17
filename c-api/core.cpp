@@ -500,6 +500,10 @@ void Core_StopServer(alt::ICore* core) {
 ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core) {
     return new ClrConfigNodeData(core->GetServerConfig());
 }
+
+void Core_SetWorldProfiler(alt::ICore* core, uint8_t state) {
+    core->SetWorldProfiler(state);
+}
 #endif
 
 #ifdef ALT_CLIENT_API
