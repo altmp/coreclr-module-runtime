@@ -100,6 +100,8 @@ typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId
 
 typedef void (* PlayerBeforeConnectDelegate_t)(const alt::CEvent* event, ClrConnectionInfo* connectionInfo, const char* reason);
 
+typedef void (* PlayerConnectDeniedDelegate_t)(alt::CPlayerConnectDeniedEvent::Reason reason, const char* name, const char* ip, uint64_t passwortHash, bool isDebug, const char* branch, uint32_t majorVersion, const char* cdnUrl, int64_t discordId);
+
 typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
 
 typedef void (* PlayerDamageDelegate_t)(alt::IPlayer* player, void* attacker,
@@ -240,6 +242,8 @@ public:
     PlayerConnectDelegate_t OnPlayerConnectDelegate = nullptr;
 
     PlayerBeforeConnectDelegate_t OnPlayerBeforeConnectDelegate = nullptr;
+
+    PlayerConnectDeniedDelegate_t OnPlayerConnectDeniedDelegate = nullptr;
 
     ResourceEventDelegate_t OnResourceStartDelegate = nullptr;
 
@@ -416,6 +420,9 @@ EXPORT void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* reso
 
 EXPORT void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(CSharpResourceImpl* resource,
                                                         PlayerBeforeConnectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerConnectDeniedDelegate(CSharpResourceImpl* resource,
+                                                              PlayerConnectDeniedDelegate_t delegate);                                                        
 
 EXPORT void CSharpResourceImpl_SetResourceStartDelegate(CSharpResourceImpl* resource,
                                                         ResourceEventDelegate_t delegate);
