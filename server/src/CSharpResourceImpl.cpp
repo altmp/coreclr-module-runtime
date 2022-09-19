@@ -17,6 +17,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnClientEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerBeforeConnectDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerConnectDeniedDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8, auto var9) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
     OnResourceErrorDelegate = [](auto var) {};
@@ -181,6 +182,23 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             delete clrInfo;
         }
             break;
+        case alt::CEvent::Type::PLAYER_CONNECT_DENIED: {
+            auto playerConnectDeniedEvent = (alt::CPlayerConnectDeniedEvent*)ev;
+
+            OnPlayerConnectDeniedDelegate(
+                playerConnectDeniedEvent->GetReason(),
+                playerConnectDeniedEvent->GetName().c_str(),
+                playerConnectDeniedEvent->GetIp().c_str(),
+                playerConnectDeniedEvent->GetPasswordHash(),
+                playerConnectDeniedEvent->IsDebug(),
+                playerConnectDeniedEvent->GetBranch().c_str(),
+                playerConnectDeniedEvent->GetMajorVersion(),
+                playerConnectDeniedEvent->GetCdnUrl().c_str(),
+                playerConnectDeniedEvent->GetDiscordId()
+                );
+
+            break;
+        }
         case alt::CEvent::Type::RESOURCE_START: {
             OnResourceStartDelegate(reinterpret_cast<const alt::CResourceStartEvent*>(ev)->GetResource());
         }
@@ -640,6 +658,11 @@ void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* resource,
 void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(CSharpResourceImpl* resource,
                                                        PlayerBeforeConnectDelegate_t delegate) {
     resource->OnPlayerBeforeConnectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerConnectDeniedDelegate(CSharpResourceImpl* resource,
+                                                       PlayerConnectDeniedDelegate_t delegate) {
+    resource->OnPlayerConnectDeniedDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetResourceStartDelegate(CSharpResourceImpl* resource, ResourceEventDelegate_t delegate) {
