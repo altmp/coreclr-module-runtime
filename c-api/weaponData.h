@@ -20,11 +20,6 @@
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
     
 EXPORT_CLIENT uint32_t WeaponData_GetNameHash(alt::IWeaponData* weaponData);
 EXPORT_CLIENT uint32_t WeaponData_GetModelHash(alt::IWeaponData* weaponData);
@@ -56,7 +51,3 @@ EXPORT_CLIENT void WeaponData_SetHeadshotDamageModifier(alt::IWeaponData* weapon
 EXPORT_CLIENT void WeaponData_SetPlayerDamageModifier(alt::IWeaponData* weaponData, float val);
 EXPORT_CLIENT void WeaponData_Dispose(alt::IWeaponData* weaponData);
 EXPORT_CLIENT uint8_t WeaponData_GetByWeaponHash(alt::ICore* core, uint32_t modelHash, alt::IWeaponData*& weaponData);
-
-#ifdef __cplusplus
-}
-#endif

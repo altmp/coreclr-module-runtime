@@ -14,11 +14,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_CLIENT alt::IRmlElement* RmlDocument_GetRmlElement(alt::IRmlDocument* rmlDocument);
 
 EXPORT_CLIENT alt::IRmlElement* RmlDocument_GetBody(alt::IRmlDocument* rmlDocument);
@@ -36,8 +31,3 @@ EXPORT_CLIENT alt::IRmlElement* RmlDocument_CreateTextNode(alt::IRmlDocument* rm
 EXPORT_CLIENT void RmlDocument_Hide(alt::IRmlDocument* rmlDocument);
 EXPORT_CLIENT void RmlDocument_Show(alt::IRmlDocument* rmlDocument, uint8_t isModal, uint8_t focused);
 EXPORT_CLIENT void RmlDocument_Update(alt::IRmlDocument* rmlDocument);
-
-
-#ifdef __cplusplus
-}
-#endif

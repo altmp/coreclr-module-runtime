@@ -16,11 +16,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED void BaseObject_AddRef(alt::IBaseObject* baseObject);
 EXPORT_SHARED void BaseObject_RemoveRef(alt::IBaseObject* baseObject);
 EXPORT_SHARED uint8_t BaseObject_AddRefIfExists(alt::IBaseObject* baseObject);
@@ -31,7 +26,3 @@ EXPORT_SHARED void BaseObject_DeleteMetaData(alt::IBaseObject* baseObject, const
 EXPORT_SHARED alt::MValueConst* BaseObject_GetMetaData(alt::IBaseObject* baseObject, const char* key);
 
 EXPORT_SHARED uint8_t BaseObject_GetType(alt::IBaseObject* baseObject);
-
-#ifdef __cplusplus
-}
-#endif

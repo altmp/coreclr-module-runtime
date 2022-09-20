@@ -27,11 +27,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED void Core_LogInfo(alt::ICore* server, const char* str);
 EXPORT_SHARED void Core_LogDebug(alt::ICore* server, const char* str);
 EXPORT_SHARED void Core_LogWarning(alt::ICore* server, const char* str);
@@ -281,7 +276,4 @@ EXPORT_CLIENT uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos);
 EXPORT_CLIENT alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, uint8_t noOffset, uint8_t dynamic);
 EXPORT_CLIENT alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size);
 EXPORT_CLIENT alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size);
-
-#ifdef __cplusplus
-}
-#endif
+    
