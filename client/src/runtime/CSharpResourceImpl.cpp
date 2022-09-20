@@ -19,6 +19,7 @@ using namespace std;
 bool CSharpResourceImpl::Start()
 {
     Log::Info << "Starting resource" << Log::Endl;
+    ResetDelegates();
     try {
         runtime->clr.Initialize();
     } catch(std::runtime_error& e) {
@@ -27,7 +28,6 @@ bool CSharpResourceImpl::Start()
     }
     resource->EnableNatives();
     auto scope = resource->PushNativesScope();
-    ResetDelegates();
     return CoreClr::StartResource(resource, core);
 }
 
