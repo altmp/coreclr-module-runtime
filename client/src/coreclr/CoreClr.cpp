@@ -10,6 +10,8 @@
 #include <zip_file.hpp>
 
 #include "utils.h"
+#include "c-api/client.h"
+#include "c-api/func_table.h"
 
 using namespace alt;
 using namespace std;
@@ -114,7 +116,7 @@ void CoreClr::Initialize() {
 
     InitializeCoreclr();
 
-    typedef uint8_t (* initialize_method)(alt::ICore* ptr, const char* dllName, uint8_t sandbox);
+    typedef uint8_t (* initialize_method)(alt::ICore* ptr, const char* dllName, uint8_t sandbox, const capi_func_table_t* cApiFuncTable);
     initialize_method hostInitDelegate = nullptr;
 
     const int rc = _createDelegate(_runtimeHost, _domainId, "AltV.Net.Client.Host", "Entrypoint", "Initialize", (void **) &hostInitDelegate);
@@ -126,7 +128,7 @@ void CoreClr::Initialize() {
 
     Log::Info << "Executing method from Host dll" << Log::Endl;
 
-    const auto hostInitRc = hostInitDelegate(_core, DLL_NAME, sandbox);
+    const auto hostInitRc = hostInitDelegate(_core, DLL_NAME, sandbox, get_func_table());
     if (hostInitRc != 0) {
         throw std::runtime_error("Host dll initialization failed. Code: " + std::to_string(hostInitRc));
     }
@@ -156,7 +158,7 @@ bool CoreClr::StopResource(alt::IResource* resource) {
 }
 
 // ReSharper disable once CppInconsistentNaming
-EXPORT void SetResourceLoadDelegates(const CoreClrDelegate_t resourceExecute, const CoreClrDelegate_t resourceExecuteUnload,
+void SetResourceLoadDelegates(const CoreClrDelegate_t resourceExecute, const CoreClrDelegate_t resourceExecuteUnload,
                                      const CoreClrDelegate_t stopRuntime) {
     if (load_resource_delegate || stop_resource_delegate || stop_runtime_delegate) {
         Log::Error << "Resource delegates cannot be replaced" << Log::Endl;
@@ -169,7 +171,7 @@ EXPORT void SetResourceLoadDelegates(const CoreClrDelegate_t resourceExecute, co
 }
 
 // ReSharper disable once CppInconsistentNaming
-EXPORT bool GetCachedAssembly(const char* name, int* bufferSize, void** buffer) {
+bool GetCachedAssembly(const char* name, int* bufferSize, void** buffer) {
     auto strName = std::string(name);
     const auto path = CoreClr::GetLibrariesDirectoryPath().append(utils::to_lower(strName) + ".nupkg");
     if (!exists(path)) return false;
