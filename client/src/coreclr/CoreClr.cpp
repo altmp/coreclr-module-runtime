@@ -116,7 +116,7 @@ void CoreClr::Initialize() {
 
     InitializeCoreclr();
 
-    typedef uint8_t (* initialize_method)(alt::ICore* ptr, const char* dllName, uint8_t sandbox, const capi_func_table_t* cApiFuncTable);
+    typedef uint8_t (* initialize_method)(alt::ICore* ptr, const char* dllName, uint8_t sandbox, const function_table_t* cApiFuncTable);
     initialize_method hostInitDelegate = nullptr;
 
     const int rc = _createDelegate(_runtimeHost, _domainId, "AltV.Net.Client.Host", "Entrypoint", "Initialize", (void **) &hostInitDelegate);

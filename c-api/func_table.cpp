@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-uint64_t hashes[] = {
+inline uint64_t capiHashes[] = {
     #ifdef ALT_CLIENT_API
     16905578002628361906UL,
     5827298603098340943UL,
@@ -208,6 +208,7 @@ uint64_t hashes[] = {
     11266509741016760981UL,
     2759792098189334963UL,
     7133530922931485325UL,
+    18057905405504285670UL,
     2365480475834603879UL,
     8232918492481382800UL,
     4334635731329240893UL,
@@ -1163,7 +1164,7 @@ uint64_t hashes[] = {
     #endif
 };
 
-inline void* pointers[] = {
+inline void* capiPointers[] = {
     #ifdef ALT_CLIENT_API
     (void*) Audio_AddOutput_Entity,
     (void*) Audio_AddOutput_ScriptId,
@@ -1371,6 +1372,7 @@ inline void* pointers[] = {
     (void*) Event_SetWindowResolutionChangeDelegate,
     (void*) FreeRmlElementArray,
     (void*) GetCachedAssembly,
+    (void*) GetNativeFuncTable,
     (void*) HttpClient_Connect,
     (void*) HttpClient_Delete,
     (void*) HttpClient_Get,
@@ -2326,11 +2328,11 @@ inline void* pointers[] = {
     #endif
 };
 
-const capi_func_table_t* get_func_table() {
-    static constexpr capi_func_table_t data {
-        std::extent<decltype(hashes)>::value,
-        &hashes[0],
-        &pointers[0]
+const function_table_t* get_func_table() {
+    static constexpr function_table_t data {
+        std::extent<decltype(capiHashes)>::value,
+        &capiHashes[0],
+        &capiPointers[0]
     };
     return &data;
 }
