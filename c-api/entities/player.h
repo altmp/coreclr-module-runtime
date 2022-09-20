@@ -20,11 +20,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED uint16_t Player_GetID(alt::IPlayer* player);
 EXPORT_SHARED alt::IEntity* Player_GetEntity(alt::IPlayer* player);
 
@@ -194,7 +189,3 @@ EXPORT_CLIENT uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer,
 EXPORT_CLIENT uint8_t LocalPlayer_HasWeapon(alt::ILocalPlayer* localPlayer, uint32_t weaponHash);
 EXPORT_CLIENT void LocalPlayer_GetWeapons(alt::ILocalPlayer* localPlayer, const uint32_t*& weapons, uint32_t& size);
 EXPORT_CLIENT void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlayer, uint32_t weaponHash, const uint32_t*& weaponComponents, uint32_t& size);
-
-#ifdef __cplusplus
-}
-#endif

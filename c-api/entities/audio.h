@@ -13,10 +13,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 
 EXPORT_CLIENT alt::IBaseObject* Audio_GetBaseObject(alt::IAudio* audio);
 
@@ -42,7 +38,3 @@ EXPORT_CLIENT void Audio_Pause(alt::IAudio* audio);
 EXPORT_CLIENT void Audio_Play(alt::IAudio* audio);
 EXPORT_CLIENT void Audio_Reset(alt::IAudio* audio);
 EXPORT_CLIENT void Audio_Seek(alt::IAudio* audio, double time);
-
-#ifdef __cplusplus
-}
-#endif

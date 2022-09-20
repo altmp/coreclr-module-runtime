@@ -14,11 +14,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED uint16_t Vehicle_GetID(alt::IVehicle* vehicle);
 EXPORT_SHARED alt::IEntity* Vehicle_GetEntity(alt::IVehicle* vehicle);
 
@@ -422,7 +417,3 @@ EXPORT_CLIENT void Vehicle_Handling_SetHandlingFlags(alt::IHandlingData* handlin
 EXPORT_CLIENT uint32_t Vehicle_Handling_GetDamageFlags(alt::IHandlingData* handling);
 EXPORT_CLIENT void Vehicle_Handling_SetDamageFlags(alt::IHandlingData* handling, uint32_t value);
 EXPORT_CLIENT void Vehicle_Handling_Dispose(alt::IHandlingData* handling);
-
-#ifdef __cplusplus
-}
-#endif

@@ -17,16 +17,7 @@
 #include "../client/src/runtime/CSharpResourceImpl.h"
 #endif
 
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-
 void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *val, alt::Size i);
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 
 EXPORT_SHARED uint8_t MValueConst_GetBool(alt::MValueConst* mValueConst);
 EXPORT_SHARED int64_t MValueConst_GetInt(alt::MValueConst* mValueConst);
@@ -52,7 +43,3 @@ EXPORT_SHARED uint8_t MValueConst_GetType(alt::MValueConst* mValueConst);
 
 EXPORT_SHARED CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val);
 EXPORT_SHARED void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val);
-
-#ifdef __cplusplus
-}
-#endif

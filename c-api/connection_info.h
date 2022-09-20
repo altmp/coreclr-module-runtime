@@ -13,11 +13,6 @@
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
     
 EXPORT_SERVER void ConnectionInfo_Accept(alt::IConnectionInfo* connectionInfo);
 EXPORT_SERVER void ConnectionInfo_Decline(alt::IConnectionInfo* connectionInfo, const char* reason);
@@ -35,7 +30,3 @@ EXPORT_SERVER const char* ConnectionInfo_GetIp(alt::IConnectionInfo *connectionI
 EXPORT_SERVER int64_t ConnectionInfo_GetDiscordUserID(alt::IConnectionInfo *connectionInfo);
 EXPORT_SERVER void ConnectionInfo_AddRef(alt::IConnectionInfo *connectionInfo);
 EXPORT_SERVER void ConnectionInfo_RemoveRef(alt::IConnectionInfo *connectionInfo);
-
-#ifdef __cplusplus
-}
-#endif

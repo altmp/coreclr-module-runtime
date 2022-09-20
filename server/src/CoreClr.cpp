@@ -9,6 +9,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "c-api/func_table.h"
+
 std::mutex mtx;             // mutex for critical section
 std::condition_variable cv; // condition variable for critical section
 CoreClrDelegate_t hostResourceExecute;
@@ -86,7 +88,7 @@ CoreClr::CoreClr(alt::ICore* core) {
     strcpy(defaultPath, pf);
     strcat(defaultPath, windowsProgramFilesPath);
 
-    char *dotnetProgramFilesPath = "/dotnet/";
+    const char *dotnetProgramFilesPath = "/dotnet/";
     dotnetDirectory = new char[strlen(dotnetProgramFilesPath) + strlen(pf) + 1];
     strcpy(dotnetDirectory, pf);
     strcat(dotnetDirectory, dotnetProgramFilesPath);
@@ -587,6 +589,7 @@ bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resou
         const char* resourceMain;
         alt::ICore* serverPointer;
         alt::IResource* resourcePointer;
+        const capi_func_table_t* funcTable;
     };
     lib_args args
             {
@@ -594,7 +597,8 @@ bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resou
                     resourceName,
                     resourceMain,
                     core,
-                    resource
+                    resource,
+                    get_func_table()
             };
 
     hostResourceExecute(&args, sizeof(args));

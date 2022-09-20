@@ -4,11 +4,6 @@
 #include "utils/strings.h"
 #include "cpp-sdk/SDK.h"
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED void FreeUIntArray(alt::Array<uint32_t> *array);
 //EXPORT void FreePlayerPointerArray(alt::Array<alt::IPlayer*> *array);
 //EXPORT void FreeStringViewArray(alt::Array<std::stringView> *array);
@@ -31,7 +26,3 @@ EXPORT_SHARED const char* GetSDKVersion(int32_t &size);
 
 EXPORT_CLIENT void FreeRmlElementArray(alt::IRmlElement** rmlElementArray);
 EXPORT_CLIENT void* Win_GetTaskDialog();
-
-#ifdef __cplusplus
-}
-#endif
