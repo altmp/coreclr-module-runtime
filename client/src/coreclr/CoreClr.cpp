@@ -10,8 +10,8 @@
 #include <zip_file.hpp>
 
 #include "utils.h"
-#include "c-api/client.h"
-#include "c-api/func_table.h"
+#include "../../c-api/client.h"
+#include "../../c-api/func_table.h"
 
 using namespace alt;
 using namespace std;
