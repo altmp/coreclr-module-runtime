@@ -589,7 +589,7 @@ bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resou
         const char* resourceMain;
         alt::ICore* serverPointer;
         alt::IResource* resourcePointer;
-        const capi_func_table_t* funcTable;
+        const function_table_t* funcTable;
     };
     lib_args args
             {

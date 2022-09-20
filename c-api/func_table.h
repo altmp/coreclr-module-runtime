@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include "data/function_table.h"
 #include "core.h"
 #include "altv.h"
 #include "client.h"
@@ -30,10 +31,4 @@
 #include "entities/worldObject.h"
 #include <type_traits>
 
-typedef struct {
-    uint32_t size;
-    uint64_t* hashes;
-    void** pointers; 
-} capi_func_table_t;
-
-const capi_func_table_t* get_func_table();
+const function_table_t* get_func_table();
