@@ -914,6 +914,10 @@ uint8_t Vehicle_IsHandlingModified(alt::IVehicle* vehicle) {
     return vehicle->IsHandlingModified();
 }
 
+uint32_t Vehicle_GetWheelSurfaceMaterial(alt::IVehicle* vehicle, uint8_t wheel) {
+    return vehicle->GetWheelSurfaceMaterial(wheel);
+}
+
 uint8_t Vehicle_Handling_GetByModelHash(alt::ICore* core, uint32_t modelHash, alt::IHandlingData*& handling) {
     auto data = core->GetHandlingData(modelHash);
     if (data.IsEmpty()) return false;
