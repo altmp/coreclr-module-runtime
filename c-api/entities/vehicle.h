@@ -285,6 +285,8 @@ EXPORT_CLIENT void Vehicle_ReplaceHandling(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_ResetHandling(alt::IVehicle* vehicle);
 EXPORT_CLIENT uint8_t Vehicle_IsHandlingModified(alt::IVehicle* vehicle);
 
+EXPORT_CLIENT uint32_t Vehicle_GetWheelSurfaceMaterial(alt::IVehicle* vehicle, uint8_t wheel);
+
 EXPORT_CLIENT uint32_t Vehicle_Handling_GetHandlingNameHash(alt::IHandlingData* handling);
 EXPORT_CLIENT float Vehicle_Handling_GetMass(alt::IHandlingData* handling);
 EXPORT_CLIENT void Vehicle_Handling_SetMass(alt::IHandlingData* handling, float value);

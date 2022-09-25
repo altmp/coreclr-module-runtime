@@ -355,6 +355,7 @@ inline uint64_t capiHashes[] = {
     4466655922564697820UL,
     6222226012404492852UL,
     12526415873184871038UL,
+    14498368668841337331UL,
     1600966760321369891UL,
     6447107622156387014UL,
     7256591593615684542UL,
@@ -813,7 +814,6 @@ inline uint64_t capiHashes[] = {
     18205025242291418495UL,
     13783539956199648033UL,
     13686142672988940052UL,
-    7469948310820491890UL,
     #ifdef ALT_SERVER_API
     8246223245924620254UL,
     9198858762629145399UL,
@@ -1159,6 +1159,7 @@ inline uint64_t capiHashes[] = {
     4956759779487566838UL,
     9736361074722605058UL,
     15182911217769927409UL,
+    7469948310820491890UL,
     10474817540727671173UL,
     15794898554691126400UL,
     #endif
@@ -1519,6 +1520,7 @@ inline void* capiPointers[] = {
     (void*) Vehicle_GetSeatCount,
     (void*) Vehicle_GetSpeedVector,
     (void*) Vehicle_GetWheelSpeed,
+    (void*) Vehicle_GetWheelSurfaceMaterial,
     (void*) Vehicle_Handling_Dispose,
     (void*) Vehicle_Handling_GetAcceleration,
     (void*) Vehicle_Handling_GetAntiRollBarBiasFront,
@@ -1977,7 +1979,6 @@ inline void* capiPointers[] = {
     (void*) Vehicle_GetWheelsCount,
     (void*) WorldObject_GetBaseObject,
     (void*) WorldObject_GetPosition,
-    (void*) WorldObject_GetPositionCoords,
     #ifdef ALT_SERVER_API
     (void*) Blip_AttachedTo,
     (void*) Blip_IsAttached,
@@ -2323,6 +2324,7 @@ inline void* capiPointers[] = {
     (void*) VoiceChannel_SetMetaData,
     (void*) VoiceChannel_UnmutePlayer,
     (void*) WorldObject_GetDimension,
+    (void*) WorldObject_GetPositionCoords,
     (void*) WorldObject_SetDimension,
     (void*) WorldObject_SetPosition,
     #endif
