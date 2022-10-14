@@ -645,6 +645,13 @@ void Vehicle_AttachToEntity(alt::IVehicle* vehicle, alt::IEntity* entity, int16_
     vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
 }
 
+void Vehicle_AttachToEntity_BoneString(alt::IVehicle* vehicle, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot) 
+{
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
+}
+
 void Vehicle_Detach(alt::IVehicle* vehicle)
 {
     vehicle->Detach();
