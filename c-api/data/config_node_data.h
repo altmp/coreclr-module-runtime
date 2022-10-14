@@ -4,7 +4,7 @@ struct ClrConfigNodeData {
     uint8_t type = (uint8_t) Config::Value::Type::NONE;
     char* strValue = nullptr;
     uint8_t boolValue = 0;
-    int64_t numValue = 0;
+    double numValue = 0;
     int32_t elements = 0;
     char** keys = nullptr;
     ClrConfigNodeData** values = nullptr;
@@ -14,7 +14,7 @@ struct ClrConfigNodeData {
         type = (uint8_t) nodeType;
         switch (nodeType) {
             case Config::Value::Type::STRING: {
-                const auto str = node->As<std::string>();
+                const auto str = node->AsString();
 
                 strValue = new char[str.length() + 1];
                 std::copy(str.begin(), str.end(), strValue);
@@ -23,19 +23,19 @@ struct ClrConfigNodeData {
                 break;
             }
             case Config::Value::Type::BOOL: {
-                const auto nodeBool = node->As<bool>();
+                const auto nodeBool = node->AsBool();
 
                 boolValue = nodeBool;
                 break;
             }
             case Config::Value::Type::NUMBER: {
-                const auto nodeNumber = node->As<double>();
+                const auto nodeNumber = node->AsNumber();
 
                 numValue = nodeNumber;
                 break;
             }
             case Config::Value::Type::LIST: {
-                const auto list = node->As<std::vector<Config::Value::ValuePtr>>();
+                const auto list = node->AsList();
                 elements = list.size();
                 values = new ClrConfigNodeData*[elements];
                 for (int i = 0; i < elements; i++) {
@@ -45,8 +45,9 @@ struct ClrConfigNodeData {
             }
             
             case Config::Value::Type::DICT: {
-                const auto dict = node->As<std::map<std::string, Config::Value::ValuePtr>>();
-                elements = dict.size();
+                const auto dict = node->AsDict();
+                elements = static_cast<int32_t>(dict.size());
+
                 keys = new char*[elements];
                 values = new ClrConfigNodeData*[elements];
                 int i = 0;
