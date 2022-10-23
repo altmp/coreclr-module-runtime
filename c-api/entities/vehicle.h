@@ -280,6 +280,19 @@ EXPORT_CLIENT void Vehicle_SetEngineTemperature(alt::IVehicle* vehicle, float va
 EXPORT_CLIENT void Vehicle_SetFuelLevel(alt::IVehicle* vehicle, float value);
 EXPORT_CLIENT void Vehicle_SetOilLevel(alt::IVehicle* vehicle, float value);
 
+EXPORT_CLIENT uint8_t Vehicle_GetEngineLightState(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetEngineLightState(alt::IVehicle* vehicle, uint8_t state);
+EXPORT_CLIENT uint8_t Vehicle_GetAbsLightState(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetAbsLightState(alt::IVehicle* vehicle, uint8_t state);
+EXPORT_CLIENT uint8_t Vehicle_GetPetrolLightState(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetPetrolLightState(alt::IVehicle* vehicle, uint8_t state);
+EXPORT_CLIENT uint8_t Vehicle_GetOilLightState(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetOilLightState(alt::IVehicle* vehicle, uint8_t state);
+EXPORT_CLIENT uint8_t Vehicle_GetBatteryLightState(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetBatteryLightState(alt::IVehicle* vehicle, uint8_t state);
+EXPORT_CLIENT void Vehicle_ResetDashboardLights(alt::IVehicle* vehicle);
+
+
 EXPORT_CLIENT uint8_t Vehicle_Handling_GetByModelHash(alt::ICore* core, uint32_t modelHash, alt::IHandlingData*& handling);
 EXPORT_CLIENT void Vehicle_GetHandling(alt::IVehicle* vehicle, alt::IHandlingData*& handling);
 EXPORT_CLIENT void Vehicle_ReplaceHandling(alt::IVehicle* vehicle);

@@ -903,6 +903,50 @@ void Vehicle_SetOilLevel(alt::IVehicle* vehicle, float value) {
     vehicle->SetOilLevel(value);
 }
 
+uint8_t Vehicle_GetEngineLightState(alt::IVehicle* vehicle) {
+    return vehicle->GetEngineLightState();
+}
+
+void Vehicle_SetEngineLightState(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetEngineLightState(state);
+}
+
+uint8_t Vehicle_GetAbsLightState(alt::IVehicle* vehicle) {
+    return vehicle->GetAbsLightState();
+}
+
+void Vehicle_SetAbsLightState(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetAbsLightState(state);
+}
+
+uint8_t Vehicle_GetPetrolLightState(alt::IVehicle* vehicle) {
+    return vehicle->GetPetrolLightState();
+}
+
+void Vehicle_SetPetrolLightState(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetPetrolLightState(state);
+}
+
+uint8_t Vehicle_GetOilLightState(alt::IVehicle* vehicle) {
+    return vehicle->GetOilLightState();
+}
+
+void Vehicle_SetOilLightState(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetOilLightState(state);
+}
+
+uint8_t Vehicle_GetBatteryLightState(alt::IVehicle* vehicle) {
+    return vehicle->GetBatteryLightState();
+}
+
+void Vehicle_SetBatteryLightState(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->SetBatteryLightState(state);
+}
+
+void Vehicle_ResetDashboardLights(alt::IVehicle* vehicle) {
+    vehicle->ResetDashboardLights();
+}
+
 
 void Vehicle_GetHandling(alt::IVehicle* vehicle, alt::IHandlingData*& handling) {
     handling = vehicle->GetHandling().Get();
