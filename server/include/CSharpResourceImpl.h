@@ -216,9 +216,9 @@ class CSharpResourceImpl : public alt::IResource::Impl {
 
     bool Stop() override;
 
-    void OnCreateBaseObject(alt::Ref<alt::IBaseObject> object) override;
+    void OnCreateBaseObject(alt::IBaseObject* object) override;
 
-    void OnRemoveBaseObject(alt::Ref<alt::IBaseObject> object) override;
+    void OnRemoveBaseObject(alt::IBaseObject* object) override;
 
     static void* GetBaseObjectPointer(alt::IBaseObject* baseObject);
 
@@ -355,16 +355,16 @@ public:
 class BaseObjectWeakReference : public alt::IWeakRef {
 
 public:
-    alt::Ref<alt::IBaseObject> baseObjectRef;
+    alt::IBaseObject* baseObject;
     CSharpResourceImpl* cSharpResource;
 
-    BaseObjectWeakReference(alt::Ref<alt::IBaseObject> baseObjectRef, CSharpResourceImpl* cSharpResource) {
-        this->baseObjectRef = baseObjectRef;
+    BaseObjectWeakReference(alt::IBaseObject* baseObject, CSharpResourceImpl* cSharpResource) {
+        this->baseObject = baseObject;
         this->cSharpResource = cSharpResource;
     }
 
     void OnDestroy() override {
-        auto object = this->baseObjectRef.Get();
+        auto object = this->baseObject;
         if (object != nullptr) {
             switch (object->GetType()) {
                 case alt::IBaseObject::Type::PLAYER:

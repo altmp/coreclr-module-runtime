@@ -136,7 +136,7 @@ void Core_GetPlayers(alt::ICore* core, alt::IPlayer* players[], uint64_t size) {
         size = playersArray.GetSize();
     }
     for (uint64_t i = 0; i < size; i++) {
-        players[i] = playersArray[i].Get();
+        players[i] = playersArray[i];
     }
 }
 
@@ -150,27 +150,26 @@ void Core_GetVehicles(alt::ICore* core, alt::IVehicle* vehicles[], uint64_t size
         size = vehiclesArray.GetSize();
     }
     for (uint64_t i = 0; i < size; i++) {
-        vehicles[i] = vehiclesArray[i].Get();
+        vehicles[i] = vehiclesArray[i];
     }
 }
 
 uint64_t Core_GetBlipCount(alt::ICore* core) {
-    return core->GetBlips().GetSize();
+    return core->GetBlips().size();
 }
 
 void Core_GetBlips(alt::ICore* core, alt::IBlip* Blips[], uint64_t size) {
     auto BlipsArray = core->GetBlips();
-    if (BlipsArray.GetSize() < size) {
-        size = BlipsArray.GetSize();
+    if (BlipsArray.size() < size) {
+        size = BlipsArray.size();
     }
     for (uint64_t i = 0; i < size; i++) {
-        Blips[i] = BlipsArray[i].Get();
+        Blips[i] = BlipsArray[i];
     }
 }
 
 void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
-    auto entityRef = core->GetEntityByID(id);
-    auto entity = entityRef.Get();
+    auto entity = core->GetEntityByID(id);
     if (entity == nullptr) return nullptr;
     type = (uint8_t) entity->GetType();
     switch (entity->GetType()) {
@@ -305,7 +304,7 @@ Core_TriggerClientEventForAll(alt::ICore* core, const char* ev, alt::MValueConst
 void
 Core_TriggerClientEventForSome(alt::ICore* core, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[],
     int argsSize) {
-    alt::Array<alt::Ref<alt::IPlayer>> clients(targetsSize);
+    alt::Array<alt::IPlayer*> clients(targetsSize);
     for (int i = 0; i < targetsSize; i++)
     {
         clients[i] = targets[i];
@@ -327,7 +326,7 @@ Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t 
     rotation.roll = rot.roll;
     rotation.pitch = rot.pitch;
     rotation.yaw = rot.yaw;
-    auto vehicle = core->CreateVehicle(model, position, rotation).Get();
+    auto vehicle = core->CreateVehicle(model, position, rotation);
     if (vehicle != nullptr) {
         id = vehicle->GetID();
     }
@@ -346,7 +345,7 @@ Core_CreateCheckpoint(alt::ICore* core, uint8_t type, position_t pos, float radi
     rgba.g = color.g;
     rgba.b = color.b;
     rgba.a = color.a;
-    return core->CreateCheckpoint(type, position, radius, height, rgba).Get();
+    return core->CreateCheckpoint(type, position, radius, height, rgba);
 }
 
 alt::IBlip*
@@ -355,11 +354,11 @@ Core_CreateBlip(alt::ICore* core, alt::IPlayer* target, uint8_t type, position_t
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return core->CreateBlip(target, (alt::IBlip::BlipType) type, position).Get();
+    return core->CreateBlip(target, (alt::IBlip::BlipType) type, position);
 }
 
 alt::IBlip* Core_CreateBlipAttached(alt::ICore* core, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo) {
-    return core->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo).Get();
+    return core->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo);
 }
 
 ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* core, uint32_t hash) {
@@ -379,7 +378,7 @@ void Core_DeallocPedModelInfo(ClrPedModelInfo* modelInfo) {
 }
 
 alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* core, uint8_t spatial, float maxDistance) {
-    return core->CreateVoiceChannel(spatial, maxDistance).Get();
+    return core->CreateVoiceChannel(spatial, maxDistance);
 }
 
 alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* core, position_t pos, float radius, float height) {
@@ -387,7 +386,7 @@ alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* core, position_t pos, fl
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return core->CreateColShapeCylinder(position, radius, height).Get();
+    return core->CreateColShapeCylinder(position, radius, height);
 }
 
 alt::IColShape* Core_CreateColShapeSphere(alt::ICore* core, position_t pos, float radius) {
@@ -395,7 +394,7 @@ alt::IColShape* Core_CreateColShapeSphere(alt::ICore* core, position_t pos, floa
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return core->CreateColShapeSphere(position, radius).Get();
+    return core->CreateColShapeSphere(position, radius);
 }
 
 alt::IColShape* Core_CreateColShapeCircle(alt::ICore* core, position_t pos, float radius) {
@@ -403,7 +402,7 @@ alt::IColShape* Core_CreateColShapeCircle(alt::ICore* core, position_t pos, floa
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return core->CreateColShapeCircle(position, radius).Get();
+    return core->CreateColShapeCircle(position, radius);
 }
 
 alt::IColShape* Core_CreateColShapeCube(alt::ICore* core, position_t pos, position_t pos2) {
@@ -416,11 +415,11 @@ alt::IColShape* Core_CreateColShapeCube(alt::ICore* core, position_t pos, positi
     position2.x = pos2.x;
     position2.y = pos2.y;
     position2.z = pos2.z;
-    return core->CreateColShapeCube(position, position2).Get();
+    return core->CreateColShapeCube(position, position2);
 }
 
 alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* core, float x1, float y1, float x2, float y2, float z) {
-    return core->CreateColShapeRectangle(x1, y1, x2, y2, z).Get();
+    return core->CreateColShapeRectangle(x1, y1, x2, y2, z);
 }
 
 alt::IColShape* Core_CreateColShapePolygon(alt::ICore* core, float minZ, float maxZ, vector2_t points[], int pointSize) {
@@ -433,7 +432,7 @@ alt::IColShape* Core_CreateColShapePolygon(alt::ICore* core, float minZ, float m
        convertedPoints[i] = point;
     }
 
-    return core->CreateColShapePolygon(minZ, maxZ, convertedPoints).Get();
+    return core->CreateColShapePolygon(minZ, maxZ, convertedPoints);
 }
 
 /*void Core_DestroyBaseObject(alt::ICore* core, alt::IBaseObject* baseObject) {
@@ -532,7 +531,7 @@ alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position) {
     pos.z = position.z;
     auto blip = core->CreateBlip(alt::IBlip::BlipType::DESTINATION, pos);
     if (blip.IsEmpty()) return nullptr;
-    return blip.Get();
+    return blip;
 }
 
 alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius) {
@@ -542,7 +541,7 @@ alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, f
     pos.z = position.z;
     auto blip = core->CreateBlip(pos, radius);
     if (blip.IsEmpty()) return nullptr;
-    return blip.Get();
+    return blip;
 }
 
 alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height) {
@@ -552,23 +551,23 @@ alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, flo
     pos.z = position.z;
     auto blip = core->CreateBlip(pos, width, height);
     if (blip.IsEmpty()) return nullptr;
-    return blip.Get();
+    return blip;
 }
 
 alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay) {
     auto webView = core->CreateWebView(resource, url, { pos.x, pos.y }, { size.x, size.y }, true, isOverlay);
     if (webView.IsEmpty()) return nullptr;
-    return webView.Get();
+    return webView;
 }
 
 alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture) {
     auto webView = core->CreateWebView(resource, url, hash, targetTexture);
     if (webView.IsEmpty()) return nullptr;
-    return webView.Get();
+    return webView;
 }
 
 alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url) {
-    return core->CreateDocument(url, resource->GetMain(), resource).Get();
+    return core->CreateDocument(url, resource->GetMain(), resource);
 }
 
 alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color) {
@@ -585,7 +584,7 @@ alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_
     rgba.g = color.g;
     rgba.b = color.b;
     rgba.a = color.a;
-    return core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }).Get();
+    return core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a });
 }
 
 
@@ -1006,15 +1005,15 @@ uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, ScreenshotDelegate_t deleg
 }
 
 alt::IMapData* Core_GetMapZoomDataById(alt::ICore* core, uint32_t id) {
-    return core->GetMapData(id).Get();
+    return core->GetMapData(id);
 }
 
 alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const char* alias, uint32_t& id) {
     auto data = core->GetMapData(alias);
-    if (data.IsEmpty() || data.Get() == nullptr) return nullptr;
+    if (data.IsEmpty() || data == nullptr) return nullptr;
 
     id = core->GetMapDataIDFromAlias(alias);
-    return data.Get();
+    return data;
 }
 
 void Core_ResetAllMapZoomData(alt::ICore* core) {
@@ -1026,15 +1025,15 @@ void Core_ResetMapZoomData(alt::ICore* core, uint32_t id) {
 }
 
 alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource) {
-    return core->CreateHttpClient(resource).Get();
+    return core->CreateHttpClient(resource);
 }
 
 alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url) {
-    return core->CreateWebSocketClient(url, resource).Get();
+    return core->CreateWebSocketClient(url, resource);
 }
 
 alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend) {
-    return core->CreateAudio(source, volume, category, frontend, resource).Get();
+    return core->CreateAudio(source, volume, category, frontend, resource);
 }
 
 uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key) {
@@ -1069,7 +1068,7 @@ void Core_GetFocusOverrideOffset(alt::ICore* core, vector3_t& offset) {
 }
 
 void* Core_GetFocusOverrideEntity(alt::ICore* core, uint8_t& type) {
-    auto entity = core->GetFocusOverrideEntity().Get();
+    auto entity = core->GetFocusOverrideEntity();
     if (entity == nullptr) return nullptr;
     type = (uint8_t) entity->GetType();
     switch (entity->GetType()) {
@@ -1104,7 +1103,7 @@ uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos) {
 }
 
 alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t pos, vector3_t rot, uint8_t noOffset, uint8_t dynamic) {
-    return core->CreateObject(modelHash, { pos.x, pos.y, pos.z }, { rot.x, rot.y, rot.z }, noOffset, dynamic).Get();
+    return core->CreateObject(modelHash, { pos.x, pos.y, pos.z }, { rot.x, rot.y, rot.z }, noOffset, dynamic);
 }
 
 alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size) {
@@ -1112,7 +1111,7 @@ alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size) {
     size = objects.size();
     auto out = new alt::IObject*[size];
     for (auto i = 0; i < size; i++) {
-        out[i] = objects[i].Get();
+        out[i] = objects[i];
     }
 
     return out;
@@ -1123,7 +1122,7 @@ alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size) {
     size = worldObjects.size();
     auto out = new alt::IObject*[size];
     for (auto i = 0; i < size; i++) {
-        out[i] = worldObjects[i].Get();
+        out[i] = worldObjects[i];
     }
 
     return out;

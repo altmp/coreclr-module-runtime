@@ -22,14 +22,6 @@ void VoiceChannel_DeleteMetaData(alt::IVoiceChannel* voiceChannel, const char* k
     voiceChannel->DeleteMetaData(key);
 }
 
-void VoiceChannel_AddRef(alt::IVoiceChannel* voiceChannel) {
-    voiceChannel->AddRef();
-}
-
-void VoiceChannel_RemoveRef(alt::IVoiceChannel* voiceChannel) {
-    voiceChannel->RemoveRef();
-}
-
 void VoiceChannel_AddPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player) {
     channel->AddPlayer(player);
 }

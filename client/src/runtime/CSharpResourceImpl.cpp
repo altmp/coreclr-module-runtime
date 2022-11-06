@@ -353,7 +353,7 @@ void CSharpResourceImpl::OnTick()
     OnTickDelegate();
 }
 
-void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef)
+void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* objectRef)
 {
     auto object = objectRef.Get();
     if (object == nullptr) return;
@@ -412,7 +412,7 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::Ref<alt::IBaseObject> objectRef
     }
 }
 
-void CSharpResourceImpl::OnRemoveBaseObject(alt::Ref<alt::IBaseObject> objectRef)
+void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* objectRef)
 {
     auto object = objectRef.Get();
     if (object == nullptr) return;

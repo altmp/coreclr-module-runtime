@@ -98,12 +98,12 @@ uint8_t Player_IsInVehicle(alt::IPlayer* player) {
 }
 
 alt::IVehicle* Player_GetVehicle(alt::IPlayer* player) {
-    return player->GetVehicle().Get();
+    return player->GetVehicle();
 }
 
 uint8_t Player_GetVehicleID(alt::IPlayer* player, uint16_t& id) {
     auto vehicle = player->GetVehicle();
-    if (vehicle.IsEmpty()) return false;
+    if (vehicle == nullptr) return false;
     id = vehicle->GetID();
     return true;
 }
@@ -114,7 +114,7 @@ uint8_t Player_GetSeat(alt::IPlayer* player) {
 
 
 void* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &type) {
-    auto entity = player->GetEntityAimingAt().Get();
+    auto entity = player->GetEntityAimingAt();
     if (entity != nullptr) {
         type = entity->GetType();
         switch (type) {
@@ -396,7 +396,7 @@ void Player_ClearProps(alt::IPlayer* player, uint8_t component) {
 
 
 uint8_t Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity) {
-    return player->IsEntityInStreamingRange(entity);
+    return player->IsEntityInStreamingRange(entity->GetID());
 }
 
 

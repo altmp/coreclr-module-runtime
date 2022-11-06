@@ -365,7 +365,7 @@ uint8_t MValueConst_GetDict(alt::MValueConst *mValueConst, const char *keys[],
 void *MValueConst_GetEntity(alt::MValueConst *mValueConst, alt::IBaseObject::Type &type) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BASE_OBJECT) {
-        auto entityPointer = dynamic_cast<const alt::IMValueBaseObject *>(mValue)->Value().Get();
+        auto entityPointer = dynamic_cast<const alt::IMValueBaseObject *>(mValue)->Value();
         if (entityPointer != nullptr) {
             type = entityPointer->GetType();
             switch (type) {
