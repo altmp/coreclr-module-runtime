@@ -1005,15 +1005,15 @@ uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, ScreenshotDelegate_t deleg
 }
 
 alt::IMapData* Core_GetMapZoomDataById(alt::ICore* core, uint32_t id) {
-    return core->GetMapData(id);
+    return core->GetMapData(id).Get();
 }
 
 alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const char* alias, uint32_t& id) {
     auto data = core->GetMapData(alias);
-    if (data.IsEmpty() || data == nullptr) return nullptr;
+    if (data.IsEmpty() || data.Get() == nullptr) return nullptr;
 
     id = core->GetMapDataIDFromAlias(alias);
-    return data;
+    return data.Get();
 }
 
 void Core_ResetAllMapZoomData(alt::ICore* core) {
