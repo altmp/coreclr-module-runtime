@@ -63,7 +63,7 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
             return;
         }
         case alt::IMValue::Type::BASE_OBJECT:
-            mValues[i] = core->CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value());
+            mValues[i] = core->CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value()->As<alt::IBaseObject>());
             return;
         case alt::IMValue::Type::FUNCTION:
             mValues[i] = mValue;
@@ -147,7 +147,7 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
             return;
         }
         case alt::IMValue::Type::BASE_OBJECT:
-            mValues->SetConst(i, core->CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value()));
+            mValues->SetConst(i, core->CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value()->As<alt::IBaseObject>()));
             return;
         case alt::IMValue::Type::FUNCTION:
             mValues->SetConst(i, mValue);
@@ -231,7 +231,7 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
             return;
         }
         case alt::IMValue::Type::BASE_OBJECT:
-            mValues->SetConst(key, core->CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value()));
+            mValues->SetConst(key, core->CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value()->As<alt::IBaseObject>()));
             return;
         case alt::IMValue::Type::FUNCTION:
             mValues->SetConst(key, mValue);
@@ -371,29 +371,29 @@ void *MValueConst_GetEntity(alt::MValueConst *mValueConst, alt::IBaseObject::Typ
             switch (type) {
                 case alt::IBaseObject::Type::PLAYER:
                 case alt::IBaseObject::Type::LOCAL_PLAYER:
-                    return dynamic_cast<alt::IPlayer *>(entityPointer);
+                    return entityPointer->As<alt::IPlayer>();
                 case alt::IBaseObject::Type::VEHICLE:
-                    return dynamic_cast<alt::IVehicle *>(entityPointer);
+                    return entityPointer->As<alt::IVehicle>();
                 case alt::IBaseObject::Type::BLIP:
-                    return dynamic_cast<alt::IBlip *>(entityPointer);
+                    return entityPointer->As<alt::IBlip>();
                 case alt::IBaseObject::Type::VOICE_CHANNEL:
-                    return dynamic_cast<alt::IVoiceChannel *>(entityPointer);
+                    return entityPointer->As<alt::IVoiceChannel>();
                 case alt::IBaseObject::Type::COLSHAPE:
-                    return dynamic_cast<alt::IColShape *>(entityPointer);
+                    return entityPointer->As<alt::IColShape>();
                 case alt::IBaseObject::Type::CHECKPOINT:
-                    return dynamic_cast<alt::ICheckpoint *>(entityPointer);
+                    return entityPointer->As<alt::ICheckpoint>();
                 case alt::IBaseObject::Type::AUDIO:
-                    return dynamic_cast<alt::IAudio *>(entityPointer);
+                    return entityPointer->As<alt::IAudio>();
                 case alt::IBaseObject::Type::WEBVIEW:
-                    return dynamic_cast<alt::IWebView *>(entityPointer);
+                    return entityPointer->As<alt::IWebView>();
                 case alt::IBaseObject::Type::HTTP_CLIENT:
-                    return dynamic_cast<alt::IHttpClient *>(entityPointer);
+                    return entityPointer->As<alt::IHttpClient>();
                 case alt::IBaseObject::Type::RML_ELEMENT:
-                    return dynamic_cast<alt::IRmlElement *>(entityPointer);
+                    return entityPointer->As<alt::IRmlElement>();
                 case alt::IBaseObject::Type::RML_DOCUMENT:
-                    return dynamic_cast<alt::IRmlDocument *>(entityPointer);
+                    return entityPointer->As<alt::IRmlDocument>();
                 case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
-                    return dynamic_cast<alt::IWebSocketClient *>(entityPointer);
+                    return entityPointer->As<alt::IWebSocketClient>();
                 default:
                     return nullptr;
             }
