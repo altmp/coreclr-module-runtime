@@ -63,8 +63,15 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
             return;
         }
         case alt::IMValue::Type::BASE_OBJECT:
-            mValues[i] = core->CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value()->As<alt::IBaseObject>());
+        {
+            auto baseobject = dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value();
+            if (baseobject) {
+                mValues[i] = core->CreateMValueBaseObject(baseobject->As<alt::IBaseObject>());
+            }else{
+                mValues[i] = core->CreateMValueNil();
+            }
             return;
+        }
         case alt::IMValue::Type::FUNCTION:
             mValues[i] = mValue;
             return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
@@ -147,8 +154,15 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
             return;
         }
         case alt::IMValue::Type::BASE_OBJECT:
-            mValues->SetConst(i, core->CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value()->As<alt::IBaseObject>()));
+        {
+            auto baseobject = dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value();
+            if (baseobject) {
+                mValues->SetConst(i, core->CreateMValueBaseObject(baseobject->As<alt::IBaseObject>()));
+            }else{
+                mValues->SetConst(i, core->CreateMValueNil());
+            }
             return;
+        }
         case alt::IMValue::Type::FUNCTION:
             mValues->SetConst(i, mValue);
             return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
@@ -231,8 +245,15 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
             return;
         }
         case alt::IMValue::Type::BASE_OBJECT:
-            mValues->SetConst(key, core->CreateMValueBaseObject(dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value()->As<alt::IBaseObject>()));
+        {
+            auto baseobject = dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value();
+            if (baseobject) {
+                mValues->SetConst(key, core->CreateMValueBaseObject(baseobject->As<alt::IBaseObject>()));
+            }else{
+                mValues->SetConst(key, core->CreateMValueNil());
+            }
             return;
+        }
         case alt::IMValue::Type::FUNCTION:
             mValues->SetConst(key, mValue);
             return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
@@ -366,7 +387,7 @@ void *MValueConst_GetEntity(alt::MValueConst *mValueConst, alt::IBaseObject::Typ
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BASE_OBJECT) {
         auto entityPointer = dynamic_cast<const alt::IMValueBaseObject *>(mValue)->Value();
-        if (entityPointer != nullptr) {
+        if (entityPointer) {
             type = entityPointer->GetType();
             switch (type) {
                 case alt::IBaseObject::Type::PLAYER:

@@ -28,5 +28,3 @@ EXPORT_SERVER const char* ConnectionInfo_GetCdnUrl(alt::IConnectionInfo *connect
 EXPORT_SERVER uint64_t ConnectionInfo_GetPasswordHash(alt::IConnectionInfo *connectionInfo);
 EXPORT_SERVER const char* ConnectionInfo_GetIp(alt::IConnectionInfo *connectionInfo, int32_t& size);
 EXPORT_SERVER int64_t ConnectionInfo_GetDiscordUserID(alt::IConnectionInfo *connectionInfo);
-EXPORT_SERVER void ConnectionInfo_AddRef(alt::IConnectionInfo *connectionInfo);
-EXPORT_SERVER void ConnectionInfo_RemoveRef(alt::IConnectionInfo *connectionInfo);
