@@ -174,7 +174,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         case alt::CEvent::Type::PLAYER_BEFORE_CONNECT: {
             auto beforeConnectEvent = (alt::CPlayerBeforeConnectEvent*)ev;
-            auto clrInfo = new ClrConnectionInfo(beforeConnectEvent->GetConnectionInfo().Get());
+            auto clrInfo = new ClrConnectionInfo(beforeConnectEvent->GetConnectionInfo());
 
             OnPlayerBeforeConnectDelegate(beforeConnectEvent, clrInfo, "");
 
@@ -513,15 +513,13 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::CONNECTION_QUEUE_ADD: {
             auto connectionQueueAddEvent = ((alt::CConnectionQueueAddEvent*) (ev));
             auto connectionInfo = connectionQueueAddEvent->GetConnectionInfo();
-            connectionInfo->AddRef();
-            OnConnectionQueueAddDelegate(connectionInfo.Get());
+            OnConnectionQueueAddDelegate(connectionInfo);
             break;
         }
         case alt::CEvent::Type::CONNECTION_QUEUE_REMOVE: {
             auto connectionQueueRemoveEvent = ((alt::CConnectionQueueRemoveEvent*) (ev));
             auto connectionInfo = connectionQueueRemoveEvent->GetConnectionInfo();
-            OnConnectionQueueRemoveDelegate(connectionInfo.Get());
-            connectionInfo->RemoveRef();
+            OnConnectionQueueRemoveDelegate(connectionInfo);
             break;
         }
         case alt::CEvent::Type::SERVER_STARTED: {
