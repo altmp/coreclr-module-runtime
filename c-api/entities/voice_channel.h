@@ -19,8 +19,6 @@ EXPORT_SERVER alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voi
 EXPORT_SERVER void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValueConst* val);
 EXPORT_SERVER uint8_t VoiceChannel_HasMetaData(alt::IVoiceChannel* voiceChannel, const char* key);
 EXPORT_SERVER void VoiceChannel_DeleteMetaData(alt::IVoiceChannel* voiceChannel, const char* key);
-EXPORT_SERVER void VoiceChannel_AddRef(alt::IVoiceChannel* voiceChannel);
-EXPORT_SERVER void VoiceChannel_RemoveRef(alt::IVoiceChannel* voiceChannel);
 
 EXPORT_SERVER void VoiceChannel_AddPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player);
 EXPORT_SERVER void VoiceChannel_RemovePlayer(alt::IVoiceChannel* channel, alt::IPlayer* player);

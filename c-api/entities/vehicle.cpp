@@ -20,12 +20,12 @@ int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle) {
 
 #ifdef ALT_SERVER_API
 alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
-    return vehicle->GetDriver().Get();
+    return vehicle->GetDriver();
 }
 
 uint8_t Vehicle_GetDriverID(alt::IVehicle* vehicle, uint16_t& id) {
     auto driver = vehicle->GetDriver();
-    if (driver.IsEmpty()) return false;
+    if (driver == nullptr) return false;
     id = driver->GetID();
     return true;
 }
@@ -625,11 +625,11 @@ void Vehicle_LoadScriptDataFromBase64(alt::IVehicle* vehicle, const char* base64
 
 
 alt::IVehicle* Vehicle_GetAttached(alt::IVehicle* vehicle) {
-    return vehicle->GetAttached().Get();
+    return vehicle->GetAttached();
 }
 
 alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle) {
-    return vehicle->GetAttachedTo().Get();
+    return vehicle->GetAttachedTo();
 }
 
 
@@ -697,7 +697,7 @@ void Vehicle_SetTrainTrackId(alt::IVehicle* vehicle, int8_t trackId) {
 }
 
 alt::IVehicle* Vehicle_GetTrainEngineId(alt::IVehicle* vehicle) {
-    return vehicle->GetTrainEngineId().Get();
+    return vehicle->GetTrainEngineId();
 }
 
 void Vehicle_SetTrainEngineId(alt::IVehicle* vehicle, alt::IVehicle* entity) {
@@ -785,7 +785,7 @@ void Vehicle_SetTrainCarriageConfigIndex(alt::IVehicle* vehicle, int8_t carriage
 }
 
 alt::IVehicle* Vehicle_GetTrainLinkedToBackwardId(alt::IVehicle* vehicle) {
-    return vehicle->GetTrainLinkedToBackwardId().Get();
+    return vehicle->GetTrainLinkedToBackwardId();
 }
 
 void Vehicle_SetTrainLinkedToBackwardId(alt::IVehicle* vehicle, alt::IVehicle* entity) {
@@ -793,7 +793,7 @@ void Vehicle_SetTrainLinkedToBackwardId(alt::IVehicle* vehicle, alt::IVehicle* e
 }
 
 alt::IVehicle* Vehicle_GetTrainLinkedToForwardId(alt::IVehicle* vehicle) {
-    return vehicle->GetTrainLinkedToForwardId().Get();
+    return vehicle->GetTrainLinkedToForwardId();
 }
 
 void Vehicle_SetTrainLinkedToForwardId(alt::IVehicle* vehicle, alt::IVehicle* entity) {
@@ -822,7 +822,7 @@ uint8_t Vehicle_HasTimedExplosion(alt::IVehicle* vehicle) {
 }
 
 alt::IPlayer* Vehicle_GetTimedExplosionCulprit(alt::IVehicle* vehicle) {
-    return vehicle->GetTimedExplosionCulprit().Get();
+    return vehicle->GetTimedExplosionCulprit();
 }
 
 uint32_t Vehicle_GetTimedExplosionTime(alt::IVehicle* vehicle) {
