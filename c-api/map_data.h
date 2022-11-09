@@ -23,4 +23,3 @@ EXPORT_CLIENT void MapData_SetVTilesX(alt::IMapData* mapData, float value);
 EXPORT_CLIENT float MapData_GetVTilesX(alt::IMapData* mapData);
 EXPORT_CLIENT void MapData_SetVTilesY(alt::IMapData* mapData, float value);
 EXPORT_CLIENT float MapData_GetVTilesY(alt::IMapData* mapData);
-EXPORT_CLIENT void MapData_Destroy(alt::IMapData* mapData);

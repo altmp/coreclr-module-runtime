@@ -41,8 +41,4 @@ void MapData_SetVTilesY(alt::IMapData* mapData, float value) {
 float MapData_GetVTilesY(alt::IMapData* mapData) {
     return mapData->GetTilesCountY();
 }
-
-void MapData_Destroy(alt::IMapData* mapData) {
-    mapData->RemoveRef();
-}
 #endif
