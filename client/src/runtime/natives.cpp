@@ -10,7 +10,7 @@
 #include <type_traits>
 #include <stdlib.h>
 
-alt::Ref<alt::INative::Context> ctx;
+std::shared_ptr<alt::INative::Context> ctx;
 
 void InitNatives() {
 	ctx = alt::ICore::Instance().CreateNativesContext();
