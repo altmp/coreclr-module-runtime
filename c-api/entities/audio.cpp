@@ -91,7 +91,7 @@ void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint8_t*& entityT
 
             if (!baseObject) continue;
 
-            auto entityPtr = GetEntityPointer(baseObject->As<alt::IBaseObject>());
+            auto entityPtr = GetEntityPointer(baseObject.get());
             if (entityPtr != nullptr) entityArr[i] = entityPtr;
         } else if (mValue->GetType() == alt::IMValue::Type::UINT) {
             auto valueRef = dynamic_cast<const alt::IMValueUInt*>(mValue.Get())->Value();
