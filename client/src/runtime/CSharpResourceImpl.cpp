@@ -99,7 +99,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             for (auto i = 0; i < size; i++) {
                 constArgs[i] = &args[i];
             }
-            OnWebViewEventDelegate(webViewEvent->GetTarget().Get(), name.c_str(), constArgs, size);
+            OnWebViewEventDelegate(webViewEvent->GetTarget(), name.c_str(), constArgs, size);
             delete[] constArgs;
             break;
         }
@@ -109,7 +109,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto name = rmlUiEvent->GetName();
             auto size = args->GetSize();
             
-            OnRmlEventDelegate(rmlUiEvent->GetElement().Get(), name.c_str(), rmlUiEvent->GetArgs().Get(), size);
+            OnRmlEventDelegate(rmlUiEvent->GetElement(), name.c_str(), rmlUiEvent->GetArgs().Get(), size);
             break;
         }
         case alt::CEvent::Type::WEB_SOCKET_CLIENT_EVENT: {
@@ -122,7 +122,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             for (auto i = 0; i < size; i++) {
                 constArgs[i] = &args[i];
             }
-            OnWebSocketEventDelegate(webSocketClientEvent->GetTarget().Get(), name.c_str(), constArgs, size);
+            OnWebSocketEventDelegate(webSocketClientEvent->GetTarget(), name.c_str(), constArgs, size);
             break;
         }
 #pragma region Player Events
@@ -136,19 +136,19 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         }
         case alt::CEvent::Type::PLAYER_ENTER_VEHICLE: {
             auto playerEnterVehicleEvent = (alt::CPlayerEnterVehicleEvent *) ev;
-            OnPlayerEnterVehicleDelegate(playerEnterVehicleEvent->GetTarget().Get(),
+            OnPlayerEnterVehicleDelegate(playerEnterVehicleEvent->GetTarget(),
                                          playerEnterVehicleEvent->GetSeat());
             break;
         }
         case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE: {
             auto playerLeaveVehicleEvent = (alt::CPlayerLeaveVehicleEvent *) ev;
-            OnPlayerLeaveVehicleDelegate(playerLeaveVehicleEvent->GetTarget().Get(),
+            OnPlayerLeaveVehicleDelegate(playerLeaveVehicleEvent->GetTarget(),
                                          playerLeaveVehicleEvent->GetSeat());
             break;
         }
         case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT: {
             auto playerChangeVehicleSeatEvent = (alt::CPlayerChangeVehicleSeatEvent *) ev;
-            OnPlayerChangeVehicleSeatDelegate(playerChangeVehicleSeatEvent->GetTarget().Get(),
+            OnPlayerChangeVehicleSeatDelegate(playerChangeVehicleSeatEvent->GetTarget(),
                                          playerChangeVehicleSeatEvent->GetOldSeat(),
                                          playerChangeVehicleSeatEvent->GetNewSeat());
             break;
@@ -159,14 +159,14 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto oldName = playerAnimationChangeEvent->GetOldAnimationName();
             auto newDict = playerAnimationChangeEvent->GetNewAnimationDict();
             auto newName = playerAnimationChangeEvent->GetNewAnimationName();
-            OnPlayerChangeAnimationDelegate(playerAnimationChangeEvent->GetTarget().Get(), oldDict, newDict, oldName, newName);
+            OnPlayerChangeAnimationDelegate(playerAnimationChangeEvent->GetTarget(), oldDict, newDict, oldName, newName);
             break;
         }
         case alt::CEvent::Type::PLAYER_CHANGE_INTERIOR_EVENT: {
             auto playerChangeInteriorEvent = (alt::CPlayerChangeInteriorEvent *) ev;
             auto oldInteriorLocation = playerChangeInteriorEvent->GetOldInteriorLocation();
             auto newInteriorLocation = playerChangeInteriorEvent->GetNewInteriorLocation();
-            OnPlayerChangeInteriorDelegate(playerChangeInteriorEvent->GetTarget().Get(), oldInteriorLocation, newInteriorLocation);
+            OnPlayerChangeInteriorDelegate(playerChangeInteriorEvent->GetTarget(), oldInteriorLocation, newInteriorLocation);
             break;
         }
         case alt::CEvent::Type::PLAYER_WEAPON_SHOOT_EVENT: {
@@ -187,7 +187,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 #pragma region Entity events
         case alt::CEvent::Type::GAME_ENTITY_CREATE: {
             auto gameEntityCreateEvent = (alt::CGameEntityCreateEvent *) ev;
-            auto entity = gameEntityCreateEvent->GetTarget().Get();
+            auto entity = gameEntityCreateEvent->GetTarget();
             auto type = (uint8_t) entity->GetType();
             void *ptr;
 
@@ -210,7 +210,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         }
         case alt::CEvent::Type::GAME_ENTITY_DESTROY: {
             auto gameEntityDestroyEvent = (alt::CGameEntityDestroyEvent *) ev;
-            auto entity = gameEntityDestroyEvent->GetTarget().Get();
+            auto entity = gameEntityDestroyEvent->GetTarget();
             auto type = (uint8_t) entity->GetType();
             void *ptr;
 
@@ -233,8 +233,8 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         }
         case alt::CEvent::Type::REMOVE_ENTITY_EVENT: {
             auto removeEntityEvent = (alt::CRemoveEntityEvent *) ev;
-            OnRemoveEntityDelegate(GetEntityPointer(removeEntityEvent->GetEntity().Get()),
-                                   removeEntityEvent->GetEntity().Get()->GetType());
+            OnRemoveEntityDelegate(GetEntityPointer(removeEntityEvent->GetEntity()),
+                                   removeEntityEvent->GetEntity()->GetType());
             break;
         }
 #pragma endregion
@@ -295,17 +295,17 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         }
         case alt::CEvent::Type::NETOWNER_CHANGE: {
             auto netOwnerChangeEvent = (alt::CNetOwnerChangeEvent *) ev;
-            OnNetOwnerChangeDelegate(GetEntityPointer(netOwnerChangeEvent->GetTarget().Get()),
-                                     netOwnerChangeEvent->GetTarget().Get()->GetType(),
-                                     netOwnerChangeEvent->GetNewOwner().Get(),
-                                     netOwnerChangeEvent->GetOldOwner().Get());
+            OnNetOwnerChangeDelegate(GetEntityPointer(netOwnerChangeEvent->GetTarget()),
+                                     netOwnerChangeEvent->GetTarget()->GetType(),
+                                     netOwnerChangeEvent->GetNewOwner(),
+                                     netOwnerChangeEvent->GetOldOwner());
             break;
         }
         case alt::CEvent::Type::STREAM_SYNCED_META_CHANGE: {
             auto streamSyncedMetaChangeEvent = (alt::CStreamSyncedMetaDataChangeEvent *) ev;
             auto constValue = alt::MValueConst(streamSyncedMetaChangeEvent->GetVal());
             auto constOldValue = alt::MValueConst(streamSyncedMetaChangeEvent->GetOldVal());
-            OnStreamSyncedMetaChangeDelegate(GetEntityPointer(streamSyncedMetaChangeEvent->GetTarget().Get()),
+            OnStreamSyncedMetaChangeDelegate(GetEntityPointer(streamSyncedMetaChangeEvent->GetTarget()),
                                              streamSyncedMetaChangeEvent->GetTarget()->GetType(),
                                              streamSyncedMetaChangeEvent->GetKey().c_str(),
                                              &constValue,
@@ -316,7 +316,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto syncedMetaChangeEvent = (alt::CSyncedMetaDataChangeEvent *) ev;
             auto constValue = alt::MValueConst(syncedMetaChangeEvent->GetVal());
             auto constOldValue = alt::MValueConst(syncedMetaChangeEvent->GetOldVal());
-            OnSyncedMetaChangeDelegate(GetEntityPointer(syncedMetaChangeEvent->GetTarget().Get()),
+            OnSyncedMetaChangeDelegate(GetEntityPointer(syncedMetaChangeEvent->GetTarget()),
                                        syncedMetaChangeEvent->GetTarget()->GetType(),
                                        syncedMetaChangeEvent->GetKey().c_str(),
                                        &constValue,
@@ -353,12 +353,8 @@ void CSharpResourceImpl::OnTick()
     OnTickDelegate();
 }
 
-void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* objectRef)
+void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
 {
-    auto object = objectRef.Get();
-    if (object == nullptr) return;
-    object->AddRef();
-
     switch (object->GetType()) {
         case alt::IBaseObject::Type::VEHICLE:
         {
@@ -412,12 +408,8 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* objectRef)
     }
 }
 
-void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* objectRef)
+void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
 {
-    auto object = objectRef.Get();
-    if (object == nullptr) return;
-    object->RemoveRef();
-
     switch (object->GetType()) {
         case alt::IBaseObject::Type::VEHICLE:
         {

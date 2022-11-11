@@ -530,7 +530,7 @@ alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position) {
     pos.y = position.y;
     pos.z = position.z;
     auto blip = core->CreateBlip(alt::IBlip::BlipType::DESTINATION, pos);
-    if (blip.IsEmpty()) return nullptr;
+    if (!blip) return nullptr;
     return blip;
 }
 
@@ -540,7 +540,7 @@ alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, f
     pos.y = position.y;
     pos.z = position.z;
     auto blip = core->CreateBlip(pos, radius);
-    if (blip.IsEmpty()) return nullptr;
+    if (!blip) return nullptr;
     return blip;
 }
 
@@ -550,19 +550,19 @@ alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, flo
     pos.y = position.y;
     pos.z = position.z;
     auto blip = core->CreateBlip(pos, width, height);
-    if (blip.IsEmpty()) return nullptr;
+    if (!blip) return nullptr;
     return blip;
 }
 
 alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay) {
     auto webView = core->CreateWebView(resource, url, { pos.x, pos.y }, { size.x, size.y }, true, isOverlay);
-    if (webView.IsEmpty()) return nullptr;
+    if (!webView) return nullptr;
     return webView;
 }
 
 alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture) {
     auto webView = core->CreateWebView(resource, url, hash, targetTexture);
-    if (webView.IsEmpty()) return nullptr;
+    if (!webView) return nullptr;
     return webView;
 }
 
@@ -1005,15 +1005,15 @@ uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, ScreenshotDelegate_t deleg
 }
 
 alt::IMapData* Core_GetMapZoomDataById(alt::ICore* core, uint32_t id) {
-    return core->GetMapData(id).Get();
+    return core->GetMapData(id).get();
 }
 
 alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const char* alias, uint32_t& id) {
     auto data = core->GetMapData(alias);
-    if (data.IsEmpty() || data.Get() == nullptr) return nullptr;
+    if (!data) return nullptr;
 
     id = core->GetMapDataIDFromAlias(alias);
-    return data.Get();
+    return data.get();
 }
 
 void Core_ResetAllMapZoomData(alt::ICore* core) {

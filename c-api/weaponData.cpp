@@ -114,15 +114,10 @@ void WeaponData_SetPlayerDamageModifier(alt::IWeaponData* weaponData, float val)
     weaponData->SetPlayerDamageModifier(val);
 }
 
-void WeaponData_Dispose(alt::IWeaponData* weaponData) {
-    weaponData->RemoveRef();
-}
-
 uint8_t WeaponData_GetByWeaponHash(alt::ICore* core, uint32_t modelHash, alt::IWeaponData*& weaponData) {
     auto data = core->GetWeaponData(modelHash);
-    if (data.IsEmpty()) return false;
-    weaponData = data.Get();
-    weaponData->AddRef();
+    if (!data) return false;
+    weaponData = data;
     return true;
 }
 

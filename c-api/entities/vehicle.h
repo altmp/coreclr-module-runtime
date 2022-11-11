@@ -432,4 +432,3 @@ EXPORT_CLIENT uint32_t Vehicle_Handling_GetHandlingFlags(alt::IHandlingData* han
 EXPORT_CLIENT void Vehicle_Handling_SetHandlingFlags(alt::IHandlingData* handling, uint32_t value);
 EXPORT_CLIENT uint32_t Vehicle_Handling_GetDamageFlags(alt::IHandlingData* handling);
 EXPORT_CLIENT void Vehicle_Handling_SetDamageFlags(alt::IHandlingData* handling, uint32_t value);
-EXPORT_CLIENT void Vehicle_Handling_Dispose(alt::IHandlingData* handling);

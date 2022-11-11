@@ -66,7 +66,7 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
         {
             auto baseobject = dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value();
             if (baseobject) {
-                mValues[i] = core->CreateMValueBaseObject(baseobject->As<alt::IBaseObject>());
+                mValues[i] = core->CreateMValueBaseObject(baseobject.get());
             }else{
                 mValues[i] = core->CreateMValueNil();
             }
@@ -157,7 +157,7 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
         {
             auto baseobject = dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value();
             if (baseobject) {
-                mValues->SetConst(i, core->CreateMValueBaseObject(baseobject->As<alt::IBaseObject>()));
+                mValues->SetConst(i, core->CreateMValueBaseObject(baseobject.get()));
             }else{
                 mValues->SetConst(i, core->CreateMValueNil());
             }
@@ -248,7 +248,7 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
         {
             auto baseobject = dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value();
             if (baseobject) {
-                mValues->SetConst(key, core->CreateMValueBaseObject(baseobject->As<alt::IBaseObject>()));
+                mValues->SetConst(key, core->CreateMValueBaseObject(baseobject.get()));
             }else{
                 mValues->SetConst(key, core->CreateMValueNil());
             }

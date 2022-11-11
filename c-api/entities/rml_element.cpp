@@ -41,7 +41,7 @@ void RmlElement_GetChildNodes(alt::IRmlElement* rmlElement, alt::IRmlElement**& 
 
     for(int32_t i = 0; i < size; i++)
     {
-        arr[i] = rmlElement->GetChild(i).Get();
+        arr[i] = rmlElement->GetChild(i);
     }
 }
 
@@ -68,11 +68,11 @@ void RmlElement_GetContainingBlock(alt::IRmlElement* rmlElement, vector2_t& cont
 }
 
 alt::IRmlElement* RmlElement_GetFirstChild(alt::IRmlElement* rmlElement) {
-    return rmlElement->GetFirstChild().Get();
+    return rmlElement->GetFirstChild();
 }
 
 alt::IRmlElement* RmlElement_GetFocusedElement(alt::IRmlElement* rmlElement) {
-    return rmlElement->GetFocusedElement().Get();
+    return rmlElement->GetFocusedElement();
 }
 
 uint8_t RmlElement_HasChildren(alt::IRmlElement* rmlElement) {
@@ -104,15 +104,15 @@ uint8_t RmlElement_IsVisible(alt::IRmlElement* rmlElement) {
 }
 
 alt::IRmlElement* RmlElement_GetLastChild(alt::IRmlElement* rmlElement) {
-    return rmlElement->GetLastChild().Get();
+    return rmlElement->GetLastChild();
 }
 
 alt::IRmlElement* RmlElement_GetNextSibling(alt::IRmlElement* rmlElement) {
-    return rmlElement->GetNextSibling().Get();
+    return rmlElement->GetNextSibling();
 }
 
 alt::IRmlElement* RmlElement_GetPreviousSibling(alt::IRmlElement* rmlElement) {
-    return rmlElement->GetPreviousSibling().Get();
+    return rmlElement->GetPreviousSibling();
 }
 
 float RmlElement_GetOffsetTop(alt::IRmlElement* rmlElement) {
@@ -132,11 +132,11 @@ float RmlElement_GetOffsetHeight(alt::IRmlElement* rmlElement) {
 }
 
 alt::IRmlDocument* RmlElement_GetOwnerDocument(alt::IRmlElement* rmlElement) {
-    return rmlElement->GetOwnerDocument().Get();
+    return rmlElement->GetOwnerDocument();
 }
 
 alt::IRmlElement* RmlElement_GetParent(alt::IRmlElement* rmlElement) {
-    return rmlElement->GetParent().Get();
+    return rmlElement->GetParent();
 }
 
 float RmlElement_GetScrollHeight(alt::IRmlElement* rmlElement) {
@@ -192,7 +192,7 @@ void RmlElement_Click(alt::IRmlElement* rmlElement) {
 }
 
 alt::IRmlElement* RmlElement_GetClosest(alt::IRmlElement* rmlElement, const char* selectors) {
-    return rmlElement->GetClosest(selectors).Get();
+    return rmlElement->GetClosest(selectors);
 }
 
 void RmlElement_Focus(alt::IRmlElement* rmlElement) {
@@ -233,21 +233,21 @@ void RmlElement_GetClassList(alt::IRmlElement* rmlElement, const char**& classes
 }
 
 alt::IRmlElement* RmlElement_GetElementById(alt::IRmlElement* rmlElement, const char* id) {
-    return rmlElement->GetElementByID(id).Get();
+    return rmlElement->GetElementByID(id);
 }
 
 void RmlElement_GetElementsByClassName(alt::IRmlElement* rmlElement, const char* className, alt::IRmlElement**& arr, uint32_t& size) {
     auto elements = rmlElement->GetElementsByClassName(className);
     size = elements.size();
     arr = new alt::IRmlElement*[size];
-    for (auto i = 0; i < size; i++) arr[i] = elements[i].Get();
+    for (auto i = 0; i < size; i++) arr[i] = elements[i];
 }
 
 void RmlElement_GetElementsByTagName(alt::IRmlElement* rmlElement, const char* tagName, alt::IRmlElement**& arr, uint32_t& size) {
     auto elements = rmlElement->GetElementsByTagName(tagName);
     size = elements.size();
     arr = new alt::IRmlElement*[size];
-    for (auto i = 0; i < size; i++) arr[i] = elements[i].Get();
+    for (auto i = 0; i < size; i++) arr[i] = elements[i];
 }
 
 const char* RmlElement_GetLocalProperty(alt::IRmlElement* rmlElement, const char* name, int32_t& size) {
@@ -296,14 +296,14 @@ uint8_t RmlElement_IsPointWithinElement(alt::IRmlElement* rmlElement, vector2_t 
 }
 
 alt::IRmlElement* RmlElement_QuerySelector(alt::IRmlElement* rmlElement, const char* selector) {
-    return rmlElement->QuerySelector(selector).Get();
+    return rmlElement->QuerySelector(selector);
 }
 
 void RmlElement_QuerySelectorAll(alt::IRmlElement* rmlElement, const char* selector, alt::IRmlElement**& arr, uint32_t& size) {
     auto elements = rmlElement->QuerySelectorAll(selector);
     size = elements.size();
     arr = new alt::IRmlElement*[size];
-    for (auto i = 0; i < size; i++) arr[i] = elements[i].Get();
+    for (auto i = 0; i < size; i++) arr[i] = elements[i];
 }
 
 uint8_t RmlElement_RemoveAttribute(alt::IRmlElement* rmlElement, const char* name) {

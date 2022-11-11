@@ -587,7 +587,7 @@ void Player_SetSpatialVolume(alt::IPlayer* player, float value) {
 }
 
 alt::ILocalPlayer* Player_GetLocal() {
-    return alt::ICore::Instance().GetLocalPlayer().Get();
+    return alt::ICore::Instance().GetLocalPlayer();
 }
 
 uint16_t LocalPlayer_GetID(alt::ILocalPlayer* player) {
@@ -603,8 +603,7 @@ uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer) {
 }
 
 alt::IWeaponData* LocalPlayer_GetCurrentWeaponData(alt::ILocalPlayer* localPlayer) {
-    const auto data = localPlayer->GetCurrentWeaponData().Get();
-    data->AddRef();
+    const auto data = localPlayer->GetCurrentWeaponData();
     return data;
 }
 

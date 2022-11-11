@@ -7,7 +7,7 @@ alt::IRmlElement* RmlDocument_GetRmlElement(alt::IRmlDocument* rmlDocument) {
 
 #ifdef ALT_CLIENT_API
 alt::IRmlElement* RmlDocument_GetBody(alt::IRmlDocument* rmlDocument) {
-    return rmlDocument->GetBody().Get();
+    return rmlDocument->GetBody();
 }
 
 const char* RmlDocument_GetSourceUrl(alt::IRmlDocument* rmlDocument, int32_t& size) {
@@ -31,11 +31,11 @@ void RmlDocument_SetTitle(alt::IRmlDocument* rmlDocument, const char* title) {
 }
 
 alt::IRmlElement* RmlDocument_CreateElement(alt::IRmlDocument* rmlDocument, const char* tag) {
-    return rmlDocument->CreateElement(tag).Get();
+    return rmlDocument->CreateElement(tag);
 }
 
 alt::IRmlElement* RmlDocument_CreateTextNode(alt::IRmlDocument* rmlDocument, const char* text) {
-    return rmlDocument->CreateTextNode(text).Get();
+    return rmlDocument->CreateTextNode(text);
 }
 
 void RmlDocument_Hide(alt::IRmlDocument* rmlDocument) {
