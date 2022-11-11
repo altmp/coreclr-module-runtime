@@ -39,15 +39,15 @@ private:
     unsigned int _domainId = 0;
     std::optional<NuGet> _nuget;
 
-    [[nodiscard]] bool ValidateRuntime(nlohmann::json updateJson, alt::Ref<alt::IHttpClient> httpClient) const;
+    [[nodiscard]] bool ValidateRuntime(nlohmann::json updateJson, alt::IHttpClient* httpClient) const;
     [[nodiscard]] bool ValidateHost(nlohmann::json updateJson) const;
-    [[nodiscard]] bool ValidateNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& package, const std::string& version, nlohmann::json json = nullptr);
-    [[nodiscard]] bool ValidateNuGets(alt::Ref<alt::IHttpClient> httpClient);
-    std::string GetLatestNugetVersion(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName);
-    void DownloadRuntime(alt::Ref<alt::IHttpClient> httpClient) const;
-    void DownloadHost(alt::Ref<alt::IHttpClient> httpClient) const;
-    void DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName, const std::string& version, nlohmann::json json = nullptr);
-    void DownloadNuGets(alt::Ref<alt::IHttpClient> httpClient);
+    [[nodiscard]] bool ValidateNuGet(alt::IHttpClient* httpClient, const std::string& package, const std::string& version, nlohmann::json json = nullptr);
+    [[nodiscard]] bool ValidateNuGets(alt::IHttpClient* httpClient);
+    std::string GetLatestNugetVersion(alt::IHttpClient* httpClient, const std::string& packageName);
+    void DownloadRuntime(alt::IHttpClient* httpClient) const;
+    void DownloadHost(alt::IHttpClient* httpClient) const;
+    void DownloadNuGet(alt::IHttpClient* httpClient, const std::string& packageName, const std::string& version, nlohmann::json json = nullptr);
+    void DownloadNuGets(alt::IHttpClient* httpClient);
     
     void InitializeCoreclr();
     void Update();

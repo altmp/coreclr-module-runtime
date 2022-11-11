@@ -4,7 +4,7 @@
 
 class NuGet {
 public:
-    explicit NuGet(const alt::Ref<alt::IHttpClient> httpClient);
+    explicit NuGet(alt::IHttpClient* httpClient);
     ~NuGet() = default;
 
     std::vector<std::string> GetPackageVersions(const std::string& package);
@@ -12,6 +12,6 @@ public:
     std::string DownloadPackage(const std::string& package, const std::string& version);
 private:
     std::string GetIndexUrl(const std::string& type);
-    alt::Ref<alt::IHttpClient> _httpClient;
+    alt::IHttpClient* _httpClient;
     nlohmann::json _serviceIndex;
 };
