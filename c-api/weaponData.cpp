@@ -117,7 +117,7 @@ void WeaponData_SetPlayerDamageModifier(alt::IWeaponData* weaponData, float val)
 uint8_t WeaponData_GetByWeaponHash(alt::ICore* core, uint32_t modelHash, alt::IWeaponData*& weaponData) {
     auto data = core->GetWeaponData(modelHash);
     if (!data) return false;
-    weaponData = data;
+    weaponData = data.get();
     return true;
 }
 
