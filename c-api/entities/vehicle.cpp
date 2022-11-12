@@ -956,7 +956,7 @@ void Vehicle_ResetHandling(alt::IVehicle* vehicle) {
 }
 
 uint8_t Vehicle_IsHandlingModified(alt::IVehicle* vehicle) {
-    return vehicle->GetHandling()->IsHandlingModified();
+    return vehicle->IsHandlingModified();
 }
 
 uint32_t Vehicle_Handling_GetHandlingNameHash(alt::IVehicle* vehicle) {

@@ -292,8 +292,6 @@ EXPORT_CLIENT uint8_t Vehicle_GetBatteryLightState(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetBatteryLightState(alt::IVehicle* vehicle, uint8_t state);
 EXPORT_CLIENT void Vehicle_ResetDashboardLights(alt::IVehicle* vehicle);
 
-
-EXPORT_CLIENT uint8_t Vehicle_Handling_GetByModelHash(alt::ICore* core, uint32_t modelHash, alt::IHandlingData*& handling);
 EXPORT_CLIENT void Vehicle_ResetHandling(alt::IVehicle* vehicle);
 EXPORT_CLIENT uint8_t Vehicle_IsHandlingModified(alt::IVehicle* vehicle);
 
