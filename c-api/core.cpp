@@ -1004,10 +1004,6 @@ uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, ScreenshotDelegate_t deleg
     });
 }
 
-alt::IMapData* Core_GetMapZoomDataById(alt::ICore* core, uint32_t id) {
-    return core->GetMapData(id).get();
-}
-
 alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const char* alias, uint32_t& id) {
     auto data = core->GetMapData(alias);
     if (!data) return nullptr;
