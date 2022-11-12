@@ -947,562 +947,611 @@ void Vehicle_ResetDashboardLights(alt::IVehicle* vehicle) {
     vehicle->ResetDashboardLights();
 }
 
-
-void Vehicle_GetHandling(alt::IVehicle* vehicle, alt::IHandlingData*& handling) {
-    handling = vehicle->GetHandling().get();
-}
-
-void Vehicle_ReplaceHandling(alt::IVehicle* vehicle) {
-    vehicle->ReplaceHandling();
+uint32_t Vehicle_GetWheelSurfaceMaterial(alt::IVehicle* vehicle, uint8_t wheel) {
+    return vehicle->GetWheelSurfaceMaterial(wheel);
 }
 
 void Vehicle_ResetHandling(alt::IVehicle* vehicle) {
-    vehicle->ReplaceHandling();
+    vehicle->ResetHandling();
 }
 
 uint8_t Vehicle_IsHandlingModified(alt::IVehicle* vehicle) {
     return vehicle->IsHandlingModified();
 }
 
-uint32_t Vehicle_GetWheelSurfaceMaterial(alt::IVehicle* vehicle, uint8_t wheel) {
-    return vehicle->GetWheelSurfaceMaterial(wheel);
+uint32_t Vehicle_Handling_GetHandlingNameHash(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetHandlingNameHash();
 }
 
-uint8_t Vehicle_Handling_GetByModelHash(alt::ICore* core, uint32_t modelHash, alt::IHandlingData*& handling) {
-    auto data = core->GetHandlingData(modelHash);
-    if (!data) return false;
-    handling = data.get();
-    return true;
+float Vehicle_Handling_GetMass(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetMass();
 }
 
-uint32_t Vehicle_Handling_GetHandlingNameHash(alt::IHandlingData* handling) {
-    return handling->GetHandlingNameHash();
+void Vehicle_Handling_SetMass(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetMass(value);
 }
 
-float Vehicle_Handling_GetMass(alt::IHandlingData* handling) {
-    return handling->GetMass();
+float Vehicle_Handling_GetInitialDragCoeff(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetInitialDragCoeff();
 }
 
-void Vehicle_Handling_SetMass(alt::IHandlingData* handling, float value) {
-    handling->SetMass(value);
+void Vehicle_Handling_SetInitialDragCoeff(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetInitialDragCoeff(value);
 }
 
-float Vehicle_Handling_GetInitialDragCoeff(alt::IHandlingData* handling) {
-    return handling->GetInitialDragCoeff();
+float Vehicle_Handling_GetDownforceModifier(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetDownforceModifier();
 }
 
-void Vehicle_Handling_SetInitialDragCoeff(alt::IHandlingData* handling, float value) {
-    handling->SetInitialDragCoeff(value);
+void Vehicle_Handling_SetDownforceModifier(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetDownforceModifier(value);
 }
 
-float Vehicle_Handling_GetDownforceModifier(alt::IHandlingData* handling) {
-    return handling->GetDownforceModifier();
+float Vehicle_Handling_GetunkFloat1(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetunkFloat1();
 }
 
-void Vehicle_Handling_SetDownforceModifier(alt::IHandlingData* handling, float value) {
-    handling->SetDownforceModifier(value);
+void Vehicle_Handling_SetunkFloat1(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetunkFloat1(value);
 }
 
-float Vehicle_Handling_GetunkFloat1(alt::IHandlingData* handling) {
-    return handling->GetunkFloat1();
+float Vehicle_Handling_GetunkFloat2(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetunkFloat2();
 }
 
-void Vehicle_Handling_SetunkFloat1(alt::IHandlingData* handling, float value) {
-    handling->SetunkFloat1(value);
+void Vehicle_Handling_SetunkFloat2(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetunkFloat2(value);
 }
 
-float Vehicle_Handling_GetunkFloat2(alt::IHandlingData* handling) {
-    return handling->GetunkFloat2();
-}
-
-void Vehicle_Handling_SetunkFloat2(alt::IHandlingData* handling, float value) {
-    handling->SetunkFloat2(value);
-}
-
-void Vehicle_Handling_GetCentreOfMassOffset(alt::IHandlingData* handling, vector3_t& offset) {
-    auto vector = handling->GetCentreOfMassOffset();
+void Vehicle_Handling_GetCentreOfMassOffset(alt::IVehicle* vehicle, vector3_t& offset) {
+    auto vector = vehicle->GetHandling()->GetCentreOfMassOffset();
     offset.x = vector[0];
     offset.y = vector[1];
     offset.z = vector[2];
 }
 
-void Vehicle_Handling_SetCentreOfMassOffset(alt::IHandlingData* handling, vector3_t value) {
-    handling->SetCentreOfMassOffset(alt::Vector3f(value.x, value.y, value.z));
+void Vehicle_Handling_SetCentreOfMassOffset(alt::IVehicle* vehicle, vector3_t value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetCentreOfMassOffset(alt::Vector3f(value.x, value.y, value.z));
 }
 
-void Vehicle_Handling_GetInertiaMultiplier(alt::IHandlingData* handling, vector3_t& offset) {
-    auto vector = handling->GetInertiaMultiplier();
+void Vehicle_Handling_GetInertiaMultiplier(alt::IVehicle* vehicle, vector3_t& offset) {
+    auto vector = vehicle->GetHandling()->GetInertiaMultiplier();
     offset.x = vector[0];
     offset.y = vector[1];
     offset.z = vector[2];
 }
 
-void Vehicle_Handling_SetInertiaMultiplier(alt::IHandlingData* handling, vector3_t value) {
-    handling->SetInertiaMultiplier(alt::Vector3f(value.x, value.y, value.z));
+void Vehicle_Handling_SetInertiaMultiplier(alt::IVehicle* vehicle, vector3_t value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetInertiaMultiplier(alt::Vector3f(value.x, value.y, value.z));
 }
 
-float Vehicle_Handling_GetPercentSubmerged(alt::IHandlingData* handling) {
-    return handling->GetPercentSubmerged();
+float Vehicle_Handling_GetPercentSubmerged(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetPercentSubmerged();
 }
 
-void Vehicle_Handling_SetPercentSubmerged(alt::IHandlingData* handling, float value) {
-    handling->SetPercentSubmerged(value);
+void Vehicle_Handling_SetPercentSubmerged(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetPercentSubmerged(value);
 }
 
-float Vehicle_Handling_GetPercentSubmergedRatio(alt::IHandlingData* handling) {
-    return handling->GetPercentSubmergedRatio();
+float Vehicle_Handling_GetPercentSubmergedRatio(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetPercentSubmergedRatio();
 }
 
-void Vehicle_Handling_SetPercentSubmergedRatio(alt::IHandlingData* handling, float value) {
-    handling->SetPercentSubmergedRatio(value);
+void Vehicle_Handling_SetPercentSubmergedRatio(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetPercentSubmergedRatio(value);
 }
 
-float Vehicle_Handling_GetDriveBiasFront(alt::IHandlingData* handling) {
-    return handling->GetDriveBiasFront();
+float Vehicle_Handling_GetDriveBiasFront(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetDriveBiasFront();
 }
 
-void Vehicle_Handling_SetDriveBiasFront(alt::IHandlingData* handling, float value) {
-    handling->SetDriveBiasFront(value);
+void Vehicle_Handling_SetDriveBiasFront(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetDriveBiasFront(value);
 }
 
-float Vehicle_Handling_GetAcceleration(alt::IHandlingData* handling) {
-    return handling->GetAcceleration();
+float Vehicle_Handling_GetAcceleration(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetAcceleration();
 }
 
-void Vehicle_Handling_SetAcceleration(alt::IHandlingData* handling, float value) {
-    handling->SetAcceleration(value);
+void Vehicle_Handling_SetAcceleration(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetAcceleration(value);
 }
 
-uint32_t Vehicle_Handling_GetInitialDriveGears(alt::IHandlingData* handling) {
-    return handling->GetInitialDriveGears();
+uint32_t Vehicle_Handling_GetInitialDriveGears(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetInitialDriveGears();
 }
 
-void Vehicle_Handling_SetInitialDriveGears(alt::IHandlingData* handling, uint32_t value) {
-    handling->SetInitialDriveGears(value);
+void Vehicle_Handling_SetInitialDriveGears(alt::IVehicle* vehicle, uint32_t value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetInitialDriveGears(value);
 }
 
-float Vehicle_Handling_GetDriveInertia(alt::IHandlingData* handling) {
-    return handling->GetDriveInertia();
+float Vehicle_Handling_GetDriveInertia(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetDriveInertia();
 }
 
-void Vehicle_Handling_SetDriveInertia(alt::IHandlingData* handling, float value) {
-    handling->SetDriveInertia(value);
+void Vehicle_Handling_SetDriveInertia(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetDriveInertia(value);
 }
 
-float Vehicle_Handling_GetClutchChangeRateScaleUpShift(alt::IHandlingData* handling) {
-    return handling->GetClutchChangeRateScaleUpShift();
+float Vehicle_Handling_GetClutchChangeRateScaleUpShift(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetClutchChangeRateScaleUpShift();
 }
 
-void Vehicle_Handling_SetClutchChangeRateScaleUpShift(alt::IHandlingData* handling, float value) {
-    handling->SetClutchChangeRateScaleUpShift(value);
+void Vehicle_Handling_SetClutchChangeRateScaleUpShift(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetClutchChangeRateScaleUpShift(value);
 }
 
-float Vehicle_Handling_GetClutchChangeRateScaleDownShift(alt::IHandlingData* handling) {
-    return handling->GetClutchChangeRateScaleDownShift();
+float Vehicle_Handling_GetClutchChangeRateScaleDownShift(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetClutchChangeRateScaleDownShift();
 }
 
-void Vehicle_Handling_SetClutchChangeRateScaleDownShift(alt::IHandlingData* handling, float value) {
-    handling->SetClutchChangeRateScaleDownShift(value);
+void Vehicle_Handling_SetClutchChangeRateScaleDownShift(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetClutchChangeRateScaleDownShift(value);
 }
 
-float Vehicle_Handling_GetInitialDriveForce(alt::IHandlingData* handling) {
-    return handling->GetInitialDriveForce();
+float Vehicle_Handling_GetInitialDriveForce(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetInitialDriveForce();
 }
 
-void Vehicle_Handling_SetInitialDriveForce(alt::IHandlingData* handling, float value) {
-    handling->SetInitialDriveForce(value);
+void Vehicle_Handling_SetInitialDriveForce(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetInitialDriveForce(value);
 }
 
-float Vehicle_Handling_GetDriveMaxFlatVel(alt::IHandlingData* handling) {
-    return handling->GetDriveMaxFlatVel();
+float Vehicle_Handling_GetDriveMaxFlatVel(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetDriveMaxFlatVel();
 }
 
-void Vehicle_Handling_SetDriveMaxFlatVel(alt::IHandlingData* handling, float value) {
-    handling->SetDriveMaxFlatVel(value);
+void Vehicle_Handling_SetDriveMaxFlatVel(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetDriveMaxFlatVel(value);
 }
 
-float Vehicle_Handling_GetInitialDriveMaxFlatVel(alt::IHandlingData* handling) {
-    return handling->GetInitialDriveMaxFlatVel();
+float Vehicle_Handling_GetInitialDriveMaxFlatVel(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetInitialDriveMaxFlatVel();
 }
 
-void Vehicle_Handling_SetInitialDriveMaxFlatVel(alt::IHandlingData* handling, float value) {
-    handling->SetInitialDriveMaxFlatVel(value);
+void Vehicle_Handling_SetInitialDriveMaxFlatVel(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetInitialDriveMaxFlatVel(value);
 }
 
-float Vehicle_Handling_GetBrakeForce(alt::IHandlingData* handling) {
-    return handling->GetBrakeForce();
+float Vehicle_Handling_GetBrakeForce(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetBrakeForce();
 }
 
-void Vehicle_Handling_SetBrakeForce(alt::IHandlingData* handling, float value) {
-    handling->SetBrakeForce(value);
+void Vehicle_Handling_SetBrakeForce(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetBrakeForce(value);
 }
 
-float Vehicle_Handling_GetunkFloat4(alt::IHandlingData* handling) {
-    return handling->GetunkFloat4();
+float Vehicle_Handling_GetunkFloat4(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetunkFloat4();
 }
 
-void Vehicle_Handling_SetunkFloat4(alt::IHandlingData* handling, float value) {
-    handling->SetunkFloat4(value);
+void Vehicle_Handling_SetunkFloat4(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetunkFloat4(value);
 }
 
-float Vehicle_Handling_GetBrakeBiasFront(alt::IHandlingData* handling) {
-    return handling->GetBrakeBiasFront();
+float Vehicle_Handling_GetBrakeBiasFront(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetBrakeBiasFront();
 }
 
-void Vehicle_Handling_SetBrakeBiasFront(alt::IHandlingData* handling, float value) {
-    handling->SetBrakeBiasFront(value);
+void Vehicle_Handling_SetBrakeBiasFront(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetBrakeBiasFront(value);
 }
 
-float Vehicle_Handling_GetBrakeBiasRear(alt::IHandlingData* handling) {
-    return handling->GetBrakeBiasRear();
+float Vehicle_Handling_GetBrakeBiasRear(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetBrakeBiasRear();
 }
 
-void Vehicle_Handling_SetBrakeBiasRear(alt::IHandlingData* handling, float value) {
-    handling->SetBrakeBiasRear(value);
+void Vehicle_Handling_SetBrakeBiasRear(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetBrakeBiasRear(value);
 }
 
-float Vehicle_Handling_GetHandBrakeForce(alt::IHandlingData* handling) {
-    return handling->GetHandBrakeForce();
+float Vehicle_Handling_GetHandBrakeForce(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetHandBrakeForce();
 }
 
-void Vehicle_Handling_SetHandBrakeForce(alt::IHandlingData* handling, float value) {
-    handling->SetHandBrakeForce(value);
+void Vehicle_Handling_SetHandBrakeForce(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetHandBrakeForce(value);
 }
 
-float Vehicle_Handling_GetSteeringLock(alt::IHandlingData* handling) {
-    return handling->GetSteeringLock();
+float Vehicle_Handling_GetSteeringLock(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSteeringLock();
 }
 
-void Vehicle_Handling_SetSteeringLock(alt::IHandlingData* handling, float value) {
-    handling->SetSteeringLock(value);
+void Vehicle_Handling_SetSteeringLock(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSteeringLock(value);
 }
 
-float Vehicle_Handling_GetSteeringLockRatio(alt::IHandlingData* handling) {
-    return handling->GetSteeringLockRatio();
+float Vehicle_Handling_GetSteeringLockRatio(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSteeringLockRatio();
 }
 
-void Vehicle_Handling_SetSteeringLockRatio(alt::IHandlingData* handling, float value) {
-    handling->SetSteeringLockRatio(value);
+void Vehicle_Handling_SetSteeringLockRatio(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSteeringLockRatio(value);
 }
 
-float Vehicle_Handling_GetTractionCurveMax(alt::IHandlingData* handling) {
-    return handling->GetTractionCurveMax();
+float Vehicle_Handling_GetTractionCurveMax(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionCurveMax();
 }
 
-void Vehicle_Handling_SetTractionCurveMax(alt::IHandlingData* handling, float value) {
-    handling->SetTractionCurveMax(value);
+void Vehicle_Handling_SetTractionCurveMax(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionCurveMax(value);
 }
 
-float Vehicle_Handling_GetTractionCurveMaxRatio(alt::IHandlingData* handling) {
-    return handling->GetTractionCurveMaxRatio();
+float Vehicle_Handling_GetTractionCurveMaxRatio(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionCurveMaxRatio();
 }
 
-void Vehicle_Handling_SetTractionCurveMaxRatio(alt::IHandlingData* handling, float value) {
-    handling->SetTractionCurveMaxRatio(value);
+void Vehicle_Handling_SetTractionCurveMaxRatio(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionCurveMaxRatio(value);
 }
 
-float Vehicle_Handling_GetTractionCurveMin(alt::IHandlingData* handling) {
-    return handling->GetTractionCurveMin();
+float Vehicle_Handling_GetTractionCurveMin(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionCurveMin();
 }
 
-void Vehicle_Handling_SetTractionCurveMin(alt::IHandlingData* handling, float value) {
-    handling->SetTractionCurveMin(value);
+void Vehicle_Handling_SetTractionCurveMin(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionCurveMin(value);
 }
 
-float Vehicle_Handling_GetTractionCurveMinRatio(alt::IHandlingData* handling) {
-    return handling->GetTractionCurveMinRatio();
+float Vehicle_Handling_GetTractionCurveMinRatio(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionCurveMinRatio();
 }
 
-void Vehicle_Handling_SetTractionCurveMinRatio(alt::IHandlingData* handling, float value) {
-    handling->SetTractionCurveMinRatio(value);
+void Vehicle_Handling_SetTractionCurveMinRatio(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionCurveMinRatio(value);
 }
 
-float Vehicle_Handling_GetTractionCurveLateral(alt::IHandlingData* handling) {
-    return handling->GetTractionCurveLateral();
+float Vehicle_Handling_GetTractionCurveLateral(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionCurveLateral();
 }
 
-void Vehicle_Handling_SetTractionCurveLateral(alt::IHandlingData* handling, float value) {
-    handling->SetTractionCurveLateral(value);
+void Vehicle_Handling_SetTractionCurveLateral(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionCurveLateral(value);
 }
 
-float Vehicle_Handling_GetTractionCurveLateralRatio(alt::IHandlingData* handling) {
-    return handling->GetTractionCurveLateralRatio();
+float Vehicle_Handling_GetTractionCurveLateralRatio(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionCurveLateralRatio();
 }
 
-void Vehicle_Handling_SetTractionCurveLateralRatio(alt::IHandlingData* handling, float value) {
-    handling->SetTractionCurveLateralRatio(value);
+void Vehicle_Handling_SetTractionCurveLateralRatio(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionCurveLateralRatio(value);
 }
 
-float Vehicle_Handling_GetTractionSpringDeltaMax(alt::IHandlingData* handling) {
-    return handling->GetTractionSpringDeltaMax();
+float Vehicle_Handling_GetTractionSpringDeltaMax(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionSpringDeltaMax();
 }
 
-void Vehicle_Handling_SetTractionSpringDeltaMax(alt::IHandlingData* handling, float value) {
-    handling->SetTractionSpringDeltaMax(value);
+void Vehicle_Handling_SetTractionSpringDeltaMax(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionSpringDeltaMax(value);
 }
 
-float Vehicle_Handling_GetTractionSpringDeltaMaxRatio(alt::IHandlingData* handling) {
-    return handling->GetTractionSpringDeltaMaxRatio();
+float Vehicle_Handling_GetTractionSpringDeltaMaxRatio(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionSpringDeltaMaxRatio();
 }
 
-void Vehicle_Handling_SetTractionSpringDeltaMaxRatio(alt::IHandlingData* handling, float value) {
-    handling->SetTractionSpringDeltaMaxRatio(value);
+void Vehicle_Handling_SetTractionSpringDeltaMaxRatio(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionSpringDeltaMaxRatio(value);
 }
 
-float Vehicle_Handling_GetLowSpeedTractionLossMult(alt::IHandlingData* handling) {
-    return handling->GetLowSpeedTractionLossMult();
+float Vehicle_Handling_GetLowSpeedTractionLossMult(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetLowSpeedTractionLossMult();
 }
 
-void Vehicle_Handling_SetLowSpeedTractionLossMult(alt::IHandlingData* handling, float value) {
-    handling->SetLowSpeedTractionLossMult(value);
+void Vehicle_Handling_SetLowSpeedTractionLossMult(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetLowSpeedTractionLossMult(value);
 }
 
-float Vehicle_Handling_GetCamberStiffness(alt::IHandlingData* handling) {
-    return handling->GetCamberStiffness();
+float Vehicle_Handling_GetCamberStiffness(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetCamberStiffness();
 }
 
-void Vehicle_Handling_SetCamberStiffness(alt::IHandlingData* handling, float value) {
-    handling->SetCamberStiffness(value);
+void Vehicle_Handling_SetCamberStiffness(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetCamberStiffness(value);
 }
 
-float Vehicle_Handling_GetTractionBiasFront(alt::IHandlingData* handling) {
-    return handling->GetTractionBiasFront();
+float Vehicle_Handling_GetTractionBiasFront(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionBiasFront();
 }
 
-void Vehicle_Handling_SetTractionBiasFront(alt::IHandlingData* handling, float value) {
-    handling->SetTractionBiasFront(value);
+void Vehicle_Handling_SetTractionBiasFront(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionBiasFront(value);
 }
 
-float Vehicle_Handling_GetTractionBiasRear(alt::IHandlingData* handling) {
-    return handling->GetTractionBiasRear();
+float Vehicle_Handling_GetTractionBiasRear(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionBiasRear();
 }
 
-void Vehicle_Handling_SetTractionBiasRear(alt::IHandlingData* handling, float value) {
-    handling->SetTractionBiasRear(value);
+void Vehicle_Handling_SetTractionBiasRear(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionBiasRear(value);
 }
 
-float Vehicle_Handling_GetTractionLossMult(alt::IHandlingData* handling) {
-    return handling->GetTractionLossMult();
+float Vehicle_Handling_GetTractionLossMult(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetTractionLossMult();
 }
 
-void Vehicle_Handling_SetTractionLossMult(alt::IHandlingData* handling, float value) {
-    handling->SetTractionLossMult(value);
+void Vehicle_Handling_SetTractionLossMult(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetTractionLossMult(value);
 }
 
-float Vehicle_Handling_GetSuspensionForce(alt::IHandlingData* handling) {
-    return handling->GetSuspensionForce();
+float Vehicle_Handling_GetSuspensionForce(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSuspensionForce();
 }
 
-void Vehicle_Handling_SetSuspensionForce(alt::IHandlingData* handling, float value) {
-    handling->SetSuspensionForce(value);
+void Vehicle_Handling_SetSuspensionForce(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSuspensionForce(value);
 }
 
-float Vehicle_Handling_GetSuspensionCompDamp(alt::IHandlingData* handling) {
-    return handling->GetSuspensionCompDamp();
+float Vehicle_Handling_GetSuspensionCompDamp(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSuspensionCompDamp();
 }
 
-void Vehicle_Handling_SetSuspensionCompDamp(alt::IHandlingData* handling, float value) {
-    handling->SetSuspensionCompDamp(value);
+void Vehicle_Handling_SetSuspensionCompDamp(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSuspensionCompDamp(value);
 }
 
-float Vehicle_Handling_GetSuspensionReboundDamp(alt::IHandlingData* handling) {
-    return handling->GetSuspensionReboundDamp();
+float Vehicle_Handling_GetSuspensionReboundDamp(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSuspensionReboundDamp();
 }
 
-void Vehicle_Handling_SetSuspensionReboundDamp(alt::IHandlingData* handling, float value) {
-    handling->SetSuspensionReboundDamp(value);
+void Vehicle_Handling_SetSuspensionReboundDamp(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSuspensionReboundDamp(value);
 }
 
-float Vehicle_Handling_GetSuspensionUpperLimit(alt::IHandlingData* handling) {
-    return handling->GetSuspensionUpperLimit();
+float Vehicle_Handling_GetSuspensionUpperLimit(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSuspensionUpperLimit();
 }
 
-void Vehicle_Handling_SetSuspensionUpperLimit(alt::IHandlingData* handling, float value) {
-    handling->SetSuspensionUpperLimit(value);
+void Vehicle_Handling_SetSuspensionUpperLimit(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSuspensionUpperLimit(value);
 }
 
-float Vehicle_Handling_GetSuspensionLowerLimit(alt::IHandlingData* handling) {
-    return handling->GetSuspensionLowerLimit();
+float Vehicle_Handling_GetSuspensionLowerLimit(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSuspensionLowerLimit();
 }
 
-void Vehicle_Handling_SetSuspensionLowerLimit(alt::IHandlingData* handling, float value) {
-    handling->SetSuspensionLowerLimit(value);
+void Vehicle_Handling_SetSuspensionLowerLimit(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSuspensionLowerLimit(value);
 }
 
-float Vehicle_Handling_GetSuspensionRaise(alt::IHandlingData* handling) {
-    return handling->GetSuspensionRaise();
+float Vehicle_Handling_GetSuspensionRaise(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSuspensionRaise();
 }
 
-void Vehicle_Handling_SetSuspensionRaise(alt::IHandlingData* handling, float value) {
-    handling->SetSuspensionRaise(value);
+void Vehicle_Handling_SetSuspensionRaise(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSuspensionRaise(value);
 }
 
-float Vehicle_Handling_GetSuspensionBiasFront(alt::IHandlingData* handling) {
-    return handling->GetSuspensionBiasFront();
+float Vehicle_Handling_GetSuspensionBiasFront(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSuspensionBiasFront();
 }
 
-void Vehicle_Handling_SetSuspensionBiasFront(alt::IHandlingData* handling, float value) {
-    handling->SetSuspensionBiasFront(value);
+void Vehicle_Handling_SetSuspensionBiasFront(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSuspensionBiasFront(value);
 }
 
-float Vehicle_Handling_GetSuspensionBiasRear(alt::IHandlingData* handling) {
-    return handling->GetSuspensionBiasRear();
+float Vehicle_Handling_GetSuspensionBiasRear(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSuspensionBiasRear();
 }
 
-void Vehicle_Handling_SetSuspensionBiasRear(alt::IHandlingData* handling, float value) {
-    handling->SetSuspensionBiasRear(value);
+void Vehicle_Handling_SetSuspensionBiasRear(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSuspensionBiasRear(value);
 }
 
-float Vehicle_Handling_GetAntiRollBarForce(alt::IHandlingData* handling) {
-    return handling->GetAntiRollBarForce();
+float Vehicle_Handling_GetAntiRollBarForce(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetAntiRollBarForce();
 }
 
-void Vehicle_Handling_SetAntiRollBarForce(alt::IHandlingData* handling, float value) {
-    handling->SetAntiRollBarForce(value);
+void Vehicle_Handling_SetAntiRollBarForce(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetAntiRollBarForce(value);
 }
 
-float Vehicle_Handling_GetAntiRollBarBiasFront(alt::IHandlingData* handling) {
-    return handling->GetAntiRollBarBiasFront();
+float Vehicle_Handling_GetAntiRollBarBiasFront(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetAntiRollBarBiasFront();
 }
 
-void Vehicle_Handling_SetAntiRollBarBiasFront(alt::IHandlingData* handling, float value) {
-    handling->SetAntiRollBarBiasFront(value);
+void Vehicle_Handling_SetAntiRollBarBiasFront(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetAntiRollBarBiasFront(value);
 }
 
-float Vehicle_Handling_GetAntiRollBarBiasRear(alt::IHandlingData* handling) {
-    return handling->GetAntiRollBarBiasRear();
+float Vehicle_Handling_GetAntiRollBarBiasRear(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetAntiRollBarBiasRear();
 }
 
-void Vehicle_Handling_SetAntiRollBarBiasRear(alt::IHandlingData* handling, float value) {
-    handling->SetAntiRollBarBiasRear(value);
+void Vehicle_Handling_SetAntiRollBarBiasRear(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetAntiRollBarBiasRear(value);
 }
 
-float Vehicle_Handling_GetRollCentreHeightFront(alt::IHandlingData* handling) {
-    return handling->GetRollCentreHeightFront();
+float Vehicle_Handling_GetRollCentreHeightFront(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetRollCentreHeightFront();
 }
 
-void Vehicle_Handling_SetRollCentreHeightFront(alt::IHandlingData* handling, float value) {
-    handling->SetRollCentreHeightFront(value);
+void Vehicle_Handling_SetRollCentreHeightFront(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetRollCentreHeightFront(value);
 }
 
-float Vehicle_Handling_GetRollCentreHeightRear(alt::IHandlingData* handling) {
-    return handling->GetRollCentreHeightRear();
+float Vehicle_Handling_GetRollCentreHeightRear(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetRollCentreHeightRear();
 }
 
-void Vehicle_Handling_SetRollCentreHeightRear(alt::IHandlingData* handling, float value) {
-    handling->SetRollCentreHeightRear(value);
+void Vehicle_Handling_SetRollCentreHeightRear(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetRollCentreHeightRear(value);
 }
 
-float Vehicle_Handling_GetCollisionDamageMult(alt::IHandlingData* handling) {
-    return handling->GetCollisionDamageMult();
+float Vehicle_Handling_GetCollisionDamageMult(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetCollisionDamageMult();
 }
 
-void Vehicle_Handling_SetCollisionDamageMult(alt::IHandlingData* handling, float value) {
-    handling->SetCollisionDamageMult(value);
+void Vehicle_Handling_SetCollisionDamageMult(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetCollisionDamageMult(value);
 }
 
-float Vehicle_Handling_GetWeaponDamageMult(alt::IHandlingData* handling) {
-    return handling->GetWeaponDamageMult();
+float Vehicle_Handling_GetWeaponDamageMult(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetWeaponDamageMult();
 }
 
-void Vehicle_Handling_SetWeaponDamageMult(alt::IHandlingData* handling, float value) {
-    handling->SetWeaponDamageMult(value);
+void Vehicle_Handling_SetWeaponDamageMult(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetWeaponDamageMult(value);
 }
 
-float Vehicle_Handling_GetDeformationDamageMult(alt::IHandlingData* handling) {
-    return handling->GetDeformationDamageMult();
+float Vehicle_Handling_GetDeformationDamageMult(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetDeformationDamageMult();
 }
 
-void Vehicle_Handling_SetDeformationDamageMult(alt::IHandlingData* handling, float value) {
-    handling->SetDeformationDamageMult(value);
+void Vehicle_Handling_SetDeformationDamageMult(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetDeformationDamageMult(value);
 }
 
-float Vehicle_Handling_GetEngineDamageMult(alt::IHandlingData* handling) {
-    return handling->GetEngineDamageMult();
+float Vehicle_Handling_GetEngineDamageMult(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetEngineDamageMult();
 }
 
-void Vehicle_Handling_SetEngineDamageMult(alt::IHandlingData* handling, float value) {
-    handling->SetEngineDamageMult(value);
+void Vehicle_Handling_SetEngineDamageMult(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetEngineDamageMult(value);
 }
 
-float Vehicle_Handling_GetPetrolTankVolume(alt::IHandlingData* handling) {
-    return handling->GetPetrolTankVolume();
+float Vehicle_Handling_GetPetrolTankVolume(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetPetrolTankVolume();
 }
 
-void Vehicle_Handling_SetPetrolTankVolume(alt::IHandlingData* handling, float value) {
-    handling->SetPetrolTankVolume(value);
+void Vehicle_Handling_SetPetrolTankVolume(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetPetrolTankVolume(value);
 }
 
-float Vehicle_Handling_GetOilVolume(alt::IHandlingData* handling) {
-    return handling->GetOilVolume();
+float Vehicle_Handling_GetOilVolume(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetOilVolume();
 }
 
-void Vehicle_Handling_SetOilVolume(alt::IHandlingData* handling, float value) {
-    handling->SetOilVolume(value);
+void Vehicle_Handling_SetOilVolume(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetOilVolume(value);
 }
 
-float Vehicle_Handling_GetunkFloat5(alt::IHandlingData* handling) {
-    return handling->GetunkFloat5();
+float Vehicle_Handling_GetunkFloat5(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetunkFloat5();
 }
 
-void Vehicle_Handling_SetunkFloat5(alt::IHandlingData* handling, float value) {
-    handling->SetunkFloat5(value);
+void Vehicle_Handling_SetunkFloat5(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetunkFloat5(value);
 }
 
-float Vehicle_Handling_GetSeatOffsetDistX(alt::IHandlingData* handling) {
-    return handling->GetSeatOffsetDistX();
+float Vehicle_Handling_GetSeatOffsetDistX(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSeatOffsetDistX();
 }
 
-void Vehicle_Handling_SetSeatOffsetDistX(alt::IHandlingData* handling, float value) {
-    handling->SetSeatOffsetDistX(value);
+void Vehicle_Handling_SetSeatOffsetDistX(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSeatOffsetDistX(value);
 }
 
-float Vehicle_Handling_GetSeatOffsetDistY(alt::IHandlingData* handling) {
-    return handling->GetSeatOffsetDistY();
+float Vehicle_Handling_GetSeatOffsetDistY(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSeatOffsetDistY();
 }
 
-void Vehicle_Handling_SetSeatOffsetDistY(alt::IHandlingData* handling, float value) {
-    handling->SetSeatOffsetDistY(value);
+void Vehicle_Handling_SetSeatOffsetDistY(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSeatOffsetDistY(value);
 }
 
-float Vehicle_Handling_GetSeatOffsetDistZ(alt::IHandlingData* handling) {
-    return handling->GetSeatOffsetDistZ();
+float Vehicle_Handling_GetSeatOffsetDistZ(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetSeatOffsetDistZ();
 }
 
-void Vehicle_Handling_SetSeatOffsetDistZ(alt::IHandlingData* handling, float value) {
-    handling->SetSeatOffsetDistZ(value);
+void Vehicle_Handling_SetSeatOffsetDistZ(alt::IVehicle* vehicle, float value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetSeatOffsetDistZ(value);
 }
 
-uint32_t Vehicle_Handling_GetMonetaryValue(alt::IHandlingData* handling) {
-    return handling->GetMonetaryValue();
+uint32_t Vehicle_Handling_GetMonetaryValue(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetMonetaryValue();
 }
 
-void Vehicle_Handling_SetMonetaryValue(alt::IHandlingData* handling, uint32_t value) {
-    handling->SetMonetaryValue(value);
+void Vehicle_Handling_SetMonetaryValue(alt::IVehicle* vehicle, uint32_t value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetMonetaryValue(value);
 }
 
-uint32_t Vehicle_Handling_GetModelFlags(alt::IHandlingData* handling) {
-    return handling->GetModelFlags();
+uint32_t Vehicle_Handling_GetModelFlags(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetModelFlags();
 }
 
-void Vehicle_Handling_SetModelFlags(alt::IHandlingData* handling, uint32_t value) {
-    handling->SetModelFlags(value);
+void Vehicle_Handling_SetModelFlags(alt::IVehicle* vehicle, uint32_t value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetModelFlags(value);
 }
 
-uint32_t Vehicle_Handling_GetHandlingFlags(alt::IHandlingData* handling) {
-    return handling->GetHandlingFlags();
+uint32_t Vehicle_Handling_GetHandlingFlags(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetHandlingFlags();
 }
 
-void Vehicle_Handling_SetHandlingFlags(alt::IHandlingData* handling, uint32_t value) {
-    handling->SetHandlingFlags(value);
+void Vehicle_Handling_SetHandlingFlags(alt::IVehicle* vehicle, uint32_t value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetHandlingFlags(value);
 }
 
-uint32_t Vehicle_Handling_GetDamageFlags(alt::IHandlingData* handling) {
-    return handling->GetDamageFlags();
+uint32_t Vehicle_Handling_GetDamageFlags(alt::IVehicle* vehicle) {
+    return vehicle->GetHandling()->GetDamageFlags();
 }
 
-void Vehicle_Handling_SetDamageFlags(alt::IHandlingData* handling, uint32_t value) {
-    handling->SetDamageFlags(value);
+void Vehicle_Handling_SetDamageFlags(alt::IVehicle* vehicle, uint32_t value) {
+    vehicle->ReplaceHandling();
+    vehicle->GetHandling()->SetDamageFlags(value);
 }
 
 #endif
