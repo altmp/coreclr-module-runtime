@@ -184,7 +184,7 @@ EXPORT_CLIENT alt::ILocalPlayer* Player_GetLocal();
 EXPORT_CLIENT alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* player);
 
 EXPORT_CLIENT uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer);
-EXPORT_CLIENT alt::IWeaponData* LocalPlayer_GetCurrentWeaponData(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT uint32_t LocalPlayer_GetCurrentWeaponHash(alt::ILocalPlayer* localPlayer);
 
 EXPORT_CLIENT uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer, uint32_t weaponHash);
 EXPORT_CLIENT uint8_t LocalPlayer_HasWeapon(alt::ILocalPlayer* localPlayer, uint32_t weaponHash);
