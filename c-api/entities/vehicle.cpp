@@ -949,7 +949,7 @@ void Vehicle_ResetDashboardLights(alt::IVehicle* vehicle) {
 
 
 void Vehicle_GetHandling(alt::IVehicle* vehicle, alt::IHandlingData*& handling) {
-    handling = vehicle->GetHandling();
+    handling = vehicle->GetHandling().get();
 }
 
 void Vehicle_ReplaceHandling(alt::IVehicle* vehicle) {
@@ -971,7 +971,7 @@ uint32_t Vehicle_GetWheelSurfaceMaterial(alt::IVehicle* vehicle, uint8_t wheel) 
 uint8_t Vehicle_Handling_GetByModelHash(alt::ICore* core, uint32_t modelHash, alt::IHandlingData*& handling) {
     auto data = core->GetHandlingData(modelHash);
     if (!data) return false;
-    handling = data;
+    handling = data.get();
     return true;
 }
 
