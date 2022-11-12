@@ -21,8 +21,6 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_CLIENT uint8_t Handling_GetByModelHash(alt::ICore* core, uint32_t modelHash, alt::IHandlingData*& handling);
-
 EXPORT_CLIENT uint32_t Handling_GetHandlingNameHash(uint32_t modelHash);
 EXPORT_CLIENT float Handling_GetMass(uint32_t modelHash);
 EXPORT_CLIENT void Handling_SetMass(uint32_t modelHash, float value);
