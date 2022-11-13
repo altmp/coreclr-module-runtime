@@ -2,18 +2,6 @@
 
 using namespace alt;
 
-void BaseObject_AddRef(alt::IBaseObject* baseObject) {
-    baseObject->AddRef();
-}
-
-void BaseObject_RemoveRef(alt::IBaseObject* baseObject) {
-    baseObject->RemoveRef();
-}
-
-uint8_t BaseObject_AddRefIfExists(alt::IBaseObject* baseObject) {
-    return baseObject->AddRefIfExists();
-}
-
 void BaseObject_SetMetaData(alt::IBaseObject* baseObject, const char* key, alt::MValueConst* value) {
     baseObject->SetMetaData(key, value->Get()->Clone());
 }

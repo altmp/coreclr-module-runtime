@@ -13,14 +13,13 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_CLIENT void MapData_SetFScrollSpeed(alt::IMapData* mapData, float value);
-EXPORT_CLIENT float MapData_GetFScrollSpeed(alt::IMapData* mapData);
-EXPORT_CLIENT void MapData_SetFZoomScale(alt::IMapData* mapData, float value);
-EXPORT_CLIENT float MapData_GetFZoomScale(alt::IMapData* mapData);
-EXPORT_CLIENT void MapData_SetFZoomSpeed(alt::IMapData* mapData, float value);
-EXPORT_CLIENT float MapData_GetFZoomSpeed(alt::IMapData* mapData);
-EXPORT_CLIENT void MapData_SetVTilesX(alt::IMapData* mapData, float value);
-EXPORT_CLIENT float MapData_GetVTilesX(alt::IMapData* mapData);
-EXPORT_CLIENT void MapData_SetVTilesY(alt::IMapData* mapData, float value);
-EXPORT_CLIENT float MapData_GetVTilesY(alt::IMapData* mapData);
-EXPORT_CLIENT void MapData_Destroy(alt::IMapData* mapData);
+EXPORT_CLIENT void MapData_SetFScrollSpeed(uint32_t id, float value);
+EXPORT_CLIENT float MapData_GetFScrollSpeed(uint32_t id);
+EXPORT_CLIENT void MapData_SetFZoomScale(uint32_t id, float value);
+EXPORT_CLIENT float MapData_GetFZoomScale(uint32_t id);
+EXPORT_CLIENT void MapData_SetFZoomSpeed(uint32_t id, float value);
+EXPORT_CLIENT float MapData_GetFZoomSpeed(uint32_t id);
+EXPORT_CLIENT void MapData_SetVTilesX(uint32_t id, float value);
+EXPORT_CLIENT float MapData_GetVTilesX(uint32_t id);
+EXPORT_CLIENT void MapData_SetVTilesY(uint32_t id, float value);
+EXPORT_CLIENT float MapData_GetVTilesY(uint32_t id);
