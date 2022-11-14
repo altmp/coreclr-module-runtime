@@ -2,8 +2,8 @@
 #include "utils/strings.h"
 
 #ifdef ALT_SERVER_API
-void ConnectionInfo_Accept(alt::IConnectionInfo *connectionInfo) {
-    connectionInfo->Accept();
+void ConnectionInfo_Accept(alt::IConnectionInfo *connectionInfo, uint8_t sendNames) {
+    connectionInfo->Accept(sendNames);
 }
 
 void ConnectionInfo_Decline(alt::IConnectionInfo *connectionInfo, const char* reason) {
