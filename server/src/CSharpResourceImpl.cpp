@@ -1,4 +1,4 @@
-#include "../include/CSharpResourceImpl.h"
+#include "CSharpResourceImpl.h"
 #include "../../cpp-sdk/events/CPlayerRequestControlEvent.h"
 #include "../../cpp-sdk/events/CPlayerChangeAnimationEvent.h"
 #include "../../cpp-sdk/events/CPlayerChangeInteriorEvent.h"
