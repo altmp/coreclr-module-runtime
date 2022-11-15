@@ -203,6 +203,8 @@ typedef void (* ServerStartedDelegate_t)();
 
 typedef void (* PlayerRequestControlDelegate_t)(void* target, alt::IBaseObject::Type targetBaseObjectType, alt::IPlayer* player);
 
+typedef void (* PlayerDimensionChangeDelegate_t)(alt::IPlayer* player, int32_t oldDimension, int32_t newDimension);
+
 typedef void (* PlayerChangeAnimationDelegate_t)(void* target, uint32_t oldDict, uint32_t newDict, uint32_t oldName, uint32_t newName);
 
 typedef void (* PlayerChangeInteriorDelegate_t)(void* target, uint32_t oldIntLoc, uint32_t newIntLoc);
@@ -340,6 +342,8 @@ public:
     ServerStartedDelegate_t OnServerStartedDelegate = nullptr;
 
     PlayerRequestControlDelegate_t OnPlayerRequestControlDelegate = nullptr;
+
+    PlayerDimensionChangeDelegate_t OnPlayerDimensionChangeDelegate = nullptr;
 
     PlayerChangeAnimationDelegate_t OnPlayerChangeAnimationDelegate = nullptr;
 
@@ -552,6 +556,9 @@ EXPORT void CSharpResourceImpl_SetServerStartedDelegate(CSharpResourceImpl* reso
 
 EXPORT void CSharpResourceImpl_SetPlayerRequestControlDelegate(CSharpResourceImpl* resource,
                                                             PlayerRequestControlDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerDimensionChangeDelegate(CSharpResourceImpl* resource, 
+                                                            PlayerDimensionChangeDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetPlayerChangeAnimationDelegate(CSharpResourceImpl* resource,
                                                             PlayerChangeAnimationDelegate_t delegate);
