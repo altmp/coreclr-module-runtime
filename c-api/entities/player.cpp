@@ -556,6 +556,14 @@ void Player_SetLastDamagedBodyPart(alt::IPlayer* player, uint32_t bodyPart) {
     player->SetLastDamagedBodyPart(bodyPart);
 }
 
+void Player_SetSendNames(alt::IPlayer* player, uint8_t state) {
+    player->SetSendNames(state);
+}
+
+uint8_t Player_GetSendNames(alt::IPlayer* player){
+    return player->GetSendNames();
+}
+
 #endif
 
 #if ALT_CLIENT_API

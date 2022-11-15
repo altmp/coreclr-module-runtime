@@ -14,7 +14,7 @@
 #pragma clang diagnostic pop
 #endif
     
-EXPORT_SERVER void ConnectionInfo_Accept(alt::IConnectionInfo* connectionInfo);
+EXPORT_SERVER void ConnectionInfo_Accept(alt::IConnectionInfo* connectionInfo, uint8_t sendNames);
 EXPORT_SERVER void ConnectionInfo_Decline(alt::IConnectionInfo* connectionInfo, const char* reason);
 EXPORT_SERVER const char* ConnectionInfo_GetName(alt::IConnectionInfo *connectionInfo, int32_t& size);
 EXPORT_SERVER uint64_t ConnectionInfo_GetSocialId(alt::IConnectionInfo *connectionInfo);
