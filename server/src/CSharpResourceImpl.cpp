@@ -2,6 +2,7 @@
 #include "../../cpp-sdk/events/CPlayerRequestControlEvent.h"
 #include "../../cpp-sdk/events/CPlayerChangeAnimationEvent.h"
 #include "../../cpp-sdk/events/CPlayerChangeInteriorEvent.h"
+#include "../../cpp-sdk/events/CPlayerDimensionChangeEvent.h"
 #include "../../c-api/utils/entity.h"
 
 CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource)
@@ -67,6 +68,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnConnectionQueueRemoveDelegate = [](auto var){};
     OnServerStartedDelegate = []() {};
     OnPlayerRequestControlDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerDimensionChangeDelegate = [](auto var, auto var2, auto var3) {};
 }
 
 bool CSharpResourceImpl::Start() {
@@ -534,6 +536,14 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
                                           playerRequestControlEvent->GetPlayer());
            break;
         }
+        case alt::CEvent::Type::PLAYER_DIMENSION_CHANGE: {
+            auto playerDimensionChangeEvent = ((alt::CPlayerDimensionChangeEvent *) (ev));
+            
+            OnPlayerDimensionChangeDelegate(playerDimensionChangeEvent->GetTarget(), 
+                                            playerDimensionChangeEvent->GetOldDimension(),
+                                            playerDimensionChangeEvent->GetNewDimension());
+            break;
+        }
     }
     return true;
 }
@@ -868,6 +878,10 @@ void CSharpResourceImpl_SetServerStartedDelegate(CSharpResourceImpl* resource,
 
 void CSharpResourceImpl_SetPlayerRequestControlDelegate(CSharpResourceImpl* resource, PlayerRequestControlDelegate_t delegate) {
     resource->OnPlayerRequestControlDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerDimensionChangeDelegate(CSharpResourceImpl* resource, PlayerDimensionChangeDelegate_t delegate) {
+    resource->OnPlayerDimensionChangeDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetPlayerChangeAnimationDelegate(CSharpResourceImpl* resource, PlayerChangeAnimationDelegate_t delegate) {
