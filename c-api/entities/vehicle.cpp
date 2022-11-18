@@ -849,14 +849,6 @@ void Vehicle_SetRocketRefuelSpeed(alt::IVehicle* vehicle, float rocketRefuleSpee
     vehicle->SetRocketRefuelSpeed(rocketRefuleSpeed);
 }
 
-uint32_t Vehicle_GetBombCount(alt::IVehicle* vehicle) {
-    return vehicle->GetBombCount();
-}
-
-void Vehicle_SetBombCount(alt::IVehicle* vehicle, uint32_t bombCount) {
-    vehicle->SetBombCount(bombCount);
-}
-
 uint32_t Vehicle_GetCounterMeasureCount(alt::IVehicle* vehicle) {
     return vehicle->GetCounterMeasureCount();
 }
@@ -871,14 +863,6 @@ float Vehicle_GetScriptMaxSpeed(alt::IVehicle* vehicle) {
 
 void Vehicle_SetScriptMaxSpeed(alt::IVehicle* vehicle, float scriptMaxSpeed) {
     vehicle->SetScriptMaxSpeed(scriptMaxSpeed);
-}
-
-uint8_t Vehicle_GetWeaponsDisabled(alt::IVehicle* vehicle) {
-    return vehicle->GetWeaponsDisabled();
-}
-
-void Vehicle_SetWeaponsDisabled(alt::IVehicle* vehicle, uint8_t state) {
-    vehicle->SetWeaponsDisabled(state);
 }
 
 int32_t Vehicle_GetWeaponCapacity(alt::IVehicle* vehicle, uint8_t index) {
@@ -903,22 +887,6 @@ uint8_t Vehicle_GetHybridExtraState(alt::IVehicle* vehicle) {
 
 void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetHybridExtraState(state);
-}
-
-float Vehicle_GetDamageModifier(alt::IVehicle* vehicle) {
-    return vehicle->GetDamageModifier();
-}
-
-void Vehicle_SetDamageModifier(alt::IVehicle* vehicle, float state) {
-    vehicle->SetDamageModifier(state);
-}
-
-float Vehicle_GetDamageMultiplier(alt::IVehicle* vehicle) {
-    return vehicle->GetDamageMultiplier();
-}
-
-void Vehicle_SetDamageMultiplier(alt::IVehicle* vehicle, float state) {
-    vehicle->SetDamageMultiplier(state);
 }
 
 #endif
