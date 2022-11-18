@@ -14,11 +14,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_CLIENT alt::IBaseObject* WebSocketClient_GetBaseObject(alt::IWebSocketClient* webSocketClient);
 
 EXPORT_CLIENT uint8_t WebSocketClient_IsAutoReconnect(alt::IWebSocketClient* webSocketClient);
@@ -38,7 +33,3 @@ EXPORT_CLIENT uint8_t WebSocketClient_Send_Binary(alt::IWebSocketClient* webSock
 EXPORT_CLIENT void WebSocketClient_SetExtraHeader(alt::IWebSocketClient* webSocketClient, const char* key, const char* value);
 EXPORT_CLIENT void WebSocketClient_Start(alt::IWebSocketClient* webSocketClient);
 EXPORT_CLIENT void WebSocketClient_Stop(alt::IWebSocketClient* webSocketClient);
-
-#ifdef __cplusplus
-}
-#endif

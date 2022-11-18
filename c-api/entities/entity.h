@@ -14,11 +14,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED uint16_t Entity_GetID(alt::IEntity* entity);
 EXPORT_SHARED alt::IWorldObject* Entity_GetWorldObject(alt::IEntity* entity);
 EXPORT_SHARED uint8_t Entity_GetTypeByID(alt::ICore* core, uint16_t id, uint8_t& type);
@@ -54,7 +49,3 @@ EXPORT_SERVER void Entity_SetFrozen(alt::IEntity* entity, uint8_t state);
 
 EXPORT_SERVER uint8_t Entity_HasCollision(alt::IEntity* entity);
 EXPORT_SERVER void Entity_SetCollision(alt::IEntity* entity, uint8_t state);
-
-#ifdef __cplusplus
-}
-#endif

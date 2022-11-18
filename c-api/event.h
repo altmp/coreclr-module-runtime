@@ -18,11 +18,6 @@
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
     
 EXPORT_SERVER void Event_Cancel(alt::CEvent* event);
 EXPORT_SERVER void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason);
@@ -101,8 +96,6 @@ EXPORT_CLIENT void Event_SetRemoveRmlDocumentDelegate(CSharpResourceImpl* resour
 
 EXPORT_CLIENT void Event_SetPlayerWeaponShootDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponShootModuleDelegate */ PlayerWeaponShootDelegate_t delegate);
 
-#endif
+EXPORT_CLIENT void Event_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponChangeModuleDelegate */ PlayerWeaponChangeDelegate_t delegate);
 
-#ifdef __cplusplus
-}
 #endif

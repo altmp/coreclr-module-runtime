@@ -31,8 +31,8 @@ public:
     bool OnEvent(const alt::CEvent* event) override;
     void OnTick() override;
 
-    void OnCreateBaseObject(alt::Ref<alt::IBaseObject> object) override;
-    void OnRemoveBaseObject(alt::Ref<alt::IBaseObject> object) override;
+    void OnCreateBaseObject(alt::IBaseObject* object) override;
+    void OnRemoveBaseObject(alt::IBaseObject* object) override;
 
     alt::Array<CustomInvoker*>* invokers;
 
@@ -89,6 +89,8 @@ public:
     WindowResolutionChangeDelegate_t OnWindowResolutionChangeDelegate = nullptr;
 
     PlayerWeaponShootDelegate_t OnPlayerWeaponShootDelegate = nullptr;
+
+    PlayerWeaponChangeDelegate_t OnPlayerWeaponChangeDelegate = nullptr;
     
     CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
     CreateWebViewDelegate_t OnCreateWebViewDelegate = nullptr;

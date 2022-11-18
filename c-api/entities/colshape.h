@@ -14,11 +14,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED alt::IWorldObject* ColShape_GetWorldObject(alt::IColShape* colShape);
 
 EXPORT_SHARED uint8_t ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity);
@@ -28,7 +23,3 @@ EXPORT_SHARED uint8_t ColShape_IsPointIn(alt::IColShape* colShape, vector3_t poi
 EXPORT_SERVER uint8_t ColShape_GetColShapeType(alt::IColShape* colShape);
 EXPORT_SERVER void ColShape_SetPlayersOnly(alt::IColShape* colShape, uint8_t state);
 EXPORT_SERVER uint8_t ColShape_IsPlayersOnly(alt::IColShape* colShape);
-
-#ifdef __cplusplus
-}
-#endif

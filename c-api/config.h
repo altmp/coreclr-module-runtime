@@ -14,13 +14,4 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED void Config_Delete(ClrConfigNodeData* node);
-
-#ifdef __cplusplus
-}
-#endif

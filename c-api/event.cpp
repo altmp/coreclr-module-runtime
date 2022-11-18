@@ -88,4 +88,7 @@ SetDelegate(RemoveHttpClient);
 SetDelegate(RemoveAudio);
 SetDelegate(RemoveRmlElement);
 SetDelegate(RemoveRmlDocument);
+
+SetDelegate(PlayerWeaponShoot);
+SetDelegate(PlayerWeaponChange);
 #endif

@@ -50,6 +50,12 @@ void Object_AttachToEntity(alt::IObject* object, alt::IEntity* entity, int16_t b
     object->AttachToEntity(entity, bone, position, rotation, useSoftPinning, collision, fixedRot);
 }
 
+void Object_AttachToEntity_ScriptId(alt::IObject* object, uint32_t scriptId, int16_t bone, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot) {
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    object->AttachToEntity(scriptId, bone, position, rotation, useSoftPinning, collision, fixedRot);
+}
+
 void Object_Detach(alt::IObject* object, uint8_t dynamic) {
     object->Detach(dynamic);
 }
@@ -72,6 +78,18 @@ void Object_SetPositionFrozen(alt::IObject* object, uint8_t toggle) {
 
 void Object_ActivatePhysics(alt::IObject* object) {
     object->ActivatePhysics();
+}
+
+uint8_t Object_GetTextureVariation(alt::IObject* object) {
+    return object->GetTextureVariation();
+}
+
+void Object_SetTextureVariation(alt::IObject* object, uint8_t variation) {
+    object->SetTextureVariation(variation);
+}
+
+uint8_t Object_IsWorldObject(alt::IObject* object) {
+    return object->IsWorldObject();
 }
 
 #ifdef ALT_CLIENT_API

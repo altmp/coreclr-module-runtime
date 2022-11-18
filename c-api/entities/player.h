@@ -20,11 +20,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED uint16_t Player_GetID(alt::IPlayer* player);
 EXPORT_SHARED alt::IEntity* Player_GetEntity(alt::IPlayer* player);
 
@@ -129,6 +124,7 @@ EXPORT_SERVER void Player_ClearProps(alt::IPlayer* player, uint8_t component);
 EXPORT_SERVER uint8_t Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity);
 
 EXPORT_SERVER void Player_AttachToEntity(alt::IPlayer* player, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
+EXPORT_SERVER void Player_AttachToEntity_BoneString(alt::IPlayer* player, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
 EXPORT_SERVER void Player_Detach(alt::IPlayer* player);
 
 EXPORT_SERVER uint8_t Player_GetInvincible(alt::IPlayer* player);
@@ -174,6 +170,9 @@ EXPORT_SERVER int64_t Player_GetDiscordId(alt::IPlayer* player);
 EXPORT_SERVER uint32_t Player_GetLastDamagedBodyPart(alt::IPlayer* player);
 EXPORT_SERVER void Player_SetLastDamagedBodyPart(alt::IPlayer* player, uint32_t bodyPart);
 
+EXPORT_SERVER void Player_SetSendNames(alt::IPlayer* player, uint8_t state);
+EXPORT_SERVER uint8_t Player_GetSendNames(alt::IPlayer* player);
+
 EXPORT_CLIENT uint8_t Player_IsTalking(alt::IPlayer* player);
 EXPORT_CLIENT float Player_GetMicLevel(alt::IPlayer* player);
 
@@ -188,13 +187,9 @@ EXPORT_CLIENT alt::ILocalPlayer* Player_GetLocal();
 EXPORT_CLIENT alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* player);
 
 EXPORT_CLIENT uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer);
-EXPORT_CLIENT alt::IWeaponData* LocalPlayer_GetCurrentWeaponData(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT uint32_t LocalPlayer_GetCurrentWeaponHash(alt::ILocalPlayer* localPlayer);
 
 EXPORT_CLIENT uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer, uint32_t weaponHash);
 EXPORT_CLIENT uint8_t LocalPlayer_HasWeapon(alt::ILocalPlayer* localPlayer, uint32_t weaponHash);
 EXPORT_CLIENT void LocalPlayer_GetWeapons(alt::ILocalPlayer* localPlayer, const uint32_t*& weapons, uint32_t& size);
 EXPORT_CLIENT void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlayer, uint32_t weaponHash, const uint32_t*& weaponComponents, uint32_t& size);
-
-#ifdef __cplusplus
-}
-#endif

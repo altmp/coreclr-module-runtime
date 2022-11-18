@@ -27,11 +27,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED void Core_LogInfo(alt::ICore* server, const char* str);
 EXPORT_SHARED void Core_LogDebug(alt::ICore* server, const char* str);
 EXPORT_SHARED void Core_LogWarning(alt::ICore* server, const char* str);
@@ -118,6 +113,8 @@ EXPORT_SERVER uint64_t Core_HashPassword(alt::ICore* core, const char* password)
 EXPORT_SERVER void Core_SetPassword(alt::ICore* core, const char* value);
 EXPORT_SERVER void Core_StopServer(alt::ICore* core);
 EXPORT_SERVER ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core);
+
+EXPORT_SERVER void Core_SetWorldProfiler(alt::ICore* core, uint8_t state);
 
 #ifdef ALT_CLIENT_API
 EXPORT_CLIENT uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path);
@@ -251,7 +248,6 @@ typedef void (* ScreenshotDelegate_t)(const char* string);
 EXPORT_CLIENT uint8_t Core_TakeScreenshot(alt::ICore* core, /** ClientEvents.ScreenshotResultModuleDelegate */ ScreenshotDelegate_t delegate);
 EXPORT_CLIENT uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, /** ClientEvents.ScreenshotResultModuleDelegate */ ScreenshotDelegate_t delegate);
 
-EXPORT_CLIENT alt::IMapData* Core_GetMapZoomDataById(alt::ICore* core, uint32_t id);
 EXPORT_CLIENT alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const char* alias, uint32_t& id);
 EXPORT_CLIENT void Core_ResetAllMapZoomData(alt::ICore* core);
 EXPORT_CLIENT void Core_ResetMapZoomData(alt::ICore* core, uint32_t id);
@@ -278,7 +274,5 @@ EXPORT_CLIENT uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos);
 
 EXPORT_CLIENT alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, uint8_t noOffset, uint8_t dynamic);
 EXPORT_CLIENT alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size);
-
-#ifdef __cplusplus
-}
-#endif
+EXPORT_CLIENT alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size);
+    
