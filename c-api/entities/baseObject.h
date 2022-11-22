@@ -11,9 +11,9 @@
 #include "../data/cloth.h"
 #include "../data/head_overlay.h"
 #include "../utils/export.h"
-#include "c-api/cache/CachedBaseObject.h"
-#include "c-api/cache/CachedPlayer.h"
-#include "c-api/cache/CachedVehicle.h"
+#include "../cache/CachedBaseObject.h"
+#include "../cache/CachedPlayer.h"
+#include "../cache/CachedVehicle.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
