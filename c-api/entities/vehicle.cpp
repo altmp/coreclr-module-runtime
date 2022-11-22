@@ -1,6 +1,6 @@
 #include "vehicle.h"
 #include "../utils/strings.h"
-#include "c-api/cache/CachedVehicle.h"
+#include "../cache/CachedVehicle.h"
 
 uint16_t Vehicle_GetID(alt::IVehicle* entity) {
     return entity->GetID();
