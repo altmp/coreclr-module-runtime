@@ -101,13 +101,13 @@ CSharpResourceImpl::~CSharpResourceImpl() {
     //delete[] invokers;
 }
 
-bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
-    if (ev == nullptr) return true;
+void CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
+    if (ev == nullptr) return;
     switch (ev->GetType()) {
         case alt::CEvent::Type::META_CHANGE: {
             /*auto event = ((alt::CMetaChangeEvent*) (ev));
             auto entity = event->GetTarget().Get();
-            if (entity == nullptr) return true;
+            if (entity == nullptr) return;
             auto key = event->GetKey();
             auto value = event->GetVal();
             const char* keyCStr;
@@ -126,7 +126,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::SYNCED_META_CHANGE: {
             /*auto event = ((alt::CSyncedMetaDataChangeEvent*) (ev));
             auto entity = event->GetTarget().Get();
-            if (entity == nullptr) return true;
+            if (entity == nullptr) return;
             auto key = event->GetKey();
             auto value = event->GetVal();
             const char* keyCStr;
@@ -284,7 +284,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
         case alt::CEvent::Type::WEAPON_DAMAGE_EVENT: {
             auto weaponDamageEvent = ((alt::CWeaponDamageEvent*) (ev));
             auto targetEntity = weaponDamageEvent->GetTarget();
-            if (targetEntity == nullptr) return true;
+            if (targetEntity == nullptr) return;
             auto eventShotOffset = weaponDamageEvent->GetShotOffset();
             position_t shotOffset = {eventShotOffset[0], eventShotOffset[1], eventShotOffset[2]};
             OnWeaponDamageDelegate(ev, weaponDamageEvent->GetSource(), GetEntityPointer(targetEntity),
@@ -309,20 +309,6 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             OnPlayerDisconnectDelegate(disconnectPlayer,
                                        "");
             //}
-        }
-            break;
-        case alt::CEvent::Type::REMOVE_ENTITY_EVENT: {
-            auto removeEntityEntity = ((alt::CRemoveEntityEvent*) (ev))->GetEntity();
-            if (removeEntityEntity != nullptr) {
-                switch (removeEntityEntity->GetType()) {
-                    case alt::IBaseObject::Type::PLAYER:
-                        OnPlayerRemoveDelegate(dynamic_cast<alt::IPlayer*>(removeEntityEntity));
-                        break;
-                    case alt::IBaseObject::Type::VEHICLE:
-                        OnVehicleRemoveDelegate(dynamic_cast<alt::IVehicle*>(removeEntityEntity));
-                        break;
-                }
-            }
         }
             break;
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT: {
@@ -545,7 +531,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev) {
             break;
         }
     }
-    return true;
+    return;
 }
 
 void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object) {

@@ -28,7 +28,7 @@ public:
     bool Start() override;
     bool Stop() override;
 
-    bool OnEvent(const alt::CEvent* event) override;
+    void OnEvent(const alt::CEvent* event) override;
     void OnTick() override;
 
     void OnCreateBaseObject(alt::IBaseObject* object) override;

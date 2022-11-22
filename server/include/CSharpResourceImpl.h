@@ -166,7 +166,7 @@ typedef void (* ColShapeDelegate_t)(void* colShape, void* entity, alt::IBaseObje
 
 typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, alt::IPlayer* source, void* target,
                                         alt::IBaseObject::Type targetBaseObjectType,
-                                        uint32_t weaponHash, uint16_t damageValue, position_t shotOffset,
+                                        uint32_t weaponHash, uint32_t damageValue, position_t shotOffset,
                                         alt::CWeaponDamageEvent::BodyPart bodyPart);
 
 typedef void (* ExplosionDelegate_t)(const alt::CEvent* event, alt::IPlayer* source,
@@ -210,7 +210,7 @@ typedef void (* PlayerChangeAnimationDelegate_t)(void* target, uint32_t oldDict,
 typedef void (* PlayerChangeInteriorDelegate_t)(void* target, uint32_t oldIntLoc, uint32_t newIntLoc);
 
 class CSharpResourceImpl : public alt::IResource::Impl {
-    bool OnEvent(const alt::CEvent* ev) override;
+    void OnEvent(const alt::CEvent* ev) override;
 
     void OnTick() override;
 

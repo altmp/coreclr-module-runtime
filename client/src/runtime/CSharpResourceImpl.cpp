@@ -39,9 +39,9 @@ bool CSharpResourceImpl::Stop()
     return res;
 }
 
-bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
+void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 {
-    if (ev == nullptr) return true;
+    if (ev == nullptr) return;
     auto scope = resource->PushNativesScope();
     switch(ev->GetType()) {
         case alt::CEvent::Type::SERVER_SCRIPT_EVENT: {
@@ -231,12 +231,6 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             OnGameEntityDestroyDelegate(ptr, type);
             break;
         }
-        case alt::CEvent::Type::REMOVE_ENTITY_EVENT: {
-            auto removeEntityEvent = (alt::CRemoveEntityEvent *) ev;
-            OnRemoveEntityDelegate(GetEntityPointer(removeEntityEvent->GetEntity()),
-                                   removeEntityEvent->GetEntity()->GetType());
-            break;
-        }
 #pragma endregion
 #pragma region Misc
         case alt::CEvent::Type::RESOURCE_ERROR: {
@@ -344,7 +338,7 @@ bool CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         }
 #pragma endregion
     }
-    return true;
+    return;
 }
 
 void CSharpResourceImpl::OnTick()
