@@ -18,14 +18,10 @@
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
     
 EXPORT_SERVER void Event_Cancel(alt::CEvent* event);
 EXPORT_SERVER void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason);
+EXPORT_SERVER void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue);
 EXPORT_SERVER uint8_t Event_WasCancelled(alt::CEvent* event);
 
 #ifdef ALT_CLIENT_API
@@ -39,6 +35,9 @@ EXPORT_CLIENT void Event_SetRmlEventDelegate(CSharpResourceImpl* resource,  /** 
 
 EXPORT_CLIENT void Event_SetCreatePlayerDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreatePlayerModuleDelegate */ CreatePlayerDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemovePlayerDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemovePlayerModuleDelegate */ RemovePlayerDelegate_t delegate);
+
+EXPORT_CLIENT void Event_SetCreateObjectDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateObjectModuleDelegate */ CreateObjectDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveObjectDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemoveObjectModuleDelegate */ RemoveObjectDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetCreateVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateVehicleModuleDelegate */ CreateVehicleDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemoveVehicleModuleDelegate */ RemoveVehicleDelegate_t delegate);
@@ -96,8 +95,8 @@ EXPORT_CLIENT void Event_SetRemoveAudioDelegate(CSharpResourceImpl* resource, /*
 EXPORT_CLIENT void Event_SetRemoveRmlElementDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveRmlElementModuleDelegate */ RemoveRmlElementDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemoveRmlDocumentDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveRmlDocumentModuleDelegate */ RemoveRmlDocumentDelegate_t delegate);
 
-#endif
+EXPORT_CLIENT void Event_SetPlayerWeaponShootDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponShootModuleDelegate */ PlayerWeaponShootDelegate_t delegate);
 
-#ifdef __cplusplus
-}
+EXPORT_CLIENT void Event_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponChangeModuleDelegate */ PlayerWeaponChangeDelegate_t delegate);
+
 #endif

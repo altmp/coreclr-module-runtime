@@ -11,7 +11,7 @@ CSharpScriptRuntime::CSharpScriptRuntime(alt::ICore* core) : clr(core), core(cor
     Log::Info << "CSharp runtime initialized" << Log::Endl;
     auto config = core->GetClientConfig();
     try {
-        if (!config["disableRestrictedSandbox"].ToBool(false)) return;
+        if (!config["disableRestrictedSandbox"]->AsBool(false)) return;
 
         const int result = MessageBox(nullptr, L"You've enabled disableRestrictedSandbox in altv.cfg\r\n"
             "ONLY JOIN TRUSTED SERVERS, AS WITHOUT SANDBOXING THEY CAN ACCESS YOUR PERSONAL DATA.\r\n"

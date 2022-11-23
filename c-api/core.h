@@ -10,6 +10,7 @@
 #include "data/config_node_data.h"
 #include "data/types.h"
 #include "data/vehicle_model_info.h"
+#include "data/ped_model_info.h"
 #include "utils/export.h"
 
 #ifdef ALT_SERVER_API
@@ -24,11 +25,6 @@
 
 #ifdef __clang__
 #pragma clang diagnostic pop
-#endif
-
-#ifdef __cplusplus
-extern "C"
-{
 #endif
 
 EXPORT_SHARED void Core_LogInfo(alt::ICore* server, const char* str);
@@ -92,7 +88,9 @@ EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_
 EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos);
 EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo);
 EXPORT_SERVER ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* server, uint32_t hash);
+EXPORT_SERVER ClrPedModelInfo* Core_GetPedModelInfo(alt::ICore* core, uint32_t hash);
 EXPORT_SERVER void Core_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo);
+EXPORT_SERVER void Core_DeallocPedModelInfo(ClrPedModelInfo* modelInfo);
 EXPORT_SERVER alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance);
 EXPORT_SERVER alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height);
 EXPORT_SERVER alt::IColShape* Core_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius);
@@ -116,7 +114,12 @@ EXPORT_SERVER void Core_SetPassword(alt::ICore* core, const char* value);
 EXPORT_SERVER void Core_StopServer(alt::ICore* core);
 EXPORT_SERVER ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core);
 
+EXPORT_SERVER void Core_SetWorldProfiler(alt::ICore* core, uint8_t state);
+
 #ifdef ALT_CLIENT_API
+EXPORT_CLIENT uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path);
+EXPORT_CLIENT const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, const char* path, int32_t& size);
+    
 EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color);
 #endif
 EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position);
@@ -245,7 +248,6 @@ typedef void (* ScreenshotDelegate_t)(const char* string);
 EXPORT_CLIENT uint8_t Core_TakeScreenshot(alt::ICore* core, /** ClientEvents.ScreenshotResultModuleDelegate */ ScreenshotDelegate_t delegate);
 EXPORT_CLIENT uint8_t Core_TakeScreenshotGameOnly(alt::ICore* core, /** ClientEvents.ScreenshotResultModuleDelegate */ ScreenshotDelegate_t delegate);
 
-EXPORT_CLIENT alt::IMapData* Core_GetMapZoomDataById(alt::ICore* core, uint32_t id);
 EXPORT_CLIENT alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const char* alias, uint32_t& id);
 EXPORT_CLIENT void Core_ResetAllMapZoomData(alt::ICore* core);
 EXPORT_CLIENT void Core_ResetMapZoomData(alt::ICore* core, uint32_t id);
@@ -268,6 +270,9 @@ EXPORT_CLIENT void Core_OverrideFocusEntity(alt::ICore* core, alt::IEntity* enti
 EXPORT_CLIENT void Core_ClearFocusOverride(alt::ICore* core);
 EXPORT_CLIENT void Core_LoadDefaultIpls(alt::ICore* core);
 
-#ifdef __cplusplus
-}
-#endif
+EXPORT_CLIENT uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos);
+
+EXPORT_CLIENT alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, uint8_t noOffset, uint8_t dynamic);
+EXPORT_CLIENT alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size);
+EXPORT_CLIENT alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size);
+    

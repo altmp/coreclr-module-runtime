@@ -12,6 +12,10 @@ void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason) {
 uint8_t Event_WasCancelled(alt::CEvent* event) {
     return event->WasCancelled();
 }
+
+void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue) {
+    ((alt::CWeaponDamageEvent*) event)->SetDamageValue(damageValue);
+}
 #endif
 
 #ifdef ALT_CLIENT_API
@@ -29,6 +33,9 @@ SetDelegate(WebSocketEvent);
 
 SetDelegate(CreatePlayer);
 SetDelegate(RemovePlayer);
+
+SetDelegate(CreateObject);
+SetDelegate(RemoveObject);
 
 SetDelegate(CreateVehicle);
 SetDelegate(RemoveVehicle);
@@ -85,4 +92,7 @@ SetDelegate(RemoveHttpClient);
 SetDelegate(RemoveAudio);
 SetDelegate(RemoveRmlElement);
 SetDelegate(RemoveRmlDocument);
+
+SetDelegate(PlayerWeaponShoot);
+SetDelegate(PlayerWeaponChange);
 #endif

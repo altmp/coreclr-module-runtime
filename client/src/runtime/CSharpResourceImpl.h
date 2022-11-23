@@ -28,13 +28,11 @@ public:
     bool Start() override;
     bool Stop() override;
 
-    void* GetEntityPointer(alt::IEntity* entity);
-
-    bool OnEvent(const alt::CEvent* event) override;
+    void OnEvent(const alt::CEvent* event) override;
     void OnTick() override;
 
-    void OnCreateBaseObject(alt::Ref<alt::IBaseObject> object) override;
-    void OnRemoveBaseObject(alt::Ref<alt::IBaseObject> object) override;
+    void OnCreateBaseObject(alt::IBaseObject* object) override;
+    void OnRemoveBaseObject(alt::IBaseObject* object) override;
 
     alt::Array<CustomInvoker*>* invokers;
 
@@ -48,6 +46,9 @@ public:
 
     CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
     RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
+
+    CreateObjectDelegate_t OnCreateObjectDelegate = nullptr;
+    RemoveObjectDelegate_t OnRemoveObjectDelegate = nullptr;
 
     CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
     RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
@@ -86,6 +87,10 @@ public:
 
     WindowFocusChangeDelegate_t OnWindowFocusChangeDelegate = nullptr;
     WindowResolutionChangeDelegate_t OnWindowResolutionChangeDelegate = nullptr;
+
+    PlayerWeaponShootDelegate_t OnPlayerWeaponShootDelegate = nullptr;
+
+    PlayerWeaponChangeDelegate_t OnPlayerWeaponChangeDelegate = nullptr;
     
     CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
     CreateWebViewDelegate_t OnCreateWebViewDelegate = nullptr;

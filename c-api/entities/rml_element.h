@@ -14,11 +14,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_CLIENT NO_GC alt::IBaseObject* RmlElement_GetBaseObject(alt::IRmlElement* rmlElement);
 
 EXPORT_CLIENT NO_GC float RmlElement_GetAbsoluteLeft(alt::IRmlElement* rmlElement);
@@ -97,8 +92,3 @@ EXPORT_CLIENT NO_GC void RmlElement_ScrollIntoView(alt::IRmlElement* rmlElement,
 EXPORT_CLIENT NO_GC void RmlElement_SetAttribute(alt::IRmlElement* rmlElement, const char* name, const char* value);
 EXPORT_CLIENT NO_GC void RmlElement_SetOffset(alt::IRmlElement* rmlElement, alt::IRmlElement* element, vector2_t offset, uint8_t fixed);
 EXPORT_CLIENT void RmlElement_SetProperty(alt::IRmlElement* rmlElement, const char* name, const char* value);
-
-
-#ifdef __cplusplus
-}
-#endif

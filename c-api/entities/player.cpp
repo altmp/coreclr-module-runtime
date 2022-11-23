@@ -1,6 +1,7 @@
 #include "player.h"
 
 #include "../utils/strings.h"
+#include "../utils/uint.h"
 
 uint16_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();
@@ -97,12 +98,12 @@ uint8_t Player_IsInVehicle(alt::IPlayer* player) {
 }
 
 alt::IVehicle* Player_GetVehicle(alt::IPlayer* player) {
-    return player->GetVehicle().Get();
+    return player->GetVehicle();
 }
 
 uint8_t Player_GetVehicleID(alt::IPlayer* player, uint16_t& id) {
     auto vehicle = player->GetVehicle();
-    if (vehicle.IsEmpty()) return false;
+    if (vehicle == nullptr) return false;
     id = vehicle->GetID();
     return true;
 }
@@ -113,7 +114,7 @@ uint8_t Player_GetSeat(alt::IPlayer* player) {
 
 
 void* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &type) {
-    auto entity = player->GetEntityAimingAt().Get();
+    auto entity = player->GetEntityAimingAt();
     if (entity != nullptr) {
         type = entity->GetType();
         switch (type) {
@@ -395,11 +396,17 @@ void Player_ClearProps(alt::IPlayer* player, uint8_t component) {
 
 
 uint8_t Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity) {
-    return player->IsEntityInStreamingRange(entity);
+    return player->IsEntityInStreamingRange(entity->GetID());
 }
 
 
 void Player_AttachToEntity(alt::IPlayer* player, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot) {
+    alt::Position position{pos.x, pos.y, pos.z};
+    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
+    player->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
+}
+
+void Player_AttachToEntity_BoneString(alt::IPlayer* player, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot) {
     alt::Position position{pos.x, pos.y, pos.z};
     alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
     player->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
@@ -492,7 +499,7 @@ void Player_GetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t id, rgba_t &h
 void Player_SetHeadBlendData(alt::IPlayer* player, uint32_t shapeFirstID, uint32_t shapeSecondID, uint32_t shapeThirdID,
                              uint32_t skinFirstID, uint32_t skinSecondID, uint32_t skinThirdID,
                              float shapeMix, float skinMix, float thirdMix) {
-    return player->SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID, skinThirdID, shapeMix, skinMix, thirdMix);
+    player->SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID, skinThirdID, shapeMix, skinMix, thirdMix);
 }
 
 void Player_GetHeadBlendData(alt::IPlayer* player, head_blend_data_t &headBlendData) {
@@ -518,7 +525,7 @@ uint16_t Player_GetEyeColor(alt::IPlayer* player) {
 }
 
 void Player_SetHairColor(alt::IPlayer* player, uint8_t hairColor) {
-    return player->SetHairColor(hairColor);
+    player->SetHairColor(hairColor);
 }
 
 uint8_t Player_GetHairColor(alt::IPlayer* player) {
@@ -526,19 +533,35 @@ uint8_t Player_GetHairColor(alt::IPlayer* player) {
 }
 
 void Player_SetHairHighlightColor(alt::IPlayer* player, uint8_t hairHighlightColor) {
-    return player->SetHairHighlightColor(hairHighlightColor);
+    player->SetHairHighlightColor(hairHighlightColor);
 }
 
 uint8_t Player_GetHairHighlightColor(alt::IPlayer* player) {
     return player->GetHairHighlightColor();
 }
 
-const char* Player_GetDiscordId(alt::IPlayer* player, int32_t& size) {
-    return AllocateString(player->GetDiscordId(), size);
+int64_t Player_GetDiscordId(alt::IPlayer* player) {
+    return player->GetDiscordId();
 }
 
 uint32_t Player_GetInteriorLocation(alt::IPlayer* player) {
     return player->GetInteriorLocation();
+}
+
+uint32_t Player_GetLastDamagedBodyPart(alt::IPlayer* player) {
+    return player->GetLastDamagedBodyPart();
+}
+
+void Player_SetLastDamagedBodyPart(alt::IPlayer* player, uint32_t bodyPart) {
+    player->SetLastDamagedBodyPart(bodyPart);
+}
+
+void Player_SetSendNames(alt::IPlayer* player, uint8_t state) {
+    player->SetSendNames(state);
+}
+
+uint8_t Player_GetSendNames(alt::IPlayer* player){
+    return player->GetSendNames();
 }
 
 #endif
@@ -572,7 +595,7 @@ void Player_SetSpatialVolume(alt::IPlayer* player, float value) {
 }
 
 alt::ILocalPlayer* Player_GetLocal() {
-    return alt::ICore::Instance().GetLocalPlayer().Get();
+    return alt::ICore::Instance().GetLocalPlayer();
 }
 
 uint16_t LocalPlayer_GetID(alt::ILocalPlayer* player) {
@@ -587,10 +610,27 @@ uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer) {
     return localPlayer->GetCurrentAmmo();
 }
 
-alt::IWeaponData* LocalPlayer_GetCurrentWeaponData(alt::ILocalPlayer* localPlayer) {
-    const auto data = localPlayer->GetCurrentWeaponData().Get();
-    data->AddRef();
-    return data;
+uint32_t LocalPlayer_GetCurrentWeaponHash(alt::ILocalPlayer* localPlayer) {
+    const auto data = localPlayer->GetCurrentWeaponData();
+    return data.get()->GetModelHash();
+}
+
+uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer, uint32_t weaponHash) {
+    return localPlayer->GetWeaponAmmo(weaponHash);
+}
+
+uint8_t LocalPlayer_HasWeapon(alt::ILocalPlayer* localPlayer, uint32_t weaponHash) {
+    return localPlayer->HasWeapon(weaponHash);
+}
+
+void LocalPlayer_GetWeapons(alt::ILocalPlayer* localPlayer, const uint32_t*& weapons, uint32_t& size) {
+    auto arr = localPlayer->GetWeapons();
+    weapons = AllocateUInt32Array(arr, size);
+}
+
+void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlayer, uint32_t weaponHash, const uint32_t*& weaponComponents, uint32_t& size) {
+    auto arr = localPlayer->GetWeaponComponents(weaponHash);
+    weaponComponents = AllocateUInt32Array(arr, size);
 }
 
 #endif

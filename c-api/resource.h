@@ -20,11 +20,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED const char* Resource_GetName(alt::IResource* resource, int32_t& size);
 EXPORT_SHARED const char* Resource_GetType(alt::IResource* resource, int32_t& size);
 
@@ -51,7 +46,3 @@ EXPORT_SERVER ClrConfigNodeData* Resource_GetConfig(alt::IResource* resource);
 EXPORT_CLIENT void Resource_GetFile(alt::IResource* resource, const char* path, int* bufferSize, void** buffer);
 EXPORT_CLIENT bool Resource_FileExists(alt::IResource* resource, const char* path);
 EXPORT_CLIENT alt::ILocalStorage* Resource_GetLocalStorage(alt::IResource* resource);
-
-#ifdef __cplusplus
-}
-#endif

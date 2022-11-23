@@ -15,11 +15,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_SHARED alt::IWorldObject* Blip_GetWorldObject(alt::IBlip* blip);
 
 EXPORT_SHARED uint8_t Blip_IsGlobal(alt::IBlip* blip);
@@ -93,7 +88,3 @@ EXPORT_SERVER void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &ty
 
 EXPORT_CLIENT uint32_t Blip_GetScriptID(alt::IBlip* blip);
 EXPORT_CLIENT uint8_t Blip_IsRemote(alt::IBlip* blip);
-
-#ifdef __cplusplus
-}
-#endif

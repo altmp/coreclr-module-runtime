@@ -100,6 +100,8 @@ typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId
 
 typedef void (* PlayerBeforeConnectDelegate_t)(const alt::CEvent* event, ClrConnectionInfo* connectionInfo, const char* reason);
 
+typedef void (* PlayerConnectDeniedDelegate_t)(alt::CPlayerConnectDeniedEvent::Reason reason, const char* name, const char* ip, uint64_t passwortHash, bool isDebug, const char* branch, uint32_t majorVersion, const char* cdnUrl, int64_t discordId);
+
 typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
 
 typedef void (* PlayerDamageDelegate_t)(alt::IPlayer* player, void* attacker,
@@ -129,6 +131,10 @@ typedef void (* StopDelegate_t)();
 typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, uint16_t id);
 
 typedef void (* RemovePlayerDelegate_t)(alt::IPlayer* player);
+
+typedef void (* CreateObjectDelegate_t)(alt::IObject* Object, uint16_t id);
+
+typedef void (* RemoveObjectDelegate_t)(alt::IObject* Object);
 
 typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, uint16_t id);
 
@@ -160,7 +166,7 @@ typedef void (* ColShapeDelegate_t)(void* colShape, void* entity, alt::IBaseObje
 
 typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, alt::IPlayer* source, void* target,
                                         alt::IBaseObject::Type targetBaseObjectType,
-                                        uint32_t weaponHash, uint16_t damageValue, position_t shotOffset,
+                                        uint32_t weaponHash, uint32_t damageValue, position_t shotOffset,
                                         alt::CWeaponDamageEvent::BodyPart bodyPart);
 
 typedef void (* ExplosionDelegate_t)(const alt::CEvent* event, alt::IPlayer* source,
@@ -197,12 +203,14 @@ typedef void (* ServerStartedDelegate_t)();
 
 typedef void (* PlayerRequestControlDelegate_t)(void* target, alt::IBaseObject::Type targetBaseObjectType, alt::IPlayer* player);
 
+typedef void (* PlayerDimensionChangeDelegate_t)(alt::IPlayer* player, int32_t oldDimension, int32_t newDimension);
+
 typedef void (* PlayerChangeAnimationDelegate_t)(void* target, uint32_t oldDict, uint32_t newDict, uint32_t oldName, uint32_t newName);
 
 typedef void (* PlayerChangeInteriorDelegate_t)(void* target, uint32_t oldIntLoc, uint32_t newIntLoc);
 
 class CSharpResourceImpl : public alt::IResource::Impl {
-    bool OnEvent(const alt::CEvent* ev) override;
+    void OnEvent(const alt::CEvent* ev) override;
 
     void OnTick() override;
 
@@ -210,9 +218,9 @@ class CSharpResourceImpl : public alt::IResource::Impl {
 
     bool Stop() override;
 
-    void OnCreateBaseObject(alt::Ref<alt::IBaseObject> object) override;
+    void OnCreateBaseObject(alt::IBaseObject* object) override;
 
-    void OnRemoveBaseObject(alt::Ref<alt::IBaseObject> object) override;
+    void OnRemoveBaseObject(alt::IBaseObject* object) override;
 
     static void* GetBaseObjectPointer(alt::IBaseObject* baseObject);
 
@@ -236,6 +244,8 @@ public:
     PlayerConnectDelegate_t OnPlayerConnectDelegate = nullptr;
 
     PlayerBeforeConnectDelegate_t OnPlayerBeforeConnectDelegate = nullptr;
+
+    PlayerConnectDeniedDelegate_t OnPlayerConnectDeniedDelegate = nullptr;
 
     ResourceEventDelegate_t OnResourceStartDelegate = nullptr;
 
@@ -276,6 +286,10 @@ public:
     CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
 
     RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
+    
+    CreateObjectDelegate_t OnCreateObjectDelegate = nullptr;
+    
+    RemoveObjectDelegate_t OnRemoveObjectDelegate = nullptr;
 
     CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
 
@@ -329,6 +343,8 @@ public:
 
     PlayerRequestControlDelegate_t OnPlayerRequestControlDelegate = nullptr;
 
+    PlayerDimensionChangeDelegate_t OnPlayerDimensionChangeDelegate = nullptr;
+
     PlayerChangeAnimationDelegate_t OnPlayerChangeAnimationDelegate = nullptr;
 
     PlayerChangeInteriorDelegate_t OnPlayerChangeInteriorDelegate = nullptr;
@@ -343,16 +359,16 @@ public:
 class BaseObjectWeakReference : public alt::IWeakRef {
 
 public:
-    alt::Ref<alt::IBaseObject> baseObjectRef;
+    alt::IBaseObject* baseObject;
     CSharpResourceImpl* cSharpResource;
 
-    BaseObjectWeakReference(alt::Ref<alt::IBaseObject> baseObjectRef, CSharpResourceImpl* cSharpResource) {
-        this->baseObjectRef = baseObjectRef;
+    BaseObjectWeakReference(alt::IBaseObject* baseObject, CSharpResourceImpl* cSharpResource) {
+        this->baseObject = baseObject;
         this->cSharpResource = cSharpResource;
     }
 
     void OnDestroy() override {
-        auto object = this->baseObjectRef.Get();
+        auto object = this->baseObject;
         if (object != nullptr) {
             switch (object->GetType()) {
                 case alt::IBaseObject::Type::PLAYER:
@@ -372,6 +388,9 @@ public:
                     break;
                 case alt::IBaseObject::Type::CHECKPOINT:
                     this->cSharpResource->OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                    break;
+                case alt::IBaseObject::Type::OBJECT:
+                    this->cSharpResource->OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
                     break;
             }
         }
@@ -405,6 +424,9 @@ EXPORT void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* reso
 
 EXPORT void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(CSharpResourceImpl* resource,
                                                         PlayerBeforeConnectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerConnectDeniedDelegate(CSharpResourceImpl* resource,
+                                                              PlayerConnectDeniedDelegate_t delegate);                                                        
 
 EXPORT void CSharpResourceImpl_SetResourceStartDelegate(CSharpResourceImpl* resource,
                                                         ResourceEventDelegate_t delegate);
@@ -450,6 +472,12 @@ EXPORT void CSharpResourceImpl_SetCreatePlayerDelegate(CSharpResourceImpl* resou
 
 EXPORT void CSharpResourceImpl_SetRemovePlayerDelegate(CSharpResourceImpl* resource,
                                                        RemovePlayerDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreateObjectDelegate(CSharpResourceImpl* resource,
+                                                       CreateObjectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemoveObjectDelegate(CSharpResourceImpl* resource,
+                                                       RemoveObjectDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetCreateVehicleDelegate(CSharpResourceImpl* resource,
                                                         CreateVehicleDelegate_t delegate);
@@ -528,6 +556,9 @@ EXPORT void CSharpResourceImpl_SetServerStartedDelegate(CSharpResourceImpl* reso
 
 EXPORT void CSharpResourceImpl_SetPlayerRequestControlDelegate(CSharpResourceImpl* resource,
                                                             PlayerRequestControlDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerDimensionChangeDelegate(CSharpResourceImpl* resource, 
+                                                            PlayerDimensionChangeDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetPlayerChangeAnimationDelegate(CSharpResourceImpl* resource,
                                                             PlayerChangeAnimationDelegate_t delegate);

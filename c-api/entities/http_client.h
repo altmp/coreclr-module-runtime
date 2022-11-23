@@ -14,11 +14,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 EXPORT_CLIENT alt::IBaseObject* HttpClient_GetBaseObject(alt::IHttpClient* httpClient);
 
 typedef void (*HttpResponseDelegate_t)(int statusCode, const char* body, const char** headersKeys, const char** valuesKeys, int32_t headersSize);
@@ -34,7 +29,3 @@ EXPORT_CLIENT void HttpClient_Patch(alt::IHttpClient* httpClient, const char* ur
 EXPORT_CLIENT void HttpClient_Post(alt::IHttpClient* httpClient, const char* url, const char* body, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback);
 EXPORT_CLIENT void HttpClient_Put(alt::IHttpClient* httpClient, const char* url, const char* body, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback);
 EXPORT_CLIENT void HttpClient_Trace(alt::IHttpClient* httpClient, const char* url, const char* body, /** ClientEvents.HttpResponseModuleDelegate */ HttpResponseDelegate_t callback);
-
-#ifdef __cplusplus
-}
-#endif

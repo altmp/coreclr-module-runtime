@@ -15,10 +15,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 
 EXPORT_CLIENT alt::IBaseObject* WebView_GetBaseObject(alt::IWebView* webView);
 EXPORT_CLIENT uint8_t WebView_IsFocused(alt::IWebView* webView);
@@ -35,7 +31,3 @@ EXPORT_CLIENT void WebView_SetExtraHeader(alt::IWebView* webView, const char* ke
 EXPORT_CLIENT void WebView_SetZoomLevel(alt::IWebView* webView, float value);
 EXPORT_CLIENT void WebView_Focus(alt::IWebView* webView);
 EXPORT_CLIENT void WebView_Unfocus(alt::IWebView* webView);
-
-#ifdef __cplusplus
-}
-#endif
