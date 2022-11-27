@@ -70258,11 +70258,11 @@ void Native_waypointPlaybackStartAimingAtCoord(bool& success, int32_t _ped, floa
 	success = true;
 }
 
-void Native_waypointPlaybackStartShootingAtPed(bool& success, int32_t _ped, int32_t _ped, uint8_t _p2, uint8_t _p3) {
+void Native_waypointPlaybackStartShootingAtPed(bool& success, int32_t _ped, int32_t _ped2, uint8_t _p2, uint8_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE70BA7B90F8390DC);
 	ctx->Reset();
 	ctx->Push(_ped);
-	ctx->Push(_ped);
+	ctx->Push(_ped2);
 	ctx->Push((int32_t) _p2);
 	ctx->Push((int32_t) _p3);
 	if (!native->Invoke(ctx)) {
