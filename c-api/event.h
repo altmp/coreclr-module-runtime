@@ -99,4 +99,6 @@ EXPORT_CLIENT void Event_SetPlayerWeaponShootDelegate(CSharpResourceImpl* resour
 
 EXPORT_CLIENT void Event_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponChangeModuleDelegate */ PlayerWeaponChangeDelegate_t delegate);
 
+EXPORT_CLIENT void Event_SetWeaponDamageEventDelegate(CSharpResourceImpl* resource, /** ClientEvents.WeaponDamageModuleDelegate */ WeaponDamageDelegate_t delegate);
+
 #endif
