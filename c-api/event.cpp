@@ -95,4 +95,5 @@ SetDelegate(RemoveRmlDocument);
 
 SetDelegate(PlayerWeaponShoot);
 SetDelegate(PlayerWeaponChange);
+SetDelegate(WeaponDamage);
 #endif
