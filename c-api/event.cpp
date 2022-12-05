@@ -5,11 +5,11 @@
 void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason) {
     ((alt::CPlayerBeforeConnectEvent*) event)->Cancel(reason);
 }
-#endif
 
 void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue) {
     ((alt::CWeaponDamageEvent*) event)->SetDamageValue(damageValue);
 }
+#endif
 
 void Event_Cancel(alt::CEvent* event) {
     event->Cancel();
