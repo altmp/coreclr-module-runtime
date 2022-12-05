@@ -91,6 +91,8 @@ public:
     PlayerWeaponShootDelegate_t OnPlayerWeaponShootDelegate = nullptr;
 
     PlayerWeaponChangeDelegate_t OnPlayerWeaponChangeDelegate = nullptr;
+
+    WeaponDamageDelegate_t OnWeaponDamageDelegate = nullptr;
     
     CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
     CreateWebViewDelegate_t OnCreateWebViewDelegate = nullptr;

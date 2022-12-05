@@ -58,6 +58,11 @@ typedef void (* PlayerWeaponShootDelegate_t)(uint32_t weapon, uint16_t totalAmmo
 
 typedef void (* PlayerWeaponChangeDelegate_t)(uint32_t oldWeapon, uint32_t newWeapon);
 
+typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, void* target,
+                                        alt::IBaseObject::Type targetBaseObjectType,
+                                        uint32_t weaponHash, uint32_t damageValue, position_t shotOffset,
+                                        alt::CWeaponDamageEvent::BodyPart bodyPart);
+
 typedef void (* CreateBlipDelegate_t)(alt::IBlip*);
 typedef void (* CreateWebViewDelegate_t)(alt::IWebView*);
 typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint*);
