@@ -12,6 +12,7 @@
 #include "exceptions/LoadException.h"
 #include "cpp-sdk/events/CPlayerChangeAnimationEvent.h"
 #include "cpp-sdk/events/CPlayerWeaponShootEvent.h"
+#include "cpp-sdk/events/CWeaponDamageEvent.h"
 #include "../../c-api/utils/entity.h"
 
 using namespace std;
@@ -181,6 +182,17 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto playerWeaponChangeEvent = ((alt::CPlayerWeaponChangeEvent*) (ev));
             OnPlayerWeaponChangeDelegate(playerWeaponChangeEvent->GetOldWeapon(),
                                          playerWeaponChangeEvent->GetNewWeapon());
+            break;
+        }
+        case alt::CEvent::Type::WEAPON_DAMAGE_EVENT: {
+            auto weaponDamageEvent = ((alt::CWeaponDamageEvent*) (ev));
+            auto targetEntity = weaponDamageEvent->GetTarget();
+            if (targetEntity == nullptr) return;
+            auto eventShotOffset = weaponDamageEvent->GetShotOffset();
+            position_t shotOffset = {eventShotOffset[0], eventShotOffset[1], eventShotOffset[2]};
+            OnWeaponDamageDelegate(ev, GetEntityPointer(targetEntity),
+                                   targetEntity->GetType(), weaponDamageEvent->GetWeaponHash(),
+                                   weaponDamageEvent->GetDamageValue(), shotOffset, weaponDamageEvent->GetBodyPart());
             break;
         }
 #pragma endregion
@@ -524,6 +536,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerWeaponShootDelegate = [](auto var, auto var2, auto var3) {};
 
     OnPlayerWeaponChangeDelegate = [](auto var, auto var2) {};
+
+    OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
     
     OnCreateBlipDelegate = [](auto var) {};
     OnCreateWebViewDelegate = [](auto var) {};
