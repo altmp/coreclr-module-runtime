@@ -21,6 +21,7 @@ class CSharpResourceImpl : public alt::IResource::Impl
 public:
     CSharpResourceImpl(CSharpScriptRuntime* runtime, alt::IResource* resource, alt::ICore* core) : runtime(runtime), resource(resource), core(core) {
         invokers = new alt::Array<CustomInvoker*>();
+        ResetDelegates();
     };
 
     ~CSharpResourceImpl() = default;
