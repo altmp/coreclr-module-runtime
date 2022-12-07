@@ -10,7 +10,7 @@ alt::IWorldObject* Entity_GetWorldObject(alt::IEntity* entity) {
 
 uint8_t Entity_GetTypeByID(alt::ICore* core, uint16_t id, uint8_t& type) {
     auto entity = core->GetEntityByID(id);
-    if (entity.IsEmpty()) return false;
+    if (entity == nullptr) return false;
     type = static_cast<uint8_t>(entity->GetType());
     return true;
 }
@@ -22,7 +22,7 @@ uint32_t Entity_GetModel(alt::IEntity* entity) {
 
 uint8_t Entity_GetNetOwnerID(alt::IEntity* entity, uint16_t& id) {
     auto owner = entity->GetNetworkOwner();
-    if (owner.IsEmpty()) {
+    if (owner == nullptr) {
         return false;
     }
 
@@ -32,7 +32,7 @@ uint8_t Entity_GetNetOwnerID(alt::IEntity* entity, uint16_t& id) {
 
 
 alt::IPlayer* Entity_GetNetOwner(alt::IEntity* entity) {
-    return entity->GetNetworkOwner().Get();
+    return entity->GetNetworkOwner();
 }
 
 void Entity_GetRotation(alt::IEntity* entity, rotation_t& rot) {

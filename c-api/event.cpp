@@ -1,18 +1,23 @@
 #include "event.h"
 
 #ifdef ALT_SERVER_API
-void Event_Cancel(alt::CEvent* event) {
-    event->Cancel();
-}
 
 void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason) {
     ((alt::CPlayerBeforeConnectEvent*) event)->Cancel(reason);
 }
 
+void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue) {
+    ((alt::CWeaponDamageEvent*) event)->SetDamageValue(damageValue);
+}
+#endif
+
+void Event_Cancel(alt::CEvent* event) {
+    event->Cancel();
+}
+
 uint8_t Event_WasCancelled(alt::CEvent* event) {
     return event->WasCancelled();
 }
-#endif
 
 #ifdef ALT_CLIENT_API
 #define SetDelegate(name) void Event_Set##name##Delegate(CSharpResourceImpl* resource, name##Delegate_t delegate) {\
@@ -29,6 +34,9 @@ SetDelegate(WebSocketEvent);
 
 SetDelegate(CreatePlayer);
 SetDelegate(RemovePlayer);
+
+SetDelegate(CreateObject);
+SetDelegate(RemoveObject);
 
 SetDelegate(CreateVehicle);
 SetDelegate(RemoveVehicle);
@@ -85,4 +93,8 @@ SetDelegate(RemoveHttpClient);
 SetDelegate(RemoveAudio);
 SetDelegate(RemoveRmlElement);
 SetDelegate(RemoveRmlDocument);
+
+SetDelegate(PlayerWeaponShoot);
+SetDelegate(PlayerWeaponChange);
+SetDelegate(WeaponDamage);
 #endif

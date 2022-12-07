@@ -1,26 +1,41 @@
 #pragma once
 
 struct ClrConfigNodeData {
-    uint8_t type = (uint8_t) alt::config::Node::Type::NONE;
+    uint8_t type = (uint8_t) Config::Value::Type::NONE;
     char* strValue = nullptr;
+    uint8_t boolValue = 0;
+    double numValue = 0;
     int32_t elements = 0;
     char** keys = nullptr;
     ClrConfigNodeData** values = nullptr;
 
-    ClrConfigNodeData(alt::config::Node node) {
-        auto nodeType = node.GetType();
+    ClrConfigNodeData(Config::Value::ValuePtr node) {
+        auto nodeType = node->GetType();
         type = (uint8_t) nodeType;
         switch (nodeType) {
-            case alt::config::Node::Type::SCALAR: {
-                const auto str = node.ToString();
+            case Config::Value::Type::STRING: {
+                const auto str = node->AsString();
+
                 strValue = new char[str.length() + 1];
                 std::copy(str.begin(), str.end(), strValue);
                 strValue[str.length()] = '\0';
+
                 break;
             }
-            
-            case alt::config::Node::Type::LIST: {
-                const auto list = node.ToList();
+            case Config::Value::Type::BOOL: {
+                const auto nodeBool = node->AsBool();
+
+                boolValue = nodeBool;
+                break;
+            }
+            case Config::Value::Type::NUMBER: {
+                const auto nodeNumber = node->AsNumber();
+
+                numValue = nodeNumber;
+                break;
+            }
+            case Config::Value::Type::LIST: {
+                const auto list = node->AsList();
                 elements = list.size();
                 values = new ClrConfigNodeData*[elements];
                 for (int i = 0; i < elements; i++) {
@@ -29,9 +44,10 @@ struct ClrConfigNodeData {
                 break;
             }
             
-            case alt::config::Node::Type::DICT: {
-                const auto dict = node.ToDict();
-                elements = dict.size();
+            case Config::Value::Type::DICT: {
+                const auto dict = node->AsDict();
+                elements = static_cast<int32_t>(dict.size());
+
                 keys = new char*[elements];
                 values = new ClrConfigNodeData*[elements];
                 int i = 0;
@@ -45,7 +61,7 @@ struct ClrConfigNodeData {
                 break;
             }
             
-            case alt::config::Node::Type::NONE:
+            case Config::Value::Type::NONE:
             default:
                 break;
         }
@@ -54,7 +70,7 @@ struct ClrConfigNodeData {
     ~ClrConfigNodeData() {
         delete[] strValue;
         for (int i = 0; i < elements; i++) {
-            if (type == (uint8_t) alt::config::Node::Type::DICT)
+            if (type == (uint8_t) Config::Value::Type::DICT)
                 delete[] keys[i];
             delete values[i];
         }

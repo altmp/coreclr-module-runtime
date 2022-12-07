@@ -294,7 +294,7 @@ uint8_t Blip_IsAttached(alt::IBlip* blip) {
 }
 
 void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
-    auto entity = blip->AttachedTo().Get();
+    auto entity = blip->AttachedTo();
     if (entity != nullptr) {
         type = entity->GetType();
         switch (type) {

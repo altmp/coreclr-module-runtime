@@ -2,8 +2,8 @@
 #include "utils/strings.h"
 
 #ifdef ALT_SERVER_API
-void ConnectionInfo_Accept(alt::IConnectionInfo *connectionInfo) {
-    connectionInfo->Accept();
+void ConnectionInfo_Accept(alt::IConnectionInfo *connectionInfo, uint8_t sendNames) {
+    connectionInfo->Accept(sendNames);
 }
 
 void ConnectionInfo_Decline(alt::IConnectionInfo *connectionInfo, const char* reason) {
@@ -54,15 +54,7 @@ const char* ConnectionInfo_GetIp(alt::IConnectionInfo *connectionInfo, int32_t& 
     return AllocateString(connectionInfo->GetIp(), size);
 }
 
-const char* ConnectionInfo_GetDiscordUserID(alt::IConnectionInfo *connectionInfo, int32_t& size) {
-    return AllocateString(connectionInfo->GetDiscordUserID(), size);
-}
-
-void ConnectionInfo_AddRef(alt::IConnectionInfo *connectionInfo) {
-    connectionInfo->AddRef();
-}
-
-void ConnectionInfo_RemoveRef(alt::IConnectionInfo *connectionInfo) {
-    connectionInfo->RemoveRef();
+int64_t ConnectionInfo_GetDiscordUserID(alt::IConnectionInfo *connectionInfo) {
+    return connectionInfo->GetDiscordUserID();
 }
 #endif

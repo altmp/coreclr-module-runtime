@@ -18,7 +18,7 @@ std::string CoreClr::GetBaseCdnUrl() const {
 
 inline const std::string host_dll_name = "AltV.Net.Client.Host.dll";
 
-bool CoreClr::ValidateRuntime(nlohmann::json updateJson, Ref<alt::IHttpClient> httpClient) const {
+bool CoreClr::ValidateRuntime(nlohmann::json updateJson, alt::IHttpClient* httpClient) const {
     auto const runtimeDirectoryPath = GetRuntimeDirectoryPath();
     if (!fs::exists(runtimeDirectoryPath)) return false;
     
@@ -57,7 +57,7 @@ bool CoreClr::ValidateRuntime(nlohmann::json updateJson, Ref<alt::IHttpClient> h
     return true;
 }
 
-void CoreClr::DownloadRuntime(Ref<alt::IHttpClient> httpClient) const {
+void CoreClr::DownloadRuntime(alt::IHttpClient* httpClient) const {
     auto attempt = 0;
     
     while (true) {
@@ -111,7 +111,7 @@ bool CoreClr::ValidateHost(nlohmann::json updateJson) const {
     return true;
 }
 
-void CoreClr::DownloadHost(Ref<alt::IHttpClient> httpClient) const {
+void CoreClr::DownloadHost(alt::IHttpClient* httpClient) const {
     static auto url = GetBaseCdnUrl() + host_dll_name;
     auto attempt = 0;
     
@@ -135,7 +135,7 @@ void CoreClr::DownloadHost(Ref<alt::IHttpClient> httpClient) const {
     }
 }
 
-std::string CoreClr::GetLatestNugetVersion(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName) {
+std::string CoreClr::GetLatestNugetVersion(alt::IHttpClient* httpClient, const std::string& packageName) {
     if (!_nuget) _nuget.emplace(httpClient);
     const auto branch = _core->GetBranch();
     const auto versions = _nuget->GetPackageVersions(packageName);
@@ -150,7 +150,7 @@ std::string CoreClr::GetLatestNugetVersion(alt::Ref<alt::IHttpClient> httpClient
     throw std::runtime_error("Failed to find latest version of " + packageName + " for branch " + branch);
 }
 
-bool CoreClr::ValidateNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& package, const std::string& version, nlohmann::json json) {
+bool CoreClr::ValidateNuGet(alt::IHttpClient* httpClient, const std::string& package, const std::string& version, nlohmann::json json) {
     if (!_nuget) _nuget.emplace(httpClient);
     Log::Info << "Validating NuGet package " << package << " " << version << Log::Endl;
     
@@ -205,7 +205,7 @@ bool CoreClr::ValidateNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::st
 }
 
 
-bool CoreClr::ValidateNuGets(alt::Ref<alt::IHttpClient> httpClient) {
+bool CoreClr::ValidateNuGets(alt::IHttpClient* httpClient) {
     if (!_nuget) _nuget.emplace(httpClient);
     const auto librariesDirectoryPath = GetLibrariesDirectoryPath();
     if (!fs::exists(librariesDirectoryPath)) return false;
@@ -219,7 +219,7 @@ bool CoreClr::ValidateNuGets(alt::Ref<alt::IHttpClient> httpClient) {
     return true;
 }
 
-void CoreClr::DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::string& packageName, const std::string& version, nlohmann::json json) {
+void CoreClr::DownloadNuGet(alt::IHttpClient* httpClient, const std::string& packageName, const std::string& version, nlohmann::json json) {
     if (!_nuget) _nuget.emplace(httpClient);
     Log::Info << "Downloading NuGet package " << packageName << " " << version << Log::Endl;
     
@@ -246,7 +246,7 @@ void CoreClr::DownloadNuGet(alt::Ref<alt::IHttpClient> httpClient, const std::st
     }
 }
 
-void CoreClr::DownloadNuGets(alt::Ref<alt::IHttpClient> httpClient) {
+void CoreClr::DownloadNuGets(alt::IHttpClient* httpClient) {
     if (!_nuget) _nuget.emplace(httpClient);
     
     const auto librariesDirectoryPath = GetLibrariesDirectoryPath();

@@ -13,6 +13,9 @@ typedef void (* RmlEventDelegate_t)(alt::IRmlElement*, const char* name, alt::IM
 typedef void (* CreatePlayerDelegate_t)(alt::IPlayer*, uint16_t id);
 typedef void (* RemovePlayerDelegate_t)(alt::IPlayer*);
 
+typedef void (* CreateObjectDelegate_t)(alt::IObject*, uint16_t id);
+typedef void (* RemoveObjectDelegate_t)(alt::IObject*);
+
 typedef void (* CreateVehicleDelegate_t)(alt::IVehicle*, uint16_t id);
 typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle*);
 
@@ -50,6 +53,15 @@ typedef void (* TaskChangeDelegate_t)(uint32_t oldTask, uint32_t newTask);
 
 typedef void (* WindowFocusChangeDelegate_t)(uint8_t state);
 typedef void (* WindowResolutionChangeDelegate_t)(vector2_t oldRes, vector2_t newRes);
+
+typedef void (* PlayerWeaponShootDelegate_t)(uint32_t weapon, uint16_t totalAmmo, uint16_t ammoInClip);
+
+typedef void (* PlayerWeaponChangeDelegate_t)(uint32_t oldWeapon, uint32_t newWeapon);
+
+typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, void* target,
+                                        alt::IBaseObject::Type targetBaseObjectType,
+                                        uint32_t weaponHash, uint32_t damageValue, position_t shotOffset,
+                                        alt::CWeaponDamageEvent::BodyPart bodyPart);
 
 typedef void (* CreateBlipDelegate_t)(alt::IBlip*);
 typedef void (* CreateWebViewDelegate_t)(alt::IWebView*);

@@ -99,7 +99,7 @@ namespace utils
         return str;
     }
     
-    inline alt::IHttpClient::HttpResponse download_file_sync(const alt::Ref<alt::IHttpClient>& httpClient, const std::string& url) {
+    inline alt::IHttpClient::HttpResponse download_file_sync(alt::IHttpClient* httpClient, const std::string& url) {
         std::promise<alt::IHttpClient::HttpResponse> promise;
         std::future<alt::IHttpClient::HttpResponse> future = promise.get_future();
     

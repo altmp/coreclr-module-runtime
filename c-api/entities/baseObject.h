@@ -11,27 +11,19 @@
 #include "../data/cloth.h"
 #include "../data/head_overlay.h"
 #include "../utils/export.h"
+#include "../cache/CachedBaseObject.h"
+#include "../cache/CachedPlayer.h"
+#include "../cache/CachedVehicle.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
-EXPORT_SHARED void BaseObject_AddRef(alt::IBaseObject* baseObject);
-EXPORT_SHARED void BaseObject_RemoveRef(alt::IBaseObject* baseObject);
-EXPORT_SHARED uint8_t BaseObject_AddRefIfExists(alt::IBaseObject* baseObject);
-
 EXPORT_SHARED void BaseObject_SetMetaData(alt::IBaseObject* baseObject, const char* key, alt::MValueConst* value);
 EXPORT_SHARED uint8_t BaseObject_HasMetaData(alt::IBaseObject* baseObject, const char* key);
 EXPORT_SHARED void BaseObject_DeleteMetaData(alt::IBaseObject* baseObject, const char* key);
 EXPORT_SHARED alt::MValueConst* BaseObject_GetMetaData(alt::IBaseObject* baseObject, const char* key);
+EXPORT_SHARED void* BaseObject_TryCache(alt::IBaseObject* baseObject);
+EXPORT_SHARED void BaseObject_DestructCache(alt::IBaseObject* baseObject);
 
 EXPORT_SHARED uint8_t BaseObject_GetType(alt::IBaseObject* baseObject);
-
-#ifdef __cplusplus
-}
-#endif
