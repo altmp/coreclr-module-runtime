@@ -52,5 +52,9 @@ namespace cache
         
         void DeleteMetaData(const std::string& key) override {
         }
+
+		bool IsRemoved() const {
+			return false;
+		}
     };
 } // namespace alt
