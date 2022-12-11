@@ -3,6 +3,7 @@
 #include "utils/export.h"
 #include "utils/strings.h"
 #include "cpp-sdk/SDK.h"
+#include "data/types.h"
 
 EXPORT_SHARED void FreeUIntArray(alt::Array<uint32_t> *array);
 //EXPORT void FreePlayerPointerArray(alt::Array<alt::IPlayer*> *array);
@@ -13,6 +14,7 @@ EXPORT_SHARED void FreeCharArray(char charArray[]);
 EXPORT_SHARED void FreeUInt32Array(/** nint */ uint32_t* uInt32Array);
 EXPORT_SHARED void FreeUInt8Array(/** nint */ uint8_t* uInt8Array);
 EXPORT_SHARED void FreeVoidPointerArray(/** nint */void** voidPointerArray);
+EXPORT_SHARED void FreeWeaponTArray(/** nint */ weapon_t* weaponArray, uint32_t size);
 EXPORT_SHARED void FreeString(const char* string);
 EXPORT_SHARED void FreeStringArray(const char** stringArray, uint32_t size);
 EXPORT_SHARED void FreeResourceArray(alt::IResource** resourceArray);

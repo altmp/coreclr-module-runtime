@@ -112,7 +112,7 @@ namespace cache
 	        return false;
         }
     	
-        alt::Array<unsigned> GetCurrentWeaponComponents() const override {
+        std::vector<unsigned> GetCurrentWeaponComponents() const override {
 			return {};
 		}
 
@@ -419,7 +419,7 @@ namespace cache
 			return _hairHighlightColor;
 		}
 
-        alt::Array<alt::Weapon> GetWeapons() const override {
+        std::vector<alt::Weapon> GetWeapons() const override {
 			return {};
 		}
     	

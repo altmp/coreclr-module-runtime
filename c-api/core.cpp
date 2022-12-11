@@ -127,13 +127,13 @@ alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* val
 
 
 uint64_t Core_GetPlayerCount(alt::ICore* core) {
-    return core->GetPlayers().GetSize();
+    return core->GetPlayers().size();
 }
 
 void Core_GetPlayers(alt::ICore* core, alt::IPlayer* players[], uint64_t size) {
     auto playersArray = core->GetPlayers();
-    if (playersArray.GetSize() < size) {
-        size = playersArray.GetSize();
+    if (playersArray.size() < size) {
+        size = playersArray.size();
     }
     for (uint64_t i = 0; i < size; i++) {
         players[i] = playersArray[i];
@@ -141,13 +141,13 @@ void Core_GetPlayers(alt::ICore* core, alt::IPlayer* players[], uint64_t size) {
 }
 
 uint64_t Core_GetVehicleCount(alt::ICore* core) {
-    return core->GetVehicles().GetSize();
+    return core->GetVehicles().size();
 }
 
 void Core_GetVehicles(alt::ICore* core, alt::IVehicle* vehicles[], uint64_t size) {
     auto vehiclesArray = core->GetVehicles();
-    if (vehiclesArray.GetSize() < size) {
-        size = vehiclesArray.GetSize();
+    if (vehiclesArray.size() < size) {
+        size = vehiclesArray.size();
     }
     for (uint64_t i = 0; i < size; i++) {
         vehicles[i] = vehiclesArray[i];
@@ -304,7 +304,7 @@ Core_TriggerClientEventForAll(alt::ICore* core, const char* ev, alt::MValueConst
 void
 Core_TriggerClientEventForSome(alt::ICore* core, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[],
     int argsSize) {
-    alt::Array<alt::IPlayer*> clients(targetsSize);
+    std::vector<alt::IPlayer*> clients(targetsSize);
     for (int i = 0; i < targetsSize; i++)
     {
         clients[i] = targets[i];

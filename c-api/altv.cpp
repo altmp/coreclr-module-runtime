@@ -1,5 +1,6 @@
 #include "altv.h"
 
+#include "data/types.h"
 #include "version/version.h"
 #if defined ALTV_CSHARP_SHARED || defined ALT_SERVER_API
 #include "cpp-sdk/version/version.h"
@@ -54,6 +55,11 @@ void FreeUInt8Array(uint8_t uInt8Array[]) {
 
 void FreeVoidPointerArray(void* voidPointerArray[]) {
     delete[] voidPointerArray;
+}
+
+void FreeWeaponTArray(weapon_t* weaponArray, uint32_t size) {
+    for (int i = 0; i < size; i++) if (weaponArray[i].componentsCount > 0) delete[] weaponArray[i].components;
+    delete[] weaponArray;
 }
 
 void FreeString(const char* string) {

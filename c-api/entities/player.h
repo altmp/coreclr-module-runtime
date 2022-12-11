@@ -28,7 +28,7 @@ EXPORT_SHARED const char* Player_GetName(alt::IPlayer* player, int32_t& size);
 EXPORT_SHARED uint16_t Player_GetHealth(alt::IPlayer* player);
 EXPORT_SHARED uint16_t Player_GetMaxHealth(alt::IPlayer* player);
 
-EXPORT_SHARED void Player_GetCurrentWeaponComponents(alt::IPlayer* player, alt::Array<uint32_t> &weaponComponents);
+EXPORT_SHARED void Player_GetCurrentWeaponComponents(alt::IPlayer* player, uint32_t*& weaponComponents, uint32_t& size);
 EXPORT_SHARED uint32_t Player_GetCurrentWeapon(alt::IPlayer* player);
 
 EXPORT_SHARED uint8_t Player_IsDead(alt::IPlayer* player);
@@ -98,7 +98,7 @@ EXPORT_SERVER uint8_t Player_GetCurrentWeaponTintIndex(alt::IPlayer* player);
 EXPORT_SERVER void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon);
 
 EXPORT_SERVER uint64_t Player_GetWeaponCount(alt::IPlayer* player);
-EXPORT_SERVER void Player_GetWeapons(alt::IPlayer* player, alt::Array<weapon_t>& weapons);
+EXPORT_SERVER void Player_GetWeapons(alt::IPlayer* player, /** nint* */  weapon_t*& weapons, uint32_t& size);
 
 EXPORT_SERVER void Player_SetArmor(alt::IPlayer* player, uint16_t armor);
 EXPORT_SERVER void Player_SetMaxArmor(alt::IPlayer* player, uint16_t armor);
