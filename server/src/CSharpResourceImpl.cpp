@@ -112,47 +112,47 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
     if (ev == nullptr) return;
     switch (ev->GetType())
     {
-        /*
-    case alt::CEvent::Type::META_CHANGE:
-        {
-            auto event = ((alt::CMetaChangeEvent*) (ev));
-            auto entity = event->GetTarget().Get();
-            if (entity == nullptr) return;
-            auto key = event->GetKey();
-            auto value = event->GetVal();
-            const char* keyCStr;
-            if (key == nullptr) {
+    /*
+case alt::CEvent::Type::META_CHANGE:
+    {
+        auto event = ((alt::CMetaChangeEvent*) (ev));
+        auto entity = event->GetTarget().Get();
+        if (entity == nullptr) return;
+        auto key = event->GetKey();
+        auto value = event->GetVal();
+        const char* keyCStr;
+        if (key == nullptr) {
+            keyCStr = "";
+        } else {
+            keyCStr = key.c_str();
+            if (keyCStr == nullptr) {
                 keyCStr = "";
-            } else {
-                keyCStr = key.c_str();
-                if (keyCStr == nullptr) {
-                    keyCStr = "";
-                }
             }
-            auto constValue = alt::MValueConst(value);
-            OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);
-            break;
         }
-    case alt::CEvent::Type::SYNCED_META_CHANGE:
-        {
-            auto event = ((alt::CSyncedMetaDataChangeEvent*) (ev));
-            auto entity = event->GetTarget().Get();
-            if (entity == nullptr) return;
-            auto key = event->GetKey();
-            auto value = event->GetVal();
-            const char* keyCStr;
-            if (key == nullptr) {
+        auto constValue = alt::MValueConst(value);
+        OnMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);
+        break;
+    }
+case alt::CEvent::Type::SYNCED_META_CHANGE:
+    {
+        auto event = ((alt::CSyncedMetaDataChangeEvent*) (ev));
+        auto entity = event->GetTarget().Get();
+        if (entity == nullptr) return;
+        auto key = event->GetKey();
+        auto value = event->GetVal();
+        const char* keyCStr;
+        if (key == nullptr) {
+            keyCStr = "";
+        } else {
+            keyCStr = key.c_str();
+            if (keyCStr == nullptr) {
                 keyCStr = "";
-            } else {
-                keyCStr = key.c_str();
-                if (keyCStr == nullptr) {
-                    keyCStr = "";
-                }
             }
-            auto constValue = alt::MValueConst(value);
-            OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);
-            break;
-        }*/
+        }
+        auto constValue = alt::MValueConst(value);
+        OnSyncedMetaChangeDelegate(GetEntityPointer(entity), entity->GetType(), keyCStr, &constValue);
+        break;
+    }*/
     case alt::CEvent::Type::CLIENT_SCRIPT_EVENT:
         {
             auto clientScriptEvent = dynamic_cast<const alt::CClientScriptEvent*>(ev);
@@ -188,7 +188,8 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
     case alt::CEvent::Type::PLAYER_CONNECT:
         {
             auto connectPlayer = dynamic_cast<const alt::CPlayerConnectEvent*>(ev)->GetTarget();
-            OnPlayerConnectDelegate(connectPlayer, connectPlayer->GetID(),
+            OnPlayerConnectDelegate(connectPlayer,
+                                    connectPlayer->GetID(),
                                     ""); //TODO: maybe better solution
             break;
         }
@@ -197,7 +198,9 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto beforeConnectEvent = dynamic_cast<const alt::CPlayerBeforeConnectEvent*>(ev);
             auto clrInfo = new ClrConnectionInfo(beforeConnectEvent->GetConnectionInfo());
 
-            OnPlayerBeforeConnectDelegate(beforeConnectEvent, clrInfo, "");
+            OnPlayerBeforeConnectDelegate(beforeConnectEvent,
+                                          clrInfo,
+                                          "");
 
             clrInfo->dealloc();
             delete clrInfo;
@@ -207,16 +210,15 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         {
             auto playerConnectDeniedEvent = dynamic_cast<const alt::CPlayerConnectDeniedEvent*>(ev);
 
-            OnPlayerConnectDeniedDelegate(
-                playerConnectDeniedEvent->GetReason(),
-                playerConnectDeniedEvent->GetName().c_str(),
-                playerConnectDeniedEvent->GetIp().c_str(),
-                playerConnectDeniedEvent->GetPasswordHash(),
-                playerConnectDeniedEvent->IsDebug(),
-                playerConnectDeniedEvent->GetBranch().c_str(),
-                playerConnectDeniedEvent->GetMajorVersion(),
-                playerConnectDeniedEvent->GetCdnUrl().c_str(),
-                playerConnectDeniedEvent->GetDiscordId()
+            OnPlayerConnectDeniedDelegate(playerConnectDeniedEvent->GetReason(),
+                                          playerConnectDeniedEvent->GetName().c_str(),
+                                          playerConnectDeniedEvent->GetIp().c_str(),
+                                          playerConnectDeniedEvent->GetPasswordHash(),
+                                          playerConnectDeniedEvent->IsDebug(),
+                                          playerConnectDeniedEvent->GetBranch().c_str(),
+                                          playerConnectDeniedEvent->GetMajorVersion(),
+                                          playerConnectDeniedEvent->GetCdnUrl().c_str(),
+                                          playerConnectDeniedEvent->GetDiscordId()
             );
 
             break;
@@ -292,7 +294,10 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 
             if (length == 0)
             {
-                OnFireDelegate(fireEvent, source, nullptr, 0);
+                OnFireDelegate(fireEvent,
+                               source,
+                               nullptr,
+                               0);
             }
             else
             {
@@ -302,7 +307,10 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                     auto const fire = fires[i];
                     fireArray[i] = fire;
                 }
-                OnFireDelegate(fireEvent, source, fireArray, length);
+                OnFireDelegate(fireEvent,
+                               source,
+                               fireArray,
+                               length);
                 delete[] fireArray;
             }
             break;
@@ -314,14 +322,13 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto targetEntity = explosionEvent->GetTarget();
             position_t position = {eventPosition.x, eventPosition.y, eventPosition.z};
 
-            OnExplosionDelegate(
-                explosionEvent,
-                explosionEvent->GetSource(),
-                explosionEvent->GetExplosionType(),
-                position,
-                explosionEvent->GetExplosionFX(),
-                GetEntityPointer(targetEntity),
-                GetEntityType(targetEntity));
+            OnExplosionDelegate(explosionEvent,
+                                explosionEvent->GetSource(),
+                                explosionEvent->GetExplosionType(),
+                                position,
+                                explosionEvent->GetExplosionFX(),
+                                GetEntityPointer(targetEntity),
+                                GetEntityType(targetEntity));
 
             break;
         }
@@ -335,15 +342,14 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto eventShotOffset = weaponDamageEvent->GetShotOffset();
             position_t shotOffset = {eventShotOffset[0], eventShotOffset[1], eventShotOffset[2]};
 
-            OnWeaponDamageDelegate(
-                ev,
-                weaponDamageEvent->GetSource(),
-                GetEntityPointer(targetEntity),
-                targetEntity->GetType(),
-                weaponDamageEvent->GetWeaponHash(),
-                weaponDamageEvent->GetDamageValue(),
-                shotOffset,
-                weaponDamageEvent->GetBodyPart());
+            OnWeaponDamageDelegate(ev,
+                                   weaponDamageEvent->GetSource(),
+                                   GetEntityPointer(targetEntity),
+                                   targetEntity->GetType(),
+                                   weaponDamageEvent->GetWeaponHash(),
+                                   weaponDamageEvent->GetDamageValue(),
+                                   shotOffset,
+                                   weaponDamageEvent->GetBodyPart());
 
             break;
         }
@@ -366,7 +372,9 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             uint64_t size = serverArgs.GetSize();
             if (size == 0)
             {
-                OnServerEventDelegate(serverScriptEvent->GetName().c_str(), nullptr, 0);
+                OnServerEventDelegate(serverScriptEvent->GetName().c_str(),
+                                      nullptr,
+                                      0);
             }
             else
             {
@@ -379,7 +387,9 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 {
                     constArgs[i] = &serverArgs[i];
                 }
-                OnServerEventDelegate(serverScriptEvent->GetName().c_str(), constArgs, size);
+                OnServerEventDelegate(serverScriptEvent->GetName().c_str(),
+                                      constArgs,
+                                      size);
 #ifdef _WIN32
                 delete[] constArgs;
 #endif
@@ -389,11 +399,10 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
     case alt::CEvent::Type::PLAYER_CHANGE_VEHICLE_SEAT:
         {
             auto changeSeatEvent = dynamic_cast<const alt::CPlayerChangeVehicleSeatEvent*>(ev);
-            OnPlayerChangeVehicleSeatDelegate(
-                changeSeatEvent->GetTarget(),
-                changeSeatEvent->GetPlayer(),
-                changeSeatEvent->GetOldSeat(),
-                changeSeatEvent->GetNewSeat());
+            OnPlayerChangeVehicleSeatDelegate(changeSeatEvent->GetTarget(),
+                                              changeSeatEvent->GetPlayer(),
+                                              changeSeatEvent->GetOldSeat(),
+                                              changeSeatEvent->GetNewSeat());
             break;
         }
     case alt::CEvent::Type::PLAYER_ENTER_VEHICLE:
@@ -428,7 +437,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                             animationEvent->GetNewAnimationDict(),
                                             animationEvent->GetOldAnimationName(),
                                             animationEvent->GetNewAnimationName());
-        break;
+            break;
         }
     case alt::CEvent::Type::PLAYER_CHANGE_INTERIOR_EVENT:
         {
@@ -446,7 +455,9 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             uint64_t size = args.size();
             if (size == 0)
             {
-                OnConsoleCommandDelegate(consoleCommandEvent->GetName().c_str(), nullptr, 0);
+                OnConsoleCommandDelegate(consoleCommandEvent->GetName().c_str(),
+                                         nullptr,
+                                         0);
             }
             else
             {
@@ -460,7 +471,9 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                     constArgs[i] = args[i].c_str();
                 }
 
-                OnConsoleCommandDelegate(consoleCommandEvent->GetName().c_str(), constArgs, size);
+                OnConsoleCommandDelegate(consoleCommandEvent->GetName().c_str(),
+                                         constArgs,
+                                         size);
 
 #ifdef _WIN32
                 delete[] constArgs;
@@ -509,24 +522,22 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto direction = startProjectileEvent->GetDirection();
             position_t directionStruct = {direction[0], direction[1], direction[2]};
 
-            OnStartProjectileDelegate(
-                startProjectileEvent,
-                startProjectileEvent->GetSource(),
-                startPositionStruct,
-                directionStruct,
-                startProjectileEvent->GetAmmoHash(),
-                startProjectileEvent->GetWeaponHash());
+            OnStartProjectileDelegate(startProjectileEvent,
+                                      startProjectileEvent->GetSource(),
+                                      startPositionStruct,
+                                      directionStruct,
+                                      startProjectileEvent->GetAmmoHash(),
+                                      startProjectileEvent->GetWeaponHash());
             break;
         }
     case alt::CEvent::Type::PLAYER_WEAPON_CHANGE:
         {
             auto playerWeaponChangeEvent = dynamic_cast<const alt::CPlayerWeaponChangeEvent*>(ev);
 
-            OnPlayerWeaponChangeDelegate(
-                playerWeaponChangeEvent,
-                playerWeaponChangeEvent->GetTarget(),
-                playerWeaponChangeEvent->GetOldWeapon(),
-                playerWeaponChangeEvent->GetNewWeapon());
+            OnPlayerWeaponChangeDelegate(playerWeaponChangeEvent,
+                                         playerWeaponChangeEvent->GetTarget(),
+                                         playerWeaponChangeEvent->GetOldWeapon(),
+                                         playerWeaponChangeEvent->GetNewWeapon());
             break;
         }
     case alt::CEvent::Type::NETOWNER_CHANGE:
