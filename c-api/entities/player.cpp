@@ -306,7 +306,7 @@ void Player_GetWeapons(alt::IPlayer* player, weapon_t*& weapons, uint32_t& size)
         } else {
             weapon.components = nullptr;
         }
-        
+
         weaponsArr[i] = weapon;
     }
 
@@ -629,5 +629,17 @@ void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlayer, uint32_t we
     auto arr = localPlayer->GetWeaponComponents(weaponHash);
     weaponComponents = AllocateUInt32Array(arr, size);
 }
+
+float LocalPlayer_GetStamina(alt::ILocalPlayer* localPlayer)
+{
+    return localPlayer->GetStamina();
+}
+
+void LocalPlayer_SetStamina(alt::ILocalPlayer* localPlayer, float stamina)
+{
+    localPlayer->SetStamina(stamina);
+}
+
+
 
 #endif
