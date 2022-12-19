@@ -58,7 +58,7 @@ EXPORT_SHARED uint8_t Player_IsFlashlightActive(alt::IPlayer* player);
 EXPORT_SHARED uint8_t Player_IsSpawned(alt::IPlayer* player);
 EXPORT_SHARED uint32_t Player_GetCurrentAnimationDict(alt::IPlayer* player);
 EXPORT_SHARED uint32_t Player_GetCurrentAnimationName(alt::IPlayer* player);
-    
+
 EXPORT_SHARED float Player_GetForwardSpeed(alt::IPlayer* player);
 EXPORT_SHARED float Player_GetStrafeSpeed(alt::IPlayer* player);
 
@@ -162,9 +162,9 @@ EXPORT_SERVER uint8_t Player_GetHairColor(alt::IPlayer* player);
 
 EXPORT_SERVER void Player_SetHairHighlightColor(alt::IPlayer* player, uint8_t hairHighlightColor);
 EXPORT_SERVER uint8_t Player_GetHairHighlightColor(alt::IPlayer* player);
-    
+
 EXPORT_SERVER uint32_t Player_GetInteriorLocation(alt::IPlayer* player);
-    
+
 EXPORT_SERVER int64_t Player_GetDiscordId(alt::IPlayer* player);
 
 EXPORT_SERVER uint32_t Player_GetLastDamagedBodyPart(alt::IPlayer* player);
@@ -193,3 +193,6 @@ EXPORT_CLIENT uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer,
 EXPORT_CLIENT uint8_t LocalPlayer_HasWeapon(alt::ILocalPlayer* localPlayer, uint32_t weaponHash);
 EXPORT_CLIENT void LocalPlayer_GetWeapons(alt::ILocalPlayer* localPlayer, const uint32_t*& weapons, uint32_t& size);
 EXPORT_CLIENT void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlayer, uint32_t weaponHash, const uint32_t*& weaponComponents, uint32_t& size);
+
+EXPORT_CLIENT float LocalPlayer_GetStamina(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT void LocalPlayer_SetStamina(alt::ILocalPlayer* localPlayer, float stamina);
