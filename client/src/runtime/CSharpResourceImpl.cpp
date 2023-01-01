@@ -120,7 +120,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto size = args.GetSize();
             auto constArgs = new alt::MValueConst*[size];
 
-            for (auto i = 0; i < size; i++)
+            for (uint64_t i = 0; i < size; i++)
             {
                 constArgs[i] = &args[i];
             }
@@ -152,7 +152,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto size = args.GetSize();
             auto constArgs = new alt::MValueConst*[size];
 
-            for (auto i = 0; i < size; i++)
+            for (uint64_t i = 0; i < size; i++)
             {
                 constArgs[i] = &args[i];
             }
