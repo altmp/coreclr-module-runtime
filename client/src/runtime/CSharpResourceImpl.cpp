@@ -50,7 +50,8 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         {
             auto serverScriptEvent = dynamic_cast<const alt::CServerScriptEvent*>(ev);
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
-            uint64_t size = serverArgs.GetSize();
+            auto size = serverArgs.GetSize();
+
             if (size == 0)
             {
                 OnServerEventDelegate(serverScriptEvent->GetName().c_str(), nullptr, 0);
@@ -73,7 +74,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         {
             auto clientScriptEvent = dynamic_cast<const alt::CClientScriptEvent*>(ev);
             alt::MValueArgs serverArgs = clientScriptEvent->GetArgs();
-            uint64_t size = serverArgs.GetSize();
+            auto size = serverArgs.GetSize();
             if (size == 0)
             {
                 OnClientEventDelegate(clientScriptEvent->GetName().c_str(), nullptr, 0);
@@ -98,14 +99,16 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto args = consoleCommandEvent->GetArgs();
             uint64_t size = args.size();
             auto cArgs = new const char*[size];
+
             for (uint64_t i = 0; i < size; i++)
             {
                 cArgs[i] = args[i].c_str();
             }
+
             auto name = consoleCommandEvent->GetName();
             OnConsoleCommandDelegate(name.c_str(),
                                      cArgs,
-                                     (uint32_t)size);
+                                     size);
             delete[] cArgs;
             break;
         }
@@ -293,7 +296,8 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 ptr = nullptr;
             }
 
-            OnGameEntityDestroyDelegate(ptr, type);
+            OnGameEntityDestroyDelegate(ptr,
+                                        type);
             break;
         }
 #pragma endregion
