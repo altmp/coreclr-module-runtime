@@ -196,3 +196,6 @@ EXPORT_CLIENT void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlaye
 
 EXPORT_CLIENT float LocalPlayer_GetStamina(alt::ILocalPlayer* localPlayer);
 EXPORT_CLIENT void LocalPlayer_SetStamina(alt::ILocalPlayer* localPlayer, float stamina);
+
+EXPORT_CLIENT float LocalPlayer_GetMaxStamina(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT void LocalPlayer_SetMaxStamina(alt::ILocalPlayer* localPlayer, float stamina);
