@@ -640,6 +640,16 @@ void LocalPlayer_SetStamina(alt::ILocalPlayer* localPlayer, float stamina)
     localPlayer->SetStamina(stamina);
 }
 
+float LocalPlayer_GetMaxStamina(alt::ILocalPlayer* localplayer)
+{
+    return localplayer->GetMaxStamina();
+}
+
+void LocalPlayer_SetMaxStamina(alt::ILocalPlayer* localPlayer, float stamina)
+{
+    localPlayer->SetMaxStamina(stamina);
+}
+
 
 
 #endif
