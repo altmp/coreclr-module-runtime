@@ -1124,4 +1124,11 @@ alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size) {
     return out;
 }
 
+void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vector3_t& pos) {
+    auto vec = core->GetPedBonePos(scriptId, boneId);
+    pos.x = vec[0];
+    pos.y = vec[1];
+    pos.z = vec[2];
+}
+
 #endif
