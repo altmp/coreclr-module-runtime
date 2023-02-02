@@ -413,7 +413,8 @@ const char* Native_appGetString(bool& success, const char* _property) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_appSetInt(bool& success, const char* _property, int32_t _value) {
@@ -5218,7 +5219,8 @@ const char* Native_getScaleformMovieMethodReturnValueString(bool& success, int32
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_scaleformMovieMethodAddParamInt(bool& success, int32_t _value) {
@@ -6935,7 +6937,8 @@ const char* Native_getPlayerRadioStationName(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getRadioStationName(bool& success, int32_t _radioStation) {
@@ -6947,7 +6950,8 @@ const char* Native_getRadioStationName(bool& success, int32_t _radioStation) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 int32_t Native_getPlayerRadioStationGenre(bool& success) {
@@ -13519,7 +13523,8 @@ const char* Native_datadictGetString(bool& success, int32_t& _objectData, const 
 	}
 	success = true;
 	_objectData = ptr_objectData;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 vector3_t Native_datadictGetVector(bool& success, int32_t& _objectData, const char* _key) {
@@ -13726,7 +13731,8 @@ const char* Native_dataarrayGetString(bool& success, int32_t& _arrayData, int32_
 	}
 	success = true;
 	_arrayData = ptr_arrayData;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 vector3_t Native_dataarrayGetVector(bool& success, int32_t& _arrayData, int32_t _arrayIndex) {
@@ -14650,7 +14656,8 @@ const char* Native_getEntityScript(bool& success, int32_t _entity, int32_t& _scr
 	}
 	success = true;
 	_script = ptr_script;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 float Native_getEntitySpeed(bool& success, int32_t _entity) {
@@ -18899,7 +18906,8 @@ const char* Native_getCharacterFromAudioConversationFilename(bool& success, cons
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getCharacterFromAudioConversationFilenameWithByteLimit(bool& success, const char* _text, int32_t _position, int32_t _length, int32_t _maxLength) {
@@ -18914,7 +18922,8 @@ const char* Native_getCharacterFromAudioConversationFilenameWithByteLimit(bool& 
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getCharacterFromAudioConversationFilenameBytes(bool& success, const char* _text, int32_t _startPosition, int32_t _endPosition) {
@@ -18928,7 +18937,8 @@ const char* Native_getCharacterFromAudioConversationFilenameBytes(bool& success,
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getFilenameForAudioConversation(bool& success, const char* _labelName) {
@@ -18940,7 +18950,8 @@ const char* Native_getFilenameForAudioConversation(bool& success, const char* _l
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_clearPrints(bool& success) {
@@ -19112,7 +19123,8 @@ const char* Native_getFirstNCharactersOfLiteralString(bool& success, const char*
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 int32_t Native_getLengthOfStringWithThisTextLabel(bool& success, const char* _gxt) {
@@ -19160,7 +19172,8 @@ const char* Native_getStreetNameFromHashKey(bool& success, uint32_t _hash) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_isHudPreferenceSwitchedOn(bool& success) {
@@ -24705,7 +24718,8 @@ const char* Native_getContentToLoad(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_activityFeedCreate(bool& success, const char* _p0, const char* _p1) {
@@ -28421,7 +28435,8 @@ const char* Native_getOnscreenKeyboardResult(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_cancelOnscreenKeyboard(bool& success) {
@@ -30591,7 +30606,8 @@ const char* Native_processCashGift(bool& success, int32_t& _p0, int32_t& _p1, co
 	success = true;
 	_p0 = ptr_p0;
 	_p1 = ptr_p1;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_networkSpentPlayerHealthcare(bool& success, int32_t _p0, int32_t _p1, uint8_t _p2, uint8_t _p3) {
@@ -33222,7 +33238,8 @@ const char* Native_networkGetStringWalletBalance(bool& success, int32_t _charact
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_networkGetStringBankBalance(bool& success) {
@@ -33233,7 +33250,8 @@ const char* Native_networkGetStringBankBalance(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_networkGetStringBankWalletBalance(bool& success) {
@@ -33244,7 +33262,8 @@ const char* Native_networkGetStringBankWalletBalance(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_networkGetCanSpendFromWallet(bool& success, int32_t _amount, int32_t _characterSlot) {
@@ -33891,7 +33910,8 @@ const char* Native_getOnlineVersion(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_networkIsSignedIn(bool& success) {
@@ -36433,7 +36453,8 @@ const char* Native_networkGetPresenceInviteInviter(bool& success, int32_t _p0) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_networkGetPresenceInviteHandle(bool& success, int32_t _p0, int32_t& _p1) {
@@ -36472,7 +36493,8 @@ const char* Native_networkGetPresenceInviteContentId(bool& success, int32_t _p0)
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 int32_t Native_networkGetPresenceInvitePlaylistLength(bool& success, int32_t _p0) {
@@ -38182,7 +38204,8 @@ const char* Native_networkGetGamertagFromHandle(bool& success, int32_t& _gamerHa
 	}
 	success = true;
 	_gamerHandle = ptr_gamerHandle;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 int32_t Native_networkDisplaynamesFromHandlesStart(bool& success, int32_t& _p0, int32_t _p1) {
@@ -38271,7 +38294,8 @@ const char* Native_networkMemberIdFromGamerHandle(bool& success, int32_t& _gamer
 	}
 	success = true;
 	_gamerHandle = ptr_gamerHandle;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_networkIsGamerInMySession(bool& success, int32_t& _gamerHandle) {
@@ -38310,7 +38334,8 @@ const char* Native_networkPlayerGetName(bool& success, int32_t _player) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_networkPlayerGetUserid(bool& success, int32_t _player, int32_t& _userID) {
@@ -38325,7 +38350,8 @@ const char* Native_networkPlayerGetUserid(bool& success, int32_t _player, int32_
 	}
 	success = true;
 	_userID = ptr_userID;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_networkPlayerIsRockstarDev(bool& success, int32_t _player) {
@@ -38421,7 +38447,8 @@ const char* Native_networkGetFriendName(bool& success, int32_t _friendIndex) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_networkGetFriendDisplayName(bool& success, int32_t _friendIndex) {
@@ -38433,7 +38460,8 @@ const char* Native_networkGetFriendDisplayName(bool& success, int32_t _friendInd
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_networkIsFriendOnline(bool& success, const char* _name) {
@@ -40622,7 +40650,8 @@ const char* Native_getTimeAsString(bool& success, int32_t _time) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getCloudTimeAsString(bool& success) {
@@ -40633,7 +40662,8 @@ const char* Native_getCloudTimeAsString(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 int32_t Native_getCloudTimeAsInt(bool& success) {
@@ -42127,7 +42157,8 @@ const char* Native_getCommerceItemId(bool& success, int32_t _index) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getCommerceItemName(bool& success, int32_t _index) {
@@ -42139,7 +42170,8 @@ const char* Native_getCommerceItemName(bool& success, int32_t _index) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getCommerceProductPrice(bool& success, int32_t _index) {
@@ -42151,7 +42183,8 @@ const char* Native_getCommerceProductPrice(bool& success, int32_t _index) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 int32_t Native_getCommerceItemNumCats(bool& success, int32_t _index) {
@@ -42176,7 +42209,8 @@ const char* Native_getCommerceItemCat(bool& success, int32_t _index, int32_t _in
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_openCommerceStore(bool& success, const char* _p0, const char* _p1, int32_t _p2) {
@@ -42245,7 +42279,8 @@ const char* Native_getCommerceItemTexturename(bool& success, int32_t _index) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_isStoreAvailableToUser(bool& success) {
@@ -42505,7 +42540,8 @@ const char* Native_ugcGetCreateContentId(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_ugcClearCreateResult(bool& success) {
@@ -42890,7 +42926,8 @@ const char* Native_ugcGetContentUserId(bool& success, int32_t _p0) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_ugcGetContentCreatorGamerHandle(bool& success, int32_t _p0, int32_t& _p1) {
@@ -42929,7 +42966,8 @@ const char* Native_ugcGetContentUserName(bool& success, int32_t _p0) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_ugcGetContentIsUsingScNickname(bool& success, int32_t _p0) {
@@ -42965,7 +43003,8 @@ const char* Native_ugcGetContentId(bool& success, int32_t _p0) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_ugcGetRootContentId(bool& success, int32_t _p0) {
@@ -42977,7 +43016,8 @@ const char* Native_ugcGetRootContentId(bool& success, int32_t _p0) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_ugcGetContentName(bool& success, int32_t _p0) {
@@ -42989,7 +43029,8 @@ const char* Native_ugcGetContentName(bool& success, int32_t _p0) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 int32_t Native_ugcGetContentDescriptionHash(bool& success, int32_t _p0) {
@@ -43014,7 +43055,8 @@ const char* Native_ugcGetContentPath(bool& success, int32_t _p0, int32_t _p1) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_ugcGetContentUpdatedDate(bool& success, int32_t _p0, int32_t& _p1) {
@@ -43267,7 +43309,8 @@ const char* Native_ugcGetCachedDescription(bool& success, int32_t _p0, int32_t _
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_ugcReleaseCachedDescription(bool& success, int32_t _p0) {
@@ -43646,7 +43689,8 @@ const char* Native_textureDownloadGetName(bool& success, int32_t _p0) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 int32_t Native_getStatusOfTextureDownload(bool& success, int32_t _p0) {
@@ -46603,7 +46647,8 @@ const char* Native_getControlInstructionalButtonsString(bool& success, int32_t _
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getControlGroupInstructionalButtonsString(bool& success, int32_t _control, int32_t _controlGroup, uint8_t _allowXOSwap) {
@@ -46617,7 +46662,8 @@ const char* Native_getControlGroupInstructionalButtonsString(bool& success, int3
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_setControlLightEffectColor(bool& success, int32_t _control, int32_t _red, int32_t _green, int32_t _blue) {
@@ -55065,7 +55111,8 @@ const char* Native_getPedheadshotTxdString(bool& success, int32_t _id) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_requestPedheadshotImgUpload(bool& success, int32_t _id) {
@@ -56382,7 +56429,8 @@ const char* Native_getPlayerName(bool& success, int32_t _player) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 float Native_getWantedLevelRadius(bool& success, int32_t _player) {
@@ -59634,7 +59682,8 @@ const char* Native_getNameOfScriptWithThisId(bool& success, int32_t _threadId) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_scriptThreadIteratorReset(bool& success) {
@@ -59699,7 +59748,8 @@ const char* Native_getThisScriptName(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint32_t Native_getHashOfThisScriptName(bool& success) {
@@ -60270,7 +60320,8 @@ const char* Native_scInboxMessageGetRawTypeAtIndex(bool& success, int32_t _p0) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_scInboxMessagePushGamerT0RecipList(bool& success, int32_t& _gamerHandle) {
@@ -60482,7 +60533,8 @@ const char* Native_scGetNewRockstarMsg(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_scPresenceAttrSetInt(bool& success, uint32_t _attrHash, int32_t _value) {
@@ -60747,7 +60799,8 @@ const char* Native_scLicenseplateGetPlate(bool& success, int32_t _token, int32_t
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_scLicenseplateGetPlateData(bool& success, int32_t _token, int32_t _plateIndex) {
@@ -60760,7 +60813,8 @@ const char* Native_scLicenseplateGetPlateData(bool& success, int32_t _token, int
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_scLicenseplateSetPlateData(bool& success, const char* _oldPlateText, const char* _newPlateText, int32_t& _plateData) {
@@ -61217,7 +61271,8 @@ const char* Native_scAccountInfoGetNickname(bool& success) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_scAchievementInfoStatus(bool& success, int32_t& _p0) {
@@ -61676,7 +61731,8 @@ const char* Native_statGetString(bool& success, uint32_t _statHash, int32_t _p1)
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_statGetPos(bool& success, uint32_t _statName, float& _outX, float& _outY, float& _outZ, int32_t _p4) {
@@ -61728,7 +61784,8 @@ const char* Native_statGetUserId(bool& success, uint32_t _statHash) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_statGetLicensePlate(bool& success, uint32_t _statName) {
@@ -61740,7 +61797,8 @@ const char* Native_statGetLicensePlate(bool& success, uint32_t _statName) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_statSetLicensePlate(bool& success, uint32_t _statName, const char* _str) {
@@ -67871,7 +67929,8 @@ const char* Native_getClipSetForScriptedGunTask(bool& success, int32_t _gunTaskT
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_taskAimGunAtEntity(bool& success, int32_t _ped, int32_t _entity, int32_t _duration, uint8_t _instantBlendToAim) {
@@ -70625,7 +70684,8 @@ const char* Native_getTaskMoveNetworkState(bool& success, int32_t _ped) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_setTaskMoveNetworkAnimSet(bool& success, int32_t _ped, uint32_t _clipSet, uint32_t _unkVariableClipSet) {
@@ -72958,7 +73018,8 @@ const char* Native_getVehicleNumberPlateText(bool& success, int32_t _vehicle) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 int32_t Native_getNumberOfVehicleNumberPlates(bool& success) {
@@ -75121,7 +75182,8 @@ const char* Native_getDisplayNameFromVehicleModel(bool& success, uint32_t _model
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getMakeNameFromVehicleModel(bool& success, uint32_t _modelHash) {
@@ -75133,7 +75195,8 @@ const char* Native_getMakeNameFromVehicleModel(bool& success, uint32_t _modelHas
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 vector3_t Native_getVehicleDeformationAtPos(bool& success, int32_t _vehicle, float _offsetX, float _offsetY, float _offsetZ) {
@@ -76482,7 +76545,8 @@ const char* Native_getVehicleModColor1Name(bool& success, int32_t _vehicle, uint
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getVehicleModColor2Name(bool& success, int32_t _vehicle) {
@@ -76494,7 +76558,8 @@ const char* Native_getVehicleModColor2Name(bool& success, int32_t _vehicle) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 uint8_t Native_haveVehicleModsStreamedIn(bool& success, int32_t _vehicle) {
@@ -76625,7 +76690,8 @@ const char* Native_getModTextLabel(bool& success, int32_t _vehicle, int32_t _mod
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getModSlotName(bool& success, int32_t _vehicle, int32_t _modType) {
@@ -76638,7 +76704,8 @@ const char* Native_getModSlotName(bool& success, int32_t _vehicle, int32_t _modT
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 const char* Native_getLiveryName(bool& success, int32_t _vehicle, int32_t _liveryIndex) {
@@ -76651,7 +76718,8 @@ const char* Native_getLiveryName(bool& success, int32_t _vehicle, int32_t _liver
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 int32_t Native_getVehicleModModifierValue(bool& success, int32_t _vehicle, int32_t _modType, int32_t _modIndex) {
@@ -81925,7 +81993,8 @@ const char* Native_getNameOfZone(bool& success, float _x, float _y, float _z) {
 		return nullptr;
 	}
 	success = true;
-	return AllocateString(ctx->ResultString());
+	auto resultStr = ctx->ResultString();
+	return resultStr ? AllocateString(resultStr) : nullptr;
 }
 
 void Native_setZoneEnabled(bool& success, int32_t _zoneId, uint8_t _toggle) {
