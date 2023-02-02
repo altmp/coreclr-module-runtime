@@ -26,13 +26,14 @@ uint16_t Player_GetMaxHealth(alt::IPlayer* player) {
 }
 
 
-void Player_GetCurrentWeaponComponents(alt::IPlayer* player, alt::Array<uint32_t> &weaponComponents) {
+void Player_GetCurrentWeaponComponents(alt::IPlayer* player, uint32_t*& weaponComponents, uint32_t& size) {
     auto currWeaponComponents = player->GetCurrentWeaponComponents();
-    alt::Array<uint32_t> values;
-    for (auto currWeaponComponent : currWeaponComponents) {
-        values.Push(currWeaponComponent);
+    size = currWeaponComponents.size();
+    auto valuesArr = new uint32_t[size];
+    for (auto i = 0; i < size; i++) {
+        valuesArr[i] = currWeaponComponents[i];
     }
-    weaponComponents = values;
+    weaponComponents = valuesArr;
 }
 
 uint32_t Player_GetCurrentWeapon(alt::IPlayer* player) {
@@ -277,43 +278,39 @@ void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon) {
 }
 
 uint64_t Player_GetWeaponCount(alt::IPlayer* player) {
-    return player->GetWeapons().GetSize();
+    return player->GetWeapons().size();
 }
 
-void Player_GetWeapons(alt::IPlayer* player, alt::Array<weapon_t>& weapons) {
+void Player_GetWeapons(alt::IPlayer* player, weapon_t*& weapons, uint32_t& size) {
     auto playerWeapons = player->GetWeapons();
+    size = playerWeapons.size();
+    auto weaponsArr = new weapon_t[size];
 
-    alt::Array<weapon_t> values;
-    for (auto& playerWeapon : playerWeapons) {
+    for (auto i = 0; i < size; i++) {
+        auto playerWeapon = playerWeapons[i];
 
-        weapon_t weapon{};
+        weapon_t weapon;
         weapon.hash = playerWeapon.hash;
         weapon.tintIndex = playerWeapon.tintIndex;
 
-        int componentsSize = playerWeapon.components.size();
+        weapon.componentsCount = playerWeapon.components.size();
 
-        weapon.componentsCount = componentsSize;
+        if (weapon.componentsCount > 0) {
+            weapon.components = new uint32_t[weapon.componentsCount];
 
-        if (componentsSize == 0) {
+            auto j = 0;
+            for (auto component : playerWeapon.components) {
+                weapon.components[j++] = component;
+                if (j == weapon.componentsCount) break;
+            }
+        } else {
             weapon.components = nullptr;
         }
-        else {
-            weapon.components = new uint32_t[componentsSize];
-        }
 
-        int j = 0;
-        for (auto component : playerWeapon.components) {
-            if (j >= componentsSize) {
-                break;
-            }
-
-            weapon.components[j] = component;
-            j++;
-        }
-
-        values.Push(weapon);
+        weaponsArr[i] = weapon;
     }
-    weapons = values;
+
+    weapons = weaponsArr;
 }
 
 
@@ -632,5 +629,27 @@ void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlayer, uint32_t we
     auto arr = localPlayer->GetWeaponComponents(weaponHash);
     weaponComponents = AllocateUInt32Array(arr, size);
 }
+
+float LocalPlayer_GetStamina(alt::ILocalPlayer* localPlayer)
+{
+    return localPlayer->GetStamina();
+}
+
+void LocalPlayer_SetStamina(alt::ILocalPlayer* localPlayer, float stamina)
+{
+    localPlayer->SetStamina(stamina);
+}
+
+float LocalPlayer_GetMaxStamina(alt::ILocalPlayer* localplayer)
+{
+    return localplayer->GetMaxStamina();
+}
+
+void LocalPlayer_SetMaxStamina(alt::ILocalPlayer* localPlayer, float stamina)
+{
+    localPlayer->SetMaxStamina(stamina);
+}
+
+
 
 #endif

@@ -66,7 +66,7 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
         {
             auto baseobject = dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value();
             if (baseobject) {
-                mValues[i] = core->CreateMValueBaseObject(baseobject.get());
+                mValues[i] = core->CreateMValueBaseObject(baseobject);
             }else{
                 mValues[i] = core->CreateMValueNil();
             }

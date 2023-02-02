@@ -8,6 +8,7 @@
 CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource)
     : alt::IResource::Impl()
 {
+    ResetDelegates();
     this->resource = resource;
     this->server = server;
     this->invokers = new alt::Array<CustomInvoker*>();

@@ -28,7 +28,7 @@ EXPORT_SHARED const char* Player_GetName(alt::IPlayer* player, int32_t& size);
 EXPORT_SHARED uint16_t Player_GetHealth(alt::IPlayer* player);
 EXPORT_SHARED uint16_t Player_GetMaxHealth(alt::IPlayer* player);
 
-EXPORT_SHARED void Player_GetCurrentWeaponComponents(alt::IPlayer* player, alt::Array<uint32_t> &weaponComponents);
+EXPORT_SHARED void Player_GetCurrentWeaponComponents(alt::IPlayer* player, uint32_t*& weaponComponents, uint32_t& size);
 EXPORT_SHARED uint32_t Player_GetCurrentWeapon(alt::IPlayer* player);
 
 EXPORT_SHARED uint8_t Player_IsDead(alt::IPlayer* player);
@@ -58,7 +58,7 @@ EXPORT_SHARED uint8_t Player_IsFlashlightActive(alt::IPlayer* player);
 EXPORT_SHARED uint8_t Player_IsSpawned(alt::IPlayer* player);
 EXPORT_SHARED uint32_t Player_GetCurrentAnimationDict(alt::IPlayer* player);
 EXPORT_SHARED uint32_t Player_GetCurrentAnimationName(alt::IPlayer* player);
-    
+
 EXPORT_SHARED float Player_GetForwardSpeed(alt::IPlayer* player);
 EXPORT_SHARED float Player_GetStrafeSpeed(alt::IPlayer* player);
 
@@ -98,7 +98,7 @@ EXPORT_SERVER uint8_t Player_GetCurrentWeaponTintIndex(alt::IPlayer* player);
 EXPORT_SERVER void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon);
 
 EXPORT_SERVER uint64_t Player_GetWeaponCount(alt::IPlayer* player);
-EXPORT_SERVER void Player_GetWeapons(alt::IPlayer* player, alt::Array<weapon_t>& weapons);
+EXPORT_SERVER void Player_GetWeapons(alt::IPlayer* player, /** nint* */  weapon_t*& weapons, uint32_t& size);
 
 EXPORT_SERVER void Player_SetArmor(alt::IPlayer* player, uint16_t armor);
 EXPORT_SERVER void Player_SetMaxArmor(alt::IPlayer* player, uint16_t armor);
@@ -162,9 +162,9 @@ EXPORT_SERVER uint8_t Player_GetHairColor(alt::IPlayer* player);
 
 EXPORT_SERVER void Player_SetHairHighlightColor(alt::IPlayer* player, uint8_t hairHighlightColor);
 EXPORT_SERVER uint8_t Player_GetHairHighlightColor(alt::IPlayer* player);
-    
+
 EXPORT_SERVER uint32_t Player_GetInteriorLocation(alt::IPlayer* player);
-    
+
 EXPORT_SERVER int64_t Player_GetDiscordId(alt::IPlayer* player);
 
 EXPORT_SERVER uint32_t Player_GetLastDamagedBodyPart(alt::IPlayer* player);
@@ -193,3 +193,9 @@ EXPORT_CLIENT uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer,
 EXPORT_CLIENT uint8_t LocalPlayer_HasWeapon(alt::ILocalPlayer* localPlayer, uint32_t weaponHash);
 EXPORT_CLIENT void LocalPlayer_GetWeapons(alt::ILocalPlayer* localPlayer, const uint32_t*& weapons, uint32_t& size);
 EXPORT_CLIENT void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlayer, uint32_t weaponHash, const uint32_t*& weaponComponents, uint32_t& size);
+
+EXPORT_CLIENT float LocalPlayer_GetStamina(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT void LocalPlayer_SetStamina(alt::ILocalPlayer* localPlayer, float stamina);
+
+EXPORT_CLIENT float LocalPlayer_GetMaxStamina(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT void LocalPlayer_SetMaxStamina(alt::ILocalPlayer* localPlayer, float stamina);

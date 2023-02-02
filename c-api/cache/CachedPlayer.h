@@ -17,7 +17,6 @@ namespace cache
     									_name(base->GetName()),
 										_health(base->GetHealth()),
 										_maxHealth(base->GetMaxHealth()),
-										_currentWeaponComponents(base->GetCurrentWeaponComponents()),
 										_currentWeapon(base->GetCurrentWeapon()),
 										_dead(base->IsDead()),
 										_jumping(base->IsJumping()),
@@ -59,7 +58,6 @@ namespace cache
 										_eyeColor(base->GetEyeColor()),
 										_hairColor(base->GetHairColor()),
 										_hairHighlightColor(base->GetHairHighlightColor()),
-										_weapons(base->GetWeapons()),
 										_interiorLocation(base->GetInteriorLocation()),
 										_lastDamagedBodyPart(base->GetLastDamagedBodyPart()),
     									_sendNames(base->GetSendNames()),
@@ -114,9 +112,8 @@ namespace cache
 	        return false;
         }
     	
-        alt::Array<unsigned> _currentWeaponComponents;
-        alt::Array<unsigned> GetCurrentWeaponComponents() const override {
-			return _currentWeaponComponents;
+        std::vector<unsigned> GetCurrentWeaponComponents() const override {
+			return {};
 		}
 
         uint8_t GetWeaponTintIndex(uint32_t weapon) const override {
@@ -422,9 +419,8 @@ namespace cache
 			return _hairHighlightColor;
 		}
 
-        alt::Array<alt::Weapon> _weapons;
-        alt::Array<alt::Weapon> GetWeapons() const override {
-			return _weapons;
+        std::vector<alt::Weapon> GetWeapons() const override {
+			return {};
 		}
     	
     	std::unordered_map<std::string, alt::MValue> _localMetaData = {};
