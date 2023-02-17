@@ -76,7 +76,7 @@ void CoreClr::InitializeCoreclr() {
         "true",
     };
 
-    Log::Info << "Initializing CLR" << Log::Endl;
+    cs::Log::Info << "Initializing CLR" << cs::Log::Endl;
     const int rc = _initializeCoreClr(clrDirectoryPath.c_str(), "AltV Host", std::size(propertyKeys), propertyKeys, propertyValues, &_runtimeHost, &_domainId);
     
     if (rc != 0) {
@@ -85,31 +85,31 @@ void CoreClr::InitializeCoreclr() {
         throw std::runtime_error(error.str());
     }
 
-    Log::Info << "CLR initialized successfully" << Log::Endl;
+    cs::Log::Info << "CLR initialized successfully" << cs::Log::Endl;
 }
 
 CoreClr::CoreClr(alt::ICore* core) {
-    Log::Info << "Constructing CoreCLR" << Log::Endl;
+    cs::Log::Info << "Constructing CoreCLR" << cs::Log::Endl;
     _core = core;
 }
 
 void CoreClr::Initialize() {
     if (initialized) return;
-    Log::Info << "Initializing CoreCLR" << Log::Endl;
+    cs::Log::Info << "Initializing CoreCLR" << cs::Log::Endl;
     
     Update();
 
     const auto coreclrPath = GetCoreClrDllPath();
-    Log::Info << "CoreCLR dll found: " << coreclrPath.string() << Log::Endl;
+    cs::Log::Info << "CoreCLR dll found: " << coreclrPath.string() << cs::Log::Endl;
 
     _coreClrLib = LoadLibraryEx(coreclrPath.c_str(), nullptr, 0);
-    Log::Info << "Loaded lib nice" << Log::Endl;
+    cs::Log::Info << "Loaded lib nice" << cs::Log::Endl;
 
     _initializeCoreClr = (coreclr_initialize_ptr)GetProcAddress(_coreClrLib, "coreclr_initialize");
     _shutdownCoreClr = (coreclr_shutdown_2_ptr)GetProcAddress(_coreClrLib, "coreclr_shutdown_2");
     _createDelegate = (coreclr_create_delegate_ptr)GetProcAddress(_coreClrLib, "coreclr_create_delegate");
     _executeAssembly = (coreclr_execute_assembly_ptr)GetProcAddress(_coreClrLib, "coreclr_execute_assembly");
-    Log::Info << "Loaded delegates nice" << Log::Endl;
+    cs::Log::Info << "Loaded delegates nice" << cs::Log::Endl;
 
     if (!_initializeCoreClr || !_shutdownCoreClr || !_createDelegate || !_executeAssembly)
         throw std::runtime_error("Unable to find CoreCLR dll methods");
@@ -126,7 +126,7 @@ void CoreClr::Initialize() {
         throw std::runtime_error(error.str());
     }
 
-    Log::Info << "Executing method from Host dll" << Log::Endl;
+    cs::Log::Info << "Executing method from Host dll" << cs::Log::Endl;
 
     const auto hostInitRc = hostInitDelegate(_core, DLL_NAME, sandbox, get_func_table());
     if (hostInitRc != 0) {
@@ -161,7 +161,7 @@ bool CoreClr::StopResource(alt::IResource* resource) {
 void SetResourceLoadDelegates(const CoreClrDelegate_t resourceExecute, const CoreClrDelegate_t resourceExecuteUnload,
                                      const CoreClrDelegate_t stopRuntime) {
     if (load_resource_delegate || stop_resource_delegate || stop_runtime_delegate) {
-        Log::Error << "Resource delegates cannot be replaced" << Log::Endl;
+        cs::Log::Error << "Resource delegates cannot be replaced" << cs::Log::Endl;
         abort(); // developer tried to call that method from resource XD
     }
 
@@ -180,7 +180,7 @@ bool GetCachedAssembly(const char* name, int* bufferSize, void** buffer) {
     std::stringstream contentStream;
     auto fileName = std::string("lib/net6.0/") + name + ".dll";
     if (!zip.has_file(fileName)) {
-        Log::Warning << "Nupkg was found, but no dll was found in it" << Log::Endl;
+        cs::Log::Warning << "Nupkg was found, but no dll was found in it" << cs::Log::Endl;
         zip.printdir();
         return false;
     }

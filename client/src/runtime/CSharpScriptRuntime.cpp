@@ -8,7 +8,7 @@
 #include <windows.h>
 
 CSharpScriptRuntime::CSharpScriptRuntime(alt::ICore* core) : clr(core), core(core) {
-    Log::Info << "CSharp runtime initialized" << Log::Endl;
+    cs::Log::Info << "CSharp runtime initialized" << cs::Log::Endl;
     auto config = core->GetClientConfig();
     try {
         if (!config["disableRestrictedSandbox"]->AsBool(false)) return;
@@ -18,10 +18,10 @@ CSharpScriptRuntime::CSharpScriptRuntime(alt::ICore* core) : clr(core), core(cor
             "Are you sure you want to disable sandboxing?", L"Do you want to disable restricted sandbox?",  MB_YESNO | MB_ICONWARNING);
         if (result != IDYES) return;
         
-        Log::Warning << "C# sandbox disabled" << Log::Endl;
+        cs::Log::Warning << "C# sandbox disabled" << cs::Log::Endl;
         clr.sandbox = false;
     } catch(std::exception& e) {
-        Log::Error << "Failed to parse disableRestrictedSandbox value: " << e.what() << Log::Endl;
+        cs::Log::Error << "Failed to parse disableRestrictedSandbox value: " << e.what() << cs::Log::Endl;
     }
 }
 

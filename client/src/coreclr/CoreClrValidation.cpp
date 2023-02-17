@@ -29,7 +29,7 @@ bool CoreClr::ValidateRuntime(nlohmann::json updateJson, alt::IHttpClient* httpC
         auto path = GetDataDirectoryPath();
         path.append(it.key());
         if (!fs::exists(path)) {
-            Log::Warning << "File " << path.string() << " does not exist" << Log::Endl;
+            cs::Log::Warning << "File " << path.string() << " does not exist" << cs::Log::Endl;
             return false;
         }
         SHA1 checksum;
@@ -37,8 +37,8 @@ bool CoreClr::ValidateRuntime(nlohmann::json updateJson, alt::IHttpClient* httpC
         checksum.update(stream);
         const std::string hash = checksum.final();
         if (hash != it.value()) {
-            Log::Warning << "File " << path << " has invalid hash" << Log::Endl;
-            Log::Warning << "Current " << hash << " Needed " << it.value() << Log::Endl;
+            cs::Log::Warning << "File " << path << " has invalid hash" << cs::Log::Endl;
+            cs::Log::Warning << "Current " << hash << " Needed " << it.value() << cs::Log::Endl;
             return false;
         }
     }
@@ -47,7 +47,7 @@ bool CoreClr::ValidateRuntime(nlohmann::json updateJson, alt::IHttpClient* httpC
         if (entry.is_directory() || !entry.is_regular_file()) continue;
         auto relativePath = "runtime/" + fs::relative( entry.path(), runtimeDirectoryPath ).generic_string();
         if (!hashList.contains(relativePath)) {
-            Log::Warning << "File " << entry.path() << " is not in update.json" << Log::Endl;
+            cs::Log::Warning << "File " << entry.path() << " is not in update.json" << cs::Log::Endl;
             if (!fs::remove(entry.path())) {
                 throw std::runtime_error("Failed to remove file " + entry.path().string());
             }
@@ -63,36 +63,36 @@ void CoreClr::DownloadRuntime(alt::IHttpClient* httpClient) const {
     while (true) {
         if (attempt++ >= 6) throw std::runtime_error("Failed to download CoreCLR after " + std::to_string(attempt) + " attempts");
         
-        Log::Info << "Downloading CoreCLR (attempt " << attempt << ")" << Log::Endl;
+        cs::Log::Info << "Downloading CoreCLR (attempt " << attempt << ")" << cs::Log::Endl;
 
         static auto url = GetBaseCdnUrl() + "runtime.zip";
         const auto response = utils::download_file_sync(httpClient, url);
-        Log::Info << "Download finished" << Log::Endl;
+        cs::Log::Info << "Download finished" << cs::Log::Endl;
 
         static auto runtimeDirectoryPath = GetRuntimeDirectoryPath();
         if (!fs::exists(runtimeDirectoryPath)) fs::create_directories(runtimeDirectoryPath);
             
         std::istringstream is(response.body, std::ios::binary);
-        Log::Info << "Extracting zip" << Log::Endl;
+        cs::Log::Info << "Extracting zip" << cs::Log::Endl;
             
         try {
             miniz_cpp::zip_file zip(is);
             zip.extractall(runtimeDirectoryPath.string());
-            Log::Info << "Extract finished" << Log::Endl;
+            cs::Log::Info << "Extract finished" << cs::Log::Endl;
             return;
         } catch (std::runtime_error& e) {
-            Log::Error << "Failed to extract zip: " << e.what() << Log::Endl;
+            cs::Log::Error << "Failed to extract zip: " << e.what() << cs::Log::Endl;
         }
     }
 }
 
 bool CoreClr::ValidateHost(nlohmann::json updateJson) const {
-    Log::Info << "Validating Host" << Log::Endl;
+    cs::Log::Info << "Validating Host" << cs::Log::Endl;
     
     static auto hostPath = GetDataDirectoryPath().append(host_dll_name);
     
     if (!fs::exists(hostPath)) {
-        Log::Warning << "Host file does not exist" << Log::Endl;
+        cs::Log::Warning << "Host file does not exist" << cs::Log::Endl;
         return false;
     }
     
@@ -104,7 +104,7 @@ bool CoreClr::ValidateHost(nlohmann::json updateJson) const {
     const auto hashList = updateJson["hashList"];
     
     if (hashList[host_dll_name] != hash) {
-        Log::Warning << "Host has invalid hash" << Log::Endl;
+        cs::Log::Warning << "Host has invalid hash" << cs::Log::Endl;
         return false;
     }
 
@@ -118,11 +118,11 @@ void CoreClr::DownloadHost(alt::IHttpClient* httpClient) const {
     while (true) {
         if (attempt++ >= 6) throw std::runtime_error("Failed to download Host after " + std::to_string(attempt) + " attempts");
         
-        Log::Info << "Downloading Host (attempt " << attempt << ")" << Log::Endl;
+        cs::Log::Info << "Downloading Host (attempt " << attempt << ")" << cs::Log::Endl;
 
         const auto response = utils::download_file_sync(httpClient, url);
         if (response.statusCode != 200) {
-            Log::Error << "Failed to download Host: " << response.statusCode << Log::Endl;
+            cs::Log::Error << "Failed to download Host: " << response.statusCode << cs::Log::Endl;
             continue;
         }
         
@@ -152,13 +152,13 @@ std::string CoreClr::GetLatestNugetVersion(alt::IHttpClient* httpClient, const s
 
 bool CoreClr::ValidateNuGet(alt::IHttpClient* httpClient, const std::string& package, const std::string& version, nlohmann::json json) {
     if (!_nuget) _nuget.emplace(httpClient);
-    Log::Info << "Validating NuGet package " << package << " " << version << Log::Endl;
+    cs::Log::Info << "Validating NuGet package " << package << " " << version << cs::Log::Endl;
     
     if (json == nullptr) json = _nuget->GetCatalog(package, version);
     auto librariesDirectoryPath = GetLibrariesDirectoryPath();
     auto nupkgPath = librariesDirectoryPath.append(package + ".nupkg");
     if (!fs::exists(nupkgPath)) {
-        Log::Info << "Nuget file does not exist" << Log::Endl;
+        cs::Log::Info << "Nuget file does not exist" << cs::Log::Endl;
         return false;
     }
     auto stream = std::ifstream(nupkgPath, std::ios::binary);
@@ -180,10 +180,10 @@ bool CoreClr::ValidateNuGet(alt::IHttpClient* httpClient, const std::string& pac
         neededHash << std::hex << std::setw(2) << std::setfill('0') << (int) item;
     }
 
-    Log::Info << "Needed hash was " << neededHash.str() << " actual hash was " << fileHash << Log::Endl;
+    cs::Log::Info << "Needed hash was " << neededHash.str() << " actual hash was " << fileHash << cs::Log::Endl;
     
     if (neededHash.str() != fileHash) {
-        Log::Error << "Failed to validate NuGet " << package << " " << version << Log::Endl;
+        cs::Log::Error << "Failed to validate NuGet " << package << " " << version << cs::Log::Endl;
         return false;
     }
     
@@ -221,7 +221,7 @@ bool CoreClr::ValidateNuGets(alt::IHttpClient* httpClient) {
 
 void CoreClr::DownloadNuGet(alt::IHttpClient* httpClient, const std::string& packageName, const std::string& version, nlohmann::json json) {
     if (!_nuget) _nuget.emplace(httpClient);
-    Log::Info << "Downloading NuGet package " << packageName << " " << version << Log::Endl;
+    cs::Log::Info << "Downloading NuGet package " << packageName << " " << version << cs::Log::Endl;
     
     if (json == nullptr) json = _nuget->GetCatalog(packageName, version);
     
@@ -270,7 +270,7 @@ void CoreClr::Update() {
         try {
             DownloadRuntime(httpClient);
         } catch(const std::exception& e) {
-            Log::Error << "Failed to download CoreCLR: " << e.what() << Log::Endl;
+            cs::Log::Error << "Failed to download CoreCLR: " << e.what() << cs::Log::Endl;
         }
     }
     
@@ -280,7 +280,7 @@ void CoreClr::Update() {
         try {
             DownloadHost(httpClient);
         } catch(const std::exception& e) {
-            Log::Error << "Failed to download Host: " << e.what() << Log::Endl;
+            cs::Log::Error << "Failed to download Host: " << e.what() << cs::Log::Endl;
         }
     }
 
@@ -291,7 +291,7 @@ void CoreClr::Update() {
             try {
                 DownloadNuGets(httpClient);
             } catch(const std::exception& e) {
-                Log::Error << "Failed to download NuGets: " << e.what() << Log::Endl;
+                cs::Log::Error << "Failed to download NuGets: " << e.what() << cs::Log::Endl;
             }
         }
     }
