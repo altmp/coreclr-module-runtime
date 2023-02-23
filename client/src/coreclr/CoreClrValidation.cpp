@@ -13,7 +13,7 @@ namespace fs = std::filesystem;
 
 std::string CoreClr::GetBaseCdnUrl() const {
     static auto branch = _core->GetBranch();
-    return "https://cdn.altv.mp/coreclr-client-module/" + branch + "/x64_win32/";
+    return "https://cdn.alt-mp.com/coreclr-client-module/" + branch + "/x64_win32/";
 }
 
 inline const std::string host_dll_name = "AltV.Net.Client.Host.dll";
