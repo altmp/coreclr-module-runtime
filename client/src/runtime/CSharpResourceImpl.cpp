@@ -19,12 +19,12 @@ using namespace std;
 
 bool CSharpResourceImpl::Start()
 {
-    Log::Info << "Starting resource" << Log::Endl;
+    cs::Log::Info << "Starting resource" << cs::Log::Endl;
     ResetDelegates();
     try {
         runtime->clr.Initialize();
     } catch(std::runtime_error& e) {
-        Log::Error << "Failed to initialize CLR: " << e.what() << Log::Endl;
+        cs::Log::Error << "Failed to initialize CLR: " << e.what() << cs::Log::Endl;
         abort();
     }
     resource->EnableNatives();

@@ -3,6 +3,7 @@
 #include <sstream>
 #include "cpp-sdk/ICore.h"
 
+namespace cs {
 class Log
 {
     std::stringstream buf;
@@ -119,4 +120,5 @@ public:
         static Log _Instance;
         return _Instance;
     }
+};
 };
