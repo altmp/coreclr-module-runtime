@@ -465,7 +465,7 @@ void MValueConst_GetRGBA(alt::MValueConst *mValueConst, rgba_t &rgba) {
 
 void MValueConst_GetByteArray(alt::MValueConst *mValueConst, uint64_t size, void *data) {
     auto mValue = mValueConst->Get();
-    if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::RGBA) {
+    if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BYTE_ARRAY) {
         auto byteArrayMValue = dynamic_cast<const alt::IMValueByteArray *>(mValue);
         auto byteArraySize = byteArrayMValue->GetSize();
         if (byteArraySize < size) {
