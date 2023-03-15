@@ -608,8 +608,7 @@ uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer) {
 }
 
 uint32_t LocalPlayer_GetCurrentWeaponHash(alt::ILocalPlayer* localPlayer) {
-    const auto data = localPlayer->GetCurrentWeaponData();
-    return data.get()->GetModelHash();
+    return localPlayer->GetCurrentWeapon();
 }
 
 uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer, uint32_t weaponHash) {
