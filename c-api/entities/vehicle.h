@@ -300,7 +300,7 @@ EXPORT_CLIENT uint8_t Vehicle_GetOccupiedSeatsCount(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehícle_ToggleTaxiLight(alt::IVehicle* vehicle, uint8_t state);
 EXPORT_CLIENT uint8_t Vehicle_IsTaxiLightOn(alt::IVehicle* vehicle);
 
-EXPORT_CLIENT float Vehicle_GetWheelCamper(alt::IVehicle* vehicle, uint8_t wheel);
+EXPORT_CLIENT float Vehicle_GetWheelCamber(alt::IVehicle* vehicle, uint8_t wheel);
 EXPORT_CLIENT void Vehicle_SetWheelCamber(alt::IVehicle* vehicle, uint8_t wheel, float value);
 EXPORT_CLIENT float Vehicle_GetWheelTrackWidth(alt::IVehicle* vehicle, uint8_t wheel);
 EXPORT_CLIENT void Vehicle_SetWheelTrackWidth(alt::IVehicle* vehicle, uint8_t wheel, float value);

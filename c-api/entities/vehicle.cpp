@@ -934,7 +934,7 @@ uint8_t Vehicle_IsTaxiLightOn(alt::IVehicle* vehicle) {
     return vehicle->IsTaxiLightOn();
 }
 
-float Vehicle_GetWheelCamper(alt::IVehicle* vehicle, uint8_t wheel) {
+float Vehicle_GetWheelCamber(alt::IVehicle* vehicle, uint8_t wheel) {
     return vehicle->GetWheelCamber(wheel);
 }
 
