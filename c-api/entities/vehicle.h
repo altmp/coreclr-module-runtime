@@ -252,7 +252,7 @@ EXPORT_SERVER void Vehicle_SetBoatAnchor(alt::IVehicle* vehicle, uint8_t state);
 
 EXPORT_SERVER uint8_t Vehicle_GetLightState(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetLightState(alt::IVehicle* vehicle, uint8_t value);
-    
+
 EXPORT_SERVER uint8_t Vehicle_HasTimedExplosion(alt::IVehicle* vehicle);
 EXPORT_SERVER alt::IPlayer* Vehicle_GetTimedExplosionCulprit(alt::IVehicle* vehicle);
 EXPORT_SERVER uint32_t Vehicle_GetTimedExplosionTime(alt::IVehicle* vehicle);
@@ -279,28 +279,47 @@ EXPORT_SERVER void Vehicle_SetHybridExtraActive(alt::IVehicle* vehicle, uint8_t 
 EXPORT_SERVER uint8_t Vehicle_GetHybridExtraState(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t state);
 
-
-EXPORT_CLIENT uint16_t Vehicle_GetGear(alt::IVehicle* vehicle);
-EXPORT_CLIENT void Vehicle_SetGear(alt::IVehicle* vehicle, uint16_t value);
-
-EXPORT_CLIENT uint8_t Vehicle_GetIndicatorLights(alt::IVehicle* vehicle);
-EXPORT_CLIENT void Vehicle_SetIndicatorLights(alt::IVehicle* vehicle, uint8_t value);
-
+EXPORT_CLIENT float Vehicle_GetWheelSpeed(alt::IVehicle* vehicle);
+EXPORT_CLIENT uint16_t Vehicle_GetCurrentGear(alt::IVehicle* vehicle);
+EXPORT_CLIENT float Vehicle_GetCurrentRPM(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_GetSpeedVector(alt::IVehicle* vehicle, vector3_t& vector);
 EXPORT_CLIENT uint16_t Vehicle_GetMaxGear(alt::IVehicle* vehicle);
+
+EXPORT_CLIENT void Vehicle_SetCurrentGear(alt::IVehicle* vehicle, uint16_t value);
 EXPORT_CLIENT void Vehicle_SetMaxGear(alt::IVehicle* vehicle, uint16_t value);
 
-EXPORT_CLIENT float Vehicle_GetRPM(alt::IVehicle* vehicle);
+EXPORT_CLIENT uint8_t Vehicle_IsHandlingModified(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_ResetHandling(alt::IVehicle* vehicle);
+
+EXPORT_CLIENT uint8_t Vehicle_GetLightsIndicator(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetLightsIndicator(alt::IVehicle* vehicle, uint8_t value);
+
 EXPORT_CLIENT uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle);
-EXPORT_CLIENT float Vehicle_GetWheelSpeed(alt::IVehicle* vehicle);
-EXPORT_CLIENT void Vehicle_GetSpeedVector(alt::IVehicle* vehicle, vector3_t& vector);
+EXPORT_CLIENT uint8_t Vehicle_GetOccupiedSeatsCount(alt::IVehicle* vehicle);
+
+EXPORT_CLIENT void Vehícle_ToggleTaxiLight(alt::IVehicle* vehicle, uint8_t state);
+EXPORT_CLIENT uint8_t Vehicle_IsTaxiLightOn(alt::IVehicle* vehicle);
+
+EXPORT_CLIENT float Vehicle_GetWheelCamper(alt::IVehicle* vehicle, uint8_t wheel);
+EXPORT_CLIENT void Vehicle_SetWheelCamber(alt::IVehicle* vehicle, uint8_t wheel, float value);
+EXPORT_CLIENT float Vehicle_GetWheelTrackWidth(alt::IVehicle* vehicle, uint8_t wheel);
+EXPORT_CLIENT void Vehicle_SetWheelTrackWidth(alt::IVehicle* vehicle, uint8_t wheel, float value);
+EXPORT_CLIENT float Vehicle_GetWheelHeight(alt::IVehicle* vehicle, uint8_t wheel);
+EXPORT_CLIENT void Vehicle_SetWheelHeight(alt::IVehicle* vehicle, uint8_t wheel, float value);
+EXPORT_CLIENT float Vehicle_GetWheelTyreRadius(alt::IVehicle* vehicle, uint8_t wheel);
+EXPORT_CLIENT void Vehicle_SetWheelTyreRadius(alt::IVehicle* vehicle, uint8_t wheel, float value);
+EXPORT_CLIENT float Vehicle_GetWheelRimRadius(alt::IVehicle* vehicle, uint8_t wheel);
+EXPORT_CLIENT void Vehicle_SetWheelRimRadius(alt::IVehicle* vehicle, uint8_t wheel, float value);
+EXPORT_CLIENT float Vehicle_GetWheelTyreWidth(alt::IVehicle* vehicle, uint8_t wheel);
+EXPORT_CLIENT void Vehicle_SetWheelTyreWidth(alt::IVehicle* vehicle, uint8_t wheel, float value);
+EXPORT_CLIENT uint32_t Vehicle_GetWheelSurfaceMaterial(alt::IVehicle* vehicle, uint8_t wheel);
 
 EXPORT_CLIENT float Vehicle_GetEngineTemperature(alt::IVehicle* vehicle);
-EXPORT_CLIENT float Vehicle_GetFuelLevel(alt::IVehicle* vehicle);
-EXPORT_CLIENT float Vehicle_GetOilLevel(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetEngineTemperature(alt::IVehicle* vehicle, float value);
+EXPORT_CLIENT float Vehicle_GetFuelLevel(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetFuelLevel(alt::IVehicle* vehicle, float value);
+EXPORT_CLIENT float Vehicle_GetOilLevel(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetOilLevel(alt::IVehicle* vehicle, float value);
-
 EXPORT_CLIENT uint8_t Vehicle_GetEngineLightState(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetEngineLightState(alt::IVehicle* vehicle, uint8_t state);
 EXPORT_CLIENT uint8_t Vehicle_GetAbsLightState(alt::IVehicle* vehicle);
@@ -312,11 +331,6 @@ EXPORT_CLIENT void Vehicle_SetOilLightState(alt::IVehicle* vehicle, uint8_t stat
 EXPORT_CLIENT uint8_t Vehicle_GetBatteryLightState(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetBatteryLightState(alt::IVehicle* vehicle, uint8_t state);
 EXPORT_CLIENT void Vehicle_ResetDashboardLights(alt::IVehicle* vehicle);
-
-EXPORT_CLIENT void Vehicle_ResetHandling(alt::IVehicle* vehicle);
-EXPORT_CLIENT uint8_t Vehicle_IsHandlingModified(alt::IVehicle* vehicle);
-
-EXPORT_CLIENT uint32_t Vehicle_GetWheelSurfaceMaterial(alt::IVehicle* vehicle, uint8_t wheel);
 
 EXPORT_CLIENT uint32_t Vehicle_Handling_GetHandlingNameHash(alt::IVehicle* vehicle);
 EXPORT_CLIENT float Vehicle_Handling_GetMass(alt::IVehicle* vehicle);
