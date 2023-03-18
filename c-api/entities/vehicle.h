@@ -297,7 +297,7 @@ EXPORT_CLIENT void Vehicle_SetLightsIndicator(alt::IVehicle* vehicle, uint8_t va
 EXPORT_CLIENT uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle);
 EXPORT_CLIENT uint8_t Vehicle_GetOccupiedSeatsCount(alt::IVehicle* vehicle);
 
-EXPORT_CLIENT void Vehícle_ToggleTaxiLight(alt::IVehicle* vehicle, uint8_t state);
+EXPORT_CLIENT void Vehicle_ToggleTaxiLight(alt::IVehicle* vehicle, uint8_t state);
 EXPORT_CLIENT uint8_t Vehicle_IsTaxiLightOn(alt::IVehicle* vehicle);
 
 EXPORT_CLIENT float Vehicle_GetWheelCamber(alt::IVehicle* vehicle, uint8_t wheel);

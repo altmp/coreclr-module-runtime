@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 11307071366122141982UL;
+inline uint64_t capiHash = 10988236633214279111UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -656,7 +656,7 @@ inline uint64_t capiHashes[] = {
     2293924763385881861UL,
     16643704314243471312UL,
     1387113924672541868UL,
-    1110973767682136336UL,
+    4622127485385870092UL,
     12282797124788259414UL,
     3872485645449808126UL,
     16005079481042718507UL,
@@ -1992,7 +1992,7 @@ inline void* capiPointers[] = {
     (void*) Vehicle_SetWheelTrackWidth,
     (void*) Vehicle_SetWheelTyreRadius,
     (void*) Vehicle_SetWheelTyreWidth,
-    (void*) Vehícle_ToggleTaxiLight,
+    (void*) Vehicle_ToggleTaxiLight,
     (void*) WeaponData_GetAccuracySpread,
     (void*) WeaponData_GetAnimReloadRate,
     (void*) WeaponData_GetClipSize,

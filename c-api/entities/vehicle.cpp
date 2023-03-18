@@ -926,7 +926,7 @@ uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle) {
     return vehicle->GetSeatCount();
 }
 
-void Vehícle_ToggleTaxiLight(alt::IVehicle* vehicle, uint8_t state) {
+void Vehicle_ToggleTaxiLight(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->ToggleTaxiLight(state);
 }
 
