@@ -93,26 +93,36 @@ CoreClr::CoreClr(alt::ICore* core) {
     _core = core;
 }
 
-void CoreClr::Initialize() {
+void CoreClr::Initialize(progressfn_t progress) {
     if (initialized) return;
     cs::Log::Info << "Initializing CoreCLR" << cs::Log::Endl;
-    
-    Update();
+
+    try
+    {
+        Update(progress, 0);
+    } catch(std::exception& e)
+    {
+        cs::Log::Error << e.what() << cs::Log::Endl;
+        throw CoreClrInitError("FAILED_TO_DOWNLOAD_CSHARP");
+    }
 
     const auto coreclrPath = GetCoreClrDllPath();
-    cs::Log::Info << "CoreCLR dll found: " << coreclrPath.string() << cs::Log::Endl;
+    // cs::Log::Info << "CoreCLR dll found: " << coreclrPath.string() << cs::Log::Endl;
 
     _coreClrLib = LoadLibraryEx(coreclrPath.c_str(), nullptr, 0);
-    cs::Log::Info << "Loaded lib nice" << cs::Log::Endl;
+    // cs::Log::Info << "Loaded lib nice" << cs::Log::Endl;
 
     _initializeCoreClr = (coreclr_initialize_ptr)GetProcAddress(_coreClrLib, "coreclr_initialize");
     _shutdownCoreClr = (coreclr_shutdown_2_ptr)GetProcAddress(_coreClrLib, "coreclr_shutdown_2");
     _createDelegate = (coreclr_create_delegate_ptr)GetProcAddress(_coreClrLib, "coreclr_create_delegate");
     _executeAssembly = (coreclr_execute_assembly_ptr)GetProcAddress(_coreClrLib, "coreclr_execute_assembly");
-    cs::Log::Info << "Loaded delegates nice" << cs::Log::Endl;
+    // cs::Log::Info << "Loaded delegates nice" << cs::Log::Endl;
 
     if (!_initializeCoreClr || !_shutdownCoreClr || !_createDelegate || !_executeAssembly)
-        throw std::runtime_error("Unable to find CoreCLR dll methods");
+    {
+        cs::Log::Error << "Unable to find CoreCLR dll methods" << cs::Log::Endl;
+        throw CoreClrInitError("FAILED_TO_INITIALIZE_CSHARP");
+    }
 
     InitializeCoreclr();
 
@@ -121,16 +131,16 @@ void CoreClr::Initialize() {
 
     const int rc = _createDelegate(_runtimeHost, _domainId, "AltV.Net.Client.Host", "Entrypoint", "Initialize", (void **) &hostInitDelegate);
     if (rc != 0 || hostInitDelegate == nullptr) {
-        std::stringstream error;
-        error << "Cannot load Host dll. Return code: " << std::hex << std::showbase << rc << std::endl;
-        throw std::runtime_error(error.str());
+        cs::Log::Error << "Cannot load Host dll. Return code: " << std::hex << std::showbase << rc << cs::Log::Endl;
+        throw CoreClrInitError("FAILED_TO_INITIALIZE_CSHARP");
     }
 
     cs::Log::Info << "Executing method from Host dll" << cs::Log::Endl;
 
     const auto hostInitRc = hostInitDelegate(_core, DLL_NAME, sandbox, get_func_table());
     if (hostInitRc != 0) {
-        throw std::runtime_error("Host dll initialization failed. Code: " + std::to_string(hostInitRc));
+        cs::Log::Error << "Host dll initialization failed. Code: " << std::to_string(hostInitRc) << cs::Log::Endl;
+        throw CoreClrInitError("FAILED_TO_INITIALIZE_CSHARP");
     }
     initialized = true;
 }

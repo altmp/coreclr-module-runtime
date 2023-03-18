@@ -32,3 +32,25 @@ alt::IResource::Impl* CSharpScriptRuntime::CreateImpl(alt::IResource* resource)
 }
 
 void CSharpScriptRuntime::DestroyImpl(alt::IResource::Impl* impl) {}
+
+void CSharpScriptRuntime::Init(std::function<void(bool success, std::string error)> next, progressfn_t setProgress)
+{
+    std::thread thread([=]{
+        try {
+            clr.Initialize(setProgress);
+            next(true, "");
+        } catch(CoreClrInitError& e)
+        {
+            next(false, e.what());
+        } catch(std::exception& e) {
+            cs::Log::Error << e.what() << cs::Log::Endl;
+            std::stringstream ss{};
+            ss << "Failed to initialize CLR: " << e.what();
+            next(false, ss.str());
+        } catch(...)
+        {
+            cs::Log::Error << "Critical CoreCLR initialization failure" << cs::Log::Endl;
+        }
+    });
+    thread.detach();
+}

@@ -18,11 +18,51 @@ std::string CoreClr::GetBaseCdnUrl() const {
 
 inline const std::string host_dll_name = "AltV.Net.Client.Host.dll";
 
-bool CoreClr::ValidateRuntime(nlohmann::json updateJson, alt::IHttpClient* httpClient) const {
+
+std::string CoreClr::GetLatestNugetVersion(alt::IHttpClient* httpClient, const std::string& packageName) {
+    if (!_nuget) _nuget.emplace(httpClient);
+    const auto branch = std::string("dev"); // todo change
+    const auto versions = _nuget->GetPackageVersions(packageName);
+    for (auto it = versions.rbegin(); it != versions.rend(); ++it) {
+        if (branch == "release") {
+            if (it->find("-") == std::string::npos) return *it;
+        } else {
+            if (utils::has_suffix(*it, "-" + branch)) return *it;
+        }
+    }
+
+    throw std::runtime_error("Failed to find latest version of " + packageName + " for branch " + branch);
+}
+
+
+void CoreClr::GetRequiredNugets(alt::IHttpClient* httpClient, const std::string& nuget, std::map<std::string, nlohmann::json>& vec)
+{
+    if (!_nuget) _nuget.emplace(httpClient);
+    cs::Log::Info << "Fetching NuGet " << nuget << cs::Log::Endl;
+    const auto version = GetLatestNugetVersion(httpClient, nuget);
+    const auto json = _nuget->GetCatalog(nuget, version);
+    
+    const auto dependencyGroup = json["dependencyGroups"][0];
+    if (!dependencyGroup.contains("dependencies")) return;
+    
+    const auto& dependencies = dependencyGroup["dependencies"];
+    for (auto it = dependencies.begin(); it != dependencies.end(); ++it) {
+        auto id = it.value()["id"].get<std::string>();
+        utils::to_lower(id);
+        
+        if (!utils::has_prefix(id, "altv.")) continue;
+        if (vec.count(id) > 0) continue;
+
+        GetRequiredNugets(httpClient, id, vec);
+    }
+}
+
+bool CoreClr::ValidateRuntime(nlohmann::json updateJson, Progress& progress) const {
+    const auto hashList = updateJson["hashList"];
+    const auto sizeList = updateJson["sizeList"];
+    
     auto const runtimeDirectoryPath = GetRuntimeDirectoryPath();
     if (!fs::exists(runtimeDirectoryPath)) return false;
-    
-    const auto hashList = updateJson["hashList"];
     
     for (auto it = hashList.begin(); it != hashList.end(); ++it) {
         if (!utils::has_prefix(it.key(), "runtime/")) continue;
@@ -41,6 +81,8 @@ bool CoreClr::ValidateRuntime(nlohmann::json updateJson, alt::IHttpClient* httpC
             cs::Log::Warning << "Current " << hash << " Needed " << it.value() << cs::Log::Endl;
             return false;
         }
+        
+        progress.Advance(sizeList[it.key()].get<float>());
     }
     
     for (auto& entry : fs::recursive_directory_iterator(runtimeDirectoryPath)) {
@@ -57,7 +99,7 @@ bool CoreClr::ValidateRuntime(nlohmann::json updateJson, alt::IHttpClient* httpC
     return true;
 }
 
-void CoreClr::DownloadRuntime(alt::IHttpClient* httpClient) const {
+void CoreClr::DownloadRuntime(alt::IHttpClient* httpClient, Progress& progress) const {
     auto attempt = 0;
     
     while (true) {
@@ -66,6 +108,7 @@ void CoreClr::DownloadRuntime(alt::IHttpClient* httpClient) const {
         cs::Log::Info << "Downloading CoreCLR (attempt " << attempt << ")" << cs::Log::Endl;
 
         static auto url = GetBaseCdnUrl() + "runtime.zip";
+        // todo pass progress
         const auto response = utils::download_file_sync(httpClient, url);
         cs::Log::Info << "Download finished" << cs::Log::Endl;
 
@@ -111,7 +154,7 @@ bool CoreClr::ValidateHost(nlohmann::json updateJson) const {
     return true;
 }
 
-void CoreClr::DownloadHost(alt::IHttpClient* httpClient) const {
+void CoreClr::DownloadHost(alt::IHttpClient* httpClient, Progress& progress) const {
     static auto url = GetBaseCdnUrl() + host_dll_name;
     auto attempt = 0;
     
@@ -135,26 +178,12 @@ void CoreClr::DownloadHost(alt::IHttpClient* httpClient) const {
     }
 }
 
-std::string CoreClr::GetLatestNugetVersion(alt::IHttpClient* httpClient, const std::string& packageName) {
+bool CoreClr::ValidateNuGet(alt::IHttpClient* httpClient, nlohmann::json json) {
     if (!_nuget) _nuget.emplace(httpClient);
-    const auto branch = _core->GetBranch();
-    const auto versions = _nuget->GetPackageVersions(packageName);
-    for (auto it = versions.rbegin(); it != versions.rend(); ++it) {
-        if (branch == "release") {
-            if (it->find("-") == std::string::npos) return *it;
-        } else {
-            if (utils::has_suffix(*it, "-" + branch)) return *it;
-        }
-    }
-
-    throw std::runtime_error("Failed to find latest version of " + packageName + " for branch " + branch);
-}
-
-bool CoreClr::ValidateNuGet(alt::IHttpClient* httpClient, const std::string& package, const std::string& version, nlohmann::json json) {
-    if (!_nuget) _nuget.emplace(httpClient);
+    const auto package = json["id"].get<std::string>();
+    const auto version = json["version"].get<std::string>() ;
     cs::Log::Info << "Validating NuGet package " << package << " " << version << cs::Log::Endl;
     
-    if (json == nullptr) json = _nuget->GetCatalog(package, version);
     auto librariesDirectoryPath = GetLibrariesDirectoryPath();
     auto nupkgPath = librariesDirectoryPath.append(package + ".nupkg");
     if (!fs::exists(nupkgPath)) {
@@ -186,113 +215,99 @@ bool CoreClr::ValidateNuGet(alt::IHttpClient* httpClient, const std::string& pac
         cs::Log::Error << "Failed to validate NuGet " << package << " " << version << cs::Log::Endl;
         return false;
     }
-    
-    const auto dependencyGroup = json["dependencyGroups"][0];
-    if (!dependencyGroup.contains("dependencies")) return true;
-    
-    const auto dependencies = dependencyGroup["dependencies"];
-    for (auto it = dependencies.begin(); it != dependencies.end(); ++it) {
-        auto id = it.value()["id"].get<std::string>();
-        utils::to_lower(id);
-        
-        if (!utils::has_prefix(id, "altv.")) continue;
-        if (!ValidateNuGet(httpClient, id, version)) {
-            return false;
-        }
-    }
-    
     return true;
 }
 
-
-bool CoreClr::ValidateNuGets(alt::IHttpClient* httpClient) {
+void CoreClr::DownloadNuGet(alt::IHttpClient* httpClient, nlohmann::json json, Progress& progress)
+{
     if (!_nuget) _nuget.emplace(httpClient);
-    const auto librariesDirectoryPath = GetLibrariesDirectoryPath();
-    if (!fs::exists(librariesDirectoryPath)) return false;
-    
-    const auto version = GetLatestNugetVersion(httpClient, "altv.net.client");
-    const auto catalog = _nuget->GetCatalog("altv.net.client", version);
-    if (!ValidateNuGet(httpClient, "altv.net.client", version, catalog)) {
-        return false;
-    }
-
-    return true;
-}
-
-void CoreClr::DownloadNuGet(alt::IHttpClient* httpClient, const std::string& packageName, const std::string& version, nlohmann::json json) {
-    if (!_nuget) _nuget.emplace(httpClient);
+    const auto packageName = json["id"].get<std::string>();
+    const auto version = json["version"].get<std::string>() ;
     cs::Log::Info << "Downloading NuGet package " << packageName << " " << version << cs::Log::Endl;
-    
-    if (json == nullptr) json = _nuget->GetCatalog(packageName, version);
     
     auto librariesDirectoryPath = GetLibrariesDirectoryPath();
     if (!fs::exists(librariesDirectoryPath)) fs::create_directories(librariesDirectoryPath);
     const auto nupkgPath = librariesDirectoryPath.append(packageName + ".nupkg");
+    // todo pass progress
     const auto content = _nuget->DownloadPackage(packageName, version);
     std::ofstream file(nupkgPath, std::ios::binary);
     file.write(content.data(), content.size());
     file.close();
-    
-    const auto dependencyGroup = json["dependencyGroups"][0];
-    if (!dependencyGroup.contains("dependencies")) return;
-    
-    const auto dependencies = dependencyGroup["dependencies"];
-    for (auto it = dependencies.begin(); it != dependencies.end(); ++it) {
-        auto id = it.value()["id"].get<std::string>();
-        utils::to_lower(id);
-        
-        if (!utils::has_prefix(id, "altv.")) continue;
-        DownloadNuGet(httpClient, id, version);
-    }
 }
 
-void CoreClr::DownloadNuGets(alt::IHttpClient* httpClient) {
-    if (!_nuget) _nuget.emplace(httpClient);
-    
-    const auto librariesDirectoryPath = GetLibrariesDirectoryPath();
-    if (!fs::exists(librariesDirectoryPath)) fs::create_directories(librariesDirectoryPath);
-    
-    const auto version = GetLatestNugetVersion(httpClient, "altv.net.client");
-    const auto catalog = _nuget->GetCatalog("altv.net.client", version);
-    DownloadNuGet(httpClient, "altv.net.client", version, catalog);
-}
-
-void CoreClr::Update() {
+void CoreClr::Update(progressfn_t progressFn, int attempt) {
     const auto httpClient = _core->CreateHttpClient(nullptr);
-
+    
     static auto url = GetBaseCdnUrl() + "update.json";
     const auto updateFile = utils::download_file_sync(httpClient, url);
     const auto updateJson = nlohmann::json::parse(updateFile.body);
+    const auto sizeList = updateJson["sizeList"];
+
+    std::map<std::string, nlohmann::json> nugets;
+    GetRequiredNugets(httpClient, "altv.net.client", nugets);
+
+    float runtimeSize = 0;
+    for (const auto& item : sizeList.items())
+        if (utils::has_prefix(item.key(), "runtime/"))
+            runtimeSize += item.value().get<float>();
+    float hostSize = sizeList[host_dll_name].get<float>();
+    float totalSize = runtimeSize + hostSize;
+    for (auto& [key, value] : nugets)
+        totalSize += value["packageSize"].get<float>();
+
+    float validated = 0;
+    Progress validationProgress { ValidatingRuntime, totalSize, 0, progressFn };
+
+    auto runtimeValid = ValidateRuntime(updateJson, validationProgress);
+    validationProgress.current = validated += runtimeSize;
+    validationProgress.Update();
+
+    bool hostValid = ValidateHost(updateJson);
+    validationProgress.current = validated += hostSize;
+    validationProgress.Update();
+
+    std::vector<nlohmann::json> invalidNugets{};
     
-    auto attempt = 0;
-    while (!ValidateRuntime(updateJson, httpClient)) {
-        if (attempt++ >= 3) throw std::runtime_error("Failed to confirm CoreCLR download after " + std::to_string(attempt) + " attempts");
-        try {
-            DownloadRuntime(httpClient);
-        } catch(const std::exception& e) {
-            cs::Log::Error << "Failed to download CoreCLR: " << e.what() << cs::Log::Endl;
-        }
-    }
-    
-    attempt = 0;
-    while (!ValidateHost(updateJson)) {
-        if (attempt++ >= 3) throw std::runtime_error("Failed to confirm Host download after " + std::to_string(attempt) + " attempts");
-        try {
-            DownloadHost(httpClient);
-        } catch(const std::exception& e) {
-            cs::Log::Error << "Failed to download Host: " << e.what() << cs::Log::Endl;
-        }
+    for (auto& [key, value] : nugets)
+    {
+        if (!ValidateNuGet(httpClient, value)) invalidNugets.push_back(value);
+        validationProgress.current = validated += value["packageSize"].get<float>();
+        validationProgress.Update();
     }
 
-    if (sandbox) {
-        attempt = 0;
-        while (!ValidateNuGets(httpClient)) {
-            if (attempt++ >= 3) throw std::runtime_error("Failed to confirm NuGet download after " + std::to_string(attempt) + " attempts");
-            try {
-                DownloadNuGets(httpClient);
-            } catch(const std::exception& e) {
-                cs::Log::Error << "Failed to download NuGets: " << e.what() << cs::Log::Endl;
-            }
-        }
+    if (runtimeValid && hostValid && invalidNugets.empty()) return;
+    if (attempt >= 3) throw std::runtime_error("Failed to confirm CoreCLR update after " + std::to_string(attempt) + " attempts");
+
+
+    float downloadSize = 0;
+    if (!runtimeValid) downloadSize += sizeList["runtime.zip"].get<float>();
+    if (!hostValid) downloadSize += hostSize;
+    for (auto nuget : invalidNugets)
+        downloadSize += nuget["packageSize"].get<float>();
+    float downloaded = 0;
+    
+    Progress downloadProgress { DownloadingRuntime, downloadSize, 0, progressFn };
+
+    if (!runtimeValid)
+    {
+        DownloadRuntime(httpClient, downloadProgress);
+        downloadProgress.current = downloaded += sizeList["runtime.zip"].get<float>();
+        downloadProgress.Update();
     }
+
+    if (!hostValid)
+    {
+        DownloadHost(httpClient, downloadProgress);
+        downloadProgress.current = downloaded += hostSize;
+        downloadProgress.Update();
+    }
+
+    for (auto nuget : invalidNugets)
+    {
+        DownloadNuGet(httpClient, nuget, downloadProgress);
+        downloadProgress.current = downloaded += nuget["packageSize"].get<float>();
+        downloadProgress.Update();
+    }
+
+    Update(progressFn, attempt + 1);
 }

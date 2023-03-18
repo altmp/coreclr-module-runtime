@@ -21,12 +21,6 @@ bool CSharpResourceImpl::Start()
 {
     cs::Log::Info << "Starting resource" << cs::Log::Endl;
     ResetDelegates();
-    try {
-        runtime->clr.Initialize();
-    } catch(std::runtime_error& e) {
-        cs::Log::Error << "Failed to initialize CLR: " << e.what() << cs::Log::Endl;
-        abort();
-    }
     resource->EnableNatives();
     auto scope = resource->PushNativesScope();
     return CoreClr::StartResource(resource, core);
@@ -496,6 +490,8 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
             OnCreateObjectDelegate(altObject, altObject->GetID());
             break;
         }
+    case alt::IBaseObject::Type::LOCAL_PLAYER:
+        break;
     default:
         {
             std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) <<
@@ -564,6 +560,8 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
             OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
             break;
         }
+    case alt::IBaseObject::Type::LOCAL_PLAYER:
+        break;
     default:
         {
             std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) <<
