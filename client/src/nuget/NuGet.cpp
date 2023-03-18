@@ -30,7 +30,9 @@ std::vector<std::string> NuGet::GetPackageVersions(const std::string& package) {
     return json["versions"].get<std::vector<std::string>>();
 }
 
-nlohmann::json NuGet::GetCatalog(const std::string& package, const std::string& version) {
+nlohmann::json NuGet::GetCatalog(std::string package, const std::string& version) {
+    utils::to_lower(package);
+    
     static std::string url = GetIndexUrl("RegistrationsBaseUrl");
     auto data = utils::download_file_sync(_httpClient, url + package + "/" + version + ".json");
     if (data.statusCode != 200) {
@@ -44,7 +46,9 @@ nlohmann::json NuGet::GetCatalog(const std::string& package, const std::string& 
     return nlohmann::json::parse(catalogData.body);
 }
 
-std::string NuGet::DownloadPackage(const std::string& package, const std::string& version) {
+std::string NuGet::DownloadPackage(std::string package, const std::string& version) {
+    utils::to_lower(package);
+    
     static std::string url = GetIndexUrl("PackageBaseAddress/3.0.0");
     auto data = utils::download_file_sync(_httpClient, url + package + "/" + version + "/" + package + "." + version + ".nupkg");
     if (data.statusCode != 200) {
