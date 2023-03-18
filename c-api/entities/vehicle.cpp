@@ -646,7 +646,7 @@ void Vehicle_AttachToEntity(alt::IVehicle* vehicle, alt::IEntity* entity, int16_
     vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
 }
 
-void Vehicle_AttachToEntity_BoneString(alt::IVehicle* vehicle, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot) 
+void Vehicle_AttachToEntity_BoneString(alt::IVehicle* vehicle, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
 {
     alt::Position position{pos.x, pos.y, pos.z};
     alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
@@ -817,7 +817,7 @@ uint8_t Vehicle_GetLightState(alt::IVehicle* vehicle) {
 void Vehicle_SetLightState(alt::IVehicle* vehicle, uint8_t value) {
     vehicle->SetLightState(value);
 }
-    
+
 uint8_t Vehicle_HasTimedExplosion(alt::IVehicle* vehicle) {
     return vehicle->HasTimedExplosion();
 }
@@ -893,20 +893,20 @@ void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t state) {
 #endif
 
 #ifdef ALT_CLIENT_API
-uint16_t Vehicle_GetGear(alt::IVehicle* vehicle)
+uint16_t Vehicle_GetCurrentGear(alt::IVehicle* vehicle)
 {
     return vehicle->GetCurrentGear();
 }
 
-void Vehicle_SetGear(alt::IVehicle* vehicle, uint16_t value) {
+void Vehicle_SetCurrentGear(alt::IVehicle* vehicle, uint16_t value) {
     vehicle->SetCurrentGear(value);
 }
 
-uint8_t Vehicle_GetIndicatorLights(alt::IVehicle* vehicle) {
+uint8_t Vehicle_GetLightsIndicator(alt::IVehicle* vehicle) {
     return vehicle->GetLightsIndicator();
 }
 
-void Vehicle_SetIndicatorLights(alt::IVehicle* vehicle, uint8_t value) {
+void Vehicle_SetLightsIndicator(alt::IVehicle* vehicle, uint8_t value) {
     vehicle->SetLightsIndicator(value);
 }
 
@@ -918,12 +918,76 @@ void Vehicle_SetMaxGear(alt::IVehicle* vehicle, uint16_t value) {
     vehicle->SetMaxGear(value);
 }
 
-float Vehicle_GetRPM(alt::IVehicle* vehicle) {
+float Vehicle_GetCurrentRPM(alt::IVehicle* vehicle) {
     return vehicle->GetCurrentRPM();
 }
 
 uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle) {
     return vehicle->GetSeatCount();
+}
+
+void Vehícle_ToggleTaxiLight(alt::IVehicle* vehicle, uint8_t state) {
+    vehicle->ToggleTaxiLight(state);
+}
+
+uint8_t Vehicle_IsTaxiLightOn(alt::IVehicle* vehicle) {
+    return vehicle->IsTaxiLightOn();
+}
+
+float Vehicle_GetWheelCamber(alt::IVehicle* vehicle, uint8_t wheel) {
+    return vehicle->GetWheelCamber(wheel);
+}
+
+void Vehicle_SetWheelCamber(alt::IVehicle* vehicle, uint8_t wheel, float value) {
+    vehicle->SetWheelCamber(wheel, value);
+}
+
+float Vehicle_GetWheelTrackWidth(alt::IVehicle* vehicle, uint8_t wheel) {
+    return vehicle->GetWheelTrackWidth(wheel);
+}
+
+void Vehicle_SetWheelTrackWidth(alt::IVehicle* vehicle, uint8_t wheel, float value) {
+    vehicle->SetWheelTrackWidth(wheel, value);
+}
+
+float Vehicle_GetWheelHeight(alt::IVehicle* vehicle, uint8_t wheel) {
+    return vehicle->GetWheelHeight(wheel);
+}
+
+void Vehicle_SetWheelHeight(alt::IVehicle* vehicle, uint8_t wheel, float value) {
+    vehicle->SetWheelHeight(wheel, value);
+}
+
+float Vehicle_GetWheelTyreRadius(alt::IVehicle* vehicle, uint8_t wheel) {
+    return vehicle->GetWheelTyreRadius(wheel);
+}
+
+void Vehicle_SetWheelTyreRadius(alt::IVehicle* vehicle, uint8_t wheel, float value) {
+    vehicle->SetWheelTyreRadius(wheel, value);
+}
+
+float Vehicle_GetWheelRimRadius(alt::IVehicle* vehicle, uint8_t wheel) {
+    return vehicle->GetWheelRimRadius(wheel);
+}
+
+void Vehicle_SetWheelRimRadius(alt::IVehicle* vehicle, uint8_t wheel, float value) {
+    vehicle->SetWheelRimRadius(wheel, value);
+}
+
+float Vehicle_GetWheelTyreWidth(alt::IVehicle* vehicle, uint8_t wheel) {
+    return vehicle->GetWheelTyreWidth(wheel);
+}
+
+void Vehicle_SetWheelTyreWidth(alt::IVehicle* vehicle, uint8_t wheel, float value) {
+    vehicle->SetWheelTyreWidth(wheel, value);
+}
+
+uint32_t Vehicle_GetWheelSurfaceMaterial(alt::IVehicle* vehicle, uint8_t wheel) {
+    return vehicle->GetWheelSurfaceMaterial(wheel);
+}
+
+uint8_t Vehicle_GetOccupiedSeatsCount(alt::IVehicle* vehicle) {
+    return vehicle->GetOccupiedSeatsCount();
 }
 
 float Vehicle_GetWheelSpeed(alt::IVehicle* vehicle) {
@@ -936,7 +1000,7 @@ void Vehicle_GetSpeedVector(alt::IVehicle* vehicle, vector3_t& vector) {
     vector.y = speed[1];
     vector.z = speed[2];
 }
-    
+
 float Vehicle_GetEngineTemperature(alt::IVehicle* vehicle) {
     return vehicle->GetEngineTemperature();
 }
@@ -1003,10 +1067,6 @@ void Vehicle_SetBatteryLightState(alt::IVehicle* vehicle, uint8_t state) {
 
 void Vehicle_ResetDashboardLights(alt::IVehicle* vehicle) {
     vehicle->ResetDashboardLights();
-}
-
-uint32_t Vehicle_GetWheelSurfaceMaterial(alt::IVehicle* vehicle, uint8_t wheel) {
-    return vehicle->GetWheelSurfaceMaterial(wheel);
 }
 
 void Vehicle_ResetHandling(alt::IVehicle* vehicle) {
