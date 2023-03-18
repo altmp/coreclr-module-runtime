@@ -21,7 +21,7 @@ inline const std::string host_dll_name = "AltV.Net.Client.Host.dll";
 
 std::string CoreClr::GetLatestNugetVersion(alt::IHttpClient* httpClient, const std::string& packageName) {
     if (!_nuget) _nuget.emplace(httpClient);
-    const auto branch = std::string("dev"); // todo change
+    const auto branch = _core->GetBranch();
     const auto versions = _nuget->GetPackageVersions(packageName);
     for (auto it = versions.rbegin(); it != versions.rend(); ++it) {
         if (branch == "release") {
