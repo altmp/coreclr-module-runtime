@@ -41,6 +41,8 @@ void CoreClr::GetRequiredNugets(alt::IHttpClient* httpClient, const std::string&
     cs::Log::Info << "Fetching NuGet " << nuget << cs::Log::Endl;
     const auto version = GetLatestNugetVersion(httpClient, nuget);
     const auto json = _nuget->GetCatalog(nuget, version);
+    const auto package = json["id"].get<std::string>();
+    vec[package] = json;
     
     const auto dependencyGroup = json["dependencyGroups"][0];
     if (!dependencyGroup.contains("dependencies")) return;
