@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cpp-sdk/ICore.h"
+#include "bone_info.h"
 
 struct ClrVehicleModelInfo {
     char* title = nullptr;
@@ -17,8 +18,9 @@ struct ClrVehicleModelInfo {
     uint16_t extras;
     uint16_t defaultExtras;
     bool modkits[2];
+    uint8_t hasAutoAttachTrailer;
     
-    alt::BoneInfo* bones;
+    ClrBoneInfo* bones;
     uint32_t boneSize;
 
     ClrVehicleModelInfo() = default;
@@ -34,7 +36,8 @@ struct ClrVehicleModelInfo {
             interiorColor(info.interiorColor),
             dashboardColor(info.dashboardColor),
             extras(info.extras),
-            defaultExtras(info.defaultExtras) {
+            defaultExtras(info.defaultExtras),
+            hasAutoAttachTrailer(info.hasAutoAttachTrailer) {
 
         size_t modkitsSize = std::size(info.modkits);
         for(size_t i = 0; i < modkitsSize; i++)
@@ -44,12 +47,12 @@ struct ClrVehicleModelInfo {
 
         title = new char[info.title.length() + 1];
         strcpy(title, info.title.c_str());
-
-        auto vehModelBones = info.bones;
+        
+        const auto vehModelBones = info.bones;
         boneSize = vehModelBones.size();
-        bones = new alt::BoneInfo[boneSize];
-        for (auto i = 0; i < boneSize; i++) {
-            bones[i] = vehModelBones[i];
+        bones = new ClrBoneInfo[boneSize];
+        for (uint32_t i = 0; i < boneSize; i++) {
+            bones[i] = ClrBoneInfo(vehModelBones[i]);
         }
     }
 
