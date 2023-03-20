@@ -78,9 +78,15 @@ EXPORT_SHARED uint8_t Core_GetEventEnumSize();
 
 EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
 EXPORT_SERVER void Core_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
+
 EXPORT_SERVER void Core_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
-EXPORT_SERVER void Core_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
 EXPORT_SERVER void Core_TriggerClientEventForSome(alt::ICore* server, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[], int argsSize);
+EXPORT_SERVER void Core_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
+
+EXPORT_SERVER void Core_TriggerClientEventUnreliable(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
+EXPORT_SERVER void Core_TriggerClientEventUnreliableForSome(alt::ICore* server, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[], int argsSize);
+EXPORT_SERVER void Core_TriggerClientEventUnreliableForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
+
 EXPORT_SERVER alt::IVehicle* Core_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 #ifdef ALT_SERVER_API
 EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius, float height, rgba_t color);
@@ -131,6 +137,7 @@ EXPORT_CLIENT alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::I
 
 EXPORT_CLIENT void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* webview, const char* event, alt::MValueConst* args[], int size);
 EXPORT_CLIENT void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size);
+EXPORT_CLIENT void Core_TriggerServerEventUnreliable(alt::ICore* core, const char* event, alt::MValueConst* args[], int size);
 
 EXPORT_CLIENT void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state);
 EXPORT_CLIENT uint8_t Core_IsCursorVisible(alt::ICore* core, alt::IResource* resource);

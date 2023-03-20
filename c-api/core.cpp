@@ -281,8 +281,7 @@ void Core_TriggerServerEvent(alt::ICore* core, const char* ev, alt::MValueConst*
     core->TriggerLocalEvent(ev, mValues);
 }
 
-void
-Core_TriggerClientEvent(alt::ICore* core, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
+void Core_TriggerClientEvent(alt::ICore* core, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
                           int size) {
     alt::MValueArgs mValues = alt::MValueArgs(size);
     for (int i = 0; i < size; i++) {
@@ -291,18 +290,7 @@ Core_TriggerClientEvent(alt::ICore* core, alt::IPlayer* target, const char* ev, 
     core->TriggerClientEvent(target, ev, mValues);
 }
 
-void
-Core_TriggerClientEventForAll(alt::ICore* core, const char* ev, alt::MValueConst* args[],
-    int size) {
-    alt::MValueArgs mValues = alt::MValueArgs(size);
-    for (int i = 0; i < size; i++) {
-        ToMValueArg(mValues, core, args[i], i);
-    }
-    core->TriggerClientEventForAll(ev, mValues);
-}
-
-void
-Core_TriggerClientEventForSome(alt::ICore* core, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[],
+void Core_TriggerClientEventForSome(alt::ICore* core, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[],
     int argsSize) {
     std::vector<alt::IPlayer*> clients(targetsSize);
     for (int i = 0; i < targetsSize; i++)
@@ -314,6 +302,47 @@ Core_TriggerClientEventForSome(alt::ICore* core, alt::IPlayer* targets[], int ta
         ToMValueArg(mValues, core, args[i], i);
     }
     core->TriggerClientEvent(clients, ev, mValues);
+}
+
+void Core_TriggerClientEventForAll(alt::ICore* core, const char* ev, alt::MValueConst* args[],
+    int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerClientEventForAll(ev, mValues);
+}
+
+void Core_TriggerClientEventUnreliable(alt::ICore* core, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
+                          int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerClientEventUnreliable(target, ev, mValues);
+}
+
+void Core_TriggerClientEventUnreliableForSome(alt::ICore* core, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[],
+    int argsSize) {
+    std::vector<alt::IPlayer*> clients(targetsSize);
+    for (int i = 0; i < targetsSize; i++)
+    {
+        clients[i] = targets[i];
+    }
+    alt::MValueArgs mValues = alt::MValueArgs(argsSize);
+    for (int i = 0; i < argsSize; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerClientEventUnreliable(clients, ev, mValues);
+}
+
+void Core_TriggerClientEventUnreliableForAll(alt::ICore* core, const char* ev, alt::MValueConst* args[],
+    int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerClientEventUnreliableForAll(ev, mValues);
 }
 
 alt::IVehicle*
@@ -602,6 +631,14 @@ void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueCon
         ToMValueArg(mValues, core, args[i], i);
     }
     core->TriggerServerEvent(event, mValues);
+}
+
+void Core_TriggerServerEventUnreliable(alt::ICore* core, const char* event, alt::MValueConst* args[], int size) {
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerServerEventUnreliable(event, mValues);
 }
 
 void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state) {

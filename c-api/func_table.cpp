@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 10988236633214279111UL;
+inline uint64_t capiHash = 4106694118447534147UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -148,6 +148,7 @@ inline uint64_t capiHashes[] = {
     6777794076841720469UL,
     9233489201974974422UL,
     4092140335578989631UL,
+    718150788563346996UL,
     3268039739443301173UL,
     17753040748478874447UL,
     5389506501733691988UL,
@@ -1028,6 +1029,9 @@ inline uint64_t capiHashes[] = {
     12171087854734907223UL,
     9104514502849926149UL,
     5959099227636084384UL,
+    4821179867491879744UL,
+    9578627964183564598UL,
+    14557546483922608997UL,
     4092140335578989631UL,
     10985243845337635807UL,
     12452941389796187079UL,
@@ -1484,6 +1488,7 @@ inline void* capiPointers[] = {
     (void*) Core_ToggleRmlControls,
     (void*) Core_ToggleVoiceControls,
     (void*) Core_TriggerServerEvent,
+    (void*) Core_TriggerServerEventUnreliable,
     (void*) Core_TriggerWebViewEvent,
     (void*) Core_UnloadYtyp,
     (void*) Core_WorldToScreen,
@@ -2364,6 +2369,9 @@ inline void* capiPointers[] = {
     (void*) Core_TriggerClientEvent,
     (void*) Core_TriggerClientEventForAll,
     (void*) Core_TriggerClientEventForSome,
+    (void*) Core_TriggerClientEventUnreliable,
+    (void*) Core_TriggerClientEventUnreliableForAll,
+    (void*) Core_TriggerClientEventUnreliableForSome,
     (void*) Core_TriggerServerEvent,
     (void*) Entity_DeleteStreamSyncedMetaData,
     (void*) Entity_DeleteSyncedMetaData,
