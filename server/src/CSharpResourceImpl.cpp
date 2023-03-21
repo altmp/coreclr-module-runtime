@@ -67,6 +67,7 @@ void CSharpResourceImpl::ResetDelegates()
     OnVehicleDetachDelegate = [](auto var, auto var2, auto var3) {};
     OnVehicleDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
         auto var8, auto var9) {};
+    OnVehicleHornDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnConnectionQueueAddDelegate = [](auto var){};
     OnConnectionQueueRemoveDelegate = [](auto var){};
     OnServerStartedDelegate = []() {};
@@ -597,6 +598,16 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                                     vehicleDamageEvent->GetDamagedWith());
             break;
         }
+    case alt::CEvent::Type::VEHICLE_HORN:
+        {
+            auto vehicleHornEvent = dynamic_cast<const alt::CVehicleHornEvent*>(ev);
+
+            OnVehicleHornDelegate(vehicleHornEvent,
+                                  vehicleHornEvent->GetTarget(),
+                                  vehicleHornEvent->GetReporter(),
+                                  vehicleHornEvent->GetToggle());
+            break;
+        }
     case alt::CEvent::Type::CONNECTION_QUEUE_ADD:
         {
             auto connectionQueueAddEvent = dynamic_cast<const alt::CConnectionQueueAddEvent*>(ev);
@@ -1040,6 +1051,11 @@ void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
                                                  VehicleDamageDelegate_t delegate)
 {
     resource->OnVehicleDamageDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVehicleHornDelegate(CSharpResourceImpl* resource, VehicleHornDelegate_t delegate)
+{
+    resource->OnVehicleHornDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl* resource,

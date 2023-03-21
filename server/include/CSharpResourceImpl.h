@@ -195,6 +195,8 @@ typedef void (* VehicleDetachDelegate_t)(const alt::CEvent* event, alt::IVehicle
 typedef void (* VehicleDamageDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, void* attacker, alt::IBaseObject::Type attackerBaseObjectType,
     uint32_t bodyHealthDamage, uint32_t additionalBodyHealthDamage, uint32_t engineHealthDamage, uint32_t petrolTankDamage, uint32_t weaponHash);
 
+typedef void (* VehicleHornDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, alt::IPlayer* reporter, bool toggle);
+
 typedef void (* ConnectionQueueAddDelegate_t)(alt::IConnectionInfo* connectionInfo);
 
 typedef void (* ConnectionQueueRemoveDelegate_t)(alt::IConnectionInfo* connectionInfo);
@@ -334,6 +336,8 @@ public:
     VehicleDetachDelegate_t OnVehicleDetachDelegate = nullptr;
 
     VehicleDamageDelegate_t OnVehicleDamageDelegate = nullptr;
+
+    VehicleHornDelegate_t OnVehicleHornDelegate = nullptr;
 
     ConnectionQueueAddDelegate_t OnConnectionQueueAddDelegate = nullptr;
 
@@ -544,6 +548,9 @@ EXPORT void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* reso
 
 EXPORT void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
     VehicleDamageDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetVehicleHornDelegate(CSharpResourceImpl* resource,
+    VehicleHornDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl* resource,
                                                       ConnectionQueueAddDelegate_t delegate);
