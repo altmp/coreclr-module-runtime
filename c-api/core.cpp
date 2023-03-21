@@ -532,6 +532,73 @@ ClrConfigNodeData* Core_GetServerConfig(alt::ICore* core) {
 void Core_SetWorldProfiler(alt::ICore* core, uint8_t state) {
     core->SetWorldProfiler(state);
 }
+
+uint64_t Core_GetEntitiesInDimensionCount(alt::ICore* core, int32_t dimension, uint64_t allowedTypes) {
+    return core->GetEntitiesInDimension(dimension, allowedTypes).size();
+}
+
+uint64_t Core_GetEntitiesInRangeCount(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, uint64_t allowedTypes) {
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    return core->GetEntitiesInRange(pos, range, dimension, allowedTypes).size();
+}
+
+uint64_t Core_GetClosestEntitiesCount(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, int32_t limit, uint64_t allowedTypes) {
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    return core->GetClosestEntities(pos, range, dimension, limit, allowedTypes).size();
+}
+
+void Core_GetEntitiesInDimension(alt::ICore* core, int32_t dimension, uint64_t allowedTypes, alt::IBaseObject* entities[], uint8_t types[], uint64_t size) {
+    auto entitiesArray = core->GetEntitiesInDimension(dimension, allowedTypes);
+    if (entitiesArray.size() < size) {
+        size = entitiesArray.size();
+    }
+
+    for (uint64_t i = 0; i < size; i++) {
+        entities[i] = entitiesArray[i];
+        types[i] = (uint8_t) entitiesArray[i]->GetType();
+    }
+}
+
+void Core_GetEntitiesInRange(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, uint64_t allowedTypes, alt::IBaseObject* entities[], uint8_t types[], uint64_t size) {
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    auto entitiesArray = core->GetEntitiesInRange(pos, range, dimension, allowedTypes);
+    if (entitiesArray.size() < size) {
+        size = entitiesArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        entities[i] = entitiesArray[i];
+        types[i] = (uint8_t) entitiesArray[i]->GetType();
+    }
+}
+
+void Core_GetClosestEntities(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, int32_t limit, uint64_t allowedTypes, alt::IBaseObject* entities[], uint8_t types[], uint64_t size) {
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    auto entitiesArray = core->GetClosestEntities(pos, range, dimension, limit, allowedTypes);
+    if (entitiesArray.size() < size) {
+        size = entitiesArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        entities[i] = entitiesArray[i];
+        types[i] = (uint8_t) entitiesArray[i]->GetType();
+    }
+}
+
 #endif
 
 #ifdef ALT_CLIENT_API

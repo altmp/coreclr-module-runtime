@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 4106694118447534147UL;
+inline uint64_t capiHash = 12040517196746051839UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1012,6 +1012,12 @@ inline uint64_t capiHashes[] = {
     16312284234900575747UL,
     14452794280175707515UL,
     10333270135403224879UL,
+    4559218685940666205UL,
+    419502286495548608UL,
+    4124119004202747553UL,
+    12784287737200780200UL,
+    12414549446254212526UL,
+    6795936790869684439UL,
     15652019729912249391UL,
     7718568480211772772UL,
     12125306445698504265UL,
@@ -2352,6 +2358,12 @@ inline void* capiPointers[] = {
     (void*) Core_DestroyColShape,
     (void*) Core_DestroyVehicle,
     (void*) Core_DestroyVoiceChannel,
+    (void*) Core_GetClosestEntities,
+    (void*) Core_GetClosestEntitiesCount,
+    (void*) Core_GetEntitiesInDimension,
+    (void*) Core_GetEntitiesInDimensionCount,
+    (void*) Core_GetEntitiesInRange,
+    (void*) Core_GetEntitiesInRangeCount,
     (void*) Core_GetNetTime,
     (void*) Core_GetPedModelInfo,
     (void*) Core_GetRootDirectory,
