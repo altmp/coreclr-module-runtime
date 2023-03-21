@@ -197,6 +197,8 @@ typedef void (* VehicleDamageDelegate_t)(const alt::CEvent* event, alt::IVehicle
 
 typedef void (* VehicleHornDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, alt::IPlayer* reporter, bool toggle);
 
+typedef void (* VehicleSirenDelegate_t)( alt::IVehicle* target, bool toggle);
+
 typedef void (* ConnectionQueueAddDelegate_t)(alt::IConnectionInfo* connectionInfo);
 
 typedef void (* ConnectionQueueRemoveDelegate_t)(alt::IConnectionInfo* connectionInfo);
@@ -338,6 +340,8 @@ public:
     VehicleDamageDelegate_t OnVehicleDamageDelegate = nullptr;
 
     VehicleHornDelegate_t OnVehicleHornDelegate = nullptr;
+
+    VehicleSirenDelegate_t OnVehicleSirenDelegate = nullptr;
 
     ConnectionQueueAddDelegate_t OnConnectionQueueAddDelegate = nullptr;
 
@@ -549,8 +553,9 @@ EXPORT void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* reso
 EXPORT void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
     VehicleDamageDelegate_t delegate);
 
-EXPORT void CSharpResourceImpl_SetVehicleHornDelegate(CSharpResourceImpl* resource,
-    VehicleHornDelegate_t delegate);
+EXPORT void CSharpResourceImpl_SetVehicleHornDelegate(CSharpResourceImpl* resource, VehicleHornDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetVehicleSirenDelegate(CSharpResourceImpl* resource, VehicleSirenDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl* resource,
                                                       ConnectionQueueAddDelegate_t delegate);
