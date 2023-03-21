@@ -213,6 +213,8 @@ typedef void (* PlayerChangeAnimationDelegate_t)(void* target, uint32_t oldDict,
 
 typedef void (* PlayerChangeInteriorDelegate_t)(void* target, uint32_t oldIntLoc, uint32_t newIntLoc);
 
+typedef void (* PlayerSpawnDelegate_t)(alt::IPlayer* player);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
 
@@ -357,6 +359,7 @@ public:
 
     PlayerChangeInteriorDelegate_t OnPlayerChangeInteriorDelegate = nullptr;
 
+    PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -577,3 +580,5 @@ EXPORT void CSharpResourceImpl_SetPlayerChangeAnimationDelegate(CSharpResourceIm
 
 EXPORT void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(CSharpResourceImpl* resource,
                                                             PlayerChangeInteriorDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, PlayerSpawnDelegate_t delegate);

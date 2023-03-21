@@ -74,6 +74,7 @@ void CSharpResourceImpl::ResetDelegates()
     OnServerStartedDelegate = []() {};
     OnPlayerRequestControlDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerDimensionChangeDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerSpawnDelegate = [](auto var) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -654,6 +655,13 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                                             playerDimensionChangeEvent->GetNewDimension());
             break;
         }
+    case alt::CEvent::Type::PLAYER_SPAWN:
+        {
+            auto playerSpawnEvent = dynamic_cast<const alt::CPlayerSpawnEvent*>(ev);
+
+            OnPlayerSpawnDelegate(playerSpawnEvent->GetPlayer());
+            break;
+        }
     default:
         {
             std::cout << "Unhandled server event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -1112,6 +1120,11 @@ void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(CSharpResourceImpl* reso
                                                         PlayerChangeInteriorDelegate_t delegate)
 {
     resource->OnPlayerChangeInteriorDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, PlayerSpawnDelegate_t delegate)
+{
+    resource->OnPlayerSpawnDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
