@@ -175,9 +175,11 @@ void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
     switch (entity->GetType()) {
         case alt::IBaseObject::Type::PLAYER:
         case alt::IBaseObject::Type::LOCAL_PLAYER:
-            return dynamic_cast<alt::IPlayer*>(entity);
-        case alt::IBaseObject::Type::VEHICLE:
-            return dynamic_cast<alt::IVehicle*>(entity);
+        return dynamic_cast<alt::IPlayer*>(entity);
+    case alt::IBaseObject::Type::VEHICLE:
+        return dynamic_cast<alt::IVehicle*>(entity);
+    case alt::IBaseObject::Type::PED:
+        return dynamic_cast<alt::IPed*>(entity);
     }
     return nullptr;
 }
@@ -360,6 +362,25 @@ Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t 
         id = vehicle->GetID();
     }
     return vehicle;
+}
+
+alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint16_t &id)
+{
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+
+    alt::Rotation rotation;
+    rotation.roll = rot.roll;
+    rotation.pitch = rot.pitch;
+    rotation.yaw = rot.yaw;
+
+    auto ped = core->CreatePed(model, position, rotation);
+    if (ped != nullptr) {
+        id = ped->GetID();
+    }
+    return ped;
 }
 
 alt::ICheckpoint*
@@ -1177,6 +1198,8 @@ void* Core_GetFocusOverrideEntity(alt::ICore* core, uint8_t& type) {
             return dynamic_cast<alt::IPlayer*>(entity);
         case alt::IBaseObject::Type::VEHICLE:
             return dynamic_cast<alt::IVehicle*>(entity);
+        case alt::IBaseObject::Type::PED:
+            return dynamic_cast<alt::IPed*>(entity);
         default:
             return nullptr;
     }

@@ -54,6 +54,9 @@ public:
     CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
     RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
 
+    CreatePedDelegate_t OnCreatePedDelegate = nullptr;
+    RemovePedDelegate_t OnRemovePedDelegate = nullptr;
+
     PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
     PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
     PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate = nullptr;
@@ -94,7 +97,7 @@ public:
     PlayerWeaponChangeDelegate_t OnPlayerWeaponChangeDelegate = nullptr;
 
     WeaponDamageDelegate_t OnWeaponDamageDelegate = nullptr;
-    
+
     CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
     CreateWebViewDelegate_t OnCreateWebViewDelegate = nullptr;
     CreateCheckpointDelegate_t OnCreateCheckpointDelegate = nullptr;
@@ -103,7 +106,7 @@ public:
     CreateAudioDelegate_t OnCreateAudioDelegate = nullptr;
     CreateRmlElementDelegate_t OnCreateRmlElementDelegate = nullptr;
     CreateRmlDocumentDelegate_t OnCreateRmlDocumentDelegate = nullptr;
-    
+
     RemoveBlipDelegate_t OnRemoveBlipDelegate = nullptr;
     RemoveWebViewDelegate_t OnRemoveWebViewDelegate = nullptr;
     RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate = nullptr;
@@ -112,7 +115,7 @@ public:
     RemoveAudioDelegate_t OnRemoveAudioDelegate = nullptr;
     RemoveRmlElementDelegate_t OnRemoveRmlElementDelegate = nullptr;
     RemoveRmlDocumentDelegate_t OnRemoveRmlDocumentDelegate = nullptr;
-    
+
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
     {

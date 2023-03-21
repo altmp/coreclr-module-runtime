@@ -88,6 +88,7 @@ EXPORT_SERVER void Core_TriggerClientEventUnreliableForSome(alt::ICore* server, 
 EXPORT_SERVER void Core_TriggerClientEventUnreliableForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
 
 EXPORT_SERVER alt::IVehicle* Core_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
+EXPORT_SERVER alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 #ifdef ALT_SERVER_API
 EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius, float height, rgba_t color);
 #endif

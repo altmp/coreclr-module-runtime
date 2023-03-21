@@ -123,6 +123,8 @@ void* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &typ
                 return dynamic_cast<alt::IPlayer*>(entity);
             case alt::IBaseObject::Type::VEHICLE:
                 return dynamic_cast<alt::IVehicle*>(entity);
+            case alt::IBaseObject::Type::PED:
+                return dynamic_cast<alt::IPed*>(entity);
             default:
                 return nullptr;
         }

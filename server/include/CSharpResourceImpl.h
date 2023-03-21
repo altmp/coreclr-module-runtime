@@ -140,6 +140,9 @@ typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, uint16_t id);
 
 typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle* vehicle);
 
+typedef void (* CreatePedDelegate_t)(alt::IPed* ped, uint16_t id);
+typedef void (* RemovePedDelegate_t)(alt::IPed* ped);
+
 typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip);
 
 typedef void (* RemoveBlipDelegate_t)(alt::IBlip* blip);
@@ -301,6 +304,10 @@ public:
 
     RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
 
+    CreatePedDelegate_t OnCreatePedDelegate = nullptr;
+
+    RemovePedDelegate_t OnRemovePedDelegate = nullptr;
+
     CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
 
     RemoveBlipDelegate_t OnRemoveBlipDelegate = nullptr;
@@ -403,6 +410,9 @@ public:
                 case alt::IBaseObject::Type::OBJECT:
                     this->cSharpResource->OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
                     break;
+                case alt::IBaseObject::Type::PED:
+                    this->cSharpResource->OnRemovePedDelegate(dynamic_cast<alt::IPed*>(object));
+                    break;
             }
         }
         delete this;
@@ -488,13 +498,19 @@ EXPORT void CSharpResourceImpl_SetCreateObjectDelegate(CSharpResourceImpl* resou
                                                        CreateObjectDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetRemoveObjectDelegate(CSharpResourceImpl* resource,
-                                                       RemoveObjectDelegate_t delegate);
+RemoveObjectDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetCreateVehicleDelegate(CSharpResourceImpl* resource,
                                                         CreateVehicleDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,
-                                                        RemoveVehicleDelegate_t delegate);
+RemoveVehicleDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreatePedDelegate(CSharpResourceImpl* resource,
+                                                        CreatePedDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemovePedDelegate(CSharpResourceImpl* resource,
+                                                        RemovePedDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetCreateBlipDelegate(CSharpResourceImpl* resource,
                                                      CreateBlipDelegate_t delegate);

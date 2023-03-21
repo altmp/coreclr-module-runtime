@@ -714,6 +714,12 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
                 OnCreateObjectDelegate(altObject, altObject->GetID());
                 break;
             }
+        case alt::IBaseObject::Type::PED:
+            {
+                const auto ped = dynamic_cast<alt::IPed*>(object);
+                OnCreatePedDelegate(ped, ped->GetID());
+                break;
+            }
         default:
             {
                 std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) << " for create base object got called" << std::endl;
@@ -762,6 +768,11 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
         case alt::IBaseObject::Type::OBJECT:
             {
                 OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
+                break;
+            }
+        case alt::IBaseObject::Type::PED:
+            {
+                OnRemovePedDelegate(dynamic_cast<alt::IPed*>(object));
                 break;
             }
         default:
@@ -948,6 +959,18 @@ void CSharpResourceImpl_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,
                                                  RemoveVehicleDelegate_t delegate)
 {
     resource->OnRemoveVehicleDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreatePedDelegate(CSharpResourceImpl* resource,
+                                                 CreatePedDelegate_t delegate)
+{
+    resource->OnCreatePedDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemovePedDelegate(CSharpResourceImpl* resource,
+                                                 RemovePedDelegate_t delegate)
+{
+    resource->OnRemovePedDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetCreateBlipDelegate(CSharpResourceImpl* resource,
@@ -1159,6 +1182,8 @@ void* CSharpResourceImpl::GetBaseObjectPointer(alt::IBaseObject* baseObject)
             return dynamic_cast<alt::IColShape*>(baseObject);
         case alt::IBaseObject::Type::CHECKPOINT:
             return dynamic_cast<alt::ICheckpoint*>(baseObject);
+        case alt::IBaseObject::Type::PED:
+            return dynamic_cast<alt::IPed*>(baseObject);
         default:
             return nullptr;
         }
@@ -1177,6 +1202,8 @@ void* CSharpResourceImpl::GetEntityPointer(alt::IEntity* entity)
             return dynamic_cast<alt::IPlayer*>(entity);
         case alt::IBaseObject::Type::VEHICLE:
             return dynamic_cast<alt::IVehicle*>(entity);
+        case alt::IBaseObject::Type::PED:
+            return dynamic_cast<alt::IPed*>(entity);
         default:
             return nullptr;
         }

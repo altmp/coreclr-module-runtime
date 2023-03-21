@@ -415,6 +415,8 @@ void *MValueConst_GetEntity(alt::MValueConst *mValueConst, alt::IBaseObject::Typ
                     return entityPointer->As<alt::IRmlDocument>();
                 case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
                     return entityPointer->As<alt::IWebSocketClient>();
+                case alt::IBaseObject::Type::PED:
+                    return entityPointer->As<alt::IPed>();
                 default:
                     return nullptr;
             }

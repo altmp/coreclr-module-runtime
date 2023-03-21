@@ -22,9 +22,10 @@ void* BaseObject_TryCache(alt::IBaseObject* baseObject) {
     switch (baseObject->GetType()) {
         case alt::IBaseObject::Type::PLAYER:
             return dynamic_cast<alt::IPlayer*>(new cache::CachedPlayer(dynamic_cast<alt::IPlayer*>(baseObject)));
-        case alt::IBaseObject::Type::VEHICLE: {
+        case alt::IBaseObject::Type::VEHICLE:
             return dynamic_cast<alt::IVehicle*>(new cache::CachedVehicle(dynamic_cast<alt::IVehicle*>(baseObject)));
-        }
+        case alt::IBaseObject::Type::PED:
+            return dynamic_cast<alt::IPed*>(new cache::CachedPed(dynamic_cast<alt::IPed*>(baseObject)));
         default:
             return nullptr;
     }

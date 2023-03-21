@@ -41,6 +41,9 @@ SetDelegate(RemoveObject);
 SetDelegate(CreateVehicle);
 SetDelegate(RemoveVehicle);
 
+SetDelegate(CreatePed);
+SetDelegate(RemovePed);
+
 SetDelegate(PlayerSpawn);
 SetDelegate(PlayerDisconnect);
 SetDelegate(PlayerEnterVehicle);
