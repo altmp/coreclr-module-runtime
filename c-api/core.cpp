@@ -154,6 +154,20 @@ void Core_GetVehicles(alt::ICore* core, alt::IVehicle* vehicles[], uint64_t size
     }
 }
 
+uint64_t Core_GetPedCount(alt::ICore* core) {
+    return core->GetPeds().size();
+}
+
+void Core_GetPeds(alt::ICore* core, alt::IPed* peds[], uint64_t size) {
+    auto pedsArray = core->GetPeds();
+    if (pedsArray.size() < size) {
+        size = pedsArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        peds[i] = pedsArray[i];
+    }
+}
+
 uint64_t Core_GetBlipCount(alt::ICore* core) {
     return core->GetBlips().size();
 }
