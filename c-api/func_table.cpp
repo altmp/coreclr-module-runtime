@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 8120081610297105567UL;
+inline uint64_t capiHash = 7788865723744184635UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -212,6 +212,7 @@ inline uint64_t capiHashes[] = {
     12568421593610200155UL,
     3313131202173863273UL,
     15282055500069881033UL,
+    8085309467174887077UL,
     14086618333811829142UL,
     15723203749368445676UL,
     15955613981878964089UL,
@@ -1592,6 +1593,7 @@ inline void* capiPointers[] = {
     (void*) Event_SetWebViewEventDelegate,
     (void*) Event_SetWindowFocusChangeDelegate,
     (void*) Event_SetWindowResolutionChangeDelegate,
+    (void*) Event_SetWorldObjectPositionChangeDelegate,
     (void*) FreeRmlElementArray,
     (void*) GetCachedAssembly,
     (void*) GetNativeFuncTable,

@@ -420,6 +420,17 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             break;
         }
 #pragma endregion
+    case alt::CEvent::Type::WORLD_OBJECT_POSITION_CHANGE:
+        {
+            auto worldObjectPositionChangeEvent = dynamic_cast<const alt::CWorldObjectPositionChangeEvent*>(ev);
+
+            auto oldPosition = worldObjectPositionChangeEvent->GetOldPosition();
+
+            OnWorldObjectPositionChangeDelegate(GetEntityPointer(worldObjectPositionChangeEvent->GetWorldObject()),
+                                                worldObjectPositionChangeEvent->GetWorldObject()->GetType(),
+                                                {oldPosition.x, oldPosition.y, oldPosition.z});
+            break;
+        }
     default:
         {
             std::cout << "Unhandled client event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -657,6 +668,8 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnWindowFocusChangeDelegate = [](auto var) {};
     OnWindowResolutionChangeDelegate = [](auto var, auto var2) {};
+
+    OnWorldObjectPositionChangeDelegate = [](auto var, auto var2, auto var3){};
 
     OnPlayerWeaponShootDelegate = [](auto var, auto var2, auto var3) {};
 

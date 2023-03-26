@@ -100,4 +100,6 @@ SetDelegate(RemoveRmlDocument);
 SetDelegate(PlayerWeaponShoot);
 SetDelegate(PlayerWeaponChange);
 SetDelegate(WeaponDamage);
+
+SetDelegate(WorldObjectPositionChange);
 #endif

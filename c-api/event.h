@@ -80,6 +80,8 @@ EXPORT_CLIENT void Event_SetTaskChangeDelegate(CSharpResourceImpl* resource, /**
 EXPORT_CLIENT void Event_SetWindowFocusChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WindowFocusChangeModuleDelegate */ WindowFocusChangeDelegate_t delegate);
 EXPORT_CLIENT void Event_SetWindowResolutionChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WindowResolutionChangeModuleDelegate */ WindowResolutionChangeDelegate_t delegate);
 
+EXPORT_CLIENT void Event_SetWorldObjectPositionChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WorldObjectPositionChangeDelegate */ WorldObjectPositionChangeDelegate_t delegate);
+
 EXPORT_CLIENT void Event_SetCreateBlipDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateBlipModuleDelegate */ CreateBlipDelegate_t delegate);
 EXPORT_CLIENT void Event_SetCreateWebViewDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateWebViewModuleDelegate */ CreateWebViewDelegate_t delegate);
 EXPORT_CLIENT void Event_SetCreateCheckpointDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateCheckpointModuleDelegate */ CreateCheckpointDelegate_t delegate);

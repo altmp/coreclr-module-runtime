@@ -92,6 +92,8 @@ public:
     WindowFocusChangeDelegate_t OnWindowFocusChangeDelegate = nullptr;
     WindowResolutionChangeDelegate_t OnWindowResolutionChangeDelegate = nullptr;
 
+    WorldObjectPositionChangeDelegate_t OnWorldObjectPositionChangeDelegate = nullptr;
+
     PlayerWeaponShootDelegate_t OnPlayerWeaponShootDelegate = nullptr;
 
     PlayerWeaponChangeDelegate_t OnPlayerWeaponChangeDelegate = nullptr;
