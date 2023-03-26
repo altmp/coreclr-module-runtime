@@ -168,6 +168,38 @@ void Core_GetPeds(alt::ICore* core, alt::IPed* peds[], uint64_t size) {
     }
 }
 
+uint64_t Core_GetVirtualEntitiyCount(alt::ICore* core)
+{
+    return core->GetVirtualEntities().size();
+}
+
+void Core_GetVirtualEntities(alt::ICore* core, alt::IVirtualEntity* virtualEntities[], uint64_t size)
+{
+    auto virtualEntitiyArray = core->GetVirtualEntities();
+    if (virtualEntitiyArray.size() < size) {
+        size = virtualEntitiyArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        virtualEntities[i] = virtualEntitiyArray[i];
+    }
+}
+
+uint64_t Core_GetVirtualEntityGroupCount(alt::ICore* core)
+{
+    return core->GetVirtualEntityGroups().size();
+}
+
+void Core_GetVirtualEntityGroups(alt::ICore* core, alt::IVirtualEntityGroup* virtualEntitiyGroups[], uint64_t size)
+{
+    auto virtualEntitiyGroupArray = core->GetVirtualEntityGroups();
+    if (virtualEntitiyGroupArray.size() < size) {
+        size = virtualEntitiyGroupArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        virtualEntitiyGroups[i] = virtualEntitiyGroupArray[i];
+    }
+}
+
 uint64_t Core_GetBlipCount(alt::ICore* core) {
     return core->GetBlips().size();
 }
@@ -632,6 +664,22 @@ void Core_GetClosestEntities(alt::ICore* core, vector3_t position, int32_t range
         entities[i] = entitiesArray[i];
         types[i] = (uint8_t) entitiesArray[i]->GetType();
     }
+}
+
+alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position,
+    uint32_t streamingDistance)
+{
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    return core->CreateVirtualEntity(group, pos, streamingDistance);
+}
+
+alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance)
+{
+    return core->CreateVirtualEntityGroup(streamingDistance);
 }
 
 #endif
@@ -1273,3 +1321,4 @@ void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vec
 }
 
 #endif
+

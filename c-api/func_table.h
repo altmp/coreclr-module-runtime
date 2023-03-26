@@ -24,6 +24,8 @@
 #include "entities/object.h"
 #include "entities/player.h"
 #include "entities/ped.h"
+#include "entities/virtual_entity.h"
+#include "entities/virtual_entitiy_group.h"
 #include "entities/rml_document.h"
 #include "entities/rml_element.h"
 #include "entities/vehicle.h"

@@ -294,3 +294,12 @@ EXPORT_CLIENT alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size);
 EXPORT_CLIENT alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size);
 
 EXPORT_CLIENT void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vector3_t& pos);
+
+EXPORT_SERVER alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position, uint32_t streamingDistance);
+EXPORT_SERVER alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance);
+
+EXPORT_SHARED uint64_t Core_GetVirtualEntitiyCount(alt::ICore* server);
+EXPORT_SHARED void Core_GetVirtualEntities(alt::ICore* server, alt::IVirtualEntity* virtualEntities[], uint64_t size);
+
+EXPORT_SHARED uint64_t Core_GetVirtualEntityGroupCount(alt::ICore* core);
+EXPORT_SHARED void Core_GetVirtualEntityGroups(alt::ICore* core, alt::IVirtualEntityGroup* virtualEntitiyGroups[], uint64_t size);
