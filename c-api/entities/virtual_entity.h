@@ -14,6 +14,8 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_CLIENT alt::IBaseObject* VirtualEntity_GetBaseObject(alt::IVirtualEntity* virtualEntity);
+
 EXPORT_SHARED uint32_t VirtualEntity_GetID(alt::IVirtualEntity* virtualEntity);
 EXPORT_SHARED alt::IVirtualEntityGroup* VirtualEntity_GetGroup(alt::IVirtualEntity* virtualEntity);
 EXPORT_SHARED uint8_t VirtualEntity_HasStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key);
