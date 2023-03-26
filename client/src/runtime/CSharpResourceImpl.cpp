@@ -513,6 +513,18 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
             OnCreateObjectDelegate(altObject, altObject->GetID());
             break;
         }
+    case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+        {
+            auto virtualEntity = dynamic_cast<alt::IVirtualEntity*>(object);
+            OnCreateVirtualEntityDelegate(virtualEntity, virtualEntity->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
+        {
+            auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
+            OnCreateVirtualEntityGroupDelegate(virtualEntityGroup, virtualEntityGroup->GetID());
+            break;
+        }
     case alt::IBaseObject::Type::LOCAL_PLAYER:
         break;
     default:
@@ -586,6 +598,16 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
     case alt::IBaseObject::Type::OBJECT:
         {
             OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
+            break;
+        }
+    case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+        {
+            OnRemoveVirtualEntityDelegate(dynamic_cast<alt::IVirtualEntity*>(object));
+            break;
+        }
+    case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
+        {
+            OnRemoveVirtualEntityGroupDelegate(dynamic_cast<alt::IVirtualEntityGroup*>(object));
             break;
         }
     case alt::IBaseObject::Type::LOCAL_PLAYER:
@@ -694,4 +716,9 @@ void CSharpResourceImpl::ResetDelegates() {
     OnRemoveAudioDelegate = [](auto var) {};
     OnRemoveRmlElementDelegate = [](auto var) {};
     OnRemoveRmlDocumentDelegate = [](auto var) {};
+
+    OnCreateVirtualEntityDelegate = [](auto var, auto var2){};
+    OnRemoveVirtualEntityDelegate = [](auto var){};
+    OnCreateVirtualEntityGroupDelegate = [](auto var, auto var2){};
+    OnRemoveVirtualEntityGroupDelegate = [](auto var){};
 }

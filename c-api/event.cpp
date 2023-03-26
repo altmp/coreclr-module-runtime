@@ -102,4 +102,10 @@ SetDelegate(PlayerWeaponChange);
 SetDelegate(WeaponDamage);
 
 SetDelegate(WorldObjectPositionChange);
+
+
+SetDelegate(CreateVirtualEntity);
+SetDelegate(RemoveVirtualEntity);
+SetDelegate(CreateVirtualEntityGroup);
+SetDelegate(RemoveVirtualEntityGroup);
 #endif

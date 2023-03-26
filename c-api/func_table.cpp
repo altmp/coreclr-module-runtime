@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 8239292347523827154UL;
+inline uint64_t capiHash = 8700308321791184674UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -169,6 +169,8 @@ inline uint64_t capiHashes[] = {
     8342662956272520745UL,
     16534909662450648211UL,
     15470395866513689485UL,
+    3282077077914616201UL,
+    7137311408144436463UL,
     966125284939189405UL,
     4915496630983736761UL,
     8846162864874241135UL,
@@ -199,6 +201,8 @@ inline uint64_t capiHashes[] = {
     6728247303976044345UL,
     5264189053177093943UL,
     10892515836379989057UL,
+    16279091321469351277UL,
+    15443055621173024207UL,
     13939862339008448305UL,
     16066040165060624257UL,
     1513529985252499227UL,
@@ -1552,6 +1556,8 @@ inline void* capiPointers[] = {
     (void*) Event_SetCreateRmlDocumentDelegate,
     (void*) Event_SetCreateRmlElementDelegate,
     (void*) Event_SetCreateVehicleDelegate,
+    (void*) Event_SetCreateVirtualEntityDelegate,
+    (void*) Event_SetCreateVirtualEntityGroupDelegate,
     (void*) Event_SetCreateWebSocketClientDelegate,
     (void*) Event_SetCreateWebViewDelegate,
     (void*) Event_SetGameEntityCreateDelegate,
@@ -1582,6 +1588,8 @@ inline void* capiPointers[] = {
     (void*) Event_SetRemoveRmlDocumentDelegate,
     (void*) Event_SetRemoveRmlElementDelegate,
     (void*) Event_SetRemoveVehicleDelegate,
+    (void*) Event_SetRemoveVirtualEntityDelegate,
+    (void*) Event_SetRemoveVirtualEntityGroupDelegate,
     (void*) Event_SetRemoveWebSocketClientDelegate,
     (void*) Event_SetRemoveWebViewDelegate,
     (void*) Event_SetRmlEventDelegate,

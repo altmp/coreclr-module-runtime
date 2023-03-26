@@ -106,4 +106,10 @@ EXPORT_CLIENT void Event_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resou
 
 EXPORT_CLIENT void Event_SetWeaponDamageDelegate(CSharpResourceImpl* resource, /** ClientEvents.WeaponDamageModuleDelegate */ WeaponDamageDelegate_t delegate);
 
+
+EXPORT_CLIENT void Event_SetCreateVirtualEntityDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateVirtualEntityDelegate */ CreateVirtualEntityDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveVirtualEntityDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveVirtualEntityDelegate */ RemoveVirtualEntityDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCreateVirtualEntityGroupDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateVirtualEntityGroupDelegate */ CreateVirtualEntityGroupDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveVirtualEntityGroupDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveVirtualEntityGroupDelegate */ RemoveVirtualEntityGroupDelegate_t delegate);
+
 #endif

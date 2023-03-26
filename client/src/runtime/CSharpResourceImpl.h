@@ -118,6 +118,12 @@ public:
     RemoveRmlElementDelegate_t OnRemoveRmlElementDelegate = nullptr;
     RemoveRmlDocumentDelegate_t OnRemoveRmlDocumentDelegate = nullptr;
 
+    CreateVirtualEntityDelegate_t OnCreateVirtualEntityDelegate = nullptr;
+    RemoveVirtualEntityDelegate_t OnRemoveVirtualEntityDelegate = nullptr;
+
+    CreateVirtualEntityGroupDelegate_t OnCreateVirtualEntityGroupDelegate = nullptr;
+    RemoveVirtualEntityGroupDelegate_t OnRemoveVirtualEntityGroupDelegate = nullptr;
+
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
     {

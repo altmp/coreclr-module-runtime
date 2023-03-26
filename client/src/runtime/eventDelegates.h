@@ -85,3 +85,8 @@ typedef void (* RemoveHttpClientDelegate_t)(alt::IHttpClient*);
 typedef void (* RemoveAudioDelegate_t)(alt::IAudio*);
 typedef void (* RemoveRmlElementDelegate_t)(alt::IRmlElement*);
 typedef void (* RemoveRmlDocumentDelegate_t)(alt::IRmlDocument*);
+
+typedef void (* CreateVirtualEntityDelegate_t)(alt::IVirtualEntity*, uint32_t id);
+typedef void (* RemoveVirtualEntityDelegate_t)(alt::IVirtualEntity*);
+typedef void (* CreateVirtualEntityGroupDelegate_t)(alt::IVirtualEntityGroup*, uint32_t id);
+typedef void (* RemoveVirtualEntityGroupDelegate_t)(alt::IVirtualEntityGroup*);
