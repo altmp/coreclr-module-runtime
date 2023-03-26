@@ -14,6 +14,7 @@
 #include "../cache/CachedBaseObject.h"
 #include "../cache/CachedPlayer.h"
 #include "../cache/CachedVehicle.h"
+#include "../cache/CachedPed.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop

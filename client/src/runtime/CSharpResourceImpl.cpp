@@ -260,6 +260,9 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             case alt::IBaseObject::Type::OBJECT:
                 ptr = dynamic_cast<alt::IObject*>(entity);
                 break;
+            case alt::IBaseObject::Type::PED:
+                ptr = dynamic_cast<alt::IPed*>(entity);
+                break;
             default:
                 ptr = nullptr;
             }
@@ -285,6 +288,9 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 break;
             case alt::IBaseObject::Type::OBJECT:
                 ptr = dynamic_cast<alt::IObject*>(entity);
+                break;
+            case alt::IBaseObject::Type::PED:
+                ptr = dynamic_cast<alt::IPed*>(entity);
                 break;
             default:
                 ptr = nullptr;
@@ -444,6 +450,12 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
             OnCreatePlayerDelegate(player, player->GetID());
             break;
         }
+    case alt::IBaseObject::Type::PED:
+        {
+            auto ped = dynamic_cast<alt::IPed*>(object);
+            OnCreatePedDelegate(ped, ped->GetID());
+            break;
+        }
     case alt::IBaseObject::Type::BLIP:
         {
             OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
@@ -513,6 +525,11 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
     case alt::IBaseObject::Type::PLAYER:
         {
             OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
+            break;
+        }
+    case alt::IBaseObject::Type::PED:
+        {
+            OnRemovePedDelegate(dynamic_cast<alt::IPed*>(object));
             break;
         }
     case alt::IBaseObject::Type::BLIP:
@@ -601,6 +618,9 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnCreateVehicleDelegate = [](auto var, auto var2) {};
     OnRemoveVehicleDelegate = [](auto var) {};
+
+    OnCreatePedDelegate = [](auto var, auto var2) {};
+    OnRemovePedDelegate = [](auto var) {};
 
     OnPlayerSpawnDelegate = [](){};
     OnPlayerDisconnectDelegate = [](){};

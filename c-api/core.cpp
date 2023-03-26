@@ -154,6 +154,20 @@ void Core_GetVehicles(alt::ICore* core, alt::IVehicle* vehicles[], uint64_t size
     }
 }
 
+uint64_t Core_GetPedCount(alt::ICore* core) {
+    return core->GetPeds().size();
+}
+
+void Core_GetPeds(alt::ICore* core, alt::IPed* peds[], uint64_t size) {
+    auto pedsArray = core->GetPeds();
+    if (pedsArray.size() < size) {
+        size = pedsArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        peds[i] = pedsArray[i];
+    }
+}
+
 uint64_t Core_GetBlipCount(alt::ICore* core) {
     return core->GetBlips().size();
 }
@@ -175,9 +189,11 @@ void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
     switch (entity->GetType()) {
         case alt::IBaseObject::Type::PLAYER:
         case alt::IBaseObject::Type::LOCAL_PLAYER:
-            return dynamic_cast<alt::IPlayer*>(entity);
-        case alt::IBaseObject::Type::VEHICLE:
-            return dynamic_cast<alt::IVehicle*>(entity);
+        return dynamic_cast<alt::IPlayer*>(entity);
+    case alt::IBaseObject::Type::VEHICLE:
+        return dynamic_cast<alt::IVehicle*>(entity);
+    case alt::IBaseObject::Type::PED:
+        return dynamic_cast<alt::IPed*>(entity);
     }
     return nullptr;
 }
@@ -360,6 +376,25 @@ Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t 
         id = vehicle->GetID();
     }
     return vehicle;
+}
+
+alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint16_t &id)
+{
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+
+    alt::Rotation rotation;
+    rotation.roll = rot.roll;
+    rotation.pitch = rot.pitch;
+    rotation.yaw = rot.yaw;
+
+    auto ped = core->CreatePed(model, position, rotation);
+    if (ped != nullptr) {
+        id = ped->GetID();
+    }
+    return ped;
 }
 
 alt::ICheckpoint*
@@ -1177,6 +1212,8 @@ void* Core_GetFocusOverrideEntity(alt::ICore* core, uint8_t& type) {
             return dynamic_cast<alt::IPlayer*>(entity);
         case alt::IBaseObject::Type::VEHICLE:
             return dynamic_cast<alt::IVehicle*>(entity);
+        case alt::IBaseObject::Type::PED:
+            return dynamic_cast<alt::IPed*>(entity);
         default:
             return nullptr;
     }

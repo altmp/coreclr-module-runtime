@@ -302,6 +302,8 @@ void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
                 return dynamic_cast<alt::IPlayer*>(entity);
             case alt::IBaseObject::Type::VEHICLE:
                 return dynamic_cast<alt::IVehicle*>(entity);
+            case alt::IBaseObject::Type::PED:
+                return dynamic_cast<alt::IPed*>(entity);
             default:
                 return nullptr;
         }

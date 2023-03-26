@@ -18,7 +18,7 @@
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-    
+
 EXPORT_SHARED void Event_Cancel(alt::CEvent* event);
 EXPORT_SERVER void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason);
 EXPORT_SERVER void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue);
@@ -42,6 +42,9 @@ EXPORT_CLIENT void Event_SetRemoveObjectDelegate(CSharpResourceImpl* resource,  
 EXPORT_CLIENT void Event_SetCreateVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateVehicleModuleDelegate */ CreateVehicleDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemoveVehicleModuleDelegate */ RemoveVehicleDelegate_t delegate);
 
+EXPORT_CLIENT void Event_SetCreatePedDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreatePedModuleDelegate */ CreatePedDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemovePedDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemovePedModuleDelegate */ RemovePedDelegate_t delegate);
+
 EXPORT_CLIENT void Event_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerSpawnModuleDelegate */ PlayerSpawnDelegate_t delegate);
 EXPORT_CLIENT void Event_SetPlayerDisconnectDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerDisconnectModuleDelegate */ PlayerDisconnectDelegate_t delegate);
 EXPORT_CLIENT void Event_SetPlayerEnterVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerEnterVehicleModuleDelegate */ PlayerEnterVehicleDelegate_t delegate);
@@ -61,7 +64,7 @@ EXPORT_CLIENT void Event_SetKeyDownDelegate(CSharpResourceImpl* resource, /** Cl
 EXPORT_CLIENT void Event_SetPlayerChangeVehicleSeatDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerChangeVehicleSeatModuleDelegate */ PlayerChangeVehicleSeatDelegate_t delegate);
 EXPORT_CLIENT void Event_SetPlayerChangeAnimationDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerChangeAnimationModuleDelegate */ PlayerChangeAnimationDelegate_t delegate);
 EXPORT_CLIENT void Event_SetPlayerChangeInteriorDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerChangeInteriorModuleDelegate */ PlayerChangeInteriorDelegate_t delegate);
-    
+
 EXPORT_CLIENT void Event_SetConnectionCompleteDelegate(CSharpResourceImpl* resource, /** ClientEvents.ConnectionCompleteModuleDelegate */ ConnectionCompleteDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetGlobalMetaChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.GlobalMetaChangeModuleDelegate */ GlobalMetaChangeDelegate_t delegate);
@@ -85,7 +88,7 @@ EXPORT_CLIENT void Event_SetCreateHttpClientDelegate(CSharpResourceImpl* resourc
 EXPORT_CLIENT void Event_SetCreateAudioDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateAudioModuleDelegate */ CreateAudioDelegate_t delegate);
 EXPORT_CLIENT void Event_SetCreateRmlElementDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateRmlElementModuleDelegate */ CreateRmlElementDelegate_t delegate);
 EXPORT_CLIENT void Event_SetCreateRmlDocumentDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateRmlDocumentModuleDelegate */ CreateRmlDocumentDelegate_t delegate);
-    
+
 EXPORT_CLIENT void Event_SetRemoveBlipDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveBlipModuleDelegate */ RemoveBlipDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemoveWebViewDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveWebViewModuleDelegate */ RemoveWebViewDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRemoveCheckpointDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveCheckpointModuleDelegate */ RemoveCheckpointDelegate_t delegate);

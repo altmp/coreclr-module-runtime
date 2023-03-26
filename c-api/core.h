@@ -52,6 +52,8 @@ EXPORT_SHARED uint64_t Core_GetPlayerCount(alt::ICore* server);
 EXPORT_SHARED void Core_GetPlayers(alt::ICore* server, alt::IPlayer* players[], uint64_t size);
 EXPORT_SHARED uint64_t Core_GetVehicleCount(alt::ICore* server);
 EXPORT_SHARED void Core_GetVehicles(alt::ICore* server, alt::IVehicle* vehicles[], uint64_t size);
+EXPORT_SHARED uint64_t Core_GetPedCount(alt::ICore* server);
+EXPORT_SHARED void Core_GetPeds(alt::ICore* server, alt::IPed* peds[], uint64_t size);
 EXPORT_SHARED uint64_t Core_GetBlipCount(alt::ICore* core);
 EXPORT_SHARED void Core_GetBlips(alt::ICore* core, alt::IBlip* vehicles[], uint64_t size);
 EXPORT_SHARED void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
@@ -88,6 +90,7 @@ EXPORT_SERVER void Core_TriggerClientEventUnreliableForSome(alt::ICore* server, 
 EXPORT_SERVER void Core_TriggerClientEventUnreliableForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
 
 EXPORT_SERVER alt::IVehicle* Core_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
+EXPORT_SERVER alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 #ifdef ALT_SERVER_API
 EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius, float height, rgba_t color);
 #endif
