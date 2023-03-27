@@ -108,7 +108,8 @@ namespace cache
 										_wheelDetached(base->GetWheelsCount(), false),
 										_wheelOnFire(base->GetWheelsCount(), false),
 										_wheelHealth(base->GetWheelsCount(), 0.0f),
-										_wheelHasTire(base->GetWheelsCount(), false)
+										_wheelHasTire(base->GetWheelsCount(), false),
+    									_quaternion(base->GetQuaternion())
 #else
     									_wheelSpeed(base->GetWheelSpeed()),
 										_currentGear(base->GetCurrentGear()),
@@ -749,6 +750,13 @@ namespace cache
 		}
   
         void SetHybridExtraState(uint8_t state) override {}
+
+    	alt::Quaternion _quaternion;
+        alt::Quaternion GetQuaternion() const override
+        {
+	        return _quaternion;
+        }
+        void SetQuaternion(alt::Quaternion quaternion) override {}
 #endif
 #ifdef ALT_CLIENT_API
     	float _wheelSpeed;
