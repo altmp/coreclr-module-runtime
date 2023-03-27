@@ -218,6 +218,14 @@ typedef void (* PlayerChangeInteriorDelegate_t)(void* target, uint32_t oldIntLoc
 
 typedef void (* PlayerSpawnDelegate_t)(alt::IPlayer* player);
 
+typedef void (* CreateVirtualEntityDelegate_t)(alt::IVirtualEntity* virtualEntity, uint32_t id);
+
+typedef void (* RemoveVirtualEntityDelegate_t)(alt::IVirtualEntity* virtualEntity);
+
+typedef void (* CreateVirtualEntityGroupDelegate_t)(alt::IVirtualEntityGroup* virtualEntityGroup, uint32_t id);
+
+typedef void (* RemoveVirtualEntityGroupDelegate_t)(alt::IVirtualEntityGroup* virtualEntityGroup);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
 
@@ -367,6 +375,11 @@ public:
     PlayerChangeInteriorDelegate_t OnPlayerChangeInteriorDelegate = nullptr;
 
     PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
+
+    CreateVirtualEntityDelegate_t OnCreateVirtualEntityDelegate = nullptr;
+    RemoveVirtualEntityDelegate_t OnRemoveVirtualEntityDelegate = nullptr;
+    CreateVirtualEntityGroupDelegate_t OnCreateVirtualEntityGroupDelegate = nullptr;
+    RemoveVirtualEntityGroupDelegate_t OnRemoveVirtualEntityGroupDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -598,3 +611,11 @@ EXPORT void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(CSharpResourceImp
                                                             PlayerChangeInteriorDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, PlayerSpawnDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreateVirtualEntityDelegate(CSharpResourceImpl* resource, CreateVirtualEntityDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemoveVirtualEntityDelegate(CSharpResourceImpl* resource, RemoveVirtualEntityDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreateVirtualEntityGroupDelegate(CSharpResourceImpl* resource, CreateVirtualEntityGroupDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemoveVirtualEntityGroupDelegate(CSharpResourceImpl* resource, RemoveVirtualEntityGroupDelegate_t delegate);

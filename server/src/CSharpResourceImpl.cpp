@@ -75,6 +75,11 @@ void CSharpResourceImpl::ResetDelegates()
     OnPlayerRequestControlDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerDimensionChangeDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerSpawnDelegate = [](auto var) {};
+
+    OnCreateVirtualEntityDelegate = [](auto var, auto var2) {};
+    OnRemoveVirtualEntityDelegate = [](auto var) {};
+    OnCreateVirtualEntityGroupDelegate = [](auto var, auto var2) {};
+    OnRemoveVirtualEntityGroupDelegate = [](auto var) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -720,6 +725,18 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
                 OnCreatePedDelegate(ped, ped->GetID());
                 break;
             }
+        case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+            {
+                const auto virtualEntity = dynamic_cast<alt::IVirtualEntity*>(object);
+                OnCreateVirtualEntityDelegate(virtualEntity, virtualEntity->GetID());
+                break;
+            }
+        case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
+            {
+                const auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
+                OnCreateVirtualEntityGroupDelegate(virtualEntityGroup, virtualEntityGroup->GetID());
+                break;
+            }
         default:
             {
                 std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) << " for create base object got called" << std::endl;
@@ -773,6 +790,16 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
         case alt::IBaseObject::Type::PED:
             {
                 OnRemovePedDelegate(dynamic_cast<alt::IPed*>(object));
+                break;
+            }
+        case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+            {
+                OnRemoveVirtualEntityDelegate(dynamic_cast<alt::IVirtualEntity*>(object));
+                break;
+            }
+        case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
+            {
+                OnRemoveVirtualEntityGroupDelegate(dynamic_cast<alt::IVirtualEntityGroup*>(object));
                 break;
             }
         default:
@@ -1148,6 +1175,26 @@ void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(CSharpResourceImpl* reso
 void CSharpResourceImpl_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, PlayerSpawnDelegate_t delegate)
 {
     resource->OnPlayerSpawnDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreateVirtualEntityDelegate(CSharpResourceImpl* resource, CreateVirtualEntityDelegate_t delegate)
+{
+    resource->OnCreateVirtualEntityDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemoveVirtualEntityDelegate(CSharpResourceImpl* resource, RemoveVirtualEntityDelegate_t delegate)
+{
+    resource->OnRemoveVirtualEntityDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreateVirtualEntityGroupDelegate(CSharpResourceImpl* resource, CreateVirtualEntityGroupDelegate_t delegate)
+{
+    resource->OnCreateVirtualEntityGroupDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemoveVirtualEntityGroupDelegate(CSharpResourceImpl* resource, RemoveVirtualEntityGroupDelegate_t delegate)
+{
+    resource->OnRemoveVirtualEntityGroupDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
