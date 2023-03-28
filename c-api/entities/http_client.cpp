@@ -1,6 +1,11 @@
 #include "http_client.h"
 #include "../utils/strings.h"
 
+uint32_t HttpClient_GetID(alt::IHttpClient* httpClient)
+{
+    return 0;//httpClient->GetID();
+}
+
 #ifdef ALT_CLIENT_API
 
 alt::IBaseObject* HttpClient_GetBaseObject(alt::IHttpClient* httpClient) {

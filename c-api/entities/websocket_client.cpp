@@ -1,6 +1,11 @@
 #include "websocket_client.h"
 #include "../utils/strings.h"
 
+uint32_t WebSocketClient_GetID(alt::IWebSocketClient* webSocketClient)
+{
+    return 0;//webSocketClient->GetID();
+}
+
 #ifdef ALT_CLIENT_API
 
 alt::IBaseObject* WebSocketClient_GetBaseObject(alt::IWebSocketClient* webSocketClient) {

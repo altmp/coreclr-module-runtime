@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 8519409907250548752UL;
+inline uint64_t capiHash = 3410302900529130073UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -728,6 +728,7 @@ inline uint64_t capiHashes[] = {
     4944474832415344657UL,
     7613313658222329036UL,
     #endif
+    4464042055475980737UL,
     8032676411671743849UL,
     6691163275156255752UL,
     4252038112636547538UL,
@@ -753,6 +754,7 @@ inline uint64_t capiHashes[] = {
     1385159393766883122UL,
     548174503258268102UL,
     10301029944480990066UL,
+    13569575290390530797UL,
     4819731547457026911UL,
     15343935413119710131UL,
     575049905357744794UL,
@@ -805,6 +807,7 @@ inline uint64_t capiHashes[] = {
     3775073332217131787UL,
     17482162811317800600UL,
     13557625551244465639UL,
+    16405184437105084835UL,
     17089941913478571218UL,
     16135548078550245994UL,
     13843018058835105286UL,
@@ -812,6 +815,7 @@ inline uint64_t capiHashes[] = {
     12891628734474300322UL,
     11203997981133723426UL,
     1352429280367984961UL,
+    14808638423192174437UL,
     12063803817393523050UL,
     11663630185962538197UL,
     14246921758262831479UL,
@@ -895,6 +899,7 @@ inline uint64_t capiHashes[] = {
     10580384701439081299UL,
     13147849555054061682UL,
     9678603713250235246UL,
+    7288206209717487889UL,
     15107945359232289520UL,
     13472547340675883247UL,
     7118542945065902334UL,
@@ -988,6 +993,8 @@ inline uint64_t capiHashes[] = {
     13917417294839234600UL,
     15249221947393767886UL,
     14077927656531124451UL,
+    4296832302534320657UL,
+    15720568072626536237UL,
     8318093389193375258UL,
     17687301249122992283UL,
     18440829979133890169UL,
@@ -1000,6 +1007,9 @@ inline uint64_t capiHashes[] = {
     9683760387923149316UL,
     6854495250887664593UL,
     2450774800813411012UL,
+    15809352227459172029UL,
+    5853373970270474941UL,
+    5926308654627541549UL,
     7682733547279772474UL,
     13069539607851095701UL,
     #ifdef ALT_SERVER_API
@@ -2115,6 +2125,7 @@ inline void* capiPointers[] = {
     (void*) WebView_Unfocus,
     (void*) Win_GetTaskDialog,
     #endif
+    (void*) Audio_GetID,
     (void*) BaseObject_DeleteMetaData,
     (void*) BaseObject_DestructCache,
     (void*) BaseObject_GetMetaData,
@@ -2140,6 +2151,7 @@ inline void* capiPointers[] = {
     (void*) Blip_GetFriendIndicatorVisible,
     (void*) Blip_GetGxtName,
     (void*) Blip_GetHeadingIndicatorVisible,
+    (void*) Blip_GetID,
     (void*) Blip_GetName,
     (void*) Blip_GetNumber,
     (void*) Blip_GetOutlineIndicatorVisible,
@@ -2192,6 +2204,7 @@ inline void* capiPointers[] = {
     (void*) Checkpoint_GetColor,
     (void*) Checkpoint_GetColShape,
     (void*) Checkpoint_GetHeight,
+    (void*) Checkpoint_GetID,
     (void*) Checkpoint_GetNextPosition,
     (void*) Checkpoint_GetRadius,
     (void*) Checkpoint_SetCheckpointType,
@@ -2199,6 +2212,7 @@ inline void* capiPointers[] = {
     (void*) Checkpoint_SetHeight,
     (void*) Checkpoint_SetNextPosition,
     (void*) Checkpoint_SetRadius,
+    (void*) ColShape_GetID,
     (void*) ColShape_GetWorldObject,
     (void*) ColShape_IsEntityIdIn,
     (void*) ColShape_IsEntityIn,
@@ -2282,6 +2296,7 @@ inline void* capiPointers[] = {
     (void*) GetCApiVersion,
     (void*) GetSDKVersion,
     (void*) GetVersionStatic,
+    (void*) HttpClient_GetID,
     (void*) Invoker_Create,
     (void*) Invoker_Destroy,
     (void*) IsDebugStatic,
@@ -2375,6 +2390,8 @@ inline void* capiPointers[] = {
     (void*) Resource_IsStarted,
     (void*) Resource_SetExport,
     (void*) Resource_SetExports,
+    (void*) RmlDocument_GetID,
+    (void*) RmlElement_GetID,
     (void*) Vehicle_GetEntity,
     (void*) Vehicle_GetID,
     (void*) Vehicle_GetPetrolTankHealth,
@@ -2387,6 +2404,9 @@ inline void* capiPointers[] = {
     (void*) VirtualEntityGroup_GetBaseObject,
     (void*) VirtualEntityGroup_GetID,
     (void*) VirtualEntityGroup_GetStreamingRangeLimit,
+    (void*) VoiceChannel_GetID,
+    (void*) WebSocketClient_GetID,
+    (void*) WebView_GetID,
     (void*) WorldObject_GetBaseObject,
     (void*) WorldObject_GetPosition,
     #ifdef ALT_SERVER_API

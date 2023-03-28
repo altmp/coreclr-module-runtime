@@ -1,7 +1,13 @@
 #include "rml_element.h"
 #include "../utils/strings.h"
 
+uint32_t RmlElement_GetID(alt::IRmlElement* rmlElement)
+{
+    return 0;//rmlElement->GetID();
+}
+
 #ifdef ALT_CLIENT_API
+
 alt::IBaseObject* RmlElement_GetBaseObject(alt::IRmlElement *rmlElement) {
     return dynamic_cast<alt::IBaseObject*>(rmlElement);
 }

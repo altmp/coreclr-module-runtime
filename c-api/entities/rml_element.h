@@ -14,6 +14,8 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t RmlElement_GetID(alt::IRmlElement* rmlElement);
+
 EXPORT_CLIENT NO_GC alt::IBaseObject* RmlElement_GetBaseObject(alt::IRmlElement* rmlElement);
 
 EXPORT_CLIENT NO_GC float RmlElement_GetAbsoluteLeft(alt::IRmlElement* rmlElement);

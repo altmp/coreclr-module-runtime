@@ -1,5 +1,10 @@
 #include "colshape.h"
 
+uint32_t ColShape_GetID(alt::IColShape* colShape)
+{
+    return colShape->GetID();
+}
+
 alt::IWorldObject* ColShape_GetWorldObject(alt::IColShape* colShape) {
     return dynamic_cast<alt::IWorldObject*>(colShape);
 }

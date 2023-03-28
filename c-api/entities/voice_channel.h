@@ -13,6 +13,8 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t VoiceChannel_GetID(alt::IVoiceChannel* voiceChannel);
+
 EXPORT_SERVER alt::IBaseObject* VoiceChannel_GetBaseObject(alt::IVoiceChannel* voiceChannel);
 
 EXPORT_SERVER alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, const char* key);

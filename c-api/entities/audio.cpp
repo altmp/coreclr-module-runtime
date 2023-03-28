@@ -2,6 +2,11 @@
 #include "../utils/strings.h"
 #include "../utils/entity.h"
 
+uint32_t Audio_GetID(alt::IAudio* audio)
+{
+    return audio->GetID();
+}
+
 #ifdef ALT_CLIENT_API
 alt::IBaseObject* Audio_GetBaseObject(alt::IAudio* audio) {
     return dynamic_cast<alt::IBaseObject*>(audio);

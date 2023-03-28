@@ -14,6 +14,8 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t Checkpoint_GetID(alt::ICheckpoint* checkpoint);
+
 EXPORT_SHARED alt::IColShape* Checkpoint_GetColShape(alt::ICheckpoint* checkpoint);
 
 EXPORT_SHARED uint8_t Checkpoint_GetCheckpointType(alt::ICheckpoint* checkpoint);

@@ -14,6 +14,8 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t ColShape_GetID(alt::IColShape* colShape);
+
 EXPORT_SHARED alt::IWorldObject* ColShape_GetWorldObject(alt::IColShape* colShape);
 
 EXPORT_SHARED uint8_t ColShape_IsEntityIn(alt::IColShape* colShape, alt::IEntity* entity);

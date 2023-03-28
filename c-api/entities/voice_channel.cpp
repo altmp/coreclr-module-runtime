@@ -1,6 +1,12 @@
 #include "voice_channel.h"
 
+uint32_t VoiceChannel_GetID(alt::IVoiceChannel* voiceChannel)
+{
+    return voiceChannel->GetID();
+}
+
 #ifdef ALT_SERVER_API
+
 alt::IBaseObject* VoiceChannel_GetBaseObject(alt::IVoiceChannel* channel) {
     return dynamic_cast<alt::IBaseObject*>(channel);
 }

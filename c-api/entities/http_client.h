@@ -14,6 +14,8 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t HttpClient_GetID(alt::IHttpClient* httpClient);
+
 EXPORT_CLIENT alt::IBaseObject* HttpClient_GetBaseObject(alt::IHttpClient* httpClient);
 
 typedef void (*HttpResponseDelegate_t)(int statusCode, const char* body, const char** headersKeys, const char** valuesKeys, int32_t headersSize);
