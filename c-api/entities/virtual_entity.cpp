@@ -23,16 +23,17 @@ alt::MValueConst* VirtualEntity_GetStreamSyncedMetaData(alt::IVirtualEntity* vir
     return new alt::MValueConst(virtualEntity->GetStreamSyncedMetaData(key));
 }
 
+alt::IBaseObject* VirtualEntity_GetBaseObject(alt::IVirtualEntity* virtualEntity)
+{
+    return dynamic_cast<alt::IBaseObject*>(virtualEntity);
+}
+
 #ifdef ALT_CLIENT_API
 uint32_t VirtualEntity_GetRemoteID(alt::IVirtualEntity* virtualEntity)
 {
     return virtualEntity->GetRemoteID();
 }
 
-alt::IBaseObject* VirtualEntity_GetBaseObject(alt::IVirtualEntity* virtualEntity)
-{
-    return dynamic_cast<alt::IBaseObject*>(virtualEntity);
-}
 #endif
 
 #ifdef ALT_SERVER_API
