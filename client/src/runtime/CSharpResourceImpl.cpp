@@ -469,42 +469,50 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
         }
     case alt::IBaseObject::Type::BLIP:
         {
-            OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+            auto blip = dynamic_cast<alt::IBlip*>(object);
+            OnCreateBlipDelegate(blip, blip->GetID());
             break;
         }
     case alt::IBaseObject::Type::WEBVIEW:
         {
-            OnCreateWebViewDelegate(dynamic_cast<alt::IWebView*>(object));
+            auto webview = dynamic_cast<alt::IWebView*>(object);
+            OnCreateWebViewDelegate(webview, webview->GetID());
             break;
         }
     case alt::IBaseObject::Type::CHECKPOINT:
         {
-            OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+            auto checkPoint = dynamic_cast<alt::ICheckpoint*>(object);
+            OnCreateCheckpointDelegate(checkPoint, checkPoint->GetID());
             break;
         }
     case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
         {
-            OnCreateWebSocketClientDelegate(dynamic_cast<alt::IWebSocketClient*>(object));
+            auto webSocketClient = dynamic_cast<alt::IWebSocketClient*>(object);
+            OnCreateWebSocketClientDelegate(webSocketClient, 0);
             break;
         }
     case alt::IBaseObject::Type::HTTP_CLIENT:
         {
-            OnCreateHttpClientDelegate(dynamic_cast<alt::IHttpClient*>(object));
+            auto httpClient = dynamic_cast<alt::IHttpClient*>(object);
+            OnCreateHttpClientDelegate(httpClient, 0);
             break;
         }
     case alt::IBaseObject::Type::AUDIO:
         {
-            OnCreateAudioDelegate(dynamic_cast<alt::IAudio*>(object));
+            auto audio = dynamic_cast<alt::IAudio*>(object);
+            OnCreateAudioDelegate(audio, audio->GetID());
             break;
         }
     case alt::IBaseObject::Type::RML_ELEMENT:
         {
-            OnCreateRmlElementDelegate(dynamic_cast<alt::IRmlElement*>(object));
+            auto rmlElement = dynamic_cast<alt::IRmlElement*>(object);
+            OnCreateRmlElementDelegate(rmlElement, 0);
             break;
         }
     case alt::IBaseObject::Type::RML_DOCUMENT:
         {
-            OnCreateRmlDocumentDelegate(dynamic_cast<alt::IRmlDocument*>(object));
+            auto rmlDocument = dynamic_cast<alt::IRmlDocument*>(object);
+            OnCreateRmlDocumentDelegate(rmlDocument, 0);
             break;
         }
     case alt::IBaseObject::Type::OBJECT:
@@ -699,14 +707,14 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
 
-    OnCreateBlipDelegate = [](auto var) {};
-    OnCreateWebViewDelegate = [](auto var) {};
-    OnCreateCheckpointDelegate = [](auto var) {};
-    OnCreateWebSocketClientDelegate = [](auto var) {};
-    OnCreateHttpClientDelegate = [](auto var) {};
-    OnCreateAudioDelegate = [](auto var) {};
-    OnCreateRmlElementDelegate = [](auto var) {};
-    OnCreateRmlDocumentDelegate = [](auto var) {};
+    OnCreateBlipDelegate = [](auto var, auto var2) {};
+    OnCreateWebViewDelegate = [](auto var, auto var2) {};
+    OnCreateCheckpointDelegate = [](auto var, auto var2) {};
+    OnCreateWebSocketClientDelegate = [](auto var, auto var2) {};
+    OnCreateHttpClientDelegate = [](auto var, auto var2) {};
+    OnCreateAudioDelegate = [](auto var, auto var2) {};
+    OnCreateRmlElementDelegate = [](auto var, auto var2) {};
+    OnCreateRmlDocumentDelegate = [](auto var, auto var2) {};
 
     OnRemoveBlipDelegate = [](auto var) {};
     OnRemoveWebViewDelegate = [](auto var) {};

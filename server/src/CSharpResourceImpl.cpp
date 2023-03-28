@@ -46,16 +46,16 @@ void CSharpResourceImpl::ResetDelegates()
     OnRemoveObjectDelegate = [](auto var) {};
     OnCreateVehicleDelegate = [](auto var, auto var2) {};
     OnRemoveVehicleDelegate = [](auto var) {};
-    OnCreateBlipDelegate = [](auto var) {};
+    OnCreateBlipDelegate = [](auto var, auto var2) {};
     OnRemoveBlipDelegate = [](auto var) {};
-    OnCreateCheckpointDelegate = [](auto var) {};
+    OnCreateCheckpointDelegate = [](auto var, auto var2) {};
     OnRemoveCheckpointDelegate = [](auto var) {};
-    OnCreateVoiceChannelDelegate = [](auto var) {};
+    OnCreateVoiceChannelDelegate = [](auto var, auto var2) {};
     OnRemoveVoiceChannelDelegate = [](auto var) {};
     OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
     OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnCreateColShapeDelegate = [](auto var) {};
+    OnCreateColShapeDelegate = [](auto var, auto var2) {};
     OnRemoveColShapeDelegate = [](auto var) {};
     OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnVehicleDestroyDelegate = [](auto var) {};
@@ -695,22 +695,26 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
             }
         case alt::IBaseObject::Type::BLIP:
             {
-                OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+                auto blip = dynamic_cast<alt::IBlip*>(object);
+                OnCreateBlipDelegate(blip, blip->GetID());
                 break;
             }
         case alt::IBaseObject::Type::VOICE_CHANNEL:
             {
-                OnCreateVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+                auto voiceChannel = dynamic_cast<alt::IVoiceChannel*>(object);
+                OnCreateVoiceChannelDelegate(voiceChannel, voiceChannel->GetID());
                 break;
             }
         case alt::IBaseObject::Type::COLSHAPE:
             {
-                OnCreateColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
+                auto colShape = dynamic_cast<alt::IColShape*>(object);
+                OnCreateColShapeDelegate(colShape, colShape->GetID());
                 break;
             }
         case alt::IBaseObject::Type::CHECKPOINT:
             {
-                OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                auto checkPoint = dynamic_cast<alt::ICheckpoint*>(object);
+                OnCreateCheckpointDelegate(checkPoint, checkPoint->GetID());
                 break;
             }
         case alt::IBaseObject::Type::OBJECT:
