@@ -23,7 +23,7 @@ bool CSharpResourceImpl::Start()
     ResetDelegates();
     resource->EnableNatives();
     auto scope = resource->PushNativesScope();
-    return CoreClr::StartResource(resource, core);
+    return runtime->clr.StartResource(resource, core);
 }
 
 bool CSharpResourceImpl::Stop()
