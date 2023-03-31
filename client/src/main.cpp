@@ -18,15 +18,15 @@ EXPORT alt::IScriptRuntime* CreateScriptRuntimeCSharp(ICore* core)
     ICore::SetInstance(core);
     try
     {
-        Log::Info << "Main thread is " << std::this_thread::get_id() << Log::Endl;
-        Log::Info << "Starting initialization" << Log::Endl;
+        cs::Log::Info << "Main thread is " << std::this_thread::get_id() << cs::Log::Endl;
+        cs::Log::Info << "Starting initialization" << cs::Log::Endl;
         auto* runtime = new CSharpScriptRuntime(core);
         core->RegisterScriptRuntime("csharp", runtime);
-        Log::Info << "Initialized successfully" << Log::Endl;
+        cs::Log::Info << "Initialized successfully" << cs::Log::Endl;
         return runtime;
     } catch(std::exception& e) {
-        Log::Error << "Initialization failed:" << Log::Endl;
-        Log::Error << e.what() << Log::Endl;
+        cs::Log::Error << "Initialization failed:" << cs::Log::Endl;
+        cs::Log::Error << e.what() << cs::Log::Endl;
         throw;
     }
 }
@@ -51,8 +51,8 @@ int main() {
 //        Test test;
 //        clr.start_resource(&test);
     } catch(std::exception& e) {
-        Log::Error << "Initialization failed: " << Log::Endl;
-        Log::Error << e.what() << Log::Endl;
+        cs::Log::Error << "Initialization failed: " << cs::Log::Endl;
+        cs::Log::Error << e.what() << cs::Log::Endl;
     }
 }
 #endif

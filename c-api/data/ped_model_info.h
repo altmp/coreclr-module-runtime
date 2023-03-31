@@ -1,19 +1,7 @@
 #pragma once
 
 #include "cpp-sdk/ICore.h"
-
-struct ClrBoneInfo
-{
-    uint16_t id;
-    uint16_t index;
-    char name[256];
-
-    ClrBoneInfo() = default;
-    ClrBoneInfo(alt::BoneInfo info) : id(info.id), index(info.index), name() {
-        std::copy(info.name.begin(), info.name.size() >= 255 ? info.name.begin() + 255 : info.name.end(), name);
-        name[std::min((int) info.name.size(), 255)] = '\0';
-    }
-};
+#include "bone_info.h"
 
 struct ClrPedModelInfo {
     char* name = nullptr;
@@ -48,7 +36,6 @@ struct ClrPedModelInfo {
         movementClipSet = new char[info.movementClipSet.length() + 1];
         std::copy(info.movementClipSet.begin(), info.movementClipSet.end(), movementClipSet);
         movementClipSet[info.movementClipSet.length()] = '\0';
-
 
         const auto pedModelBones = info.bones;
         boneSize = pedModelBones.size();

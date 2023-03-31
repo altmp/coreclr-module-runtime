@@ -8,6 +8,7 @@ public:
 
     alt::IResource::Impl * CreateImpl(alt::IResource *resource) override;
     void DestroyImpl(alt::IResource::Impl *impl) override;
+    void Init(std::function<void(bool success, std::string error)> next, std::function<void(alt::InitState state, float progress, float total)> setProgress) override;
 
     CoreClr clr;
 

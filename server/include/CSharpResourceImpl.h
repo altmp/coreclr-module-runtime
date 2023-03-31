@@ -156,7 +156,7 @@ typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape);
 
 typedef void (* RemoveColShapeDelegate_t)(alt::IColShape* colShape);
 
-typedef void (* ConsoleCommandDelegate_t)(const char* name, const char* args[], int argsSize);
+typedef void (* ConsoleCommandDelegate_t)(const char* name, const char* args[], uint64_t argsSize);
 
 typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, const char* key,
                                       alt::MValueConst* value);
@@ -177,7 +177,7 @@ typedef void (* ExplosionDelegate_t)(const alt::CEvent* event, alt::IPlayer* sou
 typedef void (* VehicleDestroyDelegate_t)(alt::IVehicle* vehicle);
 
 typedef void (* FireDelegate_t)(const alt::CEvent* event, alt::IPlayer* source, alt::CFireEvent::FireInfo fires[],
-                                int fireSize);
+                                uint64_t fireSize);
 
 typedef void (* StartProjectileDelegate_t)(const alt::CEvent* event, alt::IPlayer* source, position_t startPosition,
                                            position_t direction,
@@ -286,9 +286,9 @@ public:
     CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
 
     RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
-    
+
     CreateObjectDelegate_t OnCreateObjectDelegate = nullptr;
-    
+
     RemoveObjectDelegate_t OnRemoveObjectDelegate = nullptr;
 
     CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
@@ -426,7 +426,7 @@ EXPORT void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(CSharpResourceImpl
                                                         PlayerBeforeConnectDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetPlayerConnectDeniedDelegate(CSharpResourceImpl* resource,
-                                                              PlayerConnectDeniedDelegate_t delegate);                                                        
+                                                              PlayerConnectDeniedDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetResourceStartDelegate(CSharpResourceImpl* resource,
                                                         ResourceEventDelegate_t delegate);
@@ -557,7 +557,7 @@ EXPORT void CSharpResourceImpl_SetServerStartedDelegate(CSharpResourceImpl* reso
 EXPORT void CSharpResourceImpl_SetPlayerRequestControlDelegate(CSharpResourceImpl* resource,
                                                             PlayerRequestControlDelegate_t delegate);
 
-EXPORT void CSharpResourceImpl_SetPlayerDimensionChangeDelegate(CSharpResourceImpl* resource, 
+EXPORT void CSharpResourceImpl_SetPlayerDimensionChangeDelegate(CSharpResourceImpl* resource,
                                                             PlayerDimensionChangeDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetPlayerChangeAnimationDelegate(CSharpResourceImpl* resource,

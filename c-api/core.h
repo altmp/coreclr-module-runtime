@@ -119,12 +119,12 @@ EXPORT_SERVER void Core_SetWorldProfiler(alt::ICore* core, uint8_t state);
 #ifdef ALT_CLIENT_API
 EXPORT_CLIENT uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path);
 EXPORT_CLIENT const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, const char* path, int32_t& size);
-    
-EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color);
+
+EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, alt::IResource* resource);
 #endif
-EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position);
-EXPORT_CLIENT alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius);
-EXPORT_CLIENT alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height);
+EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position, alt::IResource* resource);
+EXPORT_CLIENT alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius, alt::IResource* resource);
+EXPORT_CLIENT alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height, alt::IResource* resource);
 EXPORT_CLIENT alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay);
 EXPORT_CLIENT alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture);
 EXPORT_CLIENT alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url);
@@ -139,7 +139,7 @@ EXPORT_CLIENT uint8_t Core_IsCursorVisible(alt::ICore* core, alt::IResource* res
 EXPORT_CLIENT ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core);
 EXPORT_CLIENT void Core_DeallocDiscordUser(ClrDiscordUser* user);
 #endif
-    
+
 typedef void (* DiscordOAuth2TokenResultDelegate_t)(bool success, const char* token);
 EXPORT_CLIENT void Core_Discord_GetOAuth2Token(alt::ICore* core, const char* appId, /** ClientEvents.DiscordOAuth2TokenResultModuleDelegate */ DiscordOAuth2TokenResultDelegate_t delegate);
 
@@ -260,7 +260,7 @@ EXPORT_CLIENT uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key);
 EXPORT_CLIENT alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key);
 
 EXPORT_CLIENT const char* Core_GetClientPath(alt::ICore* core, int32_t& size);
-    
+
 EXPORT_CLIENT uint8_t Core_IsFocusOverriden(alt::ICore* core);
 EXPORT_CLIENT void Core_GetFocusOverridePos(alt::ICore* core, vector3_t& pos);
 EXPORT_CLIENT void Core_GetFocusOverrideOffset(alt::ICore* core, vector3_t& offset);
@@ -272,7 +272,8 @@ EXPORT_CLIENT void Core_LoadDefaultIpls(alt::ICore* core);
 
 EXPORT_CLIENT uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos);
 
-EXPORT_CLIENT alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, uint8_t noOffset, uint8_t dynamic);
+EXPORT_CLIENT alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, uint8_t noOffset, uint8_t dynamic, alt::IResource* resource);
 EXPORT_CLIENT alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size);
 EXPORT_CLIENT alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size);
-    
+
+EXPORT_CLIENT void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vector3_t& pos);

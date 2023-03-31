@@ -524,44 +524,44 @@ const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, con
 }
 
 
-alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position) {
+alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position, alt::IResource* resource) {
     alt::Position pos;
     pos.x = position.x;
     pos.y = position.y;
     pos.z = position.z;
-    auto blip = core->CreateBlip(alt::IBlip::BlipType::DESTINATION, pos);
+    auto blip = core->CreateBlip(alt::IBlip::BlipType::DESTINATION, pos, resource);
     if (!blip) return nullptr;
     return blip;
 }
 
-alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius) {
+alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius, alt::IResource* resource) {
     alt::Position pos;
     pos.x = position.x;
     pos.y = position.y;
     pos.z = position.z;
-    auto blip = core->CreateBlip(pos, radius);
+    auto blip = core->CreateBlip(pos, radius, resource);
     if (!blip) return nullptr;
     return blip;
 }
 
-alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height) {
+alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height, alt::IResource* resource) {
     alt::Position pos;
     pos.x = position.x;
     pos.y = position.y;
     pos.z = position.z;
-    auto blip = core->CreateBlip(pos, width, height);
+    auto blip = core->CreateBlip(pos, width, height, resource);
     if (!blip) return nullptr;
     return blip;
 }
 
 alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay) {
-    auto webView = core->CreateWebView(resource, url, { pos.x, pos.y }, { size.x, size.y }, true, isOverlay);
+    auto webView = core->CreateWebView(url, { pos.x, pos.y }, { size.x, size.y }, true, isOverlay, resource);
     if (!webView) return nullptr;
     return webView;
 }
 
 alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture) {
-    auto webView = core->CreateWebView(resource, url, hash, targetTexture);
+    auto webView = core->CreateWebView(url, hash, targetTexture, resource);
     if (!webView) return nullptr;
     return webView;
 }
@@ -570,7 +570,7 @@ alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* reso
     return core->CreateDocument(url, resource->GetMain(), resource);
 }
 
-alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color) {
+alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, alt::IResource* resource) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -584,7 +584,7 @@ alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_
     rgba.g = color.g;
     rgba.b = color.b;
     rgba.a = color.a;
-    return core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a });
+    return core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }, resource);
 }
 
 
@@ -1098,8 +1098,8 @@ uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos) {
     return core->IsPointOnScreen({ pos.x, pos.y, pos.z });
 }
 
-alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t pos, vector3_t rot, uint8_t noOffset, uint8_t dynamic) {
-    return core->CreateObject(modelHash, { pos.x, pos.y, pos.z }, { rot.x, rot.y, rot.z }, noOffset, dynamic);
+alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t pos, vector3_t rot, uint8_t noOffset, uint8_t dynamic, alt::IResource* resource) {
+    return core->CreateObject(modelHash, { pos.x, pos.y, pos.z }, { rot.x, rot.y, rot.z }, noOffset, dynamic, resource);
 }
 
 alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size) {
@@ -1122,6 +1122,13 @@ alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size) {
     }
 
     return out;
+}
+
+void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vector3_t& pos) {
+    auto vec = core->GetPedBonePos(scriptId, boneId);
+    pos.x = vec[0];
+    pos.y = vec[1];
+    pos.z = vec[2];
 }
 
 #endif

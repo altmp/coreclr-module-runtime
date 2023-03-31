@@ -8,8 +8,8 @@ public:
     ~NuGet() = default;
 
     std::vector<std::string> GetPackageVersions(const std::string& package);
-    nlohmann::json GetCatalog(const std::string& package, const std::string& version);
-    std::string DownloadPackage(const std::string& package, const std::string& version);
+    nlohmann::json GetCatalog(std::string package, const std::string& version);
+    std::string DownloadPackage(std::string package, const std::string& version);
 private:
     std::string GetIndexUrl(const std::string& type);
     alt::IHttpClient* _httpClient;
