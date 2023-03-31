@@ -146,6 +146,11 @@ void CoreClr::Initialize(progressfn_t progress) {
 }
 
 bool CoreClr::StartResource(alt::IResource* resource, alt::ICore* core) {
+    if (!load_resource_delegate)
+    {
+        Initialize([](alt::InitState state, float progress, float total) {});
+    }
+    
     const auto path = utils::string_to_wstring(resource->GetMain());
 
     struct start_args {

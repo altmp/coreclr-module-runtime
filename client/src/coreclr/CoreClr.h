@@ -47,7 +47,7 @@ public:
     bool initialized = false;
     bool sandbox = true;
     void Initialize(progressfn_t progress);
-    static bool StartResource(alt::IResource* resource, alt::ICore* core);
+    bool StartResource(alt::IResource* resource, alt::ICore* core);
     static bool StopResource(alt::IResource* resource);
     static std::string BuildTpaList(const std::string& runtimeDir);
     static std::filesystem::path GetMainDirectoryPath();
