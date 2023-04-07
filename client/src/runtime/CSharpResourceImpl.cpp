@@ -488,13 +488,13 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
     case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
         {
             auto webSocketClient = dynamic_cast<alt::IWebSocketClient*>(object);
-            OnCreateWebSocketClientDelegate(webSocketClient, 0);
+            OnCreateWebSocketClientDelegate(webSocketClient, webSocketClient->GetID());
             break;
         }
     case alt::IBaseObject::Type::HTTP_CLIENT:
         {
             auto httpClient = dynamic_cast<alt::IHttpClient*>(object);
-            OnCreateHttpClientDelegate(httpClient, 0);
+            OnCreateHttpClientDelegate(httpClient, httpClient->GetID());
             break;
         }
     case alt::IBaseObject::Type::AUDIO:
