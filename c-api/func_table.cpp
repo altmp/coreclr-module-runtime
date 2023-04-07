@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 3410302900529130073UL;
+inline uint64_t capiHash = 12388970164411181104UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -993,8 +993,6 @@ inline uint64_t capiHashes[] = {
     13917417294839234600UL,
     15249221947393767886UL,
     14077927656531124451UL,
-    4296832302534320657UL,
-    15720568072626536237UL,
     8318093389193375258UL,
     17687301249122992283UL,
     18440829979133890169UL,
@@ -2390,8 +2388,6 @@ inline void* capiPointers[] = {
     (void*) Resource_IsStarted,
     (void*) Resource_SetExport,
     (void*) Resource_SetExports,
-    (void*) RmlDocument_GetID,
-    (void*) RmlElement_GetID,
     (void*) Vehicle_GetEntity,
     (void*) Vehicle_GetID,
     (void*) Vehicle_GetPetrolTankHealth,

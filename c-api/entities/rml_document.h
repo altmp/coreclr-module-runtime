@@ -14,8 +14,6 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED uint32_t RmlDocument_GetID(alt::IRmlDocument* rmlDocument);
-
 EXPORT_CLIENT alt::IRmlElement* RmlDocument_GetRmlElement(alt::IRmlDocument* rmlDocument);
 
 EXPORT_CLIENT alt::IRmlElement* RmlDocument_GetBody(alt::IRmlDocument* rmlDocument);

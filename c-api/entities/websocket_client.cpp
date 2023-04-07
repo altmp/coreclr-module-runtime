@@ -3,7 +3,7 @@
 
 uint32_t WebSocketClient_GetID(alt::IWebSocketClient* webSocketClient)
 {
-    return 0;//webSocketClient->GetID();
+    return webSocketClient->GetID();
 }
 
 #ifdef ALT_CLIENT_API

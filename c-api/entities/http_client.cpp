@@ -3,7 +3,7 @@
 
 uint32_t HttpClient_GetID(alt::IHttpClient* httpClient)
 {
-    return 0;//httpClient->GetID();
+    return httpClient->GetID();
 }
 
 #ifdef ALT_CLIENT_API

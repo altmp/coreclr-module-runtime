@@ -111,7 +111,7 @@ namespace cache
         bool HasWeaponComponent(uint32_t weapon, uint32_t component) const override {
 	        return false;
         }
-    	
+
         std::vector<unsigned> GetCurrentWeaponComponents() const override {
 			return {};
 		}
@@ -119,7 +119,7 @@ namespace cache
         uint8_t GetWeaponTintIndex(uint32_t weapon) const override {
 	        return 0;
         }
-    	
+
         uint8_t _currentWeaponTintIndex;
         uint8_t GetCurrentWeaponTintIndex() const override {
 			return _currentWeaponTintIndex;
@@ -393,7 +393,7 @@ namespace cache
         }
         void SetHeadBlendData(uint32_t shapeFirstID, uint32_t shapeSecondID, uint32_t shapeThirdID, uint32_t skinFirstID, uint32_t skinSecondID, uint32_t skinThirdID, float shapeMix,
             float skinMix, float thirdMix) override {}
-    	
+
         alt::HeadBlendData _headBlendData;
         alt::HeadBlendData GetHeadBlendData() const override {
 			return _headBlendData;
@@ -422,31 +422,31 @@ namespace cache
         std::vector<alt::Weapon> GetWeapons() const override {
 			return {};
 		}
-    	
+
     	std::unordered_map<std::string, alt::MValue> _localMetaData = {};
-        
+
     	bool HasLocalMetaData(const std::string& key) const override {
     		return _localMetaData.find(key) != _localMetaData.end();
     	}
-        
+
     	alt::MValue GetLocalMetaData(const std::string& key) const override {
     		const auto find = _localMetaData.find(key);
     		if (find == _localMetaData.end()) return alt::ICore::Instance().CreateMValueNil();
     		return find->second;
     	}
-        
+
     	std::vector<std::string> GetLocalMetaDataKeys() const override {
     		std::vector<std::string> keys(_localMetaData.size());
     		for(const auto &kv : _localMetaData) {
-    			keys.push_back(kv.first);  
+    			keys.push_back(kv.first);
     		}
 
     		return keys;
     	}
-    	
+
         void SetLocalMetaData(const std::string& key, alt::MValue val) override {}
     	void DeleteLocalMetaData(const std::string& key) override {}
-    	
+
         uint32_t _interiorLocation;
         uint32_t GetInteriorLocation() const override {
 			return _interiorLocation;
@@ -458,14 +458,17 @@ namespace cache
 		}
 
         void SetLastDamagedBodyPart(uint32_t bodyPart) override {}
-    	
+
         void SetSendNames(bool state) override {}
         bool _sendNames;
         bool GetSendNames() const override {
 			return _sendNames;
 		}
+
+    	void PlayAnimation(const std::string& animDict, const std::string& animName, float blendInSpeed, float blendOutSpeed, int duration, int flags, float playbackRate, bool lockX, bool lockY, bool lockZ) override {}
+    	void ClearTasks() override {}
 #endif
-    	
+
 
 #ifdef ALT_CLIENT_API
     	bool _talking;

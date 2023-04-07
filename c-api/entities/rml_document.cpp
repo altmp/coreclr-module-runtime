@@ -1,10 +1,6 @@
 #include "rml_document.h"
 #include "../utils/strings.h"
 
-uint32_t RmlDocument_GetID(alt::IRmlDocument* rmlDocument)
-{
-    return 0;//rmlDocument->GetID();
-}
 
 alt::IRmlElement* RmlDocument_GetRmlElement(alt::IRmlDocument* rmlDocument) {
     return dynamic_cast<alt::IRmlElement*>(rmlDocument);
