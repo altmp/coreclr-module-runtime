@@ -1281,17 +1281,17 @@ void Core_ResetMapZoomData(alt::ICore* core, uint32_t id) {
 
 alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource, uint32_t &id) {
     auto httpClient = core->CreateHttpClient(resource);
-    /*if (httpClient != nullptr) {
+    if (httpClient != nullptr) {
         id = httpClient->GetID();
-    }*/
+    }
     return httpClient;
 }
 
 alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t &id) {
     auto webSocketClient = core->CreateWebSocketClient(url, resource);
-    /*if (webSocketClient != nullptr) {
+    if (webSocketClient != nullptr) {
         id = webSocketClient->GetID();
-    }*/
+    }
     return webSocketClient;
 }
 
