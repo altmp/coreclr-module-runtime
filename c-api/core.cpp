@@ -813,8 +813,14 @@ alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, 
     return webView;
 }
 
-alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url) {
-    return core->CreateDocument(url, resource->GetMain(), resource);
+alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t &id) {
+    auto document = core->CreateDocument(url, resource->GetMain(), resource);
+    if (!document) return nullptr;
+
+    if (document != nullptr) {
+        id = document->GetEntityID();
+    }
+    return document;
 }
 
 alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, alt::IResource* resource, uint32_t &id) {

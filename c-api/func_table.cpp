@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 12388970164411181104UL;
+inline uint64_t capiHash = 17801003938184959759UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -45,7 +45,7 @@ inline uint64_t capiHashes[] = {
     16485029339771645828UL,
     18346481764601280220UL,
     12959857024542892545UL,
-    17026352200116999522UL,
+    6616548211992387591UL,
     10887342887795907175UL,
     10630250283173809055UL,
     7487980836838238402UL,
@@ -440,7 +440,6 @@ inline uint64_t capiHashes[] = {
     13630662056285368499UL,
     6553458957728450615UL,
     13041364075361654452UL,
-    1589340925639809505UL,
     5158963891260214371UL,
     17352588287218438411UL,
     8073218222026259545UL,
@@ -456,6 +455,7 @@ inline uint64_t capiHashes[] = {
     1472783352164812952UL,
     5954717048838062752UL,
     11910576358229328046UL,
+    753581056598568298UL,
     9108383606206669496UL,
     18439136340342378146UL,
     12769945018436172868UL,
@@ -993,6 +993,7 @@ inline uint64_t capiHashes[] = {
     13917417294839234600UL,
     15249221947393767886UL,
     14077927656531124451UL,
+    4296832302534320657UL,
     8318093389193375258UL,
     17687301249122992283UL,
     18440829979133890169UL,
@@ -1835,7 +1836,6 @@ inline void* capiPointers[] = {
     (void*) RmlElement_GetElementsByTagName,
     (void*) RmlElement_GetFirstChild,
     (void*) RmlElement_GetFocusedElement,
-    (void*) RmlElement_GetId,
     (void*) RmlElement_GetInnerRml,
     (void*) RmlElement_GetLastChild,
     (void*) RmlElement_GetLocalProperty,
@@ -1851,6 +1851,7 @@ inline void* capiPointers[] = {
     (void*) RmlElement_GetPropertyAbsoluteValue,
     (void*) RmlElement_GetPseudoClassList,
     (void*) RmlElement_GetRelativeOffset,
+    (void*) RmlElement_GetRmlId,
     (void*) RmlElement_GetScrollHeight,
     (void*) RmlElement_GetScrollLeft,
     (void*) RmlElement_GetScrollTop,
@@ -2388,6 +2389,7 @@ inline void* capiPointers[] = {
     (void*) Resource_IsStarted,
     (void*) Resource_SetExport,
     (void*) Resource_SetExports,
+    (void*) RmlDocument_GetID,
     (void*) Vehicle_GetEntity,
     (void*) Vehicle_GetID,
     (void*) Vehicle_GetPetrolTankHealth,

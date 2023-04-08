@@ -80,7 +80,7 @@ uint8_t RmlElement_HasChildren(alt::IRmlElement* rmlElement) {
     return rmlElement->HasChildren();
 }
 
-const char* RmlElement_GetId(alt::IRmlElement* rmlElement, int32_t& size) {
+const char* RmlElement_GetRmlId(alt::IRmlElement* rmlElement, int32_t& size) {
     return AllocateString(rmlElement->GetID(), size);
 }
 
