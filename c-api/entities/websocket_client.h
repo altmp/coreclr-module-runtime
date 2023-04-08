@@ -14,6 +14,8 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t WebSocketClient_GetID(alt::IWebSocketClient* webSocketClient);
+
 EXPORT_CLIENT alt::IBaseObject* WebSocketClient_GetBaseObject(alt::IWebSocketClient* webSocketClient);
 
 EXPORT_CLIENT uint8_t WebSocketClient_IsAutoReconnect(alt::IWebSocketClient* webSocketClient);

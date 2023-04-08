@@ -2,6 +2,7 @@
 #include "../utils/strings.h"
 
 #ifdef ALT_CLIENT_API
+
 alt::IBaseObject* RmlElement_GetBaseObject(alt::IRmlElement *rmlElement) {
     return dynamic_cast<alt::IBaseObject*>(rmlElement);
 }
@@ -79,7 +80,7 @@ uint8_t RmlElement_HasChildren(alt::IRmlElement* rmlElement) {
     return rmlElement->HasChildren();
 }
 
-const char* RmlElement_GetId(alt::IRmlElement* rmlElement, int32_t& size) {
+const char* RmlElement_GetRmlId(alt::IRmlElement* rmlElement, int32_t& size) {
     return AllocateString(rmlElement->GetID(), size);
 }
 

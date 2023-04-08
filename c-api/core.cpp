@@ -393,8 +393,7 @@ void Core_TriggerClientEventUnreliableForAll(alt::ICore* core, const char* ev, a
     core->TriggerClientEventUnreliableForAll(ev, mValues);
 }
 
-alt::IVehicle*
-Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint16_t &id) {
+alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint16_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -429,9 +428,8 @@ alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rota
     return ped;
 }
 
-alt::ICheckpoint*
-Core_CreateCheckpoint(alt::ICore* core, uint8_t type, position_t pos, float radius,
-                        float height, rgba_t color) {
+alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, position_t pos, float radius,
+                        float height, rgba_t color, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -441,20 +439,33 @@ Core_CreateCheckpoint(alt::ICore* core, uint8_t type, position_t pos, float radi
     rgba.g = color.g;
     rgba.b = color.b;
     rgba.a = color.a;
-    return core->CreateCheckpoint(type, position, radius, height, rgba);
+
+    auto checkPoint = core->CreateCheckpoint(type, position, radius, height, rgba);
+    if (checkPoint != nullptr) {
+        id = checkPoint->GetID();
+    }
+    return checkPoint;
 }
 
-alt::IBlip*
-Core_CreateBlip(alt::ICore* core, alt::IPlayer* target, uint8_t type, position_t pos) {
+alt::IBlip* Core_CreateBlip(alt::ICore* core, alt::IPlayer* target, uint8_t type, position_t pos, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return core->CreateBlip(target, (alt::IBlip::BlipType) type, position);
+
+    auto blip = core->CreateBlip(target, (alt::IBlip::BlipType) type, position);
+    if (blip != nullptr) {
+        id = blip->GetID();
+    }
+    return blip;
 }
 
-alt::IBlip* Core_CreateBlipAttached(alt::ICore* core, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo) {
-    return core->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo);
+alt::IBlip* Core_CreateBlipAttached(alt::ICore* core, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo, uint32_t &id) {
+    auto blip = core->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo);
+    if (blip != nullptr) {
+        id = blip->GetID();
+    }
+    return blip;
 }
 
 ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* core, uint32_t hash) {
@@ -473,35 +484,52 @@ void Core_DeallocPedModelInfo(ClrPedModelInfo* modelInfo) {
     delete modelInfo;
 }
 
-alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* core, uint8_t spatial, float maxDistance) {
-    return core->CreateVoiceChannel(spatial, maxDistance);
+alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* core, uint8_t spatial, float maxDistance, uint32_t &id) {
+    auto voiceChannel = core->CreateVoiceChannel(spatial, maxDistance);
+    if (voiceChannel != nullptr) {
+        id = voiceChannel->GetID();
+    }
+    return voiceChannel;
 }
 
-alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* core, position_t pos, float radius, float height) {
+alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* core, position_t pos, float radius, float height, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return core->CreateColShapeCylinder(position, radius, height);
+
+    auto colShape = core->CreateColShapeCylinder(position, radius, height);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
 }
 
-alt::IColShape* Core_CreateColShapeSphere(alt::ICore* core, position_t pos, float radius) {
+alt::IColShape* Core_CreateColShapeSphere(alt::ICore* core, position_t pos, float radius, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return core->CreateColShapeSphere(position, radius);
+    auto colShape = core->CreateColShapeSphere(position, radius);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
 }
 
-alt::IColShape* Core_CreateColShapeCircle(alt::ICore* core, position_t pos, float radius) {
+alt::IColShape* Core_CreateColShapeCircle(alt::ICore* core, position_t pos, float radius, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
-    return core->CreateColShapeCircle(position, radius);
+    auto colShape = core->CreateColShapeCircle(position, radius);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
 }
 
-alt::IColShape* Core_CreateColShapeCube(alt::ICore* core, position_t pos, position_t pos2) {
+alt::IColShape* Core_CreateColShapeCube(alt::ICore* core, position_t pos, position_t pos2, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -511,14 +539,22 @@ alt::IColShape* Core_CreateColShapeCube(alt::ICore* core, position_t pos, positi
     position2.x = pos2.x;
     position2.y = pos2.y;
     position2.z = pos2.z;
-    return core->CreateColShapeCube(position, position2);
+    auto colShape = core->CreateColShapeCube(position, position2);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
 }
 
-alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* core, float x1, float y1, float x2, float y2, float z) {
-    return core->CreateColShapeRectangle(x1, y1, x2, y2, z);
+alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* core, float x1, float y1, float x2, float y2, float z, uint32_t &id) {
+    auto colShape = core->CreateColShapeRectangle(x1, y1, x2, y2, z);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
 }
 
-alt::IColShape* Core_CreateColShapePolygon(alt::ICore* core, float minZ, float maxZ, vector2_t points[], int pointSize) {
+alt::IColShape* Core_CreateColShapePolygon(alt::ICore* core, float minZ, float maxZ, vector2_t points[], int pointSize, uint32_t &id) {
     std::vector<alt::Vector2f> convertedPoints(pointSize);
     for (int i = 0; i < pointSize; i++)
     {
@@ -528,7 +564,11 @@ alt::IColShape* Core_CreateColShapePolygon(alt::ICore* core, float minZ, float m
        convertedPoints[i] = point;
     }
 
-    return core->CreateColShapePolygon(minZ, maxZ, convertedPoints);
+    auto colShape = core->CreateColShapePolygon(minZ, maxZ, convertedPoints);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
 }
 
 /*void Core_DestroyBaseObject(alt::ICore* core, alt::IBaseObject* baseObject) {
@@ -667,19 +707,27 @@ void Core_GetClosestEntities(alt::ICore* core, vector3_t position, int32_t range
 }
 
 alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position,
-    uint32_t streamingDistance)
+    uint32_t streamingDistance, uint32_t &id)
 {
     alt::Position pos;
     pos.x = position.x;
     pos.y = position.y;
     pos.z = position.z;
 
-    return core->CreateVirtualEntity(group, pos, streamingDistance);
+    auto virtualEntity = core->CreateVirtualEntity(group, pos, streamingDistance);
+    if (virtualEntity != nullptr) {
+        id = virtualEntity->GetID();
+    }
+    return virtualEntity;
 }
 
-alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance)
+alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance, uint32_t &id)
 {
-    return core->CreateVirtualEntityGroup(streamingDistance);
+    auto virtualEntityGroup = core->CreateVirtualEntityGroup(streamingDistance);
+    if (virtualEntityGroup != nullptr) {
+        id = virtualEntityGroup->GetID();
+    }
+    return virtualEntityGroup;
 }
 
 #endif
@@ -703,53 +751,79 @@ const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, con
 }
 
 
-alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position, alt::IResource* resource) {
+alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position, alt::IResource* resource, uint32_t &id) {
     alt::Position pos;
     pos.x = position.x;
     pos.y = position.y;
     pos.z = position.z;
     auto blip = core->CreateBlip(alt::IBlip::BlipType::DESTINATION, pos, resource);
     if (!blip) return nullptr;
+
+    if (blip != nullptr) {
+        id = blip->GetID();
+    }
     return blip;
 }
 
-alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius, alt::IResource* resource) {
+alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius, alt::IResource* resource, uint32_t &id) {
     alt::Position pos;
     pos.x = position.x;
     pos.y = position.y;
     pos.z = position.z;
     auto blip = core->CreateBlip(pos, radius, resource);
     if (!blip) return nullptr;
+
+    if (blip != nullptr) {
+        id = blip->GetID();
+    }
     return blip;
 }
 
-alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height, alt::IResource* resource) {
+alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height, alt::IResource* resource, uint32_t &id) {
     alt::Position pos;
     pos.x = position.x;
     pos.y = position.y;
     pos.z = position.z;
     auto blip = core->CreateBlip(pos, width, height, resource);
     if (!blip) return nullptr;
+
+    if (blip != nullptr) {
+        id = blip->GetID();
+    }
     return blip;
 }
 
-alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay) {
+alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay, uint32_t &id) {
     auto webView = core->CreateWebView(url, { pos.x, pos.y }, { size.x, size.y }, true, isOverlay, resource);
     if (!webView) return nullptr;
+
+    if (webView != nullptr) {
+        id = webView->GetID();
+    }
     return webView;
 }
 
-alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture) {
+alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture, uint32_t &id) {
     auto webView = core->CreateWebView(url, hash, targetTexture, resource);
     if (!webView) return nullptr;
+
+    if (webView != nullptr) {
+        id = webView->GetID();
+    }
     return webView;
 }
 
-alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url) {
-    return core->CreateDocument(url, resource->GetMain(), resource);
+alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t &id) {
+    auto document = core->CreateDocument(url, resource->GetMain(), resource);
+    if (!document) return nullptr;
+
+    if (document != nullptr) {
+        id = document->GetEntityID();
+    }
+    return document;
 }
 
-alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, alt::IResource* resource) {
+alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, alt::IResource* resource, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -763,7 +837,11 @@ alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_
     rgba.g = color.g;
     rgba.b = color.b;
     rgba.a = color.a;
-    return core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }, resource);
+    auto checkPoint = core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }, resource);
+    if (checkPoint != nullptr) {
+        id = checkPoint->GetID();
+    }
+    return checkPoint;
 }
 
 
@@ -1207,16 +1285,28 @@ void Core_ResetMapZoomData(alt::ICore* core, uint32_t id) {
     core->ResetMapData(id);
 }
 
-alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource) {
-    return core->CreateHttpClient(resource);
+alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource, uint32_t &id) {
+    auto httpClient = core->CreateHttpClient(resource);
+    if (httpClient != nullptr) {
+        id = httpClient->GetID();
+    }
+    return httpClient;
 }
 
-alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url) {
-    return core->CreateWebSocketClient(url, resource);
+alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t &id) {
+    auto webSocketClient = core->CreateWebSocketClient(url, resource);
+    if (webSocketClient != nullptr) {
+        id = webSocketClient->GetID();
+    }
+    return webSocketClient;
 }
 
-alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend) {
-    return core->CreateAudio(source, volume, category, frontend, resource);
+alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend, uint32_t &id) {
+    auto audio = core->CreateAudio(source, volume, category, frontend, resource);
+    if (audio != nullptr) {
+        id = audio->GetID();
+    }
+    return audio;
 }
 
 uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key) {
@@ -1287,8 +1377,12 @@ uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos) {
     return core->IsPointOnScreen({ pos.x, pos.y, pos.z });
 }
 
-alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t pos, vector3_t rot, uint8_t noOffset, uint8_t dynamic, alt::IResource* resource) {
-    return core->CreateObject(modelHash, { pos.x, pos.y, pos.z }, { rot.x, rot.y, rot.z }, noOffset, dynamic, resource);
+alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t pos, vector3_t rot, uint8_t noOffset, uint8_t dynamic, alt::IResource* resource, uint16_t &id) {
+    auto object = core->CreateObject(modelHash, { pos.x, pos.y, pos.z }, { rot.x, rot.y, rot.z }, noOffset, dynamic, resource);
+    if (object != nullptr) {
+        id = object->GetID();
+    }
+    return object;
 }
 
 alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size) {

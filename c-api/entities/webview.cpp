@@ -1,6 +1,11 @@
 #include "webview.h"
 #include "../utils/strings.h"
 
+uint32_t WebView_GetID(alt::IWebView* webView)
+{
+    return webView->GetID();
+}
+
 #ifdef ALT_CLIENT_API
 alt::IBaseObject* WebView_GetBaseObject(alt::IWebView* webview) {
     return dynamic_cast<alt::IBaseObject*>(webview);

@@ -68,14 +68,14 @@ typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, void* target,
                                         uint32_t weaponHash, uint32_t damageValue, position_t shotOffset,
                                         alt::CWeaponDamageEvent::BodyPart bodyPart);
 
-typedef void (* CreateBlipDelegate_t)(alt::IBlip*);
-typedef void (* CreateWebViewDelegate_t)(alt::IWebView*);
-typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint*);
-typedef void (* CreateWebSocketClientDelegate_t)(alt::IWebSocketClient*);
-typedef void (* CreateHttpClientDelegate_t)(alt::IHttpClient*);
-typedef void (* CreateAudioDelegate_t)(alt::IAudio*);
-typedef void (* CreateRmlElementDelegate_t)(alt::IRmlElement*);
-typedef void (* CreateRmlDocumentDelegate_t)(alt::IRmlDocument*);
+typedef void (* CreateBlipDelegate_t)(alt::IBlip*, uint32_t id);
+typedef void (* CreateWebViewDelegate_t)(alt::IWebView*, uint32_t id);
+typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint*, uint32_t id);
+typedef void (* CreateWebSocketClientDelegate_t)(alt::IWebSocketClient*, uint32_t id);
+typedef void (* CreateHttpClientDelegate_t)(alt::IHttpClient*, uint32_t id);
+typedef void (* CreateAudioDelegate_t)(alt::IAudio*, uint32_t id);
+typedef void (* CreateRmlElementDelegate_t)(alt::IRmlElement*, uint32_t id);
+typedef void (* CreateRmlDocumentDelegate_t)(alt::IRmlDocument*, uint32_t id);
 
 typedef void (* RemoveBlipDelegate_t)(alt::IBlip*);
 typedef void (* RemoveWebViewDelegate_t)(alt::IWebView*);

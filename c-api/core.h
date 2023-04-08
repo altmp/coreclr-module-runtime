@@ -92,21 +92,21 @@ EXPORT_SERVER void Core_TriggerClientEventUnreliableForAll(alt::ICore* server, c
 EXPORT_SERVER alt::IVehicle* Core_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 EXPORT_SERVER alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 #ifdef ALT_SERVER_API
-EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius, float height, rgba_t color);
+EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius, float height, rgba_t color, uint32_t &id);
 #endif
-EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos);
-EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo);
+EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos, uint32_t &id);
+EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo, uint32_t &id);
 EXPORT_SERVER ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* server, uint32_t hash);
 EXPORT_SERVER ClrPedModelInfo* Core_GetPedModelInfo(alt::ICore* core, uint32_t hash);
 EXPORT_SERVER void Core_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo);
 EXPORT_SERVER void Core_DeallocPedModelInfo(ClrPedModelInfo* modelInfo);
-EXPORT_SERVER alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapeCircle(alt::ICore* server, position_t pos, float radius);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapeCube(alt::ICore* server, position_t pos, position_t pos2);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize);
+EXPORT_SERVER alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance, uint32_t &id);
+EXPORT_SERVER alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height, uint32_t &id);
+EXPORT_SERVER alt::IColShape* Core_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius, uint32_t &id);
+EXPORT_SERVER alt::IColShape* Core_CreateColShapeCircle(alt::ICore* server, position_t pos, float radius, uint32_t &id);
+EXPORT_SERVER alt::IColShape* Core_CreateColShapeCube(alt::ICore* server, position_t pos, position_t pos2, uint32_t &id);
+EXPORT_SERVER alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z, uint32_t &id);
+EXPORT_SERVER alt::IColShape* Core_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize, uint32_t &id);
 EXPORT_SERVER void Core_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseObject);
 EXPORT_SERVER void Core_DestroyCheckpoint(alt::ICore* server, alt::ICheckpoint* baseObject);
 EXPORT_SERVER void Core_DestroyVoiceChannel(alt::ICore* server, alt::IVoiceChannel* baseObject);
@@ -136,14 +136,14 @@ EXPORT_SERVER void Core_GetClosestEntities(alt::ICore* core, vector3_t position,
 EXPORT_CLIENT uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path);
 EXPORT_CLIENT const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, const char* path, int32_t& size);
 
-EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, alt::IResource* resource);
+EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, alt::IResource* resource, uint32_t &id);
 #endif
-EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position, alt::IResource* resource);
-EXPORT_CLIENT alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius, alt::IResource* resource);
-EXPORT_CLIENT alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height, alt::IResource* resource);
-EXPORT_CLIENT alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay);
-EXPORT_CLIENT alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture);
-EXPORT_CLIENT alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url);
+EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::IBlip* Core_Client_CreateAreaBlip(alt::ICore* core, vector3_t position, float width, float height, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::IWebView* Core_CreateWebView(alt::ICore* core, alt::IResource* resource, const char* url, vector2_t pos, vector2_t size, uint8_t isOverlay, uint32_t &id);
+EXPORT_CLIENT alt::IWebView* Core_CreateWebView3D(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t hash, const char* targetTexture, uint32_t &id);
+EXPORT_CLIENT alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t &id);
 
 EXPORT_CLIENT void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* webview, const char* event, alt::MValueConst* args[], int size);
 EXPORT_CLIENT void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size);
@@ -269,9 +269,9 @@ EXPORT_CLIENT alt::IMapData* Core_GetMapZoomDataByAlias(alt::ICore* core, const 
 EXPORT_CLIENT void Core_ResetAllMapZoomData(alt::ICore* core);
 EXPORT_CLIENT void Core_ResetMapZoomData(alt::ICore* core, uint32_t id);
 
-EXPORT_CLIENT alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource);
-EXPORT_CLIENT alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url);
-EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend);
+EXPORT_CLIENT alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t &id);
+EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend, uint32_t &id);
 
 EXPORT_CLIENT uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key);
 EXPORT_CLIENT alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key);
@@ -289,14 +289,14 @@ EXPORT_CLIENT void Core_LoadDefaultIpls(alt::ICore* core);
 
 EXPORT_CLIENT uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos);
 
-EXPORT_CLIENT alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, uint8_t noOffset, uint8_t dynamic, alt::IResource* resource);
+EXPORT_CLIENT alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, uint8_t noOffset, uint8_t dynamic, alt::IResource* resource, uint16_t &id);
 EXPORT_CLIENT alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size);
 EXPORT_CLIENT alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size);
 
 EXPORT_CLIENT void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vector3_t& pos);
 
-EXPORT_SERVER alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position, uint32_t streamingDistance);
-EXPORT_SERVER alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance);
+EXPORT_SERVER alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position, uint32_t streamingDistance, uint32_t &id);
+EXPORT_SERVER alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance, uint32_t &id);
 
 EXPORT_SHARED uint64_t Core_GetVirtualEntitiyCount(alt::ICore* server);
 EXPORT_SHARED void Core_GetVirtualEntities(alt::ICore* server, alt::IVirtualEntity* virtualEntities[], uint64_t size);

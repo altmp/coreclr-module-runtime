@@ -13,6 +13,7 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t Audio_GetID(alt::IAudio* audio);
 
 EXPORT_CLIENT alt::IBaseObject* Audio_GetBaseObject(alt::IAudio* audio);
 

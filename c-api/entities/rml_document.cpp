@@ -1,11 +1,17 @@
 #include "rml_document.h"
 #include "../utils/strings.h"
 
+uint32_t RmlDocument_GetID(alt::IRmlDocument* rmlDocument)
+{
+    return rmlDocument->GetEntityID();
+}
+
+#ifdef ALT_CLIENT_API
+
 alt::IRmlElement* RmlDocument_GetRmlElement(alt::IRmlDocument* rmlDocument) {
     return dynamic_cast<alt::IRmlElement*>(rmlDocument);
 }
 
-#ifdef ALT_CLIENT_API
 alt::IRmlElement* RmlDocument_GetBody(alt::IRmlDocument* rmlDocument) {
     return rmlDocument->GetBody();
 }

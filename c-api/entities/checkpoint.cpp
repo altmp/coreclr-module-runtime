@@ -1,6 +1,11 @@
 #include "checkpoint.h"
 
 
+uint32_t Checkpoint_GetID(alt::ICheckpoint* checkpoint)
+{
+    return checkpoint->GetID();
+}
+
 alt::IColShape* Checkpoint_GetColShape(alt::ICheckpoint* checkpoint) {
     return dynamic_cast<alt::IColShape*>(checkpoint);
 }

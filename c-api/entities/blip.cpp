@@ -1,5 +1,10 @@
 #include "blip.h"
 
+uint32_t Blip_GetID(alt::IBlip* blip)
+{
+    return blip->GetID();
+}
+
 alt::IWorldObject* Blip_GetWorldObject(alt::IBlip* blip) {
     return dynamic_cast<alt::IWorldObject*>(blip);
 }

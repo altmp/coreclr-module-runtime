@@ -15,6 +15,8 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t Blip_GetID(alt::IBlip* blip);
+
 EXPORT_SHARED alt::IWorldObject* Blip_GetWorldObject(alt::IBlip* blip);
 
 EXPORT_SHARED uint8_t Blip_IsGlobal(alt::IBlip* blip);

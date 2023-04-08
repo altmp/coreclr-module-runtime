@@ -143,19 +143,19 @@ typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle* vehicle);
 typedef void (* CreatePedDelegate_t)(alt::IPed* ped, uint16_t id);
 typedef void (* RemovePedDelegate_t)(alt::IPed* ped);
 
-typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip);
+typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip, uint32_t id);
 
 typedef void (* RemoveBlipDelegate_t)(alt::IBlip* blip);
 
-typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
+typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint, uint32_t id);
 
 typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
 
-typedef void (* CreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
+typedef void (* CreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel, uint32_t id);
 
 typedef void (* RemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
 
-typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape);
+typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape, uint32_t id);
 
 typedef void (* RemoveColShapeDelegate_t)(alt::IColShape* colShape);
 

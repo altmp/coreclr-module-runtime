@@ -31,7 +31,7 @@ EXPORT_CLIENT NO_GC void RmlElement_GetContainingBlock(alt::IRmlElement* rmlElem
 EXPORT_CLIENT NO_GC alt::IRmlElement* RmlElement_GetFirstChild(alt::IRmlElement* rmlElement);
 EXPORT_CLIENT NO_GC alt::IRmlElement* RmlElement_GetFocusedElement(alt::IRmlElement* rmlElement);
 EXPORT_CLIENT NO_GC uint8_t RmlElement_HasChildren(alt::IRmlElement* rmlElement);
-EXPORT_CLIENT NO_GC const char* RmlElement_GetId(alt::IRmlElement* rmlElement, int32_t& size);
+EXPORT_CLIENT NO_GC const char* RmlElement_GetRmlId(alt::IRmlElement* rmlElement, int32_t& size);
 EXPORT_CLIENT NO_GC void RmlElement_SetId(alt::IRmlElement* rmlElement, const char* value);
 EXPORT_CLIENT NO_GC const char* RmlElement_GetInnerRml(alt::IRmlElement* rmlElement, int32_t& size);
 EXPORT_CLIENT void RmlElement_SetInnerRml(alt::IRmlElement* rmlElement, const char* value);

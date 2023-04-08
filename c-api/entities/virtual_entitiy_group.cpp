@@ -12,11 +12,7 @@ uint32_t VirtualEntityGroup_GetStreamingRangeLimit(alt::IVirtualEntityGroup* vir
 {
     return virtualEntityGroup->GetStreamingRangeLimit();
 }
-
-
-#ifdef ALT_CLIENT_API
 alt::IBaseObject* VirtualEntityGroup_GetBaseObject(alt::IVirtualEntityGroup* virtualEntityGroup)
 {
     return dynamic_cast<alt::IBaseObject*>(virtualEntityGroup);
 }
-#endif
