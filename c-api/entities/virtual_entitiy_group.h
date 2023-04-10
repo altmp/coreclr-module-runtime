@@ -18,3 +18,6 @@ EXPORT_SHARED alt::IBaseObject* VirtualEntityGroup_GetBaseObject(alt::IVirtualEn
 
 EXPORT_SHARED uint32_t VirtualEntityGroup_GetID(alt::IVirtualEntityGroup* virtualEntityGroup);
 EXPORT_SHARED uint32_t VirtualEntityGroup_GetStreamingRangeLimit(alt::IVirtualEntityGroup* virtualEntityGroup);
+
+EXPORT_CLIENT uint32_t VirtualEntityGroup_GetRemoteID(alt::IVirtualEntityGroup* virtualEntityGroup);
+EXPORT_CLIENT uint8_t VirtualEntityGroup_IsRemote(alt::IVirtualEntityGroup* virtualEntityGroup);
