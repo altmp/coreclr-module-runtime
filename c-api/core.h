@@ -57,6 +57,7 @@ EXPORT_SHARED void Core_GetPeds(alt::ICore* server, alt::IPed* peds[], uint64_t 
 EXPORT_SHARED uint64_t Core_GetBlipCount(alt::ICore* core);
 EXPORT_SHARED void Core_GetBlips(alt::ICore* core, alt::IBlip* vehicles[], uint64_t size);
 EXPORT_SHARED void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
+EXPORT_SHARED void* Core_GetBaseObjectByID(alt::ICore* core, uint8_t type, uint32_t id);
 EXPORT_SHARED alt::IResource* Core_GetResource(alt::ICore* core, const char* resourceName);
 EXPORT_SHARED alt::IResource** Core_GetAllResources(alt::ICore* core, uint32_t& size);
 
@@ -295,11 +296,23 @@ EXPORT_CLIENT alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& si
 
 EXPORT_CLIENT void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vector3_t& pos);
 
-EXPORT_SERVER alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position, uint32_t streamingDistance, uint32_t &id);
-EXPORT_SERVER alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance, uint32_t &id);
+EXPORT_SHARED alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position, uint32_t streamingDistance, uint32_t &id);
+EXPORT_SHARED alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance, uint32_t &id);
 
-EXPORT_SHARED uint64_t Core_GetVirtualEntitiyCount(alt::ICore* server);
-EXPORT_SHARED void Core_GetVirtualEntities(alt::ICore* server, alt::IVirtualEntity* virtualEntities[], uint64_t size);
+EXPORT_SHARED uint64_t Core_GetVirtualEntitiyCount(alt::ICore* core);
+EXPORT_SHARED void Core_GetVirtualEntities(alt::ICore* core, alt::IVirtualEntity* virtualEntities[], uint64_t size);
 
 EXPORT_SHARED uint64_t Core_GetVirtualEntityGroupCount(alt::ICore* core);
 EXPORT_SHARED void Core_GetVirtualEntityGroups(alt::ICore* core, alt::IVirtualEntityGroup* virtualEntitiyGroups[], uint64_t size);
+
+EXPORT_SHARED uint64_t Core_GetNetworkObjectCount(alt::ICore* core);
+EXPORT_SHARED void Core_GetNetworkObjects(alt::ICore* core, alt::INetworkObject* networkObjects[], uint64_t size);
+
+EXPORT_SHARED uint64_t Core_GetCheckpointCount(alt::ICore* core);
+EXPORT_SHARED void Core_GetCheckpoints(alt::ICore* core, alt::ICheckpoint* checkpoints[], uint64_t size);
+
+EXPORT_CLIENT uint64_t Core_GetWebViewCount(alt::ICore* core);
+EXPORT_CLIENT void Core_GetWebViews(alt::ICore* core, alt::IWebView* webViews[], uint64_t size);
+
+EXPORT_CLIENT uint64_t Core_GetAudioCount(alt::ICore* core);
+EXPORT_CLIENT void Core_GetAudios(alt::ICore* core, alt::IAudio* audios[], uint64_t size);

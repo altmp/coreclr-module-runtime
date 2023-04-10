@@ -219,15 +219,22 @@ void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
     if (entity == nullptr) return nullptr;
     type = (uint8_t) entity->GetType();
     switch (entity->GetType()) {
-        case alt::IBaseObject::Type::PLAYER:
-        case alt::IBaseObject::Type::LOCAL_PLAYER:
-        return dynamic_cast<alt::IPlayer*>(entity);
+    case alt::IBaseObject::Type::PLAYER:
+    case alt::IBaseObject::Type::LOCAL_PLAYER:
+    return dynamic_cast<alt::IPlayer*>(entity);
     case alt::IBaseObject::Type::VEHICLE:
         return dynamic_cast<alt::IVehicle*>(entity);
     case alt::IBaseObject::Type::PED:
         return dynamic_cast<alt::IPed*>(entity);
     }
     return nullptr;
+}
+
+void* Core_GetBaseObjectByID(alt::ICore* core, uint8_t type, uint32_t id) {
+    auto entity = core->GetBaseObjectByID((alt::IBaseObject::Type)type, id);
+    if (entity == nullptr) return nullptr;
+
+    return entity;
 }
 
 alt::IResource* Core_GetResource(alt::ICore* core, const char* resourceName) {
@@ -244,7 +251,6 @@ alt::IResource** Core_GetAllResources(alt::ICore* core, uint32_t& size) {
 
     return out;
 }
-
 
 uint8_t Core_IsDebug(alt::ICore* core) {
     return core->IsDebug();
@@ -314,6 +320,62 @@ void Core_ToggleEvent(alt::ICore* core, uint8_t event, uint8_t state) {
 
 uint8_t Core_GetEventEnumSize() {
     return (uint8_t) alt::CEvent::Type::SIZE;
+}
+
+uint64_t Core_GetNetworkObjectCount(alt::ICore* core)
+{
+    return core->GetNetworkObjects().size();
+}
+
+void Core_GetNetworkObjects(alt::ICore* core, alt::INetworkObject* networkObjects[], uint64_t size)
+{
+    auto networkObjectsArray = core->GetNetworkObjects();
+    if (networkObjectsArray.size() < size) {
+        size = networkObjectsArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        networkObjects[i] = networkObjectsArray[i];
+    }
+}
+
+uint64_t Core_GetCheckpointCount(alt::ICore* core)
+{
+    return core->GetCheckpoints().size();
+}
+
+void Core_GetCheckpoints(alt::ICore* core, alt::ICheckpoint* checkpoints[], uint64_t size)
+{
+    auto checkpointsArray = core->GetCheckpoints();
+    if (checkpointsArray.size() < size) {
+        size = checkpointsArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        checkpoints[i] = checkpointsArray[i];
+    }
+}
+
+alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position,
+    uint32_t streamingDistance, uint32_t &id)
+{
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    auto virtualEntity = core->CreateVirtualEntity(group, pos, streamingDistance);
+    if (virtualEntity != nullptr) {
+        id = virtualEntity->GetID();
+    }
+    return virtualEntity;
+}
+
+alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance, uint32_t &id)
+{
+    auto virtualEntityGroup = core->CreateVirtualEntityGroup(streamingDistance);
+    if (virtualEntityGroup != nullptr) {
+        id = virtualEntityGroup->GetID();
+    }
+    return virtualEntityGroup;
 }
 
 #ifdef ALT_SERVER_API
@@ -704,30 +766,6 @@ void Core_GetClosestEntities(alt::ICore* core, vector3_t position, int32_t range
         entities[i] = entitiesArray[i];
         types[i] = (uint8_t) entitiesArray[i]->GetType();
     }
-}
-
-alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position,
-    uint32_t streamingDistance, uint32_t &id)
-{
-    alt::Position pos;
-    pos.x = position.x;
-    pos.y = position.y;
-    pos.z = position.z;
-
-    auto virtualEntity = core->CreateVirtualEntity(group, pos, streamingDistance);
-    if (virtualEntity != nullptr) {
-        id = virtualEntity->GetID();
-    }
-    return virtualEntity;
-}
-
-alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance, uint32_t &id)
-{
-    auto virtualEntityGroup = core->CreateVirtualEntityGroup(streamingDistance);
-    if (virtualEntityGroup != nullptr) {
-        id = virtualEntityGroup->GetID();
-    }
-    return virtualEntityGroup;
 }
 
 #endif
@@ -1412,6 +1450,38 @@ void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vec
     pos.x = vec[0];
     pos.y = vec[1];
     pos.z = vec[2];
+}
+
+uint64_t Core_GetWebViewCount(alt::ICore* core)
+{
+    return core->GetWebViews().size();
+}
+
+void Core_GetWebViews(alt::ICore* core, alt::IWebView* webViews[], uint64_t size)
+{
+    auto webviewsArray = core->GetWebViews();
+    if (webviewsArray.size() < size) {
+        size = webviewsArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        webViews[i] = webviewsArray[i];
+    }
+}
+
+uint64_t Core_GetAudioCount(alt::ICore* core)
+{
+    return core->GetAudios().size();
+}
+
+void Core_GetAudios(alt::ICore* core, alt::IAudio* audios[], uint64_t size)
+{
+    auto audiosArray = core->GetAudios();
+    if (audiosArray.size() < size) {
+        size = audiosArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        audios[i] = audiosArray[i];
+    }
 }
 
 #endif
