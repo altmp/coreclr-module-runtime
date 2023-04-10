@@ -588,7 +588,7 @@ uint8_t Player_GetSendNames(alt::IPlayer* player){
 }
 
 void Player_PlayAnimation(alt::IPlayer* player, const char* animDict, const char* animName, float blendInSpeed,
-    float blendOutSpeed, int duration, int flags, float playbackRate, bool lockX, bool lockY, bool lockZ)
+    float blendOutSpeed, int duration, int flags, float playbackRate, uint8_t lockX, uint8_t lockY, uint8_t lockZ)
 {
     player->PlayAnimation(animDict, animName, blendInSpeed, blendOutSpeed, duration, flags, playbackRate, lockX, lockY, lockZ);
 }
