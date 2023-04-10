@@ -63,4 +63,24 @@ uint8_t VoiceChannel_IsSpatial(alt::IVoiceChannel* channel) {
 float VoiceChannel_GetMaxDistance(alt::IVoiceChannel* channel) {
     return channel->GetMaxDistance();
 }
+
+uint32_t VoiceChannel_GetFilter(alt::IVoiceChannel* channel)
+{
+    return channel->GetFilter();
+}
+
+void VoiceChannel_SetFilter(alt::IVoiceChannel* channel, uint32_t filter)
+{
+    channel->SetFilter(filter);
+}
+
+int32_t VoiceChannel_GetPriority(alt::IVoiceChannel* channel)
+{
+    return channel->GetPriority();
+}
+
+void VoiceChannel_SetPriority(alt::IVoiceChannel* channel, int32_t priority)
+{
+    channel->SetPriority(priority);
+}
 #endif
