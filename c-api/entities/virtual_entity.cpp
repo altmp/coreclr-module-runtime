@@ -28,15 +28,6 @@ alt::IBaseObject* VirtualEntity_GetBaseObject(alt::IVirtualEntity* virtualEntity
     return dynamic_cast<alt::IBaseObject*>(virtualEntity);
 }
 
-#ifdef ALT_CLIENT_API
-uint32_t VirtualEntity_GetRemoteID(alt::IVirtualEntity* virtualEntity)
-{
-    return virtualEntity->GetRemoteID();
-}
-
-#endif
-
-#ifdef ALT_SERVER_API
 uint32_t VirtualEntity_GetStreamingDistance(alt::IVirtualEntity* virtualEntity)
 {
     return virtualEntity->GetStreamingDistance();
@@ -52,4 +43,22 @@ void VirtualEntity_DeleteStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity
 {
     virtualEntity->DeleteStreamSyncedMetaData(key);
 }
+
+
+#ifdef ALT_CLIENT_API
+uint32_t VirtualEntity_GetRemoteID(alt::IVirtualEntity* virtualEntity)
+{
+    return virtualEntity->GetRemoteID();
+}
+
+uint8_t VirtualEntity_IsRemote(alt::IVirtualEntity* virtualEntity)
+{
+    return virtualEntity->IsRemote();
+}
+
+uint8_t VirtualEntity_IsStreamedIn(alt::IVirtualEntity* virtualEntity)
+{
+    return virtualEntity->IsStreamedIn();
+}
+
 #endif
