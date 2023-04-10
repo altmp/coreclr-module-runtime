@@ -378,6 +378,85 @@ alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32
     return virtualEntityGroup;
 }
 
+alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* core, position_t pos, float radius, float height, uint32_t &id) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+
+    auto colShape = core->CreateColShapeCylinder(position, radius, height);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
+}
+
+alt::IColShape* Core_CreateColShapeSphere(alt::ICore* core, position_t pos, float radius, uint32_t &id) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    auto colShape = core->CreateColShapeSphere(position, radius);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
+}
+
+alt::IColShape* Core_CreateColShapeCircle(alt::ICore* core, position_t pos, float radius, uint32_t &id) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+    auto colShape = core->CreateColShapeCircle(position, radius);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
+}
+
+alt::IColShape* Core_CreateColShapeCube(alt::ICore* core, position_t pos, position_t pos2, uint32_t &id) {
+    alt::Position position;
+    position.x = pos.x;
+    position.y = pos.y;
+    position.z = pos.z;
+
+    alt::Position position2;
+    position2.x = pos2.x;
+    position2.y = pos2.y;
+    position2.z = pos2.z;
+    auto colShape = core->CreateColShapeCube(position, position2);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
+}
+
+alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* core, float x1, float y1, float x2, float y2, float z, uint32_t &id) {
+    auto colShape = core->CreateColShapeRectangle(x1, y1, x2, y2, z);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
+}
+
+alt::IColShape* Core_CreateColShapePolygon(alt::ICore* core, float minZ, float maxZ, vector2_t points[], int pointSize, uint32_t &id) {
+    std::vector<alt::Vector2f> convertedPoints(pointSize);
+    for (int i = 0; i < pointSize; i++)
+    {
+       alt::Vector2f point;
+       point[0] = points[i].x;
+       point[1] = points[i].y;
+       convertedPoints[i] = point;
+    }
+
+    auto colShape = core->CreateColShapePolygon(minZ, maxZ, convertedPoints);
+    if (colShape != nullptr) {
+        id = colShape->GetID();
+    }
+    return colShape;
+}
+
 #ifdef ALT_SERVER_API
 uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
     return core->SubscribeCommand(cmd, cb);
@@ -552,85 +631,6 @@ alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* core, uint8_t spatial, f
         id = voiceChannel->GetID();
     }
     return voiceChannel;
-}
-
-alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* core, position_t pos, float radius, float height, uint32_t &id) {
-    alt::Position position;
-    position.x = pos.x;
-    position.y = pos.y;
-    position.z = pos.z;
-
-    auto colShape = core->CreateColShapeCylinder(position, radius, height);
-    if (colShape != nullptr) {
-        id = colShape->GetID();
-    }
-    return colShape;
-}
-
-alt::IColShape* Core_CreateColShapeSphere(alt::ICore* core, position_t pos, float radius, uint32_t &id) {
-    alt::Position position;
-    position.x = pos.x;
-    position.y = pos.y;
-    position.z = pos.z;
-    auto colShape = core->CreateColShapeSphere(position, radius);
-    if (colShape != nullptr) {
-        id = colShape->GetID();
-    }
-    return colShape;
-}
-
-alt::IColShape* Core_CreateColShapeCircle(alt::ICore* core, position_t pos, float radius, uint32_t &id) {
-    alt::Position position;
-    position.x = pos.x;
-    position.y = pos.y;
-    position.z = pos.z;
-    auto colShape = core->CreateColShapeCircle(position, radius);
-    if (colShape != nullptr) {
-        id = colShape->GetID();
-    }
-    return colShape;
-}
-
-alt::IColShape* Core_CreateColShapeCube(alt::ICore* core, position_t pos, position_t pos2, uint32_t &id) {
-    alt::Position position;
-    position.x = pos.x;
-    position.y = pos.y;
-    position.z = pos.z;
-
-    alt::Position position2;
-    position2.x = pos2.x;
-    position2.y = pos2.y;
-    position2.z = pos2.z;
-    auto colShape = core->CreateColShapeCube(position, position2);
-    if (colShape != nullptr) {
-        id = colShape->GetID();
-    }
-    return colShape;
-}
-
-alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* core, float x1, float y1, float x2, float y2, float z, uint32_t &id) {
-    auto colShape = core->CreateColShapeRectangle(x1, y1, x2, y2, z);
-    if (colShape != nullptr) {
-        id = colShape->GetID();
-    }
-    return colShape;
-}
-
-alt::IColShape* Core_CreateColShapePolygon(alt::ICore* core, float minZ, float maxZ, vector2_t points[], int pointSize, uint32_t &id) {
-    std::vector<alt::Vector2f> convertedPoints(pointSize);
-    for (int i = 0; i < pointSize; i++)
-    {
-       alt::Vector2f point;
-       point[0] = points[i].x;
-       point[1] = points[i].y;
-       convertedPoints[i] = point;
-    }
-
-    auto colShape = core->CreateColShapePolygon(minZ, maxZ, convertedPoints);
-    if (colShape != nullptr) {
-        id = colShape->GetID();
-    }
-    return colShape;
 }
 
 /*void Core_DestroyBaseObject(alt::ICore* core, alt::IBaseObject* baseObject) {

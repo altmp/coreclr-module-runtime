@@ -102,12 +102,12 @@ EXPORT_SERVER ClrPedModelInfo* Core_GetPedModelInfo(alt::ICore* core, uint32_t h
 EXPORT_SERVER void Core_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo);
 EXPORT_SERVER void Core_DeallocPedModelInfo(ClrPedModelInfo* modelInfo);
 EXPORT_SERVER alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance, uint32_t &id);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height, uint32_t &id);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius, uint32_t &id);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapeCircle(alt::ICore* server, position_t pos, float radius, uint32_t &id);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapeCube(alt::ICore* server, position_t pos, position_t pos2, uint32_t &id);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z, uint32_t &id);
-EXPORT_SERVER alt::IColShape* Core_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapeCircle(alt::ICore* server, position_t pos, float radius, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapeCube(alt::ICore* server, position_t pos, position_t pos2, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize, uint32_t &id);
 EXPORT_SERVER void Core_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseObject);
 EXPORT_SERVER void Core_DestroyCheckpoint(alt::ICore* server, alt::ICheckpoint* baseObject);
 EXPORT_SERVER void Core_DestroyVoiceChannel(alt::ICore* server, alt::IVoiceChannel* baseObject);
