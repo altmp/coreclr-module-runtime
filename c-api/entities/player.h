@@ -199,3 +199,12 @@ EXPORT_CLIENT void LocalPlayer_SetStamina(alt::ILocalPlayer* localPlayer, float 
 
 EXPORT_CLIENT float LocalPlayer_GetMaxStamina(alt::ILocalPlayer* localPlayer);
 EXPORT_CLIENT void LocalPlayer_SetMaxStamina(alt::ILocalPlayer* localPlayer, float stamina);
+
+EXPORT_SERVER void Player_PlayAnimation(alt::IPlayer* player, const char* animDict, const char* animName, float blendInSpeed, float blendOutSpeed, int duration, int flags, float playbackRate, bool lockX, bool lockY, bool lockZ);
+EXPORT_SERVER void Player_ClearTasks(alt::IPlayer* player);
+
+EXPORT_SHARED uint8_t Player_IsEnteringVehicle(alt::IPlayer* player);
+EXPORT_SHARED uint8_t Player_IsLeavingVehicle(alt::IPlayer* player);
+EXPORT_SHARED uint8_t Player_IsOnLadder(alt::IPlayer* player);
+EXPORT_SHARED uint8_t Player_IsInMelee(alt::IPlayer* player);
+EXPORT_SHARED uint8_t Player_IsInCover(alt::IPlayer* player);

@@ -24,6 +24,11 @@ namespace cache
 										_aiming(base->IsAiming()),
 										_shooting(base->IsShooting()),
 										_reloading(base->IsReloading()),
+    									_enteringVehicle(base->IsEnteringVehicle()),
+    									_leavingVehicle(base->IsLeavingVehicle()),
+    									_onLadder(base->IsOnLadder()),
+    									_inMelee(base->IsInMelee()),
+    									_inCover(base->IsInCover()),
 										_armour(base->GetArmour()),
 										_maxArmour(base->GetMaxArmour()),
 										_moveSpeed(base->GetMoveSpeed()),
@@ -153,12 +158,37 @@ namespace cache
         bool _shooting;
         bool IsShooting() const override {
 			return _shooting;
-		}
+        }
 
-        bool _reloading;
-        bool IsReloading() const override {
-			return _reloading;
-		}
+    	bool _reloading;
+    	bool IsReloading() const override {
+    		return _reloading;
+    	}
+
+    	bool _enteringVehicle;
+    	bool IsEnteringVehicle() const override {
+    		return _enteringVehicle;
+    	}
+
+    	bool _leavingVehicle;
+    	bool IsLeavingVehicle() const override {
+    		return _leavingVehicle;
+    	}
+
+    	bool _onLadder;
+    	bool IsOnLadder() const override {
+    		return _onLadder;
+    	}
+
+    	bool _inMelee;
+    	bool IsInMelee() const override {
+    		return _inMelee;
+    	}
+
+    	bool _inCover;
+    	bool IsInCover() const override {
+    		return _inCover;
+    	}
 
         uint16_t _armour;
         uint16_t GetArmour() const override {

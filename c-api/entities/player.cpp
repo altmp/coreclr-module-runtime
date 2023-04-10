@@ -163,7 +163,31 @@ float Player_GetForwardSpeed(alt::IPlayer* player) {
 float Player_GetStrafeSpeed(alt::IPlayer* player) {
     return player->GetStrafeSpeed();
 }
-EXPORT_SHARED float Player_GetStrafeSpeed(alt::IPlayer* player);
+
+uint8_t Player_IsEnteringVehicle(alt::IPlayer* player)
+{
+    return player->IsEnteringVehicle();
+}
+
+uint8_t Player_IsLeavingVehicle(alt::IPlayer* player)
+{
+    return player->IsLeavingVehicle();
+}
+
+uint8_t Player_IsOnLadder(alt::IPlayer* player)
+{
+    return player->IsOnLadder();
+}
+
+uint8_t Player_IsInMelee(alt::IPlayer* player)
+{
+    return player->IsInMelee();
+}
+
+uint8_t Player_IsInCover(alt::IPlayer* player)
+{
+    return player->IsInCover();
+}
 
 #ifdef ALT_SERVER_API
 alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key) {
@@ -561,6 +585,17 @@ void Player_SetSendNames(alt::IPlayer* player, uint8_t state) {
 
 uint8_t Player_GetSendNames(alt::IPlayer* player){
     return player->GetSendNames();
+}
+
+void Player_PlayAnimation(alt::IPlayer* player, const char* animDict, const char* animName, float blendInSpeed,
+    float blendOutSpeed, int duration, int flags, float playbackRate, bool lockX, bool lockY, bool lockZ)
+{
+    player->PlayAnimation(animDict, animName, blendInSpeed, blendOutSpeed, duration, flags, playbackRate, lockX, lockY, lockZ);
+}
+
+void Player_ClearTasks(alt::IPlayer* player)
+{
+    player->ClearTasks();
 }
 
 #endif
