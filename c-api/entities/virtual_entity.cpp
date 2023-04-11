@@ -33,17 +33,6 @@ uint32_t VirtualEntity_GetStreamingDistance(alt::IVirtualEntity* virtualEntity)
     return virtualEntity->GetStreamingDistance();
 }
 
-void VirtualEntity_SetStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key, alt::MValueConst* val)
-{
-    if (val == nullptr) return;
-    virtualEntity->SetStreamSyncedMetaData(key, val->Get()->Clone());
-}
-
-void VirtualEntity_DeleteStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key)
-{
-    virtualEntity->DeleteStreamSyncedMetaData(key);
-}
-
 
 #ifdef ALT_CLIENT_API
 uint32_t VirtualEntity_GetRemoteID(alt::IVirtualEntity* virtualEntity)
@@ -59,6 +48,21 @@ uint8_t VirtualEntity_IsRemote(alt::IVirtualEntity* virtualEntity)
 uint8_t VirtualEntity_IsStreamedIn(alt::IVirtualEntity* virtualEntity)
 {
     return virtualEntity->IsStreamedIn();
+}
+
+#endif
+
+
+#ifdef ALT_SERVER_API
+void VirtualEntity_SetStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key, alt::MValueConst* val)
+{
+    if (val == nullptr) return;
+    virtualEntity->SetStreamSyncedMetaData(key, val->Get()->Clone());
+}
+
+void VirtualEntity_DeleteStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key)
+{
+    virtualEntity->DeleteStreamSyncedMetaData(key);
 }
 
 #endif
