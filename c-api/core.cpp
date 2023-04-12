@@ -761,6 +761,27 @@ void Core_GetClosestEntities(alt::ICore* core, vector3_t position, int32_t range
     }
 }
 
+alt::IMarker* Core_CreateMarker(alt::ICore* core, alt::IPlayer* target, uint8_t type, position_t position, rgba_t color,
+    alt::IResource* resource, uint32_t& id)
+{
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    alt::RGBA rgbaColor;
+    rgbaColor.r = color.r;
+    rgbaColor.g = color.g;
+    rgbaColor.b = color.b;
+    rgbaColor.a = color.a;
+
+    auto marker = core->CreateMarker(target, (alt::IMarker::MarkerType)type, pos, rgbaColor, resource);
+    if (marker != nullptr) {
+        id = marker->GetID();
+    }
+    return marker;
+}
+
 #endif
 
 #ifdef ALT_CLIENT_API

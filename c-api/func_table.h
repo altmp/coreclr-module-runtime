@@ -33,6 +33,7 @@
 #include "entities/websocket_client.h"
 #include "entities/webview.h"
 #include "entities/worldObject.h"
+#include "entities/marker.h"
 #include <type_traits>
 
 const function_table_t* get_func_table();

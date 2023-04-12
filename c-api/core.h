@@ -308,4 +308,4 @@ EXPORT_CLIENT void Core_GetWebViews(alt::ICore* core, alt::IWebView* webViews[],
 EXPORT_CLIENT uint64_t Core_GetAudioCount(alt::ICore* core);
 EXPORT_CLIENT void Core_GetAudios(alt::ICore* core, alt::IAudio* audios[], uint64_t size);
 
-//EXPORT_SERVER alt::IMarker*
+EXPORT_SERVER alt::IMarker* Core_CreateMarker(alt::ICore* core, alt::IPlayer* target, uint8_t type, position_t pos, rgba_t color, alt::IResource* resource, uint32_t& id);
