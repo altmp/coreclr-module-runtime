@@ -125,93 +125,70 @@ alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* val
     return new alt::MValueConst(mValue);
 }
 
-
-uint64_t Core_GetPlayerCount(alt::ICore* core) {
-    return core->GetPlayers().size();
-}
-
-void Core_GetPlayers(alt::ICore* core, alt::IPlayer* players[], uint64_t size) {
-    auto playersArray = core->GetPlayers();
-    if (playersArray.size() < size) {
-        size = playersArray.size();
+alt::IPlayer** Core_GetPlayers(alt::ICore* core, uint64_t& size) {
+    auto players = core->GetPlayers();
+    size = players.size();
+    auto out = new alt::IPlayer*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = players[i];
     }
-    for (uint64_t i = 0; i < size; i++) {
-        players[i] = playersArray[i];
-    }
+
+    return out;
 }
 
-uint64_t Core_GetVehicleCount(alt::ICore* core) {
-    return core->GetVehicles().size();
-}
-
-void Core_GetVehicles(alt::ICore* core, alt::IVehicle* vehicles[], uint64_t size) {
+alt::IVehicle** Core_GetVehicles(alt::ICore* core, uint64_t& size) {
     auto vehiclesArray = core->GetVehicles();
-    if (vehiclesArray.size() < size) {
-        size = vehiclesArray.size();
-    }
+    size = vehiclesArray.size();
+    auto out = new alt::IVehicle*[size];
     for (uint64_t i = 0; i < size; i++) {
-        vehicles[i] = vehiclesArray[i];
+        out[i] = vehiclesArray[i];
     }
+    return out;
 }
-
-uint64_t Core_GetPedCount(alt::ICore* core) {
-    return core->GetPeds().size();
-}
-
-void Core_GetPeds(alt::ICore* core, alt::IPed* peds[], uint64_t size) {
+alt::IPed** Core_GetPeds(alt::ICore* core, uint64_t& size) {
     auto pedsArray = core->GetPeds();
-    if (pedsArray.size() < size) {
-        size = pedsArray.size();
-    }
+    size = pedsArray.size();
+    auto out = new alt::IPed*[size];
     for (uint64_t i = 0; i < size; i++) {
-        peds[i] = pedsArray[i];
+        out[i] = pedsArray[i];
     }
+
+    return out;
 }
 
-uint64_t Core_GetVirtualEntitiyCount(alt::ICore* core)
-{
-    return core->GetVirtualEntities().size();
-}
-
-void Core_GetVirtualEntities(alt::ICore* core, alt::IVirtualEntity* virtualEntities[], uint64_t size)
+alt::IVirtualEntity** Core_GetVirtualEntities(alt::ICore* core, uint64_t& size)
 {
     auto virtualEntitiyArray = core->GetVirtualEntities();
-    if (virtualEntitiyArray.size() < size) {
-        size = virtualEntitiyArray.size();
-    }
+    size = virtualEntitiyArray.size();
+    auto out = new alt::IVirtualEntity*[size];
     for (uint64_t i = 0; i < size; i++) {
-        virtualEntities[i] = virtualEntitiyArray[i];
+        out[i] = virtualEntitiyArray[i];
     }
+
+    return out;
 }
 
-uint64_t Core_GetVirtualEntityGroupCount(alt::ICore* core)
-{
-    return core->GetVirtualEntityGroups().size();
-}
-
-void Core_GetVirtualEntityGroups(alt::ICore* core, alt::IVirtualEntityGroup* virtualEntitiyGroups[], uint64_t size)
+alt::IVirtualEntityGroup** Core_GetVirtualEntityGroups(alt::ICore* core, uint64_t& size)
 {
     auto virtualEntitiyGroupArray = core->GetVirtualEntityGroups();
-    if (virtualEntitiyGroupArray.size() < size) {
-        size = virtualEntitiyGroupArray.size();
-    }
+    size = virtualEntitiyGroupArray.size();
+    auto out = new alt::IVirtualEntityGroup*[size];
     for (uint64_t i = 0; i < size; i++) {
-        virtualEntitiyGroups[i] = virtualEntitiyGroupArray[i];
+        out[i] = virtualEntitiyGroupArray[i];
     }
+
+    return out;
 }
 
-uint64_t Core_GetBlipCount(alt::ICore* core) {
-    return core->GetBlips().size();
-}
-
-void Core_GetBlips(alt::ICore* core, alt::IBlip* Blips[], uint64_t size) {
-    auto BlipsArray = core->GetBlips();
-    if (BlipsArray.size() < size) {
-        size = BlipsArray.size();
-    }
+alt::IBlip** Core_GetBlips(alt::ICore* core, uint64_t& size) {
+    auto blipsArray = core->GetBlips();
+    size = blipsArray.size();
+    auto out = new alt::IBlip*[size];
     for (uint64_t i = 0; i < size; i++) {
-        Blips[i] = BlipsArray[i];
+        out[i] = blipsArray[i];
     }
+
+    return out;
 }
 
 void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
@@ -322,68 +299,52 @@ uint8_t Core_GetEventEnumSize() {
     return (uint8_t) alt::CEvent::Type::SIZE;
 }
 
-uint64_t Core_GetNetworkObjectCount(alt::ICore* core)
-{
-    return core->GetNetworkObjects().size();
-}
-
-void Core_GetNetworkObjects(alt::ICore* core, alt::INetworkObject* networkObjects[], uint64_t size)
+alt::INetworkObject** Core_GetNetworkObjects(alt::ICore* core, uint64_t& size)
 {
     auto networkObjectsArray = core->GetNetworkObjects();
-    if (networkObjectsArray.size() < size) {
-        size = networkObjectsArray.size();
-    }
+    size = networkObjectsArray.size();
+    auto out = new alt::INetworkObject*[size];
     for (uint64_t i = 0; i < size; i++) {
-        networkObjects[i] = networkObjectsArray[i];
+        out[i] = networkObjectsArray[i];
     }
+
+    return out;
 }
 
-uint64_t Core_GetCheckpointCount(alt::ICore* core)
-{
-    return core->GetCheckpoints().size();
-}
-
-void Core_GetCheckpoints(alt::ICore* core, alt::ICheckpoint* checkpoints[], uint64_t size)
+alt::ICheckpoint** Core_GetCheckpoints(alt::ICore* core, uint64_t& size)
 {
     auto checkpointsArray = core->GetCheckpoints();
-    if (checkpointsArray.size() < size) {
-        size = checkpointsArray.size();
-    }
+    size = checkpointsArray.size();
+    auto out = new alt::ICheckpoint*[size];
     for (uint64_t i = 0; i < size; i++) {
-        checkpoints[i] = checkpointsArray[i];
+        out[i] = checkpointsArray[i];
     }
+
+    return out;
 }
 
-uint64_t Core_GetMarkerCount(alt::ICore* core)
-{
-    return core->GetMarkers().size();
-}
-
-void Core_GetMarkers(alt::ICore* core, alt::IMarker* markers[], uint64_t size)
+alt::IMarker** Core_GetMarkers(alt::ICore* core, uint64_t& size)
 {
     auto markersArray = core->GetMarkers();
-    if (markersArray.size() < size) {
-        size = markersArray.size();
-    }
+    size = markersArray.size();
+    auto out = new alt::IMarker*[size];
     for (uint64_t i = 0; i < size; i++) {
-        markers[i] = markersArray[i];
+        out[i] = markersArray[i];
     }
+
+    return out;
 }
 
-uint64_t Core_GetColShapeCount(alt::ICore* core)
-{
-    return core->GetColShapes().size();
-}
-
-void Core_GetColShapes(alt::ICore* core, alt::IColShape* coleShapes[], uint64_t size)
+alt::IColShape** Core_GetColShapes(alt::ICore* core, uint64_t& size)
 {
     auto colShapesArray = core->GetColShapes();
-    if (colShapesArray.size() < size) {
-        size = colShapesArray.size();
-    }
+    size = colShapesArray.size();
+    auto out = new alt::IColShape*[size];
     for (uint64_t i = 0; i < size; i++) {
-        coleShapes[i] = colShapesArray[i];
+        out[i] = colShapesArray[i];
     }
+
+    return out;
 }
 
 alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position,

@@ -75,6 +75,25 @@ void FreeResourceArray(alt::IResource** resourceArray) {
     delete[] resourceArray;
 }
 
+void FreePlayerArray(alt::IPlayer** playerArray) {
+    delete[] playerArray;
+}
+
+void FreeBlipArray(alt::IBlip** blipArray)
+{
+    delete[] blipArray;
+}
+
+void FreeVehicleArray(alt::IVehicle** vehicleArray)
+{
+    delete[] vehicleArray;
+}
+
+void FreePedArray(alt::IPed** pedArray)
+{
+    delete[] pedArray;
+}
+
 void FreeObjectArray(alt::IObject** objectArray) {
     delete[] objectArray;
 }
