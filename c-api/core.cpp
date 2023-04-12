@@ -354,8 +354,40 @@ void Core_GetCheckpoints(alt::ICore* core, alt::ICheckpoint* checkpoints[], uint
     }
 }
 
+uint64_t Core_GetMarkerCount(alt::ICore* core)
+{
+    return core->GetMarkers().size();
+}
+
+void Core_GetMarkers(alt::ICore* core, alt::IMarker* markers[], uint64_t size)
+{
+    auto markersArray = core->GetMarkers();
+    if (markersArray.size() < size) {
+        size = markersArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        markers[i] = markersArray[i];
+    }
+}
+
+uint64_t Core_GetColShapeCount(alt::ICore* core)
+{
+    return core->GetColShapes().size();
+}
+
+void Core_GetColShapes(alt::ICore* core, alt::IColShape* coleShapes[], uint64_t size)
+{
+    auto colShapesArray = core->GetColShapes();
+    if (colShapesArray.size() < size) {
+        size = colShapesArray.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        coleShapes[i] = colShapesArray[i];
+    }
+}
+
 alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position,
-    uint32_t streamingDistance, uint32_t &id)
+                                              uint32_t streamingDistance, uint32_t &id)
 {
     alt::Position pos;
     pos.x = position.x;

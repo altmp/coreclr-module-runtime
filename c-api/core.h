@@ -311,6 +311,12 @@ EXPORT_SHARED void Core_GetNetworkObjects(alt::ICore* core, alt::INetworkObject*
 EXPORT_SHARED uint64_t Core_GetCheckpointCount(alt::ICore* core);
 EXPORT_SHARED void Core_GetCheckpoints(alt::ICore* core, alt::ICheckpoint* checkpoints[], uint64_t size);
 
+EXPORT_SHARED uint64_t Core_GetMarkerCount(alt::ICore* core);
+EXPORT_SHARED void Core_GetMarkers(alt::ICore* core, alt::IMarker* markers[], uint64_t size);
+
+EXPORT_SHARED uint64_t Core_GetColShapeCount(alt::ICore* core);
+EXPORT_SHARED void Core_GetColShapes(alt::ICore* core, alt::IColShape* colShapes[], uint64_t size);
+
 EXPORT_CLIENT uint64_t Core_GetWebViewCount(alt::ICore* core);
 EXPORT_CLIENT void Core_GetWebViews(alt::ICore* core, alt::IWebView* webViews[], uint64_t size);
 
