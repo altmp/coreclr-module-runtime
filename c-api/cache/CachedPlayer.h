@@ -459,7 +459,7 @@ namespace cache
     		return _localMetaData.find(key) != _localMetaData.end();
     	}
 
-    	alt::MValue GetLocalMetaData(const std::string& key) const override {
+    	alt::MValueConst GetLocalMetaData(const std::string& key) const override {
     		const auto find = _localMetaData.find(key);
     		if (find == _localMetaData.end()) return alt::ICore::Instance().CreateMValueNil();
     		return find->second;
