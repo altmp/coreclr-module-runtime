@@ -94,6 +94,21 @@ void FreePedArray(alt::IPed** pedArray)
     delete[] pedArray;
 }
 
+void FreeCheckpointArray(alt::ICheckpoint** checkpointArray)
+{
+    delete[] checkpointArray;
+}
+
+void FreeVirtualEntityArray(alt::IVirtualEntity** virtualEntityArray)
+{
+    delete[] virtualEntityArray;
+}
+
+void FreeVirtualEntityGroupArray(alt::IVirtualEntityGroup** virtualEntityGroupArray)
+{
+    delete[] virtualEntityGroupArray;
+}
+
 void FreeObjectArray(alt::IObject** objectArray) {
     delete[] objectArray;
 }
