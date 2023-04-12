@@ -111,7 +111,7 @@ void Marker_SetDirection(alt::IMarker* marker, position_t dir)
 }
 
 #ifdef ALT_CLIENT_API
-uint32_t VirtualEntity_GetRemoteID(alt::IMarker* marker)
+uint32_t Marker_GetRemoteID(alt::IMarker* marker)
 {
     return marker->GetRemoteID();
 }
