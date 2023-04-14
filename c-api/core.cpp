@@ -1498,5 +1498,26 @@ void Core_GetAudios(alt::ICore* core, alt::IAudio* audios[], uint64_t size)
     }
 }
 
+alt::IMarker* Core_CreateMarker(alt::ICore* core, uint8_t type, position_t position, rgba_t color,
+    alt::IResource* resource, uint32_t& id)
+{
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    alt::RGBA rgbaColor;
+    rgbaColor.r = color.r;
+    rgbaColor.g = color.g;
+    rgbaColor.b = color.b;
+    rgbaColor.a = color.a;
+
+    auto marker = core->CreateMarker((alt::IMarker::MarkerType)type, pos, rgbaColor, resource);
+    if (marker != nullptr) {
+        id = marker->GetID();
+    }
+    return marker;
+}
+
 #endif
 

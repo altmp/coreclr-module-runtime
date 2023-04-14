@@ -1,8 +1,8 @@
 #include "marker.h"
 
-alt::IBaseObject* Marker_GetBaseObject(alt::IMarker* marker)
+alt::IWorldObject* Marker_GetWorldObject(alt::IMarker* marker)
 {
-    return dynamic_cast<alt::IBaseObject*>(marker);
+    return dynamic_cast<alt::IWorldObject*>(marker);
 }
 
 uint32_t Marker_GetID(alt::IMarker* marker)

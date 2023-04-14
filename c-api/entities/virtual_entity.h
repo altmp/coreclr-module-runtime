@@ -14,7 +14,7 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED alt::IBaseObject* VirtualEntity_GetBaseObject(alt::IVirtualEntity* virtualEntity);
+EXPORT_SHARED alt::IWorldObject* VirtualEntity_GetWorldObject(alt::IVirtualEntity* virtualEntity);
 
 EXPORT_SHARED uint32_t VirtualEntity_GetID(alt::IVirtualEntity* virtualEntity);
 EXPORT_SHARED alt::IVirtualEntityGroup* VirtualEntity_GetGroup(alt::IVirtualEntity* virtualEntity);

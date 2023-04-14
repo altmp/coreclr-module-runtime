@@ -14,7 +14,7 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED alt::IBaseObject* Marker_GetBaseObject(alt::IMarker* marker);
+EXPORT_SHARED alt::IWorldObject* Marker_GetWorldObject(alt::IMarker* marker);
 
 EXPORT_SHARED uint32_t Marker_GetID(alt::IMarker* marker);
 

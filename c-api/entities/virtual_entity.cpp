@@ -23,9 +23,9 @@ alt::MValueConst* VirtualEntity_GetStreamSyncedMetaData(alt::IVirtualEntity* vir
     return new alt::MValueConst(virtualEntity->GetStreamSyncedMetaData(key));
 }
 
-alt::IBaseObject* VirtualEntity_GetBaseObject(alt::IVirtualEntity* virtualEntity)
+alt::IWorldObject* VirtualEntity_GetWorldObject(alt::IVirtualEntity* virtualEntity)
 {
-    return dynamic_cast<alt::IBaseObject*>(virtualEntity);
+    return dynamic_cast<alt::IWorldObject*>(virtualEntity);
 }
 
 uint32_t VirtualEntity_GetStreamingDistance(alt::IVirtualEntity* virtualEntity)
