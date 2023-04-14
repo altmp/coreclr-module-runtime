@@ -494,21 +494,21 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
         {
             auto colShapeEvent = dynamic_cast<const alt::CColShapeEvent*>(ev);
             auto entity = colShapeEvent->GetEntity();
-            auto entityPointer = GetEntityPointer(entity);
-            if (entity != nullptr && entityPointer != nullptr)
+            auto worldObjectPointer = GetWorldObjectPointer(entity);
+            if (entity != nullptr && worldObjectPointer != nullptr)
             {
                 auto colShapePointer = colShapeEvent->GetTarget();
                 if (colShapePointer->GetType() == alt::IBaseObject::Type::COLSHAPE)
                 {
                     OnColShapeDelegate(colShapePointer,
-                                       entityPointer,
+                                       worldObjectPointer,
                                        entity->GetType(),
                                        colShapeEvent->GetState());
                 }
                 else if (colShapePointer->GetType() == alt::IBaseObject::Type::CHECKPOINT)
                 {
                     OnCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(colShapePointer),
-                                         entityPointer,
+                                         worldObjectPointer,
                                          entity->GetType(),
                                          colShapeEvent->GetState());
                 }
@@ -1235,6 +1235,36 @@ void* CSharpResourceImpl::GetBaseObjectPointer(alt::IBaseObject* baseObject)
             return dynamic_cast<alt::ICheckpoint*>(baseObject);
         case alt::IBaseObject::Type::PED:
             return dynamic_cast<alt::IPed*>(baseObject);
+        default:
+            return nullptr;
+        }
+    }
+    return nullptr;
+}
+
+void* CSharpResourceImpl::GetWorldObjectPointer(alt::IWorldObject* worldObject)
+{
+    if (worldObject != nullptr)
+    {
+        switch (worldObject->GetType())
+        {
+        case alt::IBaseObject::Type::PLAYER:
+        case alt::IBaseObject::Type::LOCAL_PLAYER:
+            return dynamic_cast<alt::IPlayer*>(worldObject);
+        case alt::IBaseObject::Type::VEHICLE:
+            return dynamic_cast<alt::IVehicle*>(worldObject);
+        case alt::IBaseObject::Type::PED:
+            return dynamic_cast<alt::IPed*>(worldObject);
+        case alt::IBaseObject::Type::BLIP:
+            return dynamic_cast<alt::IBlip*>(worldObject);
+        case alt::IBaseObject::Type::COLSHAPE:
+            return dynamic_cast<alt::IColShape*>(worldObject);
+        case alt::IBaseObject::Type::MARKER:
+            return dynamic_cast<alt::IMarker*>(worldObject);
+        case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+            return dynamic_cast<alt::IVirtualEntity*>(worldObject);
+        case alt::IBaseObject::Type::CHECKPOINT:
+            return dynamic_cast<alt::ICheckpoint*>(worldObject);
         default:
             return nullptr;
         }

@@ -241,6 +241,8 @@ class CSharpResourceImpl : public alt::IResource::Impl {
 
     static void* GetBaseObjectPointer(alt::IBaseObject* baseObject);
 
+    static void* GetWorldObjectPointer(alt::IWorldObject* worldObject);
+
     static void* GetEntityPointer(alt::IEntity* entity);
 
     static alt::IBaseObject::Type GetEntityType(alt::IEntity* entity);
