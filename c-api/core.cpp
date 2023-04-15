@@ -1498,7 +1498,7 @@ void Core_GetAudios(alt::ICore* core, alt::IAudio* audios[], uint64_t size)
     }
 }
 
-alt::IMarker* Core_CreateMarker(alt::ICore* core, uint8_t type, position_t position, rgba_t color,
+alt::IMarker* Core_CreateMarker_Client(alt::ICore* core, uint8_t type, position_t position, rgba_t color,
     alt::IResource* resource, uint32_t& id)
 {
     alt::Position pos;
