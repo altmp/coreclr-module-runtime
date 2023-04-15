@@ -28,3 +28,9 @@ EXPORT_SHARED void* BaseObject_TryCache(alt::IBaseObject* baseObject);
 EXPORT_SHARED void BaseObject_DestructCache(alt::IBaseObject* baseObject);
 
 EXPORT_SHARED uint8_t BaseObject_GetType(alt::IBaseObject* baseObject);
+
+EXPORT_SHARED uint8_t BaseObject_HasSyncedMetaData(alt::IBaseObject* baseObject, const char* key);
+EXPORT_SHARED alt::MValueConst* BaseObject_GetSyncedMetaData(alt::IBaseObject* baseObject, const char* key);
+
+EXPORT_SERVER void BaseObject_SetSyncedMetaData(alt::IBaseObject* baseObject, const char* key, alt::MValueConst* val);
+EXPORT_SERVER void BaseObject_DeleteSyncedMetaData(alt::IBaseObject* baseObject, const char* key);

@@ -39,3 +39,24 @@ uint8_t BaseObject_GetType(alt::IBaseObject* baseObject)
 {
     return (uint8_t) baseObject->GetType();
 }
+
+uint8_t BaseObject_HasSyncedMetaData(alt::IBaseObject* baseObject, const char* key) {
+    return baseObject->HasSyncedMetaData(key);
+}
+
+alt::MValueConst* BaseObject_GetSyncedMetaData(alt::IBaseObject* baseObject, const char* key) {
+    return new alt::MValueConst(baseObject->GetSyncedMetaData(key));
+}
+
+#ifdef ALT_SERVER_API
+
+void BaseObject_SetSyncedMetaData(alt::IBaseObject* baseObject, const char* key, alt::MValueConst* val) {
+    if (val == nullptr) return;
+    baseObject->SetSyncedMetaData(key, val->Get()->Clone());
+}
+
+void BaseObject_DeleteSyncedMetaData(alt::IBaseObject* baseObject, const char* key) {
+    baseObject->DeleteSyncedMetaData(key);
+}
+
+#endif

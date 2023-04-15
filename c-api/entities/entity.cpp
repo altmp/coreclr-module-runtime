@@ -51,15 +51,6 @@ alt::MValueConst* Entity_GetStreamSyncedMetaData(alt::IEntity* Entity, const cha
     return new alt::MValueConst(Entity->GetStreamSyncedMetaData(key));
 }
 
-
-uint8_t Entity_HasSyncedMetaData(alt::IEntity* Entity, const char* key) {
-    return Entity->HasSyncedMetaData(key);
-}
-
-alt::MValueConst* Entity_GetSyncedMetaData(alt::IEntity* Entity, const char* key) {
-    return new alt::MValueConst(Entity->GetSyncedMetaData(key));
-}
-
 #ifdef ALT_SERVER_API
 void Entity_SetNetOwner(alt::IEntity* entity, alt::IPlayer* networkOwnerPlayer, uint8_t disableMigration) {
     entity->SetNetworkOwner(networkOwnerPlayer, disableMigration);
@@ -80,15 +71,6 @@ void Entity_SetStreamSyncedMetaData(alt::IEntity* entity, const char* key, alt::
 
 void Entity_DeleteStreamSyncedMetaData(alt::IEntity* entity, const char* key) {
     entity->DeleteStreamSyncedMetaData(key);
-}
-
-void Entity_SetSyncedMetaData(alt::IEntity* entity, const char* key, alt::MValueConst* val) {
-    if (val == nullptr) return;
-    entity->SetSyncedMetaData(key, val->Get()->Clone());
-}
-
-void Entity_DeleteSyncedMetaData(alt::IEntity* entity, const char* key) {
-    entity->DeleteSyncedMetaData(key);
 }
 
 uint8_t Entity_GetVisible(alt::IEntity* entity) {
