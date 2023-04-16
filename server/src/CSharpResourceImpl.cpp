@@ -196,10 +196,11 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
         }
     case alt::CEvent::Type::PLAYER_CONNECT:
         {
-            auto connectPlayer = dynamic_cast<const alt::CPlayerConnectEvent*>(ev)->GetTarget();
+            auto playerConnectEvent = dynamic_cast<const alt::CPlayerConnectEvent*>(ev);
+            auto connectPlayer = playerConnectEvent->GetTarget();
             OnPlayerConnectDelegate(connectPlayer,
                                     connectPlayer->GetID(),
-                                    ""); //TODO: maybe better solution
+                                    playerConnectEvent->GetReason().c_str());
             break;
         }
     case alt::CEvent::Type::PLAYER_BEFORE_CONNECT:
