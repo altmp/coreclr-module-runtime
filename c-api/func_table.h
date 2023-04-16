@@ -34,6 +34,9 @@
 #include "entities/webview.h"
 #include "entities/worldObject.h"
 #include "entities/marker.h"
+#include "entities/networkObject.h"
+#include "entities/textLabel.h"
+#include "entities/audioFilter.h"
 #include <type_traits>
 
 const function_table_t* get_func_table();
