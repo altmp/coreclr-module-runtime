@@ -31,8 +31,6 @@ void CSharpResourceImpl::ResetDelegates()
     OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
                                 auto var8) {};
     OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
-    OnPlayerRemoveDelegate = [](auto var) {};
-    OnVehicleRemoveDelegate = [](auto var) {};
     OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerEnterVehicleDelegate = [](auto var, auto var2, auto var3) {};
@@ -40,23 +38,9 @@ void CSharpResourceImpl::ResetDelegates()
     OnPlayerLeaveVehicleDelegate = [](auto var, auto var2, auto var3) {};
     OnStopDelegate = []() {};
     OnTickDelegate = []() {};
-    OnCreatePlayerDelegate = [](auto var, auto var2) {};
-    OnRemovePlayerDelegate = [](auto var) {};
-    OnCreateObjectDelegate = [](auto var, auto var2) {};
-    OnRemoveObjectDelegate = [](auto var) {};
-    OnCreateVehicleDelegate = [](auto var, auto var2) {};
-    OnRemoveVehicleDelegate = [](auto var) {};
-    OnCreateBlipDelegate = [](auto var, auto var2) {};
-    OnRemoveBlipDelegate = [](auto var) {};
-    OnCreateCheckpointDelegate = [](auto var, auto var2) {};
-    OnRemoveCheckpointDelegate = [](auto var) {};
-    OnCreateVoiceChannelDelegate = [](auto var, auto var2) {};
-    OnRemoveVoiceChannelDelegate = [](auto var) {};
     OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
     OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnCreateColShapeDelegate = [](auto var, auto var2) {};
-    OnRemoveColShapeDelegate = [](auto var) {};
     OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnVehicleDestroyDelegate = [](auto var) {};
     OnFireDelegate = [](auto var, auto var2, auto var3, auto var4) {};
@@ -76,10 +60,8 @@ void CSharpResourceImpl::ResetDelegates()
     OnPlayerDimensionChangeDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerSpawnDelegate = [](auto var) {};
 
-    OnCreateVirtualEntityDelegate = [](auto var, auto var2) {};
-    OnRemoveVirtualEntityDelegate = [](auto var) {};
-    OnCreateVirtualEntityGroupDelegate = [](auto var, auto var2) {};
-    OnRemoveVirtualEntityGroupDelegate = [](auto var) {};
+    OnCreateBaseObjectDelegate = [](auto var, auto var2, auto var3) {};
+    OnRemoveBaseObjectDelegate = [](auto var, auto var2) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -685,61 +667,67 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
         case alt::IBaseObject::Type::PLAYER:
             {
                 const auto player = dynamic_cast<alt::IPlayer*>(object);
-                OnCreatePlayerDelegate(player, player->GetID());
+                OnCreateBaseObjectDelegate(player, player->GetType(), player->GetID());
                 break;
             }
         case alt::IBaseObject::Type::VEHICLE:
             {
                 const auto vehicle = dynamic_cast<alt::IVehicle*>(object);
-                OnCreateVehicleDelegate(vehicle, vehicle->GetID());
+                OnCreateBaseObjectDelegate(vehicle, vehicle->GetType(), vehicle->GetID());
                 break;
             }
         case alt::IBaseObject::Type::BLIP:
             {
                 auto blip = dynamic_cast<alt::IBlip*>(object);
-                OnCreateBlipDelegate(blip, blip->GetID());
+                OnCreateBaseObjectDelegate(blip, blip->GetType(), blip->GetID());
                 break;
             }
         case alt::IBaseObject::Type::VOICE_CHANNEL:
             {
                 auto voiceChannel = dynamic_cast<alt::IVoiceChannel*>(object);
-                OnCreateVoiceChannelDelegate(voiceChannel, voiceChannel->GetID());
+                OnCreateBaseObjectDelegate(voiceChannel, voiceChannel->GetType(), voiceChannel->GetID());
                 break;
             }
         case alt::IBaseObject::Type::COLSHAPE:
             {
                 auto colShape = dynamic_cast<alt::IColShape*>(object);
-                OnCreateColShapeDelegate(colShape, colShape->GetID());
+                OnCreateBaseObjectDelegate(colShape, colShape->GetType(), colShape->GetID());
                 break;
             }
         case alt::IBaseObject::Type::CHECKPOINT:
             {
                 auto checkPoint = dynamic_cast<alt::ICheckpoint*>(object);
-                OnCreateCheckpointDelegate(checkPoint, checkPoint->GetID());
+                OnCreateBaseObjectDelegate(checkPoint, checkPoint->GetType(), checkPoint->GetID());
                 break;
             }
         case alt::IBaseObject::Type::OBJECT:
             {
                 const auto altObject = dynamic_cast<alt::IObject*>(object);
-                OnCreateObjectDelegate(altObject, altObject->GetID());
+                OnCreateBaseObjectDelegate(altObject, altObject->GetType(), altObject->GetID());
                 break;
             }
         case alt::IBaseObject::Type::PED:
             {
                 const auto ped = dynamic_cast<alt::IPed*>(object);
-                OnCreatePedDelegate(ped, ped->GetID());
+                OnCreateBaseObjectDelegate(ped, ped->GetType(), ped->GetID());
                 break;
             }
         case alt::IBaseObject::Type::VIRTUAL_ENTITY:
             {
                 const auto virtualEntity = dynamic_cast<alt::IVirtualEntity*>(object);
-                OnCreateVirtualEntityDelegate(virtualEntity, virtualEntity->GetID());
+                OnCreateBaseObjectDelegate(virtualEntity, virtualEntity->GetType(), virtualEntity->GetID());
                 break;
             }
         case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
             {
                 const auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
-                OnCreateVirtualEntityGroupDelegate(virtualEntityGroup, virtualEntityGroup->GetID());
+                OnCreateBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType(), virtualEntityGroup->GetID());
+                break;
+            }
+        case alt::IBaseObject::Type::NETWORK_OBJECT:
+            {
+                const auto networkObject = dynamic_cast<alt::INetworkObject*>(object);
+                OnCreateBaseObjectDelegate(networkObject, networkObject->GetType(), networkObject->GetID());
                 break;
             }
         default:
@@ -759,52 +747,68 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
         {
         case alt::IBaseObject::Type::PLAYER:
             {
-                OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
+                const auto player = dynamic_cast<alt::IPlayer*>(object);
+                OnRemoveBaseObjectDelegate(player, player->GetType());
                 break;
             }
         case alt::IBaseObject::Type::VEHICLE:
             {
-                OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
+                const auto vehicle = dynamic_cast<alt::IVehicle*>(object);
+                OnRemoveBaseObjectDelegate(vehicle, vehicle->GetType());
                 break;
             }
         case alt::IBaseObject::Type::BLIP:
             {
-                OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+                auto blip = dynamic_cast<alt::IBlip*>(object);
+                OnRemoveBaseObjectDelegate(blip, blip->GetType());
                 break;
             }
         case alt::IBaseObject::Type::VOICE_CHANNEL:
             {
-                OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+                auto voiceChannel = dynamic_cast<alt::IVoiceChannel*>(object);
+                OnRemoveBaseObjectDelegate(voiceChannel, voiceChannel->GetType());
                 break;
             }
         case alt::IBaseObject::Type::COLSHAPE:
             {
-                OnRemoveColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
+                auto colShape = dynamic_cast<alt::IColShape*>(object);
+                OnRemoveBaseObjectDelegate(colShape, colShape->GetType());
                 break;
             }
         case alt::IBaseObject::Type::CHECKPOINT:
             {
-                OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                auto checkPoint = dynamic_cast<alt::ICheckpoint*>(object);
+                OnRemoveBaseObjectDelegate(checkPoint, checkPoint->GetType());
                 break;
             }
         case alt::IBaseObject::Type::OBJECT:
             {
-                OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
+                const auto altObject = dynamic_cast<alt::IObject*>(object);
+                OnRemoveBaseObjectDelegate(altObject, altObject->GetType());
                 break;
             }
         case alt::IBaseObject::Type::PED:
             {
-                OnRemovePedDelegate(dynamic_cast<alt::IPed*>(object));
+                const auto ped = dynamic_cast<alt::IPed*>(object);
+                OnRemoveBaseObjectDelegate(ped, ped->GetType());
                 break;
             }
         case alt::IBaseObject::Type::VIRTUAL_ENTITY:
             {
-                OnRemoveVirtualEntityDelegate(dynamic_cast<alt::IVirtualEntity*>(object));
+                const auto virtualEntity = dynamic_cast<alt::IVirtualEntity*>(object);
+                OnRemoveBaseObjectDelegate(virtualEntity, virtualEntity->GetType());
                 break;
             }
         case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
             {
-                OnRemoveVirtualEntityGroupDelegate(dynamic_cast<alt::IVirtualEntityGroup*>(object));
+                const auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
+                OnRemoveBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType());
+                break;
+            }
+        case alt::IBaseObject::Type::NETWORK_OBJECT:
+            {
+                const auto networkObject = dynamic_cast<alt::INetworkObject*>(object);
+                OnRemoveBaseObjectDelegate(networkObject, networkObject->GetType());
                 break;
             }
         default:
@@ -921,18 +925,6 @@ void CSharpResourceImpl_SetPlayerDisconnectDelegate(CSharpResourceImpl* resource
     resource->OnPlayerDisconnectDelegate = delegate;
 }
 
-void CSharpResourceImpl_SetPlayerRemoveDelegate(CSharpResourceImpl* resource,
-                                                PlayerRemoveDelegate_t delegate)
-{
-    resource->OnPlayerRemoveDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetVehicleRemoveDelegate(CSharpResourceImpl* resource,
-                                                 VehicleRemoveDelegate_t delegate)
-{
-    resource->OnVehicleRemoveDelegate = delegate;
-}
-
 void CSharpResourceImpl_SetPlayerChangeVehicleSeatDelegate(CSharpResourceImpl* resource,
                                                            PlayerChangeVehicleSeatDelegate_t delegate)
 {
@@ -956,91 +948,6 @@ void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(CSharpResourceImpl* resour
 {
     resource->OnPlayerLeaveVehicleDelegate = delegate;
 }
-
-void CSharpResourceImpl_SetCreatePlayerDelegate(CSharpResourceImpl* resource,
-                                                CreatePlayerDelegate_t delegate)
-{
-    resource->OnCreatePlayerDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemovePlayerDelegate(CSharpResourceImpl* resource,
-                                                RemovePlayerDelegate_t delegate)
-{
-    resource->OnRemovePlayerDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateObjectDelegate(CSharpResourceImpl* resource,
-                                                CreateObjectDelegate_t delegate)
-{
-    resource->OnCreateObjectDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveObjectDelegate(CSharpResourceImpl* resource,
-                                                RemoveObjectDelegate_t delegate)
-{
-    resource->OnRemoveObjectDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateVehicleDelegate(CSharpResourceImpl* resource,
-                                                 CreateVehicleDelegate_t delegate)
-{
-    resource->OnCreateVehicleDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,
-                                                 RemoveVehicleDelegate_t delegate)
-{
-    resource->OnRemoveVehicleDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreatePedDelegate(CSharpResourceImpl* resource,
-                                                 CreatePedDelegate_t delegate)
-{
-    resource->OnCreatePedDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemovePedDelegate(CSharpResourceImpl* resource,
-                                                 RemovePedDelegate_t delegate)
-{
-    resource->OnRemovePedDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateBlipDelegate(CSharpResourceImpl* resource,
-                                              CreateBlipDelegate_t delegate)
-{
-    resource->OnCreateBlipDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveBlipDelegate(CSharpResourceImpl* resource,
-                                              RemoveBlipDelegate_t delegate)
-{
-    resource->OnRemoveBlipDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateCheckpointDelegate(CSharpResourceImpl* resource,
-                                                    CreateCheckpointDelegate_t delegate)
-{
-    resource->OnCreateCheckpointDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveCheckpointDelegate(CSharpResourceImpl* resource,
-                                                    RemoveCheckpointDelegate_t delegate)
-{
-    resource->OnRemoveCheckpointDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateVoiceChannelDelegate(CSharpResourceImpl* resource,
-                                                      CreateVoiceChannelDelegate_t delegate)
-{
-    resource->OnCreateVoiceChannelDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveVoiceChannelDelegate(CSharpResourceImpl* resource,
-                                                      RemoveVoiceChannelDelegate_t delegate)
-{
-    resource->OnRemoveVoiceChannelDelegate = delegate;
-}
-
 void CSharpResourceImpl_SetConsoleCommandDelegate(CSharpResourceImpl* resource,
                                                   ConsoleCommandDelegate_t delegate)
 {
@@ -1057,18 +964,6 @@ void CSharpResourceImpl_SetSyncedMetaChangeDelegate(CSharpResourceImpl* resource
                                                     MetaChangeDelegate_t delegate)
 {
     resource->OnSyncedMetaChangeDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateColShapeDelegate(CSharpResourceImpl* resource,
-                                                  CreateColShapeDelegate_t delegate)
-{
-    resource->OnCreateColShapeDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveColShapeDelegate(CSharpResourceImpl* resource,
-                                                  RemoveColShapeDelegate_t delegate)
-{
-    resource->OnRemoveColShapeDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetColShapeDelegate(CSharpResourceImpl* resource,
@@ -1182,24 +1077,14 @@ void CSharpResourceImpl_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, Pla
     resource->OnPlayerSpawnDelegate = delegate;
 }
 
-void CSharpResourceImpl_SetCreateVirtualEntityDelegate(CSharpResourceImpl* resource, CreateVirtualEntityDelegate_t delegate)
+void CSharpResourceImpl_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource, CreateBaseObjectDelegate_t delegate)
 {
-    resource->OnCreateVirtualEntityDelegate = delegate;
+    resource->OnCreateBaseObjectDelegate = delegate;
 }
 
-void CSharpResourceImpl_SetRemoveVirtualEntityDelegate(CSharpResourceImpl* resource, RemoveVirtualEntityDelegate_t delegate)
+void CSharpResourceImpl_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resource, RemoveBaseObjectDelegate_t delegate)
 {
-    resource->OnRemoveVirtualEntityDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateVirtualEntityGroupDelegate(CSharpResourceImpl* resource, CreateVirtualEntityGroupDelegate_t delegate)
-{
-    resource->OnCreateVirtualEntityGroupDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveVirtualEntityGroupDelegate(CSharpResourceImpl* resource, RemoveVirtualEntityGroupDelegate_t delegate)
-{
-    resource->OnRemoveVirtualEntityGroupDelegate = delegate;
+    resource->OnRemoveBaseObjectDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)

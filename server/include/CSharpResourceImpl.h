@@ -128,37 +128,6 @@ typedef void (* PlayerLeaveVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlay
 
 typedef void (* StopDelegate_t)();
 
-typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, uint16_t id);
-
-typedef void (* RemovePlayerDelegate_t)(alt::IPlayer* player);
-
-typedef void (* CreateObjectDelegate_t)(alt::IObject* Object, uint16_t id);
-
-typedef void (* RemoveObjectDelegate_t)(alt::IObject* Object);
-
-typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, uint16_t id);
-
-typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle* vehicle);
-
-typedef void (* CreatePedDelegate_t)(alt::IPed* ped, uint16_t id);
-typedef void (* RemovePedDelegate_t)(alt::IPed* ped);
-
-typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip, uint32_t id);
-
-typedef void (* RemoveBlipDelegate_t)(alt::IBlip* blip);
-
-typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint, uint32_t id);
-
-typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
-
-typedef void (* CreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel, uint32_t id);
-
-typedef void (* RemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
-
-typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape, uint32_t id);
-
-typedef void (* RemoveColShapeDelegate_t)(alt::IColShape* colShape);
-
 typedef void (* ConsoleCommandDelegate_t)(const char* name, const char* args[], uint64_t argsSize);
 
 typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type, const char* key,
@@ -218,13 +187,9 @@ typedef void (* PlayerChangeInteriorDelegate_t)(void* target, uint32_t oldIntLoc
 
 typedef void (* PlayerSpawnDelegate_t)(alt::IPlayer* player);
 
-typedef void (* CreateVirtualEntityDelegate_t)(alt::IVirtualEntity* virtualEntity, uint32_t id);
+typedef void (* CreateBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType, uint32_t id);
 
-typedef void (* RemoveVirtualEntityDelegate_t)(alt::IVirtualEntity* virtualEntity);
-
-typedef void (* CreateVirtualEntityGroupDelegate_t)(alt::IVirtualEntityGroup* virtualEntityGroup, uint32_t id);
-
-typedef void (* RemoveVirtualEntityGroupDelegate_t)(alt::IVirtualEntityGroup* virtualEntityGroup);
+typedef void (* RemoveBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType);
 
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
@@ -302,43 +267,11 @@ public:
 
     TickDelegate_t OnTickDelegate = nullptr;
 
-    CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
-
-    RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
-
-    CreateObjectDelegate_t OnCreateObjectDelegate = nullptr;
-
-    RemoveObjectDelegate_t OnRemoveObjectDelegate = nullptr;
-
-    CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
-
-    RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
-
-    CreatePedDelegate_t OnCreatePedDelegate = nullptr;
-
-    RemovePedDelegate_t OnRemovePedDelegate = nullptr;
-
-    CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
-
-    RemoveBlipDelegate_t OnRemoveBlipDelegate = nullptr;
-
-    CreateCheckpointDelegate_t OnCreateCheckpointDelegate = nullptr;
-
-    RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate = nullptr;
-
-    CreateVoiceChannelDelegate_t OnCreateVoiceChannelDelegate = nullptr;
-
-    RemoveVoiceChannelDelegate_t OnRemoveVoiceChannelDelegate = nullptr;
-
     ConsoleCommandDelegate_t OnConsoleCommandDelegate = nullptr;
 
     MetaChangeDelegate_t OnMetaChangeDelegate = nullptr;
 
     MetaChangeDelegate_t OnSyncedMetaChangeDelegate = nullptr;
-
-    CreateColShapeDelegate_t OnCreateColShapeDelegate = nullptr;
-
-    RemoveColShapeDelegate_t OnRemoveColShapeDelegate = nullptr;
 
     ColShapeDelegate_t OnColShapeDelegate = nullptr;
 
@@ -378,10 +311,8 @@ public:
 
     PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
 
-    CreateVirtualEntityDelegate_t OnCreateVirtualEntityDelegate = nullptr;
-    RemoveVirtualEntityDelegate_t OnRemoveVirtualEntityDelegate = nullptr;
-    CreateVirtualEntityGroupDelegate_t OnCreateVirtualEntityGroupDelegate = nullptr;
-    RemoveVirtualEntityGroupDelegate_t OnRemoveVirtualEntityGroupDelegate = nullptr;
+    CreateBaseObjectDelegate_t OnCreateBaseObjectDelegate = nullptr;
+    RemoveBaseObjectDelegate_t OnRemoveBaseObjectDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -405,28 +336,37 @@ public:
         if (object != nullptr) {
             switch (object->GetType()) {
                 case alt::IBaseObject::Type::PLAYER:
-                    this->cSharpResource->OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IPlayer*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::VEHICLE:
-                    this->cSharpResource->OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IVehicle*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::BLIP:
-                    this->cSharpResource->OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IBlip*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::VOICE_CHANNEL:
-                    this->cSharpResource->OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IVoiceChannel*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::COLSHAPE:
-                    this->cSharpResource->OnRemoveColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IColShape*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::CHECKPOINT:
-                    this->cSharpResource->OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::ICheckpoint*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::OBJECT:
-                    this->cSharpResource->OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
-                    break;
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IObject*>(object), object->GetType());
+                break;
                 case alt::IBaseObject::Type::PED:
-                    this->cSharpResource->OnRemovePedDelegate(dynamic_cast<alt::IPed*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IPed*>(object), object->GetType());
+                    break;
+                case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IVirtualEntity*>(object), object->GetType());
+                    break;
+                case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IVirtualEntityGroup*>(object), object->GetType());
+                    break;
+                case alt::IBaseObject::Type::NETWORK_OBJECT:
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::INetworkObject*>(object), object->GetType());
                     break;
             }
         }
@@ -503,48 +443,6 @@ EXPORT void CSharpResourceImpl_SetPlayerEnteringVehicleDelegate(CSharpResourceIm
 EXPORT void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(CSharpResourceImpl* resource,
                                                              PlayerLeaveVehicleDelegate_t delegate);
 
-EXPORT void CSharpResourceImpl_SetCreatePlayerDelegate(CSharpResourceImpl* resource,
-                                                       CreatePlayerDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemovePlayerDelegate(CSharpResourceImpl* resource,
-                                                       RemovePlayerDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateObjectDelegate(CSharpResourceImpl* resource,
-                                                       CreateObjectDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveObjectDelegate(CSharpResourceImpl* resource,
-RemoveObjectDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateVehicleDelegate(CSharpResourceImpl* resource,
-                                                        CreateVehicleDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,
-RemoveVehicleDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreatePedDelegate(CSharpResourceImpl* resource,
-                                                        CreatePedDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemovePedDelegate(CSharpResourceImpl* resource,
-                                                        RemovePedDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateBlipDelegate(CSharpResourceImpl* resource,
-                                                     CreateBlipDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveBlipDelegate(CSharpResourceImpl* resource,
-                                                     RemoveBlipDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateCheckpointDelegate(CSharpResourceImpl* resource,
-                                                           CreateCheckpointDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveCheckpointDelegate(CSharpResourceImpl* resource,
-                                                           RemoveCheckpointDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateVoiceChannelDelegate(CSharpResourceImpl* resource,
-                                                             CreateVoiceChannelDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveVoiceChannelDelegate(CSharpResourceImpl* resource,
-                                                             RemoveVoiceChannelDelegate_t delegate);
-
 EXPORT void CSharpResourceImpl_SetConsoleCommandDelegate(CSharpResourceImpl* resource,
                                                          ConsoleCommandDelegate_t delegate);
 
@@ -553,12 +451,6 @@ EXPORT void CSharpResourceImpl_SetMetaChangeDelegate(CSharpResourceImpl* resourc
 
 EXPORT void CSharpResourceImpl_SetSyncedMetaChangeDelegate(CSharpResourceImpl* resource,
                                                            MetaChangeDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateColShapeDelegate(CSharpResourceImpl* resource,
-                                                         CreateColShapeDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveColShapeDelegate(CSharpResourceImpl* resource,
-                                                         RemoveColShapeDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetColShapeDelegate(CSharpResourceImpl* resource,
                                                    ColShapeDelegate_t delegate);
@@ -614,10 +506,6 @@ EXPORT void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(CSharpResourceImp
 
 EXPORT void CSharpResourceImpl_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, PlayerSpawnDelegate_t delegate);
 
-EXPORT void CSharpResourceImpl_SetCreateVirtualEntityDelegate(CSharpResourceImpl* resource, CreateVirtualEntityDelegate_t delegate);
+EXPORT void CSharpResourceImpl_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource, CreateBaseObjectDelegate_t delegate);
 
-EXPORT void CSharpResourceImpl_SetRemoveVirtualEntityDelegate(CSharpResourceImpl* resource, RemoveVirtualEntityDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateVirtualEntityGroupDelegate(CSharpResourceImpl* resource, CreateVirtualEntityGroupDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveVirtualEntityGroupDelegate(CSharpResourceImpl* resource, RemoveVirtualEntityGroupDelegate_t delegate);
+EXPORT void CSharpResourceImpl_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resource, RemoveBaseObjectDelegate_t delegate);
