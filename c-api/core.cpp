@@ -1116,7 +1116,7 @@ void Core_AddGXTText(alt::ICore* core, alt::IResource* resource, uint32_t key, c
 }
 
 const char* Core_GetGXTText(alt::ICore* core, alt::IResource* resource, uint32_t key, int32_t& size) {
-    return AllocateString(resource->GetGxtText(key), size);
+    return AllocateString(core->GetGxtEntry(key), size);
 }
 
 void Core_RemoveGXTText(alt::ICore* core, alt::IResource* resource, uint32_t key) {
