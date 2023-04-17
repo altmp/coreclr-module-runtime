@@ -313,7 +313,7 @@ namespace cache
 		}
   
         std::string _appearanceDataBase64;
-        std::string GetAppearanceDataBase64() override {
+        std::string GetAppearanceDataBase64() const override {
 			return _appearanceDataBase64;
 		}
   
@@ -379,7 +379,7 @@ namespace cache
 		}
   
         std::string _gameStateBase64;
-        std::string GetGameStateBase64() override {
+        std::string GetGameStateBase64() const override {
 			return _gameStateBase64;
 		}
   
@@ -439,7 +439,7 @@ namespace cache
 		}
   
         std::string _healthDataBase64;
-        std::string GetHealthDataBase64() override {
+        std::string GetHealthDataBase64() const override {
 			return _healthDataBase64;
 		}
   
@@ -473,7 +473,7 @@ namespace cache
 	        return 0;
         }
         std::string _damageDataBase64;
-        std::string GetDamageDataBase64() override {
+        std::string GetDamageDataBase64() const override {
 			return _damageDataBase64;
 		}
   
@@ -483,7 +483,7 @@ namespace cache
 		}
   
         std::string _scriptDataBase64;
-        std::string GetScriptDataBase64() override {
+        std::string GetScriptDataBase64() const override {
 			return _scriptDataBase64;
 		}
   
