@@ -598,6 +598,11 @@ void Player_ClearTasks(alt::IPlayer* player)
     player->ClearTasks();
 }
 
+const char* Player_GetSocialClubName(alt::IPlayer* player, int32_t& size)
+{
+    return AllocateString(player->GetSocialClubName(), size);
+}
+
 #endif
 
 #if ALT_CLIENT_API

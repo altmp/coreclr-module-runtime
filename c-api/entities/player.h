@@ -208,3 +208,5 @@ EXPORT_SHARED uint8_t Player_IsLeavingVehicle(alt::IPlayer* player);
 EXPORT_SHARED uint8_t Player_IsOnLadder(alt::IPlayer* player);
 EXPORT_SHARED uint8_t Player_IsInMelee(alt::IPlayer* player);
 EXPORT_SHARED uint8_t Player_IsInCover(alt::IPlayer* player);
+
+EXPORT_SERVER const char* Player_GetSocialClubName(alt::IPlayer* player, int32_t& size);

@@ -71,7 +71,8 @@ namespace cache
 										_props(13, { 0, 0 }),
 										_dlcProps(13, { 0, 0, 0 }),
 										_headOverlays(13, { 0, 0, 0, 0, 0 }),
-										_faceFeatures(20, 0.0f)
+										_faceFeatures(20, 0.0f),
+										_socialClubName(base->GetSocialClubName())
 
 #elif ALT_CLIENT_API
 										_talking(base->IsTalking()),
@@ -98,10 +99,10 @@ namespace cache
 #endif
         }
 
-        std::string _name;
-        std::string GetName() const override {
-			return _name;
-		}
+    	std::string _name;
+    	std::string GetName() const override {
+    		return _name;
+    	}
 
         uint16_t _health;
         uint16_t GetHealth() const override {
@@ -497,6 +498,11 @@ namespace cache
 
     	void PlayAnimation(const std::string& animDict, const std::string& animName, float blendInSpeed, float blendOutSpeed, int duration, int flags, float playbackRate, bool lockX, bool lockY, bool lockZ) override {}
     	void ClearTasks() override {}
+
+    	std::string _socialClubName;
+    	std::string GetSocialClubName() const override {
+    		return _socialClubName;
+    	}
 #endif
 
 
