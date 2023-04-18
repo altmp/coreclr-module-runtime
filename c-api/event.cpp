@@ -39,7 +39,6 @@ SetDelegate(PlayerLeaveVehicle);
 
 SetDelegate(GameEntityCreate);
 SetDelegate(GameEntityDestroy);
-SetDelegate(RemoveEntity);
 
 SetDelegate(AnyResourceError);
 SetDelegate(AnyResourceStart);
