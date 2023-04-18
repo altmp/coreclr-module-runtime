@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 18321794637702218046UL;
+inline uint64_t capiHash = 9147392488450757140UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1110,11 +1110,13 @@ inline uint64_t capiHashes[] = {
     4175744399917476392UL,
     3151831504154255688UL,
     11409383581668438027UL,
+    8080268107975854795UL,
     14736154404219321063UL,
     13717058348136733066UL,
     6953750044596480329UL,
     18130628108130086100UL,
     10464338232675126241UL,
+    12079559810042444284UL,
     15248911099905088878UL,
     18353410539108177249UL,
     11973654229721527198UL,
@@ -2592,11 +2594,13 @@ inline void* capiPointers[] = {
     (void*) ConnectionInfo_GetDiscordUserID,
     (void*) ConnectionInfo_GetHwIdExHash,
     (void*) ConnectionInfo_GetHwIdHash,
+    (void*) ConnectionInfo_GetID,
     (void*) ConnectionInfo_GetIp,
     (void*) ConnectionInfo_GetIsDebug,
     (void*) ConnectionInfo_GetName,
     (void*) ConnectionInfo_GetPasswordHash,
     (void*) ConnectionInfo_GetSocialId,
+    (void*) ConnectionInfo_GetSocialName,
     (void*) Core_CreateBlip,
     (void*) Core_CreateBlipAttached,
     (void*) Core_CreateCheckpoint,
