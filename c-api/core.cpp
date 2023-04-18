@@ -1288,14 +1288,14 @@ const char* Core_StringToSHA256(alt::ICore* core, const char* string, int32_t& s
 }
 
 void Core_SetWeatherCycle(alt::ICore* core, uint8_t weathers[], int32_t weathersSize, uint8_t multipliers[], int32_t multipliersSize) {
-    alt::Array<uint8_t> weathersBytes;
+    std::vector<uint8_t> weathersBytes(weathersSize);
     for (auto i = 0; i < weathersSize; i++) {
-        weathersBytes.Push((uint8_t) weathers[i]);
+        weathersBytes[i] = weathers[i];
     }
 
-    alt::Array<uint8_t> multipliersBytes;
+    std::vector<uint8_t> multipliersBytes(multipliersSize);
     for (auto i = 0; i < multipliersSize; i++) {
-        multipliersBytes.Push((uint8_t) multipliers[i]);
+        multipliersBytes[i] = multipliers[i];
     }
 
     core->SetWeatherCycle(weathersBytes, multipliersBytes);

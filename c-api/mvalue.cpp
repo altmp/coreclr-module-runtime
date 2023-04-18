@@ -429,7 +429,7 @@ alt::MValueConst *
 MValueConst_CallFunction(alt::ICore *core, alt::MValueConst *mValueConst, alt::MValueConst *val[], uint64_t size) {
     auto mValue = mValueConst->Get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::FUNCTION) {
-        alt::MValueArgs value = alt::Array<alt::MValueConst>(size);
+        alt::MValueArgs value = std::vector<alt::MValueConst>(size);
         for (uint64_t i = 0; i < size; i++) {
             if (val == nullptr) {
                 value[i] = core->CreateMValueNil();

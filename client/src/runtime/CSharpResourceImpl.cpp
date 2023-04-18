@@ -44,7 +44,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         {
             auto serverScriptEvent = dynamic_cast<const alt::CServerScriptEvent*>(ev);
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
-            auto size = serverArgs.GetSize();
+            auto size = serverArgs.size();
 
             if (size == 0)
             {
@@ -68,7 +68,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         {
             auto clientScriptEvent = dynamic_cast<const alt::CClientScriptEvent*>(ev);
             alt::MValueArgs serverArgs = clientScriptEvent->GetArgs();
-            auto size = serverArgs.GetSize();
+            auto size = serverArgs.size();
             if (size == 0)
             {
                 OnClientEventDelegate(clientScriptEvent->GetName().c_str(), nullptr, 0);
@@ -111,7 +111,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto webViewEvent = dynamic_cast<const alt::CWebViewEvent*>(ev);
             auto args = webViewEvent->GetArgs();
             auto name = webViewEvent->GetName();
-            auto size = args.GetSize();
+            auto size = args.size();
             auto constArgs = new alt::MValueConst*[size];
 
             for (uint64_t i = 0; i < size; i++)
@@ -143,7 +143,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto webSocketClientEvent = dynamic_cast<const alt::CWebSocketClientEvent*>(ev);
             auto args = webSocketClientEvent->GetArgs();
             auto name = webSocketClientEvent->GetName();
-            auto size = args.GetSize();
+            auto size = args.size();
             auto constArgs = new alt::MValueConst*[size];
 
             for (uint64_t i = 0; i < size; i++)

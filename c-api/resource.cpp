@@ -49,25 +49,25 @@ alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key) 
 }
 
 int Resource_GetDependenciesSize(alt::IResource* resource) {
-    return resource->GetDependencies().GetSize();
+    return resource->GetDependencies().size();
 }
 
 void Resource_GetDependencies(alt::IResource* resource, const char* dependencies[], int size) {
 
-    if (resource->GetDependencies().GetSize() != size) return;
-    for (uint64_t i = 0, length = resource->GetDependencies().GetSize(); i < length; i++) {
+    if (resource->GetDependencies().size() != size) return;
+    for (uint64_t i = 0, length = resource->GetDependencies().size(); i < length; i++) {
         dependencies[i] = resource->GetDependencies()[i].c_str();
     }
 }
 
 int Resource_GetDependantsSize(alt::IResource* resource) {
-    return resource->GetDependants().GetSize();
+    return resource->GetDependants().size();
 }
 
 void Resource_GetDependants(alt::IResource* resource, const char* dependencies[], int size) {
 
-    if (resource->GetDependants().GetSize() != size) return;
-    for (uint64_t i = 0, length = resource->GetDependants().GetSize(); i < length; i++) {
+    if (resource->GetDependants().size() != size) return;
+    for (uint64_t i = 0, length = resource->GetDependants().size(); i < length; i++) {
         dependencies[i] = resource->GetDependants()[i].c_str();
     }
 }

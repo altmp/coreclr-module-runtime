@@ -148,7 +148,7 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
         {
             auto clientScriptEvent = dynamic_cast<const alt::CClientScriptEvent*>(ev);
             alt::MValueArgs clientArgs = clientScriptEvent->GetArgs();
-            uint64_t size = clientArgs.GetSize();
+            uint64_t size = clientArgs.size();
             if (size == 0)
             {
                 OnClientEventDelegate(clientScriptEvent->GetTarget(),
@@ -282,7 +282,7 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             auto fireEvent = dynamic_cast<const alt::CFireEvent*>(ev);
             auto source = fireEvent->GetSource();
             auto fires = fireEvent->GetFires();
-            uint64_t length = fires.GetSize();
+            uint64_t length = fires.size();
 
             if (length == 0)
             {
@@ -361,7 +361,7 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
         {
             auto serverScriptEvent = dynamic_cast<const alt::CServerScriptEvent*>(ev);
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
-            uint64_t size = serverArgs.GetSize();
+            uint64_t size = serverArgs.size();
             if (size == 0)
             {
                 OnServerEventDelegate(serverScriptEvent->GetName().c_str(),
@@ -1087,7 +1087,7 @@ void CSharpResourceImpl_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resource
     resource->OnRemoveBaseObjectDelegate = delegate;
 }
 
-bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
+bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)
 {
     const std::string clientMain = resource->GetClientMain();
     const std::string suffix = ".dll";
