@@ -45,18 +45,6 @@ public:
     WebSocketEventDelegate_t OnWebSocketEventDelegate = nullptr;
     RmlEventDelegate_t OnRmlEventDelegate = nullptr;
 
-    CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
-    RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
-
-    CreateObjectDelegate_t OnCreateObjectDelegate = nullptr;
-    RemoveObjectDelegate_t OnRemoveObjectDelegate = nullptr;
-
-    CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
-    RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
-
-    CreatePedDelegate_t OnCreatePedDelegate = nullptr;
-    RemovePedDelegate_t OnRemovePedDelegate = nullptr;
-
     PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
     PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
     PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate = nullptr;
@@ -85,7 +73,6 @@ public:
     SyncedMetaChangeDelegate_t OnSyncedMetaChangeDelegate = nullptr;
 
     NetOwnerChangeDelegate_t OnNetOwnerChangeDelegate = nullptr;
-    RemoveEntityDelegate_t OnRemoveEntityDelegate = nullptr;
 
     TaskChangeDelegate_t OnTaskChangeDelegate = nullptr;
 
@@ -100,29 +87,8 @@ public:
 
     WeaponDamageDelegate_t OnWeaponDamageDelegate = nullptr;
 
-    CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
-    CreateWebViewDelegate_t OnCreateWebViewDelegate = nullptr;
-    CreateCheckpointDelegate_t OnCreateCheckpointDelegate = nullptr;
-    CreateWebSocketClientDelegate_t OnCreateWebSocketClientDelegate = nullptr;
-    CreateHttpClientDelegate_t OnCreateHttpClientDelegate = nullptr;
-    CreateAudioDelegate_t OnCreateAudioDelegate = nullptr;
-    CreateRmlElementDelegate_t OnCreateRmlElementDelegate = nullptr;
-    CreateRmlDocumentDelegate_t OnCreateRmlDocumentDelegate = nullptr;
-
-    RemoveBlipDelegate_t OnRemoveBlipDelegate = nullptr;
-    RemoveWebViewDelegate_t OnRemoveWebViewDelegate = nullptr;
-    RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate = nullptr;
-    RemoveWebSocketClientDelegate_t OnRemoveWebSocketClientDelegate = nullptr;
-    RemoveHttpClientDelegate_t OnRemoveHttpClientDelegate = nullptr;
-    RemoveAudioDelegate_t OnRemoveAudioDelegate = nullptr;
-    RemoveRmlElementDelegate_t OnRemoveRmlElementDelegate = nullptr;
-    RemoveRmlDocumentDelegate_t OnRemoveRmlDocumentDelegate = nullptr;
-
-    CreateVirtualEntityDelegate_t OnCreateVirtualEntityDelegate = nullptr;
-    RemoveVirtualEntityDelegate_t OnRemoveVirtualEntityDelegate = nullptr;
-
-    CreateVirtualEntityGroupDelegate_t OnCreateVirtualEntityGroupDelegate = nullptr;
-    RemoveVirtualEntityGroupDelegate_t OnRemoveVirtualEntityGroupDelegate = nullptr;
+    CreateBaseObjectDelegate_t OnCreateBaseObjectDelegate = nullptr;
+    RemoveBaseObjectDelegate_t OnRemoveBaseObjectDelegate = nullptr;
 
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)

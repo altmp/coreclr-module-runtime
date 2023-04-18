@@ -452,85 +452,85 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
     case alt::IBaseObject::Type::VEHICLE:
         {
             auto vehicle = dynamic_cast<alt::IVehicle*>(object);
-            OnCreateVehicleDelegate(vehicle, vehicle->GetID());
+            OnCreateBaseObjectDelegate(vehicle, vehicle->GetType(), vehicle->GetID());
             break;
         }
     case alt::IBaseObject::Type::PLAYER:
         {
             auto player = dynamic_cast<alt::IPlayer*>(object);
-            OnCreatePlayerDelegate(player, player->GetID());
+            OnCreateBaseObjectDelegate(player, player->GetType(), player->GetID());
             break;
         }
     case alt::IBaseObject::Type::PED:
         {
             auto ped = dynamic_cast<alt::IPed*>(object);
-            OnCreatePedDelegate(ped, ped->GetID());
+            OnCreateBaseObjectDelegate(ped, ped->GetType(), ped->GetID());
             break;
         }
     case alt::IBaseObject::Type::BLIP:
         {
             auto blip = dynamic_cast<alt::IBlip*>(object);
-            OnCreateBlipDelegate(blip, blip->GetID());
+            OnCreateBaseObjectDelegate(blip, blip->GetType(), blip->GetID());
             break;
         }
     case alt::IBaseObject::Type::WEBVIEW:
         {
             auto webview = dynamic_cast<alt::IWebView*>(object);
-            OnCreateWebViewDelegate(webview, webview->GetID());
+            OnCreateBaseObjectDelegate(webview, webview->GetType(), webview->GetID());
             break;
         }
     case alt::IBaseObject::Type::CHECKPOINT:
         {
             auto checkPoint = dynamic_cast<alt::ICheckpoint*>(object);
-            OnCreateCheckpointDelegate(checkPoint, checkPoint->GetID());
+            OnCreateBaseObjectDelegate(checkPoint, checkPoint->GetType(), checkPoint->GetID());
             break;
         }
     case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
         {
             auto webSocketClient = dynamic_cast<alt::IWebSocketClient*>(object);
-            OnCreateWebSocketClientDelegate(webSocketClient, webSocketClient->GetID());
+            OnCreateBaseObjectDelegate(webSocketClient, webSocketClient->GetType(), webSocketClient->GetID());
             break;
         }
     case alt::IBaseObject::Type::HTTP_CLIENT:
         {
             auto httpClient = dynamic_cast<alt::IHttpClient*>(object);
-            OnCreateHttpClientDelegate(httpClient, httpClient->GetID());
+            OnCreateBaseObjectDelegate(httpClient, httpClient->GetType(), httpClient->GetID());
             break;
         }
     case alt::IBaseObject::Type::AUDIO:
         {
             auto audio = dynamic_cast<alt::IAudio*>(object);
-            OnCreateAudioDelegate(audio, audio->GetID());
+            OnCreateBaseObjectDelegate(audio, audio->GetType(), audio->GetID());
             break;
         }
     case alt::IBaseObject::Type::RML_ELEMENT:
         {
             auto rmlElement = dynamic_cast<alt::IRmlElement*>(object);
-            OnCreateRmlElementDelegate(rmlElement, 0);
+            OnCreateBaseObjectDelegate(rmlElement, rmlElement->GetType(), 0);
             break;
         }
     case alt::IBaseObject::Type::RML_DOCUMENT:
         {
             auto rmlDocument = dynamic_cast<alt::IRmlDocument*>(object);
-            OnCreateRmlDocumentDelegate(rmlDocument, rmlDocument->GetEntityID());
+            OnCreateBaseObjectDelegate(rmlDocument, rmlDocument->GetType(), rmlDocument->GetEntityID());
             break;
         }
     case alt::IBaseObject::Type::OBJECT:
         {
             auto altObject = dynamic_cast<alt::IObject*>(object);
-            OnCreateObjectDelegate(altObject, altObject->GetID());
+            OnCreateBaseObjectDelegate(altObject, altObject->GetType(), altObject->GetID());
             break;
         }
     case alt::IBaseObject::Type::VIRTUAL_ENTITY:
         {
             auto virtualEntity = dynamic_cast<alt::IVirtualEntity*>(object);
-            OnCreateVirtualEntityDelegate(virtualEntity, virtualEntity->GetID());
+            OnCreateBaseObjectDelegate(virtualEntity, virtualEntity->GetType(), virtualEntity->GetID());
             break;
         }
     case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
         {
             auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
-            OnCreateVirtualEntityGroupDelegate(virtualEntityGroup, virtualEntityGroup->GetID());
+            OnCreateBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType(), virtualEntityGroup->GetID());
             break;
         }
     case alt::IBaseObject::Type::LOCAL_PLAYER:
@@ -550,72 +550,86 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
     {
     case alt::IBaseObject::Type::VEHICLE:
         {
-            OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
+            const auto vehicle = dynamic_cast<alt::IVehicle*>(object);
+            OnRemoveBaseObjectDelegate(vehicle, vehicle->GetType());
             break;
         }
     case alt::IBaseObject::Type::PLAYER:
         {
-            OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
+            const auto player = dynamic_cast<alt::IPlayer*>(object);
+            OnRemoveBaseObjectDelegate(player, player->GetType());
             break;
         }
     case alt::IBaseObject::Type::PED:
         {
-            OnRemovePedDelegate(dynamic_cast<alt::IPed*>(object));
+            const auto ped = dynamic_cast<alt::IPed*>(object);
+            OnRemoveBaseObjectDelegate(ped, ped->GetType());
             break;
         }
     case alt::IBaseObject::Type::BLIP:
         {
-            OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+            const auto blip = dynamic_cast<alt::IBlip*>(object);
+            OnRemoveBaseObjectDelegate(blip, blip->GetType());
             break;
         }
     case alt::IBaseObject::Type::WEBVIEW:
         {
-            OnRemoveWebViewDelegate(dynamic_cast<alt::IWebView*>(object));
+            const auto webView = dynamic_cast<alt::IWebView*>(object);
+            OnRemoveBaseObjectDelegate(webView, webView->GetType());
             break;
         }
     case alt::IBaseObject::Type::CHECKPOINT:
         {
-            OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+            const auto checkpoint = dynamic_cast<alt::ICheckpoint*>(object);
+            OnRemoveBaseObjectDelegate(checkpoint, checkpoint->GetType());
             break;
         }
     case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
         {
-            OnRemoveWebSocketClientDelegate(dynamic_cast<alt::IWebSocketClient*>(object));
+            const auto webSocketClient = dynamic_cast<alt::IWebSocketClient*>(object);
+            OnRemoveBaseObjectDelegate(webSocketClient, webSocketClient->GetType());
             break;
         }
     case alt::IBaseObject::Type::HTTP_CLIENT:
         {
-            OnRemoveHttpClientDelegate(dynamic_cast<alt::IHttpClient*>(object));
+            const auto httpClient = dynamic_cast<alt::IHttpClient*>(object);
+            OnRemoveBaseObjectDelegate(httpClient, httpClient->GetType());
             break;
         }
     case alt::IBaseObject::Type::AUDIO:
         {
-            OnRemoveAudioDelegate(dynamic_cast<alt::IAudio*>(object));
+            const auto audio = dynamic_cast<alt::IAudio*>(object);
+            OnRemoveBaseObjectDelegate(audio, audio->GetType());
             break;
         }
     case alt::IBaseObject::Type::RML_ELEMENT:
         {
-            OnRemoveRmlElementDelegate(dynamic_cast<alt::IRmlElement*>(object));
+            const auto rmlElement = dynamic_cast<alt::IRmlElement*>(object);
+            OnRemoveBaseObjectDelegate(rmlElement, rmlElement->GetType());
             break;
         }
     case alt::IBaseObject::Type::RML_DOCUMENT:
         {
-            OnRemoveRmlDocumentDelegate(dynamic_cast<alt::IRmlDocument*>(object));
+            const auto rmlDocument = dynamic_cast<alt::IRmlDocument*>(object);
+            OnRemoveBaseObjectDelegate(rmlDocument, rmlDocument->GetType());
             break;
         }
     case alt::IBaseObject::Type::OBJECT:
         {
-            OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
+            const auto altObject = dynamic_cast<alt::IObject*>(object);
+            OnRemoveBaseObjectDelegate(altObject, altObject->GetType());
             break;
         }
     case alt::IBaseObject::Type::VIRTUAL_ENTITY:
         {
-            OnRemoveVirtualEntityDelegate(dynamic_cast<alt::IVirtualEntity*>(object));
+            const auto virtualEntity = dynamic_cast<alt::IVirtualEntity*>(object);
+            OnRemoveBaseObjectDelegate(virtualEntity, virtualEntity->GetType());
             break;
         }
     case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
         {
-            OnRemoveVirtualEntityGroupDelegate(dynamic_cast<alt::IVirtualEntityGroup*>(object));
+            const auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
+            OnRemoveBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType());
             break;
         }
     case alt::IBaseObject::Type::LOCAL_PLAYER:
@@ -651,18 +665,6 @@ void CSharpResourceImpl::ResetDelegates() {
     OnWebSocketEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnRmlEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 
-    OnCreatePlayerDelegate = [](auto var, auto var2) {};
-    OnRemovePlayerDelegate = [](auto var) {};
-
-    OnCreateObjectDelegate = [](auto var, auto var2) {};
-    OnRemoveObjectDelegate = [](auto var) {};
-
-    OnCreateVehicleDelegate = [](auto var, auto var2) {};
-    OnRemoveVehicleDelegate = [](auto var) {};
-
-    OnCreatePedDelegate = [](auto var, auto var2) {};
-    OnRemovePedDelegate = [](auto var) {};
-
     OnPlayerSpawnDelegate = [](){};
     OnPlayerDisconnectDelegate = [](){};
     OnPlayerEnterVehicleDelegate = [](auto var, auto var2) {};
@@ -692,8 +694,6 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnNetOwnerChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 
-    OnRemoveEntityDelegate = [](auto var, auto var2) {};
-
     OnTaskChangeDelegate = [](auto var, auto var2) {};
 
     OnWindowFocusChangeDelegate = [](auto var) {};
@@ -707,26 +707,6 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
 
-    OnCreateBlipDelegate = [](auto var, auto var2) {};
-    OnCreateWebViewDelegate = [](auto var, auto var2) {};
-    OnCreateCheckpointDelegate = [](auto var, auto var2) {};
-    OnCreateWebSocketClientDelegate = [](auto var, auto var2) {};
-    OnCreateHttpClientDelegate = [](auto var, auto var2) {};
-    OnCreateAudioDelegate = [](auto var, auto var2) {};
-    OnCreateRmlElementDelegate = [](auto var, auto var2) {};
-    OnCreateRmlDocumentDelegate = [](auto var, auto var2) {};
-
-    OnRemoveBlipDelegate = [](auto var) {};
-    OnRemoveWebViewDelegate = [](auto var) {};
-    OnRemoveCheckpointDelegate = [](auto var) {};
-    OnRemoveWebSocketClientDelegate = [](auto var) {};
-    OnRemoveHttpClientDelegate = [](auto var) {};
-    OnRemoveAudioDelegate = [](auto var) {};
-    OnRemoveRmlElementDelegate = [](auto var) {};
-    OnRemoveRmlDocumentDelegate = [](auto var) {};
-
-    OnCreateVirtualEntityDelegate = [](auto var, auto var2){};
-    OnRemoveVirtualEntityDelegate = [](auto var){};
-    OnCreateVirtualEntityGroupDelegate = [](auto var, auto var2){};
-    OnRemoveVirtualEntityGroupDelegate = [](auto var){};
+    OnCreateBaseObjectDelegate = [](auto var, auto var2, auto var3) {};
+    OnRemoveBaseObjectDelegate = [](auto var, auto var2) {};
 }

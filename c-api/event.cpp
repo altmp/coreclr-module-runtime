@@ -32,18 +32,6 @@ SetDelegate(ConsoleCommand);
 SetDelegate(RmlEvent);
 SetDelegate(WebSocketEvent);
 
-SetDelegate(CreatePlayer);
-SetDelegate(RemovePlayer);
-
-SetDelegate(CreateObject);
-SetDelegate(RemoveObject);
-
-SetDelegate(CreateVehicle);
-SetDelegate(RemoveVehicle);
-
-SetDelegate(CreatePed);
-SetDelegate(RemovePed);
-
 SetDelegate(PlayerSpawn);
 SetDelegate(PlayerDisconnect);
 SetDelegate(PlayerEnterVehicle);
@@ -79,24 +67,6 @@ SetDelegate(TaskChange);
 SetDelegate(WindowFocusChange);
 SetDelegate(WindowResolutionChange);
 
-SetDelegate(CreateBlip);
-SetDelegate(CreateWebView);
-SetDelegate(CreateCheckpoint);
-SetDelegate(CreateWebSocketClient);
-SetDelegate(CreateHttpClient);
-SetDelegate(CreateAudio);
-SetDelegate(CreateRmlElement);
-SetDelegate(CreateRmlDocument);
-
-SetDelegate(RemoveBlip);
-SetDelegate(RemoveWebView);
-SetDelegate(RemoveCheckpoint);
-SetDelegate(RemoveWebSocketClient);
-SetDelegate(RemoveHttpClient);
-SetDelegate(RemoveAudio);
-SetDelegate(RemoveRmlElement);
-SetDelegate(RemoveRmlDocument);
-
 SetDelegate(PlayerWeaponShoot);
 SetDelegate(PlayerWeaponChange);
 SetDelegate(WeaponDamage);
@@ -104,8 +74,6 @@ SetDelegate(WeaponDamage);
 SetDelegate(WorldObjectPositionChange);
 
 
-SetDelegate(CreateVirtualEntity);
-SetDelegate(RemoveVirtualEntity);
-SetDelegate(CreateVirtualEntityGroup);
-SetDelegate(RemoveVirtualEntityGroup);
+SetDelegate(CreateBaseObject);
+SetDelegate(RemoveBaseObject);
 #endif

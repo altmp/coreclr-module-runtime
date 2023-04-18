@@ -33,18 +33,6 @@ EXPORT_CLIENT void Event_SetWebViewEventDelegate(CSharpResourceImpl* resource,  
 EXPORT_CLIENT void Event_SetWebSocketEventDelegate(CSharpResourceImpl* resource,  /** ClientEvents.WebSocketEventModuleDelegate */ WebSocketEventDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRmlEventDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RmlEventModuleDelegate */ RmlEventDelegate_t delegate);
 
-EXPORT_CLIENT void Event_SetCreatePlayerDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreatePlayerModuleDelegate */ CreatePlayerDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemovePlayerDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemovePlayerModuleDelegate */ RemovePlayerDelegate_t delegate);
-
-EXPORT_CLIENT void Event_SetCreateObjectDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateObjectModuleDelegate */ CreateObjectDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveObjectDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemoveObjectModuleDelegate */ RemoveObjectDelegate_t delegate);
-
-EXPORT_CLIENT void Event_SetCreateVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateVehicleModuleDelegate */ CreateVehicleDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemoveVehicleModuleDelegate */ RemoveVehicleDelegate_t delegate);
-
-EXPORT_CLIENT void Event_SetCreatePedDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreatePedModuleDelegate */ CreatePedDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemovePedDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RemovePedModuleDelegate */ RemovePedDelegate_t delegate);
-
 EXPORT_CLIENT void Event_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerSpawnModuleDelegate */ PlayerSpawnDelegate_t delegate);
 EXPORT_CLIENT void Event_SetPlayerDisconnectDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerDisconnectModuleDelegate */ PlayerDisconnectDelegate_t delegate);
 EXPORT_CLIENT void Event_SetPlayerEnterVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerEnterVehicleModuleDelegate */ PlayerEnterVehicleDelegate_t delegate);
@@ -52,7 +40,6 @@ EXPORT_CLIENT void Event_SetPlayerLeaveVehicleDelegate(CSharpResourceImpl* resou
 
 EXPORT_CLIENT void Event_SetGameEntityCreateDelegate(CSharpResourceImpl* resource, /** ClientEvents.GameEntityCreateModuleDelegate */ GameEntityCreateDelegate_t delegate);
 EXPORT_CLIENT void Event_SetGameEntityDestroyDelegate(CSharpResourceImpl* resource, /** ClientEvents.GameEntityDestroyModuleDelegate */ GameEntityDestroyDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveEntityDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveEntityModuleDelegate */ RemoveEntityDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetAnyResourceErrorDelegate(CSharpResourceImpl* resource, /** ClientEvents.AnyResourceErrorModuleDelegate */ AnyResourceErrorDelegate_t delegate);
 EXPORT_CLIENT void Event_SetAnyResourceStartDelegate(CSharpResourceImpl* resource, /** ClientEvents.AnyResourceStartModuleDelegate */ AnyResourceStartDelegate_t delegate);
@@ -82,24 +69,6 @@ EXPORT_CLIENT void Event_SetWindowResolutionChangeDelegate(CSharpResourceImpl* r
 
 EXPORT_CLIENT void Event_SetWorldObjectPositionChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WorldObjectPositionChangeDelegate */ WorldObjectPositionChangeDelegate_t delegate);
 
-EXPORT_CLIENT void Event_SetCreateBlipDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateBlipModuleDelegate */ CreateBlipDelegate_t delegate);
-EXPORT_CLIENT void Event_SetCreateWebViewDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateWebViewModuleDelegate */ CreateWebViewDelegate_t delegate);
-EXPORT_CLIENT void Event_SetCreateCheckpointDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateCheckpointModuleDelegate */ CreateCheckpointDelegate_t delegate);
-EXPORT_CLIENT void Event_SetCreateWebSocketClientDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateWebSocketClientModuleDelegate */ CreateWebSocketClientDelegate_t delegate);
-EXPORT_CLIENT void Event_SetCreateHttpClientDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateHttpClientModuleDelegate */ CreateHttpClientDelegate_t delegate);
-EXPORT_CLIENT void Event_SetCreateAudioDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateAudioModuleDelegate */ CreateAudioDelegate_t delegate);
-EXPORT_CLIENT void Event_SetCreateRmlElementDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateRmlElementModuleDelegate */ CreateRmlElementDelegate_t delegate);
-EXPORT_CLIENT void Event_SetCreateRmlDocumentDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateRmlDocumentModuleDelegate */ CreateRmlDocumentDelegate_t delegate);
-
-EXPORT_CLIENT void Event_SetRemoveBlipDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveBlipModuleDelegate */ RemoveBlipDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveWebViewDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveWebViewModuleDelegate */ RemoveWebViewDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveCheckpointDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveCheckpointModuleDelegate */ RemoveCheckpointDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveWebSocketClientDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveWebSocketClientModuleDelegate */ RemoveWebSocketClientDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveHttpClientDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveHttpClientModuleDelegate */ RemoveHttpClientDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveAudioDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveAudioModuleDelegate */ RemoveAudioDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveRmlElementDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveRmlElementModuleDelegate */ RemoveRmlElementDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveRmlDocumentDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveRmlDocumentModuleDelegate */ RemoveRmlDocumentDelegate_t delegate);
-
 EXPORT_CLIENT void Event_SetPlayerWeaponShootDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponShootModuleDelegate */ PlayerWeaponShootDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponChangeModuleDelegate */ PlayerWeaponChangeDelegate_t delegate);
@@ -107,9 +76,7 @@ EXPORT_CLIENT void Event_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resou
 EXPORT_CLIENT void Event_SetWeaponDamageDelegate(CSharpResourceImpl* resource, /** ClientEvents.WeaponDamageModuleDelegate */ WeaponDamageDelegate_t delegate);
 
 
-EXPORT_CLIENT void Event_SetCreateVirtualEntityDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateVirtualEntityDelegate */ CreateVirtualEntityDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveVirtualEntityDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveVirtualEntityDelegate */ RemoveVirtualEntityDelegate_t delegate);
-EXPORT_CLIENT void Event_SetCreateVirtualEntityGroupDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateVirtualEntityGroupDelegate */ CreateVirtualEntityGroupDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveVirtualEntityGroupDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveVirtualEntityGroupDelegate */ RemoveVirtualEntityGroupDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateBaseObjectDelegate */ CreateBaseObjectDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveBaseObjectDelegate */ RemoveBaseObjectDelegate_t delegate);
 
 #endif
