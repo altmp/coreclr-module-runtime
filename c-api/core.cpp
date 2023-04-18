@@ -1519,5 +1519,38 @@ alt::IMarker* Core_CreateMarker_Client(alt::ICore* core, uint8_t type, position_
     return marker;
 }
 
+alt::ITextLabel* Core_CreateTextLabel(alt::ICore* core, const char* text, const char* fontName, float fontSize,
+    float scale, position_t position, rotation_t rotation, rgba_t color, float outlineWith, rgba_t outlineColor,
+    alt::IResource* resource, uint32_t& id)
+{
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    alt::Rotation rot;
+    rot.roll = rotation.roll;
+    rot.pitch = rotation.pitch;
+    rot.yaw = rotation.yaw;
+
+    alt::RGBA rgbaColor;
+    rgbaColor.r = color.r;
+    rgbaColor.g = color.g;
+    rgbaColor.b = color.b;
+    rgbaColor.a = color.a;
+
+    alt::RGBA rgbaOutlineColor;
+    rgbaOutlineColor.r = outlineColor.r;
+    rgbaOutlineColor.g = outlineColor.g;
+    rgbaOutlineColor.b = outlineColor.b;
+    rgbaOutlineColor.a = outlineColor.a;
+
+    auto textLabel = core->CreateTextLabel(text, fontName, fontSize, scale, pos, rot, rgbaColor, outlineWith, rgbaOutlineColor, resource);
+    if (textLabel != nullptr) {
+        id = textLabel->GetID();
+    }
+    return textLabel;
+}
+
 #endif
 
