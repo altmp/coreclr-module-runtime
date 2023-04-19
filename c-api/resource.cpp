@@ -97,6 +97,10 @@ alt::IResource::Impl* Resource_GetImpl(alt::IResource* resource) {
     return resource->GetImpl();
 }
 
+ClrConfigNodeData* Resource_GetConfig(alt::IResource* resource) {
+    return new ClrConfigNodeData(resource->GetConfig());
+}
+
 #ifdef ALT_SERVER_API
 const char* Resource_GetPath(alt::IResource* resource, int32_t& size) {
     return AllocateString(resource->GetPath(), size);
@@ -113,11 +117,6 @@ void Resource_Start(alt::IResource* resource) {
 void Resource_Stop(alt::IResource* resource) {
     resource->GetImpl()->Stop();
 }
-
-ClrConfigNodeData* Resource_GetConfig(alt::IResource* resource) {
-    return new ClrConfigNodeData(resource->GetConfig());
-}
-
 #endif
 
 #ifdef ALT_CLIENT_API
