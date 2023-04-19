@@ -20,7 +20,6 @@ void CSharpResourceImpl::ResetDelegates()
     MainDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnClientEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
-    OnPlayerBeforeConnectDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerConnectDeniedDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8, auto var9) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
@@ -183,19 +182,6 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             OnPlayerConnectDelegate(connectPlayer,
                                     connectPlayer->GetID(),
                                     playerConnectEvent->GetReason().c_str());
-            break;
-        }
-    case alt::CEvent::Type::PLAYER_BEFORE_CONNECT:
-        {
-            auto beforeConnectEvent = dynamic_cast<const alt::CPlayerBeforeConnectEvent*>(ev);
-            auto clrInfo = new ClrConnectionInfo(beforeConnectEvent->GetConnectionInfo());
-
-            OnPlayerBeforeConnectDelegate(beforeConnectEvent,
-                                          clrInfo,
-                                          "");
-
-            clrInfo->dealloc();
-            delete clrInfo;
             break;
         }
     case alt::CEvent::Type::PLAYER_CONNECT_DENIED:
@@ -872,12 +858,6 @@ void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* resource,
                                                  PlayerConnectDelegate_t delegate)
 {
     resource->OnPlayerConnectDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(CSharpResourceImpl* resource,
-                                                       PlayerBeforeConnectDelegate_t delegate)
-{
-    resource->OnPlayerBeforeConnectDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetPlayerConnectDeniedDelegate(CSharpResourceImpl* resource,

@@ -2,10 +2,6 @@
 
 #ifdef ALT_SERVER_API
 
-void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason) {
-    ((alt::CPlayerBeforeConnectEvent*) event)->Cancel(reason);
-}
-
 void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue) {
     ((alt::CWeaponDamageEvent*) event)->SetDamageValue(damageValue);
 }
