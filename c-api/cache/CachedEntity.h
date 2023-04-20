@@ -35,10 +35,12 @@ namespace cache
             }
         }
 
-        uint16_t _id;
-        uint16_t GetID() const override {
+        uint32_t _id;
+        uint32_t GetID() const override {
             return _id;
         }
+
+        uint16_t GetSyncID() const override { return static_cast<uint16_t>(_id)/*only temp*/; }
 
         alt::IPlayer* _networkOwner;
         alt::IPlayer* GetNetworkOwner() const override {
