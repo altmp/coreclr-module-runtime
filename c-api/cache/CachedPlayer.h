@@ -45,7 +45,6 @@ namespace cache
 										_spawned(base->IsSpawned()),
 										_forwardSpeed(base->GetForwardSpeed()),
 										_strafeSpeed(base->GetStrafeSpeed()),
-										_cloudAuthHash(base->GetCloudAuthHash()),
 #ifdef ALT_SERVER_API
 										_currentWeaponTintIndex(base->GetCurrentWeaponTintIndex()),
 										_superJumpEnabled(base->IsSuperJumpEnabled()),
@@ -74,7 +73,7 @@ namespace cache
 										_headOverlays(13, { 0, 0, 0, 0, 0 }),
 										_faceFeatures(20, 0.0f),
 										_socialClubName(base->GetSocialClubName())
-
+										_cloudAuthHash(base->GetCloudAuthHash())
 #elif ALT_CLIENT_API
 										_talking(base->IsTalking()),
 										_micLevel(base->GetMicLevel()),
@@ -286,12 +285,6 @@ namespace cache
         float GetStrafeSpeed() const override {
 			return _strafeSpeed;
         }
-
-    	std::string _cloudAuthHash;
-    	std::string GetCloudAuthHash() const override {
-    		return _cloudAuthHash;
-    	}
-
 #ifdef ALT_SERVER_API
         bool _connected;
         bool IsConnected() const override {
@@ -509,6 +502,12 @@ namespace cache
     	std::string GetSocialClubName() const override {
     		return _socialClubName;
     	}
+
+    	std::string _cloudAuthHash;
+    	std::string GetCloudAuthHash() const override {
+    		return _cloudAuthHash;
+    	}
+
 #endif
 
 
