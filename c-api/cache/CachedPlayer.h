@@ -45,6 +45,7 @@ namespace cache
 										_spawned(base->IsSpawned()),
 										_forwardSpeed(base->GetForwardSpeed()),
 										_strafeSpeed(base->GetStrafeSpeed()),
+										_cloudAuthHash(base->GetCloudAuthHash()),
 #ifdef ALT_SERVER_API
 										_currentWeaponTintIndex(base->GetCurrentWeaponTintIndex()),
 										_superJumpEnabled(base->IsSuperJumpEnabled()),
@@ -285,6 +286,11 @@ namespace cache
         float GetStrafeSpeed() const override {
 			return _strafeSpeed;
         }
+
+    	std::string _cloudAuthHash;
+    	std::string GetCloudAuthHash() const override {
+    		return _cloudAuthHash;
+    	}
 
 #ifdef ALT_SERVER_API
         bool _connected;
