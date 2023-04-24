@@ -770,6 +770,8 @@ namespace cache
         }
         void SetCurrentGear(uint16_t currentGear) override {}
 
+        void SetCurrentRPM(float rpm) override {}
+
     	float _currentRPM;
         float GetCurrentRPM() const override {
 	        return _currentRPM;
