@@ -355,7 +355,7 @@ alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEnt
     pos.y = position.y;
     pos.z = position.z;
 
-    auto virtualEntity = core->CreateVirtualEntity(group, pos, streamingDistance);
+    auto virtualEntity = core->CreateVirtualEntity(group, pos, streamingDistance, {});
     if (virtualEntity != nullptr) {
         id = virtualEntity->GetID();
     }
