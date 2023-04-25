@@ -89,7 +89,7 @@ EXPORT_SERVER void Core_TriggerClientEventUnreliableForAll(alt::ICore* server, c
 EXPORT_SERVER alt::IVehicle* Core_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 EXPORT_SERVER alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint16_t &id);
 #ifdef ALT_SERVER_API
-EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius, float height, rgba_t color, uint32_t &id);
+EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius, float height, rgba_t color, uint32_t streamingDistance, uint32_t &id);
 #endif
 EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos, uint32_t &id);
 EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo, uint32_t &id);
@@ -133,7 +133,7 @@ EXPORT_SERVER void Core_GetClosestEntities(alt::ICore* core, vector3_t position,
 EXPORT_CLIENT uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path);
 EXPORT_CLIENT const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, const char* path, int32_t& size);
 
-EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id);
 #endif
 EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position, alt::IResource* resource, uint32_t &id);
 EXPORT_CLIENT alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius, alt::IResource* resource, uint32_t &id);

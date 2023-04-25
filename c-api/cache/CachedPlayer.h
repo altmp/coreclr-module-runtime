@@ -72,7 +72,7 @@ namespace cache
 										_dlcProps(13, { 0, 0, 0 }),
 										_headOverlays(13, { 0, 0, 0, 0, 0 }),
 										_faceFeatures(20, 0.0f),
-										_socialClubName(base->GetSocialClubName())
+										_socialClubName(base->GetSocialClubName()),
 										_cloudAuthHash(base->GetCloudAuthHash())
 #elif ALT_CLIENT_API
 										_talking(base->IsTalking()),

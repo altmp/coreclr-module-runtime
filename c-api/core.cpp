@@ -563,7 +563,7 @@ alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rota
 }
 
 alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, position_t pos, float radius,
-                        float height, rgba_t color, uint32_t &id) {
+                        float height, rgba_t color, uint32_t streamingDistance, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -574,7 +574,7 @@ alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, position
     rgba.b = color.b;
     rgba.a = color.a;
 
-    auto checkPoint = core->CreateCheckpoint(type, position, radius, height, rgba);
+    auto checkPoint = core->CreateCheckpoint(type, position, radius, height, rgba, streamingDistance);
     if (checkPoint != nullptr) {
         id = checkPoint->GetID();
     }
@@ -875,7 +875,7 @@ alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* reso
     return document;
 }
 
-alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, alt::IResource* resource, uint32_t &id) {
+alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -889,7 +889,7 @@ alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_
     rgba.g = color.g;
     rgba.b = color.b;
     rgba.a = color.a;
-    auto checkPoint = core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }, resource);
+    auto checkPoint = core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }, streamingDistance, resource);
     if (checkPoint != nullptr) {
         id = checkPoint->GetID();
     }
