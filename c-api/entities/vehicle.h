@@ -282,6 +282,7 @@ EXPORT_SERVER void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t s
 EXPORT_CLIENT float Vehicle_GetWheelSpeed(alt::IVehicle* vehicle);
 EXPORT_CLIENT uint16_t Vehicle_GetCurrentGear(alt::IVehicle* vehicle);
 EXPORT_CLIENT float Vehicle_GetCurrentRPM(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetCurrentRPM(alt::IVehicle* vehicle, float rpm);
 EXPORT_CLIENT void Vehicle_GetSpeedVector(alt::IVehicle* vehicle, vector3_t& vector);
 EXPORT_CLIENT uint16_t Vehicle_GetMaxGear(alt::IVehicle* vehicle);
 

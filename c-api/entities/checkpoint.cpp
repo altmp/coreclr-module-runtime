@@ -61,3 +61,16 @@ void Checkpoint_GetNextPosition(alt::ICheckpoint* checkpoint, vector3_t &pos) {
 void Checkpoint_SetNextPosition(alt::ICheckpoint* checkpoint, vector3_t pos) {
     checkpoint->SetNextPosition({ pos.x, pos.y, pos.z });
 }
+
+uint32_t Checkpoint_GetStreamingDistance(alt::ICheckpoint* checkpoint)
+{
+    return checkpoint->GetStreamingDistance();
+}
+
+#ifdef ALT_CLIENT_API
+uint8_t Checkpoint_IsStreamedIn(alt::ICheckpoint* checkpoint)
+{
+    return checkpoint->IsStreamedIn();
+}
+#endif
+

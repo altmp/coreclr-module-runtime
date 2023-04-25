@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 15624176217171012700UL;
+inline uint64_t capiHash = 8693127715154360685UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -44,6 +44,7 @@ inline uint64_t capiHashes[] = {
     4769953165963999553UL,
     16517785578451896264UL,
     16853945182069856363UL,
+    11169437175796680635UL,
     15861482869617048160UL,
     332214446285856938UL,
     6617672605820539119UL,
@@ -388,6 +389,7 @@ inline uint64_t capiHashes[] = {
     4030920042457960705UL,
     4843710155211034967UL,
     9871487800950929995UL,
+    14953611784677681252UL,
     4153837117751475501UL,
     15449156962697427469UL,
     3333598534924196965UL,
@@ -649,6 +651,7 @@ inline uint64_t capiHashes[] = {
     4563279063364526693UL,
     2853437131811490624UL,
     12232454538624166963UL,
+    13116174141655747505UL,
     15206512772388781191UL,
     347347259026240651UL,
     1181039797416690365UL,
@@ -815,6 +818,7 @@ inline uint64_t capiHashes[] = {
     16405184437105084835UL,
     17089941913478571218UL,
     16135548078550245994UL,
+    14309418926871386149UL,
     13843018058835105286UL,
     17754703024704790805UL,
     12891628734474300322UL,
@@ -968,6 +972,7 @@ inline uint64_t capiHashes[] = {
     4934471410579771998UL,
     12916172794746864343UL,
     9053583879265260950UL,
+    16226032668510538965UL,
     4660664364773957039UL,
     8859174657854274703UL,
     6249145685868994012UL,
@@ -1501,6 +1506,7 @@ inline void* capiPointers[] = {
     (void*) AudioFilter_RemoveEffect,
     (void*) Blip_GetScriptID,
     (void*) Blip_IsRemote,
+    (void*) Checkpoint_IsStreamedIn,
     (void*) Core_AddGXTText,
     (void*) Core_AreGameControlsEnabled,
     (void*) Core_AreRmlControlsEnabled,
@@ -1845,6 +1851,7 @@ inline void* capiPointers[] = {
     (void*) Marker_GetRemoteID,
     (void*) Marker_IsRemote,
     (void*) Object_IsRemote,
+    (void*) Object_IsStreamdIn,
     (void*) Player_GetLocal,
     (void*) Player_GetMicLevel,
     (void*) Player_GetNonSpatialVolume,
@@ -2106,6 +2113,7 @@ inline void* capiPointers[] = {
     (void*) Vehicle_SetAbsLightState,
     (void*) Vehicle_SetBatteryLightState,
     (void*) Vehicle_SetCurrentGear,
+    (void*) Vehicle_SetCurrentRPM,
     (void*) Vehicle_SetEngineLightState,
     (void*) Vehicle_SetEngineTemperature,
     (void*) Vehicle_SetFuelLevel,
@@ -2272,6 +2280,7 @@ inline void* capiPointers[] = {
     (void*) Checkpoint_GetID,
     (void*) Checkpoint_GetNextPosition,
     (void*) Checkpoint_GetRadius,
+    (void*) Checkpoint_GetStreamingDistance,
     (void*) Checkpoint_SetCheckpointType,
     (void*) Checkpoint_SetColor,
     (void*) Checkpoint_SetHeight,
@@ -2425,6 +2434,7 @@ inline void* capiPointers[] = {
     (void*) Object_GetEntity,
     (void*) Object_GetID,
     (void*) Object_GetLodDistance,
+    (void*) Object_GetStreamingDistance,
     (void*) Object_GetTextureVariation,
     (void*) Object_HasGravity,
     (void*) Object_IsCollisionEnabled,

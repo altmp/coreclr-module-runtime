@@ -922,6 +922,10 @@ float Vehicle_GetCurrentRPM(alt::IVehicle* vehicle) {
     return vehicle->GetCurrentRPM();
 }
 
+void Vehicle_SetCurrentRPM(alt::IVehicle* vehicle, float rpm) {
+    vehicle->SetCurrentRPM(rpm);
+}
+
 uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle) {
     return vehicle->GetSeatCount();
 }

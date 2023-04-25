@@ -92,10 +92,20 @@ uint8_t Object_IsWorldObject(alt::IObject* object) {
     return object->IsWorldObject();
 }
 
+uint32_t Object_GetStreamingDistance(alt::IObject* object)
+{
+    return object->GetStreamingDistance();
+}
+
 #ifdef ALT_CLIENT_API
 
 uint8_t Object_IsRemote(alt::IObject* object) {
     return object->IsRemote();
+}
+
+uint8_t Object_IsStreamdIn(alt::IObject* object)
+{
+    return object->IsStreamedIn();
 }
 
 #endif
