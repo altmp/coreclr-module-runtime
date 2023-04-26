@@ -397,6 +397,19 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                        &constOldValue);
             break;
         }
+    case alt::CEvent::Type::META_CHANGE:
+        {
+            auto metaChangeEvent = dynamic_cast<const alt::CMetaChangeEvent*>(ev);
+            auto constValue = alt::MValueConst(metaChangeEvent->GetVal());
+            auto constOldValue = alt::MValueConst(metaChangeEvent->GetOldVal());
+
+            OnMetaChangeDelegate(GetEntityPointer(metaChangeEvent->GetTarget()),
+                                 metaChangeEvent->GetTarget()->GetType(),
+                                 metaChangeEvent->GetKey().c_str(),
+                                 &constValue,
+                                 &constOldValue);
+            break;
+        }
     case alt::CEvent::Type::TASK_CHANGE:
         {
             auto taskChangeEvent = dynamic_cast<const alt::CTaskChangeEvent*>(ev);
@@ -429,6 +442,47 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             OnWorldObjectPositionChangeDelegate(GetEntityPointer(worldObjectPositionChangeEvent->GetWorldObject()),
                                                 worldObjectPositionChangeEvent->GetWorldObject()->GetType(),
                                                 {oldPosition.x, oldPosition.y, oldPosition.z});
+            break;
+        }
+    case alt::CEvent::Type::WORLD_OBJECT_STREAM_IN:
+        {
+            auto worldObjectStreamInEvent = dynamic_cast<const alt::CWorldObjectStreamInEvent*>(ev);
+
+            OnWorldObjectStreamInDelegate(GetWorldObjectPointer(worldObjectStreamInEvent->GetWorldObject()),
+                                          worldObjectStreamInEvent->GetWorldObject()->GetType());
+            break;
+        }
+    case alt::CEvent::Type::WORLD_OBJECT_STREAM_OUT:
+        {
+            auto worldObjectStreamOutEvent = dynamic_cast<const alt::CWorldObjectStreamOutEvent*>(ev);
+
+            OnWorldObjectStreamOutDelegate(GetWorldObjectPointer(worldObjectStreamOutEvent->GetWorldObject()),
+                                           worldObjectStreamOutEvent->GetWorldObject()->GetType());
+            break;
+        }
+    case alt::CEvent::Type::COLSHAPE_EVENT:
+        {
+            auto colShapeEvent = dynamic_cast<const alt::CColShapeEvent*>(ev);
+            auto entity = colShapeEvent->GetEntity();
+            auto worldObjectPointer = GetWorldObjectPointer(entity);
+            if (entity != nullptr && worldObjectPointer != nullptr)
+            {
+                auto colShapePointer = colShapeEvent->GetTarget();
+                if (colShapePointer->GetType() == alt::IBaseObject::Type::COLSHAPE)
+                {
+                    OnColShapeDelegate(colShapePointer,
+                                       worldObjectPointer,
+                                       entity->GetType(),
+                                       colShapeEvent->GetState());
+                }
+                else if (colShapePointer->GetType() == alt::IBaseObject::Type::CHECKPOINT)
+                {
+                    OnCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(colShapePointer),
+                                         worldObjectPointer,
+                                         entity->GetType(),
+                                         colShapeEvent->GetState());
+                }
+            }
             break;
         }
     default:
@@ -691,6 +745,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnLocalMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
     OnStreamSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
     OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+    OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
 
     OnNetOwnerChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 
@@ -700,6 +755,8 @@ void CSharpResourceImpl::ResetDelegates() {
     OnWindowResolutionChangeDelegate = [](auto var, auto var2) {};
 
     OnWorldObjectPositionChangeDelegate = [](auto var, auto var2, auto var3){};
+    OnWorldObjectStreamInDelegate = [](auto var, auto var2){};
+    OnWorldObjectStreamOutDelegate = [](auto var, auto var2){};
 
     OnPlayerWeaponShootDelegate = [](auto var, auto var2, auto var3) {};
 
@@ -709,4 +766,7 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnCreateBaseObjectDelegate = [](auto var, auto var2, auto var3) {};
     OnRemoveBaseObjectDelegate = [](auto var, auto var2) {};
+
+    OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 }

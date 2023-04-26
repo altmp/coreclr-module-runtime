@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 16681637712184005781UL;
+inline uint64_t capiHash = 15395184702929850155UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -179,7 +179,9 @@ inline uint64_t capiHashes[] = {
     14079997901958077241UL,
     18259284189737259993UL,
     13707820718504089625UL,
+    9134925632861949057UL,
     8284770729125093177UL,
+    1859619355480397883UL,
     12310767706503758111UL,
     11736526557039894433UL,
     3079581392961204745UL,
@@ -190,6 +192,7 @@ inline uint64_t capiHashes[] = {
     9792688891158114141UL,
     13013609938360144345UL,
     1555813148561817401UL,
+    10052271841742065911UL,
     15651483423859541657UL,
     1013031841840963141UL,
     10641081887455190199UL,
@@ -213,6 +216,8 @@ inline uint64_t capiHashes[] = {
     3313131202173863273UL,
     15282055500069881033UL,
     8085309467174887077UL,
+    12189198227473694261UL,
+    1153552198753902363UL,
     14086618333811829142UL,
     15723203749368445676UL,
     15955613981878964089UL,
@@ -1641,7 +1646,9 @@ inline void* capiPointers[] = {
     (void*) Event_SetAnyResourceErrorDelegate,
     (void*) Event_SetAnyResourceStartDelegate,
     (void*) Event_SetAnyResourceStopDelegate,
+    (void*) Event_SetCheckpointDelegate,
     (void*) Event_SetClientEventDelegate,
+    (void*) Event_SetColShapeDelegate,
     (void*) Event_SetConnectionCompleteDelegate,
     (void*) Event_SetConsoleCommandDelegate,
     (void*) Event_SetCreateBaseObjectDelegate,
@@ -1652,6 +1659,7 @@ inline void* capiPointers[] = {
     (void*) Event_SetKeyDownDelegate,
     (void*) Event_SetKeyUpDelegate,
     (void*) Event_SetLocalMetaChangeDelegate,
+    (void*) Event_SetMetaChangeDelegate,
     (void*) Event_SetNetOwnerChangeDelegate,
     (void*) Event_SetPlayerChangeAnimationDelegate,
     (void*) Event_SetPlayerChangeInteriorDelegate,
@@ -1675,6 +1683,8 @@ inline void* capiPointers[] = {
     (void*) Event_SetWindowFocusChangeDelegate,
     (void*) Event_SetWindowResolutionChangeDelegate,
     (void*) Event_SetWorldObjectPositionChangeDelegate,
+    (void*) Event_SetWorldObjectStreamInDelegate,
+    (void*) Event_SetWorldObjectStreamOutDelegate,
     (void*) FreeRmlElementArray,
     (void*) GetCachedAssembly,
     (void*) GetNativeFuncTable,

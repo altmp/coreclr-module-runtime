@@ -58,6 +58,7 @@ EXPORT_CLIENT void Event_SetGlobalSyncedMetaChangeDelegate(CSharpResourceImpl* r
 EXPORT_CLIENT void Event_SetLocalMetaChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.LocalMetaChangeModuleDelegate */ LocalMetaChangeDelegate_t delegate);
 EXPORT_CLIENT void Event_SetStreamSyncedMetaChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.StreamSyncedMetaChangeModuleDelegate */ StreamSyncedMetaChangeDelegate_t delegate);
 EXPORT_CLIENT void Event_SetSyncedMetaChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.SyncedMetaChangeModuleDelegate */ SyncedMetaChangeDelegate_t delegate);
+EXPORT_CLIENT void Event_SetMetaChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.MetaChangeModuleDelegate */ MetaChangeDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetNetOwnerChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.NetOwnerChangeModuleDelegate */ NetOwnerChangeDelegate_t delegate);
 
@@ -66,7 +67,9 @@ EXPORT_CLIENT void Event_SetTaskChangeDelegate(CSharpResourceImpl* resource, /**
 EXPORT_CLIENT void Event_SetWindowFocusChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WindowFocusChangeModuleDelegate */ WindowFocusChangeDelegate_t delegate);
 EXPORT_CLIENT void Event_SetWindowResolutionChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WindowResolutionChangeModuleDelegate */ WindowResolutionChangeDelegate_t delegate);
 
-EXPORT_CLIENT void Event_SetWorldObjectPositionChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WorldObjectPositionChangeDelegate */ WorldObjectPositionChangeDelegate_t delegate);
+EXPORT_CLIENT void Event_SetWorldObjectPositionChangeDelegate(CSharpResourceImpl* resource, /** ClientEvents.WorldObjectPositionChangeModuleDelegate */ WorldObjectPositionChangeDelegate_t delegate);
+EXPORT_CLIENT void Event_SetWorldObjectStreamInDelegate(CSharpResourceImpl* resource, /** ClientEvents.WorldObjectStreamInModuleDelegate */ WorldObjectStreamInDelegate_t delegate);
+EXPORT_CLIENT void Event_SetWorldObjectStreamOutDelegate(CSharpResourceImpl* resource, /** ClientEvents.WorldObjectStreamOutModuleDelegate */ WorldObjectStreamOutDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetPlayerWeaponShootDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerWeaponShootModuleDelegate */ PlayerWeaponShootDelegate_t delegate);
 
@@ -75,7 +78,10 @@ EXPORT_CLIENT void Event_SetPlayerWeaponChangeDelegate(CSharpResourceImpl* resou
 EXPORT_CLIENT void Event_SetWeaponDamageDelegate(CSharpResourceImpl* resource, /** ClientEvents.WeaponDamageModuleDelegate */ WeaponDamageDelegate_t delegate);
 
 
-EXPORT_CLIENT void Event_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateBaseObjectDelegate */ CreateBaseObjectDelegate_t delegate);
-EXPORT_CLIENT void Event_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveBaseObjectDelegate */ RemoveBaseObjectDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource, /** ClientEvents.CreateBaseObjectModuleDelegate */ CreateBaseObjectDelegate_t delegate);
+EXPORT_CLIENT void Event_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resource, /** ClientEvents.RemoveBaseObjectModuleDelegate */ RemoveBaseObjectDelegate_t delegate);
+
+EXPORT_CLIENT void Event_SetColShapeDelegate(CSharpResourceImpl* resource, /** ClientEvents.ColShapeModuleDelegate */ ColShapeDelegate_t delegate);
+EXPORT_CLIENT void Event_SetCheckpointDelegate(CSharpResourceImpl* resource, /** ClientEvents.CheckpointModuleDelegate */ CheckpointDelegate_t delegate);
 
 #endif

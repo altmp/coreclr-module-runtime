@@ -44,3 +44,33 @@ void* GetEntityPointer(alt::IBaseObject* entity) {
     }
     return nullptr;
 }
+
+void* GetWorldObjectPointer(alt::IWorldObject* worldObject)
+{
+    if (worldObject != nullptr)
+    {
+        switch (worldObject->GetType())
+        {
+        case alt::IBaseObject::Type::PLAYER:
+        case alt::IBaseObject::Type::LOCAL_PLAYER:
+            return dynamic_cast<alt::IPlayer*>(worldObject);
+        case alt::IBaseObject::Type::VEHICLE:
+            return dynamic_cast<alt::IVehicle*>(worldObject);
+        case alt::IBaseObject::Type::PED:
+            return dynamic_cast<alt::IPed*>(worldObject);
+        case alt::IBaseObject::Type::BLIP:
+            return dynamic_cast<alt::IBlip*>(worldObject);
+        case alt::IBaseObject::Type::COLSHAPE:
+            return dynamic_cast<alt::IColShape*>(worldObject);
+        case alt::IBaseObject::Type::MARKER:
+            return dynamic_cast<alt::IMarker*>(worldObject);
+        case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+            return dynamic_cast<alt::IVirtualEntity*>(worldObject);
+        case alt::IBaseObject::Type::CHECKPOINT:
+            return dynamic_cast<alt::ICheckpoint*>(worldObject);
+        default:
+            return nullptr;
+        }
+    }
+    return nullptr;
+}

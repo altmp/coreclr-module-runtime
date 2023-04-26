@@ -41,6 +41,7 @@ void CSharpResourceImpl::ResetDelegates()
     OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnVehicleDestroyDelegate = [](auto var) {};
     OnFireDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnStartProjectileDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};

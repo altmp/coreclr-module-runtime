@@ -54,6 +54,7 @@ SetDelegate(GlobalSyncedMetaChange);
 SetDelegate(LocalMetaChange);
 SetDelegate(StreamSyncedMetaChange);
 SetDelegate(SyncedMetaChange);
+SetDelegate(MetaChange);
 
 SetDelegate(NetOwnerChange);
 
@@ -67,7 +68,11 @@ SetDelegate(PlayerWeaponChange);
 SetDelegate(WeaponDamage);
 
 SetDelegate(WorldObjectPositionChange);
+SetDelegate(WorldObjectStreamIn);
+SetDelegate(WorldObjectStreamOut);
 
+SetDelegate(ColShape);
+SetDelegate(Checkpoint);
 
 SetDelegate(CreateBaseObject);
 SetDelegate(RemoveBaseObject);

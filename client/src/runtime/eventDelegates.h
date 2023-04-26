@@ -36,6 +36,7 @@ typedef void (* GlobalSyncedMetaChangeDelegate_t)(const char* key, alt::MValueCo
 typedef void (* LocalMetaChangeDelegate_t)(const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
 typedef void (* StreamSyncedMetaChangeDelegate_t)(void* target, alt::IBaseObject::Type type, const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
 typedef void (* SyncedMetaChangeDelegate_t)(void* target, alt::IBaseObject::Type type, const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
+typedef void (* MetaChangeDelegate_t)(void* target, alt::IBaseObject::Type type, const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
 
 typedef void (* NetOwnerChangeDelegate_t)(void* target, alt::IBaseObject::Type targetBaseObjectType, alt::IPlayer* newOwner, alt::IPlayer* oldOwner);
 
@@ -45,6 +46,8 @@ typedef void (* WindowFocusChangeDelegate_t)(uint8_t state);
 typedef void (* WindowResolutionChangeDelegate_t)(vector2_t oldRes, vector2_t newRes);
 
 typedef void (* WorldObjectPositionChangeDelegate_t)(void* target, alt::IBaseObject::Type type, position_t position);
+typedef void (* WorldObjectStreamInDelegate_t)(void* target, alt::IBaseObject::Type type);
+typedef void (* WorldObjectStreamOutDelegate_t)(void* target, alt::IBaseObject::Type type);
 
 typedef void (* PlayerWeaponShootDelegate_t)(uint32_t weapon, uint16_t totalAmmo, uint16_t ammoInClip);
 
@@ -58,3 +61,7 @@ typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, void* target,
 typedef void (* CreateBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType, uint32_t id);
 
 typedef void (* RemoveBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType);
+
+
+typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type, bool state);
+typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type type, bool state);

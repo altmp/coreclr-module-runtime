@@ -71,6 +71,7 @@ public:
     LocalMetaChangeDelegate_t OnLocalMetaChangeDelegate = nullptr;
     StreamSyncedMetaChangeDelegate_t OnStreamSyncedMetaChangeDelegate = nullptr;
     SyncedMetaChangeDelegate_t OnSyncedMetaChangeDelegate = nullptr;
+    MetaChangeDelegate_t OnMetaChangeDelegate = nullptr;
 
     NetOwnerChangeDelegate_t OnNetOwnerChangeDelegate = nullptr;
 
@@ -80,6 +81,8 @@ public:
     WindowResolutionChangeDelegate_t OnWindowResolutionChangeDelegate = nullptr;
 
     WorldObjectPositionChangeDelegate_t OnWorldObjectPositionChangeDelegate = nullptr;
+    WorldObjectStreamInDelegate_t OnWorldObjectStreamInDelegate = nullptr;
+    WorldObjectStreamOutDelegate_t OnWorldObjectStreamOutDelegate = nullptr;
 
     PlayerWeaponShootDelegate_t OnPlayerWeaponShootDelegate = nullptr;
 
@@ -89,6 +92,10 @@ public:
 
     CreateBaseObjectDelegate_t OnCreateBaseObjectDelegate = nullptr;
     RemoveBaseObjectDelegate_t OnRemoveBaseObjectDelegate = nullptr;
+
+    ColShapeDelegate_t OnColShapeDelegate = nullptr;
+    CheckpointDelegate_t OnCheckpointDelegate = nullptr;
+
 
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
