@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 8693127715154360685UL;
+inline uint64_t capiHash = 16681637712184005781UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -389,7 +389,7 @@ inline uint64_t capiHashes[] = {
     4030920042457960705UL,
     4843710155211034967UL,
     9871487800950929995UL,
-    14953611784677681252UL,
+    14733844975814872903UL,
     4153837117751475501UL,
     15449156962697427469UL,
     3333598534924196965UL,
@@ -1851,7 +1851,7 @@ inline void* capiPointers[] = {
     (void*) Marker_GetRemoteID,
     (void*) Marker_IsRemote,
     (void*) Object_IsRemote,
-    (void*) Object_IsStreamdIn,
+    (void*) Object_IsStreamedIn,
     (void*) Player_GetLocal,
     (void*) Player_GetMicLevel,
     (void*) Player_GetNonSpatialVolume,

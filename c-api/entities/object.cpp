@@ -103,7 +103,7 @@ uint8_t Object_IsRemote(alt::IObject* object) {
     return object->IsRemote();
 }
 
-uint8_t Object_IsStreamdIn(alt::IObject* object)
+uint8_t Object_IsStreamedIn(alt::IObject* object)
 {
     return object->IsStreamedIn();
 }

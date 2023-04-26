@@ -55,5 +55,5 @@ EXPORT_SHARED void Object_SetTextureVariation(alt::IObject* object, uint8_t vari
 EXPORT_SHARED uint8_t Object_IsWorldObject(alt::IObject* object);
 
 EXPORT_CLIENT uint8_t Object_IsRemote(alt::IObject* object);
-EXPORT_CLIENT uint8_t Object_IsStreamdIn(alt::IObject* object);
+EXPORT_CLIENT uint8_t Object_IsStreamedIn(alt::IObject* object);
 EXPORT_SHARED uint32_t Object_GetStreamingDistance(alt::IObject* object);
