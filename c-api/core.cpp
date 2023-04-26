@@ -348,14 +348,20 @@ alt::IColShape** Core_GetColShapes(alt::ICore* core, uint64_t& size)
 }
 
 alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position,
-                                              uint32_t streamingDistance, uint32_t &id)
+                                              uint32_t streamingDistance, const char* keys[], alt::MValueConst* values[], uint64_t size, uint32_t &id)
 {
     alt::Position pos;
     pos.x = position.x;
     pos.y = position.y;
     pos.z = position.z;
 
-    auto virtualEntity = core->CreateVirtualEntity(group, pos, streamingDistance, {});
+    std::unordered_map<std::string, alt::MValue> data = {};
+
+    for (uint64_t i = 0; i < size; i++) {
+        data[keys[i]] = values[i]->Get()->Clone();
+    }
+
+    auto virtualEntity = core->CreateVirtualEntity(group, pos, streamingDistance, data);
     if (virtualEntity != nullptr) {
         id = virtualEntity->GetID();
     }
