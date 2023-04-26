@@ -37,6 +37,7 @@
 #include "entities/networkObject.h"
 #include "entities/textLabel.h"
 #include "entities/audioFilter.h"
+#include "entities/local_vehicle.h"
 #include <type_traits>
 
 const function_table_t* get_func_table();
