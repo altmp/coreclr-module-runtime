@@ -97,6 +97,16 @@ uint32_t Object_GetStreamingDistance(alt::IObject* object)
     return object->GetStreamingDistance();
 }
 
+void Object_SetVisible(alt::IObject* object, uint8_t toggle)
+{
+    object->SetVisible(toggle);
+}
+
+uint8_t Object_IsVisible(alt::IObject* object)
+{
+    return object->IsVisible();
+}
+
 #ifdef ALT_CLIENT_API
 
 uint8_t Object_IsRemote(alt::IObject* object) {

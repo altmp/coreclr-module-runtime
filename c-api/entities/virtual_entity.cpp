@@ -33,6 +33,15 @@ uint32_t VirtualEntity_GetStreamingDistance(alt::IVirtualEntity* virtualEntity)
     return virtualEntity->GetStreamingDistance();
 }
 
+void VirtualEntity_SetVisible(alt::IVirtualEntity* virtualEntity, uint8_t toggle)
+{
+    virtualEntity->SetVisible(toggle);
+}
+
+uint8_t VirtualEntity_IsVisible(alt::IVirtualEntity* virtualEntity)
+{
+    return virtualEntity->IsVisible();
+}
 
 #ifdef ALT_CLIENT_API
 uint32_t VirtualEntity_GetRemoteID(alt::IVirtualEntity* virtualEntity)

@@ -30,3 +30,6 @@ EXPORT_SHARED void Checkpoint_GetNextPosition(alt::ICheckpoint* checkpoint, vect
 EXPORT_SHARED void Checkpoint_SetNextPosition(alt::ICheckpoint* checkpoint, vector3_t pos);
 EXPORT_SHARED uint32_t Checkpoint_GetStreamingDistance(alt::ICheckpoint* checkpoint);
 EXPORT_CLIENT uint8_t Checkpoint_IsStreamedIn(alt::ICheckpoint* checkpoint);
+
+EXPORT_SHARED void Checkpoint_SetVisible(alt::ICheckpoint* checkpoint, uint8_t toggle);
+EXPORT_SHARED uint8_t Checkpoint_IsVisible(alt::ICheckpoint* checkpoint);

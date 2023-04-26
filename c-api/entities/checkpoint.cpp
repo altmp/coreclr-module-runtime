@@ -67,6 +67,16 @@ uint32_t Checkpoint_GetStreamingDistance(alt::ICheckpoint* checkpoint)
     return checkpoint->GetStreamingDistance();
 }
 
+void Checkpoint_SetVisible(alt::ICheckpoint* checkpoint, uint8_t toggle)
+{
+    checkpoint->SetVisible(toggle);
+}
+
+uint8_t Checkpoint_IsVisible(alt::ICheckpoint* checkpoint)
+{
+    return checkpoint->IsVisible();
+}
+
 #ifdef ALT_CLIENT_API
 uint8_t Checkpoint_IsStreamedIn(alt::ICheckpoint* checkpoint)
 {

@@ -28,3 +28,6 @@ EXPORT_CLIENT uint8_t VirtualEntity_IsStreamedIn(alt::IVirtualEntity* virtualEnt
 EXPORT_SHARED uint32_t VirtualEntity_GetStreamingDistance(alt::IVirtualEntity* virtualEntity);
 EXPORT_SERVER void VirtualEntity_SetStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key, alt::MValueConst* val);
 EXPORT_SERVER void VirtualEntity_DeleteStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key);
+
+EXPORT_SHARED void VirtualEntity_SetVisible(alt::IVirtualEntity* virtualEntity, uint8_t toggle);
+EXPORT_SHARED uint8_t VirtualEntity_IsVisible(alt::IVirtualEntity* virtualEntity);
