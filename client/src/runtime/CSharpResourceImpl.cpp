@@ -589,6 +589,18 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
         }
     case alt::IBaseObject::Type::LOCAL_PLAYER:
         break;
+    case alt::IBaseObject::Type::LOCAL_VEHICLE:
+        {
+            auto localVehicle = dynamic_cast<alt::ILocalVehicle*>(object);
+            OnCreateBaseObjectDelegate(localVehicle, localVehicle->GetType(), localVehicle->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::LOCAL_PED:
+        {
+            auto localPed = dynamic_cast<alt::ILocalPed*>(object);
+            OnCreateBaseObjectDelegate(localPed, localPed->GetType(), localPed->GetID());
+            break;
+        }
     default:
         {
             std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) <<
@@ -688,6 +700,18 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
         }
     case alt::IBaseObject::Type::LOCAL_PLAYER:
         break;
+    case alt::IBaseObject::Type::LOCAL_VEHICLE:
+        {
+            const auto localVehicle = dynamic_cast<alt::ILocalVehicle*>(object);
+            OnRemoveBaseObjectDelegate(localVehicle, localVehicle->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::LOCAL_PED:
+        {
+            const auto localPed = dynamic_cast<alt::ILocalPed*>(object);
+            OnRemoveBaseObjectDelegate(localPed, localPed->GetType());
+            break;
+        }
     default:
         {
             std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) <<

@@ -1577,5 +1577,25 @@ alt::ILocalVehicle* Core_CreateLocalVehicle(alt::ICore* core, uint32_t modelHash
     }
     return localVehicle;
 }
+
+alt::ILocalPed* Core_CreateLocalPed(alt::ICore* core, uint32_t modelHash, int32_t dimension, position_t position,
+    rotation_t rotation, uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t& id)
+{
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    alt::Rotation rot;
+    rot.roll = rotation.roll;
+    rot.pitch = rotation.pitch;
+    rot.yaw = rotation.yaw;
+
+    auto localPed = core->CreateLocalPed(modelHash, dimension, pos, rot, useStreaming, streamingDistance, resource);
+    if (localPed != nullptr) {
+        id = localPed->GetID();
+    }
+    return localPed;
+}
 #endif
 

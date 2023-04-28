@@ -314,3 +314,4 @@ EXPORT_CLIENT alt::IMarker* Core_CreateMarker_Client(alt::ICore* core, uint8_t t
 EXPORT_CLIENT alt::ITextLabel* Core_CreateTextLabel(alt::ICore* core, const char* text, const char* fontName, float fontSize, float scale, position_t pos, rotation_t rot, rgba_t color, float outlineWith, rgba_t outlineColor, alt::IResource* resource, uint32_t& id);
 
 EXPORT_CLIENT alt::ILocalVehicle* Core_CreateLocalVehicle(alt::ICore* core, uint32_t modelHash, int32_t dimension, position_t pos, rotation_t rot, uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t& id);
+EXPORT_CLIENT alt::ILocalPed* Core_CreateLocalPed(alt::ICore* core, uint32_t modelHash, int32_t dimension, position_t pos, rotation_t rot, uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t& id);
