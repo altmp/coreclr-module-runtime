@@ -38,6 +38,7 @@
 #include "entities/textLabel.h"
 #include "entities/audioFilter.h"
 #include "entities/local_vehicle.h"
+#include "entities/local_ped.h"
 #include <type_traits>
 
 const function_table_t* get_func_table();
