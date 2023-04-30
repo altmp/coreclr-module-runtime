@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 2348991114702301885UL;
+inline uint64_t capiHash = 15465864982580703325UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -63,7 +63,7 @@ inline uint64_t capiHashes[] = {
     18346481764601280220UL,
     17592230005859506401UL,
     12946643233919435339UL,
-    3957829277222763273UL,
+    12170330479058831942UL,
     12959857024542892545UL,
     6616548211992387591UL,
     13482323824940594004UL,
@@ -965,9 +965,9 @@ inline uint64_t capiHashes[] = {
     6072515882787059448UL,
     14616096740054666449UL,
     15442851779455932452UL,
-    4762900636195164407UL,
     14796952389729553182UL,
     15394588070881330329UL,
+    7638321216817832459UL,
     16990441478007898825UL,
     5238646959486818104UL,
     17542761621503411994UL,
@@ -2466,9 +2466,9 @@ inline void* capiPointers[] = {
     (void*) Marker_GetRotation,
     (void*) Marker_GetScale,
     (void*) Marker_GetTarget,
-    (void*) Marker_GetVisible,
     (void*) Marker_GetWorldObject,
     (void*) Marker_IsGlobal,
+    (void*) Marker_IsVisible,
     (void*) Marker_SetColor,
     (void*) Marker_SetDirection,
     (void*) Marker_SetMarkerType,

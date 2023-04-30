@@ -1495,7 +1495,7 @@ void Core_GetAudios(alt::ICore* core, alt::IAudio* audios[], uint64_t size)
     }
 }
 
-alt::IMarker* Core_CreateMarker_Client(alt::ICore* core, uint8_t type, position_t position, rgba_t color,
+alt::IMarker* Core_CreateMarker_Client(alt::ICore* core, uint8_t type, position_t position, rgba_t color, uint8_t useStreaming, uint32_t streamingDistance,
     alt::IResource* resource, uint32_t& id)
 {
     alt::Position pos;
@@ -1509,7 +1509,7 @@ alt::IMarker* Core_CreateMarker_Client(alt::ICore* core, uint8_t type, position_
     rgbaColor.b = color.b;
     rgbaColor.a = color.a;
 
-    auto marker = core->CreateMarker((alt::IMarker::MarkerType)type, pos, rgbaColor, false, 0, resource);
+    auto marker = core->CreateMarker((alt::IMarker::MarkerType)type, pos, rgbaColor, useStreaming, streamingDistance, resource);
     if (marker != nullptr) {
         id = marker->GetID();
     }

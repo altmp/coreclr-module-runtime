@@ -24,7 +24,7 @@ EXPORT_SHARED alt::IPlayer* Marker_GetTarget(alt::IMarker* marker);
 EXPORT_SHARED void Marker_GetColor(alt::IMarker* marker, rgba_t& color);
 EXPORT_SHARED void Marker_SetColor(alt::IMarker* marker, rgba_t color);
 
-EXPORT_SHARED uint8_t Marker_GetVisible(alt::IMarker* marker);
+EXPORT_SHARED uint8_t Marker_IsVisible(alt::IMarker* marker);
 EXPORT_SHARED void Marker_SetVisible(alt::IMarker* marker, uint8_t visible);
 
 EXPORT_SHARED uint8_t Marker_GetMarkerType(alt::IMarker* marker);

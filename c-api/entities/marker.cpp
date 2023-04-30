@@ -39,7 +39,7 @@ void Marker_SetColor(alt::IMarker* marker, rgba_t color)
     marker->SetColor(rgba);
 }
 
-uint8_t Marker_GetVisible(alt::IMarker* marker)
+uint8_t Marker_IsVisible(alt::IMarker* marker)
 {
     return marker->IsVisible();
 }
