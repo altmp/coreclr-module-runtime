@@ -232,7 +232,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto eventShotOffset = weaponDamageEvent->GetShotOffset();
             position_t shotOffset = {eventShotOffset[0], eventShotOffset[1], eventShotOffset[2]};
             OnWeaponDamageDelegate(ev,
-                                   GetEntityPointer(targetEntity),
+                                   Util_GetEntityPointer(targetEntity),
                                    targetEntity->GetType(),
                                    weaponDamageEvent->GetWeaponHash(),
                                    weaponDamageEvent->GetDamageValue(),
@@ -367,7 +367,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
     case alt::CEvent::Type::NETOWNER_CHANGE:
         {
             auto netOwnerChangeEvent = dynamic_cast<const alt::CNetOwnerChangeEvent*>(ev);
-            OnNetOwnerChangeDelegate(GetEntityPointer(netOwnerChangeEvent->GetTarget()),
+            OnNetOwnerChangeDelegate(Util_GetEntityPointer(netOwnerChangeEvent->GetTarget()),
                                      netOwnerChangeEvent->GetTarget()->GetType(),
                                      netOwnerChangeEvent->GetNewOwner(),
                                      netOwnerChangeEvent->GetOldOwner());
@@ -378,7 +378,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto streamSyncedMetaChangeEvent = dynamic_cast<const alt::CStreamSyncedMetaDataChangeEvent*>(ev);
             auto constValue = alt::MValueConst(streamSyncedMetaChangeEvent->GetVal());
             auto constOldValue = alt::MValueConst(streamSyncedMetaChangeEvent->GetOldVal());
-            OnStreamSyncedMetaChangeDelegate(GetEntityPointer(streamSyncedMetaChangeEvent->GetTarget()),
+            OnStreamSyncedMetaChangeDelegate(Util_GetBaseObjectPointer(streamSyncedMetaChangeEvent->GetTarget()),
                                              streamSyncedMetaChangeEvent->GetTarget()->GetType(),
                                              streamSyncedMetaChangeEvent->GetKey().c_str(),
                                              &constValue,
@@ -390,7 +390,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto syncedMetaChangeEvent = dynamic_cast<const alt::CSyncedMetaDataChangeEvent*>(ev);
             auto constValue = alt::MValueConst(syncedMetaChangeEvent->GetVal());
             auto constOldValue = alt::MValueConst(syncedMetaChangeEvent->GetOldVal());
-            OnSyncedMetaChangeDelegate(GetEntityPointer(syncedMetaChangeEvent->GetTarget()),
+            OnSyncedMetaChangeDelegate(Util_GetBaseObjectPointer(syncedMetaChangeEvent->GetTarget()),
                                        syncedMetaChangeEvent->GetTarget()->GetType(),
                                        syncedMetaChangeEvent->GetKey().c_str(),
                                        &constValue,
@@ -403,7 +403,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto constValue = alt::MValueConst(metaChangeEvent->GetVal());
             auto constOldValue = alt::MValueConst(metaChangeEvent->GetOldVal());
 
-            OnMetaChangeDelegate(GetEntityPointer(metaChangeEvent->GetTarget()),
+            OnMetaChangeDelegate(Util_GetBaseObjectPointer(metaChangeEvent->GetTarget()),
                                  metaChangeEvent->GetTarget()->GetType(),
                                  metaChangeEvent->GetKey().c_str(),
                                  &constValue,
@@ -439,7 +439,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 
             auto oldPosition = worldObjectPositionChangeEvent->GetOldPosition();
 
-            OnWorldObjectPositionChangeDelegate(GetEntityPointer(worldObjectPositionChangeEvent->GetWorldObject()),
+            OnWorldObjectPositionChangeDelegate(Util_GetWorldObjectPointer(worldObjectPositionChangeEvent->GetWorldObject()),
                                                 worldObjectPositionChangeEvent->GetWorldObject()->GetType(),
                                                 {oldPosition.x, oldPosition.y, oldPosition.z});
             break;
@@ -448,7 +448,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         {
             auto worldObjectStreamInEvent = dynamic_cast<const alt::CWorldObjectStreamInEvent*>(ev);
 
-            OnWorldObjectStreamInDelegate(GetWorldObjectPointer(worldObjectStreamInEvent->GetWorldObject()),
+            OnWorldObjectStreamInDelegate(Util_GetWorldObjectPointer(worldObjectStreamInEvent->GetWorldObject()),
                                           worldObjectStreamInEvent->GetWorldObject()->GetType());
             break;
         }
@@ -456,7 +456,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         {
             auto worldObjectStreamOutEvent = dynamic_cast<const alt::CWorldObjectStreamOutEvent*>(ev);
 
-            OnWorldObjectStreamOutDelegate(GetWorldObjectPointer(worldObjectStreamOutEvent->GetWorldObject()),
+            OnWorldObjectStreamOutDelegate(Util_GetWorldObjectPointer(worldObjectStreamOutEvent->GetWorldObject()),
                                            worldObjectStreamOutEvent->GetWorldObject()->GetType());
             break;
         }
@@ -464,7 +464,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         {
             auto colShapeEvent = dynamic_cast<const alt::CColShapeEvent*>(ev);
             auto entity = colShapeEvent->GetEntity();
-            auto worldObjectPointer = GetWorldObjectPointer(entity);
+            auto worldObjectPointer = Util_GetWorldObjectPointer(entity);
             if (entity != nullptr && worldObjectPointer != nullptr)
             {
                 auto colShapePointer = colShapeEvent->GetTarget();

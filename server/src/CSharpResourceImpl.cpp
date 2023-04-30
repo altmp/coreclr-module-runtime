@@ -708,7 +708,8 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
         case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
             {
                 const auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
-                OnCreateBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType(), virtualEntityGroup->GetID());
+                OnCreateBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType(),
+                                           virtualEntityGroup->GetID());
                 break;
             }
         case alt::IBaseObject::Type::NETWORK_OBJECT:
@@ -719,7 +720,8 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
             }
         default:
             {
-                std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) << " for create base object got called" << std::endl;
+                std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) <<
+                    " for create base object got called" << std::endl;
                 break;
             }
         }
@@ -929,6 +931,7 @@ void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(CSharpResourceImpl* resour
 {
     resource->OnPlayerLeaveVehicleDelegate = delegate;
 }
+
 void CSharpResourceImpl_SetConsoleCommandDelegate(CSharpResourceImpl* resource,
                                                   ConsoleCommandDelegate_t delegate)
 {
@@ -1086,77 +1089,17 @@ bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, std::vec
 
 void* CSharpResourceImpl::GetBaseObjectPointer(alt::IBaseObject* baseObject)
 {
-    if (baseObject != nullptr)
-    {
-        switch (baseObject->GetType())
-        {
-        case alt::IBaseObject::Type::PLAYER:
-            return dynamic_cast<alt::IPlayer*>(baseObject);
-        case alt::IBaseObject::Type::VEHICLE:
-            return dynamic_cast<alt::IVehicle*>(baseObject);
-        case alt::IBaseObject::Type::BLIP:
-            return dynamic_cast<alt::IBlip*>(baseObject);
-        case alt::IBaseObject::Type::COLSHAPE:
-            return dynamic_cast<alt::IColShape*>(baseObject);
-        case alt::IBaseObject::Type::CHECKPOINT:
-            return dynamic_cast<alt::ICheckpoint*>(baseObject);
-        case alt::IBaseObject::Type::PED:
-            return dynamic_cast<alt::IPed*>(baseObject);
-        default:
-            return nullptr;
-        }
-    }
-    return nullptr;
+    return Util_GetBaseObjectPointer(baseObject);
 }
 
 void* CSharpResourceImpl::GetWorldObjectPointer(alt::IWorldObject* worldObject)
 {
-    if (worldObject != nullptr)
-    {
-        switch (worldObject->GetType())
-        {
-        case alt::IBaseObject::Type::PLAYER:
-        case alt::IBaseObject::Type::LOCAL_PLAYER:
-            return dynamic_cast<alt::IPlayer*>(worldObject);
-        case alt::IBaseObject::Type::VEHICLE:
-            return dynamic_cast<alt::IVehicle*>(worldObject);
-        case alt::IBaseObject::Type::PED:
-            return dynamic_cast<alt::IPed*>(worldObject);
-        case alt::IBaseObject::Type::BLIP:
-            return dynamic_cast<alt::IBlip*>(worldObject);
-        case alt::IBaseObject::Type::COLSHAPE:
-            return dynamic_cast<alt::IColShape*>(worldObject);
-        case alt::IBaseObject::Type::MARKER:
-            return dynamic_cast<alt::IMarker*>(worldObject);
-        case alt::IBaseObject::Type::VIRTUAL_ENTITY:
-            return dynamic_cast<alt::IVirtualEntity*>(worldObject);
-        case alt::IBaseObject::Type::CHECKPOINT:
-            return dynamic_cast<alt::ICheckpoint*>(worldObject);
-        default:
-            return nullptr;
-        }
-    }
-    return nullptr;
+    return Util_GetWorldObjectPointer(worldObject);
 }
 
 void* CSharpResourceImpl::GetEntityPointer(alt::IEntity* entity)
 {
-    if (entity != nullptr)
-    {
-        switch (entity->GetType())
-        {
-        case alt::IBaseObject::Type::PLAYER:
-        case alt::IBaseObject::Type::LOCAL_PLAYER:
-            return dynamic_cast<alt::IPlayer*>(entity);
-        case alt::IBaseObject::Type::VEHICLE:
-            return dynamic_cast<alt::IVehicle*>(entity);
-        case alt::IBaseObject::Type::PED:
-            return dynamic_cast<alt::IPed*>(entity);
-        default:
-            return nullptr;
-        }
-    }
-    return nullptr;
+    return Util_GetEntityPointer(entity);
 }
 
 alt::IBaseObject::Type CSharpResourceImpl::GetEntityType(alt::IEntity* entity)

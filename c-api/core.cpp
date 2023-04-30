@@ -4,6 +4,8 @@
 #include "data/config_node_data.h"
 #include <vector>
 
+#include "utils/entity.h"
+
 void Core_LogInfo(alt::ICore* core, const char* str) {
     core->LogInfo(str);
 }
@@ -193,25 +195,14 @@ alt::IBlip** Core_GetBlips(alt::ICore* core, uint64_t& size) {
 
 void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
     auto entity = core->GetEntityByID(id);
-    if (entity == nullptr) return nullptr;
-    type = (uint8_t) entity->GetType();
-    switch (entity->GetType()) {
-    case alt::IBaseObject::Type::PLAYER:
-    case alt::IBaseObject::Type::LOCAL_PLAYER:
-    return dynamic_cast<alt::IPlayer*>(entity);
-    case alt::IBaseObject::Type::VEHICLE:
-        return dynamic_cast<alt::IVehicle*>(entity);
-    case alt::IBaseObject::Type::PED:
-        return dynamic_cast<alt::IPed*>(entity);
-    }
-    return nullptr;
+
+    return Util_GetEntityPointer(entity);
 }
 
 void* Core_GetBaseObjectByID(alt::ICore* core, uint8_t type, uint32_t id) {
     auto entity = core->GetBaseObjectByID((alt::IBaseObject::Type)type, id);
-    if (entity == nullptr) return nullptr;
 
-    return entity;
+    return Util_GetBaseObjectPointer(entity);
 }
 
 alt::IResource* Core_GetResource(alt::ICore* core, const char* resourceName) {
