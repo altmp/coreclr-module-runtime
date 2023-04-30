@@ -890,6 +890,16 @@ void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetHybridExtraState(state);
 }
 
+alt::Quaternion Vehicle_GetQuaternion(alt::IVehicle* vehicle)
+{
+    return vehicle->GetQuaternion();
+}
+
+void Vehicle_SetQuaternion(alt::IVehicle* vehicle, alt::Quaternion quaternion)
+{
+    vehicle->SetQuaternion(quaternion);
+}
+
 #endif
 
 #ifdef ALT_CLIENT_API

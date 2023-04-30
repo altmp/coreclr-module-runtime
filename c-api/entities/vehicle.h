@@ -464,3 +464,6 @@ EXPORT_CLIENT uint32_t Vehicle_Handling_GetHandlingFlags(alt::IVehicle* vehicle)
 EXPORT_CLIENT void Vehicle_Handling_SetHandlingFlags(alt::IVehicle* vehicle, uint32_t value);
 EXPORT_CLIENT uint32_t Vehicle_Handling_GetDamageFlags(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_Handling_SetDamageFlags(alt::IVehicle* vehicle, uint32_t value);
+
+EXPORT_SERVER alt::Quaternion Vehicle_GetQuaternion(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetQuaternion(alt::IVehicle* vehicle, alt::Quaternion quaternion);

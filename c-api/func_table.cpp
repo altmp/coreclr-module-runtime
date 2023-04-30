@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 18085891344785532001UL;
+inline uint64_t capiHash = 2348991114702301885UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1331,6 +1331,7 @@ inline uint64_t capiHashes[] = {
     15213363766571057872UL,
     6361531094469306918UL,
     12628655035446474558UL,
+    2293158668820125317UL,
     4283418015941180107UL,
     3402335583322585123UL,
     13519520674920899414UL,
@@ -1434,6 +1435,7 @@ inline uint64_t capiHashes[] = {
     8082406915422712268UL,
     1331330944977889229UL,
     10226234016994918718UL,
+    3644573911776237792UL,
     10139114821440740454UL,
     11398193715753714450UL,
     13400577352062327287UL,
@@ -2830,6 +2832,7 @@ inline void* capiPointers[] = {
     (void*) Vehicle_GetPearlColor,
     (void*) Vehicle_GetPrimaryColor,
     (void*) Vehicle_GetPrimaryColorRGB,
+    (void*) Vehicle_GetQuaternion,
     (void*) Vehicle_GetRadioStationIndex,
     (void*) Vehicle_GetRearWheelVariation,
     (void*) Vehicle_GetRepairsCount,
@@ -2933,6 +2936,7 @@ inline void* capiPointers[] = {
     (void*) Vehicle_SetPetrolTankHealth,
     (void*) Vehicle_SetPrimaryColor,
     (void*) Vehicle_SetPrimaryColorRGB,
+    (void*) Vehicle_SetQuaternion,
     (void*) Vehicle_SetRadioStationIndex,
     (void*) Vehicle_SetRearWheels,
     (void*) Vehicle_SetRocketRefuelSpeed,
