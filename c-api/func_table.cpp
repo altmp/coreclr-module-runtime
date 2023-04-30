@@ -913,6 +913,7 @@ inline uint64_t capiHashes[] = {
     16194706534247749750UL,
     15286200049861980882UL,
     2664435930066837893UL,
+    7991844148745066430UL,
     4913360914395691424UL,
     15923635865693275395UL,
     12999641840922984330UL,
@@ -1109,7 +1110,9 @@ inline uint64_t capiHashes[] = {
     5853373970270474941UL,
     5926308654627541549UL,
     7682733547279772474UL,
+    17276300057698662707UL,
     13069539607851095701UL,
+    15027192667173077188UL,
     #ifdef ALT_SERVER_API
     8228424877092269355UL,
     8002999088966424231UL,
@@ -1183,7 +1186,6 @@ inline uint64_t capiHashes[] = {
     10673322505892191972UL,
     2663061204279682928UL,
     6937824812303569788UL,
-    7991844148745066430UL,
     6004628797499736605UL,
     12798418058428333585UL,
     8026011842118229214UL,
@@ -1493,10 +1495,8 @@ inline uint64_t capiHashes[] = {
     15510848492294686387UL,
     11160223830254443614UL,
     10269140636860300589UL,
-    17276300057698662707UL,
     16135129168754632706UL,
     8281427375806201830UL,
-    15027192667173077188UL,
     #endif
 };
 
@@ -2412,6 +2412,7 @@ inline void* capiPointers[] = {
     (void*) Entity_GetTypeByID,
     (void*) Entity_GetWorldObject,
     (void*) Entity_HasStreamSyncedMetaData,
+    (void*) Entity_SetRotation,
     (void*) Event_Cancel,
     (void*) Event_WasCancelled,
     (void*) FreeBlipArray,
@@ -2608,7 +2609,9 @@ inline void* capiPointers[] = {
     (void*) WebSocketClient_GetID,
     (void*) WebView_GetID,
     (void*) WorldObject_GetBaseObject,
+    (void*) WorldObject_GetDimension,
     (void*) WorldObject_GetPosition,
+    (void*) WorldObject_SetPosition,
     #ifdef ALT_SERVER_API
     (void*) BaseObject_DeleteSyncedMetaData,
     (void*) BaseObject_SetSyncedMetaData,
@@ -2682,7 +2685,6 @@ inline void* capiPointers[] = {
     (void*) Entity_SetCollision,
     (void*) Entity_SetFrozen,
     (void*) Entity_SetNetOwner,
-    (void*) Entity_SetRotation,
     (void*) Entity_SetStreamed,
     (void*) Entity_SetStreamSyncedMetaData,
     (void*) Entity_SetVisible,
@@ -2992,10 +2994,8 @@ inline void* capiPointers[] = {
     (void*) VoiceChannel_SetMetaData,
     (void*) VoiceChannel_SetPriority,
     (void*) VoiceChannel_UnmutePlayer,
-    (void*) WorldObject_GetDimension,
     (void*) WorldObject_GetPositionCoords,
     (void*) WorldObject_SetDimension,
-    (void*) WorldObject_SetPosition,
     #endif
 };
 

@@ -51,17 +51,17 @@ alt::MValueConst* Entity_GetStreamSyncedMetaData(alt::IEntity* Entity, const cha
     return new alt::MValueConst(Entity->GetStreamSyncedMetaData(key));
 }
 
-#ifdef ALT_SERVER_API
-void Entity_SetNetOwner(alt::IEntity* entity, alt::IPlayer* networkOwnerPlayer, uint8_t disableMigration) {
-    entity->SetNetworkOwner(networkOwnerPlayer, disableMigration);
-}
-
 void Entity_SetRotation(alt::IEntity* entity, rotation_t rot) {
     alt::Rotation rotation;
     rotation.roll = rot.roll;
     rotation.pitch = rot.pitch;
     rotation.yaw = rot.yaw;
     entity->SetRotation(rotation);
+}
+
+#ifdef ALT_SERVER_API
+void Entity_SetNetOwner(alt::IEntity* entity, alt::IPlayer* networkOwnerPlayer, uint8_t disableMigration) {
+    entity->SetNetworkOwner(networkOwnerPlayer, disableMigration);
 }
 
 void Entity_SetStreamSyncedMetaData(alt::IEntity* entity, const char* key, alt::MValueConst* val) {

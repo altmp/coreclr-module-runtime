@@ -27,7 +27,7 @@ EXPORT_SHARED uint8_t Entity_HasStreamSyncedMetaData(alt::IEntity* Entity, const
 EXPORT_SHARED alt::MValueConst* Entity_GetStreamSyncedMetaData(alt::IEntity* Entity, const char* key);
 
 EXPORT_SERVER void Entity_SetNetOwner(alt::IEntity* entity, alt::IPlayer* networkOwnerPlayer, uint8_t disableMigration);
-EXPORT_SERVER void Entity_SetRotation(alt::IEntity* entity, rotation_t rot);
+EXPORT_SHARED void Entity_SetRotation(alt::IEntity* entity, rotation_t rot);
 
 EXPORT_SERVER void Entity_SetStreamSyncedMetaData(alt::IEntity* entity, const char* key, alt::MValueConst* val);
 EXPORT_SERVER void Entity_DeleteStreamSyncedMetaData(alt::IEntity* entity, const char* key);
