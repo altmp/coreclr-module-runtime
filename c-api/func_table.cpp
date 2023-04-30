@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 15465864982580703325UL;
+inline uint64_t capiHash = 3474170565812693939UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -403,6 +403,7 @@ inline uint64_t capiHashes[] = {
     4990605972443241597UL,
     4030920042457960705UL,
     4843710155211034967UL,
+    18075714963587758699UL,
     9871487800950929995UL,
     14733844975814872903UL,
     4153837117751475501UL,
@@ -964,6 +965,7 @@ inline uint64_t capiHashes[] = {
     5240420572409205647UL,
     6072515882787059448UL,
     14616096740054666449UL,
+    5405050753430155401UL,
     15442851779455932452UL,
     14796952389729553182UL,
     15394588070881330329UL,
@@ -1904,6 +1906,7 @@ inline void* capiPointers[] = {
     (void*) MapData_SetVTilesY,
     (void*) Marker_GetRemoteID,
     (void*) Marker_IsRemote,
+    (void*) Marker_IsStreamedIn,
     (void*) Object_IsRemote,
     (void*) Object_IsStreamedIn,
     (void*) Player_GetLocal,
@@ -2465,6 +2468,7 @@ inline void* capiPointers[] = {
     (void*) Marker_GetMarkerType,
     (void*) Marker_GetRotation,
     (void*) Marker_GetScale,
+    (void*) Marker_GetStreamingDistance,
     (void*) Marker_GetTarget,
     (void*) Marker_GetWorldObject,
     (void*) Marker_IsGlobal,

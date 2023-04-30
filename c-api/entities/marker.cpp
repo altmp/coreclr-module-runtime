@@ -110,6 +110,11 @@ void Marker_SetDirection(alt::IMarker* marker, position_t dir)
     marker->SetScale(markerDir);
 }
 
+uint32_t Marker_GetStreamingDistance(alt::IMarker* marker)
+{
+    return marker->GetStreamingDistance();
+}
+
 #ifdef ALT_CLIENT_API
 uint32_t Marker_GetRemoteID(alt::IMarker* marker)
 {
@@ -119,5 +124,10 @@ uint32_t Marker_GetRemoteID(alt::IMarker* marker)
 uint8_t Marker_IsRemote(alt::IMarker* marker)
 {
     return marker->IsRemote();
+}
+
+uint8_t Marker_IsStreamedIn(alt::IMarker* marker)
+{
+    return marker->IsStreamedIn();
 }
 #endif
