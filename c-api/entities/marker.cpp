@@ -115,6 +115,16 @@ uint32_t Marker_GetStreamingDistance(alt::IMarker* marker)
     return marker->GetStreamingDistance();
 }
 
+uint8_t Marker_IsFaceCamera(alt::IMarker* marker)
+{
+    return marker->IsFaceCamera();
+}
+
+void Marker_SetFaceCamera(alt::IMarker* marker, uint8_t faceCamera)
+{
+    marker->SetFaceCamera(faceCamera);
+}
+
 #ifdef ALT_CLIENT_API
 uint32_t Marker_GetRemoteID(alt::IMarker* marker)
 {

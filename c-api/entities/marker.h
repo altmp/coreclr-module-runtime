@@ -44,3 +44,6 @@ EXPORT_CLIENT uint8_t Marker_IsStreamedIn(alt::IMarker* marker);
 
 EXPORT_CLIENT uint8_t Marker_IsRemote(alt::IMarker* marker);
 EXPORT_CLIENT uint32_t Marker_GetRemoteID(alt::IMarker* marker);
+
+EXPORT_SHARED uint8_t Marker_IsFaceCamera(alt::IMarker* marker);
+EXPORT_SHARED void Marker_SetFaceCamera(alt::IMarker* marker, uint8_t faceCamera);
