@@ -1509,7 +1509,7 @@ alt::IMarker* Core_CreateMarker_Client(alt::ICore* core, uint8_t type, position_
     rgbaColor.b = color.b;
     rgbaColor.a = color.a;
 
-    auto marker = core->CreateMarker((alt::IMarker::MarkerType)type, pos, rgbaColor, resource);
+    auto marker = core->CreateMarker((alt::IMarker::MarkerType)type, pos, rgbaColor, false, 0, resource);
     if (marker != nullptr) {
         id = marker->GetID();
     }
