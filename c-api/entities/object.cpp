@@ -118,4 +118,9 @@ uint8_t Object_IsStreamedIn(alt::IObject* object)
     return object->IsStreamedIn();
 }
 
+uint8_t Object_UsesStreaming(alt::IObject* object)
+{
+    return object->UsesStreaming();
+}
+
 #endif
