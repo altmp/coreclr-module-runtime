@@ -981,6 +981,35 @@ void Core_SetVoiceInputMuted(alt::ICore* core, uint8_t value) {
     core->SetVoiceInputMuted(value);
 }
 
+uint8_t Core_ToggleVoiceInput(alt::ICore* core, uint8_t state)
+{
+    return static_cast<uint8_t>(core->ToggleVoiceInput(state));
+}
+
+uint8_t Core_ToggleVoiceActivation(alt::ICore* core, uint8_t state)
+{
+    return static_cast<uint8_t>(core->ToggleVoiceActivation(state));
+}
+
+uint8_t Core_SetVoiceActivationLevel(alt::ICore* core, float level)
+{
+    return static_cast<uint8_t>(core->SetVoiceActivationLevel(level));
+}
+
+float Core_GetVoiceActivationLevel(alt::ICore* core)
+{
+    return core->GetVoiceActivationLevel();
+}
+
+uint8_t Core_ToggleNoiseSuppression(alt::ICore* core, uint8_t state)
+{
+    return static_cast<uint8_t>(core->ToggleNoiseSuppression(state));
+}
+
+uint8_t Core_IsNoiseSuppressionEnabled(alt::ICore* core)
+{
+    return core->IsNoiseSuppressionEnabled();
+}
 
 uint8_t Core_BeginScaleformMovieMethodMinimap(alt::ICore* core, const char* methodName) {
     return core->BeginScaleformMovieMethodMinimap(methodName);
