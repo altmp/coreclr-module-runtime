@@ -1,5 +1,7 @@
 #include "local_vehicle.h"
 
+
+#ifdef ALT_CLIENT_API
 alt::IWorldObject* LocalVehicle_GetWorldObject(alt::ILocalVehicle* localVehicle)
 {
     return dynamic_cast<alt::IWorldObject*>(localVehicle);
@@ -47,7 +49,6 @@ uint8_t LocalVehicle_IsVisible(alt::ILocalVehicle* localVehicle)
     return localVehicle->IsVisible();
 }
 
-#ifdef ALT_CLIENT_API
 uint32_t LocalVehicle_GetScriptID(alt::ILocalVehicle* localVehicle)
 {
     return localVehicle->GetScriptID();
