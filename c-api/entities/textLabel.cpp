@@ -39,9 +39,9 @@ void TextLabel_SetColor(alt::ITextLabel* textLabel, rgba_t color)
     textLabel->SetColor(textLabelColor);
 }
 
-uint8_t TextLabel_GetVisible(alt::ITextLabel* textLabel)
+uint8_t TextLabel_IsVisible(alt::ITextLabel* textLabel)
 {
-    return textLabel->GetVisible();
+    return textLabel->IsVisible();
 }
 
 void TextLabel_SetVisible(alt::ITextLabel* textLabel, uint8_t visible)
@@ -76,6 +76,11 @@ void TextLabel_SetRotation(alt::ITextLabel* textLabel, rotation_t rot)
     textLabel->SetRotation(textLabelRot);
 }
 
+uint32_t TextLabel_GetStreamingDistance(alt::ITextLabel* textLabel)
+{
+    return textLabel->GetStreamingDistance();
+}
+
 #ifdef ALT_CLIENT_API
 uint8_t TextLabel_IsRemote(alt::ITextLabel* textLabel)
 {
@@ -85,5 +90,10 @@ uint8_t TextLabel_IsRemote(alt::ITextLabel* textLabel)
 uint32_t TextLabel_GetRemoteID(alt::ITextLabel* textLabel)
 {
     return textLabel->GetRemoteID();
+}
+
+uint8_t TextLabel_IsStreamedIn(alt::ITextLabel* textLabel)
+{
+    return textLabel->IsStreamedIn();
 }
 #endif

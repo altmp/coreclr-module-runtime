@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 14817668500749310216UL;
+inline uint64_t capiHash = 12085732356892434231UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -66,7 +66,7 @@ inline uint64_t capiHashes[] = {
     12170330479058831942UL,
     12959857024542892545UL,
     6616548211992387591UL,
-    13482323824940594004UL,
+    2377406775150972557UL,
     10887342887795907175UL,
     10630250283173809055UL,
     7487980836838238402UL,
@@ -693,6 +693,7 @@ inline uint64_t capiHashes[] = {
     2464553077225092123UL,
     6875066532735329283UL,
     11338052500504691613UL,
+    14015293096530462437UL,
     8108528114312743590UL,
     3961634604730468941UL,
     940949709699448452UL,
@@ -1266,10 +1267,11 @@ inline uint64_t capiHashes[] = {
     17469426826709697373UL,
     7785535667614932812UL,
     13329021670959257864UL,
+    9892232591592550017UL,
     6781195795327060290UL,
-    6945663332870319437UL,
     8297185820527489834UL,
     17978851917355436422UL,
+    15384695376179962647UL,
     1694191866473087021UL,
     6102843265505169340UL,
     3918260719528326415UL,
@@ -2377,6 +2379,7 @@ inline void* capiPointers[] = {
     (void*) SetResourceLoadDelegates,
     (void*) TextLabel_GetRemoteID,
     (void*) TextLabel_IsRemote,
+    (void*) TextLabel_IsStreamedIn,
     (void*) Vehicle_GetAbsLightState,
     (void*) Vehicle_GetBatteryLightState,
     (void*) Vehicle_GetCurrentGear,
@@ -2950,10 +2953,11 @@ inline void* capiPointers[] = {
     (void*) TextLabel_GetID,
     (void*) TextLabel_GetRotation,
     (void*) TextLabel_GetScale,
+    (void*) TextLabel_GetStreamingDistance,
     (void*) TextLabel_GetTarget,
-    (void*) TextLabel_GetVisible,
     (void*) TextLabel_GetWorldObject,
     (void*) TextLabel_IsGlobal,
+    (void*) TextLabel_IsVisible,
     (void*) TextLabel_SetColor,
     (void*) TextLabel_SetRotation,
     (void*) TextLabel_SetScale,

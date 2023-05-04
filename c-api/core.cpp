@@ -1547,7 +1547,7 @@ alt::IMarker* Core_CreateMarker_Client(alt::ICore* core, uint8_t type, position_
 
 alt::ITextLabel* Core_CreateTextLabel(alt::ICore* core, const char* text, const char* fontName, float fontSize,
     float scale, position_t position, rotation_t rotation, rgba_t color, float outlineWith, rgba_t outlineColor,
-    alt::IResource* resource, uint32_t& id)
+    uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t& id)
 {
     alt::Position pos;
     pos.x = position.x;
@@ -1571,7 +1571,7 @@ alt::ITextLabel* Core_CreateTextLabel(alt::ICore* core, const char* text, const 
     rgbaOutlineColor.b = outlineColor.b;
     rgbaOutlineColor.a = outlineColor.a;
 
-    auto textLabel = core->CreateTextLabel(text, fontName, fontSize, scale, pos, rot, rgbaColor, outlineWith, rgbaOutlineColor, resource);
+    auto textLabel = core->CreateTextLabel(text, fontName, fontSize, scale, pos, rot, rgbaColor, outlineWith, rgbaOutlineColor, useStreaming, streamingDistance, resource);
     if (textLabel != nullptr) {
         id = textLabel->GetID();
     }
