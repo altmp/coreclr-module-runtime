@@ -1617,5 +1617,10 @@ alt::ILocalPed* Core_CreateLocalPed(alt::ICore* core, uint32_t modelHash, int32_
     }
     return localPed;
 }
+
+uint8_t Core_IsFullScreen(alt::ICore* core)
+{
+    return core->IsFullScreen();
+}
 #endif
 
