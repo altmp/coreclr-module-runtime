@@ -21,7 +21,8 @@ inline const std::string host_dll_name = "AltV.Net.Client.Host.dll";
 
 std::string CoreClr::GetLatestNugetVersion(alt::IHttpClient* httpClient, const std::string& packageName) {
     if (!_nuget) _nuget.emplace(httpClient);
-    const auto branch = _core->GetBranch();
+    auto branch = _core->GetBranch();
+    if (branch == "internal") branch = "dev";
     const auto versions = _nuget->GetPackageVersions(packageName);
     for (auto it = versions.rbegin(); it != versions.rend(); ++it) {
         if (branch == "release") {
@@ -138,6 +139,11 @@ bool CoreClr::ValidateHost(nlohmann::json updateJson) const {
     if (!fs::exists(hostPath)) {
         cs::Log::Warning << "Host file does not exist" << cs::Log::Endl;
         return false;
+    }
+
+    if (alt::ICore::Instance().GetBranch() == "internal")
+    {
+        return true;
     }
     
     SHA1 checksum;
