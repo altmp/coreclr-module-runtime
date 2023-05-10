@@ -196,7 +196,7 @@ alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key)
 
 void Player_SetLocalMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    player->SetLocalMetaData(key, val->Get()->Clone());
+    player->SetLocalMetaData(key, val->get()->Clone());
 }
 
 uint8_t Player_HasLocalMetaData(alt::IPlayer* player, const char* key) {

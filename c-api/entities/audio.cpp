@@ -92,14 +92,14 @@ void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint8_t*& entityT
 
         auto mValue = outputs->Get(i);
         if (mValue->GetType() == alt::IMValue::Type::BASE_OBJECT) {
-            auto baseObject = dynamic_cast<const alt::IMValueBaseObject*>(mValue.Get())->Value();
+            auto baseObject = dynamic_cast<const alt::IMValueBaseObject*>(mValue.get())->Value();
 
             if (!baseObject) continue;
 
             auto entityPtr = Util_GetBaseObjectPointer(baseObject.get());
             if (entityPtr != nullptr) entityArr[i] = entityPtr;
         } else if (mValue->GetType() == alt::IMValue::Type::UINT) {
-            auto valueRef = dynamic_cast<const alt::IMValueUInt*>(mValue.Get())->Value();
+            auto valueRef = dynamic_cast<const alt::IMValueUInt*>(mValue.get())->Value();
             scriptIdArr[i] = valueRef;
         }
     }

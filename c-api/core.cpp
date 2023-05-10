@@ -58,10 +58,10 @@ alt::MValueConst* Core_CreateMValueString(alt::ICore* core, const char* value) {
 
 alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[], uint64_t size) {
     auto mValueConst = core->CreateMValueList(size);
-    auto mValue = mValueConst.Get();
+    auto mValue = mValueConst.get();
     for (uint64_t i = 0; i < size; i++) {
         auto mValueElement = val[i];
-        if (mValueElement == nullptr || mValueElement->Get() == nullptr) {
+        if (mValueElement == nullptr || mValueElement->get() == nullptr) {
             mValue->Set(i, core->CreateMValueNil());
         } else {
             mValue->SetConst(i, *val[i]);
@@ -72,10 +72,10 @@ alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[
 
 alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], alt::MValueConst* val[], uint64_t size) {
     auto mValueConst = core->CreateMValueDict();
-    auto mValue = mValueConst.Get();
+    auto mValue = mValueConst.get();
     for (uint64_t i = 0; i < size; i++) {
         auto mValueElement = val[i];
-        if (mValueElement == nullptr || mValueElement->Get() == nullptr) {
+        if (mValueElement == nullptr || mValueElement->get() == nullptr) {
             mValue->Set(keys[i], core->CreateMValueNil());
         } else {
             mValue->SetConst(keys[i], *val[i]);
@@ -243,7 +243,7 @@ alt::MValueConst* Core_GetMetaData(alt::ICore* core, const char* key) {
 
 void Core_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    core->SetMetaData(key, val->Get()->Clone());
+    core->SetMetaData(key, val->get()->Clone());
 }
 
 uint8_t Core_HasMetaData(alt::ICore* core, const char* key) {
@@ -349,7 +349,7 @@ alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEnt
     std::unordered_map<std::string, alt::MValue> data = {};
 
     for (uint64_t i = 0; i < size; i++) {
-        data[keys[i]] = values[i]->Get()->Clone();
+        data[keys[i]] = values[i]->get()->Clone();
     }
 
     auto virtualEntity = core->CreateVirtualEntity(group, pos, streamingDistance, data);
@@ -665,7 +665,7 @@ void Core_RestartResource(alt::ICore* core, const char* text) {
 
 void Core_SetSyncedMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    core->SetSyncedMetaData(key, val->Get()->Clone());
+    core->SetSyncedMetaData(key, val->get()->Clone());
 }
 
 void Core_DeleteSyncedMetaData(alt::ICore* core, const char* key) {

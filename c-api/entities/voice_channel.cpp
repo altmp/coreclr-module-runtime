@@ -17,7 +17,7 @@ alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, con
 
 void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    channel->SetMetaData(key, val->Get()->Clone());
+    channel->SetMetaData(key, val->get()->Clone());
 }
 
 uint8_t VoiceChannel_HasMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {

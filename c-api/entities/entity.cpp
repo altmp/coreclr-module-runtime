@@ -66,7 +66,7 @@ void Entity_SetNetOwner(alt::IEntity* entity, alt::IPlayer* networkOwnerPlayer, 
 
 void Entity_SetStreamSyncedMetaData(alt::IEntity* entity, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    entity->SetStreamSyncedMetaData(key, val->Get()->Clone());
+    entity->SetStreamSyncedMetaData(key, val->get()->Clone());
 }
 
 void Entity_DeleteStreamSyncedMetaData(alt::IEntity* entity, const char* key) {

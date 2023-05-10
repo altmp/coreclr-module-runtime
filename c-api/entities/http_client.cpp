@@ -25,7 +25,7 @@ void MarshalStringDict(alt::IMValueDict* map, const char**& keys, const char**& 
     for(auto it = map->Begin(); it; it = map->Next())
     {
         auto key = it->GetKey();
-        auto value = it->GetValue().As<alt::IMValueString>()->Value();
+        auto value = std::dynamic_pointer_cast<const alt::IMValueString>(it->GetValue())->Value();
 
         auto keyStr = key.c_str();
         auto keySize = key.size();
@@ -46,14 +46,14 @@ void MarshalStringDict(alt::IMValueDict* map, const char**& keys, const char**& 
 
 void HttpClient_GetExtraHeaders(alt::IHttpClient* httpClient, const char**& keys, const char**& values, int32_t& size) {
     auto map = httpClient->GetExtraHeaders();
-    MarshalStringDict(map.Get(), keys, values, size);
+    MarshalStringDict(map.get(), keys, values, size);
 }
 
 void InvokeCallback(const alt::IHttpClient::HttpResponse response, const void* ptr) {
     const char** keys;
     const char** values;
     int32_t size;
-    MarshalStringDict(response.headers.Get(), keys, values, size);
+    MarshalStringDict(response.headers.get(), keys, values, size);
     auto delegate = (HttpResponseDelegate_t) ptr;
     delegate(response.statusCode, response.body.c_str(), keys, values, size);
 }

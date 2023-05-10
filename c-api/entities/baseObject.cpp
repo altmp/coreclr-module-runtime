@@ -3,7 +3,7 @@
 using namespace alt;
 
 void BaseObject_SetMetaData(alt::IBaseObject* baseObject, const char* key, alt::MValueConst* value) {
-    baseObject->SetMetaData(key, value->Get()->Clone());
+    baseObject->SetMetaData(key, value->get()->Clone());
 }
 
 uint8_t BaseObject_HasMetaData(alt::IBaseObject* baseObject, const char* key) {
@@ -54,7 +54,7 @@ alt::MValueConst* BaseObject_GetSyncedMetaData(alt::IBaseObject* baseObject, con
 
 void BaseObject_SetSyncedMetaData(alt::IBaseObject* baseObject, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    baseObject->SetSyncedMetaData(key, val->Get()->Clone());
+    baseObject->SetSyncedMetaData(key, val->get()->Clone());
 }
 
 void BaseObject_DeleteSyncedMetaData(alt::IBaseObject* baseObject, const char* key) {

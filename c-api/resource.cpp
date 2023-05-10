@@ -18,7 +18,7 @@ CSharpResourceImpl* Resource_GetCSharpImpl(alt::IResource* resource) {
     return (CSharpResourceImpl*) resource->GetImpl();
 }
 uint64_t Resource_GetExportsCount(alt::IResource* resource) {
-    alt::IMValueDict* dict = resource->GetExports().Get();
+    alt::IMValueDict* dict = resource->GetExports().get();
     if (dict == nullptr) return 0;
     return dict->GetSize();
 }
@@ -26,7 +26,7 @@ uint64_t Resource_GetExportsCount(alt::IResource* resource) {
 void Resource_GetExports(alt::IResource* resource, const char* keys[],
                          alt::MValueConst* values[]) {
     auto dict = resource->GetExports();
-    if (dict.Get() == nullptr) {
+    if (dict.get() == nullptr) {
         return;
     }
     auto next = dict->Begin();
@@ -39,10 +39,10 @@ void Resource_GetExports(alt::IResource* resource, const char* keys[],
 }
 
 alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key) {
-    alt::IMValueDict* dict = resource->GetExports().Get();
+    alt::IMValueDict* dict = resource->GetExports().get();
     if (dict == nullptr) return nullptr;
     auto value = dict->Get(key);
-    if (value.Get() == nullptr) {
+    if (value.get() == nullptr) {
         return nullptr;
     }
     return new alt::MValueConst(value);
@@ -74,17 +74,17 @@ void Resource_GetDependants(alt::IResource* resource, const char* dependencies[]
 
 void Resource_SetExport(alt::ICore* core, alt::IResource* resource, const char* key, alt::MValueConst* val) {
     alt::MValueDict dict = resource->GetExports();
-    if (dict.Get() == nullptr) {
+    if (dict.get() == nullptr) {
         dict = core->CreateMValueDict();
         resource->SetExports(dict);
     }
-    dict->Set(key, val->Get()->Clone());
+    dict->Set(key, val->get()->Clone());
 }
 
 void Resource_SetExports(alt::ICore* core, alt::IResource* resource, alt::MValueConst* val[], const char* keys[], int size) {
     alt::MValueDict dict = core->CreateMValueDict();
     for (int i = 0; i < size; i++) {
-        dict->Set(keys[i], val[i]->Get()->Clone());
+        dict->Set(keys[i], val[i]->get()->Clone());
     }
     resource->SetExports(dict);
 }

@@ -134,7 +134,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 
             OnRmlEventDelegate(rmlUiEvent->GetElement(),
                                name.c_str(),
-                               rmlUiEvent->GetArgs().Get(),
+                               rmlUiEvent->GetArgs().get(),
                                size);
             break;
         }

@@ -66,7 +66,7 @@ uint8_t VirtualEntity_IsStreamedIn(alt::IVirtualEntity* virtualEntity)
 void VirtualEntity_SetStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key, alt::MValueConst* val)
 {
     if (val == nullptr) return;
-    virtualEntity->SetStreamSyncedMetaData(key, val->Get()->Clone());
+    virtualEntity->SetStreamSyncedMetaData(key, val->get()->Clone());
 }
 
 void VirtualEntity_DeleteStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key)
