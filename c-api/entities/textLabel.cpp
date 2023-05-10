@@ -81,6 +81,16 @@ uint32_t TextLabel_GetStreamingDistance(alt::ITextLabel* textLabel)
     return textLabel->GetStreamingDistance();
 }
 
+uint8_t TextLabel_IsFacingCamera(alt::ITextLabel* textLabel)
+{
+    return textLabel->IsFacingCamera();
+}
+
+void TextLabel_SetFaceCamera(alt::ITextLabel* textLabel, uint8_t faceCamera)
+{
+    textLabel->SetFaceCamera(faceCamera);
+}
+
 #ifdef ALT_CLIENT_API
 uint8_t TextLabel_IsRemote(alt::ITextLabel* textLabel)
 {

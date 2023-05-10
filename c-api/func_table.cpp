@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 12677746710615445053UL;
+inline uint64_t capiHash = 7081606559081446992UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1271,9 +1271,11 @@ inline uint64_t capiHashes[] = {
     9892232591592550017UL,
     6781195795327060290UL,
     8297185820527489834UL,
+    2012454944172259572UL,
     17978851917355436422UL,
     15384695376179962647UL,
     1694191866473087021UL,
+    15820914931030469094UL,
     6102843265505169340UL,
     3918260719528326415UL,
     2302278843105157392UL,
@@ -2958,9 +2960,11 @@ inline void* capiPointers[] = {
     (void*) TextLabel_GetStreamingDistance,
     (void*) TextLabel_GetTarget,
     (void*) TextLabel_GetWorldObject,
+    (void*) TextLabel_IsFacingCamera,
     (void*) TextLabel_IsGlobal,
     (void*) TextLabel_IsVisible,
     (void*) TextLabel_SetColor,
+    (void*) TextLabel_SetFaceCamera,
     (void*) TextLabel_SetRotation,
     (void*) TextLabel_SetScale,
     (void*) TextLabel_SetVisible,

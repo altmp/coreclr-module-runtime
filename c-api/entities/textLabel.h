@@ -33,3 +33,6 @@ EXPORT_CLIENT uint32_t TextLabel_GetRemoteID(alt::ITextLabel* textLabel);
 
 EXPORT_CLIENT uint8_t TextLabel_IsStreamedIn(alt::ITextLabel* textLabel);
 EXPORT_SHARED uint32_t TextLabel_GetStreamingDistance(alt::ITextLabel* textLabel);
+
+EXPORT_SHARED uint8_t TextLabel_IsFacingCamera(alt::ITextLabel* textLabel);
+EXPORT_SHARED void TextLabel_SetFaceCamera(alt::ITextLabel* textLabel, uint8_t faceCamera);
