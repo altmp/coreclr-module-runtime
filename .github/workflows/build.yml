@@ -147,8 +147,7 @@ jobs:
       - id: create_archive
         shell: bash
         run: |
-          filename=$(echo "windows")
-          tar -cvf ./$filename.tar modules/$filename/modules
+          tar -cvf ./$filename.tar client/windows/client
           echo "::set-output name=art_name::$filename"
       - uses: actions/upload-artifact@v3
         with:
