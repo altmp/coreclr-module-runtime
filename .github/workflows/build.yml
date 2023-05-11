@@ -1,0 +1,168 @@
+name: Build client and server
+
+on:
+  push:
+
+jobs:
+  fetch-nethost-linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Setup .NET Core
+        shell: pwsh
+        run: |
+          .\download_dotnet.ps1 ${{ runner.temp }} linux
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: nethost-linux
+          path: ${{ runner.temp }}/libnethost.tar
+  fetch-nethost-windows:
+    runs-on: windows-2022
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Setup .NET Core
+        shell: pwsh
+        run: |
+          .\download_dotnet.ps1 ${{ runner.temp }} win
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: nethost-windows
+          path: ${{ runner.temp }}\libnethost.tar
+  build-server:
+    runs-on: ${{ matrix.config.os }}
+    needs: [fetch-nethost-linux, fetch-nethost-windows]
+    strategy:
+      matrix:
+        config:
+          - {
+              name: linux,
+              os: ubuntu-20.04,
+              cc: gcc-9,
+              cxx: g++-9,
+              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo,
+              nethost: nethost-linux,
+            }
+          - {
+              name: windows,
+              os: windows-latest,
+              cc: cl,
+              cxx: cl,
+              args: -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64,
+              nethost: nethost-windows,
+            }
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.config.nethost }}
+          path: ./nethost
+      - working-directory: ./nethost
+        shell: bash
+        run: |
+          tar xvf libnethost.tar
+          ls -l
+          pwd
+      - working-directory: ./server
+        shell: cmake -P {0}
+        run: |
+          set(ENV{CC} ${{ matrix.config.cc }})
+          set(ENV{CXX} ${{ matrix.config.cxx }})
+          file(MAKE_DIRECTORY build)
+          execute_process(
+            COMMAND cmake .. ${{ matrix.config.args }}
+            RESULT_VARIABLE result
+            WORKING_DIRECTORY build
+          )
+          if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Bad exit status")
+          endif()
+      - working-directory: ./server
+        shell: bash
+        run: cmake --build build --config RelWithDebInfo
+      - if: ${{ runner.os == 'Linux' }}
+        shell: bash
+        run: |
+          mkdir -p modules/linux/modules/
+          cp ./server/build/src/libcsharp-module.so ./modules/linux/modules
+      - if: ${{ runner.os == 'Windows' }}
+        shell: bash
+        run: |
+          mkdir -p modules/windows/modules/
+          cp ./server/build/src/RelWithDebInfo/csharp-module.dll ./modules/windows/modules
+          cp ./server/build/src/RelWithDebInfo/csharp-module.pdb ./modules/windows/modules
+      - id: create_archive
+        shell: bash
+        run: |
+          filename=$(echo "${{ matrix.config.name }}")
+          tar -cvf ./$filename.tar modules/$filename/modules
+          echo "art_name=$filename" >> $GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v3
+        with:
+          name: csharp-module-${{ matrix.config.name }}
+          path: ./${{ steps.create_archive.outputs.art_name }}.tar
+  build-client:
+    runs-on: windows-latest
+    needs: [fetch-nethost-linux, fetch-nethost-windows]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - uses: actions/download-artifact@v3
+        with:
+          name: nethost-windows
+          path: ./nethost
+      - working-directory: ./nethost
+        shell: bash
+        run: |
+          tar xvf libnethost.tar
+          ls -l
+          pwd
+      - working-directory: ./client
+        shell: cmake -P {0}
+        run: |
+          set(ENV{CC} cl)
+          set(ENV{CXX} cl)
+          file(MAKE_DIRECTORY build )
+          execute_process(
+            COMMAND cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64 -DDYNAMIC_BUILD=1
+            RESULT_VARIABLE result
+            WORKING_DIRECTORY build
+          )
+          if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Bad exit status")
+          endif()
+      - working-directory: ./client
+        shell: bash
+        run: cmake --build build --config RelWithDebInfo
+      - shell: bash
+        run: |
+          mkdir -p client/windows/client/
+          cp ./client/build/RelWithDebInfo/altv-client-csharp.dll ./client/windows/client
+      - id: create_archive
+        shell: bash
+        run: |
+          tar -cvf ./$filename.tar client/windows/client
+          echo "art_name=$filename" >> $GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v3
+        with:
+          name: client-windows
+          path: ./${{ steps.create_archive.outputs.art_name }}.tar
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: [build-server, build-client]
+    if: ${{ always() }}
+    steps:
+      - uses: geekyeggo/delete-artifact@v2
+        with:
+          name: |
+            nethost-linux
+            nethost-windows
+            csharp-module-linux
+            csharp-module-windows
+            client-windows
