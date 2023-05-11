@@ -101,7 +101,7 @@ jobs:
         run: |
           filename=$(echo "${{ matrix.config.name }}")
           tar -cvf ./$filename.tar modules/$filename/modules
-          echo "::set-output name=art_name::$filename"
+          echo "art_name=$filename" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v3
         with:
           name: csharp-module-${{ matrix.config.name }}
@@ -148,7 +148,7 @@ jobs:
         shell: bash
         run: |
           tar -cvf ./$filename.tar client/windows/client
-          echo "::set-output name=art_name::$filename"
+          echo "art_name=$filename" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v3
         with:
           name: client-windows
