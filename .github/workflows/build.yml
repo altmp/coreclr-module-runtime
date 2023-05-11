@@ -106,3 +106,66 @@ jobs:
         with:
           name: csharp-module-${{ matrix.config.name }}
           path: ./${{ steps.create_archive.outputs.art_name }}.tar
+  build-client:
+    runs-on: windows-latest
+    needs: [fetch-nethost-linux, fetch-nethost-windows]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - uses: actions/download-artifact@v3
+        with:
+          name: nethost-windows
+          path: ./nethost
+      - working-directory: ./nethost
+        shell: bash
+        run: |
+          tar xvf libnethost.tar
+          ls -l
+          pwd
+      - working-directory: ./client
+        shell: cmake -P {0}
+        run: |
+          set(ENV{CC} cl)
+          set(ENV{CXX} cl)
+          file(MAKE_DIRECTORY build )
+          execute_process(
+            COMMAND cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -A x64 -T host=x64 -DDYNAMIC_BUILD=1
+            RESULT_VARIABLE result
+            WORKING_DIRECTORY build
+          )
+          if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Bad exit status")
+          endif()
+      - working-directory: ./client
+        shell: bash
+        run: cmake --build build --config RelWithDebInfo
+      - shell: bash
+        run: |
+          mkdir -p client/windows/client/
+          cp ./client/build/src/RelWithDebInfo/csharp-module.dll ./client/windows/client
+          cp ./client/build/src/RelWithDebInfo/csharp-module.pdb ./client/windows/client
+      - id: create_archive
+        shell: bash
+        run: |
+          filename=$(echo "windows")
+          tar -cvf ./$filename.tar modules/$filename/modules
+          echo "::set-output name=art_name::$filename"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: client-windows
+          path: ./${{ steps.create_archive.outputs.art_name }}.tar
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: [build-server, build-client]
+    needs: create-release
+    if: ${{ always() }}
+    steps:
+      - uses: geekyeggo/delete-artifact@v1
+        with:
+          name: |
+            nethost-linux
+            nethost-windows
+            csharp-module-linux
+            csharp-module-windows
+            client-windows
