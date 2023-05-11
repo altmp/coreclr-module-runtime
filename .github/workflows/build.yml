@@ -89,13 +89,13 @@ jobs:
         shell: bash
         run: |
           mkdir -p modules/linux/modules/
-          cp ./runtime/server/build/src/libcsharp-module.so ./modules/linux/modules
+          cp ./server/build/src/libcsharp-module.so ./modules/linux/modules
       - if: ${{ runner.os == 'Windows' }}
         shell: bash
         run: |
           mkdir -p modules/windows/modules/
-          cp ./runtime/server/build/src/RelWithDebInfo/csharp-module.dll ./modules/windows/modules
-          cp ./runtime/server/build/src/RelWithDebInfo/csharp-module.pdb ./modules/windows/modules
+          cp ./server/build/src/RelWithDebInfo/csharp-module.dll ./modules/windows/modules
+          cp ./server/build/src/RelWithDebInfo/csharp-module.pdb ./modules/windows/modules
       - id: create_archive
         shell: bash
         run: |
