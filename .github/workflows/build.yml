@@ -143,7 +143,7 @@ jobs:
       - shell: bash
         run: |
           mkdir -p client/windows/client/
-          cp ./client/build/src/RelWithDebInfo/altv-client-csharp.dll ./client/windows/client
+          cp ./client/build/RelWithDebInfo/altv-client-csharp.dll ./client/windows/client
       - id: create_archive
         shell: bash
         run: |
