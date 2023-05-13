@@ -55,9 +55,9 @@ std::filesystem::path CoreClr::GetCoreClrDllPath() {
 void CoreClr::InitializeCoreclr() {
     const auto runtimePath = GetRuntimeDirectoryPath().string();
     const auto clrDirectoryPath = GetDataDirectoryPath().string();
-    
+
     const auto tpaList = BuildTpaList(runtimePath);
-    
+
     const char *propertyKeys[] = {
         "TRUSTED_PLATFORM_ASSEMBLIES",
         "APP_PATHS",
@@ -66,7 +66,7 @@ void CoreClr::InitializeCoreclr() {
         "System.GC.Server",
         "System.Globalization.Invariant",
     };
-    
+
     const char *propertyValues[] = {
         tpaList.c_str(),
         clrDirectoryPath.c_str(),
@@ -78,7 +78,7 @@ void CoreClr::InitializeCoreclr() {
 
     cs::Log::Info << "Initializing CLR" << cs::Log::Endl;
     const int rc = _initializeCoreClr(clrDirectoryPath.c_str(), "AltV Host", std::size(propertyKeys), propertyKeys, propertyValues, &_runtimeHost, &_domainId);
-    
+
     if (rc != 0) {
         std::stringstream error;
         error << "Init failed: " << std::hex << std::showbase << rc << std::endl;
@@ -150,7 +150,7 @@ bool CoreClr::StartResource(alt::IResource* resource, alt::ICore* core) {
     {
         Initialize([](alt::InitState state, float progress, float total) {});
     }
-    
+
     const auto path = utils::string_to_wstring(resource->GetMain());
 
     struct start_args {
@@ -186,7 +186,7 @@ void SetResourceLoadDelegates(const CoreClrDelegate_t resourceExecute, const Cor
 }
 
 // ReSharper disable once CppInconsistentNaming
-bool GetCachedAssembly(const char* name, int* bufferSize, void** buffer) {
+uint8_t GetCachedAssembly(const char* name, int* bufferSize, void** buffer) {
     auto strName = std::string(name);
     const auto path = CoreClr::GetLibrariesDirectoryPath().append(utils::to_lower(strName) + ".nupkg");
     if (!exists(path)) return false;
@@ -201,7 +201,7 @@ bool GetCachedAssembly(const char* name, int* bufferSize, void** buffer) {
     }
     contentStream << zip.open(fileName).rdbuf();
     auto content = contentStream.str();
-    
+
     *bufferSize = static_cast<int>(content.size());
     *buffer = utils::get_clr_value(content.data(), content.size());
     return true;

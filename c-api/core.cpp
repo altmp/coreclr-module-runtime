@@ -918,7 +918,7 @@ void Core_TriggerServerEventUnreliable(alt::ICore* core, const char* event, alt:
     core->TriggerServerEventUnreliable(event, mValues);
 }
 
-void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state) {
+void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, uint8_t state) {
     if(!resource->ToggleCursor(state))
     {
         core->LogWarning("Cursor state can't go < 0");
@@ -942,7 +942,7 @@ void Core_DeallocDiscordUser(ClrDiscordUser* user) {
 
 
 void Core_Discord_GetOAuth2Token(alt::ICore* core, const char* appId, DiscordOAuth2TokenResultDelegate_t delegate) {
-    core->DiscordRequestOAuth2Token(appId, [delegate](const bool result, const std::string& token) {
+    core->DiscordRequestOAuth2Token(appId, [delegate](const uint8_t result, const std::string& token) {
         delegate(result, token.c_str());
     });
 }

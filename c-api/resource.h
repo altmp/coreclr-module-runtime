@@ -44,5 +44,5 @@ EXPORT_SERVER void Resource_Start(alt::IResource* resource);
 EXPORT_SERVER void Resource_Stop(alt::IResource* resource);
 
 EXPORT_CLIENT void Resource_GetFile(alt::IResource* resource, const char* path, int* bufferSize, void** buffer);
-EXPORT_CLIENT bool Resource_FileExists(alt::IResource* resource, const char* path);
+EXPORT_CLIENT uint8_t Resource_FileExists(alt::IResource* resource, const char* path);
 EXPORT_CLIENT alt::ILocalStorage* Resource_GetLocalStorage(alt::IResource* resource);

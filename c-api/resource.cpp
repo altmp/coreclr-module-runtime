@@ -120,7 +120,7 @@ void Resource_Stop(alt::IResource* resource) {
 #endif
 
 #ifdef ALT_CLIENT_API
-bool Resource_FileExists(alt::IResource* resource, const char* path) {
+uint8_t Resource_FileExists(alt::IResource* resource, const char* path) {
     auto pkg = resource->GetPackage();
     return pkg->FileExists(path);
 }

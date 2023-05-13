@@ -146,7 +146,7 @@ EXPORT_CLIENT void Core_TriggerWebViewEvent(alt::ICore* core, alt::IWebView* web
 EXPORT_CLIENT void Core_TriggerServerEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size);
 EXPORT_CLIENT void Core_TriggerServerEventUnreliable(alt::ICore* core, const char* event, alt::MValueConst* args[], int size);
 
-EXPORT_CLIENT void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, bool state);
+EXPORT_CLIENT void Core_ShowCursor(alt::ICore* core, alt::IResource* resource, uint8_t state);
 EXPORT_CLIENT uint8_t Core_IsCursorVisible(alt::ICore* core, alt::IResource* resource);
 
 #ifdef ALT_CLIENT_API
@@ -154,7 +154,7 @@ EXPORT_CLIENT ClrDiscordUser* Core_GetDiscordUser(alt::ICore* core);
 EXPORT_CLIENT void Core_DeallocDiscordUser(ClrDiscordUser* user);
 #endif
 
-typedef void (* DiscordOAuth2TokenResultDelegate_t)(bool success, const char* token);
+typedef void (* DiscordOAuth2TokenResultDelegate_t)(uint8_t success, const char* token);
 EXPORT_CLIENT void Core_Discord_GetOAuth2Token(alt::ICore* core, const char* appId, /** ClientEvents.DiscordOAuth2TokenResultModuleDelegate */ DiscordOAuth2TokenResultDelegate_t delegate);
 
 EXPORT_CLIENT void Core_WorldToScreen(alt::ICore* core, vector3_t in, vector2_t& out);

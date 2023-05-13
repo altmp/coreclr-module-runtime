@@ -63,5 +63,5 @@ typedef void (* CreateBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::
 typedef void (* RemoveBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType);
 
 
-typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type, bool state);
-typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type type, bool state);
+typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type, uint8_t state);
+typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type type, uint8_t state);
