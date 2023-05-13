@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 7081606559081446992UL;
+inline uint64_t capiHash = 16373247840332557468UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API

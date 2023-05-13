@@ -601,6 +601,18 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
             OnCreateBaseObjectDelegate(localPed, localPed->GetType(), localPed->GetID());
             break;
         }
+    case alt::IBaseObject::Type::MARKER:
+        {
+            auto marker = dynamic_cast<alt::IMarker*>(object);
+            OnCreateBaseObjectDelegate(marker, marker->GetType(), marker->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::TEXT_LABEL:
+        {
+            auto textLabel = dynamic_cast<alt::ITextLabel*>(object);
+            OnCreateBaseObjectDelegate(textLabel, textLabel->GetType(), textLabel->GetID());
+            break;
+        }
     default:
         {
             std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) <<
@@ -710,6 +722,18 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
         {
             const auto localPed = dynamic_cast<alt::ILocalPed*>(object);
             OnRemoveBaseObjectDelegate(localPed, localPed->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::MARKER:
+        {
+            const auto marker = dynamic_cast<alt::IMarker*>(object);
+            OnRemoveBaseObjectDelegate(marker, marker->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::TEXT_LABEL:
+        {
+            const auto textLabel = dynamic_cast<alt::ITextLabel*>(object);
+            OnRemoveBaseObjectDelegate(textLabel, textLabel->GetType());
             break;
         }
     default:
