@@ -43,15 +43,15 @@ void CoreClr::GetRequiredNugets(alt::IHttpClient* httpClient, const std::string&
     const auto version = GetLatestNugetVersion(httpClient, nuget);
     const auto json = _nuget->GetCatalog(nuget, version);
     vec[nuget] = json;
-    
+
     const auto dependencyGroup = json["dependencyGroups"][0];
     if (!dependencyGroup.contains("dependencies")) return;
-    
+
     const auto& dependencies = dependencyGroup["dependencies"];
     for (auto it = dependencies.begin(); it != dependencies.end(); ++it) {
         auto id = it.value()["id"].get<std::string>();
         utils::to_lower(id);
-        
+
         if (!utils::has_prefix(id, "altv.")) continue;
         if (vec.count(id) > 0) continue;
 
@@ -62,10 +62,10 @@ void CoreClr::GetRequiredNugets(alt::IHttpClient* httpClient, const std::string&
 bool CoreClr::ValidateRuntime(nlohmann::json updateJson, Progress& progress) const {
     const auto hashList = updateJson["hashList"];
     const auto sizeList = updateJson["sizeList"];
-    
+
     auto const runtimeDirectoryPath = GetRuntimeDirectoryPath();
     if (!fs::exists(runtimeDirectoryPath)) return false;
-    
+
     for (auto it = hashList.begin(); it != hashList.end(); ++it) {
         if (!utils::has_prefix(it.key(), "runtime/")) continue;
         auto path = GetDataDirectoryPath();
@@ -83,10 +83,10 @@ bool CoreClr::ValidateRuntime(nlohmann::json updateJson, Progress& progress) con
             cs::Log::Warning << "Current " << hash << " Needed " << it.value() << cs::Log::Endl;
             return false;
         }
-        
+
         progress.Advance(sizeList[it.key()].get<float>());
     }
-    
+
     for (auto& entry : fs::recursive_directory_iterator(runtimeDirectoryPath)) {
         if (entry.is_directory() || !entry.is_regular_file()) continue;
         auto relativePath = "runtime/" + fs::relative( entry.path(), runtimeDirectoryPath ).generic_string();
@@ -103,10 +103,10 @@ bool CoreClr::ValidateRuntime(nlohmann::json updateJson, Progress& progress) con
 
 void CoreClr::DownloadRuntime(alt::IHttpClient* httpClient, Progress& progress) const {
     auto attempt = 0;
-    
+
     while (true) {
         if (attempt++ >= 6) throw std::runtime_error("Failed to download CoreCLR after " + std::to_string(attempt) + " attempts");
-        
+
         cs::Log::Info << "Downloading CoreCLR (attempt " << attempt << ")" << cs::Log::Endl;
 
         static auto url = GetBaseCdnUrl() + "runtime.zip";
@@ -116,10 +116,10 @@ void CoreClr::DownloadRuntime(alt::IHttpClient* httpClient, Progress& progress) 
 
         static auto runtimeDirectoryPath = GetRuntimeDirectoryPath();
         if (!fs::exists(runtimeDirectoryPath)) fs::create_directories(runtimeDirectoryPath);
-            
+
         std::istringstream is(response.body, std::ios::binary);
         cs::Log::Info << "Extracting zip" << cs::Log::Endl;
-            
+
         try {
             miniz_cpp::zip_file zip(is);
             zip.extractall(runtimeDirectoryPath.string());
@@ -133,9 +133,9 @@ void CoreClr::DownloadRuntime(alt::IHttpClient* httpClient, Progress& progress) 
 
 bool CoreClr::ValidateHost(nlohmann::json updateJson) const {
     cs::Log::Info << "Validating Host" << cs::Log::Endl;
-    
+
     static auto hostPath = GetDataDirectoryPath().append(host_dll_name);
-    
+
     if (!fs::exists(hostPath)) {
         cs::Log::Warning << "Host file does not exist" << cs::Log::Endl;
         return false;
@@ -145,16 +145,18 @@ bool CoreClr::ValidateHost(nlohmann::json updateJson) const {
     {
         return true;
     }
-    
+
     SHA1 checksum;
     auto stream = std::ifstream(hostPath, std::ios::binary);
     checksum.update(stream);
     const std::string hash = checksum.final();
-    
+
     const auto hashList = updateJson["hashList"];
-    
+
     if (hashList[host_dll_name] != hash) {
-        cs::Log::Warning << "Host has invalid hash" << cs::Log::Endl;
+        cs::Log::Warning << "Host has invalid hash." << cs::Log::Endl;
+        cs::Log::Warning << "CDN hash: " << hashList[host_dll_name] << cs::Log::Endl;
+        cs::Log::Warning << "Local hash: " << hash << cs::Log::Endl;
         return false;
     }
 
@@ -164,10 +166,10 @@ bool CoreClr::ValidateHost(nlohmann::json updateJson) const {
 void CoreClr::DownloadHost(alt::IHttpClient* httpClient, Progress& progress) const {
     static auto url = GetBaseCdnUrl() + host_dll_name;
     auto attempt = 0;
-    
+
     while (true) {
         if (attempt++ >= 6) throw std::runtime_error("Failed to download Host after " + std::to_string(attempt) + " attempts");
-        
+
         cs::Log::Info << "Downloading Host (attempt " << attempt << ")" << cs::Log::Endl;
 
         const auto response = utils::download_file_sync(httpClient, url);
@@ -175,7 +177,7 @@ void CoreClr::DownloadHost(alt::IHttpClient* httpClient, Progress& progress) con
             cs::Log::Error << "Failed to download Host: " << response.statusCode << cs::Log::Endl;
             continue;
         }
-        
+
 
         static auto path = GetDataDirectoryPath().append(host_dll_name);
         std::ofstream file(path, std::ios::binary);
@@ -190,7 +192,7 @@ bool CoreClr::ValidateNuGet(alt::IHttpClient* httpClient, nlohmann::json json) {
     const auto package = json["id"].get<std::string>();
     const auto version = json["version"].get<std::string>() ;
     cs::Log::Info << "Validating NuGet package " << package << " " << version << cs::Log::Endl;
-    
+
     auto librariesDirectoryPath = GetLibrariesDirectoryPath();
     auto nupkgPath = librariesDirectoryPath.append(package + ".nupkg");
     if (!fs::exists(nupkgPath)) {
@@ -199,7 +201,7 @@ bool CoreClr::ValidateNuGet(alt::IHttpClient* httpClient, nlohmann::json json) {
     }
     auto stream = std::ifstream(nupkgPath, std::ios::binary);
     const auto hashAlgorithm = json["packageHashAlgorithm"].get<std::string>();
-    
+
     std::string fileHash;
     if (hashAlgorithm == "SHA512") {
         fileHash = sw::sha512::calculate(stream);
@@ -207,9 +209,9 @@ bool CoreClr::ValidateNuGet(alt::IHttpClient* httpClient, nlohmann::json json) {
         std::string content((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
         fileHash = _core->StringToSHA256(content);
     } else {
-        throw std::runtime_error("Unsupported hash algorithm " + json["packageHashAlgorithm"].get<std::string>());   
+        throw std::runtime_error("Unsupported hash algorithm " + json["packageHashAlgorithm"].get<std::string>());
     }
-    
+
     const auto neededHashBase64 = json["packageHash"].get<std::string>();
     std::stringstream neededHash;
     for (const auto &item : utils::base64_decode(neededHashBase64)) {
@@ -217,7 +219,7 @@ bool CoreClr::ValidateNuGet(alt::IHttpClient* httpClient, nlohmann::json json) {
     }
 
     cs::Log::Info << "Needed hash was " << neededHash.str() << " actual hash was " << fileHash << cs::Log::Endl;
-    
+
     if (neededHash.str() != fileHash) {
         cs::Log::Error << "Failed to validate NuGet " << package << " " << version << cs::Log::Endl;
         return false;
@@ -231,7 +233,7 @@ void CoreClr::DownloadNuGet(alt::IHttpClient* httpClient, nlohmann::json json, P
     const auto packageName = json["id"].get<std::string>();
     const auto version = json["version"].get<std::string>() ;
     cs::Log::Info << "Downloading NuGet package " << packageName << " " << version << cs::Log::Endl;
-    
+
     auto librariesDirectoryPath = GetLibrariesDirectoryPath();
     if (!fs::exists(librariesDirectoryPath)) fs::create_directories(librariesDirectoryPath);
     const auto nupkgPath = librariesDirectoryPath.append(packageName + ".nupkg");
@@ -244,7 +246,7 @@ void CoreClr::DownloadNuGet(alt::IHttpClient* httpClient, nlohmann::json json, P
 
 void CoreClr::Update(progressfn_t progressFn, int attempt) {
     const auto httpClient = _core->CreateHttpClient(nullptr);
-    
+
     static auto url = GetBaseCdnUrl() + "update.json";
     const auto updateFile = utils::download_file_sync(httpClient, url);
     const auto updateJson = nlohmann::json::parse(updateFile.body);
@@ -274,7 +276,7 @@ void CoreClr::Update(progressfn_t progressFn, int attempt) {
     validationProgress.Update();
 
     std::vector<nlohmann::json> invalidNugets{};
-    
+
     for (auto& [key, value] : nugets)
     {
         if (!ValidateNuGet(httpClient, value)) invalidNugets.push_back(value);
@@ -292,7 +294,7 @@ void CoreClr::Update(progressfn_t progressFn, int attempt) {
     for (auto nuget : invalidNugets)
         downloadSize += nuget["packageSize"].get<float>();
     float downloaded = 0;
-    
+
     Progress downloadProgress { DownloadingRuntime, downloadSize, 0, progressFn };
 
     if (!runtimeValid)
