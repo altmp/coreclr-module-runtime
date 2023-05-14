@@ -2,6 +2,7 @@
 
 #include "../utils/strings.h"
 #include "../utils/uint.h"
+#include "c-api/mvalue.h"
 
 uint32_t VirtualEntity_GetID(alt::IVirtualEntity* virtualEntity)
 {
@@ -20,7 +21,7 @@ uint8_t VirtualEntity_HasStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity
 
 alt::MValueConst* VirtualEntity_GetStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key)
 {
-    return new alt::MValueConst(virtualEntity->GetStreamSyncedMetaData(key));
+    return AllocMValue(virtualEntity->GetStreamSyncedMetaData(key));
 }
 
 alt::IWorldObject* VirtualEntity_GetWorldObject(alt::IVirtualEntity* virtualEntity)

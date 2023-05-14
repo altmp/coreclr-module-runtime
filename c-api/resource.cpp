@@ -3,6 +3,8 @@
 //
 
 #include "resource.h"
+
+#include "mvalue.h"
 #include "data/config_node_data.h"
 #include "utils/strings.h"
 
@@ -45,7 +47,7 @@ alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key) 
     if (value.get() == nullptr) {
         return nullptr;
     }
-    return new alt::MValueConst(value);
+    return AllocMValue(value);
 }
 
 int Resource_GetDependenciesSize(alt::IResource* resource) {

@@ -1,5 +1,7 @@
 #include "entity.h"
 
+#include "c-api/mvalue.h"
+
 uint16_t Entity_GetID(alt::IEntity* entity) {
     return entity->GetID();
 }
@@ -48,7 +50,7 @@ uint8_t Entity_HasStreamSyncedMetaData(alt::IEntity* Entity, const char* key) {
 }
 
 alt::MValueConst* Entity_GetStreamSyncedMetaData(alt::IEntity* Entity, const char* key) {
-    return new alt::MValueConst(Entity->GetStreamSyncedMetaData(key));
+    return AllocMValue(Entity->GetStreamSyncedMetaData(key));
 }
 
 void Entity_SetRotation(alt::IEntity* entity, rotation_t rot) {

@@ -1,4 +1,6 @@
 #include "localstorage.h"
+
+#include "mvalue.h"
 #include "utils/strings.h"
 
 #ifdef ALT_CLIENT_API
@@ -11,7 +13,7 @@ void LocalStorage_DeleteKey(alt::ILocalStorage* localStorage, const char* key) {
 }
 
 alt::MValueConst* LocalStorage_GetKey(alt::ILocalStorage* localStorage, const char* key) {
-    return new alt::MValueConst(localStorage->Get(key));
+    return AllocMValue(localStorage->Get(key));
 }
 
 void LocalStorage_Clear(alt::ILocalStorage* localStorage) {

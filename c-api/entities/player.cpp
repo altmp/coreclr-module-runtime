@@ -2,6 +2,7 @@
 
 #include "../utils/strings.h"
 #include "../utils/uint.h"
+#include "c-api/mvalue.h"
 
 uint16_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();
@@ -191,7 +192,7 @@ uint8_t Player_IsInCover(alt::IPlayer* player)
 
 #ifdef ALT_SERVER_API
 alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key) {
-    return new alt::MValueConst(player->GetLocalMetaData(key));
+    return AllocMValue(player->GetLocalMetaData(key));
 }
 
 void Player_SetLocalMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {

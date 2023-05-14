@@ -1,5 +1,7 @@
 #include "voice_channel.h"
 
+#include "c-api/mvalue.h"
+
 uint32_t VoiceChannel_GetID(alt::IVoiceChannel* voiceChannel)
 {
     return voiceChannel->GetID();
@@ -12,7 +14,7 @@ alt::IBaseObject* VoiceChannel_GetBaseObject(alt::IVoiceChannel* channel) {
 }
 
 alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
-    return new alt::MValueConst(voiceChannel->GetMetaData(key));
+    return AllocMValue(voiceChannel->GetMetaData(key));
 }
 
 void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValueConst* val) {

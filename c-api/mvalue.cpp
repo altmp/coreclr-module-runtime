@@ -1,6 +1,21 @@
 #include "mvalue.h"
 #include "utils/strings.h"
 
+static std::set<alt::MValueConst> mvalues;
+
+alt::MValueConst* AllocMValue(alt::MValueConst&& val) {
+    const auto key = mvalues.emplace(std::move(val)).first;
+    return const_cast<alt::MValueConst*>(&*key);
+}
+
+void FreeMValue(alt::MValueConst* val) {
+    for (auto it = mvalues.begin(); it != mvalues.end(); ++it) {
+        if (val != &*it) continue;
+        mvalues.erase(it);
+        return;
+    }
+}
+
 void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, alt::MValueConst *val);
 void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *val, alt::Size i);
 
@@ -342,7 +357,7 @@ uint8_t MValueConst_GetList(alt::MValueConst *mValueConst, alt::MValueConst *val
         auto list = dynamic_cast<const alt::IMValueList *>(mValue);
         for (uint64_t i = 0, length = list->GetSize(); i < length; i++) {
             alt::MValueConst mValueElement = list->Get(i);
-            values[i] = new alt::MValueConst(mValueElement);
+            values[i] = AllocMValue(std::move(mValueElement));
         }
         return true;
     }
@@ -375,7 +390,7 @@ uint8_t MValueConst_GetDict(alt::MValueConst *mValueConst, const char *keys[],
             keyArray[keySize] = '\0';
             keys[i] = keyArray;
             alt::MValueConst mValueElement = next->GetValue();
-            values[i] = new alt::MValueConst(mValueElement);
+            values[i] = AllocMValue(std::move(mValueElement));
             i++;
         } while ((next = dict->Next()) != nullptr);
         return true;
@@ -438,7 +453,7 @@ MValueConst_CallFunction(alt::ICore *core, alt::MValueConst *mValueConst, alt::M
             }
         }
         auto mValueFunction = dynamic_cast<const alt::IMValueFunction *>(mValue);
-        auto result = new alt::MValueConst(mValueFunction->Call(value));
+        auto result = AllocMValue(mValueFunction->Call(value));
         return result;
     }
     return nullptr;
@@ -492,7 +507,7 @@ uint64_t MValueConst_GetByteArraySize(alt::MValueConst *mValueConst) {
 }*/
 
 void MValueConst_Delete(alt::MValueConst *mValueConst) {
-    delete mValueConst;
+    FreeMValue(mValueConst);
 }
 
 uint8_t MValueConst_GetType(alt::MValueConst *mValueConst) {

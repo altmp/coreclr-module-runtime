@@ -1,4 +1,5 @@
 #include "baseObject.h"
+#include "c-api/mvalue.h"
 
 using namespace alt;
 
@@ -15,7 +16,7 @@ void BaseObject_DeleteMetaData(alt::IBaseObject* baseObject, const char* key) {
 }
 
 alt::MValueConst* BaseObject_GetMetaData(alt::IBaseObject* baseObject, const char* key) {
-    return new MValueConst(baseObject->GetMetaData(key));
+    return AllocMValue(baseObject->GetMetaData(key));
 }
 
 void* BaseObject_TryCache(alt::IBaseObject* baseObject) {
@@ -47,7 +48,7 @@ uint8_t BaseObject_HasSyncedMetaData(alt::IBaseObject* baseObject, const char* k
 }
 
 alt::MValueConst* BaseObject_GetSyncedMetaData(alt::IBaseObject* baseObject, const char* key) {
-    return new alt::MValueConst(baseObject->GetSyncedMetaData(key));
+    return AllocMValue(baseObject->GetSyncedMetaData(key));
 }
 
 #ifdef ALT_SERVER_API

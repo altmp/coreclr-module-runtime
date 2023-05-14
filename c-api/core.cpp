@@ -28,37 +28,38 @@ void Core_LogColored(alt::ICore* core, const char* str) {
 
 alt::MValueConst* Core_CreateMValueNil(alt::ICore* core) {
     auto mValue = core->CreateMValueNil();
-    return new alt::MValueConst(mValue);
+    return AllocMValue(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueBool(alt::ICore* core, uint8_t value) {
     auto mValue = core->CreateMValueBool(value);
-    return new alt::MValueConst(mValue);
+    return AllocMValue(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueInt(alt::ICore* core, int64_t value) {
     auto mValue = core->CreateMValueInt(value);
-    return new alt::MValueConst(mValue);
+    return AllocMValue(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueUInt(alt::ICore* core, uint64_t value) {
     auto mValue = core->CreateMValueUInt(value);
-    return new alt::MValueConst(mValue);
+    return AllocMValue(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueDouble(alt::ICore* core, double value) {
     auto mValue = core->CreateMValueDouble(value);
-    return new alt::MValueConst(mValue);
+    return AllocMValue(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueString(alt::ICore* core, const char* value) {
     auto mValue = core->CreateMValueString(value);
-    return new alt::MValueConst(mValue);
+    
+    return AllocMValue(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[], uint64_t size) {
     auto mValueConst = core->CreateMValueList(size);
-    auto mValue = mValueConst.get();
+    auto mValue = mValueConst;
     for (uint64_t i = 0; i < size; i++) {
         auto mValueElement = val[i];
         if (mValueElement == nullptr || mValueElement->get() == nullptr) {
@@ -67,12 +68,12 @@ alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[
             mValue->SetConst(i, *val[i]);
         }
     }
-    return new alt::MValueConst(mValue);
+    return AllocMValue(std::move(mValue));
 }
 
 alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], alt::MValueConst* val[], uint64_t size) {
     auto mValueConst = core->CreateMValueDict();
-    auto mValue = mValueConst.get();
+    auto mValue = mValueConst;
     for (uint64_t i = 0; i < size; i++) {
         auto mValueElement = val[i];
         if (mValueElement == nullptr || mValueElement->get() == nullptr) {
@@ -81,12 +82,12 @@ alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], al
             mValue->SetConst(keys[i], *val[i]);
         }
     }
-    return new alt::MValueConst(mValue);
+    return AllocMValue(std::move(mValue));
 }
 
 alt::MValueConst* Core_CreateMValueBaseObject(alt::ICore* core, alt::IBaseObject* value) {
     auto mValue = core->CreateMValueBaseObject(value);
-    return new alt::MValueConst(mValue);
+    return AllocMValue(mValue);
 }
 
 alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value) {
@@ -95,7 +96,7 @@ alt::MValueConst* Core_CreateMValueVector3(alt::ICore* core, position_t value) {
     vector3F[1] = value.y;
     vector3F[2] = value.z;
     alt::MValueConst mValue = core->CreateMValueVector3(vector3F);
-    return new alt::MValueConst(mValue);
+    return AllocMValue(std::move(mValue));
 }
 
 alt::MValueConst* Core_CreateMValueVector2(alt::ICore* core, vector2_t value) {
@@ -103,13 +104,13 @@ alt::MValueConst* Core_CreateMValueVector2(alt::ICore* core, vector2_t value) {
     vector2F[0] = value.x;
     vector2F[1] = value.y;
     alt::MValueConst mValue = core->CreateMValueVector2(vector2F);
-    return new alt::MValueConst(mValue);
+    return AllocMValue(std::move(mValue));
 }
 
 alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data) {
     auto byteArray = (const uint8_t*) data;
     alt::MValueConst mValue = core->CreateMValueByteArray(byteArray, size);
-    return new alt::MValueConst(mValue);
+    return AllocMValue(std::move(mValue));
 }
 
 alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
@@ -119,12 +120,12 @@ alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value) {
     rgba.b = value.b;
     rgba.a = value.a;
     alt::MValueConst mValue = core->CreateMValueRGBA(rgba);
-    return new alt::MValueConst(mValue);
+    return AllocMValue(std::move(mValue));
 }
 
 alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value) {
     alt::MValueConst mValue = core->CreateMValueFunction(value);
-    return new alt::MValueConst(mValue);
+    return AllocMValue(std::move(mValue));
 }
 
 alt::IPlayer** Core_GetPlayers(alt::ICore* core, uint64_t& size) {
@@ -238,7 +239,7 @@ void Core_DestroyBaseObject(alt::ICore* core, alt::IBaseObject* baseObject) {
 }
 
 alt::MValueConst* Core_GetMetaData(alt::ICore* core, const char* key) {
-    return new alt::MValueConst(core->GetMetaData(key));
+    return AllocMValue(core->GetMetaData(key));
 }
 
 void Core_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val) {
@@ -255,7 +256,7 @@ void Core_DeleteMetaData(alt::ICore* core, const char* key) {
 }
 
 alt::MValueConst* Core_GetSyncedMetaData(alt::ICore* core, const char* key) {
-    return new alt::MValueConst(core->GetSyncedMetaData(key));
+    return AllocMValue(core->GetSyncedMetaData(key));
 }
 
 uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key) {
@@ -1392,7 +1393,7 @@ uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key) {
 }
 
 alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key) {
-    return new alt::MValueConst(core->GetLocalMetaData(key));
+    return AllocMValue(core->GetLocalMetaData(key));
 }
 
 const char* Core_GetClientPath(alt::ICore* core, int32_t& size) {
