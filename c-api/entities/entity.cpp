@@ -1,6 +1,6 @@
 #include "entity.h"
 
-#include "c-api/mvalue.h"
+#include "../mvalue.h"
 
 uint16_t Entity_GetID(alt::IEntity* entity) {
     return entity->GetID();

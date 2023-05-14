@@ -2,7 +2,7 @@
 
 #include "../utils/strings.h"
 #include "../utils/uint.h"
-#include "c-api/mvalue.h"
+#include "../mvalue.h"
 
 uint16_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();

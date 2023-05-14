@@ -1,6 +1,6 @@
 #include "voice_channel.h"
 
-#include "c-api/mvalue.h"
+#include "../mvalue.h"
 
 uint32_t VoiceChannel_GetID(alt::IVoiceChannel* voiceChannel)
 {
