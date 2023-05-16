@@ -16,7 +16,6 @@
 
 EXPORT_SHARED uint16_t Entity_GetID(alt::IEntity* entity);
 EXPORT_SHARED alt::IWorldObject* Entity_GetWorldObject(alt::IEntity* entity);
-EXPORT_SHARED uint8_t Entity_GetTypeByID(alt::ICore* core, uint16_t id, uint8_t& type);
 
 EXPORT_SHARED uint32_t Entity_GetModel(alt::IEntity* entity);
 EXPORT_SHARED uint8_t Entity_GetNetOwnerID(alt::IEntity* entity, uint16_t& id);

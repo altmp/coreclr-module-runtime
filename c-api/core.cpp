@@ -53,7 +53,7 @@ alt::MValueConst* Core_CreateMValueDouble(alt::ICore* core, double value) {
 
 alt::MValueConst* Core_CreateMValueString(alt::ICore* core, const char* value) {
     auto mValue = core->CreateMValueString(value);
-    
+
     return AllocMValue(mValue);
 }
 
@@ -192,12 +192,6 @@ alt::IBlip** Core_GetBlips(alt::ICore* core, uint64_t& size) {
     }
 
     return out;
-}
-
-void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type) {
-    auto entity = core->GetEntityByID(id);
-
-    return Util_GetEntityPointer(entity);
 }
 
 void* Core_GetBaseObjectByID(alt::ICore* core, uint8_t type, uint32_t id) {

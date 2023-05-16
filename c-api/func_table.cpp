@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 13323279783407662680UL;
+inline uint64_t capiHash = 3704171453107582554UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1070,7 +1070,6 @@ inline uint64_t capiHashes[] = {
     14291068473487208197UL,
     9480713887250028309UL,
     16862996593036574459UL,
-    5700771154374947006UL,
     6921054663232355759UL,
     7482854450085275693UL,
     2139798095052897524UL,
@@ -1100,7 +1099,6 @@ inline uint64_t capiHashes[] = {
     10262653550309861069UL,
     13365378745805996598UL,
     11045454806874783898UL,
-    16194706534247749750UL,
     15286200049861980882UL,
     2664435930066837893UL,
     7991844148745066430UL,
@@ -2759,7 +2757,6 @@ inline void* capiPointers[] = {
     (void*) Core_GetCheckpoints,
     (void*) Core_GetColShapes,
     (void*) Core_GetCoreInstance,
-    (void*) Core_GetEntityById,
     (void*) Core_GetEventEnumSize,
     (void*) Core_GetMarkers,
     (void*) Core_GetMetaData,
@@ -2789,7 +2786,6 @@ inline void* capiPointers[] = {
     (void*) Entity_GetNetOwnerID,
     (void*) Entity_GetRotation,
     (void*) Entity_GetStreamSyncedMetaData,
-    (void*) Entity_GetTypeByID,
     (void*) Entity_GetWorldObject,
     (void*) Entity_HasStreamSyncedMetaData,
     (void*) Entity_SetRotation,

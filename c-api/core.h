@@ -52,7 +52,6 @@ EXPORT_SHARED alt::IPlayer** Core_GetPlayers(alt::ICore* core, uint64_t& size);
 EXPORT_SHARED alt::IVehicle** Core_GetVehicles(alt::ICore* core, uint64_t& size);
 EXPORT_SHARED alt::IPed** Core_GetPeds(alt::ICore* core, uint64_t& size);
 EXPORT_SHARED alt::IBlip** Core_GetBlips(alt::ICore* core, uint64_t& size);
-EXPORT_SHARED void* Core_GetEntityById(alt::ICore* core, uint16_t id, uint8_t& type);
 EXPORT_SHARED void* Core_GetBaseObjectByID(alt::ICore* core, uint8_t type, uint32_t id);
 EXPORT_SHARED alt::IResource* Core_GetResource(alt::ICore* core, const char* resourceName);
 EXPORT_SHARED alt::IResource** Core_GetAllResources(alt::ICore* core, uint32_t& size);
