@@ -65,7 +65,7 @@ alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[
         if (mValueElement == nullptr || mValueElement->get() == nullptr) {
             mValue->Set(i, core->CreateMValueNil());
         } else {
-            mValue->SetConst(i, mValueElement->get()->Clone());
+            mValue->Set(i, mValueElement->get()->Clone());
         }
     }
     return AllocMValue(std::move(mValue));
@@ -79,7 +79,8 @@ alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], al
         if (mValueElement == nullptr || mValueElement->get() == nullptr) {
             mValue->Set(keys[i], core->CreateMValueNil());
         } else {
-            mValue->SetConst(keys[i], mValueElement->get()->Clone());
+            auto element = mValueElement->get()->Clone();
+            mValue->Set(keys[i], element);
         }
     }
     return AllocMValue(std::move(mValue));
