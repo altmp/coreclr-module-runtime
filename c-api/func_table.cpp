@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 8962316284148830757UL;
+inline uint64_t capiHash = 17255086960092643626UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1327,6 +1327,7 @@ inline uint64_t capiHashes[] = {
     18353410539108177249UL,
     3410920088129362997UL,
     9200413248217250533UL,
+    12388703530222285438UL,
     4775071260549210311UL,
     6991502881874526937UL,
     16510685691058823138UL,
@@ -3008,6 +3009,7 @@ inline void* capiPointers[] = {
     (void*) Core_CreateBlipAttached,
     (void*) Core_CreateCheckpoint,
     (void*) Core_CreateMarker,
+    (void*) Core_CreateNetworkObject,
     (void*) Core_CreatePed,
     (void*) Core_CreateVehicle,
     (void*) Core_CreateVoiceChannel,

@@ -323,3 +323,5 @@ EXPORT_CLIENT alt::ILocalVehicle* Core_CreateLocalVehicle(alt::ICore* core, uint
 EXPORT_CLIENT alt::ILocalPed* Core_CreateLocalPed(alt::ICore* core, uint32_t modelHash, int32_t dimension, position_t pos, rotation_t rot, uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t& id);
 
 EXPORT_CLIENT uint8_t Core_IsFullScreen(alt::ICore* core);
+
+EXPORT_SERVER alt::INetworkObject* Core_CreateNetworkObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation, uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t& id);

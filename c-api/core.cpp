@@ -777,6 +777,26 @@ alt::IMarker* Core_CreateMarker(alt::ICore* core, alt::IPlayer* target, uint8_t 
     return marker;
 }
 
+alt::INetworkObject* Core_CreateNetworkObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation,
+    uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t& id)
+{
+    alt::Position pos;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
+
+    alt::Rotation rot;
+    rot.roll = rotation.roll;
+    rot.pitch = rotation.pitch;
+    rot.yaw = rotation.yaw;
+
+    auto networkObject = core->CreateNetworkObject(model, pos, rot, alpha, textureVariation, lodDistance);
+    if (networkObject != nullptr) {
+        id = networkObject->GetID();
+    }
+    return networkObject;
+}
+
 #endif
 
 #ifdef ALT_CLIENT_API
