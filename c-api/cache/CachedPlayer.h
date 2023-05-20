@@ -508,6 +508,7 @@ namespace cache
     		return _cloudAuthHash;
     	}
 
+    	std::vector<std::pair<IEntity*, int32_t>> GetStreamedEntities() const override { return {}; }
 #endif
 
 
