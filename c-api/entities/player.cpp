@@ -423,24 +423,6 @@ uint8_t Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* enti
     return player->IsEntityInStreamingRange(entity->GetSyncID());
 }
 
-
-void Player_AttachToEntity(alt::IPlayer* player, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot) {
-    alt::Position position{pos.x, pos.y, pos.z};
-    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    player->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
-}
-
-void Player_AttachToEntity_BoneString(alt::IPlayer* player, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot) {
-    alt::Position position{pos.x, pos.y, pos.z};
-    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    player->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
-}
-
-void Player_Detach(alt::IPlayer* player) {
-    player->Detach();
-}
-
-
 uint8_t Player_GetInvincible(alt::IPlayer* player) {
     return player->GetInvincible();
 }

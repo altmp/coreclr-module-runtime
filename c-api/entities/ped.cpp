@@ -29,22 +29,6 @@ uint32_t Ped_GetCurrentWeapon(alt::IPed* ped) {
 
 #ifdef ALT_SERVER_API
 
-void Ped_AttachToEntity(alt::IPed* ped, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot) {
-    alt::Position position{pos.x, pos.y, pos.z};
-    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    ped->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
-}
-
-void Ped_AttachToEntity_BoneString(alt::IPed* ped, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot) {
-    alt::Position position{pos.x, pos.y, pos.z};
-    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    ped->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
-}
-
-void Ped_Detach(alt::IPed* ped) {
-    ped->Detach();
-}
-
 void Ped_SetHealth(alt::IPed* ped, uint16_t health) {
     ped->SetHealth(health);
 }

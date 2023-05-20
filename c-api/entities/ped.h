@@ -22,9 +22,6 @@ EXPORT_SHARED uint16_t Ped_GetMaxHealth(alt::IPed* ped);
 EXPORT_SHARED uint16_t Ped_GetArmour(alt::IPed* ped);
 EXPORT_SHARED uint32_t Ped_GetCurrentWeapon(alt::IPed* ped);
 
-EXPORT_SERVER void Ped_AttachToEntity(alt::IPed* ped, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Ped_AttachToEntity_BoneString(alt::IPed* ped, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Ped_Detach(alt::IPed* ped);
 EXPORT_SERVER void Ped_SetHealth(alt::IPed* ped, uint16_t health);
 EXPORT_SERVER void Ped_SetMaxHealth(alt::IPed* ped, uint16_t maxHealth);
 EXPORT_SERVER void Ped_SetArmour(alt::IPed* ped, uint16_t armor);

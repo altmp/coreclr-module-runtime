@@ -123,10 +123,6 @@ EXPORT_SERVER void Player_ClearProps(alt::IPlayer* player, uint8_t component);
 
 EXPORT_SERVER uint8_t Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity);
 
-EXPORT_SERVER void Player_AttachToEntity(alt::IPlayer* player, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Player_AttachToEntity_BoneString(alt::IPlayer* player, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Player_Detach(alt::IPlayer* player);
-
 EXPORT_SERVER uint8_t Player_GetInvincible(alt::IPlayer* player);
 EXPORT_SERVER void Player_SetInvincible(alt::IPlayer* player, uint8_t state);
 

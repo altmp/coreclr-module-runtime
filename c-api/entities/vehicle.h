@@ -205,10 +205,6 @@ EXPORT_SERVER alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle);
 
 EXPORT_SERVER void Vehicle_Repair(alt::IVehicle* vehicle);
 
-EXPORT_SERVER void Vehicle_AttachToEntity(alt::IVehicle* vehicle, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Vehicle_AttachToEntity_BoneString(alt::IVehicle* vehicle, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Vehicle_Detach(alt::IVehicle* vehicle);
-
 EXPORT_SERVER void Vehicle_GetVelocity(alt::IVehicle* vehicle, position_t &velocity);
 
 EXPORT_SERVER void Vehicle_SetDriftMode(alt::IVehicle* vehicle, uint8_t state);
