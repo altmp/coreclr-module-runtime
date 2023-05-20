@@ -46,7 +46,7 @@ void NetworkObject_SetTextureVariation(alt::INetworkObject* networkObject, uint8
     networkObject->SetTextureVariation(textureVariation);
 }
 
-void NetworkObject_SetLodDistance(alt::INetworkObject* networkObject, uint8_t lodDistance)
+void NetworkObject_SetLodDistance(alt::INetworkObject* networkObject, uint16_t lodDistance)
 {
     networkObject->SetLodDistance(lodDistance);
 }

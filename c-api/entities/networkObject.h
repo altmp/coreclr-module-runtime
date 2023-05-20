@@ -25,4 +25,4 @@ EXPORT_SERVER void NetworkObject_ActivatePhysics(alt::INetworkObject* networkObj
 EXPORT_SERVER void NetworkObject_PlaceOnGroundProperly(alt::INetworkObject* networkObject);
 EXPORT_SERVER void NetworkObject_SetAlpha(alt::INetworkObject* networkObject, uint8_t alpha);
 EXPORT_SERVER void NetworkObject_SetTextureVariation(alt::INetworkObject* networkObject, uint8_t textureVariation);
-EXPORT_SERVER void NetworkObject_SetLodDistance(alt::INetworkObject* networkObject, uint8_t lodDistance);
+EXPORT_SERVER void NetworkObject_SetLodDistance(alt::INetworkObject* networkObject, uint16_t lodDistance);
