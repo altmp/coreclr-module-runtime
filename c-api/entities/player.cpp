@@ -420,7 +420,7 @@ void Player_ClearProps(alt::IPlayer* player, uint8_t component) {
 
 
 uint8_t Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity) {
-    return player->IsEntityInStreamingRange(entity->GetID());
+    return player->IsEntityInStreamingRange(entity->GetSyncID());
 }
 
 
