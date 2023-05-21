@@ -27,8 +27,8 @@ EXPORT_CLIENT uint8_t RmlDocument_IsVisible(alt::IRmlDocument* rmlDocument);
 EXPORT_CLIENT const char* RmlDocument_GetTitle(alt::IRmlDocument* rmlDocument, int32_t& size);
 EXPORT_CLIENT void RmlDocument_SetTitle(alt::IRmlDocument* rmlDocument, const char* title);
 
-EXPORT_CLIENT alt::IRmlElement* RmlDocument_CreateElement(alt::IRmlDocument* rmlDocument, const char* tag);
-EXPORT_CLIENT alt::IRmlElement* RmlDocument_CreateTextNode(alt::IRmlDocument* rmlDocument, const char* text);
+EXPORT_CLIENT alt::IRmlElement* RmlDocument_CreateElement(alt::IRmlDocument* rmlDocument, const char* tag, uint32_t& id);
+EXPORT_CLIENT alt::IRmlElement* RmlDocument_CreateTextNode(alt::IRmlDocument* rmlDocument, const char* text, uint32_t& id);
 
 EXPORT_CLIENT void RmlDocument_Hide(alt::IRmlDocument* rmlDocument);
 EXPORT_CLIENT void RmlDocument_Show(alt::IRmlDocument* rmlDocument, uint8_t isModal, uint8_t focused);
