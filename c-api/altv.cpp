@@ -109,6 +109,11 @@ void FreeVirtualEntityGroupArray(alt::IVirtualEntityGroup** virtualEntityGroupAr
     delete[] virtualEntityGroupArray;
 }
 
+void FreeConnectionInfoArray(alt::IConnectionInfo** connectionInfoArray)
+{
+    delete[] connectionInfoArray;
+}
+
 void FreeObjectArray(alt::IObject** objectArray) {
     delete[] objectArray;
 }

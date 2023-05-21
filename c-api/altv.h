@@ -25,6 +25,7 @@ EXPORT_SHARED void FreePedArray(alt::IPed** pedArray);
 EXPORT_SHARED void FreeCheckpointArray(alt::ICheckpoint** checkpointArray);
 EXPORT_SHARED void FreeVirtualEntityArray(alt::IVirtualEntity** virtualEntityArray);
 EXPORT_SHARED void FreeVirtualEntityGroupArray(alt::IVirtualEntityGroup** virtualEntityGroupArray);
+EXPORT_SHARED void FreeConnectionInfoArray(alt::IConnectionInfo** connectionInfoArray);
 EXPORT_SHARED void FreeObjectArray(alt::IObject** objectArray);
 EXPORT_SHARED void FreeMValueConstArray(alt::MValueConst** mvalueConstArray);
 EXPORT_SHARED const char* GetVersionStatic(int32_t &size);
