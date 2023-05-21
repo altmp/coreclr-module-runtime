@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 17255086960092643626UL;
+inline uint64_t capiHash = 7551806495224545705UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1310,9 +1310,11 @@ inline uint64_t capiHashes[] = {
     12411302106891962144UL,
     17030579920009662077UL,
     8194004283135524333UL,
+    12397496971801767822UL,
     1577439110274874884UL,
     14204191833155309704UL,
     5988681596904693572UL,
+    3511183830329804829UL,
     4175744399917476392UL,
     3151831504154255688UL,
     11409383581668438027UL,
@@ -1323,6 +1325,7 @@ inline uint64_t capiHashes[] = {
     18130628108130086100UL,
     10464338232675126241UL,
     12079559810042444284UL,
+    8806505177995284480UL,
     15248911099905088878UL,
     18353410539108177249UL,
     3410920088129362997UL,
@@ -1340,6 +1343,7 @@ inline uint64_t capiHashes[] = {
     10333270135403224879UL,
     4559218685940666205UL,
     419502286495548608UL,
+    13972691773502904173UL,
     4124119004202747553UL,
     12784287737200780200UL,
     12414549446254212526UL,
@@ -2992,9 +2996,11 @@ inline void* capiPointers[] = {
     (void*) ConnectionInfo_Accept,
     (void*) ConnectionInfo_Decline,
     (void*) ConnectionInfo_GetAuthToken,
+    (void*) ConnectionInfo_GetBaseObject,
     (void*) ConnectionInfo_GetBranch,
     (void*) ConnectionInfo_GetBuild,
     (void*) ConnectionInfo_GetCdnUrl,
+    (void*) ConnectionInfo_GetCloudAuthHash,
     (void*) ConnectionInfo_GetDiscordUserID,
     (void*) ConnectionInfo_GetHwIdExHash,
     (void*) ConnectionInfo_GetHwIdHash,
@@ -3005,6 +3011,7 @@ inline void* capiPointers[] = {
     (void*) ConnectionInfo_GetPasswordHash,
     (void*) ConnectionInfo_GetSocialId,
     (void*) ConnectionInfo_GetSocialName,
+    (void*) ConnectionInfo_IsAccepted,
     (void*) Core_CreateBlip,
     (void*) Core_CreateBlipAttached,
     (void*) Core_CreateCheckpoint,
@@ -3022,6 +3029,7 @@ inline void* capiPointers[] = {
     (void*) Core_DestroyVoiceChannel,
     (void*) Core_GetClosestEntities,
     (void*) Core_GetClosestEntitiesCount,
+    (void*) Core_GetConnectionInfos,
     (void*) Core_GetEntitiesInDimension,
     (void*) Core_GetEntitiesInDimensionCount,
     (void*) Core_GetEntitiesInRange,

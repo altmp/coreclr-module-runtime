@@ -797,6 +797,17 @@ alt::INetworkObject* Core_CreateNetworkObject(alt::ICore* core, uint32_t model, 
     return networkObject;
 }
 
+alt::IConnectionInfo** Core_GetConnectionInfos(alt::ICore* core, uint64_t& size)
+{
+    auto connectionInfoArray = core->GetConnectionInfos();
+    size = connectionInfoArray.size();
+    auto out = new alt::IConnectionInfo*[size];
+    for (uint64_t i = 0; i < size; i++) {
+        out[i] = connectionInfoArray[i];
+    }
+
+    return out;
+}
 #endif
 
 #ifdef ALT_CLIENT_API

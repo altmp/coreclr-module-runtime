@@ -7,7 +7,6 @@
 #endif
 
 #include "cpp-sdk/SDK.h"
-#include "cpp-sdk/types/IConnectionInfo.h"
 #include "utils/export.h"
 
 #ifdef __clang__

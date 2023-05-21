@@ -7,7 +7,7 @@
 #endif
 
 #include "../../cpp-sdk/ICore.h"
-#include <../../cpp-sdk/types/IConnectionInfo.h>
+#include <../../cpp-sdk/script-objects/IConnectionInfo.h>
 #include <../../cpp-sdk/events/CMetaDataChangeEvent.h>
 #include <../../cpp-sdk/events/CSyncedMetaDataChangeEvent.h>
 #include <../../cpp-sdk/events/CVehicleDestroyEvent.h>
