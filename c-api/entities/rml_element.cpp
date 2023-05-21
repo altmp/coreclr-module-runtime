@@ -7,6 +7,10 @@ alt::IBaseObject* RmlElement_GetBaseObject(alt::IRmlElement *rmlElement) {
     return dynamic_cast<alt::IBaseObject*>(rmlElement);
 }
 
+uint32_t RmlElement_GetID(alt::IRmlElement* rmlElement)
+{
+    return rmlElement->GetID();
+}
 
 float RmlElement_GetAbsoluteLeft(alt::IRmlElement* rmlElement) {
     return rmlElement->GetAbsoluteLeft();
@@ -81,11 +85,11 @@ uint8_t RmlElement_HasChildren(alt::IRmlElement* rmlElement) {
 }
 
 const char* RmlElement_GetRmlId(alt::IRmlElement* rmlElement, int32_t& size) {
-    return AllocateString(rmlElement->GetID(), size);
+    return AllocateString(rmlElement->GetRmlID(), size);
 }
 
-void RmlElement_SetId(alt::IRmlElement* rmlElement, const char* value) {
-    rmlElement->SetID(value);
+void RmlElement_SetRmlID(alt::IRmlElement* rmlElement, const char* value) {
+    rmlElement->SetRmlID(value);
 }
 
 const char* RmlElement_GetInnerRml(alt::IRmlElement* rmlElement, int32_t& size) {

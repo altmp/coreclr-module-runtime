@@ -3,7 +3,7 @@
 
 uint32_t RmlDocument_GetID(alt::IRmlDocument* rmlDocument)
 {
-    return rmlDocument->GetEntityID();
+    return rmlDocument->GetID();
 }
 
 #ifdef ALT_CLIENT_API

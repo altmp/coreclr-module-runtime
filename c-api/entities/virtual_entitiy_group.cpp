@@ -8,9 +8,9 @@ uint32_t VirtualEntityGroup_GetID(alt::IVirtualEntityGroup* virtualEntityGroup)
     return virtualEntityGroup->GetID();
 }
 
-uint32_t VirtualEntityGroup_GetStreamingRangeLimit(alt::IVirtualEntityGroup* virtualEntityGroup)
+uint32_t VirtualEntityGroup_GetMaxEntitiesInStream(alt::IVirtualEntityGroup* virtualEntityGroup)
 {
-    return virtualEntityGroup->GetStreamingRangeLimit();
+    return virtualEntityGroup->GetMaxEntitiesInStream();
 }
 alt::IBaseObject* VirtualEntityGroup_GetBaseObject(alt::IVirtualEntityGroup* virtualEntityGroup)
 {

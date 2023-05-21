@@ -560,13 +560,13 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
     case alt::IBaseObject::Type::RML_ELEMENT:
         {
             auto rmlElement = dynamic_cast<alt::IRmlElement*>(object);
-            OnCreateBaseObjectDelegate(rmlElement, rmlElement->GetType(), 0);
+            OnCreateBaseObjectDelegate(rmlElement, rmlElement->GetType(), rmlElement->GetID());
             break;
         }
     case alt::IBaseObject::Type::RML_DOCUMENT:
         {
             auto rmlDocument = dynamic_cast<alt::IRmlDocument*>(object);
-            OnCreateBaseObjectDelegate(rmlDocument, rmlDocument->GetType(), rmlDocument->GetEntityID());
+            OnCreateBaseObjectDelegate(rmlDocument, rmlDocument->GetType(), rmlDocument->GetID());
             break;
         }
     case alt::IBaseObject::Type::OBJECT:

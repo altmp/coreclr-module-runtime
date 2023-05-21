@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 16549740436282301303UL;
+inline uint64_t capiHash = 8564929668378317727UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -643,6 +643,7 @@ inline uint64_t capiHashes[] = {
     13630662056285368499UL,
     6553458957728450615UL,
     13041364075361654452UL,
+    15720568072626536237UL,
     5158963891260214371UL,
     17352588287218438411UL,
     8073218222026259545UL,
@@ -685,10 +686,10 @@ inline uint64_t capiHashes[] = {
     8859753723526739098UL,
     9747040310019678598UL,
     9715739411149823680UL,
-    7350120607458974702UL,
     14124113203556569364UL,
     17706736457461964530UL,
     909974105310409725UL,
+    9009195862305249761UL,
     6756114124150098233UL,
     14066701879635486595UL,
     2464553077225092123UL,
@@ -1292,7 +1293,7 @@ inline uint64_t capiHashes[] = {
     16962249384814735578UL,
     9683760387923149316UL,
     6854495250887664593UL,
-    2450774800813411012UL,
+    3706424129225943778UL,
     15809352227459172029UL,
     5853373970270474941UL,
     5926308654627541549UL,
@@ -2330,6 +2331,7 @@ inline void* capiPointers[] = {
     (void*) RmlElement_GetElementsByTagName,
     (void*) RmlElement_GetFirstChild,
     (void*) RmlElement_GetFocusedElement,
+    (void*) RmlElement_GetID,
     (void*) RmlElement_GetInnerRml,
     (void*) RmlElement_GetLastChild,
     (void*) RmlElement_GetLocalProperty,
@@ -2372,10 +2374,10 @@ inline void* capiPointers[] = {
     (void*) RmlElement_ReplaceChild,
     (void*) RmlElement_ScrollIntoView,
     (void*) RmlElement_SetAttribute,
-    (void*) RmlElement_SetId,
     (void*) RmlElement_SetInnerRml,
     (void*) RmlElement_SetOffset,
     (void*) RmlElement_SetProperty,
+    (void*) RmlElement_SetRmlID,
     (void*) RmlElement_SetScrollLeft,
     (void*) RmlElement_SetScrollTop,
     (void*) SetResourceLoadDelegates,
@@ -2979,7 +2981,7 @@ inline void* capiPointers[] = {
     (void*) VirtualEntity_SetVisible,
     (void*) VirtualEntityGroup_GetBaseObject,
     (void*) VirtualEntityGroup_GetID,
-    (void*) VirtualEntityGroup_GetStreamingRangeLimit,
+    (void*) VirtualEntityGroup_GetMaxEntitiesInStream,
     (void*) VoiceChannel_GetID,
     (void*) WebSocketClient_GetID,
     (void*) WebView_GetID,

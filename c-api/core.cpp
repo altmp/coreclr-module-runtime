@@ -357,9 +357,9 @@ alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEnt
     return virtualEntity;
 }
 
-alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t streamingDistance, uint32_t &id)
+alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore* core, uint32_t maxEntitiesInStream, uint32_t &id)
 {
-    auto virtualEntityGroup = core->CreateVirtualEntityGroup(streamingDistance);
+    auto virtualEntityGroup = core->CreateVirtualEntityGroup(maxEntitiesInStream);
     if (virtualEntityGroup != nullptr) {
         id = virtualEntityGroup->GetID();
     }
@@ -896,7 +896,7 @@ alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* reso
     if (!document) return nullptr;
 
     if (document != nullptr) {
-        id = document->GetEntityID();
+        id = document->GetID();
     }
     return document;
 }
