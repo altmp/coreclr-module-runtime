@@ -730,6 +730,12 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
                 OnCreateBaseObjectDelegate(textLabel, textLabel->GetType(), textLabel->GetID());
                 break;
             }
+        case alt::IBaseObject::Type::CONNECTION_INFO:
+            {
+                auto connectionInfo = dynamic_cast<alt::IConnectionInfo*>(object);
+                OnCreateBaseObjectDelegate(connectionInfo, connectionInfo->GetType(), connectionInfo->GetID());
+                break;
+            }
         default:
             {
                 std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) <<
@@ -822,6 +828,12 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
             {
                 const auto textLabel = dynamic_cast<alt::ITextLabel*>(object);
                 OnRemoveBaseObjectDelegate(textLabel, textLabel->GetType());
+                break;
+            }
+        case alt::IBaseObject::Type::CONNECTION_INFO:
+            {
+                const auto connectionInfo = dynamic_cast<alt::IConnectionInfo*>(object);
+                OnRemoveBaseObjectDelegate(connectionInfo, connectionInfo->GetType());
                 break;
             }
         default:
