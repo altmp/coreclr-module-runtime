@@ -522,7 +522,7 @@ void Core_TriggerClientEventUnreliableForAll(alt::ICore* core, const char* ev, a
     core->TriggerClientEventUnreliableForAll(ev, mValues);
 }
 
-alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint16_t &id) {
+alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -538,7 +538,7 @@ alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t p
     return vehicle;
 }
 
-alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint16_t &id)
+alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t &id)
 {
     alt::Position position;
     position.x = pos.x;
@@ -1484,7 +1484,7 @@ uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos) {
     return core->IsPointOnScreen({ pos.x, pos.y, pos.z });
 }
 
-alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t pos, vector3_t rot, uint8_t noOffset, uint8_t dynamic, alt::IResource* resource, uint16_t &id) {
+alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t pos, vector3_t rot, uint8_t noOffset, uint8_t dynamic, alt::IResource* resource, uint32_t &id) {
     auto object = core->CreateObject(modelHash, { pos.x, pos.y, pos.z }, { rot.x, rot.y, rot.z }, noOffset, dynamic, resource);
     if (object != nullptr) {
         id = object->GetID();
