@@ -4,6 +4,8 @@
 
 #include "object.h"
 
+#ifdef ALT_CLIENT_API
+
 uint16_t Object_GetID(alt::IObject* object) {
     return object->GetID();
 }
@@ -18,6 +20,10 @@ uint8_t Object_GetAlpha(alt::IObject* object) {
 
 void Object_SetAlpha(alt::IObject* object, uint8_t alpha) {
     object->SetAlpha(alpha);
+}
+
+void Object_SetModel(alt::IObject* object, uint32_t model) {
+    object->SetModel(model);
 }
 
 void Object_ResetAlpha(alt::IObject* object) {
@@ -106,8 +112,6 @@ uint8_t Object_IsVisible(alt::IObject* object)
 {
     return object->IsVisible();
 }
-
-#ifdef ALT_CLIENT_API
 
 uint8_t Object_IsRemote(alt::IObject* object) {
     return object->IsRemote();

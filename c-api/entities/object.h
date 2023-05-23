@@ -21,43 +21,45 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED uint16_t Object_GetID(alt::IObject* object);
-EXPORT_SHARED alt::IEntity* Object_GetEntity(alt::IObject* object);
+EXPORT_CLIENT uint16_t Object_GetID(alt::IObject* object);
+EXPORT_CLIENT alt::IEntity* Object_GetEntity(alt::IObject* object);
+EXPORT_CLIENT void Object_ResetAlpha(alt::IObject* object);
 
-EXPORT_SHARED uint8_t Object_GetAlpha(alt::IObject* object);
-EXPORT_SHARED void Object_SetAlpha(alt::IObject* object, uint8_t alpha);
-EXPORT_SHARED void Object_ResetAlpha(alt::IObject* object);
+EXPORT_CLIENT uint8_t Object_GetAlpha(alt::IObject* object);
+EXPORT_CLIENT void Object_SetAlpha(alt::IObject* object, uint8_t alpha);
 
-EXPORT_SHARED uint8_t Object_IsDynamic(alt::IObject* object);
+EXPORT_CLIENT void Object_SetModel(alt::IObject* object, uint32_t model);
 
-EXPORT_SHARED uint16_t Object_GetLodDistance(alt::IObject* object);
-EXPORT_SHARED void Object_SetLodDistance(alt::IObject* object, uint16_t distance);
+EXPORT_CLIENT uint8_t Object_IsDynamic(alt::IObject* object);
 
-EXPORT_SHARED uint8_t Object_HasGravity(alt::IObject* object);
-EXPORT_SHARED void Object_ToggleGravity(alt::IObject* object, uint8_t toggle);
+EXPORT_CLIENT uint16_t Object_GetLodDistance(alt::IObject* object);
+EXPORT_CLIENT void Object_SetLodDistance(alt::IObject* object, uint16_t distance);
 
-EXPORT_SHARED void Object_AttachToEntity(alt::IObject* object, alt::IEntity* entity, int16_t bone, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot);
-EXPORT_SHARED void Object_AttachToEntity_ScriptId(alt::IObject* object, uint32_t scriptId, int16_t bone, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot);
-EXPORT_SHARED void Object_Detach(alt::IObject* object, uint8_t dynamic);
+EXPORT_CLIENT uint8_t Object_HasGravity(alt::IObject* object);
+EXPORT_CLIENT void Object_ToggleGravity(alt::IObject* object, uint8_t toggle);
 
-EXPORT_SHARED uint8_t Object_IsCollisionEnabled(alt::IObject* object);
-EXPORT_SHARED void Object_ToggleCollision(alt::IObject* object, uint8_t toggle, uint8_t keepPhysics);
+EXPORT_CLIENT void Object_AttachToEntity(alt::IObject* object, alt::IEntity* entity, int16_t bone, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot);
+EXPORT_CLIENT void Object_AttachToEntity_ScriptId(alt::IObject* object, uint32_t scriptId, int16_t bone, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot);
+EXPORT_CLIENT void Object_Detach(alt::IObject* object, uint8_t dynamic);
 
-EXPORT_SHARED void Object_PlaceOnGroundProperly(alt::IObject* object);
+EXPORT_CLIENT uint8_t Object_IsCollisionEnabled(alt::IObject* object);
+EXPORT_CLIENT void Object_ToggleCollision(alt::IObject* object, uint8_t toggle, uint8_t keepPhysics);
 
-EXPORT_SHARED void Object_SetPositionFrozen(alt::IObject* object, uint8_t toggle);
+EXPORT_CLIENT void Object_PlaceOnGroundProperly(alt::IObject* object);
 
-EXPORT_SHARED void Object_ActivatePhysics(alt::IObject* object);
+EXPORT_CLIENT void Object_SetPositionFrozen(alt::IObject* object, uint8_t toggle);
 
-EXPORT_SHARED uint8_t Object_GetTextureVariation(alt::IObject* object);
-EXPORT_SHARED void Object_SetTextureVariation(alt::IObject* object, uint8_t variation);
+EXPORT_CLIENT void Object_ActivatePhysics(alt::IObject* object);
 
-EXPORT_SHARED uint8_t Object_IsWorldObject(alt::IObject* object);
+EXPORT_CLIENT uint8_t Object_GetTextureVariation(alt::IObject* object);
+EXPORT_CLIENT void Object_SetTextureVariation(alt::IObject* object, uint8_t variation);
+
+EXPORT_CLIENT uint8_t Object_IsWorldObject(alt::IObject* object);
 
 EXPORT_CLIENT uint8_t Object_IsRemote(alt::IObject* object);
 EXPORT_CLIENT uint8_t Object_IsStreamedIn(alt::IObject* object);
 EXPORT_CLIENT uint8_t Object_UsesStreaming(alt::IObject* object);
-EXPORT_SHARED uint32_t Object_GetStreamingDistance(alt::IObject* object);
+EXPORT_CLIENT uint32_t Object_GetStreamingDistance(alt::IObject* object);
 
-EXPORT_SHARED void Object_SetVisible(alt::IObject* object, uint8_t toggle);
-EXPORT_SHARED uint8_t Object_IsVisible(alt::IObject* object);
+EXPORT_CLIENT void Object_SetVisible(alt::IObject* object, uint8_t toggle);
+EXPORT_CLIENT uint8_t Object_IsVisible(alt::IObject* object);
