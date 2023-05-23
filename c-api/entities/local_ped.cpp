@@ -1,5 +1,7 @@
 #include "local_ped.h"
 
+#ifdef ALT_CLIENT_API
+
 alt::IWorldObject* LocalPed_GetWorldObject(alt::ILocalPed* localPed)
 {
     return dynamic_cast<alt::IWorldObject*>(localPed);
@@ -13,6 +15,11 @@ uint32_t LocalPed_GetID(alt::ILocalPed* localPed)
 uint32_t LocalPed_GetModel(alt::ILocalPed* localPed)
 {
     return localPed->GetModel();
+}
+
+void LocalPed_SetModel(alt::ILocalPed* localPed, uint32_t model)
+{
+    localPed->SetModel(model);
 }
 
 void LocalPed_GetRotation(alt::ILocalPed* localPed, rotation_t& rot)
@@ -47,7 +54,6 @@ uint8_t LocalPed_IsVisible(alt::ILocalPed* localPed)
     return localPed->IsVisible();
 }
 
-#ifdef ALT_CLIENT_API
 uint32_t LocalPed_GetScriptID(alt::ILocalPed* localPed)
 {
     return localPed->GetScriptID();

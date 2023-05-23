@@ -14,18 +14,18 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_CLIENT alt::IWorldObject* LocalPed_GetWorldObject(alt::ILocalPed* localPed);
 
-EXPORT_SHARED alt::IWorldObject* LocalPed_GetWorldObject(alt::ILocalPed* localPed);
+EXPORT_CLIENT uint32_t LocalPed_GetID(alt::ILocalPed* localPed);
+EXPORT_CLIENT uint32_t LocalPed_GetModel(alt::ILocalPed* localPed);
+EXPORT_CLIENT void LocalPed_SetModel(alt::ILocalPed* localPed, uint32_t model);
+EXPORT_CLIENT void LocalPed_GetRotation(alt::ILocalPed* localPed, rotation_t& rot);
+EXPORT_CLIENT void LocalPed_SetRotation(alt::ILocalPed* localPed, rotation_t rot);
 
-EXPORT_SHARED uint32_t LocalPed_GetID(alt::ILocalPed* localPed);
-EXPORT_SHARED uint32_t LocalPed_GetModel(alt::ILocalPed* localPed);
-EXPORT_SHARED void LocalPed_GetRotation(alt::ILocalPed* localPed, rotation_t& rot);
-EXPORT_SHARED void LocalPed_SetRotation(alt::ILocalPed* localPed, rotation_t rot);
+EXPORT_CLIENT uint32_t LocalPed_GetStreamingDistance(alt::ILocalPed* localPed);
 
-EXPORT_SHARED uint32_t LocalPed_GetStreamingDistance(alt::ILocalPed* localPed);
-
-EXPORT_SHARED void LocalPed_SetVisible(alt::ILocalPed* localPed, uint8_t toggle);
-EXPORT_SHARED uint8_t LocalPed_IsVisible(alt::ILocalPed* localPed);
+EXPORT_CLIENT void LocalPed_SetVisible(alt::ILocalPed* localPed, uint8_t toggle);
+EXPORT_CLIENT uint8_t LocalPed_IsVisible(alt::ILocalPed* localPed);
 
 EXPORT_CLIENT uint32_t LocalPed_GetScriptID(alt::ILocalPed* localPed);
 

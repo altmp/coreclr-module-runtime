@@ -14,11 +14,11 @@
 #pragma clang diagnostic pop
 #endif
 
-
 EXPORT_CLIENT alt::IWorldObject* LocalVehicle_GetWorldObject(alt::ILocalVehicle* localVehicle);
 
 EXPORT_CLIENT uint32_t LocalVehicle_GetID(alt::ILocalVehicle* localVehicle);
 EXPORT_CLIENT uint32_t LocalVehicle_GetModel(alt::ILocalVehicle* localVehicle);
+EXPORT_CLIENT void LocalVehicle_SetModel(alt::ILocalVehicle* localVehicle, uint32_t model);
 EXPORT_CLIENT void LocalVehicle_GetRotation(alt::ILocalVehicle* localVehicle, rotation_t& rot);
 EXPORT_CLIENT void LocalVehicle_SetRotation(alt::ILocalVehicle* localVehicle, rotation_t rot);
 

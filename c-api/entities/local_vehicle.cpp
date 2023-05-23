@@ -17,6 +17,11 @@ uint32_t LocalVehicle_GetModel(alt::ILocalVehicle* localVehicle)
     return localVehicle->GetModel();
 }
 
+void LocalVehicle_SetModel(alt::ILocalVehicle* localVehicle, uint32_t model)
+{
+    localVehicle->SetModel(model);
+}
+
 void LocalVehicle_GetRotation(alt::ILocalVehicle* localVehicle, rotation_t& rot)
 {
     auto localVehicleRotation = localVehicle->GetRotation();

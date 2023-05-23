@@ -53,9 +53,9 @@ void* Util_GetWorldObjectPointer(alt::IWorldObject* worldObject)
             return dynamic_cast<alt::IMarker*>(worldObject);
         case alt::IBaseObject::Type::TEXT_LABEL:
             return dynamic_cast<alt::ITextLabel*>(worldObject);
+#ifdef ALT_CLIENT_API
         case alt::IBaseObject::Type::LOCAL_PED:
             return dynamic_cast<alt::ILocalPed*>(worldObject);
-#ifdef ALT_CLIENT_API
         case alt::IBaseObject::Type::LOCAL_VEHICLE:
             return dynamic_cast<alt::ILocalVehicle*>(worldObject);
 #endif
@@ -111,9 +111,9 @@ void* Util_GetBaseObjectPointer(alt::IBaseObject* baseObject)
             return dynamic_cast<alt::IMarker*>(baseObject);
         case alt::IBaseObject::Type::TEXT_LABEL:
             return dynamic_cast<alt::ITextLabel*>(baseObject);
+#ifdef ALT_CLIENT_API
         case alt::IBaseObject::Type::LOCAL_PED:
             return dynamic_cast<alt::ILocalPed*>(baseObject);
-#ifdef ALT_CLIENT_API
         case alt::IBaseObject::Type::LOCAL_VEHICLE:
             return dynamic_cast<alt::ILocalVehicle*>(baseObject);
 #endif
