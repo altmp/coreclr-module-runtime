@@ -47,3 +47,9 @@ EXPORT_CLIENT uint32_t Marker_GetRemoteID(alt::IMarker* marker);
 
 EXPORT_SHARED uint8_t Marker_IsFaceCamera(alt::IMarker* marker);
 EXPORT_SHARED void Marker_SetFaceCamera(alt::IMarker* marker, uint8_t faceCamera);
+
+EXPORT_SHARED uint8_t Marker_IsRotating(alt::IMarker* marker);
+EXPORT_SHARED void Marker_SetRotating(alt::IMarker* marker, uint8_t rotating);
+
+EXPORT_SHARED uint8_t Marker_IsBobUpDown(alt::IMarker* marker);
+EXPORT_SHARED void Marker_SetBobUpDown(alt::IMarker* marker, uint8_t bobUpDown);

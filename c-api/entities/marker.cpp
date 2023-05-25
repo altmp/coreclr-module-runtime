@@ -125,6 +125,26 @@ void Marker_SetFaceCamera(alt::IMarker* marker, uint8_t faceCamera)
     marker->SetFaceCamera(faceCamera);
 }
 
+uint8_t Marker_IsRotating(alt::IMarker* marker)
+{
+    return marker->IsRotating();
+}
+
+void Marker_SetRotating(alt::IMarker* marker, uint8_t rotating)
+{
+    marker->SetRotating(rotating);
+}
+
+uint8_t Marker_IsBobUpDown(alt::IMarker* marker)
+{
+    return marker->IsBobUpDown();
+}
+
+void Marker_SetBobUpDown(alt::IMarker* marker, uint8_t bobUpDown)
+{
+    marker->SetBobUpDown(bobUpDown);
+}
+
 #ifdef ALT_CLIENT_API
 uint32_t Marker_GetRemoteID(alt::IMarker* marker)
 {

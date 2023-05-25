@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 15796151505885304725UL;
+inline uint64_t capiHash = 6779350597201322032UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1176,13 +1176,17 @@ inline uint64_t capiHashes[] = {
     5405050753430155401UL,
     15442851779455932452UL,
     14796952389729553182UL,
+    12125711448637417959UL,
     3331151536932433603UL,
     15394588070881330329UL,
+    15528528424596295369UL,
     7638321216817832459UL,
+    4738788525555220350UL,
     16990441478007898825UL,
     5238646959486818104UL,
     9437043437809276362UL,
     17542761621503411994UL,
+    14949621861451410192UL,
     12229547285560302608UL,
     7129171957282455779UL,
     7158984024495559554UL,
@@ -2867,13 +2871,17 @@ inline void* capiPointers[] = {
     (void*) Marker_GetStreamingDistance,
     (void*) Marker_GetTarget,
     (void*) Marker_GetWorldObject,
+    (void*) Marker_IsBobUpDown,
     (void*) Marker_IsFaceCamera,
     (void*) Marker_IsGlobal,
+    (void*) Marker_IsRotating,
     (void*) Marker_IsVisible,
+    (void*) Marker_SetBobUpDown,
     (void*) Marker_SetColor,
     (void*) Marker_SetDirection,
     (void*) Marker_SetFaceCamera,
     (void*) Marker_SetMarkerType,
+    (void*) Marker_SetRotating,
     (void*) Marker_SetRotation,
     (void*) Marker_SetScale,
     (void*) Marker_SetVisible,
