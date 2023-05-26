@@ -12,6 +12,7 @@
 #include "mvalue.h"
 #include "resource.h"
 #include "weaponData.h"
+#include "data/metric.h"
 #include "handling_data.h"
 #include "entities/audio.h"
 #include "entities/baseObject.h"

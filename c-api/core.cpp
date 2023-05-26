@@ -808,6 +808,24 @@ alt::IConnectionInfo** Core_GetConnectionInfos(alt::ICore* core, uint64_t& size)
 
     return out;
 }
+
+alt::Metric* Core_RegisterMetric(alt::ICore* core, const char* metricName, uint8_t type, const char* keys[],
+    const char* values[], uint64_t size)
+{
+
+    std::unordered_map<std::string, std::string> data = {};
+
+    for (uint64_t i = 0; i < size; i++) {
+        data[keys[i]] = values[i];
+    }
+
+    return core->RegisterMetric(metricName, static_cast<alt::Metric::Type>(type), data);
+}
+
+void Core_UnrgisterMetric(alt::ICore* core, alt::Metric* metric)
+{
+    core->UnregisterMetric(metric);
+}
 #endif
 
 #ifdef ALT_CLIENT_API

@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 6779350597201322032UL;
+inline uint64_t capiHash = 12381564353268550512UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1363,6 +1363,7 @@ inline uint64_t capiHashes[] = {
     14723504540957489106UL,
     4351657857321681174UL,
     11016797678327133571UL,
+    5640834261493040151UL,
     14370739159812248240UL,
     6443050816994465854UL,
     15257521334482717721UL,
@@ -1378,6 +1379,7 @@ inline uint64_t capiHashes[] = {
     9578627964183564598UL,
     14557546483922608997UL,
     4092140335578989631UL,
+    12132329207255716449UL,
     8214096007757560094UL,
     4813711775676193020UL,
     10985243845337635807UL,
@@ -1393,6 +1395,11 @@ inline uint64_t capiHashes[] = {
     12798418058428333585UL,
     8026011842118229214UL,
     18440396865533386791UL,
+    2348810001298180138UL,
+    13016512038826983106UL,
+    8652629169459184520UL,
+    16033500183040421617UL,
+    13198892627580896636UL,
     8450915683705067802UL,
     4893173731336848168UL,
     10303430124488928578UL,
@@ -3058,6 +3065,7 @@ inline void* capiPointers[] = {
     (void*) Core_GetServerConfig,
     (void*) Core_GetVehicleModelInfo,
     (void*) Core_HashPassword,
+    (void*) Core_RegisterMetric,
     (void*) Core_RestartResource,
     (void*) Core_SetPassword,
     (void*) Core_SetSyncedMetaData,
@@ -3073,6 +3081,7 @@ inline void* capiPointers[] = {
     (void*) Core_TriggerClientEventUnreliableForAll,
     (void*) Core_TriggerClientEventUnreliableForSome,
     (void*) Core_TriggerServerEvent,
+    (void*) Core_UnrgisterMetric,
     (void*) Entity_AttachToEntity,
     (void*) Entity_AttachToEntity_BoneString,
     (void*) Entity_DeleteStreamSyncedMetaData,
@@ -3088,6 +3097,11 @@ inline void* capiPointers[] = {
     (void*) Entity_SetStreamSyncedMetaData,
     (void*) Entity_SetVisible,
     (void*) Event_WeaponDamageEvent_SetDamageValue,
+    (void*) Metric_Begin,
+    (void*) Metric_End,
+    (void*) Metric_GetName,
+    (void*) Metric_GetValue,
+    (void*) Metric_SetValue,
     (void*) NetworkObject_ActivatePhysics,
     (void*) NetworkObject_PlaceOnGroundProperly,
     (void*) NetworkObject_SetAlpha,

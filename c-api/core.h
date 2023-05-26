@@ -326,3 +326,6 @@ EXPORT_CLIENT alt::ILocalPed* Core_CreateLocalPed(alt::ICore* core, uint32_t mod
 EXPORT_CLIENT uint8_t Core_IsFullScreen(alt::ICore* core);
 
 EXPORT_SERVER alt::INetworkObject* Core_CreateNetworkObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation, uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t& id);
+
+EXPORT_SERVER alt::Metric* Core_RegisterMetric(alt::ICore* core, const char* metricName, uint8_t type, const char* keys[], const char* values[], uint64_t size);
+EXPORT_SERVER void Core_UnrgisterMetric(alt::ICore* core, alt::Metric* metric);
