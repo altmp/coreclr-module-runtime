@@ -4,11 +4,6 @@
 #include "./CSharpScriptRuntime.h"
 #include "eventDelegates.h"
 #include "../../../c-api/data/invoker.h"
-#include "cpp-sdk/events/CLocalMetaDataChangeEvent.h"
-#include "cpp-sdk/events/CWindowFocusChangeEvent.h"
-#include "cpp-sdk/events/CWindowResolutionChangeEvent.h"
-#include "cpp-sdk/events/CRmlEvent.h"
-#include "cpp-sdk/events/CWebSocketClientEvent.h"
 
 class CSharpResourceImpl : public alt::IResource::Impl
 {

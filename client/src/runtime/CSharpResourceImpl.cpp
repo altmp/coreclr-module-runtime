@@ -10,9 +10,6 @@
 #include <iomanip>
 #include "natives.h"
 #include "exceptions/LoadException.h"
-#include "cpp-sdk/events/CPlayerChangeAnimationEvent.h"
-#include "cpp-sdk/events/CPlayerWeaponShootEvent.h"
-#include "cpp-sdk/events/CWeaponDamageEvent.h"
 #include "../../c-api/utils/entity.h"
 
 using namespace std;

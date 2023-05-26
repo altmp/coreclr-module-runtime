@@ -8,16 +8,6 @@
 
 #include "../../cpp-sdk/ICore.h"
 #include <../../cpp-sdk/script-objects/IConnectionInfo.h>
-#include <../../cpp-sdk/events/CMetaDataChangeEvent.h>
-#include <../../cpp-sdk/events/CSyncedMetaDataChangeEvent.h>
-#include <../../cpp-sdk/events/CVehicleDestroyEvent.h>
-#include <../../cpp-sdk/events/CFireEvent.h>
-#include <../../cpp-sdk/events/CStartProjectileEvent.h>
-#include <../../cpp-sdk/events/CPlayerWeaponChangeEvent.h>
-#include <../../cpp-sdk/events/CNetOwnerChangeEvent.h>
-#include <../../cpp-sdk/events/CVehicleAttachEvent.h>
-#include <../../cpp-sdk/events/CVehicleDetachEvent.h>
-#include <../../cpp-sdk/events/CPlayerEnteringVehicleEvent.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
