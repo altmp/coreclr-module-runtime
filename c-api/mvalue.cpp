@@ -1,18 +1,22 @@
 #include "mvalue.h"
 #include "utils/strings.h"
+#include <list>
 
-static std::set<alt::MValueConst> mvalues;
+static std::list<alt::MValueConst> mvalues;
 
 alt::MValueConst* AllocMValue(alt::MValueConst&& val) {
-    const auto key = mvalues.emplace(std::move(val)).first;
-    return const_cast<alt::MValueConst*>(&*key);
+    mvalues.push_back(std::move(val));
+    return &mvalues.back();
 }
 
 void FreeMValue(alt::MValueConst* val) {
-    for (auto it = mvalues.begin(); it != mvalues.end(); ++it) {
-        if (val != &*it) continue;
-        mvalues.erase(it);
-        return;
+    for (auto it = mvalues.begin(); it != mvalues.end(); ++it)
+    {
+        if (&*it == val)
+        {
+            mvalues.erase(it);
+            break;
+        }
     }
 }
 
