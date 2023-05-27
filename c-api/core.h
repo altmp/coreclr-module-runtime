@@ -329,3 +329,5 @@ EXPORT_SERVER alt::INetworkObject* Core_CreateNetworkObject(alt::ICore* core, ui
 
 EXPORT_SERVER alt::Metric* Core_RegisterMetric(alt::ICore* core, const char* metricName, uint8_t type, const char* keys[], const char* values[], uint64_t size);
 EXPORT_SERVER void Core_UnrgisterMetric(alt::ICore* core, alt::Metric* metric);
+
+EXPORT_CLIENT alt::IBlip* Core_GetBlipByGameID(alt::ICore* core, uint32_t gameId);

@@ -1669,5 +1669,10 @@ uint8_t Core_IsFullScreen(alt::ICore* core)
 {
     return core->IsFullScreen();
 }
+
+alt::IBlip* Core_GetBlipByGameID(alt::ICore* core, uint32_t gameId)
+{
+    return core->GetBlipByGameID(gameId);
+}
 #endif
 

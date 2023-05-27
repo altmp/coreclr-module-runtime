@@ -318,12 +318,21 @@ void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
 #endif
 
 #ifdef ALT_CLIENT_API
-uint32_t Blip_GetScriptID(alt::IBlip* blip) {
-    return blip->GetScriptID();
+uint32_t Blip_GetGameID(alt::IBlip* blip) {
+    return blip->GetGameID();
 }
 
 uint8_t Blip_IsRemote(alt::IBlip* blip) {
     return blip->IsRemote();
 }
 
+uint8_t Blip_IsVisible(alt::IBlip* blip)
+{
+    return blip->IsVisible();
+}
+
+void Blip_SetVisible(alt::IBlip* blip, uint8_t toggle)
+{
+    blip->SetVisible(toggle);
+}
 #endif

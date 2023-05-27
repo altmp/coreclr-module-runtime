@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 12381564353268550512UL;
+inline uint64_t capiHash = 7443662804426366964UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -42,8 +42,10 @@ inline uint64_t capiHashes[] = {
     8867334748367703826UL,
     10116851781453819636UL,
     4769953165963999553UL,
-    16517785578451896264UL,
+    8435480280567473939UL,
     16853945182069856363UL,
+    1369623533546304585UL,
+    1722086041206273362UL,
     11169437175796680635UL,
     15861482869617048160UL,
     332214446285856938UL,
@@ -75,6 +77,7 @@ inline uint64_t capiHashes[] = {
     2905154853369701790UL,
     18419578908798121866UL,
     4570431726496627488UL,
+    18078473099666119995UL,
     13815274607564352429UL,
     10032718746164771334UL,
     9388016697579829930UL,
@@ -1744,8 +1747,10 @@ inline void* capiPointers[] = {
     (void*) AudioFilter_GetBaseObject,
     (void*) AudioFilter_GetHash,
     (void*) AudioFilter_RemoveEffect,
-    (void*) Blip_GetScriptID,
+    (void*) Blip_GetGameID,
     (void*) Blip_IsRemote,
+    (void*) Blip_IsVisible,
+    (void*) Blip_SetVisible,
     (void*) Checkpoint_IsStreamedIn,
     (void*) Core_AddGXTText,
     (void*) Core_AreGameControlsEnabled,
@@ -1777,6 +1782,7 @@ inline void* capiPointers[] = {
     (void*) Core_DoesConfigFlagExist,
     (void*) Core_GetAudioCount,
     (void*) Core_GetAudios,
+    (void*) Core_GetBlipByGameID,
     (void*) Core_GetCamPos,
     (void*) Core_GetClientPath,
     (void*) Core_GetConfigFlag,

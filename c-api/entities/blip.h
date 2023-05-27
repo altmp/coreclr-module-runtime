@@ -88,5 +88,7 @@ EXPORT_SHARED void Blip_Fade(alt::IBlip* blip, uint32_t opacity, uint32_t durati
 EXPORT_SERVER uint8_t Blip_IsAttached(alt::IBlip* blip);
 EXPORT_SERVER void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type);
 
-EXPORT_CLIENT uint32_t Blip_GetScriptID(alt::IBlip* blip);
+EXPORT_CLIENT uint32_t Blip_GetGameID(alt::IBlip* blip);
 EXPORT_CLIENT uint8_t Blip_IsRemote(alt::IBlip* blip);
+EXPORT_CLIENT uint8_t Blip_IsVisible(alt::IBlip* blip);
+EXPORT_CLIENT void Blip_SetVisible(alt::IBlip* blip, uint8_t toggle);
