@@ -61,7 +61,6 @@ alt::MValueConst* Core_CreateMValueList(alt::ICore* core, alt::MValueConst* val[
     auto mValueConst = core->CreateMValueList(size);
     auto mValue = mValueConst;
     for (uint64_t i = 0; i < size; i++) {
-        std::cout << "Core_CreateMValueList #" << i << " #" << std::endl;
         auto mValueElement = val[i];
         if (mValueElement == nullptr || mValueElement->get() == nullptr) {
             mValue->Set(i, core->CreateMValueNil());
@@ -76,7 +75,6 @@ alt::MValueConst* Core_CreateMValueDict(alt::ICore* core, const char* keys[], al
     auto mValueConst = core->CreateMValueDict();
     auto mValue = mValueConst;
     for (uint64_t i = 0; i < size; i++) {
-        std::cout << "Core_CreateMValueDict #" << keys[i] << " #" << std::endl;
         auto mValueElement = val[i];
         if (mValueElement == nullptr || mValueElement->get() == nullptr) {
             mValue->Set(keys[i], core->CreateMValueNil());
