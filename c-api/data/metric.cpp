@@ -1,6 +1,6 @@
 ﻿#include "metric.h"
 
-#include "c-api/utils/strings.h"
+#include "../utils/strings.h"
 
 #ifdef ALT_SERVER_API
 void Metric_SetValue(alt::Metric* metric, uint64_t value)
