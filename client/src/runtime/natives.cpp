@@ -14639,7 +14639,7 @@ vector3_t Native_getEntityRotationVelocity(bool& success, uint32_t _entity) {
 	return { resultVec.x, resultVec.y, resultVec.z };
 }
 
-const char* Native_getEntityScript(bool& success, uint32_t _entity, int32_t& _script) {
+const char* Native_getEntityScript(bool& success, uint32_t _entity, uint32_t& _script) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA6E9C38DB51D7748);
 	ctx->Reset();
 	ctx->Push(_entity);
@@ -14804,7 +14804,7 @@ int32_t Native_getEntityPopulationType(bool& success, uint32_t _entity) {
 	return ctx->ResultInt();
 }
 
-uint8_t Native_isAnEntity(bool& success, int32_t _handle) {
+uint8_t Native_isAnEntity(bool& success, uint32_t _handle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x731EC8A916BD11A1);
 	ctx->Reset();
 	ctx->Push(_handle);
@@ -16708,7 +16708,7 @@ uint8_t Native_isShockingEventInSphere(bool& success, int32_t _eventType, float 
 	return ctx->ResultBool();
 }
 
-uint8_t Native_removeShockingEvent(bool& success, int32_t _event) {
+uint8_t Native_removeShockingEvent(bool& success, uint32_t _event) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2CDA538C44C6CCE5);
 	ctx->Reset();
 	ctx->Push(_event);
@@ -24379,7 +24379,7 @@ void Native_setIsExteriorOnly(bool& success, uint32_t _entity, uint8_t _toggle) 
 	success = true;
 }
 
-int32_t Native_createItemset(bool& success, uint8_t _p0) {
+uint32_t Native_createItemset(bool& success, uint8_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x35AD299F50D91B24);
 	ctx->Reset();
 	ctx->Push((int32_t) _p0);
@@ -24388,10 +24388,10 @@ int32_t Native_createItemset(bool& success, uint8_t _p0) {
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-void Native_destroyItemset(bool& success, int32_t _itemset) {
+void Native_destroyItemset(bool& success, uint32_t _itemset) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xDE18220B1C183EDA);
 	ctx->Reset();
 	ctx->Push(_itemset);
@@ -24402,7 +24402,7 @@ void Native_destroyItemset(bool& success, int32_t _itemset) {
 	success = true;
 }
 
-uint8_t Native_isItemsetValid(bool& success, int32_t _itemset) {
+uint8_t Native_isItemsetValid(bool& success, uint32_t _itemset) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB1B1EA596344DFAB);
 	ctx->Reset();
 	ctx->Push(_itemset);
@@ -24414,7 +24414,7 @@ uint8_t Native_isItemsetValid(bool& success, int32_t _itemset) {
 	return ctx->ResultBool();
 }
 
-uint8_t Native_addToItemset(bool& success, int32_t _item, int32_t _itemset) {
+uint8_t Native_addToItemset(bool& success, uint32_t _item, uint32_t _itemset) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE3945201F14637DD);
 	ctx->Reset();
 	ctx->Push(_item);
@@ -24427,7 +24427,7 @@ uint8_t Native_addToItemset(bool& success, int32_t _item, int32_t _itemset) {
 	return ctx->ResultBool();
 }
 
-void Native_removeFromItemset(bool& success, int32_t _item, int32_t _itemset) {
+void Native_removeFromItemset(bool& success, uint32_t _item, uint32_t _itemset) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x25E68244B0177686);
 	ctx->Reset();
 	ctx->Push(_item);
@@ -24439,7 +24439,7 @@ void Native_removeFromItemset(bool& success, int32_t _item, int32_t _itemset) {
 	success = true;
 }
 
-int32_t Native_getItemsetSize(bool& success, int32_t _itemset) {
+int32_t Native_getItemsetSize(bool& success, uint32_t _itemset) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD9127E83ABF7C631);
 	ctx->Reset();
 	ctx->Push(_itemset);
@@ -24451,7 +24451,7 @@ int32_t Native_getItemsetSize(bool& success, int32_t _itemset) {
 	return ctx->ResultInt();
 }
 
-int32_t Native_getIndexedItemInItemset(bool& success, int32_t _index, int32_t _itemset) {
+uint32_t Native_getIndexedItemInItemset(bool& success, int32_t _index, uint32_t _itemset) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7A197E2521EE2BAB);
 	ctx->Reset();
 	ctx->Push(_index);
@@ -24461,10 +24461,10 @@ int32_t Native_getIndexedItemInItemset(bool& success, int32_t _index, int32_t _i
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-uint8_t Native_isInItemset(bool& success, int32_t _item, int32_t _itemset) {
+uint8_t Native_isInItemset(bool& success, uint32_t _item, uint32_t _itemset) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2D0FC594D1E9C107);
 	ctx->Reset();
 	ctx->Push(_item);
@@ -24477,7 +24477,7 @@ uint8_t Native_isInItemset(bool& success, int32_t _item, int32_t _itemset) {
 	return ctx->ResultBool();
 }
 
-void Native_cleanItemset(bool& success, int32_t _itemset) {
+void Native_cleanItemset(bool& success, uint32_t _itemset) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x41BC0D722FC04221);
 	ctx->Reset();
 	ctx->Push(_itemset);
@@ -68800,7 +68800,7 @@ void Native_taskPedSlideToCoordHdgRate(bool& success, uint32_t _ped, float _x, f
 	success = true;
 }
 
-int32_t Native_addCoverPoint(bool& success, float _x, float _y, float _z, float _direction, int32_t _usage, int32_t _height, int32_t _arc, uint8_t _isPriority) {
+uint32_t Native_addCoverPoint(bool& success, float _x, float _y, float _z, float _direction, int32_t _usage, int32_t _height, int32_t _arc, uint8_t _isPriority) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD5C12A75C7B9497F);
 	ctx->Reset();
 	ctx->Push(_x);
@@ -68816,10 +68816,10 @@ int32_t Native_addCoverPoint(bool& success, float _x, float _y, float _z, float 
 		return 0;
 	}
 	success = true;
-	return ctx->ResultInt();
+	return ctx->ResultUint();
 }
 
-void Native_removeCoverPoint(bool& success, int32_t _coverpoint) {
+void Native_removeCoverPoint(bool& success, uint32_t _coverpoint) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAE287C923D891715);
 	ctx->Reset();
 	ctx->Push(_coverpoint);
@@ -68844,7 +68844,7 @@ uint8_t Native_doesScriptedCoverPointExistAtCoords(bool& success, float _x, floa
 	return ctx->ResultBool();
 }
 
-vector3_t Native_getScriptedCoverPointCoords(bool& success, int32_t _coverpoint) {
+vector3_t Native_getScriptedCoverPointCoords(bool& success, uint32_t _coverpoint) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x594A1028FC2A3E85);
 	ctx->Reset();
 	ctx->Push(_coverpoint);
@@ -68929,7 +68929,7 @@ void Native_taskSeekCoverFromPed(bool& success, uint32_t _ped, uint32_t _target,
 	success = true;
 }
 
-void Native_taskSeekCoverToCoverPoint(bool& success, uint32_t _ped, int32_t _coverpoint, float _x, float _y, float _z, int32_t _time, uint8_t _allowPeekingAndFiring) {
+void Native_taskSeekCoverToCoverPoint(bool& success, uint32_t _ped, uint32_t _coverpoint, float _x, float _y, float _z, int32_t _time, uint8_t _allowPeekingAndFiring) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD43D95C7A869447F);
 	ctx->Reset();
 	ctx->Push(_ped);
