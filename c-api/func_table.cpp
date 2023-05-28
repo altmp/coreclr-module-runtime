@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 15465564797756057804UL;
+inline uint64_t capiHash = 14122111986891398707UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -46,6 +46,7 @@ inline uint64_t capiHashes[] = {
     16853945182069856363UL,
     1369623533546304585UL,
     1722086041206273362UL,
+    10807368225937279665UL,
     11169437175796680635UL,
     15861482869617048160UL,
     332214446285856938UL,
@@ -119,6 +120,7 @@ inline uint64_t capiHashes[] = {
     14294729290243559040UL,
     5500487167100623739UL,
     8710938014357466262UL,
+    13654803678312450436UL,
     18414288505939983172UL,
     9239396081375157170UL,
     11416637200173234902UL,
@@ -187,7 +189,7 @@ inline uint64_t capiHashes[] = {
     3268039739443301173UL,
     17753040748478874447UL,
     5389506501733691988UL,
-    12438992660215991189UL,
+    11915813456855488252UL,
     14079997901958077241UL,
     18259284189737259993UL,
     13707820718504089625UL,
@@ -1576,6 +1578,7 @@ inline void* capiPointers[] = {
     (void*) Blip_IsRemote,
     (void*) Blip_IsVisible,
     (void*) Blip_SetVisible,
+    (void*) Checkpoint_GetGameID,
     (void*) Checkpoint_IsStreamedIn,
     (void*) Core_AddGXTText,
     (void*) Core_AreGameControlsEnabled,
@@ -1649,6 +1652,7 @@ inline void* capiPointers[] = {
     (void*) Core_GetVoiceInputMuted,
     (void*) Core_GetWebViewCount,
     (void*) Core_GetWebViews,
+    (void*) Core_GetWorldObjectByScriptID,
     (void*) Core_GetWorldObjects,
     (void*) Core_HasLocalMeta,
     (void*) Core_IsCamFrozen,

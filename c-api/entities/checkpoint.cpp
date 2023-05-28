@@ -82,5 +82,9 @@ uint8_t Checkpoint_IsStreamedIn(alt::ICheckpoint* checkpoint)
 {
     return checkpoint->IsStreamedIn();
 }
-#endif
 
+uint32_t Checkpoint_GetGameID(alt::ICheckpoint* checkpoint)
+{
+    return checkpoint->GetGameID();
+}
+#endif

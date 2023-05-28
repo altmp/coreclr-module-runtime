@@ -33,3 +33,5 @@ EXPORT_CLIENT uint8_t Checkpoint_IsStreamedIn(alt::ICheckpoint* checkpoint);
 
 EXPORT_SHARED void Checkpoint_SetVisible(alt::ICheckpoint* checkpoint, uint8_t toggle);
 EXPORT_SHARED uint8_t Checkpoint_IsVisible(alt::ICheckpoint* checkpoint);
+
+EXPORT_CLIENT uint32_t Checkpoint_GetGameID(alt::ICheckpoint* checkpoint);

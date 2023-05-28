@@ -331,3 +331,5 @@ EXPORT_SERVER alt::Metric* Core_RegisterMetric(alt::ICore* core, const char* met
 EXPORT_SERVER void Core_UnrgisterMetric(alt::ICore* core, alt::Metric* metric);
 
 EXPORT_CLIENT alt::IBlip* Core_GetBlipByGameID(alt::ICore* core, uint32_t gameId);
+
+EXPORT_CLIENT alt::IWorldObject* Core_GetWorldObjectByScriptID(alt::ICore* core, uint32_t scriptId);

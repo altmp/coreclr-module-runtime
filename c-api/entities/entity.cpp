@@ -122,7 +122,7 @@ void Entity_Detach(alt::IEntity* entity)
 #endif
 
 #ifdef ALT_CLIENT_API
-int32_t Entity_GetScriptID(alt::IEntity* entity) {
+uint32_t Entity_GetScriptID(alt::IEntity* entity) {
     return entity->GetScriptGuid();
 }
 #endif

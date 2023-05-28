@@ -1672,5 +1672,10 @@ alt::IBlip* Core_GetBlipByGameID(alt::ICore* core, uint32_t gameId)
 {
     return core->GetBlipByGameID(gameId);
 }
+
+alt::IWorldObject* Core_GetWorldObjectByScriptID(alt::ICore* core, uint32_t scriptId)
+{
+    return core->GetWorldObjectByScriptID(scriptId);
+}
 #endif
 
