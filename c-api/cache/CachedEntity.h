@@ -205,8 +205,8 @@ namespace cache
 
 
 #ifdef ALT_CLIENT_API
-        int32_t _scriptId;
-        int32_t GetScriptGuid() const override {
+        uint32_t _scriptId;
+        uint32_t GetScriptGuid() const override {
             return _scriptId;
         }
 #endif
