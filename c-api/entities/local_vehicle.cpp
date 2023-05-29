@@ -37,16 +37,6 @@ uint32_t LocalVehicle_GetScriptID(alt::ILocalVehicle* localVehicle)
     return localVehicle->GetScriptID();
 }
 
-uint32_t LocalVehicle_GetRemoteID(alt::ILocalVehicle* localVehicle)
-{
-    return localVehicle->GetRemoteID();
-}
-
-uint8_t LocalVehicle_IsRemote(alt::ILocalVehicle* localVehicle)
-{
-    return localVehicle->IsRemote();
-}
-
 uint8_t LocalVehicle_IsStreamedIn(alt::ILocalVehicle* localVehicle)
 {
     return localVehicle->IsStreamedIn();

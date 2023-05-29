@@ -122,7 +122,17 @@ void Entity_Detach(alt::IEntity* entity)
 #endif
 
 #ifdef ALT_CLIENT_API
-uint32_t Entity_GetScriptID(alt::IEntity* entity) {
+uint32_t Entity_GetScriptGuid(alt::IEntity* entity) {
     return entity->GetScriptGuid();
+}
+
+uint32_t Entity_GetRemoteID(alt::IEntity* entity)
+{
+    return entity->GetRemoteID();
+}
+
+uint8_t Entity_IsRemote(alt::IEntity* entity)
+{
+    return entity->IsRemote();
 }
 #endif

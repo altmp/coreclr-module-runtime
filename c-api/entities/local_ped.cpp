@@ -2,9 +2,9 @@
 
 #ifdef ALT_CLIENT_API
 
-alt::IWorldObject* LocalPed_GetWorldObject(alt::ILocalPed* localPed)
+alt::IPed* LocalPed_GetPed(alt::ILocalPed* localPed)
 {
-    return dynamic_cast<alt::IWorldObject*>(localPed);
+    return dynamic_cast<alt::IPed*>(localPed);
 }
 
 uint32_t LocalPed_GetID(alt::ILocalPed* localPed)
@@ -12,31 +12,9 @@ uint32_t LocalPed_GetID(alt::ILocalPed* localPed)
     return localPed->GetID();
 }
 
-uint32_t LocalPed_GetModel(alt::ILocalPed* localPed)
-{
-    return localPed->GetModel();
-}
-
 void LocalPed_SetModel(alt::ILocalPed* localPed, uint32_t model)
 {
     localPed->SetModel(model);
-}
-
-void LocalPed_GetRotation(alt::ILocalPed* localPed, rotation_t& rot)
-{
-    auto localPedRotation = localPed->GetRotation();
-    rot.roll = localPedRotation.roll;
-    rot.pitch = localPedRotation.pitch;
-    rot.yaw = localPedRotation.yaw;
-}
-
-void LocalPed_SetRotation(alt::ILocalPed* localPed, rotation_t rot)
-{
-    alt::Rotation localPedRot;
-    localPedRot.roll = rot.roll;
-    localPedRot.pitch = rot.pitch;
-    localPedRot.yaw = rot.yaw;
-    localPed->SetRotation(localPedRot);
 }
 
 uint32_t LocalPed_GetStreamingDistance(alt::ILocalPed* localPed)
@@ -57,16 +35,6 @@ uint8_t LocalPed_IsVisible(alt::ILocalPed* localPed)
 uint32_t LocalPed_GetScriptID(alt::ILocalPed* localPed)
 {
     return localPed->GetScriptID();
-}
-
-uint32_t LocalPed_GetRemoteID(alt::ILocalPed* localPed)
-{
-    return localPed->GetRemoteID();
-}
-
-uint8_t LocalPed_IsRemote(alt::ILocalPed* localPed)
-{
-    return localPed->IsRemote();
 }
 
 uint8_t LocalPed_IsStreamedIn(alt::ILocalPed* localPed)

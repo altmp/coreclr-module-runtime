@@ -22,6 +22,4 @@ EXPORT_CLIENT uint32_t LocalVehicle_GetStreamingDistance(alt::ILocalVehicle* loc
 EXPORT_CLIENT void LocalVehicle_SetVisible(alt::ILocalVehicle* localVehicle, uint8_t toggle);
 EXPORT_CLIENT uint8_t LocalVehicle_IsVisible(alt::ILocalVehicle* localVehicle);
 EXPORT_CLIENT uint32_t LocalVehicle_GetScriptID(alt::ILocalVehicle* localVehicle);
-EXPORT_CLIENT uint32_t LocalVehicle_GetRemoteID(alt::ILocalVehicle* localVehicle);
-EXPORT_CLIENT uint8_t LocalVehicle_IsRemote(alt::ILocalVehicle* localVehicle);
 EXPORT_CLIENT uint8_t LocalVehicle_IsStreamedIn(alt::ILocalVehicle* localVehicle);
