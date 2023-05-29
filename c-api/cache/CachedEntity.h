@@ -22,7 +22,9 @@ namespace cache
                                       _frozen(base->IsFrozen()),
                                       _collision(base->HasCollision())
 #elif ALT_CLIENT_API
-                                      _scriptId(base->GetScriptGuid())
+                                      _scriptId(base->GetScriptGuid()),
+                                      _remoteId(base->GetRemoteID()),
+                                      _isRemote(base->IsRemote())
 #endif
         {
             auto syncedKeys = base->GetSyncedMetaDataKeys();
@@ -208,6 +210,16 @@ namespace cache
         uint32_t _scriptId;
         uint32_t GetScriptGuid() const override {
             return _scriptId;
+        }
+
+        uint32_t _remoteId;
+        uint32_t GetRemoteID() const override {
+            return _remoteId;
+        }
+
+        bool _isRemote;
+        bool IsRemote() const override {
+            return _isRemote;
         }
 #endif
     };
