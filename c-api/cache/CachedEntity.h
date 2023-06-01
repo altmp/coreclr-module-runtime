@@ -22,7 +22,7 @@ namespace cache
                                       _frozen(base->IsFrozen()),
                                       _collision(base->HasCollision())
 #elif ALT_CLIENT_API
-                                      _scriptId(base->GetScriptGuid()),
+                                      _scriptId(base->GetScriptID()),
                                       _remoteId(base->GetRemoteID()),
                                       _isRemote(base->IsRemote())
 #endif
@@ -208,7 +208,7 @@ namespace cache
 
 #ifdef ALT_CLIENT_API
         uint32_t _scriptId;
-        uint32_t GetScriptGuid() const override {
+        uint32_t GetScriptID() const override {
             return _scriptId;
         }
 
