@@ -146,16 +146,6 @@ void Marker_SetBobUpDown(alt::IMarker* marker, uint8_t bobUpDown)
 }
 
 #ifdef ALT_CLIENT_API
-uint32_t Marker_GetRemoteID(alt::IMarker* marker)
-{
-    return marker->GetRemoteID();
-}
-
-uint8_t Marker_IsRemote(alt::IMarker* marker)
-{
-    return marker->IsRemote();
-}
-
 uint8_t Marker_IsStreamedIn(alt::IMarker* marker)
 {
     return marker->IsStreamedIn();

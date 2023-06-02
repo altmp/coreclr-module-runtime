@@ -113,10 +113,6 @@ uint8_t Object_IsVisible(alt::IObject* object)
     return object->IsVisible();
 }
 
-uint8_t Object_IsRemote(alt::IObject* object) {
-    return object->IsRemote();
-}
-
 uint8_t Object_IsStreamedIn(alt::IObject* object)
 {
     return object->IsStreamedIn();

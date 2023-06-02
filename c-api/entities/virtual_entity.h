@@ -21,8 +21,6 @@ EXPORT_SHARED alt::IVirtualEntityGroup* VirtualEntity_GetGroup(alt::IVirtualEnti
 EXPORT_SHARED uint8_t VirtualEntity_HasStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key);
 EXPORT_SHARED alt::MValueConst* VirtualEntity_GetStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* key);
 
-EXPORT_CLIENT uint32_t VirtualEntity_GetRemoteID(alt::IVirtualEntity* virtualEntity);
-EXPORT_CLIENT uint8_t VirtualEntity_IsRemote(alt::IVirtualEntity* virtualEntity);
 EXPORT_CLIENT uint8_t VirtualEntity_IsStreamedIn(alt::IVirtualEntity* virtualEntity);
 
 EXPORT_SHARED uint32_t VirtualEntity_GetStreamingDistance(alt::IVirtualEntity* virtualEntity);

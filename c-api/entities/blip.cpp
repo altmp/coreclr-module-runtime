@@ -322,10 +322,6 @@ uint32_t Blip_GetGameID(alt::IBlip* blip) {
     return blip->GetGameID();
 }
 
-uint8_t Blip_IsRemote(alt::IBlip* blip) {
-    return blip->IsRemote();
-}
-
 uint8_t Blip_IsVisible(alt::IBlip* blip)
 {
     return blip->IsVisible();

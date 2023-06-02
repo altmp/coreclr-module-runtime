@@ -45,21 +45,10 @@ uint8_t VirtualEntity_IsVisible(alt::IVirtualEntity* virtualEntity)
 }
 
 #ifdef ALT_CLIENT_API
-uint32_t VirtualEntity_GetRemoteID(alt::IVirtualEntity* virtualEntity)
-{
-    return virtualEntity->GetRemoteID();
-}
-
-uint8_t VirtualEntity_IsRemote(alt::IVirtualEntity* virtualEntity)
-{
-    return virtualEntity->IsRemote();
-}
-
 uint8_t VirtualEntity_IsStreamedIn(alt::IVirtualEntity* virtualEntity)
 {
     return virtualEntity->IsStreamedIn();
 }
-
 #endif
 
 

@@ -35,3 +35,6 @@ EXPORT_SHARED alt::MValueConst* BaseObject_GetSyncedMetaData(alt::IBaseObject* b
 
 EXPORT_SERVER void BaseObject_SetSyncedMetaData(alt::IBaseObject* baseObject, const char* key, alt::MValueConst* val);
 EXPORT_SERVER void BaseObject_DeleteSyncedMetaData(alt::IBaseObject* baseObject, const char* key);
+
+EXPORT_CLIENT uint32_t BaseObject_GetRemoteID(alt::IBaseObject* baseObject);
+EXPORT_CLIENT uint8_t BaseObject_IsRemote(alt::IBaseObject* baseObject);

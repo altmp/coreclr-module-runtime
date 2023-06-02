@@ -16,16 +16,3 @@ alt::IBaseObject* VirtualEntityGroup_GetBaseObject(alt::IVirtualEntityGroup* vir
 {
     return dynamic_cast<alt::IBaseObject*>(virtualEntityGroup);
 }
-
-
-#ifdef ALT_CLIENT_API
-uint32_t VirtualEntityGroup_GetRemoteID(alt::IVirtualEntityGroup* virtualEntityGroup)
-{
-    return virtualEntityGroup->GetRemoteID();
-}
-
-uint8_t VirtualEntityGroup_IsRemote(alt::IVirtualEntityGroup* virtualEntityGroup)
-{
-    return virtualEntityGroup->IsRemote();
-}
-#endif

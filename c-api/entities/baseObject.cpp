@@ -63,3 +63,15 @@ void BaseObject_DeleteSyncedMetaData(alt::IBaseObject* baseObject, const char* k
 }
 
 #endif
+
+#ifdef ALT_CLIENT_API
+uint32_t BaseObject_GetRemoteID(alt::IBaseObject* baseObject)
+{
+    return baseObject->GetRemoteID();
+}
+
+uint8_t BaseObject_IsRemote(alt::IBaseObject* baseObject)
+{
+    return baseObject->IsRemote();
+}
+#endif

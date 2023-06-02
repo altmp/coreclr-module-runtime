@@ -92,16 +92,6 @@ void TextLabel_SetFaceCamera(alt::ITextLabel* textLabel, uint8_t faceCamera)
 }
 
 #ifdef ALT_CLIENT_API
-uint8_t TextLabel_IsRemote(alt::ITextLabel* textLabel)
-{
-    return textLabel->IsRemote();
-}
-
-uint32_t TextLabel_GetRemoteID(alt::ITextLabel* textLabel)
-{
-    return textLabel->GetRemoteID();
-}
-
 uint8_t TextLabel_IsStreamedIn(alt::ITextLabel* textLabel)
 {
     return textLabel->IsStreamedIn();
