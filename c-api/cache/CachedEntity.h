@@ -17,9 +17,9 @@ namespace cache
                                       _model(base->GetModel()),
                                       _rotation(base->GetRotation()),
                                       _visible(base->GetVisible()),
+                                      _frozen(base->IsFrozen()),
 #ifdef ALT_SERVER_API
                                       _streamed(base->GetStreamed()),
-                                      _frozen(base->IsFrozen()),
                                       _collision(base->HasCollision())
 #elif ALT_CLIENT_API
                                       _scriptId(base->GetScriptID()),
@@ -130,6 +130,16 @@ namespace cache
         {
             return _visible;
         }
+        bool _frozen;
+
+        bool IsFrozen() const override
+        {
+            return _frozen;
+        }
+
+        void SetFrozen(bool state) override
+        {
+        }
 
 #ifdef ALT_SERVER_API
         void SetNetworkOwner(alt::IPlayer* player, bool disableMigration) override
@@ -181,18 +191,7 @@ namespace cache
         {
             return _streamed;
         }
-
-        bool _frozen;
-
-        bool IsFrozen() const override
-        {
-            return _frozen;
-        }
-
-        void SetFrozen(bool state) override
-        {
-        }
-
+        
         bool _collision;
 
         bool HasCollision() const override

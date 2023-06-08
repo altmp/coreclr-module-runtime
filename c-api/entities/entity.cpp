@@ -53,6 +53,14 @@ void Entity_SetRotation(alt::IEntity* entity, rotation_t rot) {
     entity->SetRotation(rotation);
 }
 
+uint8_t Entity_IsFrozen(alt::IEntity* entity) {
+    return entity->IsFrozen();
+}
+
+void Entity_SetFrozen(alt::IEntity* entity, uint8_t state) {
+    entity->SetFrozen(state);
+}
+
 #ifdef ALT_SERVER_API
 void Entity_SetNetOwner(alt::IEntity* entity, alt::IPlayer* networkOwnerPlayer, uint8_t disableMigration) {
     entity->SetNetworkOwner(networkOwnerPlayer, disableMigration);
@@ -81,14 +89,6 @@ uint8_t Entity_GetStreamed(alt::IEntity* entity) {
 
 void Entity_SetStreamed(alt::IEntity* entity, uint8_t state) {
     entity->SetStreamed(state);
-}
-
-uint8_t Entity_IsFrozen(alt::IEntity* entity) {
-    return entity->IsFrozen();
-}
-
-void Entity_SetFrozen(alt::IEntity* entity, uint8_t state) {
-    entity->SetFrozen(state);
 }
 
 uint8_t Entity_HasCollision(alt::IEntity* entity) {
