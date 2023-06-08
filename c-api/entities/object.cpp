@@ -123,4 +123,39 @@ uint8_t Object_UsesStreaming(alt::IObject* object)
     return object->UsesStreaming();
 }
 
+uint8_t Object_IsWeaponObject(alt::IObject* object)
+{
+    return object->IsWeaponObject();
+}
+
+void Object_SetTintIndex(alt::IObject* object, int32_t tintIndex)
+{
+    object->SetTintIndex(tintIndex);
+}
+
+int32_t Object_GetTintIndex(alt::IObject* object)
+{
+    return object->GetTintIndex();
+}
+
+void Object_GiveComponent(alt::IObject* object, int32_t componentType)
+{
+    object->GiveComponent(componentType);
+}
+
+void Object_RemoveComponent(alt::IObject* object, int32_t componentType)
+{
+    object->RemoveComponent(componentType);
+}
+
+void Object_SetComponentTintIndex(alt::IObject* object, int32_t componentType, int32_t tintIndex)
+{
+    object->SetComponentTintIndex(componentType, tintIndex);
+}
+
+int32_t Object_GetComponentTintIndex(alt::IObject* object, int32_t componentType)
+{
+    return object->GetComponentTintIndex(componentType);
+}
+
 #endif

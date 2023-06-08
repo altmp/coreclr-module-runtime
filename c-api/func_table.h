@@ -40,6 +40,8 @@
 #include "entities/audioFilter.h"
 #include "entities/local_vehicle.h"
 #include "entities/local_ped.h"
+#include "entities/font.h"
+#include "entities/custom_texture.h"
 #include <type_traits>
 
 const function_table_t* get_func_table();

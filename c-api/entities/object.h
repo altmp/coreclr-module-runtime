@@ -62,3 +62,14 @@ EXPORT_CLIENT uint32_t Object_GetStreamingDistance(alt::IObject* object);
 
 EXPORT_CLIENT void Object_SetVisible(alt::IObject* object, uint8_t toggle);
 EXPORT_CLIENT uint8_t Object_IsVisible(alt::IObject* object);
+
+EXPORT_CLIENT uint8_t Object_IsWeaponObject(alt::IObject* object);
+
+EXPORT_CLIENT void Object_SetTintIndex(alt::IObject* object, int32_t tintIndex);
+EXPORT_CLIENT int32_t Object_GetTintIndex(alt::IObject* object);
+
+EXPORT_CLIENT void Object_GiveComponent(alt::IObject* object, int32_t componentType);
+EXPORT_CLIENT void Object_RemoveComponent(alt::IObject* object, int32_t componentType);
+
+EXPORT_CLIENT void Object_SetComponentTintIndex(alt::IObject* object, int32_t componentType, int32_t tintIndex);
+EXPORT_CLIENT int32_t Object_GetComponentTintIndex(alt::IObject* object, int32_t componentType);

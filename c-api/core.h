@@ -293,8 +293,10 @@ EXPORT_CLIENT void Core_LoadDefaultIpls(alt::ICore* core);
 EXPORT_CLIENT uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos);
 
 EXPORT_CLIENT alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t position, vector3_t rot, uint8_t noOffset, uint8_t dynamic, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::IObject* Core_CreateWeaponObject(alt::ICore* core, alt::Position pos, alt::Rotation rot, uint32_t weaponHash, uint32_t modelHash, int32_t numAmmo, uint8_t createDefaultComponents, float scale, uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id);
 EXPORT_CLIENT alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size);
 EXPORT_CLIENT alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size);
+EXPORT_CLIENT alt::IObject** Core_GetWeaponObjects(alt::ICore* core, uint32_t& size);
 
 EXPORT_CLIENT void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vector3_t& pos);
 
@@ -322,6 +324,8 @@ EXPORT_CLIENT alt::ITextLabel* Core_CreateTextLabel(alt::ICore* core, const char
 
 EXPORT_CLIENT alt::ILocalVehicle* Core_CreateLocalVehicle(alt::ICore* core, uint32_t modelHash, int32_t dimension, position_t pos, rotation_t rot, uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t& id);
 EXPORT_CLIENT alt::ILocalPed* Core_CreateLocalPed(alt::ICore* core, uint32_t modelHash, int32_t dimension, position_t pos, rotation_t rot, uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t& id);
+
+EXPORT_CLIENT alt::IFont* Core_RegisterFont(alt::ICore* core, alt::IResource* resource, const char* path, const char* currentPath, uint32_t& id);
 
 EXPORT_CLIENT uint8_t Core_IsFullScreen(alt::ICore* core);
 

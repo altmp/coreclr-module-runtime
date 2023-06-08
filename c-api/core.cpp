@@ -1508,6 +1508,17 @@ alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t 
     return object;
 }
 
+alt::IObject* Core_CreateWeaponObject(alt::ICore* core, alt::Position pos, alt::Rotation rot, uint32_t weaponHash,
+    uint32_t modelHash, int32_t numAmmo, uint8_t createDefaultComponents, float scale, uint8_t useStreaming,
+    uint32_t streamingDistance, alt::IResource* resource, uint32_t& id)
+{
+    auto object = core->CreateWeaponObject(pos, rot, weaponHash, modelHash, numAmmo, createDefaultComponents, scale, useStreaming, streamingDistance, resource);
+    if (object != nullptr) {
+        id = object->GetID();
+    }
+    return object;
+}
+
 alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size) {
     auto objects = core->GetObjects();
     size = objects.size();
@@ -1525,6 +1536,18 @@ alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size) {
     auto out = new alt::IObject*[size];
     for (auto i = 0; i < size; i++) {
         out[i] = worldObjects[i];
+    }
+
+    return out;
+}
+
+alt::IObject** Core_GetWeaponObjects(alt::ICore* core, uint32_t& size)
+{
+    auto weaponObject = core->GetWeaponObjects();
+    size = weaponObject.size();
+    auto out = new alt::IObject*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = weaponObject[i];
     }
 
     return out;
@@ -1661,6 +1684,17 @@ alt::ILocalPed* Core_CreateLocalPed(alt::ICore* core, uint32_t modelHash, int32_
         id = localPed->GetID();
     }
     return localPed;
+}
+
+alt::IFont* Core_RegisterFont(alt::ICore* core, alt::IResource* resource, const char* path, const char* currentPath,
+    uint32_t& id)
+{
+    auto font = core->RegisterFont(resource, path, currentPath);
+
+    if (font != nullptr) {
+        id = font->GetID();
+    }
+    return font;
 }
 
 uint8_t Core_IsFullScreen(alt::ICore* core)
