@@ -84,9 +84,9 @@ EXPORT_CLIENT void Event_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resourc
 EXPORT_CLIENT void Event_SetColShapeDelegate(CSharpResourceImpl* resource, /** ClientEvents.ColShapeModuleDelegate */ ColShapeDelegate_t delegate);
 EXPORT_CLIENT void Event_SetCheckpointDelegate(CSharpResourceImpl* resource, /** ClientEvents.CheckpointModuleDelegate */ CheckpointDelegate_t delegate);
 
-EXPORT_CLIENT void Event_SetEntityHitEntityDelegate(CSharpResourceImpl* resource, /** ClientEvents.EntityHitEntityDelegate */ EntityHitEntityDelegate_t delegate);
+EXPORT_CLIENT void Event_SetEntityHitEntityDelegate(CSharpResourceImpl* resource, /** ClientEvents.EntityHitEntityModuleDelegate */ EntityHitEntityDelegate_t delegate);
 
-EXPORT_CLIENT void Event_SetPlayerStartEnterVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerStartEnterVehicleDelegate */ PlayerStartEnterVehicleDelegate_t delegate);
-EXPORT_CLIENT void Event_SetPlayerStartLeaveVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerStartLeaveVehicleDelegate */ PlayerStartLeaveVehicleDelegate_t delegate);
+EXPORT_CLIENT void Event_SetPlayerStartEnterVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerStartEnterVehicleModuleDelegate */ PlayerStartEnterVehicleDelegate_t delegate);
+EXPORT_CLIENT void Event_SetPlayerStartLeaveVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerStartLeaveVehicleModuleDelegate */ PlayerStartLeaveVehicleDelegate_t delegate);
 
 #endif
