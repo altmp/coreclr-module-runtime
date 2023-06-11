@@ -207,7 +207,7 @@ EXPORT_SHARED uint8_t Player_IsInCover(alt::IPlayer* player);
 
 EXPORT_SERVER const char* Player_GetSocialClubName(alt::IPlayer* player, int32_t& size);
 
-EXPORT_SERVER const char* Player_GetGetCloudAuthHash(alt::IPlayer* player, int32_t& size);
+EXPORT_SERVER const char* Player_GetCloudAuthHash(alt::IPlayer* player, int32_t& size);
 
 EXPORT_SERVER uint16_t Player_GetAmmo(alt::IPlayer* player, uint32_t ammoHash);
 EXPORT_SERVER uint16_t Player_GetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash);

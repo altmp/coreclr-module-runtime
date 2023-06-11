@@ -586,7 +586,7 @@ const char* Player_GetSocialClubName(alt::IPlayer* player, int32_t& size)
     return AllocateString(player->GetSocialClubName(), size);
 }
 
-const char* Player_GetGetCloudAuthHash(alt::IPlayer* player, int32_t& size)
+const char* Player_GetCloudAuthHash(alt::IPlayer* player, int32_t& size)
 {
     return AllocateString(player->GetCloudAuthHash(), size);
 }
