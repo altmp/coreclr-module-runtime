@@ -586,6 +586,21 @@ const char* Player_GetSocialClubName(alt::IPlayer* player, int32_t& size)
     return AllocateString(player->GetSocialClubName(), size);
 }
 
+const char* Player_GetGetCloudAuthHash(alt::IPlayer* player, int32_t& size)
+{
+    return AllocateString(player->GetCloudAuthHash(), size);
+}
+
+uint16_t Player_GetAmmo(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return player->GetAmmo(ammoHash);
+}
+
+uint16_t Player_GetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash)
+{
+    return player->GetWeaponAmmo(weaponHash);
+}
+
 #endif
 
 #if ALT_CLIENT_API

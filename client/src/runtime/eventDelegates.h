@@ -56,7 +56,9 @@ typedef void (* PlayerWeaponChangeDelegate_t)(uint32_t oldWeapon, uint32_t newWe
 typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, void* target,
                                         alt::IBaseObject::Type targetBaseObjectType,
                                         uint32_t weaponHash, uint32_t damageValue, position_t shotOffset,
-                                        alt::CWeaponDamageEvent::BodyPart bodyPart);
+                                        alt::CWeaponDamageEvent::BodyPart bodyPart,
+                                        void* sourceEntity,
+                                        alt::IBaseObject::Type sourceEntityType);
 
 typedef void (* CreateBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType, uint32_t id);
 
@@ -65,3 +67,8 @@ typedef void (* RemoveBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::
 
 typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type, uint8_t state);
 typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type type, uint8_t state);
+
+typedef void (* EntityHitEntityDelegate_t)(void* target, alt::IBaseObject::Type targetType, void* damager, alt::IBaseObject::Type damagerType, uint32_t weaponHash);
+
+typedef void (* PlayerStartEnterVehicleDelegate_t)(void* target, void* player, uint8_t seat);
+typedef void (* PlayerStartLeaveVehicleDelegate_t)(void* target, void* player, uint8_t seat);

@@ -509,6 +509,14 @@ namespace cache
     	}
 
     	std::vector<std::pair<IEntity*, int32_t>> GetStreamedEntities() const override { return {}; }
+
+    	uint16_t GetAmmo(uint32_t ammoHash) const override {
+    		return 0;
+    	}
+
+    	uint16_t GetWeaponAmmo(uint32_t weaponHash) const override {
+    		return 0;
+    	}
 #endif
 
 

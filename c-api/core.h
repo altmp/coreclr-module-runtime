@@ -11,6 +11,7 @@
 #include "data/types.h"
 #include "data/vehicle_model_info.h"
 #include "data/ped_model_info.h"
+#include "data/weapon_model_info.h"
 #include "utils/export.h"
 
 #ifdef ALT_SERVER_API
@@ -92,10 +93,15 @@ EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_
 #endif
 EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos, uint32_t &id);
 EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo, uint32_t &id);
+
 EXPORT_SERVER ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* server, uint32_t hash);
 EXPORT_SERVER ClrPedModelInfo* Core_GetPedModelInfo(alt::ICore* core, uint32_t hash);
+EXPORT_SERVER ClrWeaponModelInfo* Core_GetWeaponModelByHash(alt::ICore* core, uint32_t hash);
 EXPORT_SERVER void Core_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo);
 EXPORT_SERVER void Core_DeallocPedModelInfo(ClrPedModelInfo* modelInfo);
+EXPORT_SERVER void Core_DeallocWeaponModelInfo(ClrWeaponModelInfo* modelInfo);
+
+
 EXPORT_SERVER alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance, uint32_t &id);
 EXPORT_SHARED alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height, uint32_t &id);
 EXPORT_SHARED alt::IColShape* Core_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius, uint32_t &id);

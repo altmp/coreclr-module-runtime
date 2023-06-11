@@ -4,6 +4,7 @@
 #include "data/config_node_data.h"
 #include <vector>
 
+#include "data/weapon_model_info.h"
 #include "utils/entity.h"
 
 void Core_LogInfo(alt::ICore* core, const char* str) {
@@ -603,11 +604,20 @@ ClrPedModelInfo* Core_GetPedModelInfo(alt::ICore* core, uint32_t hash) {
     return new ClrPedModelInfo(core->GetPedModelByHash(hash));
 }
 
+ClrWeaponModelInfo* Core_GetWeaponModelByHash(alt::ICore* core, uint32_t hash)
+{
+    return new ClrWeaponModelInfo(core->GetWeaponModelByHash(hash));
+}
+
 void Core_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo) {
     delete modelInfo;
 }
 
 void Core_DeallocPedModelInfo(ClrPedModelInfo* modelInfo) {
+    delete modelInfo;
+}
+
+void Core_DeallocWeaponModelInfo(ClrWeaponModelInfo* modelInfo) {
     delete modelInfo;
 }
 

@@ -228,13 +228,18 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             if (targetEntity == nullptr) return;
             auto eventShotOffset = weaponDamageEvent->GetShotOffset();
             position_t shotOffset = {eventShotOffset[0], eventShotOffset[1], eventShotOffset[2]};
+
+            auto sourceEntity = weaponDamageEvent->GetSourceEntity();
+
             OnWeaponDamageDelegate(ev,
                                    Util_GetEntityPointer(targetEntity),
                                    targetEntity->GetType(),
                                    weaponDamageEvent->GetWeaponHash(),
                                    weaponDamageEvent->GetDamageValue(),
                                    shotOffset,
-                                   weaponDamageEvent->GetBodyPart());
+                                   weaponDamageEvent->GetBodyPart(),
+                                   Util_GetEntityPointer(sourceEntity),
+                                   sourceEntity->GetType());
             break;
         }
 #pragma endregion
@@ -480,6 +485,50 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                          colShapeEvent->GetState());
                 }
             }
+            break;
+        }
+    case alt::CEvent::Type::ENTITY_HIT_ENTITY:
+        {
+            auto entityHitEntityEvent = dynamic_cast<const alt::CEntityHitEntityEvent*>(ev);
+            auto target = entityHitEntityEvent->GetTarget();
+            auto targetPointer = Util_GetEntityPointer(target);
+
+            auto damager = entityHitEntityEvent->GetDamager();
+            auto damagerPointer = Util_GetEntityPointer(damager);
+
+            OnEntityHitEntityDelegate(targetPointer,
+                                      target->GetType(),
+                                      damagerPointer,
+                                      damager->GetType(),
+                                      entityHitEntityEvent->GetWeapon());
+            break;
+        }
+    case alt::CEvent::Type::PLAYER_START_ENTER_VEHICLE:
+        {
+            auto playerStartEnterVehicleEvent = dynamic_cast<const alt::CPlayerStartEnterVehicleEvent*>(ev);
+            auto target = playerStartEnterVehicleEvent->GetTarget();
+            auto targetPointer = Util_GetEntityPointer(target);
+
+            auto player = playerStartEnterVehicleEvent->GetPlayer();
+            auto playerPointer = Util_GetEntityPointer(player);
+
+            OnPlayerStartEnterVehicleDelegate(targetPointer,
+                                              playerPointer,
+                                              playerStartEnterVehicleEvent->GetSeat());
+            break;
+        }
+    case alt::CEvent::Type::PLAYER_START_LEAVE_VEHICLE:
+        {
+            auto playerStartLeaveVehicleEvent = dynamic_cast<const alt::CPlayerStartLeaveVehicleEvent*>(ev);
+            auto target = playerStartLeaveVehicleEvent->GetTarget();
+            auto targetPointer = Util_GetEntityPointer(target);
+
+            auto player = playerStartLeaveVehicleEvent->GetPlayer();
+            auto playerPointer = Util_GetEntityPointer(player);
+
+            OnPlayerStartLeaveVehicleDelegate(targetPointer,
+                                              playerPointer,
+                                              playerStartLeaveVehicleEvent->GetSeat());
             break;
         }
     default:
@@ -807,11 +856,13 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnPlayerWeaponChangeDelegate = [](auto var, auto var2) {};
 
-    OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
+    OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8, auto var9) {};
 
     OnCreateBaseObjectDelegate = [](auto var, auto var2, auto var3) {};
     OnRemoveBaseObjectDelegate = [](auto var, auto var2) {};
 
     OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+
+    OnEntityHitEntityDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
 }

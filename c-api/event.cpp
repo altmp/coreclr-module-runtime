@@ -76,4 +76,10 @@ SetDelegate(Checkpoint);
 
 SetDelegate(CreateBaseObject);
 SetDelegate(RemoveBaseObject);
+
+SetDelegate(EntityHitEntity);
+
+SetDelegate(PlayerStartEnterVehicle);
+SetDelegate(PlayerStartLeaveVehicle);
+
 #endif

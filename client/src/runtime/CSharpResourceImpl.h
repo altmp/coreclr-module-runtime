@@ -91,6 +91,10 @@ public:
     ColShapeDelegate_t OnColShapeDelegate = nullptr;
     CheckpointDelegate_t OnCheckpointDelegate = nullptr;
 
+    EntityHitEntityDelegate_t OnEntityHitEntityDelegate = nullptr;
+
+    PlayerStartEnterVehicleDelegate_t OnPlayerStartEnterVehicleDelegate = nullptr;
+    PlayerStartLeaveVehicleDelegate_t OnPlayerStartLeaveVehicleDelegate = nullptr;
 
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
