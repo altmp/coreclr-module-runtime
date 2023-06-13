@@ -514,7 +514,10 @@ namespace cache
     		return 0;
     	}
 
-    	uint16_t GetWeaponAmmo(uint32_t weaponHash) const override {
+        void SetAmmo(uint32_t ammoHash, uint16_t ammo) override {}
+        void SetWeaponAmmo(uint32_t weaponHash, uint16_t ammo) override {}
+
+        uint16_t GetWeaponAmmo(uint32_t weaponHash) const override {
     		return 0;
     	}
 #endif

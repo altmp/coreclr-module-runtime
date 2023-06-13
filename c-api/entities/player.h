@@ -209,5 +209,7 @@ EXPORT_SERVER const char* Player_GetSocialClubName(alt::IPlayer* player, int32_t
 
 EXPORT_SERVER const char* Player_GetCloudAuthHash(alt::IPlayer* player, int32_t& size);
 
+EXPORT_SERVER void Player_SetAmmo(alt::IPlayer* player, uint32_t ammoHash, uint16_t ammo);
 EXPORT_SERVER uint16_t Player_GetAmmo(alt::IPlayer* player, uint32_t ammoHash);
+EXPORT_SERVER void Player_SetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash, uint16_t ammo);
 EXPORT_SERVER uint16_t Player_GetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash);

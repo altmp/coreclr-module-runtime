@@ -591,9 +591,19 @@ const char* Player_GetCloudAuthHash(alt::IPlayer* player, int32_t& size)
     return AllocateString(player->GetCloudAuthHash(), size);
 }
 
+void Player_SetAmmo(alt::IPlayer* player, uint32_t ammoHash, uint16_t ammo)
+{
+    player->SetAmmo(ammoHash, ammo);
+}
+
 uint16_t Player_GetAmmo(alt::IPlayer* player, uint32_t ammoHash)
 {
     return player->GetAmmo(ammoHash);
+}
+
+void Player_SetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash, uint16_t ammo)
+{
+    player->SetWeaponAmmo(weaponHash, ammo);
 }
 
 uint16_t Player_GetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash)
