@@ -5,9 +5,11 @@
 struct ClrWeaponModelInfo {
     uint32_t hash = 0;
     char* name = nullptr;
+    char* modelName = nullptr;
     uint32_t modelHash = 0;
     uint32_t ammoTypeHash = 0;
     char* ammoType = nullptr;
+    char* ammoModelName = nullptr;
     uint32_t ammoModelHash = 0;
     int32_t defaultMaxAmmoMp = 0;
     int32_t skillAbove50MaxAmmoMp = 0;
@@ -31,11 +33,21 @@ struct ClrWeaponModelInfo {
 
         ammoType = new char[info.ammoType.length() + 1];
         std::copy(info.ammoType.begin(), info.ammoType.end(), ammoType);
-        name[info.ammoType.length()] = '\0';
+        ammoType[info.ammoType.length()] = '\0';
+
+        modelName = new char[info.modelName.length() + 1];
+        std::copy(info.modelName.begin(), info.modelName.end(), modelName);
+        modelName[info.modelName.length()] = '\0';
+
+        ammoModelName = new char[info.ammoModelName.length() + 1];
+        std::copy(info.ammoModelName.begin(), info.ammoModelName.end(), ammoModelName);
+        ammoModelName[info.ammoModelName.length()] = '\0';
     }
 
     ~ClrWeaponModelInfo() {
         delete[] name;
         delete[] ammoType;
+        delete[] modelName;
+        delete[] ammoModelName;
     }
 };
