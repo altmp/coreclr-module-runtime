@@ -119,6 +119,11 @@ void Entity_Detach(alt::IEntity* entity)
 {
     entity->Detach();
 }
+
+uint32_t Entity_GetTimestamp(alt::IEntity* entity)
+{
+    return entity->GetTimestamp();
+}
 #endif
 
 #ifdef ALT_CLIENT_API

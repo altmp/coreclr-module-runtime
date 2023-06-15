@@ -48,3 +48,5 @@ EXPORT_SERVER void Entity_SetCollision(alt::IEntity* entity, uint8_t state);
 EXPORT_SERVER void Entity_AttachToEntity(alt::IEntity* entity, alt::IEntity* secondEntity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
 EXPORT_SERVER void Entity_AttachToEntity_BoneString(alt::IEntity* entity, alt::IEntity* secondEntity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
 EXPORT_SERVER void Entity_Detach(alt::IEntity* entity);
+
+EXPORT_SERVER uint32_t Entity_GetTimestamp(alt::IEntity* entity);

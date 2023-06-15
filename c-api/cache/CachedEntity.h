@@ -20,7 +20,8 @@ namespace cache
                                       _frozen(base->IsFrozen()),
 #ifdef ALT_SERVER_API
                                       _streamed(base->GetStreamed()),
-                                      _collision(base->HasCollision())
+                                      _collision(base->HasCollision()),
+                                      _timestamp(base->GetTimestamp())
 #elif ALT_CLIENT_API
                                       _scriptId(base->GetScriptID()),
                                       _remoteId(base->GetRemoteID()),
@@ -191,7 +192,7 @@ namespace cache
         {
             return _streamed;
         }
-        
+
         bool _collision;
 
         bool HasCollision() const override
@@ -201,6 +202,13 @@ namespace cache
 
         void SetCollision(bool state) override
         {
+        }
+
+        uint32_t _timestamp;
+
+        uint32_t GetTimestamp() const override
+        {
+            return _timestamp;
         }
 #endif
 
