@@ -672,7 +672,12 @@ uint8_t LocalPlayer_HasWeapon(alt::ILocalPlayer* localPlayer, uint32_t weaponHas
 
 void LocalPlayer_GetWeapons(alt::ILocalPlayer* localPlayer, const uint32_t*& weapons, uint32_t& size) {
     auto arr = localPlayer->GetWeapons();
-    weapons = AllocateUInt32Array(arr, size);
+    std::vector<uint32_t> hashes {};
+    for (auto crr : arr)
+    {
+        hashes.push_back(crr.hash);
+    }
+    weapons = AllocateUInt32Array(hashes, size);
 }
 
 void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlayer, uint32_t weaponHash, const uint32_t*& weaponComponents, uint32_t& size) {
