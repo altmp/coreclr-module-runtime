@@ -342,7 +342,7 @@ namespace cache
         bool RemoveWeapon(uint32_t weapon) override {
 	        return false;
         }
-        void RemoveAllWeapons() override {}
+        void RemoveAllWeapons(bool removeAllAmmo) override {}
         void SetDateTime(int day, int month, int year, int hour, int minute, int second) override {}
         void SetWeather(uint32_t weather) override {}
         void Kick(const std::string& reason) override {}
@@ -519,6 +519,11 @@ namespace cache
 
         uint16_t GetWeaponAmmo(uint32_t weaponHash) const override {
     		return 0;
+    	}
+
+        bool HasWeapon(uint32_t weapon) const override
+    	{
+    		return false;
     	}
 #endif
 

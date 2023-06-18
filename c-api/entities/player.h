@@ -85,7 +85,7 @@ EXPORT_SERVER void Player_SetWeather(alt::IPlayer* player, uint32_t weather);
 
 EXPORT_SERVER void Player_GiveWeapon(alt::IPlayer* player, uint32_t weapon, int32_t ammo, uint8_t selectWeapon);
 EXPORT_SERVER uint8_t Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon);
-EXPORT_SERVER void Player_RemoveAllWeapons(alt::IPlayer* player);
+EXPORT_SERVER void Player_RemoveAllWeapons(alt::IPlayer* player, uint8_t removeAllAmmo);
 
 EXPORT_SERVER void Player_AddWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
 EXPORT_SERVER void Player_RemoveWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
@@ -99,6 +99,8 @@ EXPORT_SERVER void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon
 
 EXPORT_SERVER uint64_t Player_GetWeaponCount(alt::IPlayer* player);
 EXPORT_SERVER void Player_GetWeapons(alt::IPlayer* player, /** nint* */  weapon_t*& weapons, uint32_t& size);
+
+EXPORT_SERVER uint8_t Player_HasWeapon(alt::IPlayer* player, uint32_t weapon);
 
 EXPORT_SERVER void Player_SetArmor(alt::IPlayer* player, uint16_t armor);
 EXPORT_SERVER void Player_SetMaxArmor(alt::IPlayer* player, uint16_t armor);

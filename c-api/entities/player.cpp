@@ -269,10 +269,9 @@ uint8_t Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon) {
     return player->RemoveWeapon(weapon);
 }
 
-void Player_RemoveAllWeapons(alt::IPlayer* player) {
-    player->RemoveAllWeapons();
+void Player_RemoveAllWeapons(alt::IPlayer* player, uint8_t removeAllAmmo) {
+    player->RemoveAllWeapons(removeAllAmmo);
 }
-
 
 void Player_AddWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component) {
     player->AddWeaponComponent(weapon, component);
@@ -306,6 +305,11 @@ void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon) {
 
 uint64_t Player_GetWeaponCount(alt::IPlayer* player) {
     return player->GetWeapons().size();
+}
+
+uint8_t Player_HasWeapon(alt::IPlayer* player, uint32_t weapon)
+{
+    return player->HasWeapon(weapon);
 }
 
 void Player_GetWeapons(alt::IPlayer* player, weapon_t*& weapons, uint32_t& size) {
@@ -704,7 +708,5 @@ void LocalPlayer_SetMaxStamina(alt::ILocalPlayer* localPlayer, float stamina)
 {
     localPlayer->SetMaxStamina(stamina);
 }
-
-
 
 #endif
