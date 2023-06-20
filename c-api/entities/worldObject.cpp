@@ -25,6 +25,10 @@ void WorldObject_SetPosition(alt::IWorldObject* worldObject, position_t pos) {
     worldObject->SetPosition(position);
 }
 
+void WorldObject_SetDimension(alt::IWorldObject* worldObject, int32_t dimension) {
+    worldObject->SetDimension(dimension);
+}
+
 #ifdef ALT_SERVER_API
 void WorldObject_GetPositionCoords(alt::IWorldObject* worldObject, float *position_x, float *position_y, float *position_z, int *dimension) {
     auto playerPosition = worldObject->GetPosition();
@@ -34,7 +38,4 @@ void WorldObject_GetPositionCoords(alt::IWorldObject* worldObject, float *positi
     *dimension = worldObject->GetDimension();
 }
 
-void WorldObject_SetDimension(alt::IWorldObject* worldObject, int32_t dimension) {
-    worldObject->SetDimension(dimension);
-}
 #endif

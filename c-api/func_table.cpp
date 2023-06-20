@@ -1141,6 +1141,7 @@ inline uint64_t capiHashes[] = {
     7682733547279772474UL,
     17276300057698662707UL,
     13069539607851095701UL,
+    8281427375806201830UL,
     15027192667173077188UL,
     #ifdef ALT_SERVER_API
     8228424877092269355UL,
@@ -1540,7 +1541,6 @@ inline uint64_t capiHashes[] = {
     11160223830254443614UL,
     10269140636860300589UL,
     16135129168754632706UL,
-    8281427375806201830UL,
     #endif
 };
 
@@ -2684,6 +2684,7 @@ inline void* capiPointers[] = {
     (void*) WorldObject_GetBaseObject,
     (void*) WorldObject_GetDimension,
     (void*) WorldObject_GetPosition,
+    (void*) WorldObject_SetDimension,
     (void*) WorldObject_SetPosition,
     #ifdef ALT_SERVER_API
     (void*) BaseObject_DeleteSyncedMetaData,
@@ -3083,7 +3084,6 @@ inline void* capiPointers[] = {
     (void*) VoiceChannel_SetPriority,
     (void*) VoiceChannel_UnmutePlayer,
     (void*) WorldObject_GetPositionCoords,
-    (void*) WorldObject_SetDimension,
     #endif
 };
 

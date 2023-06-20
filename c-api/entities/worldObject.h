@@ -20,5 +20,5 @@ EXPORT_SHARED void WorldObject_GetPosition(alt::IWorldObject* worldObject, vecto
 
 EXPORT_SERVER void WorldObject_GetPositionCoords(alt::IWorldObject* worldObject, float* position_x, float* position_y, float* position_z, int* dimension);
 EXPORT_SHARED int32_t WorldObject_GetDimension(alt::IWorldObject* worldObject);
-EXPORT_SERVER void WorldObject_SetDimension(alt::IWorldObject* worldObject, int32_t dimension);
+EXPORT_SHARED void WorldObject_SetDimension(alt::IWorldObject* worldObject, int32_t dimension);
 EXPORT_SHARED void WorldObject_SetPosition(alt::IWorldObject* worldObject, position_t pos);
