@@ -341,5 +341,7 @@ EXPORT_SERVER alt::Metric* Core_RegisterMetric(alt::ICore* core, const char* met
 EXPORT_SERVER void Core_UnrgisterMetric(alt::ICore* core, alt::Metric* metric);
 
 EXPORT_CLIENT alt::IBlip* Core_GetBlipByGameID(alt::ICore* core, uint32_t gameId);
+EXPORT_CLIENT alt::ICheckpoint* Core_GetCheckpointByGameID(alt::ICore* core, uint32_t gameId);
+EXPORT_CLIENT uint8_t Core_IsWebViewGpuAccelerationActive(alt::ICore* core);
 
 EXPORT_CLIENT alt::IWorldObject* Core_GetWorldObjectByScriptID(alt::ICore* core, uint32_t scriptId);

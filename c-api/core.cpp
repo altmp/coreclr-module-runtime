@@ -1717,6 +1717,16 @@ alt::IBlip* Core_GetBlipByGameID(alt::ICore* core, uint32_t gameId)
     return core->GetBlipByGameID(gameId);
 }
 
+alt::ICheckpoint* Core_GetCheckpointByGameID(alt::ICore* core, uint32_t gameId)
+{
+    return core->GetCheckpointByGameID(gameId);
+}
+
+uint8_t Core_IsWebViewGpuAccelerationActive(alt::ICore* core)
+{
+    return core->IsWebViewGpuAccelerationActive();
+}
+
 alt::IWorldObject* Core_GetWorldObjectByScriptID(alt::ICore* core, uint32_t scriptId)
 {
     return core->GetWorldObjectByScriptID(scriptId);

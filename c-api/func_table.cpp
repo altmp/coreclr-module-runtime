@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 13533382576204472374UL;
+inline uint64_t capiHash = 16481579865703525811UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -82,6 +82,7 @@ inline uint64_t capiHashes[] = {
     4570431726496627488UL,
     18078473099666119995UL,
     13815274607564352429UL,
+    17443733140958323295UL,
     10032718746164771334UL,
     9388016697579829930UL,
     15134150969197995835UL,
@@ -140,6 +141,7 @@ inline uint64_t capiHashes[] = {
     9053921873104901604UL,
     5487028108265672799UL,
     4433142925114007365UL,
+    4577141218762914496UL,
     17184217455720907957UL,
     12272171669941913364UL,
     9589250181503294824UL,
@@ -1625,6 +1627,7 @@ inline void* capiPointers[] = {
     (void*) Core_GetAudios,
     (void*) Core_GetBlipByGameID,
     (void*) Core_GetCamPos,
+    (void*) Core_GetCheckpointByGameID,
     (void*) Core_GetClientPath,
     (void*) Core_GetConfigFlag,
     (void*) Core_GetCursorPos,
@@ -1683,6 +1686,7 @@ inline void* capiPointers[] = {
     (void*) Core_IsPointOnScreen,
     (void*) Core_IsTextureExistInArchetype,
     (void*) Core_IsVoiceActivityInputEnabled,
+    (void*) Core_IsWebViewGpuAccelerationActive,
     (void*) Core_LoadDefaultIpls,
     (void*) Core_LoadModel,
     (void*) Core_LoadModelAsync,
