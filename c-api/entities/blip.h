@@ -53,7 +53,7 @@ EXPORT_SHARED uint8_t Blip_GetFlashesAlternate(alt::IBlip* blip);
 EXPORT_SHARED void Blip_SetFlashesAlternate(alt::IBlip* blip, uint8_t state);
 EXPORT_SHARED uint8_t Blip_GetAsShortRange(alt::IBlip* blip);
 EXPORT_SHARED void Blip_SetAsShortRange(alt::IBlip* blip, uint8_t state);
-EXPORT_SHARED uint16_t Blip_GetPriority(alt::IBlip* blip);
+EXPORT_SHARED uint32_t Blip_GetPriority(alt::IBlip* blip);
 EXPORT_SHARED void Blip_SetPriority(alt::IBlip* blip, uint32_t priority);
 EXPORT_SHARED float Blip_GetRotation(alt::IBlip* blip);
 EXPORT_SHARED void Blip_SetRotation(alt::IBlip* blip, float rotation);

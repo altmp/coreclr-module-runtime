@@ -159,11 +159,11 @@ void Blip_SetAsShortRange(alt::IBlip* blip, uint8_t state) {
     blip->SetAsShortRange(state);
 }
 
-uint16_t Blip_GetPriority(alt::IBlip* blip) {
+uint32_t Blip_GetPriority(alt::IBlip* blip) {
     return blip->GetPriority();
 }
 
-void Blip_SetPriority(alt::IBlip* blip, uint16_t priority) {
+void Blip_SetPriority(alt::IBlip* blip, uint32_t priority) {
     blip->SetPriority(priority);
 }
 
