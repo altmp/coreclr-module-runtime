@@ -30,27 +30,27 @@ void Blip_SetScaleXY(alt::IBlip* blip, vector2_t scale) {
     blip->SetScaleXY(blipScale);
 }
 
-int16_t Blip_GetDisplay(alt::IBlip* blip) {
+uint32_t Blip_GetDisplay(alt::IBlip* blip) {
     return blip->GetDisplay();
 }
 
-void Blip_SetDisplay(alt::IBlip* blip, int16_t display) {
+void Blip_SetDisplay(alt::IBlip* blip, uint32_t display) {
     blip->SetDisplay(display);
 }
 
-uint16_t Blip_GetSprite(alt::IBlip* blip) {
+uint32_t Blip_GetSprite(alt::IBlip* blip) {
     return blip->GetSprite();
 }
 
-void Blip_SetSprite(alt::IBlip* blip, uint16_t sprite) {
+void Blip_SetSprite(alt::IBlip* blip, uint32_t sprite) {
     blip->SetSprite(sprite);
 }
 
-uint8_t Blip_GetColor(alt::IBlip* blip) {
+uint32_t Blip_GetColor(alt::IBlip* blip) {
     return blip->GetColor();
 }
 
-void Blip_SetColor(alt::IBlip* blip, uint8_t color) {
+void Blip_SetColor(alt::IBlip* blip, uint32_t color) {
     blip->SetColor(color);
 }
 
@@ -71,11 +71,11 @@ void Blip_SetSecondaryColor(alt::IBlip* blip, rgba_t color) {
     blip->SetSecondaryColor(blipSecondaryColor);
 }
 
-uint8_t Blip_GetAlpha(alt::IBlip* blip) {
+uint32_t Blip_GetAlpha(alt::IBlip* blip) {
     return blip->GetAlpha();
 }
 
-void Blip_SetAlpha(alt::IBlip* blip, uint8_t alpha) {
+void Blip_SetAlpha(alt::IBlip* blip, uint32_t alpha) {
     blip->SetAlpha(alpha);
 }
 
@@ -264,11 +264,11 @@ void Blip_SetCrewIndicatorVisible(alt::IBlip* blip, uint8_t state) {
     blip->SetCrewIndicatorVisible(state);
 }
 
-uint16_t Blip_GetCategory(alt::IBlip* blip) {
+uint32_t Blip_GetCategory(alt::IBlip* blip) {
     return blip->GetCategory();
 }
 
-void Blip_SetCategory(alt::IBlip* blip, uint16_t category) {
+void Blip_SetCategory(alt::IBlip* blip, uint32_t category) {
     blip->SetCategory(category);
 }
 
