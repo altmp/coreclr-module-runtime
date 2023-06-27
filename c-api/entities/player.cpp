@@ -649,7 +649,7 @@ alt::ILocalPlayer* Player_GetLocal() {
     return alt::ICore::Instance().GetLocalPlayer();
 }
 
-uint16_t LocalPlayer_GetID(alt::ILocalPlayer* player) {
+uint32_t LocalPlayer_GetID(alt::ILocalPlayer* player) {
     return player->GetID();
 }
 
@@ -663,7 +663,11 @@ uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer) {
 
 uint32_t LocalPlayer_GetCurrentWeaponHash(alt::ILocalPlayer* localPlayer) {
     const auto data = localPlayer->GetCurrentWeaponData();
-    return data.get()->GetNameHash();
+    if (!data)
+    {
+        return 0;
+    }
+    return data->GetNameHash();
 }
 
 uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer, uint32_t weaponHash) {

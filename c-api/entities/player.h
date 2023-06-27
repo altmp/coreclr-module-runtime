@@ -180,7 +180,7 @@ EXPORT_CLIENT void Player_SetNonSpatialVolume(alt::IPlayer* player, float value)
 EXPORT_CLIENT float Player_GetSpatialVolume(alt::IPlayer* player);
 EXPORT_CLIENT void Player_SetSpatialVolume(alt::IPlayer* player, float value);
 
-EXPORT_CLIENT uint16_t LocalPlayer_GetID(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT uint32_t LocalPlayer_GetID(alt::ILocalPlayer* localPlayer);
 EXPORT_CLIENT alt::ILocalPlayer* Player_GetLocal();
 EXPORT_CLIENT alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* player);
 
