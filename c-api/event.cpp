@@ -82,4 +82,6 @@ SetDelegate(EntityHitEntity);
 SetDelegate(PlayerStartEnterVehicle);
 SetDelegate(PlayerStartLeaveVehicle);
 
+SetDelegate(PlayerBulletHit);
+
 #endif

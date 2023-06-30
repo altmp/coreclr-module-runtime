@@ -89,4 +89,5 @@ EXPORT_CLIENT void Event_SetEntityHitEntityDelegate(CSharpResourceImpl* resource
 EXPORT_CLIENT void Event_SetPlayerStartEnterVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerStartEnterVehicleModuleDelegate */ PlayerStartEnterVehicleDelegate_t delegate);
 EXPORT_CLIENT void Event_SetPlayerStartLeaveVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerStartLeaveVehicleModuleDelegate */ PlayerStartLeaveVehicleDelegate_t delegate);
 
+EXPORT_CLIENT void Event_SetPlayerBulletHitDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerBulletHitModuleDelegate */ PlayerBulletHitDelegate_t delegate);
 #endif

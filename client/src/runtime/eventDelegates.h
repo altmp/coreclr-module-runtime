@@ -72,3 +72,5 @@ typedef void (* EntityHitEntityDelegate_t)(void* target, alt::IBaseObject::Type 
 
 typedef void (* PlayerStartEnterVehicleDelegate_t)(void* target, void* player, uint8_t seat);
 typedef void (* PlayerStartLeaveVehicleDelegate_t)(void* target, void* player, uint8_t seat);
+
+typedef void (* PlayerBulletHitDelegate_t)(uint32_t weapon, void* victim, alt::IBaseObject::Type victimType, position_t pos);

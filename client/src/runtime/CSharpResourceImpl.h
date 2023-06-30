@@ -96,6 +96,8 @@ public:
     PlayerStartEnterVehicleDelegate_t OnPlayerStartEnterVehicleDelegate = nullptr;
     PlayerStartLeaveVehicleDelegate_t OnPlayerStartLeaveVehicleDelegate = nullptr;
 
+    PlayerBulletHitDelegate_t OnPlayerBulletHitDelegate = nullptr;
+
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
     {

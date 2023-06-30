@@ -242,6 +242,21 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                    sourceEntity->GetType());
             break;
         }
+    case alt::CEvent::Type::PLAYER_BULLET_HIT_EVENT:
+        {
+            auto playerBulletHitEvent = dynamic_cast<const alt::CPlayerBulletHitEvent*>(ev);
+            auto victimEntity = playerBulletHitEvent->GetVictim();
+            if (victimEntity == nullptr) return;
+            auto position = playerBulletHitEvent->GetPosition();
+            position_t pos = {position.x, position.y, position.z};
+
+            OnPlayerBulletHitDelegate(playerBulletHitEvent->GetWeapon(),
+                                      Util_GetEntityPointer(victimEntity),
+                                      victimEntity->GetType(),
+                                      pos);
+
+            break;
+        }
 #pragma endregion
 #pragma region Entity events
     case alt::CEvent::Type::GAME_ENTITY_CREATE:
@@ -865,4 +880,6 @@ void CSharpResourceImpl::ResetDelegates() {
     OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 
     OnEntityHitEntityDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+
+    OnPlayerBulletHitDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 }

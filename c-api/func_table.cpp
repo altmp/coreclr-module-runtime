@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 18419608128736389916UL;
+inline uint64_t capiHash = 11688032597971807811UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -217,6 +217,7 @@ inline uint64_t capiHashes[] = {
     1555813148561817401UL,
     10052271841742065911UL,
     15651483423859541657UL,
+    17879780001793566297UL,
     1013031841840963141UL,
     10641081887455190199UL,
     2849447755791784577UL,
@@ -1762,6 +1763,7 @@ inline void* capiPointers[] = {
     (void*) Event_SetLocalMetaChangeDelegate,
     (void*) Event_SetMetaChangeDelegate,
     (void*) Event_SetNetOwnerChangeDelegate,
+    (void*) Event_SetPlayerBulletHitDelegate,
     (void*) Event_SetPlayerChangeAnimationDelegate,
     (void*) Event_SetPlayerChangeInteriorDelegate,
     (void*) Event_SetPlayerChangeVehicleSeatDelegate,
