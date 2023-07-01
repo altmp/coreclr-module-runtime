@@ -575,21 +575,33 @@ alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, position
     return checkPoint;
 }
 
-alt::IBlip* Core_CreateBlip(alt::ICore* core, alt::IPlayer* target, uint8_t type, position_t pos, uint32_t &id) {
+alt::IBlip* Core_CreateBlip(alt::ICore* core, uint8_t global, uint8_t type, position_t pos, alt::IPlayer* targets[], int targetsSize, uint32_t &id) {
+    std::vector<alt::IPlayer*> vectorTargets(targetsSize);
+
+    for (auto i = 0; i < targetsSize; i++) {
+        vectorTargets[i] = targets[i];
+    }
+
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
     position.z = pos.z;
 
-    auto blip = core->CreateBlip(target, (alt::IBlip::BlipType) type, position);
+    auto blip = core->CreateBlip(global, (alt::IBlip::BlipType) type, position, vectorTargets);
     if (blip != nullptr) {
         id = blip->GetID();
     }
     return blip;
 }
 
-alt::IBlip* Core_CreateBlipAttached(alt::ICore* core, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo, uint32_t &id) {
-    auto blip = core->CreateBlip(target, (alt::IBlip::BlipType) type, attachTo);
+alt::IBlip* Core_CreateBlipAttached(alt::ICore* core, uint8_t global, uint8_t type, alt::IEntity* attachTo, alt::IPlayer* targets[], int targetsSize, uint32_t &id) {
+    std::vector<alt::IPlayer*> vectorTargets(targetsSize);
+
+    for (auto i = 0; i < targetsSize; i++) {
+        vectorTargets[i] = targets[i];
+    }
+
+    auto blip = core->CreateBlip(global, (alt::IBlip::BlipType) type, attachTo, vectorTargets);
     if (blip != nullptr) {
         id = blip->GetID();
     }

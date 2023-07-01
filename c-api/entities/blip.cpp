@@ -9,12 +9,27 @@ alt::IWorldObject* Blip_GetWorldObject(alt::IBlip* blip) {
     return dynamic_cast<alt::IWorldObject*>(blip);
 }
 
+uint8_t Blip_IsVisible(alt::IBlip* blip)
+{
+    return blip->IsVisible();
+}
+
+void Blip_SetVisible(alt::IBlip* blip, uint8_t toggle)
+{
+    blip->SetVisible(toggle);
+}
+
 uint8_t Blip_IsGlobal(alt::IBlip* blip) {
     return blip->IsGlobal();
 }
 
-uint8_t Blip_GetType(alt::IBlip* blip) {
+uint8_t Blip_GetBlipType(alt::IBlip* blip) {
     return (uint8_t) blip->GetBlipType();
+}
+
+void Blip_SetBlipType(alt::IBlip* blip, uint8_t blipType)
+{
+    blip->SetBlipType((alt::IBlip::BlipType) blipType);
 }
 
 void Blip_GetScaleXY(alt::IBlip* blip, vector2_t &scale) {
@@ -292,8 +307,6 @@ void Blip_Fade(alt::IBlip* blip, uint32_t opacity, uint32_t duration) {
     blip->Fade(opacity, duration);
 }
 
-
-#ifdef ALT_SERVER_API
 uint8_t Blip_IsAttached(alt::IBlip* blip) {
     return blip->IsAttached();
 }
@@ -303,32 +316,54 @@ void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
     if (entity != nullptr) {
         type = entity->GetType();
         switch (type) {
-            case alt::IBaseObject::Type::PLAYER:
-                return dynamic_cast<alt::IPlayer*>(entity);
-            case alt::IBaseObject::Type::VEHICLE:
-                return dynamic_cast<alt::IVehicle*>(entity);
-            case alt::IBaseObject::Type::PED:
-                return dynamic_cast<alt::IPed*>(entity);
-            default:
-                return nullptr;
+        case alt::IBaseObject::Type::PLAYER:
+            return dynamic_cast<alt::IPlayer*>(entity);
+        case alt::IBaseObject::Type::VEHICLE:
+            return dynamic_cast<alt::IVehicle*>(entity);
+        case alt::IBaseObject::Type::PED:
+            return dynamic_cast<alt::IPed*>(entity);
+        default:
+            return nullptr;
         }
     }
     return nullptr;
 }
-#endif
 
 #ifdef ALT_CLIENT_API
 uint32_t Blip_GetGameID(alt::IBlip* blip) {
     return blip->GetGameID();
 }
 
-uint8_t Blip_IsVisible(alt::IBlip* blip)
+uint8_t Blip_IsStreamedIn(alt::IBlip* blip) {
+    return blip->IsStreamedIn();
+}
+#endif
+
+#if ALT_SERVER_API
+void Blip_SetGlobal(alt::IBlip* blip, uint8_t state)
 {
-    return blip->IsVisible();
+    blip->SetGlobal(state);
 }
 
-void Blip_SetVisible(alt::IBlip* blip, uint8_t toggle)
+void Blip_AddTargetPlayer(alt::IBlip* blip, alt::IPlayer* player)
 {
-    blip->SetVisible(toggle);
+    blip->AddTargetPlayer(player);
+}
+
+void Blip_RemoveTargetPlayer(alt::IBlip* blip, alt::IPlayer* player)
+{
+    blip->RemoveTargetPlayer(player);
+}
+
+alt::IPlayer** Blip_GetTargets(alt::IBlip* blip, uint64_t& size)
+{
+    auto targets = blip->GetTargets();
+    size = targets.size();
+    auto out = new alt::IPlayer*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = targets[i];
+    }
+
+    return out;
 }
 #endif

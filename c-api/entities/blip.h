@@ -19,8 +19,13 @@ EXPORT_SHARED uint32_t Blip_GetID(alt::IBlip* blip);
 
 EXPORT_SHARED alt::IWorldObject* Blip_GetWorldObject(alt::IBlip* blip);
 
+EXPORT_SHARED uint8_t Blip_IsVisible(alt::IBlip* blip);
+EXPORT_SHARED void Blip_SetVisible(alt::IBlip* blip, uint8_t toggle);
+
+
 EXPORT_SHARED uint8_t Blip_IsGlobal(alt::IBlip* blip);
-EXPORT_SHARED uint8_t Blip_GetType(alt::IBlip* blip);
+EXPORT_SHARED uint8_t Blip_GetBlipType(alt::IBlip* blip);
+EXPORT_SHARED void Blip_SetBlipType(alt::IBlip* blip, uint8_t blipType);
 EXPORT_SHARED void Blip_GetScaleXY(alt::IBlip* blip, vector2_t &scale);
 EXPORT_SHARED void Blip_SetScaleXY(alt::IBlip* blip, vector2_t scale);
 EXPORT_SHARED uint32_t Blip_GetDisplay(alt::IBlip* blip);
@@ -85,9 +90,14 @@ EXPORT_SHARED uint8_t Blip_GetShrinked(alt::IBlip* blip);
 EXPORT_SHARED void Blip_SetShrinked(alt::IBlip* blip, uint8_t state);
 EXPORT_SHARED void Blip_Fade(alt::IBlip* blip, uint32_t opacity, uint32_t duration);
 
-EXPORT_SERVER uint8_t Blip_IsAttached(alt::IBlip* blip);
-EXPORT_SERVER void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type);
+EXPORT_SHARED uint8_t Blip_IsAttached(alt::IBlip* blip);
+EXPORT_SHARED void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type);
 
 EXPORT_CLIENT uint32_t Blip_GetGameID(alt::IBlip* blip);
-EXPORT_CLIENT uint8_t Blip_IsVisible(alt::IBlip* blip);
-EXPORT_CLIENT void Blip_SetVisible(alt::IBlip* blip, uint8_t toggle);
+EXPORT_CLIENT uint8_t Blip_IsStreamedIn(alt::IBlip* blip);
+
+EXPORT_SERVER void Blip_SetGlobal(alt::IBlip* blip, uint8_t state);
+EXPORT_SERVER void Blip_AddTargetPlayer(alt::IBlip* blip, alt::IPlayer* player);
+EXPORT_SERVER void Blip_RemoveTargetPlayer(alt::IBlip* blip, alt::IPlayer* player);
+EXPORT_SERVER alt::IPlayer** Blip_GetTargets(alt::IBlip* blip, uint64_t& size);
+

@@ -91,8 +91,8 @@ EXPORT_SERVER alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, positi
 #ifdef ALT_SERVER_API
 EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius, float height, rgba_t color, uint32_t streamingDistance, uint32_t &id);
 #endif
-EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* server, alt::IPlayer* target, uint8_t type, position_t pos, uint32_t &id);
-EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* server, alt::IPlayer* target, uint8_t type, alt::IEntity* attachTo, uint32_t &id);
+EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* server, uint8_t global, uint8_t type, position_t pos, alt::IPlayer* targets[], int targetsSize, uint32_t &id);
+EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* server, uint8_t global, uint8_t type, alt::IEntity* attachTo, alt::IPlayer* targets[], int targetsSize, uint32_t &id);
 
 EXPORT_SERVER ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* server, uint32_t hash);
 EXPORT_SERVER ClrPedModelInfo* Core_GetPedModelInfo(alt::ICore* core, uint32_t hash);
