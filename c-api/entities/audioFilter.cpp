@@ -6,6 +6,16 @@ alt::IBaseObject* AudioFilter_GetBaseObject(alt::IAudioFilter* audioFilter)
     return dynamic_cast<alt::IBaseObject*>(audioFilter);
 }
 
+uint32_t AudioFilter_GetAudCategory(alt::IAudioFilter* audioFilter)
+{
+    return audioFilter->GetAudCategory();
+}
+
+void AudioFilter_SetAudCategory(alt::IAudioFilter* audioFilter, uint32_t category)
+{
+    audioFilter->SetAudCategory(category);
+}
+
 uint32_t AudioFilter_GetHash(alt::IAudioFilter* audioFilter)
 {
     return audioFilter->GetHash();

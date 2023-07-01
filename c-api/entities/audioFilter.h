@@ -17,6 +17,9 @@ EXPORT_CLIENT alt::IBaseObject* AudioFilter_GetBaseObject(alt::IAudioFilter* aud
 
 EXPORT_CLIENT uint32_t AudioFilter_GetHash(alt::IAudioFilter* audioFilter);
 
+EXPORT_CLIENT uint32_t AudioFilter_GetAudCategory(alt::IAudioFilter* audioFilter);
+EXPORT_CLIENT void AudioFilter_SetAudCategory(alt::IAudioFilter* audioFilter, uint32_t category);
+
 EXPORT_CLIENT uint32_t AudioFilter_AddRotateEffect(alt::IAudioFilter* audioFilter, float rate, int priority);
 EXPORT_CLIENT uint32_t AudioFilter_AddVolumeEffect(alt::IAudioFilter* audioFilter, float volume, int priority);
 EXPORT_CLIENT uint32_t AudioFilter_AddPeakeqEffect(alt::IAudioFilter* audioFilter, int lBand, float bandwidth, float q, float center, float gain, int priority);

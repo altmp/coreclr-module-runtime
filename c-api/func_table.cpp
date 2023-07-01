@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 11688032597971807811UL;
+inline uint64_t capiHash = 1218110124323930036UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -39,9 +39,11 @@ inline uint64_t capiHashes[] = {
     13860375026413797308UL,
     3023765297763740660UL,
     4712013335136464389UL,
+    6059317348005410766UL,
     8867334748367703826UL,
     10116851781453819636UL,
     4769953165963999553UL,
+    6748113621735625221UL,
     13504129310031776629UL,
     514365565196881175UL,
     8435480280567473939UL,
@@ -1585,9 +1587,11 @@ inline void* capiPointers[] = {
     (void*) AudioFilter_AddPitchshiftEffect,
     (void*) AudioFilter_AddRotateEffect,
     (void*) AudioFilter_AddVolumeEffect,
+    (void*) AudioFilter_GetAudCategory,
     (void*) AudioFilter_GetBaseObject,
     (void*) AudioFilter_GetHash,
     (void*) AudioFilter_RemoveEffect,
+    (void*) AudioFilter_SetAudCategory,
     (void*) BaseObject_GetRemoteID,
     (void*) BaseObject_IsRemote,
     (void*) Blip_GetGameID,
