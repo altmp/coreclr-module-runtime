@@ -231,6 +231,15 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 
             auto sourceEntity = weaponDamageEvent->GetSourceEntity();
 
+            auto sourceType = alt::IBaseObject::Type::PLAYER;
+            void* sourceTPtr = nullptr;
+
+            if (sourceEntity != nullptr)
+            {
+                sourceTPtr = Util_GetEntityPointer(sourceEntity);
+                sourceType = sourceEntity->GetType();
+            }
+
             OnWeaponDamageDelegate(ev,
                                    Util_GetEntityPointer(targetEntity),
                                    targetEntity->GetType(),
@@ -238,8 +247,8 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                    weaponDamageEvent->GetDamageValue(),
                                    shotOffset,
                                    weaponDamageEvent->GetBodyPart(),
-                                   Util_GetEntityPointer(sourceEntity),
-                                   sourceEntity->GetType());
+                                   sourceTPtr,
+                                   sourceType);
             break;
         }
     case alt::CEvent::Type::PLAYER_BULLET_HIT_EVENT:
