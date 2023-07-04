@@ -953,7 +953,7 @@ alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_
     rgba.g = color.g;
     rgba.b = color.b;
     rgba.a = color.a;
-    auto checkPoint = core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }, streamingDistance, resource);
+    auto checkPoint = core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }, {}, streamingDistance, resource);
     if (checkPoint != nullptr) {
         id = checkPoint->GetID();
     }
