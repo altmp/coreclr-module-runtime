@@ -1447,7 +1447,7 @@ alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResour
 }
 
 alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend, uint32_t &id) {
-    auto audio = core->CreateAudio(source, volume, category, frontend, resource);
+    auto audio = core->CreateAudio(source, volume, resource);
     if (audio != nullptr) {
         id = audio->GetID();
     }

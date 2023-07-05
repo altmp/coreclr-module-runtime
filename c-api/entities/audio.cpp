@@ -14,11 +14,11 @@ alt::IBaseObject* Audio_GetBaseObject(alt::IAudio* audio) {
 
 
 uint32_t Audio_GetCategory(alt::IAudio* audio) {
-    return audio->GetCategory();
+    return 0;
 }
 
 void Audio_SetCategory(alt::IAudio* audio, uint32_t value) {
-    audio->SetCategory(value);
+    //audio->SetCategory(value);
 }
 
 double Audio_GetCurrentTime(alt::IAudio* audio) {
@@ -26,7 +26,7 @@ double Audio_GetCurrentTime(alt::IAudio* audio) {
 }
 
 uint8_t Audio_IsFrontendPlay(alt::IAudio* audio) {
-    return audio->IsFrontendPlay();
+    return 0;
 }
 
 uint8_t Audio_GetLooped(alt::IAudio* audio) {
@@ -63,19 +63,19 @@ void Audio_SetVolume(alt::IAudio* audio, float value) {
 
 
 void Audio_AddOutput_ScriptId(alt::IAudio* audio, uint32_t value) {
-    audio->AddOutput(value);
+    //audio->AddOutput(value);
 }
 
 void Audio_AddOutput_Entity(alt::IAudio* audio, alt::IEntity* value) {
-    audio->AddOutput(value);
+    //audio->AddOutput(value);
 }
 
 void Audio_RemoveOutput_ScriptId(alt::IAudio* audio, uint32_t value) {
-    audio->RemoveOutput(value);
+    //->RemoveOutput(value);
 }
 
 void Audio_RemoveOutput_Entity(alt::IAudio* audio, alt::IEntity* value) {
-    audio->RemoveOutput(value);
+    //audio->RemoveOutput(value);
 }
 
 void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint8_t*& entityTypesArray, uint32_t*& scriptIdArray, uint32_t& size) {
