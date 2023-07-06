@@ -615,6 +615,46 @@ uint16_t Player_GetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash)
     return player->GetWeaponAmmo(weaponHash);
 }
 
+void Player_SetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash, uint32_t ammoSpecialType)
+{
+    player->SetAmmoSpecialType(ammoHash, (alt::AmmoSpecialType)ammoSpecialType);
+}
+
+uint32_t Player_GetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return (uint32_t)player->GetAmmoSpecialType(ammoHash);
+}
+
+void Player_SetAmmoMax(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax)
+{
+    player->SetAmmoMax(ammoHash, ammoMax);
+}
+
+int32_t Player_GetAmmoMax(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return player->GetAmmoMax(ammoHash);
+}
+
+void Player_SetAmmoMax50(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax50)
+{
+    player->SetAmmoMax50(ammoHash, ammoMax50);
+}
+
+int32_t Player_GetAmmoMax50(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return player->GetAmmoMax50(ammoHash);
+}
+
+void Player_SetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax100)
+{
+    player->SetAmmoMax100(ammoHash, ammoMax100);
+}
+
+int32_t Player_GetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return player->GetAmmoMax100(ammoHash);
+}
+
 #endif
 
 #if ALT_CLIENT_API

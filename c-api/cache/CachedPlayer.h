@@ -525,6 +525,32 @@ namespace cache
     	{
     		return false;
     	}
+
+        void SetAmmoSpecialType(uint32_t ammoHash, alt::AmmoSpecialType ammoSpecialType) override {}
+    	alt::AmmoSpecialType GetAmmoSpecialType(uint32_t ammoHash) const override
+    	{
+        	return {};
+    	}
+        void SetAmmoFlags(uint32_t ammoHash, alt::AmmoFlags ammoFlags) override {}
+    	alt::AmmoFlags GetAmmoFlags(uint32_t ammoHash) const override
+        {
+        	return {};
+        }
+        void SetAmmoMax(uint32_t ammoHash, int32_t ammoMax) override {}
+    	int32_t GetAmmoMax(uint32_t ammoHash) const override
+        {
+        	return 0;
+        }
+        void SetAmmoMax50(uint32_t ammoHash, int32_t ammoMax50) override {}
+    	int32_t GetAmmoMax50(uint32_t ammoHash) const override
+        {
+        	return 0;
+        }
+        void SetAmmoMax100(uint32_t ammoHash, int32_t ammoMax100) override {}
+        int32_t GetAmmoMax100(uint32_t ammoHash) const override
+        {
+	        return 0;
+        }
 #endif
 
 

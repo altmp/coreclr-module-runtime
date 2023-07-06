@@ -26,6 +26,8 @@ EXPORT_SHARED float Checkpoint_GetRadius(alt::ICheckpoint* checkpoint);
 EXPORT_SHARED void Checkpoint_SetRadius(alt::ICheckpoint* checkpoint, float radius);
 EXPORT_SHARED void Checkpoint_GetColor(alt::ICheckpoint* checkpoint, rgba_t &color);
 EXPORT_SHARED void Checkpoint_SetColor(alt::ICheckpoint* checkpoint, rgba_t color);
+EXPORT_SHARED void Checkpoint_GetIconColor(alt::ICheckpoint* checkpoint, rgba_t &color);
+EXPORT_SHARED void Checkpoint_SetIconColor(alt::ICheckpoint* checkpoint, rgba_t color);
 EXPORT_SHARED void Checkpoint_GetNextPosition(alt::ICheckpoint* checkpoint, vector3_t &pos);
 EXPORT_SHARED void Checkpoint_SetNextPosition(alt::ICheckpoint* checkpoint, vector3_t pos);
 EXPORT_SHARED uint32_t Checkpoint_GetStreamingDistance(alt::ICheckpoint* checkpoint);

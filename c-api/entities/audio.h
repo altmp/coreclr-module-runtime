@@ -17,10 +17,7 @@ EXPORT_SHARED uint32_t Audio_GetID(alt::IAudio* audio);
 
 EXPORT_CLIENT alt::IBaseObject* Audio_GetBaseObject(alt::IAudio* audio);
 
-EXPORT_CLIENT uint32_t Audio_GetCategory(alt::IAudio* audio);
-EXPORT_CLIENT void Audio_SetCategory(alt::IAudio* audio, uint32_t value);
 EXPORT_CLIENT double Audio_GetCurrentTime(alt::IAudio* audio);
-EXPORT_CLIENT uint8_t Audio_IsFrontendPlay(alt::IAudio* audio);
 EXPORT_CLIENT uint8_t Audio_GetLooped(alt::IAudio* audio);
 EXPORT_CLIENT void Audio_SetLooped(alt::IAudio* audio, uint8_t value);
 EXPORT_CLIENT double Audio_GetMaxTime(alt::IAudio* audio);
@@ -30,10 +27,8 @@ EXPORT_CLIENT void Audio_SetSource(alt::IAudio* audio, const char* source);
 EXPORT_CLIENT float Audio_GetVolume(alt::IAudio* audio);
 EXPORT_CLIENT void Audio_SetVolume(alt::IAudio* audio, float value);
 
-EXPORT_CLIENT void Audio_AddOutput_ScriptId(alt::IAudio* audio, uint32_t value);
-EXPORT_CLIENT void Audio_AddOutput_Entity(alt::IAudio* audio, alt::IEntity* value);
-EXPORT_CLIENT void Audio_RemoveOutput_ScriptId(alt::IAudio* audio, uint32_t value);
-EXPORT_CLIENT void Audio_RemoveOutput_Entity(alt::IAudio* audio, alt::IEntity* value);
+EXPORT_CLIENT void Audio_AddOutput(alt::IAudio* audio, alt::IAudioOutput* output);
+EXPORT_CLIENT void Audio_RemoveOutput(alt::IAudio* audio, alt::IAudioOutput* output);
 EXPORT_CLIENT void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint8_t*& entityTypesArray, uint32_t*& scriptIdArray, uint32_t& size);
 EXPORT_CLIENT void Audio_Pause(alt::IAudio* audio);
 EXPORT_CLIENT void Audio_Play(alt::IAudio* audio);

@@ -138,7 +138,7 @@ EXPORT_SERVER void Core_GetClosestEntities(alt::ICore* core, vector3_t position,
 EXPORT_CLIENT uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path);
 EXPORT_CLIENT const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, const char* path, int32_t& size);
 
-EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, rgba_t iconColor, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id);
 #endif
 EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position, alt::IResource* resource, uint32_t &id);
 EXPORT_CLIENT alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius, alt::IResource* resource, uint32_t &id);

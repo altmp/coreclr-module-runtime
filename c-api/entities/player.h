@@ -215,3 +215,16 @@ EXPORT_SERVER void Player_SetAmmo(alt::IPlayer* player, uint32_t ammoHash, uint1
 EXPORT_SERVER uint16_t Player_GetAmmo(alt::IPlayer* player, uint32_t ammoHash);
 EXPORT_SERVER void Player_SetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash, uint16_t ammo);
 EXPORT_SERVER uint16_t Player_GetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash);
+
+EXPORT_SERVER void Player_SetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash, uint32_t ammoSpecialType);
+EXPORT_SERVER uint32_t Player_GetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash);
+
+
+
+EXPORT_SERVER void Player_SetAmmoMax(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax);
+EXPORT_SERVER int32_t Player_GetAmmoMax(alt::IPlayer* player, uint32_t ammoHash);
+
+EXPORT_SERVER void Player_SetAmmoMax50(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax50);
+EXPORT_SERVER int32_t Player_GetAmmoMax50(alt::IPlayer* player, uint32_t ammoHash);
+EXPORT_SERVER void Player_SetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax100);
+EXPORT_SERVER int32_t Player_GetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash);

@@ -939,7 +939,7 @@ alt::IRmlDocument* Core_CreateRmlDocument(alt::ICore* core, alt::IResource* reso
     return document;
 }
 
-alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id) {
+alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, rgba_t iconColor, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -953,7 +953,13 @@ alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_
     rgba.g = color.g;
     rgba.b = color.b;
     rgba.a = color.a;
-    auto checkPoint = core->CreateCheckpoint(type, position, nextPosition, radius, height, { (uint8_t) color.r, (uint8_t) color.g, (uint8_t) color.b, (uint8_t) color.a }, {}, streamingDistance, resource);
+
+    alt::RGBA iconRgba;
+    iconRgba.r = iconColor.r;
+    iconRgba.g = iconColor.g;
+    iconRgba.b = iconColor.b;
+    iconRgba.a = iconColor.a;
+    auto checkPoint = core->CreateCheckpoint(type, position, nextPosition, radius, height, rgba, iconRgba, streamingDistance, resource);
     if (checkPoint != nullptr) {
         id = checkPoint->GetID();
     }

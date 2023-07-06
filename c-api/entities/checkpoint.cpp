@@ -51,6 +51,25 @@ void Checkpoint_SetColor(alt::ICheckpoint* checkpoint, rgba_t color) {
     checkpoint->SetColor(newColor);
 }
 
+void Checkpoint_GetIconColor(alt::ICheckpoint* checkpoint, rgba_t& color)
+{
+    auto checkpointIconColor = checkpoint->GetIconColor();
+    color.r = checkpointIconColor.r;
+    color.g = checkpointIconColor.g;
+    color.b = checkpointIconColor.b;
+    color.a = checkpointIconColor.a;
+}
+
+void Checkpoint_SetIconColor(alt::ICheckpoint* checkpoint, rgba_t color)
+{
+    alt::RGBA newColor;
+    newColor.r = color.r;
+    newColor.g = color.g;
+    newColor.b = color.b;
+    newColor.a = color.a;
+    checkpoint->SetIconColor(newColor);
+}
+
 void Checkpoint_GetNextPosition(alt::ICheckpoint* checkpoint, vector3_t &pos) {
     auto position = checkpoint->GetNextPosition();
     pos.x = position.x;
