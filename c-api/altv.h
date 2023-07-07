@@ -27,6 +27,8 @@ EXPORT_SHARED void FreeVirtualEntityArray(alt::IVirtualEntity** virtualEntityArr
 EXPORT_SHARED void FreeVirtualEntityGroupArray(alt::IVirtualEntityGroup** virtualEntityGroupArray);
 EXPORT_SHARED void FreeConnectionInfoArray(alt::IConnectionInfo** connectionInfoArray);
 EXPORT_SHARED void FreeObjectArray(alt::IObject** objectArray);
+EXPORT_SHARED void FreeAudioArray(alt::IAudio** audioArray);
+EXPORT_SHARED void FreeAudioOutputArray(alt::IAudioOutput** audioOutputArray);
 EXPORT_SHARED void FreeMValueConstArray(alt::MValueConst** mvalueConstArray);
 EXPORT_SHARED const char* GetVersionStatic(int32_t &size);
 EXPORT_SHARED const char* GetBranchStatic(int32_t &size);

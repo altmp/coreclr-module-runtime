@@ -1,5 +1,10 @@
 #include "audioFilter.h"
 
+uint32_t AudioFilter_GetID(alt::IAudioFilter* audioFilter)
+{
+    return audioFilter->GetID();
+}
+
 #ifdef ALT_CLIENT_API
 alt::IBaseObject* AudioFilter_GetBaseObject(alt::IAudioFilter* audioFilter)
 {

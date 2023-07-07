@@ -280,7 +280,12 @@ EXPORT_CLIENT void Core_ResetMapZoomData(alt::ICore* core, uint32_t id);
 
 EXPORT_CLIENT alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource, uint32_t &id);
 EXPORT_CLIENT alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t &id);
-EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend, uint32_t &id);
+
+EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, const char* source, float volume, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::IAudioFilter* Core_CreateAudioFilter(alt::ICore* core, uint32_t hash, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::IAudioFrontendOutput* Core_CreateFrontendOutput(alt::ICore* core, uint32_t categoryHash, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::IAudioWorldOutput* Core_CreateWorldOutput(alt::ICore* core, uint32_t categoryHash, alt::Position pos, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::IAudioAttachedOutput* Core_CreateAttachedOutput(alt::ICore* core, uint32_t categoryHash, alt::IWorldObject* entity, alt::IResource* resource, uint32_t &id);
 
 EXPORT_CLIENT uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key);
 EXPORT_CLIENT alt::MValueConst* Core_GetLocalMeta(alt::ICore* core, const char* key);
@@ -321,7 +326,8 @@ EXPORT_CLIENT uint64_t Core_GetWebViewCount(alt::ICore* core);
 EXPORT_CLIENT void Core_GetWebViews(alt::ICore* core, alt::IWebView* webViews[], uint64_t size);
 
 EXPORT_CLIENT uint64_t Core_GetAudioCount(alt::ICore* core);
-EXPORT_CLIENT void Core_GetAudios(alt::ICore* core, alt::IAudio* audios[], uint64_t size);
+EXPORT_CLIENT alt::IAudio** Core_GetAudios(alt::ICore* core, uint64_t& size);
+EXPORT_CLIENT alt::IAudioOutput** Core_GetAudioOutputs(alt::ICore* core, uint64_t& size);
 
 EXPORT_SERVER alt::IMarker* Core_CreateMarker(alt::ICore* core, alt::IPlayer* target, uint8_t type, position_t pos, rgba_t color, alt::IResource* resource, uint32_t& id);
 EXPORT_CLIENT alt::IMarker* Core_CreateMarker_Client(alt::ICore* core, uint8_t type, position_t pos, rgba_t color, uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t& id);

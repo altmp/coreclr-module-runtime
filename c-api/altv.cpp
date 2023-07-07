@@ -118,6 +118,16 @@ void FreeObjectArray(alt::IObject** objectArray) {
     delete[] objectArray;
 }
 
+void FreeAudioArray(alt::IAudio** audioArray)
+{
+    delete[] audioArray;
+}
+
+void FreeAudioOutputArray(alt::IAudioOutput** audioOutputArray)
+{
+    delete[] audioOutputArray;
+}
+
 void FreeMValueConstArray(alt::MValueConst** mValueConstArray) {
     delete[] mValueConstArray;
 }

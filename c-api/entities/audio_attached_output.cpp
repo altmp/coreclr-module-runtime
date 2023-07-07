@@ -16,8 +16,10 @@ void AudioAttachedOutput_SetEntity(alt::IAudioAttachedOutput* audioAttachedOutpu
     audioAttachedOutput->SetEntity(entity);
 }
 
-alt::IWorldObject* AudioAttachedOutput_GetEntity(alt::IAudioAttachedOutput* audioAttachedOutput)
+alt::IWorldObject* AudioAttachedOutput_GetEntity(alt::IAudioAttachedOutput* audioAttachedOutput, alt::IBaseObject::Type& type)
 {
-    return audioAttachedOutput->GetEntity();
+    auto entity = audioAttachedOutput->GetEntity();
+    type = entity->GetType();
+    return entity;
 }
 #endif

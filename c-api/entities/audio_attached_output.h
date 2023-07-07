@@ -18,4 +18,4 @@ EXPORT_SHARED uint32_t AudioAttachedOutput_GetID(alt::IAudioAttachedOutput* audi
 EXPORT_CLIENT alt::IAudioOutput* AudioAttachedOutput_GetAudioOutputObject(alt::IAudioAttachedOutput* audioAttachedOutput);
 
 EXPORT_CLIENT void AudioAttachedOutput_SetEntity(alt::IAudioAttachedOutput* audioAttachedOutput, alt::IWorldObject* entity);
-EXPORT_CLIENT alt::IWorldObject* AudioAttachedOutput_GetEntity(alt::IAudioAttachedOutput* audioAttachedOutput);
+EXPORT_CLIENT alt::IWorldObject* AudioAttachedOutput_GetEntity(alt::IAudioAttachedOutput* audioAttachedOutput, alt::IBaseObject::Type& type);

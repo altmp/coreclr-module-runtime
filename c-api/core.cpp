@@ -1452,12 +1452,50 @@ alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResour
     return webSocketClient;
 }
 
-alt::IAudio* Core_CreateAudio(alt::ICore* core, alt::IResource* resource, const char* source, float volume, uint32_t category, uint8_t frontend, uint32_t &id) {
+alt::IAudio* Core_CreateAudio(alt::ICore* core, const char* source, float volume, alt::IResource* resource, uint32_t &id) {
     auto audio = core->CreateAudio(source, volume, resource);
     if (audio != nullptr) {
         id = audio->GetID();
     }
     return audio;
+}
+
+alt::IAudioFilter* Core_CreateAudioFilter(alt::ICore* core, uint32_t hash, alt::IResource* resource, uint32_t& id)
+{
+    auto audioFilter = core->CreateAudioFilter(hash, resource);
+    if (audioFilter != nullptr) {
+        id = audioFilter->GetID();
+    }
+    return audioFilter;
+}
+
+alt::IAudioFrontendOutput* Core_CreateFrontendOutput(alt::ICore* core, uint32_t categoryHash, alt::IResource* resource, uint32_t& id)
+{
+    auto audioFrontendOutput = core->CreateFrontendOutput(categoryHash, resource);
+    if (audioFrontendOutput != nullptr) {
+        id = audioFrontendOutput->GetID();
+    }
+    return audioFrontendOutput;
+}
+
+alt::IAudioWorldOutput* Core_CreateWorldOutput(alt::ICore* core, uint32_t categoryHash, alt::Position pos,
+    alt::IResource* resource, uint32_t& id)
+{
+    auto audioWorldOutput = core->CreateWorldOutput(categoryHash, pos, resource);
+    if (audioWorldOutput != nullptr) {
+        id = audioWorldOutput->GetID();
+    }
+    return audioWorldOutput;
+}
+
+alt::IAudioAttachedOutput* Core_CreateAttachedOutput(alt::ICore* core, uint32_t categoryHash, alt::IWorldObject* entity,
+    alt::IResource* resource, uint32_t& id)
+{
+    auto audioAttachedOutput = core->CreateAttachedOutput(categoryHash, entity, resource);
+    if (audioAttachedOutput != nullptr) {
+        id = audioAttachedOutput->GetID();
+    }
+    return audioAttachedOutput;
 }
 
 uint8_t Core_HasLocalMeta(alt::ICore* core, const char* key) {
@@ -1609,19 +1647,32 @@ uint64_t Core_GetAudioCount(alt::ICore* core)
     return core->GetAudios().size();
 }
 
-void Core_GetAudios(alt::ICore* core, alt::IAudio* audios[], uint64_t size)
+alt::IAudio** Core_GetAudios(alt::ICore* core, uint64_t& size)
 {
-    auto audiosArray = core->GetAudios();
-    if (audiosArray.size() < size) {
-        size = audiosArray.size();
+    auto audios = core->GetAudios();
+    size = audios.size();
+    auto out = new alt::IAudio*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = audios[i];
     }
-    for (uint64_t i = 0; i < size; i++) {
-        audios[i] = audiosArray[i];
+
+    return out;
+}
+
+alt::IAudioOutput** Core_GetAudioOutputs(alt::ICore* core, uint64_t& size)
+{
+    auto audioOutputs = core->GetAudioOutputs();
+    size = audioOutputs.size();
+    auto out = new alt::IAudioOutput*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = audioOutputs[i];
     }
+
+    return out;
 }
 
 alt::IMarker* Core_CreateMarker_Client(alt::ICore* core, uint8_t type, position_t position, rgba_t color, uint8_t useStreaming, uint32_t streamingDistance,
-    alt::IResource* resource, uint32_t& id)
+                                       alt::IResource* resource, uint32_t& id)
 {
     alt::Position pos;
     pos.x = position.x;

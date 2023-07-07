@@ -13,6 +13,7 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t AudioFilter_GetID(alt::IAudioFilter* audioFilter);
 EXPORT_CLIENT alt::IBaseObject* AudioFilter_GetBaseObject(alt::IAudioFilter* audioFilter);
 
 EXPORT_CLIENT uint32_t AudioFilter_GetHash(alt::IAudioFilter* audioFilter);
