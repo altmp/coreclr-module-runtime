@@ -627,6 +627,36 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
             OnCreateBaseObjectDelegate(audio, audio->GetType(), audio->GetID());
             break;
         }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT:
+        {
+            auto audioOutput = dynamic_cast<alt::IAudioOutput*>(object);
+            OnCreateBaseObjectDelegate(audioOutput, audioOutput->GetType(), audioOutput->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_WORLD:
+        {
+            auto audioWorldOutput = dynamic_cast<alt::IAudioWorldOutput*>(object);
+            OnCreateBaseObjectDelegate(audioWorldOutput, audioWorldOutput->GetType(), audioWorldOutput->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_ATTACHED:
+        {
+            auto audioAttachedOutput = dynamic_cast<alt::IAudioAttachedOutput*>(object);
+            OnCreateBaseObjectDelegate(audioAttachedOutput, audioAttachedOutput->GetType(), audioAttachedOutput->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_FRONTEND:
+        {
+            auto audioFrontendOutput = dynamic_cast<alt::IAudioFrontendOutput*>(object);
+            OnCreateBaseObjectDelegate(audioFrontendOutput, audioFrontendOutput->GetType(), audioFrontendOutput->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_FILTER:
+        {
+            auto audioFilter = dynamic_cast<alt::IAudioFilter*>(object);
+            OnCreateBaseObjectDelegate(audioFilter, audioFilter->GetType(), audioFilter->GetID());
+            break;
+        }
     case alt::IBaseObject::Type::RML_ELEMENT:
         {
             auto rmlElement = dynamic_cast<alt::IRmlElement*>(object);
@@ -748,6 +778,36 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
         {
             const auto audio = dynamic_cast<alt::IAudio*>(object);
             OnRemoveBaseObjectDelegate(audio, audio->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT:
+        {
+            const auto audioOutput = dynamic_cast<alt::IAudioOutput*>(object);
+            OnRemoveBaseObjectDelegate(audioOutput, audioOutput->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_WORLD:
+        {
+            const auto audioWorldOutput = dynamic_cast<alt::IAudioWorldOutput*>(object);
+            OnRemoveBaseObjectDelegate(audioWorldOutput, audioWorldOutput->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_ATTACHED:
+        {
+            const auto audioAttachedOutput = dynamic_cast<alt::IAudioAttachedOutput*>(object);
+            OnRemoveBaseObjectDelegate(audioAttachedOutput, audioAttachedOutput->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_FRONTEND:
+        {
+            const auto audioFrontendOutput = dynamic_cast<alt::IAudioFrontendOutput*>(object);
+            OnRemoveBaseObjectDelegate(audioFrontendOutput, audioFrontendOutput->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_FILTER:
+        {
+            const auto audioFilter = dynamic_cast<alt::IAudioFilter*>(object);
+            OnRemoveBaseObjectDelegate(audioFilter, audioFilter->GetType());
             break;
         }
     case alt::IBaseObject::Type::RML_ELEMENT:
