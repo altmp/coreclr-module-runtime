@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 6667977309785723871UL;
+inline uint64_t capiHash = 16891803787576742001UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1278,9 +1278,11 @@ inline uint64_t capiHashes[] = {
     1935399752104807234UL,
     14293729102633233291UL,
     2394928316223850939UL,
+    17674808600712417948UL,
     18350138927152444768UL,
     10068978925729858744UL,
     6890209545812653225UL,
+    10446003059764787426UL,
     12499323796185454576UL,
     13784986107578511323UL,
     11704988286424373327UL,
@@ -1333,6 +1335,7 @@ inline uint64_t capiHashes[] = {
     6739305111416325852UL,
     937601034617427157UL,
     7259744676523289652UL,
+    5085700603299897862UL,
     10836018786747292423UL,
     11695668961107082902UL,
     8083052449033648842UL,
@@ -2858,9 +2861,11 @@ inline void* capiPointers[] = {
     (void*) Player_ClearBloodDamage,
     (void*) Player_ClearProps,
     (void*) Player_ClearTasks,
+    (void*) Player_DeallocAmmoFlags,
     (void*) Player_DeleteLocalMetaData,
     (void*) Player_Despawn,
     (void*) Player_GetAmmo,
+    (void*) Player_GetAmmoFlags,
     (void*) Player_GetAmmoMax,
     (void*) Player_GetAmmoMax100,
     (void*) Player_GetAmmoMax50,
@@ -2913,6 +2918,7 @@ inline void* capiPointers[] = {
     (void*) Player_RemoveWeapon,
     (void*) Player_RemoveWeaponComponent,
     (void*) Player_SetAmmo,
+    (void*) Player_SetAmmoFlags,
     (void*) Player_SetAmmoMax,
     (void*) Player_SetAmmoMax100,
     (void*) Player_SetAmmoMax50,

@@ -625,6 +625,28 @@ uint32_t Player_GetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash)
     return (uint32_t)player->GetAmmoSpecialType(ammoHash);
 }
 
+void Player_SetAmmoFlags(alt::IPlayer* player, uint32_t ammoHash, uint8_t infiniteAmmo, uint8_t addSmokeOnExplosion, uint8_t fuse,
+    uint8_t fixedAfterExplosion)
+{
+    player->SetAmmoFlags(ammoHash,
+        {
+            static_cast<bool>(infiniteAmmo),
+            static_cast<bool>(addSmokeOnExplosion),
+            static_cast<bool>(fuse),
+            static_cast<bool>(fixedAfterExplosion)
+        });
+}
+
+ClrAmmoFlags* Player_GetAmmoFlags(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return new ClrAmmoFlags(player->GetAmmoFlags(ammoHash));
+}
+
+void Player_DeallocAmmoFlags(ClrAmmoFlags* ammoFlags)
+{
+    delete ammoFlags;
+}
+
 void Player_SetAmmoMax(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax)
 {
     player->SetAmmoMax(ammoHash, ammoMax);

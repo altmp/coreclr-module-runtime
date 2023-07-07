@@ -15,6 +15,7 @@
 #include "../data/head_blend_data.h"
 #include "../data/head_overlay.h"
 #include "../utils/export.h"
+#include "../data/ammo_flags.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -219,7 +220,10 @@ EXPORT_SERVER uint16_t Player_GetWeaponAmmo(alt::IPlayer* player, uint32_t weapo
 EXPORT_SERVER void Player_SetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash, uint32_t ammoSpecialType);
 EXPORT_SERVER uint32_t Player_GetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash);
 
+EXPORT_SERVER void Player_SetAmmoFlags(alt::IPlayer* player, uint32_t ammoHash, uint8_t infiniteAmmo, uint8_t addSmokeOnExplosion, uint8_t fuse, uint8_t fixedAfterExplosion);
+EXPORT_SERVER ClrAmmoFlags* Player_GetAmmoFlags(alt::IPlayer* player, uint32_t ammoHash);
 
+EXPORT_SERVER void Player_DeallocAmmoFlags(ClrAmmoFlags* ammoFlags);
 
 EXPORT_SERVER void Player_SetAmmoMax(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax);
 EXPORT_SERVER int32_t Player_GetAmmoMax(alt::IPlayer* player, uint32_t ammoHash);
