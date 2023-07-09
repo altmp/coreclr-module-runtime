@@ -677,6 +677,37 @@ int32_t Player_GetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash)
     return player->GetAmmoMax100(ammoHash);
 }
 
+void Player_AddDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay)
+{
+    player->AddDecoration(collection, overlay);
+}
+
+void Player_RemoveDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay)
+{
+    player->RemoveDecoration(collection, overlay);
+}
+
+void Player_ClearDecorations(alt::IPlayer* player)
+{
+    player->ClearDecorations();
+}
+
+ClrDecoration** Player_GetDecorations(alt::IPlayer* player, uint64_t& size)
+{
+    auto decorations = player->GetDecorations();
+    size = decorations.size();
+    auto out = new ClrDecoration*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = new ClrDecoration(decorations[i]);
+    }
+
+    return out;
+}
+
+void Player_DeallocVehicleModelInfo(ClrDecoration** decoInfo) {
+    delete[] decoInfo;
+}
+
 #endif
 
 #if ALT_CLIENT_API

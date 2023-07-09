@@ -16,6 +16,7 @@
 #include "../data/head_overlay.h"
 #include "../utils/export.h"
 #include "../data/ammo_flags.h"
+#include "../data/decoration.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -232,3 +233,10 @@ EXPORT_SERVER void Player_SetAmmoMax50(alt::IPlayer* player, uint32_t ammoHash, 
 EXPORT_SERVER int32_t Player_GetAmmoMax50(alt::IPlayer* player, uint32_t ammoHash);
 EXPORT_SERVER void Player_SetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax100);
 EXPORT_SERVER int32_t Player_GetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash);
+
+EXPORT_SERVER void Player_AddDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay);
+EXPORT_SERVER void Player_RemoveDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay);
+EXPORT_SERVER void Player_ClearDecorations(alt::IPlayer* player);
+
+EXPORT_SERVER ClrDecoration** Player_GetDecorations(alt::IPlayer* player, uint64_t& size);
+EXPORT_SERVER void Player_DeallocVehicleModelInfo(ClrDecoration** decoInfo);
