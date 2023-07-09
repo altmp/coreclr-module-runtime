@@ -11,6 +11,7 @@
 #include "natives.h"
 #include "exceptions/LoadException.h"
 #include "../../c-api/utils/entity.h"
+#include "../../c-api/mvalue.h"
 
 using namespace std;
 
@@ -125,14 +126,11 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
     case alt::CEvent::Type::RMLUI_EVENT:
         {
             auto rmlUiEvent = dynamic_cast<const alt::CRmlEvent*>(ev);
-            auto args = rmlUiEvent->GetArgs();
             auto name = rmlUiEvent->GetName();
-            auto size = args->GetSize();
 
             OnRmlEventDelegate(rmlUiEvent->GetElement(),
                                name.c_str(),
-                               rmlUiEvent->GetArgs().get(),
-                               size);
+                               AllocMValue(std::move(rmlUiEvent->GetArgs())));
             break;
         }
     case alt::CEvent::Type::WEB_SOCKET_CLIENT_EVENT:
@@ -895,7 +893,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnWebViewEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
     OnWebSocketEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnRmlEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnRmlEventDelegate = [](auto var, auto var2, auto var3) {};
 
     OnPlayerSpawnDelegate = [](){};
     OnPlayerDisconnectDelegate = [](){};

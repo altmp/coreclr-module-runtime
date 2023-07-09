@@ -8,7 +8,7 @@ typedef void (* ServerEventDelegate_t)(const char* name, alt::MValueConst** args
 typedef void (* WebViewEventDelegate_t)(alt::IWebView*, const char* name, alt::MValueConst** args, uint64_t size);
 typedef void (* ConsoleCommandDelegate_t)(const char* name, const char* args[], uint64_t size);
 typedef void (* WebSocketEventDelegate_t)(alt::IWebSocketClient*, const char* name, alt::MValueConst** args, uint64_t size);
-typedef void (* RmlEventDelegate_t)(alt::IRmlElement*, const char* name, alt::IMValueDict* args, uint64_t size);
+typedef void (* RmlEventDelegate_t)(alt::IRmlElement*, const char* name, alt::MValueConst* args);
 
 typedef void (* PlayerSpawnDelegate_t)();
 typedef void (* PlayerDisconnectDelegate_t)();
