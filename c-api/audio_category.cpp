@@ -126,7 +126,7 @@ void AudioCategory_SetEnvironmentalLoudness(const char* name, float value) {
 
 void AudioCategory_SetUnderwaterWetLevel(const char* name, float value) {
     auto audioCategory = alt::ICore::Instance().GetAudioCategory(name);
-    audioCategory->SetUnderwaterWetLevel((value); 
+    audioCategory->SetUnderwaterWetLevel(value); 
 }
 
 void AudioCategory_SetStonedWetLevel(const char* name, float value) {
