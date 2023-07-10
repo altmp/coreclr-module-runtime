@@ -1,6 +1,6 @@
 #include "audio_category.h"
 
-#include "../utils/strings.h"
+#include "utils/strings.h"
 
 #ifdef ALT_CLIENT_API
 
