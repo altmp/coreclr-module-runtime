@@ -560,7 +560,7 @@ namespace cache
     		return {};
     	}
 
-    	void PlayScenario(const std::string& reason) override {}
+    	void PlayScenario(const std::string& name) override {}
 #endif
 
 

@@ -708,12 +708,12 @@ void Player_DeallocVehicleModelInfo(ClrDecoration** decoInfo) {
     delete[] decoInfo;
 }
 
-#endif
-
 void Player_PlayScenario(alt::IPlayer* player, const char* name)
 {
     player->PlayScenario(name);
 }
+
+#endif
 
 #if ALT_CLIENT_API
 
