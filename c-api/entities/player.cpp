@@ -710,6 +710,11 @@ void Player_DeallocVehicleModelInfo(ClrDecoration** decoInfo) {
 
 #endif
 
+void Player_PlayScenario(alt::IPlayer* player, const char* name)
+{
+    player->PlayScenario(name);
+}
+
 #if ALT_CLIENT_API
 
 uint8_t Player_IsTalking(alt::IPlayer* player) {

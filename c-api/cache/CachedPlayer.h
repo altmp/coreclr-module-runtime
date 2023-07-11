@@ -559,6 +559,8 @@ namespace cache
     	{
     		return {};
     	}
+
+    	void PlayScenario(const std::string& reason) override {}
 #endif
 
 
