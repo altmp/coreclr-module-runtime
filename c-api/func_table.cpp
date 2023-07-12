@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 3791551142871488314UL;
+inline uint64_t capiHash = 11130246753470560260UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -125,6 +125,8 @@ inline uint64_t capiHashes[] = {
     1212339219242517554UL,
     11971296438427190394UL,
     2905154853369701790UL,
+    17040861123821249134UL,
+    10675436726413059015UL,
     18419578908798121866UL,
     17324382311220306947UL,
     16659676766335434349UL,
@@ -1752,6 +1754,8 @@ inline void* capiPointers[] = {
     (void*) Core_DeallocDiscordUser,
     (void*) Core_Discord_GetOAuth2Token,
     (void*) Core_DoesConfigFlagExist,
+    (void*) Core_GetAllWeaponData,
+    (void*) Core_GetAllWeaponDataCount,
     (void*) Core_GetAudioCount,
     (void*) Core_GetAudioOutputs,
     (void*) Core_GetAudios,

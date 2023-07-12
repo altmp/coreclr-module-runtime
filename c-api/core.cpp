@@ -1800,5 +1800,21 @@ alt::IWorldObject* Core_GetWorldObjectByScriptID(alt::ICore* core, uint32_t scri
 {
     return core->GetWorldObjectByScriptID(scriptId);
 }
+
+uint64_t Core_GetAllWeaponDataCount(alt::ICore* core)
+{
+    return core->GetAllWeaponData().size();
+}
+
+void Core_GetAllWeaponData(alt::ICore* core, uint32_t weaponHashes[], uint64_t size)
+{
+    auto weaponData = core->GetAllWeaponData();
+    if (weaponData.size() < size) {
+        size = weaponData.size();
+    }
+    for (uint64_t i = 0; i < size; i++) {
+        weaponHashes[i] = weaponData[i]->GetNameHash();
+    }
+}
 #endif
 

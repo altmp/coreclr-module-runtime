@@ -351,3 +351,6 @@ EXPORT_CLIENT alt::ICheckpoint* Core_GetCheckpointByGameID(alt::ICore* core, uin
 EXPORT_CLIENT uint8_t Core_IsWebViewGpuAccelerationActive(alt::ICore* core);
 
 EXPORT_CLIENT alt::IWorldObject* Core_GetWorldObjectByScriptID(alt::ICore* core, uint32_t scriptId);
+
+EXPORT_CLIENT uint64_t Core_GetAllWeaponDataCount(alt::ICore* core);
+EXPORT_CLIENT void Core_GetAllWeaponData(alt::ICore* core, uint32_t weaponHashes[], uint64_t size);
