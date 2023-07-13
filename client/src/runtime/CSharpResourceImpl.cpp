@@ -607,6 +607,12 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
             OnCreateBaseObjectDelegate(checkPoint, checkPoint->GetType(), checkPoint->GetID());
             break;
         }
+    case alt::IBaseObject::Type::COLSHAPE:
+        {
+            auto colshape = dynamic_cast<alt::IColShape*>(object);
+            OnCreateBaseObjectDelegate(colshape, colshape->GetType(), colshape->GetID());
+            break;
+        }
     case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
         {
             auto webSocketClient = dynamic_cast<alt::IWebSocketClient*>(object);
@@ -758,6 +764,12 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
         {
             const auto checkpoint = dynamic_cast<alt::ICheckpoint*>(object);
             OnRemoveBaseObjectDelegate(checkpoint, checkpoint->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::COLSHAPE:
+        {
+            const auto colshape = dynamic_cast<alt::IColShape*>(object);
+            OnRemoveBaseObjectDelegate(colshape, colshape->GetType());
             break;
         }
     case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
