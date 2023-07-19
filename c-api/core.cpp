@@ -842,9 +842,14 @@ alt::Metric* Core_RegisterMetric(alt::ICore* core, const char* metricName, uint8
     return core->RegisterMetric(metricName, static_cast<alt::Metric::Type>(type), data);
 }
 
-void Core_UnrgisterMetric(alt::ICore* core, alt::Metric* metric)
+void Core_UnregisterMetric(alt::ICore* core, alt::Metric* metric)
 {
     core->UnregisterMetric(metric);
+}
+
+void Core_SetVoiceExternalPublic(alt::ICore* core, const char* host, uint16_t port)
+{
+    core->SetVoiceExternalPublic(host, port);
 }
 #endif
 

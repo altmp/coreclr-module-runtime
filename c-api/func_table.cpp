@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 11130246753470560260UL;
+inline uint64_t capiHash = 8369075040012837243UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -286,6 +286,7 @@ inline uint64_t capiHashes[] = {
     12745100726667735891UL,
     11607888672861240667UL,
     6297655192007422547UL,
+    15217894888506700489UL,
     3915432127661349363UL,
     1607737297081958503UL,
     12568421593610200155UL,
@@ -1273,6 +1274,7 @@ inline uint64_t capiHashes[] = {
     14370739159812248240UL,
     6443050816994465854UL,
     15257521334482717721UL,
+    1331513094967507660UL,
     10444519920811589155UL,
     16286692558347341301UL,
     6124037131742433471UL,
@@ -1285,7 +1287,7 @@ inline uint64_t capiHashes[] = {
     9578627964183564598UL,
     14557546483922608997UL,
     4092140335578989631UL,
-    12132329207255716449UL,
+    17237210604041123822UL,
     8214096007757560094UL,
     4813711775676193020UL,
     10985243845337635807UL,
@@ -1915,6 +1917,7 @@ inline void* capiPointers[] = {
     (void*) Event_SetSyncedMetaChangeDelegate,
     (void*) Event_SetTaskChangeDelegate,
     (void*) Event_SetTickDelegate,
+    (void*) Event_SetVoiceConnectionDelegate,
     (void*) Event_SetWeaponDamageDelegate,
     (void*) Event_SetWebSocketEventDelegate,
     (void*) Event_SetWebViewEventDelegate,
@@ -2902,6 +2905,7 @@ inline void* capiPointers[] = {
     (void*) Core_RestartResource,
     (void*) Core_SetPassword,
     (void*) Core_SetSyncedMetaData,
+    (void*) Core_SetVoiceExternalPublic,
     (void*) Core_SetWorldProfiler,
     (void*) Core_StartResource,
     (void*) Core_StopResource,
@@ -2914,7 +2918,7 @@ inline void* capiPointers[] = {
     (void*) Core_TriggerClientEventUnreliableForAll,
     (void*) Core_TriggerClientEventUnreliableForSome,
     (void*) Core_TriggerServerEvent,
-    (void*) Core_UnrgisterMetric,
+    (void*) Core_UnregisterMetric,
     (void*) Entity_AttachToEntity,
     (void*) Entity_AttachToEntity_BoneString,
     (void*) Entity_DeleteStreamSyncedMetaData,

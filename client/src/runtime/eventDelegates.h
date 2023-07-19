@@ -74,3 +74,5 @@ typedef void (* PlayerStartEnterVehicleDelegate_t)(void* target, void* player, u
 typedef void (* PlayerStartLeaveVehicleDelegate_t)(void* target, void* player, uint8_t seat);
 
 typedef void (* PlayerBulletHitDelegate_t)(uint32_t weapon, void* victim, alt::IBaseObject::Type victimType, position_t pos);
+
+typedef void (* VoiceConnectionDelegate_t)(uint8_t state);

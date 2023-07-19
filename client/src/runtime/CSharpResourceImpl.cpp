@@ -553,6 +553,14 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                               playerStartLeaveVehicleEvent->GetSeat());
             break;
         }
+    case alt::CEvent::Type::VOICE_CONNECTION_EVENT:
+        {
+            auto voiceConnectionEvent = dynamic_cast<const alt::CVoiceConnectionEvent*>(ev);
+
+            OnVoiceConnectionDelegate(static_cast<uint8_t>(voiceConnectionEvent->GetState()));
+
+            break;
+        }
     default:
         {
             std::cout << "Unhandled client event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -960,5 +968,10 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnEntityHitEntityDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
 
+    OnPlayerStartEnterVehicleDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerStartLeaveVehicleDelegate = [](auto var, auto var2, auto var3) {};
+
     OnPlayerBulletHitDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+
+    OnVoiceConnectionDelegate = [](auto var) {};
 }

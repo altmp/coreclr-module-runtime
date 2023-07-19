@@ -83,5 +83,6 @@ SetDelegate(PlayerStartEnterVehicle);
 SetDelegate(PlayerStartLeaveVehicle);
 
 SetDelegate(PlayerBulletHit);
+SetDelegate(VoiceConnection);
 
 #endif

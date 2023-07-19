@@ -90,4 +90,5 @@ EXPORT_CLIENT void Event_SetPlayerStartEnterVehicleDelegate(CSharpResourceImpl* 
 EXPORT_CLIENT void Event_SetPlayerStartLeaveVehicleDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerStartLeaveVehicleModuleDelegate */ PlayerStartLeaveVehicleDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetPlayerBulletHitDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerBulletHitModuleDelegate */ PlayerBulletHitDelegate_t delegate);
+EXPORT_CLIENT void Event_SetVoiceConnectionDelegate(CSharpResourceImpl* resource, /** ClientEvents.VoiceConnectionModuleDelegate */ VoiceConnectionDelegate_t delegate);
 #endif

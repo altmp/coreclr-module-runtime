@@ -98,6 +98,8 @@ public:
 
     PlayerBulletHitDelegate_t OnPlayerBulletHitDelegate = nullptr;
 
+    VoiceConnectionDelegate_t OnVoiceConnectionDelegate = nullptr;
+
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
     {
