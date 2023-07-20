@@ -695,7 +695,7 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
             }
         case alt::IBaseObject::Type::LOCAL_OBJECT:
             {
-                const auto altObject = dynamic_cast<alt::IObject*>(object);
+                const auto altObject = dynamic_cast<alt::ILocalObject*>(object);
                 OnCreateBaseObjectDelegate(altObject, altObject->GetType(), altObject->GetID());
                 break;
             }
@@ -796,7 +796,7 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
             }
         case alt::IBaseObject::Type::LOCAL_OBJECT:
             {
-                const auto altObject = dynamic_cast<alt::IObject*>(object);
+                const auto altObject = dynamic_cast<alt::ILocalObject*>(object);
                 OnRemoveBaseObjectDelegate(altObject, altObject->GetType());
                 break;
             }

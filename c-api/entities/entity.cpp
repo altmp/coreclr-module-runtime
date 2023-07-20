@@ -99,12 +99,12 @@ void Entity_SetCollision(alt::IEntity* entity, uint8_t state) {
     entity->SetCollision(state);
 }
 
-void Entity_AttachToEntity(alt::IEntity* entity, alt::IEntity* secondEntity, int16_t otherBone, int16_t ownBone,
+void Entity_AttachToEntity(alt::IEntity* entity, alt::IEntity* secondEntity, uint16_t otherBoneId, uint16_t ownBoneId,
     position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
 {
     alt::Position position{pos.x, pos.y, pos.z};
     alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    entity->AttachToEntity(secondEntity, otherBone, ownBone, position, rotation, collision, noFixedRot);
+    entity->AttachToEntity(secondEntity, otherBoneId, ownBoneId, position, rotation, collision, noFixedRot);
 }
 
 void Entity_AttachToEntity_BoneString(alt::IEntity* entity, alt::IEntity* secondEntity, const char* otherBone,

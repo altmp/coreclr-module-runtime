@@ -282,7 +282,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 ptr = dynamic_cast<alt::IVehicle*>(entity);
                 break;
             case alt::IBaseObject::Type::LOCAL_OBJECT:
-                ptr = dynamic_cast<alt::IObject*>(entity);
+                ptr = dynamic_cast<alt::ILocalObject*>(entity);
                 break;
             case alt::IBaseObject::Type::PED:
                 ptr = dynamic_cast<alt::IPed*>(entity);
@@ -311,7 +311,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 ptr = dynamic_cast<alt::IVehicle*>(entity);
                 break;
             case alt::IBaseObject::Type::LOCAL_OBJECT:
-                ptr = dynamic_cast<alt::IObject*>(entity);
+                ptr = dynamic_cast<alt::ILocalObject*>(entity);
                 break;
             case alt::IBaseObject::Type::PED:
                 ptr = dynamic_cast<alt::IPed*>(entity);
@@ -683,7 +683,7 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
         }
     case alt::IBaseObject::Type::LOCAL_OBJECT:
         {
-            auto altObject = dynamic_cast<alt::IObject*>(object);
+            auto altObject = dynamic_cast<alt::ILocalObject*>(object);
             OnCreateBaseObjectDelegate(altObject, altObject->GetType(), altObject->GetID());
             break;
         }
@@ -842,7 +842,7 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
         }
     case alt::IBaseObject::Type::LOCAL_OBJECT:
         {
-            const auto altObject = dynamic_cast<alt::IObject*>(object);
+            const auto altObject = dynamic_cast<alt::ILocalObject*>(object);
             OnRemoveBaseObjectDelegate(altObject, altObject->GetType());
             break;
         }

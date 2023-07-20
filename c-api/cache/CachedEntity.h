@@ -167,7 +167,7 @@ namespace cache
         {
         }
 
-        void AttachToEntity(IEntity* entity, int16_t otherBoneIndex, int16_t myBoneIndex, alt::Position position,
+        void AttachToEntity(IEntity* entity, uint16_t otherBoneId, uint16_t myBoneId, alt::Position position,
                             alt::Rotation rotation, bool collision, bool noFixedRotation) override
         {
         }

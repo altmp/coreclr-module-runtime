@@ -16,7 +16,7 @@ void* Util_GetEntityPointer(alt::IBaseObject* entity)
         case alt::IBaseObject::Type::NETWORK_OBJECT:
             return dynamic_cast<alt::INetworkObject*>(entity);
         case alt::IBaseObject::Type::LOCAL_OBJECT:
-            return dynamic_cast<alt::IObject*>(entity);
+            return dynamic_cast<alt::ILocalObject*>(entity);
         default:
             return nullptr;
         }
@@ -46,7 +46,7 @@ void* Util_GetWorldObjectPointer(alt::IWorldObject* worldObject)
         case alt::IBaseObject::Type::CHECKPOINT:
             return dynamic_cast<alt::ICheckpoint*>(worldObject);
         case alt::IBaseObject::Type::LOCAL_OBJECT:
-            return dynamic_cast<alt::IObject*>(worldObject);
+            return dynamic_cast<alt::ILocalObject*>(worldObject);
         case alt::IBaseObject::Type::VIRTUAL_ENTITY:
             return dynamic_cast<alt::IVirtualEntity*>(worldObject);
         case alt::IBaseObject::Type::MARKER:
@@ -102,7 +102,7 @@ void* Util_GetBaseObjectPointer(alt::IBaseObject* baseObject)
         case alt::IBaseObject::Type::RML_DOCUMENT:
             return dynamic_cast<alt::IRmlDocument*>(baseObject);
         case alt::IBaseObject::Type::LOCAL_OBJECT:
-            return dynamic_cast<alt::IObject*>(baseObject);
+            return dynamic_cast<alt::ILocalObject*>(baseObject);
         case alt::IBaseObject::Type::VIRTUAL_ENTITY:
             return dynamic_cast<alt::IVirtualEntity*>(baseObject);
         case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:

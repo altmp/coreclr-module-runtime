@@ -114,7 +114,7 @@ void FreeConnectionInfoArray(alt::IConnectionInfo** connectionInfoArray)
     delete[] connectionInfoArray;
 }
 
-void FreeObjectArray(alt::IObject** objectArray) {
+void FreeLocalObjectArray(alt::ILocalObject** objectArray) {
     delete[] objectArray;
 }
 

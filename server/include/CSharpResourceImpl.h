@@ -344,7 +344,7 @@ public:
                     this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::ICheckpoint*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::LOCAL_OBJECT:
-                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IObject*>(object), object->GetType());
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::ILocalObject*>(object), object->GetType());
                 break;
                 case alt::IBaseObject::Type::PED:
                     this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IPed*>(object), object->GetType());

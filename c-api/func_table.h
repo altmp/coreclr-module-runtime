@@ -27,7 +27,7 @@
 #include "entities/connection_info.h"
 #include "entities/entity.h"
 #include "entities/http_client.h"
-#include "entities/object.h"
+#include "entities/local_object.h"
 #include "entities/player.h"
 #include "entities/ped.h"
 #include "entities/virtual_entity.h"

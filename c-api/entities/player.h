@@ -242,3 +242,6 @@ EXPORT_SERVER ClrDecoration** Player_GetDecorations(alt::IPlayer* player, uint64
 EXPORT_SERVER void Player_DeallocVehicleModelInfo(ClrDecoration** decoInfo);
 
 EXPORT_SERVER void Player_PlayScenario(alt::IPlayer* player, const char* name);
+
+EXPORT_SERVER uint8_t Player_IsNetworkOwnershipDisabled(alt::IPlayer* player);
+EXPORT_SERVER void Player_SetNetworkOwnershipDisabled(alt::IPlayer* player, uint8_t state);

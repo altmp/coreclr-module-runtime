@@ -561,6 +561,12 @@ namespace cache
     	}
 
     	void PlayScenario(const std::string& name) override {}
+
+        bool IsNetworkOwnershipDisabled() const override
+    	{
+    		return false;
+    	}
+        void SetNetworkOwnershipDisabled(bool disabled) override {}
 #endif
 
 

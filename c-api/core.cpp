@@ -1576,15 +1576,15 @@ uint8_t Core_IsPointOnScreen(alt::ICore* core, vector3_t pos) {
     return core->IsPointOnScreen({ pos.x, pos.y, pos.z });
 }
 
-alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t modelHash, vector3_t pos, vector3_t rot, uint8_t noOffset, uint8_t dynamic, uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id) {
-    auto object = core->CreateObject(modelHash, { pos.x, pos.y, pos.z }, { rot.x, rot.y, rot.z }, noOffset, dynamic, useStreaming, streamingDistance, resource);
+alt::ILocalObject* Core_CreateLocalObject(alt::ICore* core, uint32_t modelHash, vector3_t pos, vector3_t rot, uint8_t noOffset, uint8_t dynamic, uint8_t useStreaming, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id) {
+    auto object = core->CreateLocalObject(modelHash, { pos.x, pos.y, pos.z }, { rot.x, rot.y, rot.z }, noOffset, dynamic, useStreaming, streamingDistance, resource);
     if (object != nullptr) {
         id = object->GetID();
     }
     return object;
 }
 
-alt::IObject* Core_CreateWeaponObject(alt::ICore* core, alt::Position pos, alt::Rotation rot, uint32_t weaponHash,
+alt::ILocalObject* Core_CreateWeaponObject(alt::ICore* core, alt::Position pos, alt::Rotation rot, uint32_t weaponHash,
     uint32_t modelHash, int32_t numAmmo, uint8_t createDefaultComponents, float scale, uint8_t useStreaming,
     uint32_t streamingDistance, alt::IResource* resource, uint32_t& id)
 {
@@ -1595,10 +1595,10 @@ alt::IObject* Core_CreateWeaponObject(alt::ICore* core, alt::Position pos, alt::
     return object;
 }
 
-alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size) {
-    auto objects = core->GetObjects();
+alt::ILocalObject** Core_GetLocalObjects(alt::ICore* core, uint32_t& size) {
+    auto objects = core->GetLocalObjects();
     size = objects.size();
-    auto out = new alt::IObject*[size];
+    auto out = new alt::ILocalObject*[size];
     for (auto i = 0; i < size; i++) {
         out[i] = objects[i];
     }
@@ -1606,10 +1606,10 @@ alt::IObject** Core_GetObjects(alt::ICore* core, uint32_t& size) {
     return out;
 }
 
-alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size) {
+alt::ILocalObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size) {
     auto worldObjects = core->GetWorldObjects();
     size = worldObjects.size();
-    auto out = new alt::IObject*[size];
+    auto out = new alt::ILocalObject*[size];
     for (auto i = 0; i < size; i++) {
         out[i] = worldObjects[i];
     }
@@ -1617,11 +1617,11 @@ alt::IObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size) {
     return out;
 }
 
-alt::IObject** Core_GetWeaponObjects(alt::ICore* core, uint32_t& size)
+alt::ILocalObject** Core_GetWeaponObjects(alt::ICore* core, uint32_t& size)
 {
     auto weaponObject = core->GetWeaponObjects();
     size = weaponObject.size();
-    auto out = new alt::IObject*[size];
+    auto out = new alt::ILocalObject*[size];
     for (auto i = 0; i < size; i++) {
         out[i] = weaponObject[i];
     }

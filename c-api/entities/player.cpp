@@ -713,6 +713,16 @@ void Player_PlayScenario(alt::IPlayer* player, const char* name)
     player->PlayScenario(name);
 }
 
+uint8_t Player_IsNetworkOwnershipDisabled(alt::IPlayer* player)
+{
+    return player->IsNetworkOwnershipDisabled();
+}
+
+void Player_SetNetworkOwnershipDisabled(alt::IPlayer* player, uint8_t state)
+{
+    player->SetNetworkOwnershipDisabled(state);
+}
+
 #endif
 
 #if ALT_CLIENT_API
