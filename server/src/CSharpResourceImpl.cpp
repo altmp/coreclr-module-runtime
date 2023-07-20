@@ -693,7 +693,7 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
                 OnCreateBaseObjectDelegate(checkPoint, checkPoint->GetType(), checkPoint->GetID());
                 break;
             }
-        case alt::IBaseObject::Type::OBJECT:
+        case alt::IBaseObject::Type::LOCAL_OBJECT:
             {
                 const auto altObject = dynamic_cast<alt::IObject*>(object);
                 OnCreateBaseObjectDelegate(altObject, altObject->GetType(), altObject->GetID());
@@ -794,7 +794,7 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
                 OnRemoveBaseObjectDelegate(checkPoint, checkPoint->GetType());
                 break;
             }
-        case alt::IBaseObject::Type::OBJECT:
+        case alt::IBaseObject::Type::LOCAL_OBJECT:
             {
                 const auto altObject = dynamic_cast<alt::IObject*>(object);
                 OnRemoveBaseObjectDelegate(altObject, altObject->GetType());

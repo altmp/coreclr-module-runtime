@@ -281,7 +281,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             case alt::IBaseObject::Type::VEHICLE:
                 ptr = dynamic_cast<alt::IVehicle*>(entity);
                 break;
-            case alt::IBaseObject::Type::OBJECT:
+            case alt::IBaseObject::Type::LOCAL_OBJECT:
                 ptr = dynamic_cast<alt::IObject*>(entity);
                 break;
             case alt::IBaseObject::Type::PED:
@@ -310,7 +310,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             case alt::IBaseObject::Type::VEHICLE:
                 ptr = dynamic_cast<alt::IVehicle*>(entity);
                 break;
-            case alt::IBaseObject::Type::OBJECT:
+            case alt::IBaseObject::Type::LOCAL_OBJECT:
                 ptr = dynamic_cast<alt::IObject*>(entity);
                 break;
             case alt::IBaseObject::Type::PED:
@@ -681,7 +681,7 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
             OnCreateBaseObjectDelegate(rmlDocument, rmlDocument->GetType(), rmlDocument->GetID());
             break;
         }
-    case alt::IBaseObject::Type::OBJECT:
+    case alt::IBaseObject::Type::LOCAL_OBJECT:
         {
             auto altObject = dynamic_cast<alt::IObject*>(object);
             OnCreateBaseObjectDelegate(altObject, altObject->GetType(), altObject->GetID());
@@ -840,7 +840,7 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
             OnRemoveBaseObjectDelegate(rmlDocument, rmlDocument->GetType());
             break;
         }
-    case alt::IBaseObject::Type::OBJECT:
+    case alt::IBaseObject::Type::LOCAL_OBJECT:
         {
             const auto altObject = dynamic_cast<alt::IObject*>(object);
             OnRemoveBaseObjectDelegate(altObject, altObject->GetType());
