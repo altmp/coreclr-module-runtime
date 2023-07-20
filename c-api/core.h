@@ -316,7 +316,7 @@ EXPORT_SHARED alt::IVirtualEntityGroup* Core_CreateVirtualEntityGroup(alt::ICore
 
 EXPORT_SHARED alt::IVirtualEntity** Core_GetVirtualEntities(alt::ICore* core, uint64_t& size);
 EXPORT_SHARED alt::IVirtualEntityGroup** Core_GetVirtualEntityGroups(alt::ICore* core, uint64_t& size);
-EXPORT_SHARED alt::INetworkObject** Core_GetNetworkObjects(alt::ICore* core, uint64_t& size);
+EXPORT_SHARED alt::IObject** Core_GetNetworkObjects(alt::ICore* core, uint64_t& size);
 EXPORT_SHARED alt::ICheckpoint** Core_GetCheckpoints(alt::ICore* core, uint64_t& size);
 EXPORT_SHARED alt::IMarker** Core_GetMarkers(alt::ICore* core, uint64_t& size);
 EXPORT_SHARED alt::IColShape** Core_GetColShapes(alt::ICore* core, uint64_t& size);
@@ -341,7 +341,7 @@ EXPORT_CLIENT alt::IFont* Core_RegisterFont(alt::ICore* core, alt::IResource* re
 
 EXPORT_CLIENT uint8_t Core_IsFullScreen(alt::ICore* core);
 
-EXPORT_SERVER alt::INetworkObject* Core_CreateNetworkObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation, uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t& id);
+EXPORT_SERVER alt::IObject* Core_CreateNetworkObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation, uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t& id);
 
 EXPORT_SERVER alt::Metric* Core_RegisterMetric(alt::ICore* core, const char* metricName, uint8_t type, const char* keys[], const char* values[], uint64_t size);
 EXPORT_SERVER void Core_UnregisterMetric(alt::ICore* core, alt::Metric* metric);

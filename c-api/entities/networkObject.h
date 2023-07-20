@@ -14,15 +14,15 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED uint16_t NetworkObject_GetID(alt::INetworkObject* networkObject);
-EXPORT_SHARED alt::IEntity* NetworkObject_GetEntity(alt::INetworkObject* networkObject);
+EXPORT_SHARED uint16_t NetworkObject_GetID(alt::IObject* networkObject);
+EXPORT_SHARED alt::IEntity* NetworkObject_GetEntity(alt::IObject* networkObject);
 
-EXPORT_SHARED uint8_t NetworkObject_GetAlpha(alt::INetworkObject* networkObject);
-EXPORT_SHARED uint8_t NetworkObject_GetTextureVariation(alt::INetworkObject* networkObject);
-EXPORT_SHARED uint16_t NetworkObject_GetLodDistance(alt::INetworkObject* networkObject);
+EXPORT_SHARED uint8_t NetworkObject_GetAlpha(alt::IObject* networkObject);
+EXPORT_SHARED uint8_t NetworkObject_GetTextureVariation(alt::IObject* networkObject);
+EXPORT_SHARED uint16_t NetworkObject_GetLodDistance(alt::IObject* networkObject);
 
-EXPORT_SERVER void NetworkObject_ActivatePhysics(alt::INetworkObject* networkObject);
-EXPORT_SERVER void NetworkObject_PlaceOnGroundProperly(alt::INetworkObject* networkObject);
-EXPORT_SERVER void NetworkObject_SetAlpha(alt::INetworkObject* networkObject, uint8_t alpha);
-EXPORT_SERVER void NetworkObject_SetTextureVariation(alt::INetworkObject* networkObject, uint8_t textureVariation);
-EXPORT_SERVER void NetworkObject_SetLodDistance(alt::INetworkObject* networkObject, uint16_t lodDistance);
+EXPORT_SERVER void NetworkObject_ActivatePhysics(alt::IObject* networkObject);
+EXPORT_SERVER void NetworkObject_PlaceOnGroundProperly(alt::IObject* networkObject);
+EXPORT_SERVER void NetworkObject_SetAlpha(alt::IObject* networkObject, uint8_t alpha);
+EXPORT_SERVER void NetworkObject_SetTextureVariation(alt::IObject* networkObject, uint8_t textureVariation);
+EXPORT_SERVER void NetworkObject_SetLodDistance(alt::IObject* networkObject, uint16_t lodDistance);

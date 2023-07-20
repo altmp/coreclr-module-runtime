@@ -27,8 +27,8 @@ void* BaseObject_TryCache(alt::IBaseObject* baseObject) {
         return dynamic_cast<alt::IVehicle*>(new cache::CachedVehicle(dynamic_cast<alt::IVehicle*>(baseObject)));
     case alt::IBaseObject::Type::PED:
         return dynamic_cast<alt::IPed*>(new cache::CachedPed(dynamic_cast<alt::IPed*>(baseObject)));
-    case alt::IBaseObject::Type::NETWORK_OBJECT:
-        return dynamic_cast<alt::INetworkObject*>(new cache::CachedNetworkObject(dynamic_cast<alt::INetworkObject*>(baseObject)));
+    case alt::IBaseObject::Type::OBJECT:
+        return dynamic_cast<alt::IObject*>(new cache::CachedNetworkObject(dynamic_cast<alt::IObject*>(baseObject)));
         default:
             return nullptr;
     }

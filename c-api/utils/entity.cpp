@@ -13,8 +13,8 @@ void* Util_GetEntityPointer(alt::IBaseObject* entity)
             return dynamic_cast<alt::IVehicle*>(entity);
         case alt::IBaseObject::Type::PED:
             return dynamic_cast<alt::IPed*>(entity);
-        case alt::IBaseObject::Type::NETWORK_OBJECT:
-            return dynamic_cast<alt::INetworkObject*>(entity);
+        case alt::IBaseObject::Type::OBJECT:
+            return dynamic_cast<alt::IObject*>(entity);
         case alt::IBaseObject::Type::LOCAL_OBJECT:
             return dynamic_cast<alt::ILocalObject*>(entity);
         default:
@@ -37,8 +37,8 @@ void* Util_GetWorldObjectPointer(alt::IWorldObject* worldObject)
             return dynamic_cast<alt::IVehicle*>(worldObject);
         case alt::IBaseObject::Type::PED:
             return dynamic_cast<alt::IPed*>(worldObject);
-        case alt::IBaseObject::Type::NETWORK_OBJECT:
-            return dynamic_cast<alt::INetworkObject*>(worldObject);
+        case alt::IBaseObject::Type::OBJECT:
+            return dynamic_cast<alt::IObject*>(worldObject);
         case alt::IBaseObject::Type::BLIP:
             return dynamic_cast<alt::IBlip*>(worldObject);
         case alt::IBaseObject::Type::COLSHAPE:
@@ -79,8 +79,8 @@ void* Util_GetBaseObjectPointer(alt::IBaseObject* baseObject)
             return dynamic_cast<alt::IVehicle*>(baseObject);
         case alt::IBaseObject::Type::PED:
             return dynamic_cast<alt::IPed*>(baseObject);
-        case alt::IBaseObject::Type::NETWORK_OBJECT:
-            return dynamic_cast<alt::INetworkObject*>(baseObject);
+        case alt::IBaseObject::Type::OBJECT:
+            return dynamic_cast<alt::IObject*>(baseObject);
         case alt::IBaseObject::Type::BLIP:
             return dynamic_cast<alt::IBlip*>(baseObject);
         case alt::IBaseObject::Type::WEBVIEW:

@@ -287,13 +287,13 @@ uint8_t Core_GetEventEnumSize() {
     return (uint8_t) alt::CEvent::Type::SIZE;
 }
 
-alt::INetworkObject** Core_GetNetworkObjects(alt::ICore* core, uint64_t& size)
+alt::IObject** Core_GetNetworkObjects(alt::ICore* core, uint64_t& size)
 {
-    auto networkObjectsArray = core->GetBaseObjects(alt::IBaseObject::Type::NETWORK_OBJECT);
+    auto networkObjectsArray = core->GetBaseObjects(alt::IBaseObject::Type::OBJECT);
     size = networkObjectsArray.size();
-    auto out = new alt::INetworkObject*[size];
+    auto out = new alt::IObject*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = dynamic_cast<alt::INetworkObject*>(networkObjectsArray[i]);
+        out[i] = dynamic_cast<alt::IObject*>(networkObjectsArray[i]);
     }
 
     return out;

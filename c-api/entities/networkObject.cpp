@@ -1,26 +1,26 @@
 #include "networkObject.h"
 
-uint16_t NetworkObject_GetID(alt::INetworkObject* networkObject)
+uint16_t NetworkObject_GetID(alt::IObject* networkObject)
 {
     return networkObject->GetID();
 }
 
-alt::IEntity* NetworkObject_GetEntity(alt::INetworkObject* networkObject)
+alt::IEntity* NetworkObject_GetEntity(alt::IObject* networkObject)
 {
     return dynamic_cast<alt::IEntity*>(networkObject);
 }
 
-uint8_t NetworkObject_GetAlpha(alt::INetworkObject* networkObject)
+uint8_t NetworkObject_GetAlpha(alt::IObject* networkObject)
 {
     return networkObject->GetAlpha();
 }
 
-uint8_t NetworkObject_GetTextureVariation(alt::INetworkObject* networkObject)
+uint8_t NetworkObject_GetTextureVariation(alt::IObject* networkObject)
 {
     return networkObject->GetTextureVariation();
 }
 
-uint16_t NetworkObject_GetLodDistance(alt::INetworkObject* networkObject)
+uint16_t NetworkObject_GetLodDistance(alt::IObject* networkObject)
 {
     return networkObject->GetLodDistance();
 }

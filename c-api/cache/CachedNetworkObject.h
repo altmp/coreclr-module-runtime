@@ -9,10 +9,10 @@
 
 namespace cache
 {
-    class CachedNetworkObject : public virtual CachedEntity, public virtual CachedWorldObject, public virtual CachedBaseObject, public virtual alt::INetworkObject
+    class CachedNetworkObject : public virtual CachedEntity, public virtual CachedWorldObject, public virtual CachedBaseObject, public virtual alt::IObject
     {
     public:
-        CachedNetworkObject(INetworkObject* base) : CachedBaseObject(base),
+        CachedNetworkObject(IObject* base) : CachedBaseObject(base),
                                                     CachedWorldObject(base),
                                                     CachedEntity(base),
                                                     _alpha(base->GetAlpha()),
