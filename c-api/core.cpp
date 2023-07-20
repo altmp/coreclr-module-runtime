@@ -1638,32 +1638,32 @@ void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vec
 
 uint64_t Core_GetWebViewCount(alt::ICore* core)
 {
-    return core->GetWebViews().size();
+    return core->GetBaseObjects(alt::IBaseObject::Type::WEBVIEW).size();
 }
 
 void Core_GetWebViews(alt::ICore* core, alt::IWebView* webViews[], uint64_t size)
 {
-    auto webviewsArray = core->GetWebViews();
+    auto webviewsArray = core->GetBaseObjects(alt::IBaseObject::Type::WEBVIEW);
     if (webviewsArray.size() < size) {
         size = webviewsArray.size();
     }
     for (uint64_t i = 0; i < size; i++) {
-        webViews[i] = webviewsArray[i];
+        webViews[i] = dynamic_cast<alt::IWebView*>(webviewsArray[i]);
     }
 }
 
 uint64_t Core_GetAudioCount(alt::ICore* core)
 {
-    return core->GetAudios().size();
+    return core->GetBaseObjects(alt::IBaseObject::Type::AUDIO).size();
 }
 
 alt::IAudio** Core_GetAudios(alt::ICore* core, uint64_t& size)
 {
-    auto audios = core->GetAudios();
+    auto audios = core->GetBaseObjects(alt::IBaseObject::Type::AUDIO);
     size = audios.size();
     auto out = new alt::IAudio*[size];
     for (auto i = 0; i < size; i++) {
-        out[i] = audios[i];
+        out[i] = dynamic_cast<alt::IAudio*>(audios[i]);
     }
 
     return out;
@@ -1671,11 +1671,11 @@ alt::IAudio** Core_GetAudios(alt::ICore* core, uint64_t& size)
 
 alt::IAudioOutput** Core_GetAudioOutputs(alt::ICore* core, uint64_t& size)
 {
-    auto audioOutputs = core->GetAudioOutputs();
+    auto audioOutputs = core->GetBaseObjects(alt::IBaseObject::Type::AUDIO_OUTPUT);
     size = audioOutputs.size();
     auto out = new alt::IAudioOutput*[size];
     for (auto i = 0; i < size; i++) {
-        out[i] = audioOutputs[i];
+        out[i] = dynamic_cast<alt::IAudioOutput*>(audioOutputs[i]);
     }
 
     return out;
