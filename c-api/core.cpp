@@ -131,31 +131,31 @@ alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* val
 }
 
 alt::IPlayer** Core_GetPlayers(alt::ICore* core, uint64_t& size) {
-    auto players = core->GetPlayers();
+    auto players = core->GetBaseObjects(alt::IBaseObject::Type::PLAYER);
     size = players.size();
     auto out = new alt::IPlayer*[size];
     for (auto i = 0; i < size; i++) {
-        out[i] = players[i];
+        out[i] = dynamic_cast<alt::IPlayer*>(players[i]);
     }
 
     return out;
 }
 
 alt::IVehicle** Core_GetVehicles(alt::ICore* core, uint64_t& size) {
-    auto vehiclesArray = core->GetVehicles();
+    auto vehiclesArray = core->GetBaseObjects(alt::IBaseObject::Type::VEHICLE);
     size = vehiclesArray.size();
     auto out = new alt::IVehicle*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = vehiclesArray[i];
+        out[i] = dynamic_cast<alt::IVehicle*>(vehiclesArray[i]);
     }
     return out;
 }
 alt::IPed** Core_GetPeds(alt::ICore* core, uint64_t& size) {
-    auto pedsArray = core->GetPeds();
+    auto pedsArray = core->GetBaseObjects(alt::IBaseObject::Type::PED);
     size = pedsArray.size();
     auto out = new alt::IPed*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = pedsArray[i];
+        out[i] = dynamic_cast<alt::IPed*>(pedsArray[i]);
     }
 
     return out;
@@ -163,11 +163,11 @@ alt::IPed** Core_GetPeds(alt::ICore* core, uint64_t& size) {
 
 alt::IVirtualEntity** Core_GetVirtualEntities(alt::ICore* core, uint64_t& size)
 {
-    auto virtualEntitiyArray = core->GetVirtualEntities();
+    auto virtualEntitiyArray = core->GetBaseObjects(alt::IBaseObject::Type::VIRTUAL_ENTITY);
     size = virtualEntitiyArray.size();
     auto out = new alt::IVirtualEntity*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = virtualEntitiyArray[i];
+        out[i] = dynamic_cast<alt::IVirtualEntity*>(virtualEntitiyArray[i]);
     }
 
     return out;
@@ -175,22 +175,22 @@ alt::IVirtualEntity** Core_GetVirtualEntities(alt::ICore* core, uint64_t& size)
 
 alt::IVirtualEntityGroup** Core_GetVirtualEntityGroups(alt::ICore* core, uint64_t& size)
 {
-    auto virtualEntitiyGroupArray = core->GetVirtualEntityGroups();
+    auto virtualEntitiyGroupArray = core->GetBaseObjects(alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP);
     size = virtualEntitiyGroupArray.size();
     auto out = new alt::IVirtualEntityGroup*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = virtualEntitiyGroupArray[i];
+        out[i] = dynamic_cast<alt::IVirtualEntityGroup*>(virtualEntitiyGroupArray[i]);
     }
 
     return out;
 }
 
 alt::IBlip** Core_GetBlips(alt::ICore* core, uint64_t& size) {
-    auto blipsArray = core->GetBlips();
+    auto blipsArray = core->GetBaseObjects(alt::IBaseObject::Type::BLIP);
     size = blipsArray.size();
     auto out = new alt::IBlip*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = blipsArray[i];
+        out[i] = dynamic_cast<alt::IBlip*>(blipsArray[i]);
     }
 
     return out;
@@ -289,11 +289,11 @@ uint8_t Core_GetEventEnumSize() {
 
 alt::INetworkObject** Core_GetNetworkObjects(alt::ICore* core, uint64_t& size)
 {
-    auto networkObjectsArray = core->GetNetworkObjects();
+    auto networkObjectsArray = core->GetBaseObjects(alt::IBaseObject::Type::NETWORK_OBJECT);
     size = networkObjectsArray.size();
     auto out = new alt::INetworkObject*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = networkObjectsArray[i];
+        out[i] = dynamic_cast<alt::INetworkObject*>(networkObjectsArray[i]);
     }
 
     return out;
@@ -301,11 +301,11 @@ alt::INetworkObject** Core_GetNetworkObjects(alt::ICore* core, uint64_t& size)
 
 alt::ICheckpoint** Core_GetCheckpoints(alt::ICore* core, uint64_t& size)
 {
-    auto checkpointsArray = core->GetCheckpoints();
+    auto checkpointsArray = core->GetBaseObjects(alt::IBaseObject::Type::CHECKPOINT);
     size = checkpointsArray.size();
     auto out = new alt::ICheckpoint*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = checkpointsArray[i];
+        out[i] = dynamic_cast<alt::ICheckpoint*>(checkpointsArray[i]);
     }
 
     return out;
@@ -313,11 +313,11 @@ alt::ICheckpoint** Core_GetCheckpoints(alt::ICore* core, uint64_t& size)
 
 alt::IMarker** Core_GetMarkers(alt::ICore* core, uint64_t& size)
 {
-    auto markersArray = core->GetMarkers();
+    auto markersArray = core->GetBaseObjects(alt::IBaseObject::Type::MARKER);
     size = markersArray.size();
     auto out = new alt::IMarker*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = markersArray[i];
+        out[i] = dynamic_cast<alt::IMarker*>(markersArray[i]);
     }
 
     return out;
@@ -325,11 +325,11 @@ alt::IMarker** Core_GetMarkers(alt::ICore* core, uint64_t& size)
 
 alt::IColShape** Core_GetColShapes(alt::ICore* core, uint64_t& size)
 {
-    auto colShapesArray = core->GetColShapes();
+    auto colShapesArray = core->GetBaseObjects(alt::IBaseObject::Type::COLSHAPE);
     size = colShapesArray.size();
     auto out = new alt::IColShape*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = colShapesArray[i];
+        out[i] = dynamic_cast<alt::IColShape*>(colShapesArray[i]);
     }
 
     return out;
@@ -1596,11 +1596,11 @@ alt::ILocalObject* Core_CreateWeaponObject(alt::ICore* core, alt::Position pos, 
 }
 
 alt::ILocalObject** Core_GetLocalObjects(alt::ICore* core, uint32_t& size) {
-    auto objects = core->GetLocalObjects();
+    auto objects = core->GetBaseObjects(alt::IBaseObject::Type::LOCAL_OBJECT);
     size = objects.size();
     auto out = new alt::ILocalObject*[size];
     for (auto i = 0; i < size; i++) {
-        out[i] = objects[i];
+        out[i] = dynamic_cast<alt::ILocalObject*>(objects[i]);
     }
 
     return out;
