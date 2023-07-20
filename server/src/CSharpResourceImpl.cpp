@@ -56,6 +56,8 @@ void CSharpResourceImpl::ResetDelegates()
     OnPlayerDimensionChangeDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerSpawnDelegate = [](auto var) {};
 
+    OnVoiceConnectionDelegate = [](auto var) {};
+
     OnCreateBaseObjectDelegate = [](auto var, auto var2, auto var3) {};
     OnRemoveBaseObjectDelegate = [](auto var, auto var2) {};
 }
@@ -633,6 +635,14 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             OnPlayerSpawnDelegate(playerSpawnEvent->GetPlayer());
             break;
         }
+    case alt::CEvent::Type::VOICE_CONNECTION_EVENT:
+        {
+            auto voiceConnectionEvent = dynamic_cast<const alt::CVoiceConnectionEvent*>(ev);
+
+            OnVoiceConnectionDelegate(static_cast<uint8_t>(voiceConnectionEvent->GetState()));
+
+            break;
+        }
     default:
         {
             std::cout << "Unhandled server event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -1091,6 +1101,11 @@ void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(CSharpResourceImpl* reso
 void CSharpResourceImpl_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, PlayerSpawnDelegate_t delegate)
 {
     resource->OnPlayerSpawnDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVoiceConnectionDelegate(CSharpResourceImpl* resource, VoiceConnectionDelegate_t delegate)
+{
+    resource->OnVoiceConnectionDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource, CreateBaseObjectDelegate_t delegate)

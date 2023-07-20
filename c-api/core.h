@@ -356,3 +356,4 @@ EXPORT_CLIENT uint64_t Core_GetAllWeaponDataCount(alt::ICore* core);
 EXPORT_CLIENT void Core_GetAllWeaponData(alt::ICore* core, uint32_t weaponHashes[], uint64_t size);
 
 EXPORT_SERVER void Core_SetVoiceExternalPublic(alt::ICore* core, const char* host, uint16_t port);
+EXPORT_SERVER void Core_SetVoiceExternal(alt::ICore* core, const char* host, uint16_t port);

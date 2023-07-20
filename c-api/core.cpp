@@ -851,6 +851,11 @@ void Core_SetVoiceExternalPublic(alt::ICore* core, const char* host, uint16_t po
 {
     core->SetVoiceExternalPublic(host, port);
 }
+
+void Core_SetVoiceExternal(alt::ICore* core, const char* host, uint16_t port)
+{
+    core->SetVoiceExternal(host, port);
+}
 #endif
 
 #ifdef ALT_CLIENT_API

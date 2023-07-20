@@ -179,6 +179,8 @@ typedef void (* CreateBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::
 
 typedef void (* RemoveBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType);
 
+typedef void (* VoiceConnectionDelegate_t)(uint8_t state);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
 
@@ -299,6 +301,8 @@ public:
 
     CreateBaseObjectDelegate_t OnCreateBaseObjectDelegate = nullptr;
     RemoveBaseObjectDelegate_t OnRemoveBaseObjectDelegate = nullptr;
+
+    VoiceConnectionDelegate_t OnVoiceConnectionDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -488,6 +492,8 @@ EXPORT void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(CSharpResourceImp
                                                             PlayerChangeInteriorDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, PlayerSpawnDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetVoiceConnectionDelegate(CSharpResourceImpl* resource, VoiceConnectionDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource, CreateBaseObjectDelegate_t delegate);
 
