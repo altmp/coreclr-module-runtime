@@ -179,7 +179,9 @@ EXPORT_CLIENT uint8_t Core_IsNoiseSuppressionEnabled(alt::ICore* core);
 
 EXPORT_CLIENT uint8_t Core_BeginScaleformMovieMethodMinimap(alt::ICore* core, const char* methodName);
 EXPORT_CLIENT void Core_SetMinimapComponentPosition(alt::ICore* core, const char* name, uint8_t alignX, uint8_t alignY, float posX, float posY, float sizeX, float sizeY);
+EXPORT_CLIENT void Core_ResetMinimapComponentPosition(alt::ICore* core, const char* name);
 EXPORT_CLIENT void Core_SetMinimapIsRectangle(alt::ICore* core, uint8_t state);
+
 
 
 EXPORT_CLIENT uint8_t Core_CopyToClipboard(alt::ICore* core, const char* value);

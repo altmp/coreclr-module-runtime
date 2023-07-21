@@ -1102,6 +1102,11 @@ void Core_SetMinimapComponentPosition(alt::ICore* core, const char* name, uint8_
     core->SetMinimapComponentPosition(name, (char) alignX, (char) alignY, { posX, posY }, { sizeX, sizeY });
 }
 
+void Core_ResetMinimapComponentPosition(alt::ICore* core, const char* name)
+{
+    core->ResetMinimapComponentPosition(name);
+}
+
 void Core_SetMinimapIsRectangle(alt::ICore* core, uint8_t state) {
     core->SetMinimapIsRectangle(state);
 }

@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 8496771753167776193UL;
+inline uint64_t capiHash = 17163045773985090537UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -205,6 +205,7 @@ inline uint64_t capiHashes[] = {
     6993510006268976715UL,
     664982279299386907UL,
     12948735896839739671UL,
+    7361681817946843007UL,
     5460369299538905850UL,
     15701563360488661578UL,
     2415100583194488559UL,
@@ -1839,6 +1840,7 @@ inline void* capiPointers[] = {
     (void*) Core_RequestIpl,
     (void*) Core_ResetAllMapZoomData,
     (void*) Core_ResetMapZoomData,
+    (void*) Core_ResetMinimapComponentPosition,
     (void*) Core_ResetStat,
     (void*) Core_ScreenToWorld,
     (void*) Core_SetCamFrozen,
