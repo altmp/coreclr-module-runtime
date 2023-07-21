@@ -10,12 +10,8 @@ uint16_t LocalObject_GetID(alt::ILocalObject* localObject) {
     return localObject->GetID();
 }
 
-alt::IEntity* LocalObject_GetEntity(alt::ILocalObject* localObject) {
-    return dynamic_cast<alt::IEntity*>(localObject);
-}
-
-uint8_t LocalObject_GetAlpha(alt::ILocalObject* localObject) {
-    return localObject->GetAlpha();
+alt::IObject* LocalObject_GetObject(alt::ILocalObject* localObject) {
+    return dynamic_cast<alt::IObject*>(localObject);
 }
 
 void LocalObject_SetAlpha(alt::ILocalObject* localObject, uint8_t alpha) {
@@ -34,10 +30,6 @@ uint8_t LocalObject_IsDynamic(alt::ILocalObject* localObject) {
     return localObject->IsDynamic();
 }
 
-uint16_t LocalObject_GetLodDistance(alt::ILocalObject* localObject) {
-    return localObject->GetLodDistance();
-}
-
 void LocalObject_SetLodDistance(alt::ILocalObject* localObject, uint16_t distance) {
     localObject->SetLodDistance(distance);
 }
@@ -50,16 +42,16 @@ void LocalObject_ToggleGravity(alt::ILocalObject* localObject, uint8_t toggle) {
     localObject->ToggleGravity(toggle);
 }
 
-void LocalObject_AttachToEntity(alt::ILocalObject* localObject, alt::IEntity* entity, int16_t bone, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot) {
+void LocalObject_AttachToEntity(alt::ILocalObject* localObject, alt::IEntity* entity, int16_t boneIndex, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot) {
     alt::Position position{pos.x, pos.y, pos.z};
     alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    localObject->AttachToEntity(entity, bone, position, rotation, useSoftPinning, collision, fixedRot);
+    localObject->AttachToEntity(entity, boneIndex, position, rotation, useSoftPinning, collision, fixedRot);
 }
 
-void LocalObject_AttachToEntity_ScriptId(alt::ILocalObject* localObject, uint32_t scriptId, int16_t bone, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot) {
+void LocalObject_AttachToEntity_ScriptId(alt::ILocalObject* localObject, uint32_t scriptId, int16_t boneIndex, position_t pos, rotation_t rot, uint8_t useSoftPinning, uint8_t collision, uint8_t fixedRot) {
     alt::Position position{pos.x, pos.y, pos.z};
     alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    localObject->AttachToEntity(scriptId, bone, position, rotation, useSoftPinning, collision, fixedRot);
+    localObject->AttachToEntity(scriptId, boneIndex, position, rotation, useSoftPinning, collision, fixedRot);
 }
 
 void LocalObject_Detach(alt::ILocalObject* localObject, uint8_t dynamic) {
@@ -84,10 +76,6 @@ void LocalObject_SetPositionFrozen(alt::ILocalObject* localObject, uint8_t toggl
 
 void LocalObject_ActivatePhysics(alt::ILocalObject* localObject) {
     localObject->ActivatePhysics();
-}
-
-uint8_t LocalObject_GetTextureVariation(alt::ILocalObject* localObject) {
-    return localObject->GetTextureVariation();
 }
 
 void LocalObject_SetTextureVariation(alt::ILocalObject* localObject, uint8_t variation) {

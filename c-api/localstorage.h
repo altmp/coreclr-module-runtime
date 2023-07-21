@@ -17,5 +17,6 @@
 EXPORT_CLIENT void LocalStorage_SetKey(alt::ILocalStorage* localStorage, const char* key, alt::MValueConst* value);
 EXPORT_CLIENT void LocalStorage_DeleteKey(alt::ILocalStorage* localStorage, const char* key);
 EXPORT_CLIENT alt::MValueConst* LocalStorage_GetKey(alt::ILocalStorage* localStorage, const char* key);
+EXPORT_CLIENT uint8_t LocalStorage_Has(alt::ILocalStorage* localStorage, const char* key);
 EXPORT_CLIENT void LocalStorage_Clear(alt::ILocalStorage* localStorage);
 EXPORT_CLIENT void LocalStorage_Save(alt::ILocalStorage* localStorage);

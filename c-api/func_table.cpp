@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 17163045773985090537UL;
+inline uint64_t capiHash = 620890210989099442UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -448,13 +448,10 @@ inline uint64_t capiHashes[] = {
     12557963046901634258UL,
     8482470825689546294UL,
     6719251755255314299UL,
-    279187344888334817UL,
     15889022995396061331UL,
-    5655857680500999890UL,
     11677534497960574507UL,
-    17813783015392264390UL,
+    872653086987800810UL,
     12256606847122365951UL,
-    18012930337375535349UL,
     9339331434227951252UL,
     12513455835140389576UL,
     11443047463427446095UL,
@@ -501,6 +498,7 @@ inline uint64_t capiHashes[] = {
     5882434795069919583UL,
     9477816035737488937UL,
     13895693989408516536UL,
+    4134515557055194984UL,
     15681738723671545643UL,
     9720785834619501975UL,
     15310181097891449037UL,
@@ -2083,13 +2081,10 @@ inline void* capiPointers[] = {
     (void*) LocalObject_AttachToEntity,
     (void*) LocalObject_AttachToEntity_ScriptId,
     (void*) LocalObject_Detach,
-    (void*) LocalObject_GetAlpha,
     (void*) LocalObject_GetComponentTintIndex,
-    (void*) LocalObject_GetEntity,
     (void*) LocalObject_GetID,
-    (void*) LocalObject_GetLodDistance,
+    (void*) LocalObject_GetObject,
     (void*) LocalObject_GetStreamingDistance,
-    (void*) LocalObject_GetTextureVariation,
     (void*) LocalObject_GetTintIndex,
     (void*) LocalObject_GiveComponent,
     (void*) LocalObject_HasGravity,
@@ -2136,6 +2131,7 @@ inline void* capiPointers[] = {
     (void*) LocalStorage_Clear,
     (void*) LocalStorage_DeleteKey,
     (void*) LocalStorage_GetKey,
+    (void*) LocalStorage_Has,
     (void*) LocalStorage_Save,
     (void*) LocalStorage_SetKey,
     (void*) LocalVehicle_GetID,

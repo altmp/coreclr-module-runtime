@@ -16,6 +16,11 @@ alt::MValueConst* LocalStorage_GetKey(alt::ILocalStorage* localStorage, const ch
     return AllocMValue(localStorage->Get(key));
 }
 
+uint8_t LocalStorage_Has(alt::ILocalStorage* localStorage, const char* key)
+{
+    return localStorage->Has(key);
+}
+
 void LocalStorage_Clear(alt::ILocalStorage* localStorage) {
     localStorage->Clear();
 }
