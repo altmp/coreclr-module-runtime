@@ -40,7 +40,7 @@
 #include "entities/webview.h"
 #include "entities/worldObject.h"
 #include "entities/marker.h"
-#include "entities/networkObject.h"
+#include "entities/object.h"
 #include "entities/textLabel.h"
 #include "entities/audioFilter.h"
 #include "entities/local_vehicle.h"

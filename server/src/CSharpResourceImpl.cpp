@@ -718,10 +718,10 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
                                            virtualEntityGroup->GetID());
                 break;
             }
-        case alt::IBaseObject::Type::NETWORK_OBJECT:
+        case alt::IBaseObject::Type::OBJECT:
             {
-                const auto networkObject = dynamic_cast<alt::INetworkObject*>(object);
-                OnCreateBaseObjectDelegate(networkObject, networkObject->GetType(), networkObject->GetID());
+                const auto iOject = dynamic_cast<alt::IObject*>(object);
+                OnCreateBaseObjectDelegate(iOject, iOject->GetType(), iOject->GetID());
                 break;
             }
         case alt::IBaseObject::Type::MARKER:
@@ -818,10 +818,10 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
                 OnRemoveBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType());
                 break;
             }
-        case alt::IBaseObject::Type::NETWORK_OBJECT:
+        case alt::IBaseObject::Type::OBJECT:
             {
-                const auto networkObject = dynamic_cast<alt::INetworkObject*>(object);
-                OnRemoveBaseObjectDelegate(networkObject, networkObject->GetType());
+                const auto iObject = dynamic_cast<alt::IObject*>(object);
+                OnRemoveBaseObjectDelegate(iObject, iObject->GetType());
                 break;
             }
         case alt::IBaseObject::Type::MARKER:

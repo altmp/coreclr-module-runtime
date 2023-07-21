@@ -797,7 +797,7 @@ alt::IMarker* Core_CreateMarker(alt::ICore* core, alt::IPlayer* target, uint8_t 
     return marker;
 }
 
-alt::INetworkObject* Core_CreateNetworkObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation,
+alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation,
     uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t& id)
 {
     alt::Position pos;
@@ -810,7 +810,7 @@ alt::INetworkObject* Core_CreateNetworkObject(alt::ICore* core, uint32_t model, 
     rot.pitch = rotation.pitch;
     rot.yaw = rotation.yaw;
 
-    auto networkObject = core->CreateNetworkObject(model, pos, rot, alpha, textureVariation, lodDistance);
+    auto networkObject = core->CreateObject(model, pos, rot, alpha, textureVariation, lodDistance);
     if (networkObject != nullptr) {
         id = networkObject->GetID();
     }
@@ -819,11 +819,11 @@ alt::INetworkObject* Core_CreateNetworkObject(alt::ICore* core, uint32_t model, 
 
 alt::IConnectionInfo** Core_GetConnectionInfos(alt::ICore* core, uint64_t& size)
 {
-    auto connectionInfoArray = core->GetConnectionInfos();
+    auto connectionInfoArray = core->GetBaseObjects(alt::IBaseObject::Type::CONNECTION_INFO);
     size = connectionInfoArray.size();
     auto out = new alt::IConnectionInfo*[size];
     for (uint64_t i = 0; i < size; i++) {
-        out[i] = connectionInfoArray[i];
+        out[i] = dynamic_cast<alt::IConnectionInfo*>(connectionInfoArray[i]);
     }
 
     return out;

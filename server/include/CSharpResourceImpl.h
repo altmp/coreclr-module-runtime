@@ -355,8 +355,8 @@ public:
                 case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
                     this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IVirtualEntityGroup*>(object), object->GetType());
                     break;
-                case alt::IBaseObject::Type::NETWORK_OBJECT:
-                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::INetworkObject*>(object), object->GetType());
+                case alt::IBaseObject::Type::OBJECT:
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IObject*>(object), object->GetType());
                     break;
             }
         }
