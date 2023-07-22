@@ -287,6 +287,11 @@ uint8_t Core_GetEventEnumSize() {
     return (uint8_t) alt::CEvent::Type::SIZE;
 }
 
+uint8_t Core_GetVoiceConnectionState(alt::ICore* core)
+{
+    return (uint8_t) core->GetVoiceConnectionState();
+}
+
 alt::IObject** Core_GetNetworkObjects(alt::ICore* core, uint64_t& size)
 {
     auto networkObjectsArray = core->GetBaseObjects(alt::IBaseObject::Type::OBJECT);

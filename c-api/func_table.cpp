@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 620890210989099442UL;
+inline uint64_t capiHash = 9326924779181455521UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1267,6 +1267,7 @@ inline uint64_t capiHashes[] = {
     12125306445698504265UL,
     14723504540957489106UL,
     4351657857321681174UL,
+    4278537667856004336UL,
     5867649830401585497UL,
     11016797678327133571UL,
     5640834261493040151UL,
@@ -2900,6 +2901,7 @@ inline void* capiPointers[] = {
     (void*) Core_GetRootDirectory,
     (void*) Core_GetServerConfig,
     (void*) Core_GetVehicleModelInfo,
+    (void*) Core_GetVoiceConnectionState,
     (void*) Core_GetWeaponModelByHash,
     (void*) Core_HashPassword,
     (void*) Core_RegisterMetric,
