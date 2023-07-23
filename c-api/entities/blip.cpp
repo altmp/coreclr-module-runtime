@@ -329,6 +329,46 @@ void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
     return nullptr;
 }
 
+uint8_t Blip_IsHiddenOnLegend(alt::IBlip* blip)
+{
+    return blip->IsHiddenOnLegend();
+}
+
+void Blip_SetHiddenOnLegend(alt::IBlip* blip, uint8_t state)
+{
+    blip->SetHiddenOnLegend(state);
+}
+
+uint8_t Blip_IsMinimalOnEdge(alt::IBlip* blip)
+{
+    return blip->IsMinimalOnEdge();
+}
+
+void Blip_SetMinimalOnEdge(alt::IBlip* blip, uint8_t state)
+{
+    blip->SetMinimalOnEdge(state);
+}
+
+uint8_t Blip_IsUseHeightIndicatorOnEdge(alt::IBlip* blip)
+{
+    return blip->IsUseHeightIndicatorOnEdge();
+}
+
+void Blip_SetUseHeightIndicatorOnEdge(alt::IBlip* blip, uint8_t state)
+{
+    blip->SetUseHeightIndicatorOnEdge(state);
+}
+
+uint8_t Blip_IsShortHeightThreshold(alt::IBlip* blip)
+{
+    return blip->IsShortHeightThreshold();
+}
+
+void Blip_SetShortHeightThreshold(alt::IBlip* blip, uint8_t state)
+{
+    blip->SetShortHeightThreshold(state);
+}
+
 #ifdef ALT_CLIENT_API
 uint32_t Blip_GetGameID(alt::IBlip* blip) {
     return blip->GetGameID();

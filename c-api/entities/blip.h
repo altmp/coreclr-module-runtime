@@ -101,3 +101,15 @@ EXPORT_SERVER void Blip_AddTargetPlayer(alt::IBlip* blip, alt::IPlayer* player);
 EXPORT_SERVER void Blip_RemoveTargetPlayer(alt::IBlip* blip, alt::IPlayer* player);
 EXPORT_SERVER alt::IPlayer** Blip_GetTargets(alt::IBlip* blip, uint64_t& size);
 
+EXPORT_SHARED uint8_t Blip_IsHiddenOnLegend(alt::IBlip* blip);
+EXPORT_SHARED void Blip_SetHiddenOnLegend(alt::IBlip* blip, uint8_t state);
+
+EXPORT_SHARED uint8_t Blip_IsMinimalOnEdge(alt::IBlip* blip);
+EXPORT_SHARED void Blip_SetMinimalOnEdge(alt::IBlip* blip, uint8_t state);
+
+EXPORT_SHARED uint8_t Blip_IsUseHeightIndicatorOnEdge(alt::IBlip* blip);
+EXPORT_SHARED void Blip_SetUseHeightIndicatorOnEdge(alt::IBlip* blip, uint8_t state);
+
+EXPORT_SHARED uint8_t Blip_IsShortHeightThreshold(alt::IBlip* blip);
+EXPORT_SHARED void Blip_SetShortHeightThreshold(alt::IBlip* blip, uint8_t state);
+
