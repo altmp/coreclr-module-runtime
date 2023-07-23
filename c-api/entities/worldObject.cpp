@@ -13,21 +13,8 @@ void WorldObject_GetPosition(alt::IWorldObject* worldObject, vector3_t& position
     position.z = pos.z;
 }
 
-#ifdef ALT_SERVER_API
-void WorldObject_GetPositionCoords(alt::IWorldObject* worldObject, float *position_x, float *position_y, float *position_z, int *dimension) {
-    auto playerPosition = worldObject->GetPosition();
-    *position_x = playerPosition.x;
-    *position_y = playerPosition.y;
-    *position_z = playerPosition.z;
-    *dimension = worldObject->GetDimension();
-}
-
 int32_t WorldObject_GetDimension(alt::IWorldObject* worldObject) {
     return worldObject->GetDimension();
-}
-
-void WorldObject_SetDimension(alt::IWorldObject* worldObject, int32_t dimension) {
-    worldObject->SetDimension(dimension);
 }
 
 void WorldObject_SetPosition(alt::IWorldObject* worldObject, position_t pos) {
@@ -37,4 +24,18 @@ void WorldObject_SetPosition(alt::IWorldObject* worldObject, position_t pos) {
     position.z = pos.z;
     worldObject->SetPosition(position);
 }
+
+void WorldObject_SetDimension(alt::IWorldObject* worldObject, int32_t dimension) {
+    worldObject->SetDimension(dimension);
+}
+
+#ifdef ALT_SERVER_API
+void WorldObject_GetPositionCoords(alt::IWorldObject* worldObject, float *position_x, float *position_y, float *position_z, int *dimension) {
+    auto playerPosition = worldObject->GetPosition();
+    *position_x = playerPosition.x;
+    *position_y = playerPosition.y;
+    *position_z = playerPosition.z;
+    *dimension = worldObject->GetDimension();
+}
+
 #endif

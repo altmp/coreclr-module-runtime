@@ -15,6 +15,8 @@
 #include "../data/head_blend_data.h"
 #include "../data/head_overlay.h"
 #include "../utils/export.h"
+#include "../data/ammo_flags.h"
+#include "../data/decoration.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -85,7 +87,7 @@ EXPORT_SERVER void Player_SetWeather(alt::IPlayer* player, uint32_t weather);
 
 EXPORT_SERVER void Player_GiveWeapon(alt::IPlayer* player, uint32_t weapon, int32_t ammo, uint8_t selectWeapon);
 EXPORT_SERVER uint8_t Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon);
-EXPORT_SERVER void Player_RemoveAllWeapons(alt::IPlayer* player);
+EXPORT_SERVER void Player_RemoveAllWeapons(alt::IPlayer* player, uint8_t removeAllAmmo);
 
 EXPORT_SERVER void Player_AddWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
 EXPORT_SERVER void Player_RemoveWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component);
@@ -99,6 +101,8 @@ EXPORT_SERVER void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon
 
 EXPORT_SERVER uint64_t Player_GetWeaponCount(alt::IPlayer* player);
 EXPORT_SERVER void Player_GetWeapons(alt::IPlayer* player, /** nint* */  weapon_t*& weapons, uint32_t& size);
+
+EXPORT_SERVER uint8_t Player_HasWeapon(alt::IPlayer* player, uint32_t weapon);
 
 EXPORT_SERVER void Player_SetArmor(alt::IPlayer* player, uint16_t armor);
 EXPORT_SERVER void Player_SetMaxArmor(alt::IPlayer* player, uint16_t armor);
@@ -122,10 +126,6 @@ EXPORT_SERVER uint8_t Player_SetDlcProps(alt::IPlayer* player, uint8_t component
 EXPORT_SERVER void Player_ClearProps(alt::IPlayer* player, uint8_t component);
 
 EXPORT_SERVER uint8_t Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity);
-
-EXPORT_SERVER void Player_AttachToEntity(alt::IPlayer* player, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Player_AttachToEntity_BoneString(alt::IPlayer* player, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Player_Detach(alt::IPlayer* player);
 
 EXPORT_SERVER uint8_t Player_GetInvincible(alt::IPlayer* player);
 EXPORT_SERVER void Player_SetInvincible(alt::IPlayer* player, uint8_t state);
@@ -182,7 +182,7 @@ EXPORT_CLIENT void Player_SetNonSpatialVolume(alt::IPlayer* player, float value)
 EXPORT_CLIENT float Player_GetSpatialVolume(alt::IPlayer* player);
 EXPORT_CLIENT void Player_SetSpatialVolume(alt::IPlayer* player, float value);
 
-EXPORT_CLIENT uint16_t LocalPlayer_GetID(alt::ILocalPlayer* localPlayer);
+EXPORT_CLIENT uint32_t LocalPlayer_GetID(alt::ILocalPlayer* localPlayer);
 EXPORT_CLIENT alt::ILocalPlayer* Player_GetLocal();
 EXPORT_CLIENT alt::IPlayer* LocalPlayer_GetPlayer(alt::ILocalPlayer* player);
 
@@ -199,3 +199,49 @@ EXPORT_CLIENT void LocalPlayer_SetStamina(alt::ILocalPlayer* localPlayer, float 
 
 EXPORT_CLIENT float LocalPlayer_GetMaxStamina(alt::ILocalPlayer* localPlayer);
 EXPORT_CLIENT void LocalPlayer_SetMaxStamina(alt::ILocalPlayer* localPlayer, float stamina);
+
+EXPORT_SERVER void Player_PlayAnimation(alt::IPlayer* player, const char* animDict, const char* animName, float blendInSpeed, float blendOutSpeed, int duration, int flags, float playbackRate, uint8_t lockX, uint8_t lockY, uint8_t lockZ);
+EXPORT_SERVER void Player_ClearTasks(alt::IPlayer* player);
+
+EXPORT_SHARED uint8_t Player_IsEnteringVehicle(alt::IPlayer* player);
+EXPORT_SHARED uint8_t Player_IsLeavingVehicle(alt::IPlayer* player);
+EXPORT_SHARED uint8_t Player_IsOnLadder(alt::IPlayer* player);
+EXPORT_SHARED uint8_t Player_IsInMelee(alt::IPlayer* player);
+EXPORT_SHARED uint8_t Player_IsInCover(alt::IPlayer* player);
+
+EXPORT_SERVER const char* Player_GetSocialClubName(alt::IPlayer* player, int32_t& size);
+
+EXPORT_SERVER const char* Player_GetCloudAuthHash(alt::IPlayer* player, int32_t& size);
+
+EXPORT_SERVER void Player_SetAmmo(alt::IPlayer* player, uint32_t ammoHash, uint16_t ammo);
+EXPORT_SERVER uint16_t Player_GetAmmo(alt::IPlayer* player, uint32_t ammoHash);
+EXPORT_SERVER void Player_SetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash, uint16_t ammo);
+EXPORT_SERVER uint16_t Player_GetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash);
+
+EXPORT_SERVER void Player_SetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash, uint32_t ammoSpecialType);
+EXPORT_SERVER uint32_t Player_GetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash);
+
+EXPORT_SERVER void Player_SetAmmoFlags(alt::IPlayer* player, uint32_t ammoHash, uint8_t infiniteAmmo, uint8_t addSmokeOnExplosion, uint8_t fuse, uint8_t fixedAfterExplosion);
+EXPORT_SERVER ClrAmmoFlags* Player_GetAmmoFlags(alt::IPlayer* player, uint32_t ammoHash);
+
+EXPORT_SERVER void Player_DeallocAmmoFlags(ClrAmmoFlags* ammoFlags);
+
+EXPORT_SERVER void Player_SetAmmoMax(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax);
+EXPORT_SERVER int32_t Player_GetAmmoMax(alt::IPlayer* player, uint32_t ammoHash);
+
+EXPORT_SERVER void Player_SetAmmoMax50(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax50);
+EXPORT_SERVER int32_t Player_GetAmmoMax50(alt::IPlayer* player, uint32_t ammoHash);
+EXPORT_SERVER void Player_SetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax100);
+EXPORT_SERVER int32_t Player_GetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash);
+
+EXPORT_SERVER void Player_AddDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay);
+EXPORT_SERVER void Player_RemoveDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay);
+EXPORT_SERVER void Player_ClearDecorations(alt::IPlayer* player);
+
+EXPORT_SERVER ClrDecoration** Player_GetDecorations(alt::IPlayer* player, uint64_t& size);
+EXPORT_SERVER void Player_DeallocVehicleModelInfo(ClrDecoration** decoInfo);
+
+EXPORT_SERVER void Player_PlayScenario(alt::IPlayer* player, const char* name);
+
+EXPORT_SERVER uint8_t Player_IsNetworkOwnershipDisabled(alt::IPlayer* player);
+EXPORT_SERVER void Player_SetNetworkOwnershipDisabled(alt::IPlayer* player, uint8_t state);

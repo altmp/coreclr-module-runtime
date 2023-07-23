@@ -13,6 +13,8 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t VoiceChannel_GetID(alt::IVoiceChannel* voiceChannel);
+
 EXPORT_SERVER alt::IBaseObject* VoiceChannel_GetBaseObject(alt::IVoiceChannel* voiceChannel);
 
 EXPORT_SERVER alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, const char* key);
@@ -28,3 +30,9 @@ EXPORT_SERVER uint8_t VoiceChannel_HasPlayer(alt::IVoiceChannel* channel, alt::I
 EXPORT_SERVER uint8_t VoiceChannel_IsPlayerMuted(alt::IVoiceChannel* channel, alt::IPlayer* player);
 EXPORT_SERVER uint8_t VoiceChannel_IsSpatial(alt::IVoiceChannel* channel);
 EXPORT_SERVER float VoiceChannel_GetMaxDistance(alt::IVoiceChannel* channel);
+
+EXPORT_SERVER uint32_t VoiceChannel_GetFilter(alt::IVoiceChannel* channel);
+EXPORT_SERVER void VoiceChannel_SetFilter(alt::IVoiceChannel* channel, uint32_t filter);
+
+EXPORT_SERVER int32_t VoiceChannel_GetPriority(alt::IVoiceChannel* channel);
+EXPORT_SERVER void VoiceChannel_SetPriority(alt::IVoiceChannel* channel, int32_t priority);

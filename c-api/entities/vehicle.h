@@ -205,10 +205,6 @@ EXPORT_SERVER alt::IVehicle* Vehicle_GetAttachedTo(alt::IVehicle* vehicle);
 
 EXPORT_SERVER void Vehicle_Repair(alt::IVehicle* vehicle);
 
-EXPORT_SERVER void Vehicle_AttachToEntity(alt::IVehicle* vehicle, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Vehicle_AttachToEntity_BoneString(alt::IVehicle* vehicle, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
-EXPORT_SERVER void Vehicle_Detach(alt::IVehicle* vehicle);
-
 EXPORT_SERVER void Vehicle_GetVelocity(alt::IVehicle* vehicle, position_t &velocity);
 
 EXPORT_SERVER void Vehicle_SetDriftMode(alt::IVehicle* vehicle, uint8_t state);
@@ -282,6 +278,7 @@ EXPORT_SERVER void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t s
 EXPORT_CLIENT float Vehicle_GetWheelSpeed(alt::IVehicle* vehicle);
 EXPORT_CLIENT uint16_t Vehicle_GetCurrentGear(alt::IVehicle* vehicle);
 EXPORT_CLIENT float Vehicle_GetCurrentRPM(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetCurrentRPM(alt::IVehicle* vehicle, float rpm);
 EXPORT_CLIENT void Vehicle_GetSpeedVector(alt::IVehicle* vehicle, vector3_t& vector);
 EXPORT_CLIENT uint16_t Vehicle_GetMaxGear(alt::IVehicle* vehicle);
 
@@ -463,3 +460,6 @@ EXPORT_CLIENT uint32_t Vehicle_Handling_GetHandlingFlags(alt::IVehicle* vehicle)
 EXPORT_CLIENT void Vehicle_Handling_SetHandlingFlags(alt::IVehicle* vehicle, uint32_t value);
 EXPORT_CLIENT uint32_t Vehicle_Handling_GetDamageFlags(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_Handling_SetDamageFlags(alt::IVehicle* vehicle, uint32_t value);
+
+EXPORT_SERVER alt::Quaternion Vehicle_GetQuaternion(alt::IVehicle* vehicle);
+EXPORT_SERVER void Vehicle_SetQuaternion(alt::IVehicle* vehicle, alt::Quaternion quaternion);

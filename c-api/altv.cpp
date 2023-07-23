@@ -75,8 +75,57 @@ void FreeResourceArray(alt::IResource** resourceArray) {
     delete[] resourceArray;
 }
 
-void FreeObjectArray(alt::IObject** objectArray) {
+void FreePlayerArray(alt::IPlayer** playerArray) {
+    delete[] playerArray;
+}
+
+void FreeBlipArray(alt::IBlip** blipArray)
+{
+    delete[] blipArray;
+}
+
+void FreeVehicleArray(alt::IVehicle** vehicleArray)
+{
+    delete[] vehicleArray;
+}
+
+void FreePedArray(alt::IPed** pedArray)
+{
+    delete[] pedArray;
+}
+
+void FreeCheckpointArray(alt::ICheckpoint** checkpointArray)
+{
+    delete[] checkpointArray;
+}
+
+void FreeVirtualEntityArray(alt::IVirtualEntity** virtualEntityArray)
+{
+    delete[] virtualEntityArray;
+}
+
+void FreeVirtualEntityGroupArray(alt::IVirtualEntityGroup** virtualEntityGroupArray)
+{
+    delete[] virtualEntityGroupArray;
+}
+
+void FreeConnectionInfoArray(alt::IConnectionInfo** connectionInfoArray)
+{
+    delete[] connectionInfoArray;
+}
+
+void FreeLocalObjectArray(alt::ILocalObject** objectArray) {
     delete[] objectArray;
+}
+
+void FreeAudioArray(alt::IAudio** audioArray)
+{
+    delete[] audioArray;
+}
+
+void FreeAudioOutputArray(alt::IAudioOutput** audioOutputArray)
+{
+    delete[] audioOutputArray;
 }
 
 void FreeMValueConstArray(alt::MValueConst** mValueConstArray) {

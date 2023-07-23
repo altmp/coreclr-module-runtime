@@ -2,10 +2,6 @@
 
 #ifdef ALT_SERVER_API
 
-void Event_PlayerBeforeConnect_Cancel(alt::CEvent* event, const char* reason) {
-    ((alt::CPlayerBeforeConnectEvent*) event)->Cancel(reason);
-}
-
 void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue) {
     ((alt::CWeaponDamageEvent*) event)->SetDamageValue(damageValue);
 }
@@ -32,15 +28,6 @@ SetDelegate(ConsoleCommand);
 SetDelegate(RmlEvent);
 SetDelegate(WebSocketEvent);
 
-SetDelegate(CreatePlayer);
-SetDelegate(RemovePlayer);
-
-SetDelegate(CreateObject);
-SetDelegate(RemoveObject);
-
-SetDelegate(CreateVehicle);
-SetDelegate(RemoveVehicle);
-
 SetDelegate(PlayerSpawn);
 SetDelegate(PlayerDisconnect);
 SetDelegate(PlayerEnterVehicle);
@@ -48,7 +35,6 @@ SetDelegate(PlayerLeaveVehicle);
 
 SetDelegate(GameEntityCreate);
 SetDelegate(GameEntityDestroy);
-SetDelegate(RemoveEntity);
 
 SetDelegate(AnyResourceError);
 SetDelegate(AnyResourceStart);
@@ -68,6 +54,7 @@ SetDelegate(GlobalSyncedMetaChange);
 SetDelegate(LocalMetaChange);
 SetDelegate(StreamSyncedMetaChange);
 SetDelegate(SyncedMetaChange);
+SetDelegate(MetaChange);
 
 SetDelegate(NetOwnerChange);
 
@@ -76,25 +63,26 @@ SetDelegate(TaskChange);
 SetDelegate(WindowFocusChange);
 SetDelegate(WindowResolutionChange);
 
-SetDelegate(CreateBlip);
-SetDelegate(CreateWebView);
-SetDelegate(CreateCheckpoint);
-SetDelegate(CreateWebSocketClient);
-SetDelegate(CreateHttpClient);
-SetDelegate(CreateAudio);
-SetDelegate(CreateRmlElement);
-SetDelegate(CreateRmlDocument);
-
-SetDelegate(RemoveBlip);
-SetDelegate(RemoveWebView);
-SetDelegate(RemoveCheckpoint);
-SetDelegate(RemoveWebSocketClient);
-SetDelegate(RemoveHttpClient);
-SetDelegate(RemoveAudio);
-SetDelegate(RemoveRmlElement);
-SetDelegate(RemoveRmlDocument);
-
 SetDelegate(PlayerWeaponShoot);
 SetDelegate(PlayerWeaponChange);
 SetDelegate(WeaponDamage);
+
+SetDelegate(WorldObjectPositionChange);
+SetDelegate(WorldObjectStreamIn);
+SetDelegate(WorldObjectStreamOut);
+
+SetDelegate(ColShape);
+SetDelegate(Checkpoint);
+
+SetDelegate(CreateBaseObject);
+SetDelegate(RemoveBaseObject);
+
+SetDelegate(EntityHitEntity);
+
+SetDelegate(PlayerStartEnterVehicle);
+SetDelegate(PlayerStartLeaveVehicle);
+
+SetDelegate(PlayerBulletHit);
+SetDelegate(VoiceConnection);
+
 #endif

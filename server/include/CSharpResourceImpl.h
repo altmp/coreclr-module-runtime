@@ -7,17 +7,7 @@
 #endif
 
 #include "../../cpp-sdk/ICore.h"
-#include <../../cpp-sdk/types/IConnectionInfo.h>
-#include <../../cpp-sdk/events/CMetaDataChangeEvent.h>
-#include <../../cpp-sdk/events/CSyncedMetaDataChangeEvent.h>
-#include <../../cpp-sdk/events/CVehicleDestroyEvent.h>
-#include <../../cpp-sdk/events/CFireEvent.h>
-#include <../../cpp-sdk/events/CStartProjectileEvent.h>
-#include <../../cpp-sdk/events/CPlayerWeaponChangeEvent.h>
-#include <../../cpp-sdk/events/CNetOwnerChangeEvent.h>
-#include <../../cpp-sdk/events/CVehicleAttachEvent.h>
-#include <../../cpp-sdk/events/CVehicleDetachEvent.h>
-#include <../../cpp-sdk/events/CPlayerEnteringVehicleEvent.h>
+#include <../../cpp-sdk/script-objects/IConnectionInfo.h>
 
 #ifdef _WIN32
 #define RESOURCES_PATH "\\resources\\"
@@ -98,8 +88,6 @@ typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, a
 
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
 
-typedef void (* PlayerBeforeConnectDelegate_t)(const alt::CEvent* event, ClrConnectionInfo* connectionInfo, const char* reason);
-
 typedef void (* PlayerConnectDeniedDelegate_t)(alt::CPlayerConnectDeniedEvent::Reason reason, const char* name, const char* ip, uint64_t passwortHash, bool isDebug, const char* branch, uint32_t majorVersion, const char* cdnUrl, int64_t discordId);
 
 typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
@@ -127,34 +115,6 @@ typedef void (* PlayerEnteringVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IP
 typedef void (* PlayerLeaveVehicleDelegate_t)(alt::IVehicle* vehicle, alt::IPlayer* player, uint8_t seat);
 
 typedef void (* StopDelegate_t)();
-
-typedef void (* CreatePlayerDelegate_t)(alt::IPlayer* player, uint16_t id);
-
-typedef void (* RemovePlayerDelegate_t)(alt::IPlayer* player);
-
-typedef void (* CreateObjectDelegate_t)(alt::IObject* Object, uint16_t id);
-
-typedef void (* RemoveObjectDelegate_t)(alt::IObject* Object);
-
-typedef void (* CreateVehicleDelegate_t)(alt::IVehicle* vehicle, uint16_t id);
-
-typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle* vehicle);
-
-typedef void (* CreateBlipDelegate_t)(alt::IBlip* blip);
-
-typedef void (* RemoveBlipDelegate_t)(alt::IBlip* blip);
-
-typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
-
-typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint* checkpoint);
-
-typedef void (* CreateVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
-
-typedef void (* RemoveVoiceChannelDelegate_t)(alt::IVoiceChannel* channel);
-
-typedef void (* CreateColShapeDelegate_t)(alt::IColShape* colShape);
-
-typedef void (* RemoveColShapeDelegate_t)(alt::IColShape* colShape);
 
 typedef void (* ConsoleCommandDelegate_t)(const char* name, const char* args[], uint64_t argsSize);
 
@@ -195,6 +155,10 @@ typedef void (* VehicleDetachDelegate_t)(const alt::CEvent* event, alt::IVehicle
 typedef void (* VehicleDamageDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, void* attacker, alt::IBaseObject::Type attackerBaseObjectType,
     uint32_t bodyHealthDamage, uint32_t additionalBodyHealthDamage, uint32_t engineHealthDamage, uint32_t petrolTankDamage, uint32_t weaponHash);
 
+typedef void (* VehicleHornDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, alt::IPlayer* reporter, bool toggle);
+
+typedef void (* VehicleSirenDelegate_t)( alt::IVehicle* target, bool toggle);
+
 typedef void (* ConnectionQueueAddDelegate_t)(alt::IConnectionInfo* connectionInfo);
 
 typedef void (* ConnectionQueueRemoveDelegate_t)(alt::IConnectionInfo* connectionInfo);
@@ -208,6 +172,14 @@ typedef void (* PlayerDimensionChangeDelegate_t)(alt::IPlayer* player, int32_t o
 typedef void (* PlayerChangeAnimationDelegate_t)(void* target, uint32_t oldDict, uint32_t newDict, uint32_t oldName, uint32_t newName);
 
 typedef void (* PlayerChangeInteriorDelegate_t)(void* target, uint32_t oldIntLoc, uint32_t newIntLoc);
+
+typedef void (* PlayerSpawnDelegate_t)(alt::IPlayer* player);
+
+typedef void (* CreateBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType, uint32_t id);
+
+typedef void (* RemoveBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType);
+
+typedef void (* VoiceConnectionDelegate_t)(uint8_t state);
 
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
@@ -224,6 +196,8 @@ class CSharpResourceImpl : public alt::IResource::Impl {
 
     static void* GetBaseObjectPointer(alt::IBaseObject* baseObject);
 
+    static void* GetWorldObjectPointer(alt::IWorldObject* worldObject);
+
     static void* GetEntityPointer(alt::IEntity* entity);
 
     static alt::IBaseObject::Type GetEntityType(alt::IEntity* entity);
@@ -235,15 +209,13 @@ public:
 
     ~CSharpResourceImpl() override;
 
-    bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files) override;
+    bool MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files) override;
 
     CheckpointDelegate_t OnCheckpointDelegate = nullptr;
 
     ClientEventDelegate_t OnClientEventDelegate = nullptr;
 
     PlayerConnectDelegate_t OnPlayerConnectDelegate = nullptr;
-
-    PlayerBeforeConnectDelegate_t OnPlayerBeforeConnectDelegate = nullptr;
 
     PlayerConnectDeniedDelegate_t OnPlayerConnectDeniedDelegate = nullptr;
 
@@ -283,39 +255,11 @@ public:
 
     TickDelegate_t OnTickDelegate = nullptr;
 
-    CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
-
-    RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
-
-    CreateObjectDelegate_t OnCreateObjectDelegate = nullptr;
-
-    RemoveObjectDelegate_t OnRemoveObjectDelegate = nullptr;
-
-    CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
-
-    RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
-
-    CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
-
-    RemoveBlipDelegate_t OnRemoveBlipDelegate = nullptr;
-
-    CreateCheckpointDelegate_t OnCreateCheckpointDelegate = nullptr;
-
-    RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate = nullptr;
-
-    CreateVoiceChannelDelegate_t OnCreateVoiceChannelDelegate = nullptr;
-
-    RemoveVoiceChannelDelegate_t OnRemoveVoiceChannelDelegate = nullptr;
-
     ConsoleCommandDelegate_t OnConsoleCommandDelegate = nullptr;
 
     MetaChangeDelegate_t OnMetaChangeDelegate = nullptr;
 
     MetaChangeDelegate_t OnSyncedMetaChangeDelegate = nullptr;
-
-    CreateColShapeDelegate_t OnCreateColShapeDelegate = nullptr;
-
-    RemoveColShapeDelegate_t OnRemoveColShapeDelegate = nullptr;
 
     ColShapeDelegate_t OnColShapeDelegate = nullptr;
 
@@ -335,6 +279,10 @@ public:
 
     VehicleDamageDelegate_t OnVehicleDamageDelegate = nullptr;
 
+    VehicleHornDelegate_t OnVehicleHornDelegate = nullptr;
+
+    VehicleSirenDelegate_t OnVehicleSirenDelegate = nullptr;
+
     ConnectionQueueAddDelegate_t OnConnectionQueueAddDelegate = nullptr;
 
     ConnectionQueueRemoveDelegate_t OnConnectionQueueRemoveDelegate = nullptr;
@@ -349,6 +297,12 @@ public:
 
     PlayerChangeInteriorDelegate_t OnPlayerChangeInteriorDelegate = nullptr;
 
+    PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
+
+    CreateBaseObjectDelegate_t OnCreateBaseObjectDelegate = nullptr;
+    RemoveBaseObjectDelegate_t OnRemoveBaseObjectDelegate = nullptr;
+
+    VoiceConnectionDelegate_t OnVoiceConnectionDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -372,25 +326,37 @@ public:
         if (object != nullptr) {
             switch (object->GetType()) {
                 case alt::IBaseObject::Type::PLAYER:
-                    this->cSharpResource->OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IPlayer*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::VEHICLE:
-                    this->cSharpResource->OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IVehicle*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::BLIP:
-                    this->cSharpResource->OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IBlip*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::VOICE_CHANNEL:
-                    this->cSharpResource->OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IVoiceChannel*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::COLSHAPE:
-                    this->cSharpResource->OnRemoveColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IColShape*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::CHECKPOINT:
-                    this->cSharpResource->OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::ICheckpoint*>(object), object->GetType());
+                    break;
+                case alt::IBaseObject::Type::LOCAL_OBJECT:
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::ILocalObject*>(object), object->GetType());
+                break;
+                case alt::IBaseObject::Type::PED:
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IPed*>(object), object->GetType());
+                    break;
+                case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IVirtualEntity*>(object), object->GetType());
+                    break;
+                case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IVirtualEntityGroup*>(object), object->GetType());
                     break;
                 case alt::IBaseObject::Type::OBJECT:
-                    this->cSharpResource->OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
+                    this->cSharpResource->OnRemoveBaseObjectDelegate(dynamic_cast<alt::IObject*>(object), object->GetType());
                     break;
             }
         }
@@ -421,9 +387,6 @@ EXPORT void CSharpResourceImpl_SetPlayerDamageDelegate(CSharpResourceImpl* resou
 
 EXPORT void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* resource,
                                                         PlayerConnectDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(CSharpResourceImpl* resource,
-                                                        PlayerBeforeConnectDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetPlayerConnectDeniedDelegate(CSharpResourceImpl* resource,
                                                               PlayerConnectDeniedDelegate_t delegate);
@@ -467,42 +430,6 @@ EXPORT void CSharpResourceImpl_SetPlayerEnteringVehicleDelegate(CSharpResourceIm
 EXPORT void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(CSharpResourceImpl* resource,
                                                              PlayerLeaveVehicleDelegate_t delegate);
 
-EXPORT void CSharpResourceImpl_SetCreatePlayerDelegate(CSharpResourceImpl* resource,
-                                                       CreatePlayerDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemovePlayerDelegate(CSharpResourceImpl* resource,
-                                                       RemovePlayerDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateObjectDelegate(CSharpResourceImpl* resource,
-                                                       CreateObjectDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveObjectDelegate(CSharpResourceImpl* resource,
-                                                       RemoveObjectDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateVehicleDelegate(CSharpResourceImpl* resource,
-                                                        CreateVehicleDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,
-                                                        RemoveVehicleDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateBlipDelegate(CSharpResourceImpl* resource,
-                                                     CreateBlipDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveBlipDelegate(CSharpResourceImpl* resource,
-                                                     RemoveBlipDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateCheckpointDelegate(CSharpResourceImpl* resource,
-                                                           CreateCheckpointDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveCheckpointDelegate(CSharpResourceImpl* resource,
-                                                           RemoveCheckpointDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateVoiceChannelDelegate(CSharpResourceImpl* resource,
-                                                             CreateVoiceChannelDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveVoiceChannelDelegate(CSharpResourceImpl* resource,
-                                                             RemoveVoiceChannelDelegate_t delegate);
-
 EXPORT void CSharpResourceImpl_SetConsoleCommandDelegate(CSharpResourceImpl* resource,
                                                          ConsoleCommandDelegate_t delegate);
 
@@ -511,12 +438,6 @@ EXPORT void CSharpResourceImpl_SetMetaChangeDelegate(CSharpResourceImpl* resourc
 
 EXPORT void CSharpResourceImpl_SetSyncedMetaChangeDelegate(CSharpResourceImpl* resource,
                                                            MetaChangeDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetCreateColShapeDelegate(CSharpResourceImpl* resource,
-                                                         CreateColShapeDelegate_t delegate);
-
-EXPORT void CSharpResourceImpl_SetRemoveColShapeDelegate(CSharpResourceImpl* resource,
-                                                         RemoveColShapeDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetColShapeDelegate(CSharpResourceImpl* resource,
                                                    ColShapeDelegate_t delegate);
@@ -545,6 +466,10 @@ EXPORT void CSharpResourceImpl_SetVehicleDetachDelegate(CSharpResourceImpl* reso
 EXPORT void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
     VehicleDamageDelegate_t delegate);
 
+EXPORT void CSharpResourceImpl_SetVehicleHornDelegate(CSharpResourceImpl* resource, VehicleHornDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetVehicleSirenDelegate(CSharpResourceImpl* resource, VehicleSirenDelegate_t delegate);
+
 EXPORT void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl* resource,
                                                       ConnectionQueueAddDelegate_t delegate);
 
@@ -565,3 +490,11 @@ EXPORT void CSharpResourceImpl_SetPlayerChangeAnimationDelegate(CSharpResourceIm
 
 EXPORT void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(CSharpResourceImpl* resource,
                                                             PlayerChangeInteriorDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, PlayerSpawnDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetVoiceConnectionDelegate(CSharpResourceImpl* resource, VoiceConnectionDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource, CreateBaseObjectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resource, RemoveBaseObjectDelegate_t delegate);

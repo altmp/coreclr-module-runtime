@@ -12,7 +12,7 @@
 
 typedef int (* CoreClrDelegate_t)(void* args, int argsLength);
 
-typedef std::function<void(alt::InitState state, float progress, float total)> progressfn_t;
+typedef std::function<void(alt::InitState state, float progress, float total, int)> progressfn_t;
 
 struct Progress
 {
@@ -23,7 +23,7 @@ struct Progress
     
     void Update() const
     {
-        updateFn(state, current, total);
+        updateFn(state, current, total, 1000);
     }
     
     void Advance(float value)

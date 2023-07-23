@@ -638,27 +638,6 @@ void Vehicle_Repair(alt::IVehicle* vehicle) {
     vehicle->SetFixed();
 }
 
-
-void Vehicle_AttachToEntity(alt::IVehicle* vehicle, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
-{
-    alt::Position position{pos.x, pos.y, pos.z};
-    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
-}
-
-void Vehicle_AttachToEntity_BoneString(alt::IVehicle* vehicle, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
-{
-    alt::Position position{pos.x, pos.y, pos.z};
-    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
-}
-
-void Vehicle_Detach(alt::IVehicle* vehicle)
-{
-    vehicle->Detach();
-}
-
-
 void Vehicle_GetVelocity(alt::IVehicle* vehicle, position_t &velocity) {
     auto vehicleVelocity = vehicle->GetVelocity();
     velocity.x = vehicleVelocity[0];
@@ -890,6 +869,16 @@ void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetHybridExtraState(state);
 }
 
+alt::Quaternion Vehicle_GetQuaternion(alt::IVehicle* vehicle)
+{
+    return vehicle->GetQuaternion();
+}
+
+void Vehicle_SetQuaternion(alt::IVehicle* vehicle, alt::Quaternion quaternion)
+{
+    vehicle->SetQuaternion(quaternion);
+}
+
 #endif
 
 #ifdef ALT_CLIENT_API
@@ -920,6 +909,10 @@ void Vehicle_SetMaxGear(alt::IVehicle* vehicle, uint16_t value) {
 
 float Vehicle_GetCurrentRPM(alt::IVehicle* vehicle) {
     return vehicle->GetCurrentRPM();
+}
+
+void Vehicle_SetCurrentRPM(alt::IVehicle* vehicle, float rpm) {
+    vehicle->SetCurrentRPM(rpm);
 }
 
 uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle) {

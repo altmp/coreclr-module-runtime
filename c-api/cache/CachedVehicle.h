@@ -108,7 +108,8 @@ namespace cache
 										_wheelDetached(base->GetWheelsCount(), false),
 										_wheelOnFire(base->GetWheelsCount(), false),
 										_wheelHealth(base->GetWheelsCount(), 0.0f),
-										_wheelHasTire(base->GetWheelsCount(), false)
+										_wheelHasTire(base->GetWheelsCount(), false),
+    									_quaternion(base->GetQuaternion())
 #else
     									_wheelSpeed(base->GetWheelSpeed()),
 										_currentGear(base->GetCurrentGear()),
@@ -312,7 +313,7 @@ namespace cache
 		}
   
         std::string _appearanceDataBase64;
-        std::string GetAppearanceDataBase64() override {
+        std::string GetAppearanceDataBase64() const override {
 			return _appearanceDataBase64;
 		}
   
@@ -378,7 +379,7 @@ namespace cache
 		}
   
         std::string _gameStateBase64;
-        std::string GetGameStateBase64() override {
+        std::string GetGameStateBase64() const override {
 			return _gameStateBase64;
 		}
   
@@ -438,7 +439,7 @@ namespace cache
 		}
   
         std::string _healthDataBase64;
-        std::string GetHealthDataBase64() override {
+        std::string GetHealthDataBase64() const override {
 			return _healthDataBase64;
 		}
   
@@ -472,7 +473,7 @@ namespace cache
 	        return 0;
         }
         std::string _damageDataBase64;
-        std::string GetDamageDataBase64() override {
+        std::string GetDamageDataBase64() const override {
 			return _damageDataBase64;
 		}
   
@@ -482,7 +483,7 @@ namespace cache
 		}
   
         std::string _scriptDataBase64;
-        std::string GetScriptDataBase64() override {
+        std::string GetScriptDataBase64() const override {
 			return _scriptDataBase64;
 		}
   
@@ -749,6 +750,13 @@ namespace cache
 		}
   
         void SetHybridExtraState(uint8_t state) override {}
+
+    	alt::Quaternion _quaternion;
+        alt::Quaternion GetQuaternion() const override
+        {
+	        return _quaternion;
+        }
+        void SetQuaternion(alt::Quaternion quaternion) override {}
 #endif
 #ifdef ALT_CLIENT_API
     	float _wheelSpeed;
@@ -761,6 +769,8 @@ namespace cache
 	        return _currentGear;
         }
         void SetCurrentGear(uint16_t currentGear) override {}
+
+        void SetCurrentRPM(float rpm) override {}
 
     	float _currentRPM;
         float GetCurrentRPM() const override {

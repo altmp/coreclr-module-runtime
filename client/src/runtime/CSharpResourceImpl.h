@@ -4,11 +4,6 @@
 #include "./CSharpScriptRuntime.h"
 #include "eventDelegates.h"
 #include "../../../c-api/data/invoker.h"
-#include "cpp-sdk/events/CLocalMetaDataChangeEvent.h"
-#include "cpp-sdk/events/CWindowFocusChangeEvent.h"
-#include "cpp-sdk/events/CWindowResolutionChangeEvent.h"
-#include "cpp-sdk/events/CRmlEvent.h"
-#include "cpp-sdk/events/CWebSocketClientEvent.h"
 
 class CSharpResourceImpl : public alt::IResource::Impl
 {
@@ -45,15 +40,6 @@ public:
     WebSocketEventDelegate_t OnWebSocketEventDelegate = nullptr;
     RmlEventDelegate_t OnRmlEventDelegate = nullptr;
 
-    CreatePlayerDelegate_t OnCreatePlayerDelegate = nullptr;
-    RemovePlayerDelegate_t OnRemovePlayerDelegate = nullptr;
-
-    CreateObjectDelegate_t OnCreateObjectDelegate = nullptr;
-    RemoveObjectDelegate_t OnRemoveObjectDelegate = nullptr;
-
-    CreateVehicleDelegate_t OnCreateVehicleDelegate = nullptr;
-    RemoveVehicleDelegate_t OnRemoveVehicleDelegate = nullptr;
-
     PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
     PlayerDisconnectDelegate_t OnPlayerDisconnectDelegate = nullptr;
     PlayerEnterVehicleDelegate_t OnPlayerEnterVehicleDelegate = nullptr;
@@ -80,39 +66,40 @@ public:
     LocalMetaChangeDelegate_t OnLocalMetaChangeDelegate = nullptr;
     StreamSyncedMetaChangeDelegate_t OnStreamSyncedMetaChangeDelegate = nullptr;
     SyncedMetaChangeDelegate_t OnSyncedMetaChangeDelegate = nullptr;
+    MetaChangeDelegate_t OnMetaChangeDelegate = nullptr;
 
     NetOwnerChangeDelegate_t OnNetOwnerChangeDelegate = nullptr;
-    RemoveEntityDelegate_t OnRemoveEntityDelegate = nullptr;
 
     TaskChangeDelegate_t OnTaskChangeDelegate = nullptr;
 
     WindowFocusChangeDelegate_t OnWindowFocusChangeDelegate = nullptr;
     WindowResolutionChangeDelegate_t OnWindowResolutionChangeDelegate = nullptr;
 
+    WorldObjectPositionChangeDelegate_t OnWorldObjectPositionChangeDelegate = nullptr;
+    WorldObjectStreamInDelegate_t OnWorldObjectStreamInDelegate = nullptr;
+    WorldObjectStreamOutDelegate_t OnWorldObjectStreamOutDelegate = nullptr;
+
     PlayerWeaponShootDelegate_t OnPlayerWeaponShootDelegate = nullptr;
 
     PlayerWeaponChangeDelegate_t OnPlayerWeaponChangeDelegate = nullptr;
 
     WeaponDamageDelegate_t OnWeaponDamageDelegate = nullptr;
-    
-    CreateBlipDelegate_t OnCreateBlipDelegate = nullptr;
-    CreateWebViewDelegate_t OnCreateWebViewDelegate = nullptr;
-    CreateCheckpointDelegate_t OnCreateCheckpointDelegate = nullptr;
-    CreateWebSocketClientDelegate_t OnCreateWebSocketClientDelegate = nullptr;
-    CreateHttpClientDelegate_t OnCreateHttpClientDelegate = nullptr;
-    CreateAudioDelegate_t OnCreateAudioDelegate = nullptr;
-    CreateRmlElementDelegate_t OnCreateRmlElementDelegate = nullptr;
-    CreateRmlDocumentDelegate_t OnCreateRmlDocumentDelegate = nullptr;
-    
-    RemoveBlipDelegate_t OnRemoveBlipDelegate = nullptr;
-    RemoveWebViewDelegate_t OnRemoveWebViewDelegate = nullptr;
-    RemoveCheckpointDelegate_t OnRemoveCheckpointDelegate = nullptr;
-    RemoveWebSocketClientDelegate_t OnRemoveWebSocketClientDelegate = nullptr;
-    RemoveHttpClientDelegate_t OnRemoveHttpClientDelegate = nullptr;
-    RemoveAudioDelegate_t OnRemoveAudioDelegate = nullptr;
-    RemoveRmlElementDelegate_t OnRemoveRmlElementDelegate = nullptr;
-    RemoveRmlDocumentDelegate_t OnRemoveRmlDocumentDelegate = nullptr;
-    
+
+    CreateBaseObjectDelegate_t OnCreateBaseObjectDelegate = nullptr;
+    RemoveBaseObjectDelegate_t OnRemoveBaseObjectDelegate = nullptr;
+
+    ColShapeDelegate_t OnColShapeDelegate = nullptr;
+    CheckpointDelegate_t OnCheckpointDelegate = nullptr;
+
+    EntityHitEntityDelegate_t OnEntityHitEntityDelegate = nullptr;
+
+    PlayerStartEnterVehicleDelegate_t OnPlayerStartEnterVehicleDelegate = nullptr;
+    PlayerStartLeaveVehicleDelegate_t OnPlayerStartLeaveVehicleDelegate = nullptr;
+
+    PlayerBulletHitDelegate_t OnPlayerBulletHitDelegate = nullptr;
+
+    VoiceConnectionDelegate_t OnVoiceConnectionDelegate = nullptr;
+
 
     bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
     {

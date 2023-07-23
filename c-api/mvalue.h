@@ -17,6 +17,8 @@
 #include "../client/src/runtime/CSharpResourceImpl.h"
 #endif
 
+alt::MValueConst* AllocMValue(alt::MValueConst&& val);
+void FreeMValue(alt::MValueConst* val);
 void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *val, alt::Size i);
 
 EXPORT_SHARED uint8_t MValueConst_GetBool(alt::MValueConst* mValueConst);

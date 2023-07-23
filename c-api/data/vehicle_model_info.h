@@ -19,9 +19,11 @@ struct ClrVehicleModelInfo {
     uint16_t defaultExtras;
     bool modkits[2];
     uint8_t hasAutoAttachTrailer;
-    
+
     ClrBoneInfo* bones;
     uint32_t boneSize;
+
+    uint8_t canAttachCars;
 
     ClrVehicleModelInfo() = default;
 
@@ -37,7 +39,8 @@ struct ClrVehicleModelInfo {
             dashboardColor(info.dashboardColor),
             extras(info.extras),
             defaultExtras(info.defaultExtras),
-            hasAutoAttachTrailer(info.hasAutoAttachTrailer) {
+            hasAutoAttachTrailer(info.hasAutoAttachTrailer),
+            canAttachCars(info.canAttachCars){
 
         size_t modkitsSize = std::size(info.modkits);
         for(size_t i = 0; i < modkitsSize; i++)
@@ -47,7 +50,7 @@ struct ClrVehicleModelInfo {
 
         title = new char[info.title.length() + 1];
         strcpy(title, info.title.c_str());
-        
+
         const auto vehModelBones = info.bones;
         boneSize = vehModelBones.size();
         bones = new ClrBoneInfo[boneSize];

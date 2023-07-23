@@ -10,10 +10,8 @@
 #include <iomanip>
 #include "natives.h"
 #include "exceptions/LoadException.h"
-#include "cpp-sdk/events/CPlayerChangeAnimationEvent.h"
-#include "cpp-sdk/events/CPlayerWeaponShootEvent.h"
-#include "cpp-sdk/events/CWeaponDamageEvent.h"
 #include "../../c-api/utils/entity.h"
+#include "../../c-api/mvalue.h"
 
 using namespace std;
 
@@ -44,7 +42,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         {
             auto serverScriptEvent = dynamic_cast<const alt::CServerScriptEvent*>(ev);
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
-            auto size = serverArgs.GetSize();
+            auto size = serverArgs.size();
 
             if (size == 0)
             {
@@ -68,7 +66,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
         {
             auto clientScriptEvent = dynamic_cast<const alt::CClientScriptEvent*>(ev);
             alt::MValueArgs serverArgs = clientScriptEvent->GetArgs();
-            auto size = serverArgs.GetSize();
+            auto size = serverArgs.size();
             if (size == 0)
             {
                 OnClientEventDelegate(clientScriptEvent->GetName().c_str(), nullptr, 0);
@@ -111,7 +109,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto webViewEvent = dynamic_cast<const alt::CWebViewEvent*>(ev);
             auto args = webViewEvent->GetArgs();
             auto name = webViewEvent->GetName();
-            auto size = args.GetSize();
+            auto size = args.size();
             auto constArgs = new alt::MValueConst*[size];
 
             for (uint64_t i = 0; i < size; i++)
@@ -128,14 +126,11 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
     case alt::CEvent::Type::RMLUI_EVENT:
         {
             auto rmlUiEvent = dynamic_cast<const alt::CRmlEvent*>(ev);
-            auto args = rmlUiEvent->GetArgs();
             auto name = rmlUiEvent->GetName();
-            auto size = args->GetSize();
 
             OnRmlEventDelegate(rmlUiEvent->GetElement(),
                                name.c_str(),
-                               rmlUiEvent->GetArgs().Get(),
-                               size);
+                               AllocMValue(std::move(rmlUiEvent->GetArgs())));
             break;
         }
     case alt::CEvent::Type::WEB_SOCKET_CLIENT_EVENT:
@@ -143,7 +138,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto webSocketClientEvent = dynamic_cast<const alt::CWebSocketClientEvent*>(ev);
             auto args = webSocketClientEvent->GetArgs();
             auto name = webSocketClientEvent->GetName();
-            auto size = args.GetSize();
+            auto size = args.size();
             auto constArgs = new alt::MValueConst*[size];
 
             for (uint64_t i = 0; i < size; i++)
@@ -231,13 +226,42 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             if (targetEntity == nullptr) return;
             auto eventShotOffset = weaponDamageEvent->GetShotOffset();
             position_t shotOffset = {eventShotOffset[0], eventShotOffset[1], eventShotOffset[2]};
+
+            auto sourceEntity = weaponDamageEvent->GetSourceEntity();
+
+            auto sourceType = alt::IBaseObject::Type::PLAYER;
+            void* sourceTPtr = nullptr;
+
+            if (sourceEntity != nullptr)
+            {
+                sourceTPtr = Util_GetEntityPointer(sourceEntity);
+                sourceType = sourceEntity->GetType();
+            }
+
             OnWeaponDamageDelegate(ev,
-                                   GetEntityPointer(targetEntity),
+                                   Util_GetEntityPointer(targetEntity),
                                    targetEntity->GetType(),
                                    weaponDamageEvent->GetWeaponHash(),
                                    weaponDamageEvent->GetDamageValue(),
                                    shotOffset,
-                                   weaponDamageEvent->GetBodyPart());
+                                   weaponDamageEvent->GetBodyPart(),
+                                   sourceTPtr,
+                                   sourceType);
+            break;
+        }
+    case alt::CEvent::Type::PLAYER_BULLET_HIT_EVENT:
+        {
+            auto playerBulletHitEvent = dynamic_cast<const alt::CPlayerBulletHitEvent*>(ev);
+            auto victimEntity = playerBulletHitEvent->GetVictim();
+            if (victimEntity == nullptr) return;
+            auto position = playerBulletHitEvent->GetPosition();
+            position_t pos = {position.x, position.y, position.z};
+
+            OnPlayerBulletHitDelegate(playerBulletHitEvent->GetWeapon(),
+                                      Util_GetEntityPointer(victimEntity),
+                                      victimEntity->GetType(),
+                                      pos);
+
             break;
         }
 #pragma endregion
@@ -257,8 +281,11 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             case alt::IBaseObject::Type::VEHICLE:
                 ptr = dynamic_cast<alt::IVehicle*>(entity);
                 break;
-            case alt::IBaseObject::Type::OBJECT:
-                ptr = dynamic_cast<alt::IObject*>(entity);
+            case alt::IBaseObject::Type::LOCAL_OBJECT:
+                ptr = dynamic_cast<alt::ILocalObject*>(entity);
+                break;
+            case alt::IBaseObject::Type::PED:
+                ptr = dynamic_cast<alt::IPed*>(entity);
                 break;
             default:
                 ptr = nullptr;
@@ -283,8 +310,11 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             case alt::IBaseObject::Type::VEHICLE:
                 ptr = dynamic_cast<alt::IVehicle*>(entity);
                 break;
-            case alt::IBaseObject::Type::OBJECT:
-                ptr = dynamic_cast<alt::IObject*>(entity);
+            case alt::IBaseObject::Type::LOCAL_OBJECT:
+                ptr = dynamic_cast<alt::ILocalObject*>(entity);
+                break;
+            case alt::IBaseObject::Type::PED:
+                ptr = dynamic_cast<alt::IPed*>(entity);
                 break;
             default:
                 ptr = nullptr;
@@ -361,7 +391,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
     case alt::CEvent::Type::NETOWNER_CHANGE:
         {
             auto netOwnerChangeEvent = dynamic_cast<const alt::CNetOwnerChangeEvent*>(ev);
-            OnNetOwnerChangeDelegate(GetEntityPointer(netOwnerChangeEvent->GetTarget()),
+            OnNetOwnerChangeDelegate(Util_GetEntityPointer(netOwnerChangeEvent->GetTarget()),
                                      netOwnerChangeEvent->GetTarget()->GetType(),
                                      netOwnerChangeEvent->GetNewOwner(),
                                      netOwnerChangeEvent->GetOldOwner());
@@ -372,7 +402,7 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto streamSyncedMetaChangeEvent = dynamic_cast<const alt::CStreamSyncedMetaDataChangeEvent*>(ev);
             auto constValue = alt::MValueConst(streamSyncedMetaChangeEvent->GetVal());
             auto constOldValue = alt::MValueConst(streamSyncedMetaChangeEvent->GetOldVal());
-            OnStreamSyncedMetaChangeDelegate(GetEntityPointer(streamSyncedMetaChangeEvent->GetTarget()),
+            OnStreamSyncedMetaChangeDelegate(Util_GetBaseObjectPointer(streamSyncedMetaChangeEvent->GetTarget()),
                                              streamSyncedMetaChangeEvent->GetTarget()->GetType(),
                                              streamSyncedMetaChangeEvent->GetKey().c_str(),
                                              &constValue,
@@ -384,11 +414,24 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto syncedMetaChangeEvent = dynamic_cast<const alt::CSyncedMetaDataChangeEvent*>(ev);
             auto constValue = alt::MValueConst(syncedMetaChangeEvent->GetVal());
             auto constOldValue = alt::MValueConst(syncedMetaChangeEvent->GetOldVal());
-            OnSyncedMetaChangeDelegate(GetEntityPointer(syncedMetaChangeEvent->GetTarget()),
+            OnSyncedMetaChangeDelegate(Util_GetBaseObjectPointer(syncedMetaChangeEvent->GetTarget()),
                                        syncedMetaChangeEvent->GetTarget()->GetType(),
                                        syncedMetaChangeEvent->GetKey().c_str(),
                                        &constValue,
                                        &constOldValue);
+            break;
+        }
+    case alt::CEvent::Type::META_CHANGE:
+        {
+            auto metaChangeEvent = dynamic_cast<const alt::CMetaChangeEvent*>(ev);
+            auto constValue = alt::MValueConst(metaChangeEvent->GetVal());
+            auto constOldValue = alt::MValueConst(metaChangeEvent->GetOldVal());
+
+            OnMetaChangeDelegate(Util_GetBaseObjectPointer(metaChangeEvent->GetTarget()),
+                                 metaChangeEvent->GetTarget()->GetType(),
+                                 metaChangeEvent->GetKey().c_str(),
+                                 &constValue,
+                                 &constOldValue);
             break;
         }
     case alt::CEvent::Type::TASK_CHANGE:
@@ -414,6 +457,110 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             break;
         }
 #pragma endregion
+    case alt::CEvent::Type::WORLD_OBJECT_POSITION_CHANGE:
+        {
+            auto worldObjectPositionChangeEvent = dynamic_cast<const alt::CWorldObjectPositionChangeEvent*>(ev);
+
+            auto oldPosition = worldObjectPositionChangeEvent->GetOldPosition();
+
+            OnWorldObjectPositionChangeDelegate(Util_GetWorldObjectPointer(worldObjectPositionChangeEvent->GetWorldObject()),
+                                                worldObjectPositionChangeEvent->GetWorldObject()->GetType(),
+                                                {oldPosition.x, oldPosition.y, oldPosition.z});
+            break;
+        }
+    case alt::CEvent::Type::WORLD_OBJECT_STREAM_IN:
+        {
+            auto worldObjectStreamInEvent = dynamic_cast<const alt::CWorldObjectStreamInEvent*>(ev);
+
+            OnWorldObjectStreamInDelegate(Util_GetWorldObjectPointer(worldObjectStreamInEvent->GetWorldObject()),
+                                          worldObjectStreamInEvent->GetWorldObject()->GetType());
+            break;
+        }
+    case alt::CEvent::Type::WORLD_OBJECT_STREAM_OUT:
+        {
+            auto worldObjectStreamOutEvent = dynamic_cast<const alt::CWorldObjectStreamOutEvent*>(ev);
+
+            OnWorldObjectStreamOutDelegate(Util_GetWorldObjectPointer(worldObjectStreamOutEvent->GetWorldObject()),
+                                           worldObjectStreamOutEvent->GetWorldObject()->GetType());
+            break;
+        }
+    case alt::CEvent::Type::COLSHAPE_EVENT:
+        {
+            auto colShapeEvent = dynamic_cast<const alt::CColShapeEvent*>(ev);
+            auto entity = colShapeEvent->GetEntity();
+            auto worldObjectPointer = Util_GetWorldObjectPointer(entity);
+            if (entity != nullptr && worldObjectPointer != nullptr)
+            {
+                auto colShapePointer = colShapeEvent->GetTarget();
+                if (colShapePointer->GetType() == alt::IBaseObject::Type::COLSHAPE)
+                {
+                    OnColShapeDelegate(colShapePointer,
+                                       worldObjectPointer,
+                                       entity->GetType(),
+                                       colShapeEvent->GetState());
+                }
+                else if (colShapePointer->GetType() == alt::IBaseObject::Type::CHECKPOINT)
+                {
+                    OnCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(colShapePointer),
+                                         worldObjectPointer,
+                                         entity->GetType(),
+                                         colShapeEvent->GetState());
+                }
+            }
+            break;
+        }
+    case alt::CEvent::Type::ENTITY_HIT_ENTITY:
+        {
+            auto entityHitEntityEvent = dynamic_cast<const alt::CEntityHitEntityEvent*>(ev);
+            auto target = entityHitEntityEvent->GetTarget();
+            auto targetPointer = Util_GetEntityPointer(target);
+
+            auto damager = entityHitEntityEvent->GetDamager();
+            auto damagerPointer = Util_GetEntityPointer(damager);
+
+            OnEntityHitEntityDelegate(targetPointer,
+                                      target->GetType(),
+                                      damagerPointer,
+                                      damager->GetType(),
+                                      entityHitEntityEvent->GetWeapon());
+            break;
+        }
+    case alt::CEvent::Type::PLAYER_START_ENTER_VEHICLE:
+        {
+            auto playerStartEnterVehicleEvent = dynamic_cast<const alt::CPlayerStartEnterVehicleEvent*>(ev);
+            auto target = playerStartEnterVehicleEvent->GetTarget();
+            auto targetPointer = Util_GetEntityPointer(target);
+
+            auto player = playerStartEnterVehicleEvent->GetPlayer();
+            auto playerPointer = Util_GetEntityPointer(player);
+
+            OnPlayerStartEnterVehicleDelegate(targetPointer,
+                                              playerPointer,
+                                              playerStartEnterVehicleEvent->GetSeat());
+            break;
+        }
+    case alt::CEvent::Type::PLAYER_START_LEAVE_VEHICLE:
+        {
+            auto playerStartLeaveVehicleEvent = dynamic_cast<const alt::CPlayerStartLeaveVehicleEvent*>(ev);
+            auto target = playerStartLeaveVehicleEvent->GetTarget();
+            auto targetPointer = Util_GetEntityPointer(target);
+
+            auto player = playerStartLeaveVehicleEvent->GetPlayer();
+            auto playerPointer = Util_GetEntityPointer(player);
+
+            OnPlayerStartLeaveVehicleDelegate(targetPointer,
+                                              playerPointer,
+                                              playerStartLeaveVehicleEvent->GetSeat());
+            break;
+        }
+    case alt::CEvent::Type::VOICE_CONNECTION_EVENT:
+        {
+            auto voiceConnectionEvent = dynamic_cast<const alt::CVoiceConnectionEvent*>(ev);
+
+            OnVoiceConnectionDelegate(static_cast<uint8_t>(voiceConnectionEvent->GetState()));
+
+            break;
+        }
     default:
         {
             std::cout << "Unhandled client event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -435,63 +582,149 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
     case alt::IBaseObject::Type::VEHICLE:
         {
             auto vehicle = dynamic_cast<alt::IVehicle*>(object);
-            OnCreateVehicleDelegate(vehicle, vehicle->GetID());
+            OnCreateBaseObjectDelegate(vehicle, vehicle->GetType(), vehicle->GetID());
             break;
         }
     case alt::IBaseObject::Type::PLAYER:
         {
             auto player = dynamic_cast<alt::IPlayer*>(object);
-            OnCreatePlayerDelegate(player, player->GetID());
+            OnCreateBaseObjectDelegate(player, player->GetType(), player->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::PED:
+        {
+            auto ped = dynamic_cast<alt::IPed*>(object);
+            OnCreateBaseObjectDelegate(ped, ped->GetType(), ped->GetID());
             break;
         }
     case alt::IBaseObject::Type::BLIP:
         {
-            OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+            auto blip = dynamic_cast<alt::IBlip*>(object);
+            OnCreateBaseObjectDelegate(blip, blip->GetType(), blip->GetID());
             break;
         }
     case alt::IBaseObject::Type::WEBVIEW:
         {
-            OnCreateWebViewDelegate(dynamic_cast<alt::IWebView*>(object));
+            auto webview = dynamic_cast<alt::IWebView*>(object);
+            OnCreateBaseObjectDelegate(webview, webview->GetType(), webview->GetID());
             break;
         }
     case alt::IBaseObject::Type::CHECKPOINT:
         {
-            OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+            auto checkPoint = dynamic_cast<alt::ICheckpoint*>(object);
+            OnCreateBaseObjectDelegate(checkPoint, checkPoint->GetType(), checkPoint->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::COLSHAPE:
+        {
+            auto colshape = dynamic_cast<alt::IColShape*>(object);
+            OnCreateBaseObjectDelegate(colshape, colshape->GetType(), colshape->GetID());
             break;
         }
     case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
         {
-            OnCreateWebSocketClientDelegate(dynamic_cast<alt::IWebSocketClient*>(object));
+            auto webSocketClient = dynamic_cast<alt::IWebSocketClient*>(object);
+            OnCreateBaseObjectDelegate(webSocketClient, webSocketClient->GetType(), webSocketClient->GetID());
             break;
         }
     case alt::IBaseObject::Type::HTTP_CLIENT:
         {
-            OnCreateHttpClientDelegate(dynamic_cast<alt::IHttpClient*>(object));
+            auto httpClient = dynamic_cast<alt::IHttpClient*>(object);
+            OnCreateBaseObjectDelegate(httpClient, httpClient->GetType(), httpClient->GetID());
             break;
         }
     case alt::IBaseObject::Type::AUDIO:
         {
-            OnCreateAudioDelegate(dynamic_cast<alt::IAudio*>(object));
+            auto audio = dynamic_cast<alt::IAudio*>(object);
+            OnCreateBaseObjectDelegate(audio, audio->GetType(), audio->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT:
+        {
+            auto audioOutput = dynamic_cast<alt::IAudioOutput*>(object);
+            OnCreateBaseObjectDelegate(audioOutput, audioOutput->GetType(), audioOutput->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_WORLD:
+        {
+            auto audioWorldOutput = dynamic_cast<alt::IAudioWorldOutput*>(object);
+            OnCreateBaseObjectDelegate(audioWorldOutput, audioWorldOutput->GetType(), audioWorldOutput->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_ATTACHED:
+        {
+            auto audioAttachedOutput = dynamic_cast<alt::IAudioAttachedOutput*>(object);
+            OnCreateBaseObjectDelegate(audioAttachedOutput, audioAttachedOutput->GetType(), audioAttachedOutput->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_FRONTEND:
+        {
+            auto audioFrontendOutput = dynamic_cast<alt::IAudioFrontendOutput*>(object);
+            OnCreateBaseObjectDelegate(audioFrontendOutput, audioFrontendOutput->GetType(), audioFrontendOutput->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_FILTER:
+        {
+            auto audioFilter = dynamic_cast<alt::IAudioFilter*>(object);
+            OnCreateBaseObjectDelegate(audioFilter, audioFilter->GetType(), audioFilter->GetID());
             break;
         }
     case alt::IBaseObject::Type::RML_ELEMENT:
         {
-            OnCreateRmlElementDelegate(dynamic_cast<alt::IRmlElement*>(object));
+            auto rmlElement = dynamic_cast<alt::IRmlElement*>(object);
+            OnCreateBaseObjectDelegate(rmlElement, rmlElement->GetType(), rmlElement->GetID());
             break;
         }
     case alt::IBaseObject::Type::RML_DOCUMENT:
         {
-            OnCreateRmlDocumentDelegate(dynamic_cast<alt::IRmlDocument*>(object));
+            auto rmlDocument = dynamic_cast<alt::IRmlDocument*>(object);
+            OnCreateBaseObjectDelegate(rmlDocument, rmlDocument->GetType(), rmlDocument->GetID());
             break;
         }
-    case alt::IBaseObject::Type::OBJECT:
+    case alt::IBaseObject::Type::LOCAL_OBJECT:
         {
-            auto altObject = dynamic_cast<alt::IObject*>(object);
-            OnCreateObjectDelegate(altObject, altObject->GetID());
+            auto altObject = dynamic_cast<alt::ILocalObject*>(object);
+            OnCreateBaseObjectDelegate(altObject, altObject->GetType(), altObject->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+        {
+            auto virtualEntity = dynamic_cast<alt::IVirtualEntity*>(object);
+            OnCreateBaseObjectDelegate(virtualEntity, virtualEntity->GetType(), virtualEntity->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
+        {
+            auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
+            OnCreateBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType(), virtualEntityGroup->GetID());
             break;
         }
     case alt::IBaseObject::Type::LOCAL_PLAYER:
         break;
+    case alt::IBaseObject::Type::LOCAL_VEHICLE:
+        {
+            auto localVehicle = dynamic_cast<alt::ILocalVehicle*>(object);
+            OnCreateBaseObjectDelegate(localVehicle, localVehicle->GetType(), localVehicle->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::LOCAL_PED:
+        {
+            auto localPed = dynamic_cast<alt::ILocalPed*>(object);
+            OnCreateBaseObjectDelegate(localPed, localPed->GetType(), localPed->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::MARKER:
+        {
+            auto marker = dynamic_cast<alt::IMarker*>(object);
+            OnCreateBaseObjectDelegate(marker, marker->GetType(), marker->GetID());
+            break;
+        }
+    case alt::IBaseObject::Type::TEXT_LABEL:
+        {
+            auto textLabel = dynamic_cast<alt::ITextLabel*>(object);
+            OnCreateBaseObjectDelegate(textLabel, textLabel->GetType(), textLabel->GetID());
+            break;
+        }
     default:
         {
             std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) <<
@@ -507,61 +740,150 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
     {
     case alt::IBaseObject::Type::VEHICLE:
         {
-            OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
+            const auto vehicle = dynamic_cast<alt::IVehicle*>(object);
+            OnRemoveBaseObjectDelegate(vehicle, vehicle->GetType());
             break;
         }
     case alt::IBaseObject::Type::PLAYER:
         {
-            OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
+            const auto player = dynamic_cast<alt::IPlayer*>(object);
+            OnRemoveBaseObjectDelegate(player, player->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::PED:
+        {
+            const auto ped = dynamic_cast<alt::IPed*>(object);
+            OnRemoveBaseObjectDelegate(ped, ped->GetType());
             break;
         }
     case alt::IBaseObject::Type::BLIP:
         {
-            OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+            const auto blip = dynamic_cast<alt::IBlip*>(object);
+            OnRemoveBaseObjectDelegate(blip, blip->GetType());
             break;
         }
     case alt::IBaseObject::Type::WEBVIEW:
         {
-            OnRemoveWebViewDelegate(dynamic_cast<alt::IWebView*>(object));
+            const auto webView = dynamic_cast<alt::IWebView*>(object);
+            OnRemoveBaseObjectDelegate(webView, webView->GetType());
             break;
         }
     case alt::IBaseObject::Type::CHECKPOINT:
         {
-            OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+            const auto checkpoint = dynamic_cast<alt::ICheckpoint*>(object);
+            OnRemoveBaseObjectDelegate(checkpoint, checkpoint->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::COLSHAPE:
+        {
+            const auto colshape = dynamic_cast<alt::IColShape*>(object);
+            OnRemoveBaseObjectDelegate(colshape, colshape->GetType());
             break;
         }
     case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
         {
-            OnRemoveWebSocketClientDelegate(dynamic_cast<alt::IWebSocketClient*>(object));
+            const auto webSocketClient = dynamic_cast<alt::IWebSocketClient*>(object);
+            OnRemoveBaseObjectDelegate(webSocketClient, webSocketClient->GetType());
             break;
         }
     case alt::IBaseObject::Type::HTTP_CLIENT:
         {
-            OnRemoveHttpClientDelegate(dynamic_cast<alt::IHttpClient*>(object));
+            const auto httpClient = dynamic_cast<alt::IHttpClient*>(object);
+            OnRemoveBaseObjectDelegate(httpClient, httpClient->GetType());
             break;
         }
     case alt::IBaseObject::Type::AUDIO:
         {
-            OnRemoveAudioDelegate(dynamic_cast<alt::IAudio*>(object));
+            const auto audio = dynamic_cast<alt::IAudio*>(object);
+            OnRemoveBaseObjectDelegate(audio, audio->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT:
+        {
+            const auto audioOutput = dynamic_cast<alt::IAudioOutput*>(object);
+            OnRemoveBaseObjectDelegate(audioOutput, audioOutput->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_WORLD:
+        {
+            const auto audioWorldOutput = dynamic_cast<alt::IAudioWorldOutput*>(object);
+            OnRemoveBaseObjectDelegate(audioWorldOutput, audioWorldOutput->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_ATTACHED:
+        {
+            const auto audioAttachedOutput = dynamic_cast<alt::IAudioAttachedOutput*>(object);
+            OnRemoveBaseObjectDelegate(audioAttachedOutput, audioAttachedOutput->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_OUTPUT_FRONTEND:
+        {
+            const auto audioFrontendOutput = dynamic_cast<alt::IAudioFrontendOutput*>(object);
+            OnRemoveBaseObjectDelegate(audioFrontendOutput, audioFrontendOutput->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::AUDIO_FILTER:
+        {
+            const auto audioFilter = dynamic_cast<alt::IAudioFilter*>(object);
+            OnRemoveBaseObjectDelegate(audioFilter, audioFilter->GetType());
             break;
         }
     case alt::IBaseObject::Type::RML_ELEMENT:
         {
-            OnRemoveRmlElementDelegate(dynamic_cast<alt::IRmlElement*>(object));
+            const auto rmlElement = dynamic_cast<alt::IRmlElement*>(object);
+            OnRemoveBaseObjectDelegate(rmlElement, rmlElement->GetType());
             break;
         }
     case alt::IBaseObject::Type::RML_DOCUMENT:
         {
-            OnRemoveRmlDocumentDelegate(dynamic_cast<alt::IRmlDocument*>(object));
+            const auto rmlDocument = dynamic_cast<alt::IRmlDocument*>(object);
+            OnRemoveBaseObjectDelegate(rmlDocument, rmlDocument->GetType());
             break;
         }
-    case alt::IBaseObject::Type::OBJECT:
+    case alt::IBaseObject::Type::LOCAL_OBJECT:
         {
-            OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
+            const auto altObject = dynamic_cast<alt::ILocalObject*>(object);
+            OnRemoveBaseObjectDelegate(altObject, altObject->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+        {
+            const auto virtualEntity = dynamic_cast<alt::IVirtualEntity*>(object);
+            OnRemoveBaseObjectDelegate(virtualEntity, virtualEntity->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
+        {
+            const auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
+            OnRemoveBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType());
             break;
         }
     case alt::IBaseObject::Type::LOCAL_PLAYER:
         break;
+    case alt::IBaseObject::Type::LOCAL_VEHICLE:
+        {
+            const auto localVehicle = dynamic_cast<alt::ILocalVehicle*>(object);
+            OnRemoveBaseObjectDelegate(localVehicle, localVehicle->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::LOCAL_PED:
+        {
+            const auto localPed = dynamic_cast<alt::ILocalPed*>(object);
+            OnRemoveBaseObjectDelegate(localPed, localPed->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::MARKER:
+        {
+            const auto marker = dynamic_cast<alt::IMarker*>(object);
+            OnRemoveBaseObjectDelegate(marker, marker->GetType());
+            break;
+        }
+    case alt::IBaseObject::Type::TEXT_LABEL:
+        {
+            const auto textLabel = dynamic_cast<alt::ITextLabel*>(object);
+            OnRemoveBaseObjectDelegate(textLabel, textLabel->GetType());
+            break;
+        }
     default:
         {
             std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) <<
@@ -591,16 +913,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnWebViewEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
     OnWebSocketEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnRmlEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-
-    OnCreatePlayerDelegate = [](auto var, auto var2) {};
-    OnRemovePlayerDelegate = [](auto var) {};
-
-    OnCreateObjectDelegate = [](auto var, auto var2) {};
-    OnRemoveObjectDelegate = [](auto var) {};
-
-    OnCreateVehicleDelegate = [](auto var, auto var2) {};
-    OnRemoveVehicleDelegate = [](auto var) {};
+    OnRmlEventDelegate = [](auto var, auto var2, auto var3) {};
 
     OnPlayerSpawnDelegate = [](){};
     OnPlayerDisconnectDelegate = [](){};
@@ -628,37 +941,37 @@ void CSharpResourceImpl::ResetDelegates() {
     OnLocalMetaChangeDelegate = [](auto var, auto var2, auto var3) {};
     OnStreamSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
     OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+    OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
 
     OnNetOwnerChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-
-    OnRemoveEntityDelegate = [](auto var, auto var2) {};
 
     OnTaskChangeDelegate = [](auto var, auto var2) {};
 
     OnWindowFocusChangeDelegate = [](auto var) {};
     OnWindowResolutionChangeDelegate = [](auto var, auto var2) {};
 
+    OnWorldObjectPositionChangeDelegate = [](auto var, auto var2, auto var3){};
+    OnWorldObjectStreamInDelegate = [](auto var, auto var2){};
+    OnWorldObjectStreamOutDelegate = [](auto var, auto var2){};
+
     OnPlayerWeaponShootDelegate = [](auto var, auto var2, auto var3) {};
 
     OnPlayerWeaponChangeDelegate = [](auto var, auto var2) {};
 
-    OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
+    OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8, auto var9) {};
 
-    OnCreateBlipDelegate = [](auto var) {};
-    OnCreateWebViewDelegate = [](auto var) {};
-    OnCreateCheckpointDelegate = [](auto var) {};
-    OnCreateWebSocketClientDelegate = [](auto var) {};
-    OnCreateHttpClientDelegate = [](auto var) {};
-    OnCreateAudioDelegate = [](auto var) {};
-    OnCreateRmlElementDelegate = [](auto var) {};
-    OnCreateRmlDocumentDelegate = [](auto var) {};
+    OnCreateBaseObjectDelegate = [](auto var, auto var2, auto var3) {};
+    OnRemoveBaseObjectDelegate = [](auto var, auto var2) {};
 
-    OnRemoveBlipDelegate = [](auto var) {};
-    OnRemoveWebViewDelegate = [](auto var) {};
-    OnRemoveCheckpointDelegate = [](auto var) {};
-    OnRemoveWebSocketClientDelegate = [](auto var) {};
-    OnRemoveHttpClientDelegate = [](auto var) {};
-    OnRemoveAudioDelegate = [](auto var) {};
-    OnRemoveRmlElementDelegate = [](auto var) {};
-    OnRemoveRmlDocumentDelegate = [](auto var) {};
+    OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+
+    OnEntityHitEntityDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+
+    OnPlayerStartEnterVehicleDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerStartLeaveVehicleDelegate = [](auto var, auto var2, auto var3) {};
+
+    OnPlayerBulletHitDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+
+    OnVoiceConnectionDelegate = [](auto var) {};
 }

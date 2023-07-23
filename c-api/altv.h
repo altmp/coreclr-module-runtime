@@ -18,7 +18,17 @@ EXPORT_SHARED void FreeWeaponTArray(/** nint */ weapon_t* weaponArray, uint32_t 
 EXPORT_SHARED void FreeString(const char* string);
 EXPORT_SHARED void FreeStringArray(const char** stringArray, uint32_t size);
 EXPORT_SHARED void FreeResourceArray(alt::IResource** resourceArray);
-EXPORT_SHARED void FreeObjectArray(alt::IObject** objectArray);
+EXPORT_SHARED void FreePlayerArray(alt::IPlayer** playerArray);
+EXPORT_SHARED void FreeBlipArray(alt::IBlip** blipArray);
+EXPORT_SHARED void FreeVehicleArray(alt::IVehicle** vehicleArray);
+EXPORT_SHARED void FreePedArray(alt::IPed** pedArray);
+EXPORT_SHARED void FreeCheckpointArray(alt::ICheckpoint** checkpointArray);
+EXPORT_SHARED void FreeVirtualEntityArray(alt::IVirtualEntity** virtualEntityArray);
+EXPORT_SHARED void FreeVirtualEntityGroupArray(alt::IVirtualEntityGroup** virtualEntityGroupArray);
+EXPORT_SHARED void FreeConnectionInfoArray(alt::IConnectionInfo** connectionInfoArray);
+EXPORT_SHARED void FreeLocalObjectArray(alt::ILocalObject** objectArray);
+EXPORT_SHARED void FreeAudioArray(alt::IAudio** audioArray);
+EXPORT_SHARED void FreeAudioOutputArray(alt::IAudioOutput** audioOutputArray);
 EXPORT_SHARED void FreeMValueConstArray(alt::MValueConst** mvalueConstArray);
 EXPORT_SHARED const char* GetVersionStatic(int32_t &size);
 EXPORT_SHARED const char* GetBranchStatic(int32_t &size);

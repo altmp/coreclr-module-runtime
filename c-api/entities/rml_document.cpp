@@ -1,11 +1,17 @@
 #include "rml_document.h"
 #include "../utils/strings.h"
 
+uint32_t RmlDocument_GetID(alt::IRmlDocument* rmlDocument)
+{
+    return rmlDocument->GetID();
+}
+
+#ifdef ALT_CLIENT_API
+
 alt::IRmlElement* RmlDocument_GetRmlElement(alt::IRmlDocument* rmlDocument) {
     return dynamic_cast<alt::IRmlElement*>(rmlDocument);
 }
 
-#ifdef ALT_CLIENT_API
 alt::IRmlElement* RmlDocument_GetBody(alt::IRmlDocument* rmlDocument) {
     return rmlDocument->GetBody();
 }
@@ -30,12 +36,26 @@ void RmlDocument_SetTitle(alt::IRmlDocument* rmlDocument, const char* title) {
     rmlDocument->SetTitle(title);
 }
 
-alt::IRmlElement* RmlDocument_CreateElement(alt::IRmlDocument* rmlDocument, const char* tag) {
-    return rmlDocument->CreateElement(tag);
+alt::IRmlElement* RmlDocument_CreateElement(alt::IRmlDocument* rmlDocument, const char* tag, uint32_t& id) {
+    auto element = rmlDocument->CreateElement(tag);
+
+    if (!element) return nullptr;
+
+    if (element != nullptr) {
+        id = element->GetID();
+    }
+    return element;
 }
 
-alt::IRmlElement* RmlDocument_CreateTextNode(alt::IRmlDocument* rmlDocument, const char* text) {
-    return rmlDocument->CreateTextNode(text);
+alt::IRmlElement* RmlDocument_CreateTextNode(alt::IRmlDocument* rmlDocument, const char* text, uint32_t& id) {
+    auto element = rmlDocument->CreateTextNode(text);
+
+    if (!element) return nullptr;
+
+    if (element != nullptr) {
+        id = element->GetID();
+    }
+    return element;
 }
 
 void RmlDocument_Hide(alt::IRmlDocument* rmlDocument) {
