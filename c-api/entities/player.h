@@ -247,4 +247,4 @@ EXPORT_SERVER uint8_t Player_IsNetworkOwnershipDisabled(alt::IPlayer* player);
 EXPORT_SERVER void Player_SetNetworkOwnershipDisabled(alt::IPlayer* player, uint8_t state);
 
 typedef void (* RequestAuthCallback_t)(bool ok, const char* result);
-EXPORT_SERVER void Player_RequestCloudID(alt::IPlayer* player, /** Player.RequestAuthCallbackDelegate */ RequestAuthCallback_t delegate);
+EXPORT_SERVER void Player_RequestCloudID(alt::IPlayer* player, /** ServerEvents.RequestAuthCallbackDelegate */ RequestAuthCallback_t delegate);
