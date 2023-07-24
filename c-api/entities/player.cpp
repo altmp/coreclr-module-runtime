@@ -723,6 +723,13 @@ void Player_SetNetworkOwnershipDisabled(alt::IPlayer* player, uint8_t state)
     player->SetNetworkOwnershipDisabled(state);
 }
 
+void Player_RequestCloudID(alt::IPlayer* player, RequestAuthCallback_t delegate)
+{
+    player->RequestCloudID([delegate](uint8_t ok, const std::string& result) {
+        delegate(ok, result.c_str());
+    });
+}
+
 #endif
 
 #if ALT_CLIENT_API
