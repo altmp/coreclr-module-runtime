@@ -567,6 +567,8 @@ namespace cache
     		return false;
     	}
         void SetNetworkOwnershipDisabled(bool disabled) override {}
+
+        void RequestCloudID(RequestAuthCallback callback) const override {}
 #endif
 
 
