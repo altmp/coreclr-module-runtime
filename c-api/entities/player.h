@@ -248,3 +248,7 @@ EXPORT_SERVER void Player_SetNetworkOwnershipDisabled(alt::IPlayer* player, uint
 
 typedef void (* RequestAuthCallback_t)(bool ok, const char* result);
 EXPORT_SERVER void Player_RequestCloudID(alt::IPlayer* player, /** ServerEvents.RequestAuthCallbackDelegate */ RequestAuthCallback_t delegate);
+
+EXPORT_CLIENT void Player_AddFilter(alt::IPlayer* player, alt::IAudioFilter* filter);
+EXPORT_CLIENT void Player_RemoveFilter(alt::IPlayer* player);
+EXPORT_CLIENT alt::IAudioFilter* Player_GetFilter(alt::IPlayer* player);

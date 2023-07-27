@@ -181,6 +181,14 @@ typedef void (* RemoveBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::
 
 typedef void (* VoiceConnectionDelegate_t)(uint8_t state);
 
+typedef void (* RequestSyncedSceneDelegate_t)(alt::IPlayer* source, int32_t sceneId);
+
+typedef void (* StartSyncedSceneDelegate_t)(alt::IPlayer* source, int32_t sceneId, position_t startPosition, rotation_t startRotation, uint32_t animDictHash, alt::IEntity* entities[], alt::IBaseObject::Type types[], uint32_t animHash[], uint64_t size);
+
+typedef void (* StopSyncedSceneDelegate_t)(alt::IPlayer* source, int32_t sceneId);
+
+typedef void (* UpdateSyncedSceneDelegate_t)(alt::IPlayer* source, float startRate, int32_t sceneId);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
 
@@ -303,6 +311,11 @@ public:
     RemoveBaseObjectDelegate_t OnRemoveBaseObjectDelegate = nullptr;
 
     VoiceConnectionDelegate_t OnVoiceConnectionDelegate = nullptr;
+
+    RequestSyncedSceneDelegate_t OnRequestSyncedSceneDelegate = nullptr;
+    StartSyncedSceneDelegate_t OnStartSyncedSceneDelegate = nullptr;
+    StopSyncedSceneDelegate_t OnStopSyncedSceneDelegate = nullptr;
+    UpdateSyncedSceneDelegate_t OnUpdateSyncedSceneDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;

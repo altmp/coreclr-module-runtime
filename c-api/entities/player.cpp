@@ -828,4 +828,19 @@ void LocalPlayer_SetMaxStamina(alt::ILocalPlayer* localPlayer, float stamina)
     localPlayer->SetMaxStamina(stamina);
 }
 
+void Player_AddFilter(alt::IPlayer* player, alt::IAudioFilter* filter)
+{
+    player->AddFilter(filter);
+}
+
+void Player_RemoveFilter(alt::IPlayer* player)
+{
+    player->RemoveFilter();
+}
+
+alt::IAudioFilter* Player_GetFilter(alt::IPlayer* player)
+{
+    return player->GetFilter();
+}
+
 #endif
