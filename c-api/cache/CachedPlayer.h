@@ -592,6 +592,10 @@ namespace cache
         }
         void SetNonSpatialVolume(float volume) override {}
 
+        void AddFilter(alt::IAudioFilter* filter) override {};
+        void RemoveFilter() override {};
+        alt::IAudioFilter* GetFilter() const override { return nullptr; };
+
 #endif
 
     };
