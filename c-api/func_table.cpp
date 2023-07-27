@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 9382033170143343053UL;
+inline uint64_t capiHash = 5093129298395150148UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -520,11 +520,14 @@ inline uint64_t capiHashes[] = {
     7101748004939864958UL,
     4990605972443241597UL,
     18075714963587758699UL,
+    15133858287819310418UL,
+    3531465307052554310UL,
     4153837117751475501UL,
     15449156962697427469UL,
     3333598534924196965UL,
     1924883508304421034UL,
     2228995248668686637UL,
+    14799984366573861130UL,
     13836779891982146248UL,
     2220752195777140849UL,
     5553401603064078474UL,
@@ -2169,11 +2172,14 @@ inline void* capiPointers[] = {
     (void*) MapData_SetVTilesX,
     (void*) MapData_SetVTilesY,
     (void*) Marker_IsStreamedIn,
+    (void*) Player_AddFilter,
+    (void*) Player_GetFilter,
     (void*) Player_GetLocal,
     (void*) Player_GetMicLevel,
     (void*) Player_GetNonSpatialVolume,
     (void*) Player_GetSpatialVolume,
     (void*) Player_IsTalking,
+    (void*) Player_RemoveFilter,
     (void*) Player_SetNonSpatialVolume,
     (void*) Player_SetSpatialVolume,
     (void*) Resource_FileExists,
