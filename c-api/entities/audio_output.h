@@ -25,7 +25,7 @@ EXPORT_CLIENT uint8_t AudioOutput_IsMuted(alt::IAudioOutput* audioOutput);
 
 EXPORT_CLIENT uint32_t AudioOutput_GetCategory(alt::IAudioOutput* audioOutput);
 
-EXPORT_CLIENT alt::IAudio* AudioOutput_GetOwner(alt::IAudioOutput* audioOutput);
+EXPORT_CLIENT alt::IBaseObject* AudioOutput_GetOwner(alt::IAudioOutput* audioOutput);
 
 EXPORT_CLIENT void AudioOutput_AddFilter(alt::IAudioOutput* audioOutput, alt::IAudioFilter* filter);
 EXPORT_CLIENT void AudioOutput_RemoveFilter(alt::IAudioOutput* audioOutput);
