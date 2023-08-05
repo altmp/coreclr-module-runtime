@@ -463,3 +463,12 @@ EXPORT_CLIENT void Vehicle_Handling_SetDamageFlags(alt::IVehicle* vehicle, uint3
 
 EXPORT_SERVER alt::Quaternion Vehicle_GetQuaternion(alt::IVehicle* vehicle);
 EXPORT_SERVER void Vehicle_SetQuaternion(alt::IVehicle* vehicle, alt::Quaternion quaternion);
+
+EXPORT_SHARED float Vehicle_GetSteeringAngle(alt::IVehicle* vehicle);
+
+EXPORT_SERVER uint8_t Vehicle_IsHornActive(alt::IVehicle* vehicle);
+EXPORT_SERVER float Vehicle_GetAccelerationLevel(alt::IVehicle* vehicle);
+EXPORT_SERVER float Vehicle_GetBrakeLevel(alt::IVehicle* vehicle);
+
+EXPORT_CLIENT float Vehicle_GetSuspensionHeight(alt::IVehicle* vehicle);
+EXPORT_CLIENT void Vehicle_SetSuspensionHeight(alt::IVehicle* vehicle, float value);

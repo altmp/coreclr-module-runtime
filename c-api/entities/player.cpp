@@ -723,6 +723,13 @@ void Player_SetNetworkOwnershipDisabled(alt::IPlayer* player, uint8_t state)
     player->SetNetworkOwnershipDisabled(state);
 }
 
+void Player_RequestCloudID(alt::IPlayer* player, RequestAuthCallback_t delegate)
+{
+    player->RequestCloudID([delegate](uint8_t ok, const std::string& result) {
+        delegate(ok, result.c_str());
+    });
+}
+
 #endif
 
 #if ALT_CLIENT_API
@@ -819,6 +826,21 @@ float LocalPlayer_GetMaxStamina(alt::ILocalPlayer* localplayer)
 void LocalPlayer_SetMaxStamina(alt::ILocalPlayer* localPlayer, float stamina)
 {
     localPlayer->SetMaxStamina(stamina);
+}
+
+void Player_AddFilter(alt::IPlayer* player, alt::IAudioFilter* filter)
+{
+    player->AddFilter(filter);
+}
+
+void Player_RemoveFilter(alt::IPlayer* player)
+{
+    player->RemoveFilter();
+}
+
+alt::IAudioFilter* Player_GetFilter(alt::IPlayer* player)
+{
+    return player->GetFilter();
 }
 
 #endif

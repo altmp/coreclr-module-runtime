@@ -567,6 +567,8 @@ namespace cache
     		return false;
     	}
         void SetNetworkOwnershipDisabled(bool disabled) override {}
+
+        void RequestCloudID(RequestAuthCallback callback) const override {}
 #endif
 
 
@@ -589,6 +591,10 @@ namespace cache
 	        return _nonSpatialVolume;
         }
         void SetNonSpatialVolume(float volume) override {}
+
+        void AddFilter(alt::IAudioFilter* filter) override {}
+        void RemoveFilter() override {}
+        alt::IAudioFilter* GetFilter() const override { return nullptr; }
 
 #endif
 

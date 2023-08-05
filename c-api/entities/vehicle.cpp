@@ -18,6 +18,11 @@ int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle) {
     return vehicle->GetPetrolTankHealth();
 }
 
+float Vehicle_GetSteeringAngle(alt::IVehicle* vehicle)
+{
+    return vehicle->GetSteeringAngle();
+}
+
 
 #ifdef ALT_SERVER_API
 alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
@@ -879,6 +884,21 @@ void Vehicle_SetQuaternion(alt::IVehicle* vehicle, alt::Quaternion quaternion)
     vehicle->SetQuaternion(quaternion);
 }
 
+uint8_t Vehicle_IsHornActive(alt::IVehicle* vehicle)
+{
+    return vehicle->IsHornActive();
+}
+
+float Vehicle_GetAccelerationLevel(alt::IVehicle* vehicle)
+{
+    return vehicle->GetAccelerationLevel();
+}
+
+float Vehicle_GetBrakeLevel(alt::IVehicle* vehicle)
+{
+    return vehicle->GetBrakeLevel();
+}
+
 #endif
 
 #ifdef ALT_CLIENT_API
@@ -1060,6 +1080,16 @@ void Vehicle_SetBatteryLightState(alt::IVehicle* vehicle, uint8_t state) {
 
 void Vehicle_ResetDashboardLights(alt::IVehicle* vehicle) {
     vehicle->ResetDashboardLights();
+}
+
+float Vehicle_GetSuspensionHeight(alt::IVehicle* vehicle)
+{
+    return vehicle->GetSuspensionHeight();
+}
+
+void Vehicle_SetSuspensionHeight(alt::IVehicle* vehicle, float value)
+{
+    vehicle->SetSuspensionHeight(value);
 }
 
 void Vehicle_ResetHandling(alt::IVehicle* vehicle) {

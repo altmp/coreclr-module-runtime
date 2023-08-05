@@ -39,7 +39,7 @@ uint32_t AudioOutput_GetCategory(alt::IAudioOutput* audioOutput)
     return audioOutput->GetCategory();
 }
 
-alt::IAudio* AudioOutput_GetOwner(alt::IAudioOutput* audioOutput)
+alt::IBaseObject* AudioOutput_GetOwner(alt::IAudioOutput* audioOutput)
 {
     return audioOutput->GetOwner();
 }

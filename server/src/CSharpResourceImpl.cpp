@@ -60,6 +60,11 @@ void CSharpResourceImpl::ResetDelegates()
 
     OnCreateBaseObjectDelegate = [](auto var, auto var2, auto var3) {};
     OnRemoveBaseObjectDelegate = [](auto var, auto var2) {};
+
+    OnRequestSyncedSceneDelegate = [](auto var, auto var2) {};
+    OnStartSyncedSceneDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8, auto var9) {};
+    OnStopSyncedSceneDelegate = [](auto var, auto var2) {};
+    OnUpdateSyncedSceneDelegate = [](auto var, auto var2, auto var3) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -643,6 +648,57 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
 
             break;
         }
+    case alt::CEvent::Type::REQUEST_SYNCED_SCENE:
+        {
+            auto requestSyncedSceneEvent = dynamic_cast<const alt::CRequestSyncedSceneEvent*>(ev);
+
+            OnRequestSyncedSceneDelegate(requestSyncedSceneEvent->GetSource(), requestSyncedSceneEvent->GetSceneID());
+            break;
+        }
+    case alt::CEvent::Type::START_SYNCED_SCENE:
+        {
+            auto startSyncedSceneEvent = dynamic_cast<const alt::CStartSyncedSceneEvent*>(ev);
+            position_t startPosition = {startSyncedSceneEvent->GetStartPosition().x, startSyncedSceneEvent->GetStartPosition().y, startSyncedSceneEvent->GetStartPosition().z};
+            rotation_t startRotation = {startSyncedSceneEvent->GetStartRotation().roll, startSyncedSceneEvent->GetStartRotation().pitch, startSyncedSceneEvent->GetStartRotation().yaw};
+
+            auto entities = new alt::IEntity*[startSyncedSceneEvent->GetEntityAndAnimHashPairs().size()];
+            auto types = new alt::IBaseObject::Type[startSyncedSceneEvent->GetEntityAndAnimHashPairs().size()];
+            auto animHashes = new uint32_t[startSyncedSceneEvent->GetEntityAndAnimHashPairs().size()];
+            uint64_t size = 0;
+
+            for (const auto& hash_pair : startSyncedSceneEvent->GetEntityAndAnimHashPairs())
+            {
+                auto entity = hash_pair.first.get();
+                entities[size] = entity;
+                types[size] = entity->GetType();
+                animHashes[size] = hash_pair.second;
+                size = size + 1;
+            }
+
+            OnStartSyncedSceneDelegate(startSyncedSceneEvent->GetSource(),
+                                       startSyncedSceneEvent->GetSceneID(),
+                                       startPosition,
+                                       startRotation,
+                                       startSyncedSceneEvent->GetAnimDictHash(),
+                                       entities,
+                                       types,
+                                       animHashes,
+                                       size);
+            break;
+        }
+    case alt::CEvent::Type::STOP_SYNCED_SCENE:
+        {
+            auto stopSyncedSceneEvent = dynamic_cast<const alt::CStopSyncedSceneEvent*>(ev);
+
+            OnStopSyncedSceneDelegate(stopSyncedSceneEvent->GetSource(), stopSyncedSceneEvent->GetSceneID());
+            break;
+        }
+    case alt::CEvent::Type::UPDATE_SYNCED_SCENE:
+        {
+            auto updateSyncedSceneEvent = dynamic_cast<const alt::CUpdateSyncedSceneEvent*>(ev);
+            OnUpdateSyncedSceneDelegate(updateSyncedSceneEvent->GetSource(), updateSyncedSceneEvent->GetStartRate(), updateSyncedSceneEvent->GetSceneID());
+            break;
+        }
     default:
         {
             std::cout << "Unhandled server event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -1116,6 +1172,26 @@ void CSharpResourceImpl_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource
 void CSharpResourceImpl_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resource, RemoveBaseObjectDelegate_t delegate)
 {
     resource->OnRemoveBaseObjectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRequestSyncedSceneDelegate(CSharpResourceImpl* resource, RequestSyncedSceneDelegate_t delegate)
+{
+    resource->OnRequestSyncedSceneDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetStartSyncedSceneDelegate(CSharpResourceImpl* resource, StartSyncedSceneDelegate_t delegate)
+{
+    resource->OnStartSyncedSceneDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetStopSyncedSceneDelegate(CSharpResourceImpl* resource, StopSyncedSceneDelegate_t delegate)
+{
+    resource->OnStopSyncedSceneDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetUpdateSyncedSceneDelegate(CSharpResourceImpl* resource, UpdateSyncedSceneDelegate_t delegate)
+{
+    resource->OnUpdateSyncedSceneDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)
