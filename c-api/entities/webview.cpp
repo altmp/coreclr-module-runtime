@@ -1,5 +1,6 @@
 #include "webview.h"
 #include "../utils/strings.h"
+#include "../../c-api/mvalue.h"
 
 uint32_t WebView_GetID(alt::IWebView* webView)
 {
@@ -75,5 +76,21 @@ void WebView_Focus(alt::IWebView* webview) {
 
 void WebView_Unfocus(alt::IWebView* webview) {
     webview->Unfocus();
+}
+
+void WebView_AddOutput(alt::IWebView* webView, alt::IAudioOutput* output)
+{
+    webView->AddOutput(output);
+}
+
+void WebView_RemoveOutput(alt::IWebView* webView, alt::IAudioOutput* output)
+{
+    webView->RemoveOutput(output);
+}
+
+alt::MValueConst* WebView_GetOutputs(alt::IWebView* webView)
+{
+    auto mValue = webView->GetOutputs();
+    return AllocMValue(std::move(mValue));
 }
 #endif

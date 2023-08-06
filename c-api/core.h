@@ -284,7 +284,7 @@ EXPORT_CLIENT void Core_ResetMapZoomData(alt::ICore* core, uint32_t id);
 EXPORT_CLIENT alt::IHttpClient* Core_CreateHttpClient(alt::ICore* core, alt::IResource* resource, uint32_t &id);
 EXPORT_CLIENT alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResource* resource, const char* url, uint32_t &id);
 
-EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, const char* source, float volume, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::IAudio* Core_CreateAudio(alt::ICore* core, const char* source, float volume, uint8_t isRadio, const char* basePath, alt::IResource* resource, uint32_t &id);
 EXPORT_CLIENT alt::IAudioFilter* Core_CreateAudioFilter(alt::ICore* core, uint32_t hash, alt::IResource* resource, uint32_t &id);
 EXPORT_CLIENT alt::IAudioFrontendOutput* Core_CreateFrontendOutput(alt::ICore* core, uint32_t categoryHash, alt::IResource* resource, uint32_t &id);
 EXPORT_CLIENT alt::IAudioWorldOutput* Core_CreateWorldOutput(alt::ICore* core, uint32_t categoryHash, alt::Position pos, alt::IResource* resource, uint32_t &id);
