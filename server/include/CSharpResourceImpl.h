@@ -511,3 +511,11 @@ EXPORT void CSharpResourceImpl_SetVoiceConnectionDelegate(CSharpResourceImpl* re
 EXPORT void CSharpResourceImpl_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource, CreateBaseObjectDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resource, RemoveBaseObjectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetRequestSyncedSceneDelegate(CSharpResourceImpl* resource, RequestSyncedSceneDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetStartSyncedSceneDelegate(CSharpResourceImpl* resource, StartSyncedSceneDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetStopSyncedSceneDelegate(CSharpResourceImpl* resource, StopSyncedSceneDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetUpdateSyncedSceneDelegate(CSharpResourceImpl* resource, UpdateSyncedSceneDelegate_t delegate);
