@@ -61,7 +61,7 @@ void CSharpResourceImpl::ResetDelegates()
     OnCreateBaseObjectDelegate = [](auto var, auto var2, auto var3) {};
     OnRemoveBaseObjectDelegate = [](auto var, auto var2) {};
 
-    OnRequestSyncedSceneDelegate = [](auto var, auto var2) {};
+    OnRequestSyncedSceneDelegate = [](auto var, auto var2, auto var3) {};
     OnStartSyncedSceneDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8, auto var9) {};
     OnStopSyncedSceneDelegate = [](auto var, auto var2) {};
     OnUpdateSyncedSceneDelegate = [](auto var, auto var2, auto var3) {};
@@ -652,7 +652,7 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
         {
             auto requestSyncedSceneEvent = dynamic_cast<const alt::CRequestSyncedSceneEvent*>(ev);
 
-            OnRequestSyncedSceneDelegate(requestSyncedSceneEvent->GetSource(), requestSyncedSceneEvent->GetSceneID());
+            OnRequestSyncedSceneDelegate(requestSyncedSceneEvent, requestSyncedSceneEvent->GetSource(), requestSyncedSceneEvent->GetSceneID());
             break;
         }
     case alt::CEvent::Type::START_SYNCED_SCENE:
