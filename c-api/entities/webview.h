@@ -31,3 +31,6 @@ EXPORT_CLIENT void WebView_SetExtraHeader(alt::IWebView* webView, const char* ke
 EXPORT_CLIENT void WebView_SetZoomLevel(alt::IWebView* webView, float value);
 EXPORT_CLIENT void WebView_Focus(alt::IWebView* webView);
 EXPORT_CLIENT void WebView_Unfocus(alt::IWebView* webView);
+EXPORT_CLIENT void WebView_AddOutput(alt::IWebView* webView, alt::IAudioOutput* output);
+EXPORT_CLIENT void WebView_RemoveOutput(alt::IWebView* webView, alt::IAudioOutput* output);
+EXPORT_CLIENT alt::MValueConst* WebView_GetOutputs(alt::IWebView* webView);
