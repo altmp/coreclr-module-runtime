@@ -3,13 +3,17 @@
 #include <list>
 
 static std::list<alt::MValueConst> mvalues;
+static std::mutex mvalueLock;
 
-alt::MValueConst* AllocMValue(alt::MValueConst&& val) {
-    mvalues.push_back(std::move(val));
+alt::MValueConst* AllocMValue(alt::MValueConst val) {
+    std::unique_lock lock(mvalueLock);
+    mvalues.push_back(val);
     return &mvalues.back();
 }
 
 void FreeMValue(alt::MValueConst* val) {
+    std::unique_lock lock(mvalueLock);
+    if (mvalues.empty()) return;
     for (auto it = mvalues.begin(); it != mvalues.end(); ++it)
     {
         if (&*it == val)
@@ -361,7 +365,7 @@ uint8_t MValueConst_GetList(alt::MValueConst *mValueConst, alt::MValueConst *val
         auto list = dynamic_cast<const alt::IMValueList *>(mValue);
         for (uint64_t i = 0, length = list->GetSize(); i < length; i++) {
             alt::MValueConst mValueElement = list->Get(i);
-            values[i] = AllocMValue(std::move(mValueElement));
+            values[i] = AllocMValue(mValueElement);
         }
         return true;
     }
@@ -394,7 +398,7 @@ uint8_t MValueConst_GetDict(alt::MValueConst *mValueConst, const char *keys[],
             keyArray[keySize] = '\0';
             keys[i] = keyArray;
             alt::MValueConst mValueElement = next->GetValue();
-            values[i] = AllocMValue(std::move(mValueElement));
+            values[i] = AllocMValue(mValueElement);
             i++;
         } while ((next = dict->Next()) != nullptr);
         return true;
