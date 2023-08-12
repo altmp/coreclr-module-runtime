@@ -1785,10 +1785,9 @@ alt::ILocalPed* Core_CreateLocalPed(alt::ICore* core, uint32_t modelHash, int32_
     return localPed;
 }
 
-alt::IFont* Core_RegisterFont(alt::ICore* core, alt::IResource* resource, const char* path, const char* currentPath,
-    uint32_t& id)
+alt::IFont* Core_RegisterFont(alt::ICore* core, alt::IResource* resource, const char* path, uint32_t& id)
 {
-    auto font = core->RegisterFont(resource, path, currentPath);
+    auto font = core->RegisterFont(resource, path, resource->GetMain());
 
     if (font != nullptr) {
         id = font->GetID();
