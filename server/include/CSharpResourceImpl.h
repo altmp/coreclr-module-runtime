@@ -189,6 +189,10 @@ typedef void (* StopSyncedSceneDelegate_t)(alt::IPlayer* source, int32_t sceneId
 
 typedef void (* UpdateSyncedSceneDelegate_t)(alt::IPlayer* source, float startRate, int32_t sceneId);
 
+typedef void (* ClientRequestObjectDelegate_t)(const alt::CEvent* event, alt::IPlayer* target, uint32_t model, position_t position);
+
+typedef void (* ClientDeleteObjectDelegate_t)(const alt::CEvent* event, alt::IPlayer* target);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
 
@@ -316,6 +320,9 @@ public:
     StartSyncedSceneDelegate_t OnStartSyncedSceneDelegate = nullptr;
     StopSyncedSceneDelegate_t OnStopSyncedSceneDelegate = nullptr;
     UpdateSyncedSceneDelegate_t OnUpdateSyncedSceneDelegate = nullptr;
+
+    ClientRequestObjectDelegate_t OnClientRequestObjectDelegate = nullptr;
+    ClientDeleteObjectDelegate_t OnClientDeleteObjectDelegate = nullptr;
 
     alt::Array<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -519,3 +526,7 @@ EXPORT void CSharpResourceImpl_SetStartSyncedSceneDelegate(CSharpResourceImpl* r
 EXPORT void CSharpResourceImpl_SetStopSyncedSceneDelegate(CSharpResourceImpl* resource, StopSyncedSceneDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetUpdateSyncedSceneDelegate(CSharpResourceImpl* resource, UpdateSyncedSceneDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetClientRequestObjectDelegate(CSharpResourceImpl* resource, ClientRequestObjectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetClientDeleteObjectDelegate(CSharpResourceImpl* resource, ClientDeleteObjectDelegate_t delegate);
