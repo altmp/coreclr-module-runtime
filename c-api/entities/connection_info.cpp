@@ -86,4 +86,14 @@ uint8_t ConnectionInfo_IsAccepted(alt::IConnectionInfo* connectionInfo)
 {
     return connectionInfo->IsAccepted();
 }
+
+const char* ConnectionInfo_GetText(alt::IConnectionInfo* connectionInfo, int32_t& size)
+{
+    return AllocateString(connectionInfo->GetText(), size);
+}
+
+void ConnectionInfo_SetText(alt::IConnectionInfo* connectionInfo, const char* text)
+{
+    connectionInfo->SetText(text);
+}
 #endif
