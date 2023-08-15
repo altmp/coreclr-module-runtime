@@ -45,6 +45,7 @@ namespace cache
 										_spawned(base->IsSpawned()),
 										_forwardSpeed(base->GetForwardSpeed()),
 										_strafeSpeed(base->GetStrafeSpeed()),
+    									_parachuting(base->IsParachuting()),
 #ifdef ALT_SERVER_API
 										_currentWeaponTintIndex(base->GetCurrentWeaponTintIndex()),
 										_superJumpEnabled(base->IsSuperJumpEnabled()),
@@ -261,11 +262,6 @@ namespace cache
 			return _stealthy;
 		}
 
-        bool _parachuting;
-        bool IsParachuting() const override {
-            return _parachuting;
-        }
-
         uint32_t _currentAnimationDict;
         uint32_t GetCurrentAnimationDict() const override {
 			return _currentAnimationDict;
@@ -290,6 +286,11 @@ namespace cache
         float GetStrafeSpeed() const override {
 			return _strafeSpeed;
         }
+
+    	bool _parachuting;
+    	bool IsParachuting() const override {
+    		return _parachuting;
+    	}
 #ifdef ALT_SERVER_API
         bool _connected;
         bool IsConnected() const override {

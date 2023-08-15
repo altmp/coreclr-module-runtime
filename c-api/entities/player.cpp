@@ -190,6 +190,11 @@ uint8_t Player_IsInCover(alt::IPlayer* player)
     return player->IsInCover();
 }
 
+uint8_t Player_IsParachuting(alt::IPlayer* player)
+{
+    return player->IsParachuting();
+}
+
 #ifdef ALT_SERVER_API
 alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key) {
     return AllocMValue(player->GetLocalMetaData(key));
