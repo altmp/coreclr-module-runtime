@@ -261,6 +261,11 @@ namespace cache
 			return _stealthy;
 		}
 
+        bool _parachuting;
+        bool IsParachuting() const override {
+            return _parachuting;
+        }
+
         uint32_t _currentAnimationDict;
         uint32_t GetCurrentAnimationDict() const override {
 			return _currentAnimationDict;
