@@ -31,13 +31,12 @@ void Resource_GetExports(alt::IResource* resource, const char* keys[],
     if (dict.get() == nullptr) {
         return;
     }
-    auto next = dict->Begin();
     uint64_t i = 0;
-    do {
-        alt::MValueConst mValueElement = next->GetValue();
-        keys[i] = next->GetKey().c_str();
+    for (auto next = dict->Begin(); next != dict->End(); ++next) {
+        alt::MValueConst mValueElement = next->second;
+        keys[i] = next->first.c_str();
         values[i] = &mValueElement;
-    } while ((next = dict->Next()) != nullptr);
+    }
 }
 
 alt::MValueConst* Resource_GetExport(alt::IResource* resource, const char* key) {

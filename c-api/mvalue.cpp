@@ -74,13 +74,11 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
             alt::MValueDict dict = core->CreateMValueDict();
 
             alt::MValueConst innerVal;
-            alt::IMValueDict::Iterator *it = cVal->Begin();
             std::string key;
-            while (it != nullptr) {
-                innerVal = it->GetValue();
-                key = it->GetKey();
+            for (auto it = cVal->Begin(); it != dict->End(); ++it) {
+                innerVal = it->second;
+                key = it->first;
                 ToMValueDict(dict, key, core, &innerVal);
-                it = cVal->Next();
             }
             mValues[i] = dict;
             return;
@@ -165,13 +163,11 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
             alt::MValueDict dict = core->CreateMValueDict();
 
             alt::MValueConst innerVal;
-            alt::IMValueDict::Iterator *it = cVal->Begin();
             std::string key;
-            while (it != nullptr) {
-                innerVal = it->GetValue();
-                key = it->GetKey();
+            for (auto it = cVal->Begin(); it != cVal->End(); ++it) {
+                innerVal = it->second;
+                key = it->first;
                 ToMValueDict(dict, key, core, &innerVal);
-                it = cVal->Next();
             }
             mValues->SetConst(i, dict);
             return;
@@ -256,13 +252,11 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
             alt::MValueDict dict = core->CreateMValueDict();
 
             alt::MValueConst innerVal;
-            alt::IMValueDict::Iterator *it = cVal->Begin();
             std::string innerKey;
-            while (it != nullptr) {
-                innerVal = it->GetValue();
-                innerKey = it->GetKey();
+            for (auto it = cVal->Begin(); it != cVal->End(); ++it) {
+                innerVal = it->second;
+                innerKey = it->first;
                 ToMValueDict(dict, innerKey, core, &innerVal);
-                it = cVal->Next();
             }
             mValues->SetConst(key, dict);
             return;
@@ -387,20 +381,19 @@ uint8_t MValueConst_GetDict(alt::MValueConst *mValueConst, const char *keys[],
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::DICT) {
         auto dict = dynamic_cast<const alt::IMValueDict *>(mValue);
-        auto next = dict->Begin();
-        if (next == nullptr) return true;
+        if (dict == nullptr) return true;
         uint64_t i = 0;
-        do {
-            auto key = next->GetKey();
+        for (auto next = dict->Begin(); next != dict->End(); ++next) {
+            auto key = next->first;
             auto keySize = key.size();
             auto keyArray = new char[keySize + 1];
             memcpy(keyArray, key.c_str(), keySize);
             keyArray[keySize] = '\0';
             keys[i] = keyArray;
-            alt::MValueConst mValueElement = next->GetValue();
+            alt::MValueConst mValueElement = next->second;
             values[i] = AllocMValue(mValueElement);
             i++;
-        } while ((next = dict->Next()) != nullptr);
+        }
         return true;
     }
     return false;

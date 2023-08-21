@@ -13,23 +13,6 @@ alt::IBaseObject* VoiceChannel_GetBaseObject(alt::IVoiceChannel* channel) {
     return dynamic_cast<alt::IBaseObject*>(channel);
 }
 
-alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
-    return AllocMValue(voiceChannel->GetMetaData(key));
-}
-
-void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValueConst* val) {
-    if (val == nullptr) return;
-    channel->SetMetaData(key, val->get()->Clone());
-}
-
-uint8_t VoiceChannel_HasMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
-    return voiceChannel->HasMetaData(key);
-}
-
-void VoiceChannel_DeleteMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
-    voiceChannel->DeleteMetaData(key);
-}
-
 void VoiceChannel_AddPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player) {
     channel->AddPlayer(player);
 }
@@ -84,5 +67,22 @@ int32_t VoiceChannel_GetPriority(alt::IVoiceChannel* channel)
 void VoiceChannel_SetPriority(alt::IVoiceChannel* channel, int32_t priority)
 {
     channel->SetPriority(priority);
+}
+
+alt::IPlayer** VoiceChannel_GetPlayers(alt::IVoiceChannel* channel, uint64_t& size)
+{
+    const auto players = channel->GetPlayers();
+    size = players.size();
+    const auto out = new alt::IPlayer*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = players[i];
+    }
+
+    return out;
+}
+
+uint64_t VoiceChannel_GetPlayerCount(alt::IVoiceChannel* channel)
+{
+    return channel->GetPlayerCount();
 }
 #endif

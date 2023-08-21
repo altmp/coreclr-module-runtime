@@ -252,3 +252,5 @@ EXPORT_SERVER void Player_RequestCloudID(alt::IPlayer* player, /** ServerEvents.
 EXPORT_CLIENT void Player_AddFilter(alt::IPlayer* player, alt::IAudioFilter* filter);
 EXPORT_CLIENT void Player_RemoveFilter(alt::IPlayer* player);
 EXPORT_CLIENT alt::IAudioFilter* Player_GetFilter(alt::IPlayer* player);
+
+EXPORT_SHARED uint8_t Player_IsParachuting(alt::IPlayer* player);

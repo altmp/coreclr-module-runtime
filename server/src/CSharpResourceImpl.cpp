@@ -65,6 +65,9 @@ void CSharpResourceImpl::ResetDelegates()
     OnStartSyncedSceneDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8, auto var9) {};
     OnStopSyncedSceneDelegate = [](auto var, auto var2) {};
     OnUpdateSyncedSceneDelegate = [](auto var, auto var2, auto var3) {};
+
+    OnClientRequestObjectDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnClientDeleteObjectDelegate = [](auto var, auto var2) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -699,6 +702,32 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             OnUpdateSyncedSceneDelegate(updateSyncedSceneEvent->GetSource(), updateSyncedSceneEvent->GetStartRate(), updateSyncedSceneEvent->GetSceneID());
             break;
         }
+    case alt::CEvent::Type::CLIENT_REQUEST_OBJECT_EVENT:
+        {
+            auto clientRequestObjectEvent = dynamic_cast<const alt::CClientRequestObjectEvent*>(ev);
+
+            auto target = clientRequestObjectEvent->GetTarget();
+            if (target == nullptr) return;
+
+            OnClientRequestObjectDelegate(
+                clientRequestObjectEvent,
+                target,
+                clientRequestObjectEvent->GetModel(),
+                {clientRequestObjectEvent->GetPosition().x, clientRequestObjectEvent->GetPosition().y, clientRequestObjectEvent->GetPosition().z});
+            break;
+        }
+    case alt::CEvent::Type::CLIENT_DELETE_OBJECT_EVENT:
+        {
+            auto clientDeleteObjectEvent = dynamic_cast<const alt::CClientDeleteObjectEvent*>(ev);
+
+            auto target = clientDeleteObjectEvent->GetTarget();
+            if (target == nullptr) return;
+
+            OnClientDeleteObjectDelegate(
+                clientDeleteObjectEvent,
+                target);
+            break;
+        }
     default:
         {
             std::cout << "Unhandled server event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -1192,6 +1221,16 @@ void CSharpResourceImpl_SetStopSyncedSceneDelegate(CSharpResourceImpl* resource,
 void CSharpResourceImpl_SetUpdateSyncedSceneDelegate(CSharpResourceImpl* resource, UpdateSyncedSceneDelegate_t delegate)
 {
     resource->OnUpdateSyncedSceneDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetClientRequestObjectDelegate(CSharpResourceImpl* resource, ClientRequestObjectDelegate_t delegate)
+{
+    resource->OnClientRequestObjectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetClientDeleteObjectDelegate(CSharpResourceImpl* resource, ClientDeleteObjectDelegate_t delegate)
+{
+    resource->OnClientDeleteObjectDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)

@@ -31,6 +31,8 @@ EXPORT_SERVER uint64_t ConnectionInfo_GetPasswordHash(alt::IConnectionInfo* conn
 EXPORT_SERVER const char* ConnectionInfo_GetIp(alt::IConnectionInfo* connectionInfo, int32_t& size);
 EXPORT_SERVER int64_t ConnectionInfo_GetDiscordUserID(alt::IConnectionInfo* connectionInfo);
 EXPORT_SERVER const char* ConnectionInfo_GetCloudAuthHash(alt::IConnectionInfo* connectionInfo, int32_t& size);
+EXPORT_SERVER const char* ConnectionInfo_GetText(alt::IConnectionInfo* connectionInfo, int32_t& size);
+EXPORT_SERVER void ConnectionInfo_SetText(alt::IConnectionInfo* connectionInfo, const char* text);
 
 EXPORT_SERVER void ConnectionInfo_Accept(alt::IConnectionInfo* connectionInfo, uint8_t sendNames);
 EXPORT_SERVER void ConnectionInfo_Decline(alt::IConnectionInfo* connectionInfo, const char* reason);
