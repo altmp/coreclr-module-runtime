@@ -75,7 +75,7 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
 
             alt::MValueConst innerVal;
             std::string key;
-            for (auto it = cVal->Begin(); it != dict->End(); ++it) {
+            for (auto it = cVal->Begin(); it != cVal->End(); ++it) {
                 innerVal = it->second;
                 key = it->first;
                 ToMValueDict(dict, key, core, &innerVal);
