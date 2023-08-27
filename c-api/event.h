@@ -30,6 +30,7 @@ EXPORT_CLIENT void Event_SetClientEventDelegate(CSharpResourceImpl* resource,  /
 EXPORT_CLIENT void Event_SetConsoleCommandDelegate(CSharpResourceImpl* resource,  /** ClientEvents.ConsoleCommandModuleDelegate */ ConsoleCommandDelegate_t delegate);
 EXPORT_CLIENT void Event_SetWebViewEventDelegate(CSharpResourceImpl* resource,  /** ClientEvents.WebViewEventModuleDelegate */ WebViewEventDelegate_t delegate);
 EXPORT_CLIENT void Event_SetWebSocketEventDelegate(CSharpResourceImpl* resource,  /** ClientEvents.WebSocketEventModuleDelegate */ WebSocketEventDelegate_t delegate);
+EXPORT_CLIENT void Event_SetAudioEventDelegate(CSharpResourceImpl* resource,  /** ClientEvents.AudioEventModuleDelegate */ AudioEventDelegate_t delegate);
 EXPORT_CLIENT void Event_SetRmlEventDelegate(CSharpResourceImpl* resource,  /** ClientEvents.RmlEventModuleDelegate */ RmlEventDelegate_t delegate);
 
 EXPORT_CLIENT void Event_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerSpawnModuleDelegate */ PlayerSpawnDelegate_t delegate);

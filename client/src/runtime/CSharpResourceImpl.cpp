@@ -561,6 +561,25 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 
             break;
         }
+    case alt::CEvent::Type::AUDIO_EVENT:
+        {
+            auto audioEvent = dynamic_cast<const alt::CAudioEvent*>(ev);
+
+            auto args = audioEvent->GetArgs();
+            auto name = audioEvent->GetName();
+            auto size = args.size();
+            auto constArgs = new alt::MValueConst*[size];
+
+            for (uint64_t i = 0; i < size; i++)
+            {
+                constArgs[i] = &args[i];
+            }
+            OnAudioEventDelegate(audioEvent->GetTarget(),
+                                 name.c_str(),
+                                 constArgs,
+                                 size);
+            break;
+        }
     default:
         {
             std::cout << "Unhandled client event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -914,6 +933,7 @@ void CSharpResourceImpl::ResetDelegates() {
     OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
     OnWebSocketEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnRmlEventDelegate = [](auto var, auto var2, auto var3) {};
+    OnAudioEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 
     OnPlayerSpawnDelegate = [](){};
     OnPlayerDisconnectDelegate = [](){};

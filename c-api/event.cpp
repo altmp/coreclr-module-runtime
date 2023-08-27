@@ -84,5 +84,6 @@ SetDelegate(PlayerStartLeaveVehicle);
 
 SetDelegate(PlayerBulletHit);
 SetDelegate(VoiceConnection);
+SetDelegate(AudioEvent);
 
 #endif

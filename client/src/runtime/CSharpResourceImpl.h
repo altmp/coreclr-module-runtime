@@ -38,6 +38,7 @@ public:
     WebViewEventDelegate_t OnWebViewEventDelegate = nullptr;
     ConsoleCommandDelegate_t OnConsoleCommandDelegate = nullptr;
     WebSocketEventDelegate_t OnWebSocketEventDelegate = nullptr;
+    AudioEventDelegate_t OnAudioEventDelegate = nullptr;
     RmlEventDelegate_t OnRmlEventDelegate = nullptr;
 
     PlayerSpawnDelegate_t OnPlayerSpawnDelegate = nullptr;
