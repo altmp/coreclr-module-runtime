@@ -324,7 +324,7 @@ public:
     ClientRequestObjectDelegate_t OnClientRequestObjectDelegate = nullptr;
     ClientDeleteObjectDelegate_t OnClientDeleteObjectDelegate = nullptr;
 
-    alt::Array<CustomInvoker*>* invokers;
+    std::vector<CustomInvoker*>* invokers;
     CoreClr* coreClr;
     alt::ICore* server;
     alt::IResource* resource;

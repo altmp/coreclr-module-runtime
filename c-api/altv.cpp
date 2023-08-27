@@ -19,27 +19,9 @@
 #pragma clang diagnostic pop
 #endif
 
-using alt::Array;
-
-void FreeUIntArray(alt::Array<uint32_t>* array) {
-    array->~Array<uint32_t>();
+void FreeUIntArray(std::vector<uint32_t>* array) {
+    array->clear();
 }
-
-/*void FreeStringViewArray(alt::Array<std::stringView>* array) {
-    array->~Array<std::stringView>();
-}*/
-
-/*void FreeStringArray(alt::Array<std::string>* array) {
-    array->~Array<std::string>();
-}*/
-
-/*void FreeMValueArray(alt::Array<alt::MValue>* array) {
-    array->~Array<alt::MValue>();
-}*/
-
-/*void FreePlayerPointerArray(alt::Array<alt::IPlayer*>* array) {
-    array->~Array<alt::IPlayer*>();
-}*/
 
 void FreeCharArray(char charArray[]) {
     delete[] charArray;

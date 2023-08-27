@@ -519,20 +519,19 @@ uint8_t MValueConst_GetType(alt::MValueConst *mValueConst) {
 
 CustomInvoker *Invoker_Create(CSharpResourceImpl *resource, MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
-    resource->invokers->Push(invoker);
+    resource->invokers->push_back(invoker);
     return invoker;
 }
 
 void Invoker_Destroy(CSharpResourceImpl *resource, CustomInvoker *val) {
-    auto newInvokers = new alt::Array<CustomInvoker *>();
-    for (alt::Size i = 0, length = resource->invokers->GetSize(); i < length; i++) {
+    std::vector<CustomInvoker*>* newInvokers = {};
+    for (alt::Size i = 0, length = resource->invokers->size(); i < length; i++) {
         auto invoker = (*resource->invokers)[i];
         if (invoker != val) {
-            newInvokers->Push(invoker);
+            newInvokers->push_back(invoker);
         }
     }
-    alt::Array<CustomInvoker *> *oldInvokers = resource->invokers;
+    std::vector<CustomInvoker *> *oldInvokers = resource->invokers;
     resource->invokers = newInvokers;
-    delete val;
     delete oldInvokers;
 }

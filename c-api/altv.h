@@ -5,7 +5,7 @@
 #include "cpp-sdk/SDK.h"
 #include "data/types.h"
 
-EXPORT_SHARED void FreeUIntArray(alt::Array<uint32_t> *array);
+EXPORT_SHARED void FreeUIntArray(std::vector<uint32_t> *array);
 //EXPORT void FreePlayerPointerArray(alt::Array<alt::IPlayer*> *array);
 //EXPORT void FreeStringViewArray(alt::Array<std::stringView> *array);
 //EXPORT void FreeStringArray(alt::Array<std::string>* array);

@@ -15,7 +15,7 @@ class CSharpResourceImpl : public alt::IResource::Impl
 
 public:
     CSharpResourceImpl(CSharpScriptRuntime* runtime, alt::IResource* resource, alt::ICore* core) : runtime(runtime), resource(resource), core(core) {
-        invokers = new alt::Array<CustomInvoker*>();
+        invokers = {};
         ResetDelegates();
     };
 
@@ -30,7 +30,7 @@ public:
     void OnCreateBaseObject(alt::IBaseObject* object) override;
     void OnRemoveBaseObject(alt::IBaseObject* object) override;
 
-    alt::Array<CustomInvoker*>* invokers;
+    std::vector<CustomInvoker*>* invokers;
 
     TickDelegate_t OnTickDelegate = nullptr;
     ServerEventDelegate_t OnServerEventDelegate = nullptr;
@@ -102,7 +102,7 @@ public:
     VoiceConnectionDelegate_t OnVoiceConnectionDelegate = nullptr;
 
 
-    bool MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
+    bool MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)
     {
         // When also having a client module that is inteded to be used with this module,
         // change uncomment the next line and change to your own module type
