@@ -193,6 +193,8 @@ typedef void (* ClientRequestObjectDelegate_t)(const alt::CEvent* event, alt::IP
 
 typedef void (* ClientDeleteObjectDelegate_t)(const alt::CEvent* event, alt::IPlayer* target);
 
+typedef void (* PlayerHealDelegate_t)(alt::IPlayer* target, uint16_t oldHealth, uint16_t newHealth, uint16_t oldArmour, uint16_t newArmour);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
 
@@ -323,6 +325,8 @@ public:
 
     ClientRequestObjectDelegate_t OnClientRequestObjectDelegate = nullptr;
     ClientDeleteObjectDelegate_t OnClientDeleteObjectDelegate = nullptr;
+
+    PlayerHealDelegate_t OnPlayerHealDelegate = nullptr;
 
     std::vector<CustomInvoker*>* invokers;
     CoreClr* coreClr;
@@ -530,3 +534,5 @@ EXPORT void CSharpResourceImpl_SetUpdateSyncedSceneDelegate(CSharpResourceImpl* 
 EXPORT void CSharpResourceImpl_SetClientRequestObjectDelegate(CSharpResourceImpl* resource, ClientRequestObjectDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetClientDeleteObjectDelegate(CSharpResourceImpl* resource, ClientDeleteObjectDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerHealDelegate(CSharpResourceImpl* resource, PlayerHealDelegate_t delegate);

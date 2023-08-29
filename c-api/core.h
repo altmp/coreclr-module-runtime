@@ -360,3 +360,19 @@ EXPORT_CLIENT void Core_GetAllWeaponData(alt::ICore* core, uint32_t weaponHashes
 
 EXPORT_SERVER void Core_SetVoiceExternalPublic(alt::ICore* core, const char* host, uint16_t port);
 EXPORT_SERVER void Core_SetVoiceExternal(alt::ICore* core, const char* host, uint16_t port);
+
+EXPORT_SERVER uint16_t Core_GetMaxStreamingPeds(alt::ICore* core);
+EXPORT_SERVER void Core_SetMaxStreamingPeds(alt::ICore* core, uint16_t limit);
+EXPORT_SERVER uint16_t Core_GetMaxStreamingObjects(alt::ICore* core);
+EXPORT_SERVER void Core_SetMaxStreamingObjects(alt::ICore* core, uint16_t limit);
+EXPORT_SERVER uint16_t Core_GetMaxStreamingVehicles(alt::ICore* core);
+EXPORT_SERVER void Core_SetMaxStreamingVehicles(alt::ICore* core, uint16_t limit);
+
+EXPORT_SERVER uint8_t Core_GetStreamerThreadCount(alt::ICore* core);
+EXPORT_SERVER void Core_SetStreamerThreadCount(alt::ICore* core, uint8_t limit);
+
+EXPORT_SERVER uint32_t Core_GetStreamingTickRate(alt::ICore* core);
+EXPORT_SERVER void Core_SetStreamingTickRate(alt::ICore* core, uint32_t limit);
+
+EXPORT_SERVER uint32_t Core_GetStreamingDistance(alt::ICore* core);
+EXPORT_SERVER void Core_SetStreamingDistance(alt::ICore* core, uint32_t limit);

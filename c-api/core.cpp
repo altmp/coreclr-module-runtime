@@ -861,6 +861,66 @@ void Core_SetVoiceExternal(alt::ICore* core, const char* host, uint16_t port)
 {
     core->SetVoiceExternal(host, port);
 }
+
+uint16_t Core_GetMaxStreamingPeds(alt::ICore* core)
+{
+    return core->GetMaxStreamingPeds();
+}
+
+void Core_SetMaxStreamingPeds(alt::ICore* core, uint16_t limit)
+{
+    core->SetMaxStreamingPeds(limit);
+}
+
+uint16_t Core_GetMaxStreamingObjects(alt::ICore* core)
+{
+    return core->GetMaxStreamingObjects();
+}
+
+void Core_SetMaxStreamingObjects(alt::ICore* core, uint16_t limit)
+{
+    core->SetMaxStreamingObjects(limit);
+}
+
+uint16_t Core_GetMaxStreamingVehicles(alt::ICore* core)
+{
+    return core->GetMaxStreamingVehicles();
+}
+
+void Core_SetMaxStreamingVehicles(alt::ICore* core, uint16_t limit)
+{
+    core->SetMaxStreamingVehicles(limit);
+}
+
+uint8_t Core_GetStreamerThreadCount(alt::ICore* core)
+{
+    return core->GetStreamerThreadCount();
+}
+
+void Core_SetStreamerThreadCount(alt::ICore* core, uint8_t limit)
+{
+    core->SetStreamerThreadCount(limit);
+}
+
+uint32_t Core_GetStreamingTickRate(alt::ICore* core)
+{
+    return core->GetStreamingTickRate();
+}
+
+void Core_SetStreamingTickRate(alt::ICore* core, uint32_t limit)
+{
+    core->SetStreamingTickRate(limit);
+}
+
+uint32_t Core_GetStreamingDistance(alt::ICore* core)
+{
+    return core->GetStreamingDistance();
+}
+
+void Core_SetStreamingDistance(alt::ICore* core, uint32_t limit)
+{
+    core->SetStreamingDistance(limit);
+}
 #endif
 
 #ifdef ALT_CLIENT_API
