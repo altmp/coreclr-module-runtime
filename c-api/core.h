@@ -376,3 +376,21 @@ EXPORT_SERVER void Core_SetStreamingTickRate(alt::ICore* core, uint32_t limit);
 
 EXPORT_SERVER uint32_t Core_GetStreamingDistance(alt::ICore* core);
 EXPORT_SERVER void Core_SetStreamingDistance(alt::ICore* core, uint32_t limit);
+
+EXPORT_SERVER uint8_t Core_GetMigrationThreadCount(alt::ICore* core);
+EXPORT_SERVER void Core_SetMigrationThreadCount(alt::ICore* core, uint8_t limit);
+
+EXPORT_SERVER uint8_t Core_GetSyncSendThreadCount(alt::ICore* core);
+EXPORT_SERVER void Core_SetSyncSendThreadCount(alt::ICore* core, uint8_t limit);
+
+EXPORT_SERVER uint8_t Core_GetSyncReceiveThreadCount(alt::ICore* core);
+EXPORT_SERVER void Core_SetSyncReceiveThreadCount(alt::ICore* core, uint8_t limit);
+
+EXPORT_SERVER uint32_t Core_GetMigrationTickRate(alt::ICore* core);
+EXPORT_SERVER void Core_SetMigrationTickRate(alt::ICore* core, uint32_t limit);
+
+EXPORT_SERVER uint32_t Core_GetColShapeTickRate(alt::ICore* core);
+EXPORT_SERVER void Core_SetColShapeTickRate(alt::ICore* core, uint32_t limit);
+
+EXPORT_SERVER uint32_t Core_GetMigrationDistance(alt::ICore* core);
+EXPORT_SERVER void Core_SetMigrationDistance(alt::ICore* core, uint32_t limit);

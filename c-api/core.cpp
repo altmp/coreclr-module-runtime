@@ -921,6 +921,66 @@ void Core_SetStreamingDistance(alt::ICore* core, uint32_t limit)
 {
     core->SetStreamingDistance(limit);
 }
+
+uint8_t Core_GetMigrationThreadCount(alt::ICore* core)
+{
+    return core->GetMigrationThreadCount();
+}
+
+void Core_SetMigrationThreadCount(alt::ICore* core, uint8_t limit)
+{
+    core->SetMigrationThreadCount(limit);
+}
+
+uint8_t Core_GetSyncSendThreadCount(alt::ICore* core)
+{
+    return core->GetSyncSendThreadCount();
+}
+
+void Core_SetSyncSendThreadCount(alt::ICore* core, uint8_t limit)
+{
+    core->SetSyncSendThreadCount(limit);
+}
+
+uint8_t Core_GetSyncReceiveThreadCount(alt::ICore* core)
+{
+    return core->GetSyncReceiveThreadCount();
+}
+
+void Core_SetSyncReceiveThreadCount(alt::ICore* core, uint8_t limit)
+{
+    core->SetSyncReceiveThreadCount(limit);
+}
+
+uint32_t Core_GetMigrationTickRate(alt::ICore* core)
+{
+    return core->GetMigrationTickRate();
+}
+
+void Core_SetMigrationTickRate(alt::ICore* core, uint32_t limit)
+{
+    core->SetMigrationTickRate(limit);
+}
+
+uint32_t Core_GetColShapeTickRate(alt::ICore* core)
+{
+    return core->GetColShapeTickRate();
+}
+
+void Core_SetColShapeTickRate(alt::ICore* core, uint32_t limit)
+{
+    core->SetColShapeTickRate(limit);
+}
+
+uint32_t Core_GetMigrationDistance(alt::ICore* core)
+{
+    return core->GetMigrationDistance();
+}
+
+void Core_SetMigrationDistance(alt::ICore* core, uint32_t limit)
+{
+    core->SetMigrationDistance(limit);
+}
 #endif
 
 #ifdef ALT_CLIENT_API
