@@ -287,6 +287,9 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             case alt::IBaseObject::Type::PED:
                 ptr = dynamic_cast<alt::IPed*>(entity);
                 break;
+            case alt::IBaseObject::Type::OBJECT:
+                ptr = dynamic_cast<alt::IObject*>(entity);
+                break;
             default:
                 ptr = nullptr;
             }
@@ -315,6 +318,9 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                 break;
             case alt::IBaseObject::Type::PED:
                 ptr = dynamic_cast<alt::IPed*>(entity);
+                break;
+            case alt::IBaseObject::Type::OBJECT:
+                ptr = dynamic_cast<alt::IObject*>(entity);
                 break;
             default:
                 ptr = nullptr;
