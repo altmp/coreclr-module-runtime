@@ -1,5 +1,8 @@
 #include "baseObject.h"
 #include "../mvalue.h"
+#include "../utils/macros.h"
+
+CAPI_START()
 
 using namespace alt;
 
@@ -75,3 +78,5 @@ uint8_t BaseObject_IsRemote(alt::IBaseObject* baseObject)
     return baseObject->IsRemote();
 }
 #endif
+
+CAPI_END()

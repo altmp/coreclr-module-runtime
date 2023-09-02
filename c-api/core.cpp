@@ -6,6 +6,9 @@
 
 #include "data/weapon_model_info.h"
 #include "utils/entity.h"
+#include "utils/macros.h"
+
+CAPI_START()
 
 void Core_LogInfo(alt::ICore* core, const char* str) {
     core->LogInfo(str);
@@ -1837,3 +1840,4 @@ void Core_GetAllWeaponData(alt::ICore* core, uint32_t weaponHashes[], uint64_t s
 }
 #endif
 
+CAPI_END()

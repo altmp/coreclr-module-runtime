@@ -1,6 +1,9 @@
 #include "vehicle.h"
 #include "../utils/strings.h"
 #include "../cache/CachedVehicle.h"
+#include "../utils/macros.h"
+
+CAPI_START()
 
 uint16_t Vehicle_GetID(alt::IVehicle* entity) {
     return entity->GetID();
@@ -1696,3 +1699,5 @@ void Vehicle_Handling_SetDamageFlags(alt::IVehicle* vehicle, uint32_t value) {
 }
 
 #endif
+
+CAPI_END()

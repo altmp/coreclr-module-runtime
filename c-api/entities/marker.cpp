@@ -1,5 +1,9 @@
 #include "marker.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
 alt::IWorldObject* Marker_GetWorldObject(alt::IMarker* marker)
 {
     return dynamic_cast<alt::IWorldObject*>(marker);
@@ -151,3 +155,5 @@ uint8_t Marker_IsStreamedIn(alt::IMarker* marker)
     return marker->IsStreamedIn();
 }
 #endif
+
+CAPI_END()

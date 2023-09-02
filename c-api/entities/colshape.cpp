@@ -1,5 +1,9 @@
 #include "colshape.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
 uint32_t ColShape_GetID(alt::IColShape* colShape)
 {
     return colShape->GetID();
@@ -34,3 +38,5 @@ uint8_t ColShape_IsPlayersOnly(alt::IColShape* colShape) {
     return colShape->IsPlayersOnly();
 }
 #endif
+
+CAPI_END()

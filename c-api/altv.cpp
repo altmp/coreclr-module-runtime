@@ -1,6 +1,7 @@
 #include "altv.h"
 
 #include "data/types.h"
+#include "utils/macros.h"
 #include "version/version.h"
 #if defined ALTV_CSHARP_SHARED || defined ALT_SERVER_API
 #include "cpp-sdk/version/version.h"
@@ -18,6 +19,8 @@
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
+
+CAPI_START()
 
 using alt::Array;
 
@@ -180,3 +183,5 @@ void* Win_GetTaskDialog() {
 }
 
 #endif
+
+CAPI_END()

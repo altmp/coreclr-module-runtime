@@ -3,6 +3,9 @@
 #include "../utils/strings.h"
 #include "../utils/uint.h"
 #include "../mvalue.h"
+#include "../utils/macros.h"
+
+CAPI_START()
 
 uint32_t VirtualEntity_GetID(alt::IVirtualEntity* virtualEntity)
 {
@@ -65,3 +68,5 @@ void VirtualEntity_DeleteStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity
 }
 
 #endif
+
+CAPI_END()

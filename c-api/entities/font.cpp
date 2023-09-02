@@ -1,5 +1,8 @@
 ﻿#include "font.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
 
 #ifdef ALT_CLIENT_API
 uint32_t Font_GetID(alt::IFont* font)
@@ -12,3 +15,5 @@ alt::IBaseObject* Font_GetBaseObject(alt::IFont* font)
     return dynamic_cast<alt::IBaseObject*>(font);
 }
 #endif
+
+CAPI_END()

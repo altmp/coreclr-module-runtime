@@ -1,6 +1,9 @@
 #include "audio.h"
 #include "../utils/strings.h"
 #include "../utils/entity.h"
+#include "../utils/macros.h"
+
+CAPI_START()
 
 uint32_t Audio_GetID(alt::IAudio* audio)
 {
@@ -104,3 +107,5 @@ void Audio_Seek(alt::IAudio* audio, double time) {
     audio->Seek(time);
 }
 #endif
+
+CAPI_END()

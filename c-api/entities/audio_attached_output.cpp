@@ -1,5 +1,9 @@
 ﻿#include "audio_attached_output.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
 uint32_t AudioAttachedOutput_GetID(alt::IAudioAttachedOutput* audioAttachedOutput)
 {
     return audioAttachedOutput->GetID();
@@ -23,3 +27,5 @@ alt::IWorldObject* AudioAttachedOutput_GetEntity(alt::IAudioAttachedOutput* audi
     return entity;
 }
 #endif
+
+CAPI_END()

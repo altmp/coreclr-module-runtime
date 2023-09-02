@@ -1,6 +1,9 @@
 #include "voice_channel.h"
 
 #include "../mvalue.h"
+#include "../utils/macros.h"
+
+CAPI_START()
 
 uint32_t VoiceChannel_GetID(alt::IVoiceChannel* voiceChannel)
 {
@@ -86,3 +89,5 @@ uint64_t VoiceChannel_GetPlayerCount(alt::IVoiceChannel* channel)
     return channel->GetPlayerCount();
 }
 #endif
+
+CAPI_END()

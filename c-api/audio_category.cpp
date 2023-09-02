@@ -1,6 +1,9 @@
 #include "audio_category.h"
 
+#include "utils/macros.h"
 #include "utils/strings.h"
+
+CAPI_START()
 
 #ifdef ALT_CLIENT_API
 
@@ -155,3 +158,5 @@ void AudioCategory_Reset(const char* name) {
 }
 
 #endif
+
+CAPI_END()

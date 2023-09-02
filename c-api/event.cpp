@@ -1,5 +1,9 @@
 #include "event.h"
 
+#include "utils/macros.h"
+
+CAPI_START()
+
 #ifdef ALT_SERVER_API
 
 void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue) {
@@ -86,3 +90,5 @@ SetDelegate(PlayerBulletHit);
 SetDelegate(VoiceConnection);
 
 #endif
+
+CAPI_END()

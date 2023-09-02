@@ -1,6 +1,10 @@
 #include "local_ped.h"
 
+#include "../utils/macros.h"
+
 #ifdef ALT_CLIENT_API
+
+CAPI_START()
 
 alt::IPed* LocalPed_GetPed(alt::ILocalPed* localPed)
 {
@@ -42,3 +46,5 @@ uint8_t LocalPed_IsStreamedIn(alt::ILocalPed* localPed)
     return localPed->IsStreamedIn();
 }
 #endif
+
+CAPI_END()

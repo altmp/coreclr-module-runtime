@@ -1,5 +1,9 @@
 #include "worldObject.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
 using namespace alt;
 
 alt::IBaseObject* WorldObject_GetBaseObject(alt::IWorldObject* worldObject) {
@@ -39,3 +43,5 @@ void WorldObject_GetPositionCoords(alt::IWorldObject* worldObject, float *positi
 }
 
 #endif
+
+CAPI_END()
