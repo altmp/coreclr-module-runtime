@@ -1,7 +1,10 @@
 #include "localstorage.h"
 
 #include "mvalue.h"
+#include "utils/macros.h"
 #include "utils/strings.h"
+
+CAPI_START()
 
 #ifdef ALT_CLIENT_API
 void LocalStorage_SetKey(alt::ILocalStorage* localStorage, const char* key, alt::MValueConst* value) {
@@ -29,3 +32,5 @@ void LocalStorage_Save(alt::ILocalStorage* localStorage) {
     localStorage->Save();
 }
 #endif
+
+CAPI_END()

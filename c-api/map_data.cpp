@@ -1,5 +1,8 @@
 #include "./map_data.h"
 #include "./utils/strings.h"
+#include "utils/macros.h"
+
+CAPI_START()
 
 #ifdef ALT_CLIENT_API
 void MapData_SetFScrollSpeed(uint32_t id, float value) {
@@ -52,3 +55,5 @@ float MapData_GetVTilesY(uint32_t id) {
     return mapData->GetTilesCountY();
 }
 #endif
+
+CAPI_END()

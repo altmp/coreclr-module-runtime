@@ -1,8 +1,10 @@
 #include "connection_info.h"
 
+#include "../utils/macros.h"
 #include "../utils/strings.h"
 #include "../utils/uint.h"
 
+CAPI_START()
 
 #ifdef ALT_SERVER_API
 
@@ -97,3 +99,5 @@ void ConnectionInfo_SetText(alt::IConnectionInfo* connectionInfo, const char* te
     connectionInfo->SetText(text);
 }
 #endif
+
+CAPI_END()

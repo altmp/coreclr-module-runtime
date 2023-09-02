@@ -1,5 +1,8 @@
 #include "local_vehicle.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
 
 #ifdef ALT_CLIENT_API
 alt::IVehicle* LocalVehicle_GetVehicle(alt::ILocalVehicle* localVehicle)
@@ -42,3 +45,5 @@ uint8_t LocalVehicle_IsStreamedIn(alt::ILocalVehicle* localVehicle)
     return localVehicle->IsStreamedIn();
 }
 #endif
+
+CAPI_END()

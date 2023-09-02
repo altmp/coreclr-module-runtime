@@ -1,5 +1,9 @@
 #include "handling_data.h"
 
+#include "utils/macros.h"
+
+CAPI_START()
+
 #ifdef ALT_CLIENT_API
 uint32_t Handling_GetHandlingNameHash(uint32_t modelHash) {
     auto handling = alt::ICore::Instance().GetHandlingData(modelHash);
@@ -662,3 +666,5 @@ void Handling_SetDamageFlags(uint32_t modelHash, uint32_t value) {
     handling->SetDamageFlags(value);
 }
 #endif
+
+CAPI_END()

@@ -1,5 +1,9 @@
 #include "textLabel.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
 uint32_t TextLabel_GetID(alt::ITextLabel* textLabel)
 {
     return textLabel->GetID();
@@ -97,3 +101,5 @@ uint8_t TextLabel_IsStreamedIn(alt::ITextLabel* textLabel)
     return textLabel->IsStreamedIn();
 }
 #endif
+
+CAPI_END()

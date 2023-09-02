@@ -1,5 +1,9 @@
 #include "websocket_client.h"
+
+#include "../utils/macros.h"
 #include "../utils/strings.h"
+
+CAPI_START()
 
 uint32_t WebSocketClient_GetID(alt::IWebSocketClient* webSocketClient)
 {
@@ -78,3 +82,5 @@ void WebSocketClient_Stop(alt::IWebSocketClient* webSocketClient) {
     webSocketClient->Stop();
 }
 #endif
+
+CAPI_END()

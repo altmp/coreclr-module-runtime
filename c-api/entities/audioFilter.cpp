@@ -1,5 +1,9 @@
 #include "audioFilter.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
 uint32_t AudioFilter_GetID(alt::IAudioFilter* audioFilter)
 {
     return audioFilter->GetID();
@@ -107,3 +111,5 @@ uint8_t AudioFilter_RemoveEffect(alt::IAudioFilter* audioFilter, uint32_t hfxHan
     return audioFilter->RemoveEffect(hfxHandler);
 }
 #endif
+
+CAPI_END()

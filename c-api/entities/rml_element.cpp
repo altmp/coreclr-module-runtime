@@ -1,5 +1,9 @@
 #include "rml_element.h"
+
+#include "../utils/macros.h"
 #include "../utils/strings.h"
+
+CAPI_START()
 
 #ifdef ALT_CLIENT_API
 
@@ -352,3 +356,5 @@ void RmlElement_SetProperty(alt::IRmlElement* rmlElement, const char* name, cons
 }
 
 #endif
+
+CAPI_END()

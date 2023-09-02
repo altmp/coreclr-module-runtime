@@ -1,5 +1,9 @@
 #include "object.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
 uint16_t Object_GetID(alt::IObject* object)
 {
     return object->GetID();
@@ -51,3 +55,6 @@ void Object_SetLodDistance(alt::IObject* object, uint16_t lodDistance)
     object->SetLodDistance(lodDistance);
 }
 #endif
+
+
+CAPI_END()

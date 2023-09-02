@@ -1,6 +1,9 @@
 #include "webview.h"
 #include "../utils/strings.h"
 #include "../../c-api/mvalue.h"
+#include "../utils/macros.h"
+
+CAPI_START()
 
 uint32_t WebView_GetID(alt::IWebView* webView)
 {
@@ -94,3 +97,5 @@ alt::MValueConst* WebView_GetOutputs(alt::IWebView* webView)
     return AllocMValue(std::move(mValue));
 }
 #endif
+
+CAPI_END()

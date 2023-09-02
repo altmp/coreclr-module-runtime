@@ -1,6 +1,9 @@
 #include "entity.h"
 
 #include "../mvalue.h"
+#include "../utils/macros.h"
+
+CAPI_START()
 
 uint16_t Entity_GetID(alt::IEntity* entity) {
     return entity->GetID();
@@ -131,3 +134,5 @@ uint32_t Entity_GetScriptID(alt::IEntity* entity) {
     return entity->GetScriptID();
 }
 #endif
+
+CAPI_END()

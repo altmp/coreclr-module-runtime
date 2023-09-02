@@ -3,6 +3,9 @@
 #include "../utils/strings.h"
 #include "../utils/uint.h"
 #include "../mvalue.h"
+#include "../utils/macros.h"
+
+CAPI_START()
 
 uint16_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();
@@ -849,3 +852,5 @@ alt::IAudioFilter* Player_GetFilter(alt::IPlayer* player)
 }
 
 #endif
+
+CAPI_END()

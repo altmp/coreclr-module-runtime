@@ -1,5 +1,9 @@
 ﻿#include "audio_world_output.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
 uint32_t AudioWorldOutput_GetID(alt::IAudioWorldOutput* audioWorldOutput)
 {
     return audioWorldOutput->GetID();
@@ -21,3 +25,5 @@ alt::Position AudioWorldOutput_GetPosition(alt::IAudioWorldOutput* audioWorldOut
     return audioWorldOutput->GetPosition();
 }
 #endif
+
+CAPI_END()

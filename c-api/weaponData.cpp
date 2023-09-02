@@ -1,5 +1,9 @@
 #include "weaponData.h"
 
+#include "utils/macros.h"
+
+CAPI_START()
+
 #ifdef ALT_CLIENT_API
 
 uint32_t WeaponData_GetNameHash(uint32_t weaponHash) {
@@ -143,3 +147,5 @@ void WeaponData_SetPlayerDamageModifier(uint32_t weaponHash, float val) {
 }
 
 #endif
+
+CAPI_END()

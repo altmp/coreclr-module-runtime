@@ -4,6 +4,10 @@
 
 #include "local_object.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
 #ifdef ALT_CLIENT_API
 
 uint16_t LocalObject_GetID(alt::ILocalObject* localObject) {
@@ -147,3 +151,5 @@ int32_t LocalObject_GetComponentTintIndex(alt::ILocalObject* localObject, int32_
 }
 
 #endif
+
+CAPI_END()

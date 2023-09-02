@@ -1,5 +1,9 @@
 #include "http_client.h"
+
+#include "../utils/macros.h"
 #include "../utils/strings.h"
+
+CAPI_START()
 
 uint32_t HttpClient_GetID(alt::IHttpClient* httpClient)
 {
@@ -93,3 +97,5 @@ void HttpClient_Trace(alt::IHttpClient* httpClient, const char* url, const char*
     httpClient->Trace(InvokeCallback, url, body, (void *) callback);
 }
 #endif
+
+CAPI_END()

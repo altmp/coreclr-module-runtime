@@ -1,5 +1,9 @@
 #include "blip.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
 uint32_t Blip_GetID(alt::IBlip* blip)
 {
     return blip->GetID();
@@ -407,3 +411,5 @@ alt::IPlayer** Blip_GetTargets(alt::IBlip* blip, uint64_t& size)
     return out;
 }
 #endif
+
+CAPI_END()

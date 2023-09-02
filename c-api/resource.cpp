@@ -6,7 +6,10 @@
 
 #include "mvalue.h"
 #include "data/config_node_data.h"
+#include "utils/macros.h"
 #include "utils/strings.h"
+
+CAPI_START()
 
 const char* Resource_GetName(alt::IResource* resource, int32_t& size) {
     return AllocateString(resource->GetName(), size);
@@ -145,3 +148,5 @@ alt::ILocalStorage* Resource_GetLocalStorage(alt::IResource* resource) {
 }
 
 #endif
+
+CAPI_END()

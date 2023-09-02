@@ -1,5 +1,8 @@
 #include "checkpoint.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
 
 uint32_t Checkpoint_GetID(alt::ICheckpoint* checkpoint)
 {
@@ -107,3 +110,5 @@ uint32_t Checkpoint_GetGameID(alt::ICheckpoint* checkpoint)
     return checkpoint->GetGameID();
 }
 #endif
+
+CAPI_END()

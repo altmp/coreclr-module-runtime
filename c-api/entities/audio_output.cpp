@@ -1,6 +1,9 @@
 ﻿#include "audio_output.h"
 #include "../utils/strings.h"
 #include "../utils/entity.h"
+#include "../utils/macros.h"
+
+CAPI_START()
 
 uint32_t AudioOutput_GetID(alt::IAudioOutput* audioOutput)
 {
@@ -59,3 +62,5 @@ alt::IAudioFilter* AudioOutput_GetFilter(alt::IAudioOutput* audioOutput)
     return audioOutput->GetFilter();
 }
 #endif
+
+CAPI_END()

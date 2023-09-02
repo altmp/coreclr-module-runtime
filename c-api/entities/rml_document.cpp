@@ -1,5 +1,9 @@
 #include "rml_document.h"
+
+#include "../utils/macros.h"
 #include "../utils/strings.h"
+
+CAPI_START()
 
 uint32_t RmlDocument_GetID(alt::IRmlDocument* rmlDocument)
 {
@@ -70,3 +74,5 @@ void RmlDocument_Update(alt::IRmlDocument* rmlDocument) {
     rmlDocument->Update();
 }
 #endif
+
+CAPI_END()

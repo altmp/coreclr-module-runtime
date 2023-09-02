@@ -2,6 +2,10 @@
 #include "utils/strings.h"
 #include <list>
 
+#include "utils/macros.h"
+
+CAPI_START()
+
 static std::list<alt::MValueConst> mvalues;
 static std::mutex mvalueLock;
 
@@ -535,3 +539,6 @@ void Invoker_Destroy(CSharpResourceImpl *resource, CustomInvoker *val) {
     resource->invokers = newInvokers;
     delete oldInvokers;
 }
+
+
+CAPI_END()

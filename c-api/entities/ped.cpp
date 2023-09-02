@@ -1,7 +1,10 @@
 #include "ped.h"
 
+#include "../utils/macros.h"
 #include "../utils/strings.h"
 #include "../utils/uint.h"
+
+CAPI_START()
 
 uint16_t Ped_GetID(alt::IPed* ped) {
     return ped->GetID();
@@ -51,3 +54,5 @@ void Ped_SetCurrentWeapon(alt::IPed* ped, uint32_t weapon) {
 #if ALT_CLIENT_API
 
 #endif
+
+CAPI_END()
