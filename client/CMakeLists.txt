@@ -31,6 +31,11 @@ if(WIN32 AND (MSVC OR CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
     add_definitions(/MP)
 endif()
 
+# clang and bang
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    set_property(SOURCE ${CAPI_FILES} PROPERTY COMPILE_FLAGS -fno-optimize-sibling-calls)
+endif()
+
 if(DYNAMIC_BUILD)
     set(SDK_PROJECT_NAME csharp-alt-sdk)
     include(../cpp-sdk/CMakeLists.txt)
