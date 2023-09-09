@@ -22,6 +22,10 @@ EXPORT_SHARED void FreePlayerArray(alt::IPlayer** playerArray);
 EXPORT_SHARED void FreeBlipArray(alt::IBlip** blipArray);
 EXPORT_SHARED void FreeVehicleArray(alt::IVehicle** vehicleArray);
 EXPORT_SHARED void FreePedArray(alt::IPed** pedArray);
+EXPORT_SHARED void FreeNetworkObjectArray(alt::IObject** networkObjectArray);
+EXPORT_SHARED void FreeColShapeArray(alt::IColShape** colShapeArray);
+EXPORT_SHARED void FreeMarkerArray(alt::IMarker** markerArray);
+EXPORT_SHARED void FreeTextLabelArray(alt::ITextLabel** textLabelArray);
 EXPORT_SHARED void FreeCheckpointArray(alt::ICheckpoint** checkpointArray);
 EXPORT_SHARED void FreeVirtualEntityArray(alt::IVirtualEntity** virtualEntityArray);
 EXPORT_SHARED void FreeVirtualEntityGroupArray(alt::IVirtualEntityGroup** virtualEntityGroupArray);
@@ -37,4 +41,6 @@ EXPORT_SHARED const char* GetCApiVersion(int32_t &size);
 EXPORT_SHARED const char* GetSDKVersion(int32_t &size);
 
 EXPORT_CLIENT void FreeRmlElementArray(alt::IRmlElement** rmlElementArray);
+EXPORT_CLIENT void FreeLocalVehicleArray(alt::ILocalVehicle** localVehicleArray);
+EXPORT_CLIENT void FreeLocalPedArray(alt::ILocalPed** localPedArray);
 EXPORT_CLIENT void* Win_GetTaskDialog();
