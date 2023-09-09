@@ -67,6 +67,18 @@ void VirtualEntity_DeleteStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity
     virtualEntity->DeleteStreamSyncedMetaData(key);
 }
 
+void VirtualEntity_SetMultipleStreamSyncedMetaData(alt::IVirtualEntity* virtualEntity, const char* keys[],
+    alt::MValueConst* values[], uint64_t size)
+{
+    std::unordered_map<std::string, alt::MValue> data = {};
+
+    for (uint64_t i = 0; i < size; i++) {
+        data[keys[i]] = values[i]->get()->Clone();
+    }
+
+    virtualEntity->SetMultipleStreamSyncedMetaData(data);
+}
+
 #endif
 
 CAPI_END()

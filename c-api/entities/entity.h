@@ -49,4 +49,6 @@ EXPORT_SERVER void Entity_AttachToEntity(alt::IEntity* entity, alt::IEntity* sec
 EXPORT_SERVER void Entity_AttachToEntity_BoneString(alt::IEntity* entity, alt::IEntity* secondEntity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot);
 EXPORT_SERVER void Entity_Detach(alt::IEntity* entity);
 
+EXPORT_SERVER void Entity_SetMultipleStreamSyncedMetaData(alt::IEntity* entity, const char* keys[], alt::MValueConst* values[], uint64_t size);
+
 EXPORT_SERVER uint32_t Entity_GetTimestamp(alt::IEntity* entity);
