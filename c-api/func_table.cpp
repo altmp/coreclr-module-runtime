@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 11702784623038717250UL;
+inline uint64_t capiHash = 5495345818198116222UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -147,6 +147,8 @@ inline uint64_t capiHashes[] = {
     6468969374274395248UL,
     15640072761507866309UL,
     15584342624887125948UL,
+    11791992986566737666UL,
+    14867651012864451746UL,
     2945049114999400896UL,
     12789007219848936500UL,
     9678094278922411472UL,
@@ -1029,6 +1031,7 @@ inline uint64_t capiHashes[] = {
     6799731000550763773UL,
     2104206599506704309UL,
     11801041189958959698UL,
+    1609631730170041411UL,
     5149247920306783181UL,
     7504892851555999456UL,
     4476532196756880454UL,
@@ -1837,6 +1840,8 @@ inline void* capiPointers[] = {
     (void*) Core_GetLocale,
     (void*) Core_GetLocalMeta,
     (void*) Core_GetLocalObjects,
+    (void*) Core_GetLocalPeds,
+    (void*) Core_GetLocalVehicles,
     (void*) Core_GetMapZoomDataByAlias,
     (void*) Core_GetMsPerGameMinute,
     (void*) Core_GetPedBonePos,
@@ -2719,6 +2724,7 @@ inline void* capiPointers[] = {
     (void*) Core_GetPlayers,
     (void*) Core_GetResource,
     (void*) Core_GetSyncedMetaData,
+    (void*) Core_GetTextLabels,
     (void*) Core_GetVehicles,
     (void*) Core_GetVersion,
     (void*) Core_GetVirtualEntities,

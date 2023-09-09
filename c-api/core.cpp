@@ -343,6 +343,18 @@ alt::IColShape** Core_GetColShapes(alt::ICore* core, uint64_t& size)
     return out;
 }
 
+alt::ITextLabel** Core_GetTextLabels(alt::ICore* core, uint64_t& size)
+{
+    auto textLabelsArray = core->GetBaseObjects(alt::IBaseObject::Type::TEXT_LABEL);
+    size = textLabelsArray.size();
+    auto out = new alt::ITextLabel*[size];
+    for (uint64_t i = 0; i < size; i++) {
+        out[i] = dynamic_cast<alt::ITextLabel*>(textLabelsArray[i]);
+    }
+
+    return out;
+}
+
 alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEntityGroup* group, vector3_t position,
                                               uint32_t streamingDistance, const char* keys[], alt::MValueConst* values[], uint64_t size, uint32_t &id)
 {
@@ -1734,6 +1746,30 @@ alt::ILocalObject** Core_GetLocalObjects(alt::ICore* core, uint32_t& size) {
     auto out = new alt::ILocalObject*[size];
     for (auto i = 0; i < size; i++) {
         out[i] = dynamic_cast<alt::ILocalObject*>(objects[i]);
+    }
+
+    return out;
+}
+
+alt::ILocalPed** Core_GetLocalPeds(alt::ICore* core, uint32_t& size)
+{
+    auto localPedsArray = core->GetBaseObjects(alt::IBaseObject::Type::LOCAL_PED);
+    size = localPedsArray.size();
+    auto out = new alt::ILocalPed * [size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = dynamic_cast<alt::ILocalPed*>(localPedsArray[i]);
+    }
+
+    return out;
+}
+
+alt::ILocalVehicle** Core_GetLocalVehicles(alt::ICore* core, uint32_t& size)
+{
+    auto localVehiclesArray = core->GetBaseObjects(alt::IBaseObject::Type::LOCAL_VEHICLE);
+    size = localVehiclesArray.size();
+    auto out = new alt::ILocalVehicle * [size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = dynamic_cast<alt::ILocalVehicle*>(localVehiclesArray[i]);
     }
 
     return out;
