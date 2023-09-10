@@ -48,9 +48,6 @@ namespace cache
         void SetAlpha(uint8_t alpha) override {}
         void SetTextureVariation(uint8_t textureVariation) override {}
         void SetLodDistance(uint16_t lodDistance) override {}
-
-        void SetMultipleSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
-        void SetMultipleStreamSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
 #endif
 
     };

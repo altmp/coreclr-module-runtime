@@ -788,9 +788,6 @@ namespace cache
         {
 	        return _brakeLevel;
         }
-
-        void SetMultipleSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
-        void SetMultipleStreamSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
 #endif
 #ifdef ALT_CLIENT_API
     	float _wheelSpeed;

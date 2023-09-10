@@ -69,9 +69,6 @@ namespace cache
         void SetCurrentWeapon(uint32_t weapon) override
         {
         }
-
-        void SetMultipleSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
-        void SetMultipleStreamSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
 #endif
     };
 }
