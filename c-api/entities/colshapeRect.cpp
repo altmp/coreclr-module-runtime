@@ -1,7 +1,7 @@
 #include "colshapeRect.h"
 
 #include "../utils/macros.h"
-#include "c-api/data/types.h"
+#include "../data/types.h"
 
 CAPI_START()
 
