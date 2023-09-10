@@ -926,6 +926,11 @@ uint16_t Vehicle_GetMaxGear(alt::IVehicle* vehicle) {
     return vehicle->GetMaxGear();
 }
 
+void Vehicle_SetSteeringAngle(alt::IVehicle* vehicle, float value)
+{
+    vehicle->SetSteeringAngle(value);
+}
+
 void Vehicle_SetMaxGear(alt::IVehicle* vehicle, uint16_t value) {
     vehicle->SetMaxGear(value);
 }
