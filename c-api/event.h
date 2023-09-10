@@ -19,9 +19,9 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED void Event_Cancel(alt::CEvent* event);
+EXPORT_SHARED void Event_Cancel(alt::CCancellableEvent* event);
 EXPORT_SERVER void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue);
-EXPORT_SHARED uint8_t Event_WasCancelled(alt::CEvent* event);
+EXPORT_SHARED uint8_t Event_WasCancelled(alt::CCancellableEvent* event);
 
 #ifdef ALT_CLIENT_API
 EXPORT_CLIENT void Event_SetTickDelegate(CSharpResourceImpl* resource, /** ClientEvents.TickModuleDelegate */ TickDelegate_t delegate);

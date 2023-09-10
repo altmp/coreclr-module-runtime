@@ -949,6 +949,8 @@ namespace cache
 	        return _suspensionHeight;
         }
         void SetSuspensionHeight(float value) override {}
+
+        void SetSteeringAngle(float value) override {}
 #endif
 
     };
