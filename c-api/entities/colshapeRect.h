@@ -8,7 +8,7 @@
 
 #include "cpp-sdk/SDK.h"
 #include "../utils/export.h"
-#include "c-api/data/types.h"
+#include "../data/types.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
