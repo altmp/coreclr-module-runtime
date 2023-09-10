@@ -100,6 +100,9 @@ namespace cache
 #endif
         }
 
+
+        void SetMultipleMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {};
+
     	std::string _name;
     	std::string GetName() const override {
     		return _name;

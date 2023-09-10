@@ -1,10 +1,12 @@
 #include "baseObject.h"
 #include "../mvalue.h"
 #include "../utils/macros.h"
+#include "../cache/CachedObject.h"
+#include "../cache/CachedPed.h"
+#include "../cache/CachedPlayer.h"
+#include "../cache/CachedVehicle.h"
 
 CAPI_START()
-
-using namespace alt;
 
 void BaseObject_SetMetaData(alt::IBaseObject* baseObject, const char* key, alt::MValueConst* value) {
     baseObject->SetMetaData(key, value->get()->Clone());
@@ -54,11 +56,35 @@ alt::MValueConst* BaseObject_GetSyncedMetaData(alt::IBaseObject* baseObject, con
     return AllocMValue(baseObject->GetSyncedMetaData(key));
 }
 
+void BaseObject_SetMultipleMetaData(alt::IBaseObject* baseObject, const char* keys[], alt::MValueConst* values[],
+    uint64_t size)
+{
+    std::unordered_map<std::string, alt::MValue> data = {};
+
+    for (uint64_t i = 0; i < size; i++) {
+        data[keys[i]] = values[i]->get()->Clone();
+    }
+
+    baseObject->SetMultipleMetaData(data);
+}
+
 #ifdef ALT_SERVER_API
 
 void BaseObject_SetSyncedMetaData(alt::IBaseObject* baseObject, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
     baseObject->SetSyncedMetaData(key, val->get()->Clone());
+}
+
+void BaseObject_SetMultipleSyncedMetaData(alt::IBaseObject* baseObject, const char* keys[], alt::MValueConst* values[],
+    uint64_t size)
+{
+    std::unordered_map<std::string, alt::MValue> data = {};
+
+    for (uint64_t i = 0; i < size; i++) {
+        data[keys[i]] = values[i]->get()->Clone();
+    }
+
+    baseObject->SetMultipleSyncedMetaData(data);
 }
 
 void BaseObject_DeleteSyncedMetaData(alt::IBaseObject* baseObject, const char* key) {

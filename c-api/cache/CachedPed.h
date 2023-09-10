@@ -23,6 +23,8 @@ namespace cache
         {
         }
 
+        void SetMultipleMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {};
+
         uint16_t _health;
 
         uint16_t GetHealth() const override

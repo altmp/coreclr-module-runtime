@@ -22,27 +22,9 @@
 
 CAPI_START()
 
-using alt::Array;
-
-void FreeUIntArray(alt::Array<uint32_t>* array) {
-    array->~Array<uint32_t>();
+void FreeUIntArray(std::vector<uint32_t>* array) {
+    array->clear();
 }
-
-/*void FreeStringViewArray(alt::Array<std::stringView>* array) {
-    array->~Array<std::stringView>();
-}*/
-
-/*void FreeStringArray(alt::Array<std::string>* array) {
-    array->~Array<std::string>();
-}*/
-
-/*void FreeMValueArray(alt::Array<alt::MValue>* array) {
-    array->~Array<alt::MValue>();
-}*/
-
-/*void FreePlayerPointerArray(alt::Array<alt::IPlayer*>* array) {
-    array->~Array<alt::IPlayer*>();
-}*/
 
 void FreeCharArray(char charArray[]) {
     delete[] charArray;
@@ -54,6 +36,11 @@ void FreeUInt32Array(uint32_t uInt32Array[]) {
 
 void FreeUInt8Array(uint8_t uInt8Array[]) {
     delete[] uInt8Array;
+}
+
+void FreeVector2Array(vector2_t* vector2Array)
+{
+    delete[] vector2Array;
 }
 
 void FreeVoidPointerArray(void* voidPointerArray[]) {

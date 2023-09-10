@@ -864,6 +864,126 @@ void Core_SetVoiceExternal(alt::ICore* core, const char* host, uint16_t port)
 {
     core->SetVoiceExternal(host, port);
 }
+
+uint16_t Core_GetMaxStreamingPeds(alt::ICore* core)
+{
+    return core->GetMaxStreamingPeds();
+}
+
+void Core_SetMaxStreamingPeds(alt::ICore* core, uint16_t limit)
+{
+    core->SetMaxStreamingPeds(limit);
+}
+
+uint16_t Core_GetMaxStreamingObjects(alt::ICore* core)
+{
+    return core->GetMaxStreamingObjects();
+}
+
+void Core_SetMaxStreamingObjects(alt::ICore* core, uint16_t limit)
+{
+    core->SetMaxStreamingObjects(limit);
+}
+
+uint16_t Core_GetMaxStreamingVehicles(alt::ICore* core)
+{
+    return core->GetMaxStreamingVehicles();
+}
+
+void Core_SetMaxStreamingVehicles(alt::ICore* core, uint16_t limit)
+{
+    core->SetMaxStreamingVehicles(limit);
+}
+
+uint8_t Core_GetStreamerThreadCount(alt::ICore* core)
+{
+    return core->GetStreamerThreadCount();
+}
+
+void Core_SetStreamerThreadCount(alt::ICore* core, uint8_t limit)
+{
+    core->SetStreamerThreadCount(limit);
+}
+
+uint32_t Core_GetStreamingTickRate(alt::ICore* core)
+{
+    return core->GetStreamingTickRate();
+}
+
+void Core_SetStreamingTickRate(alt::ICore* core, uint32_t limit)
+{
+    core->SetStreamingTickRate(limit);
+}
+
+uint32_t Core_GetStreamingDistance(alt::ICore* core)
+{
+    return core->GetStreamingDistance();
+}
+
+void Core_SetStreamingDistance(alt::ICore* core, uint32_t limit)
+{
+    core->SetStreamingDistance(limit);
+}
+
+uint8_t Core_GetMigrationThreadCount(alt::ICore* core)
+{
+    return core->GetMigrationThreadCount();
+}
+
+void Core_SetMigrationThreadCount(alt::ICore* core, uint8_t limit)
+{
+    core->SetMigrationThreadCount(limit);
+}
+
+uint8_t Core_GetSyncSendThreadCount(alt::ICore* core)
+{
+    return core->GetSyncSendThreadCount();
+}
+
+void Core_SetSyncSendThreadCount(alt::ICore* core, uint8_t limit)
+{
+    core->SetSyncSendThreadCount(limit);
+}
+
+uint8_t Core_GetSyncReceiveThreadCount(alt::ICore* core)
+{
+    return core->GetSyncReceiveThreadCount();
+}
+
+void Core_SetSyncReceiveThreadCount(alt::ICore* core, uint8_t limit)
+{
+    core->SetSyncReceiveThreadCount(limit);
+}
+
+uint32_t Core_GetMigrationTickRate(alt::ICore* core)
+{
+    return core->GetMigrationTickRate();
+}
+
+void Core_SetMigrationTickRate(alt::ICore* core, uint32_t limit)
+{
+    core->SetMigrationTickRate(limit);
+}
+
+uint32_t Core_GetColShapeTickRate(alt::ICore* core)
+{
+    return core->GetColShapeTickRate();
+}
+
+void Core_SetColShapeTickRate(alt::ICore* core, uint32_t limit)
+{
+    core->SetColShapeTickRate(limit);
+}
+
+uint32_t Core_GetMigrationDistance(alt::ICore* core)
+{
+    return core->GetMigrationDistance();
+}
+
+void Core_SetMigrationDistance(alt::ICore* core, uint32_t limit)
+{
+    core->SetMigrationDistance(limit);
+}
 #endif
 
 #ifdef ALT_CLIENT_API

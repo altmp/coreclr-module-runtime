@@ -67,5 +67,14 @@ namespace cache
         {
             return false;
         }
+
+        void SetMultipleMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
+
+#ifdef ALT_SERVER_API
+        void SetMultipleSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
+        void SetSyncedMetaData(const std::string& key, alt::MValue val) override {}
+        void DeleteSyncedMetaData(const std::string& key) override {}
+#endif
+
     };
 } // namespace alt

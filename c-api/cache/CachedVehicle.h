@@ -162,6 +162,8 @@ namespace cache
     		}
     	}
 
+        void SetMultipleMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {};
+
         alt::IPlayer* _driver;
         alt::IPlayer* GetDriver() const override {
 			return _driver;
@@ -947,6 +949,8 @@ namespace cache
 	        return _suspensionHeight;
         }
         void SetSuspensionHeight(float value) override {}
+
+        void SetSteeringAngle(float value) override {}
 #endif
 
     };

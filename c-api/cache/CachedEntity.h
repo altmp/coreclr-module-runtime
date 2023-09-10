@@ -210,6 +210,8 @@ namespace cache
         {
             return _timestamp;
         }
+
+        void SetMultipleStreamSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
 #endif
 
 

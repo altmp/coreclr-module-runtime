@@ -40,6 +40,8 @@ namespace cache
             return _lodDistance;
         }
 
+        void SetMultipleMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {};
+
 #ifdef ALT_SERVER_API
         void ActivatePhysics() override {}
         void PlaceOnGroundProperly() override {}

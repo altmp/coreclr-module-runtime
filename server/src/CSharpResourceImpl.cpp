@@ -7,7 +7,7 @@ CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt
     ResetDelegates();
     this->resource = resource;
     this->server = server;
-    this->invokers = new alt::Array<CustomInvoker*>();
+    this->invokers = {};
     this->coreClr = coreClr;
 }
 
@@ -68,6 +68,8 @@ void CSharpResourceImpl::ResetDelegates()
 
     OnClientRequestObjectDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnClientDeleteObjectDelegate = [](auto var, auto var2) {};
+
+    OnPlayerHealDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -728,6 +730,19 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                 target);
             break;
         }
+    case alt::CEvent::Type::PLAYER_HEAL:
+        {
+            auto playerHealEvent = dynamic_cast<const alt::CPlayerHealEvent*>(ev);
+
+            auto target = playerHealEvent->GetTarget();
+            if (target == nullptr) return;
+            OnPlayerHealDelegate(target,
+                                 playerHealEvent->GetOldHealth(),
+                                 playerHealEvent->GetNewHealth(),
+                                 playerHealEvent->GetOldArmour(),
+                                 playerHealEvent->GetNewArmour());
+            break;
+        }
     default:
         {
             std::cout << "Unhandled server event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -1231,6 +1246,11 @@ void CSharpResourceImpl_SetClientRequestObjectDelegate(CSharpResourceImpl* resou
 void CSharpResourceImpl_SetClientDeleteObjectDelegate(CSharpResourceImpl* resource, ClientDeleteObjectDelegate_t delegate)
 {
     resource->OnClientDeleteObjectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerHealDelegate(CSharpResourceImpl* resource, PlayerHealDelegate_t delegate)
+{
+    resource->OnPlayerHealDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)

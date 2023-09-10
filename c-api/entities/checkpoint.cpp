@@ -1,6 +1,7 @@
 #include "checkpoint.h"
 
 #include "../utils/macros.h"
+#include "../mvalue.h"
 
 CAPI_START()
 
@@ -108,6 +109,41 @@ uint8_t Checkpoint_IsStreamedIn(alt::ICheckpoint* checkpoint)
 uint32_t Checkpoint_GetGameID(alt::ICheckpoint* checkpoint)
 {
     return checkpoint->GetGameID();
+}
+#endif
+
+#ifdef ALT_SERVER_API
+uint8_t Checkpoint_HasStreamSyncedMetaData(alt::ICheckpoint* checkpoint, const char* key)
+{
+    return checkpoint->HasStreamSyncedMetaData(key);
+}
+
+alt::MValueConst* Checkpoint_GetStreamSyncedMetaData(alt::ICheckpoint* checkpoint, const char* key)
+{
+    return AllocMValue(checkpoint->GetStreamSyncedMetaData(key));
+}
+
+void Checkpoint_SetStreamSyncedMetaData(alt::ICheckpoint* checkpoint, const char* key, alt::MValueConst* val)
+{
+    if (val == nullptr) return;
+    checkpoint->SetStreamSyncedMetaData(key, val->get()->Clone());
+}
+
+void Checkpoint_SetMultipleStreamSyncedMetaData(alt::ICheckpoint* checkpoint, const char* keys[],
+    alt::MValueConst* values[], uint64_t size)
+{
+    std::unordered_map<std::string, alt::MValue> data = {};
+
+    for (uint64_t i = 0; i < size; i++) {
+        data[keys[i]] = values[i]->get()->Clone();
+    }
+
+    checkpoint->SetMultipleStreamSyncedMetaData(data);
+}
+
+void Checkpoint_DeleteStreamSyncedMetaData(alt::ICheckpoint* checkpoint, const char* key)
+{
+    checkpoint->DeleteStreamSyncedMetaData(key);
 }
 #endif
 

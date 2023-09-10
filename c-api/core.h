@@ -360,3 +360,37 @@ EXPORT_CLIENT void Core_GetAllWeaponData(alt::ICore* core, uint32_t weaponHashes
 
 EXPORT_SERVER void Core_SetVoiceExternalPublic(alt::ICore* core, const char* host, uint16_t port);
 EXPORT_SERVER void Core_SetVoiceExternal(alt::ICore* core, const char* host, uint16_t port);
+
+EXPORT_SERVER uint16_t Core_GetMaxStreamingPeds(alt::ICore* core);
+EXPORT_SERVER void Core_SetMaxStreamingPeds(alt::ICore* core, uint16_t limit);
+EXPORT_SERVER uint16_t Core_GetMaxStreamingObjects(alt::ICore* core);
+EXPORT_SERVER void Core_SetMaxStreamingObjects(alt::ICore* core, uint16_t limit);
+EXPORT_SERVER uint16_t Core_GetMaxStreamingVehicles(alt::ICore* core);
+EXPORT_SERVER void Core_SetMaxStreamingVehicles(alt::ICore* core, uint16_t limit);
+
+EXPORT_SERVER uint8_t Core_GetStreamerThreadCount(alt::ICore* core);
+EXPORT_SERVER void Core_SetStreamerThreadCount(alt::ICore* core, uint8_t limit);
+
+EXPORT_SERVER uint32_t Core_GetStreamingTickRate(alt::ICore* core);
+EXPORT_SERVER void Core_SetStreamingTickRate(alt::ICore* core, uint32_t limit);
+
+EXPORT_SERVER uint32_t Core_GetStreamingDistance(alt::ICore* core);
+EXPORT_SERVER void Core_SetStreamingDistance(alt::ICore* core, uint32_t limit);
+
+EXPORT_SERVER uint8_t Core_GetMigrationThreadCount(alt::ICore* core);
+EXPORT_SERVER void Core_SetMigrationThreadCount(alt::ICore* core, uint8_t limit);
+
+EXPORT_SERVER uint8_t Core_GetSyncSendThreadCount(alt::ICore* core);
+EXPORT_SERVER void Core_SetSyncSendThreadCount(alt::ICore* core, uint8_t limit);
+
+EXPORT_SERVER uint8_t Core_GetSyncReceiveThreadCount(alt::ICore* core);
+EXPORT_SERVER void Core_SetSyncReceiveThreadCount(alt::ICore* core, uint8_t limit);
+
+EXPORT_SERVER uint32_t Core_GetMigrationTickRate(alt::ICore* core);
+EXPORT_SERVER void Core_SetMigrationTickRate(alt::ICore* core, uint32_t limit);
+
+EXPORT_SERVER uint32_t Core_GetColShapeTickRate(alt::ICore* core);
+EXPORT_SERVER void Core_SetColShapeTickRate(alt::ICore* core, uint32_t limit);
+
+EXPORT_SERVER uint32_t Core_GetMigrationDistance(alt::ICore* core);
+EXPORT_SERVER void Core_SetMigrationDistance(alt::ICore* core, uint32_t limit);
