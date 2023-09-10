@@ -11,11 +11,11 @@ void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageV
 }
 #endif
 
-void Event_Cancel(alt::CEvent* event) {
+void Event_Cancel(alt::CCancellableEvent* event) {
     event->Cancel();
 }
 
-uint8_t Event_WasCancelled(alt::CEvent* event) {
+uint8_t Event_WasCancelled(alt::CCancellableEvent* event) {
     return event->WasCancelled();
 }
 
