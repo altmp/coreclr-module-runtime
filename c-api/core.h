@@ -311,6 +311,8 @@ EXPORT_CLIENT alt::ILocalObject* Core_CreateWeaponObject(alt::ICore* core, alt::
 EXPORT_CLIENT alt::ILocalObject** Core_GetLocalObjects(alt::ICore* core, uint32_t& size);
 EXPORT_CLIENT alt::ILocalObject** Core_GetWorldObjects(alt::ICore* core, uint32_t& size);
 EXPORT_CLIENT alt::ILocalObject** Core_GetWeaponObjects(alt::ICore* core, uint32_t& size);
+EXPORT_CLIENT alt::ILocalPed** Core_GetLocalPeds(alt::ICore* core, uint32_t& size);
+EXPORT_CLIENT alt::ILocalVehicle** Core_GetLocalVehicles(alt::ICore* core, uint32_t& size);
 
 EXPORT_CLIENT void Core_GetPedBonePos(alt::ICore* core, int32_t scriptId, uint16_t boneId, vector3_t& pos);
 
@@ -323,6 +325,7 @@ EXPORT_SHARED alt::IObject** Core_GetNetworkObjects(alt::ICore* core, uint64_t& 
 EXPORT_SHARED alt::ICheckpoint** Core_GetCheckpoints(alt::ICore* core, uint64_t& size);
 EXPORT_SHARED alt::IMarker** Core_GetMarkers(alt::ICore* core, uint64_t& size);
 EXPORT_SHARED alt::IColShape** Core_GetColShapes(alt::ICore* core, uint64_t& size);
+EXPORT_SHARED alt::ITextLabel** Core_GetTextLabels(alt::ICore* core, uint64_t& size);
 EXPORT_SERVER alt::IConnectionInfo** Core_GetConnectionInfos(alt::ICore* core, uint64_t& size);
 
 EXPORT_CLIENT uint64_t Core_GetWebViewCount(alt::ICore* core);
