@@ -13,6 +13,7 @@ EXPORT_SHARED void FreeUIntArray(std::vector<uint32_t> *array);
 EXPORT_SHARED void FreeCharArray(char charArray[]);
 EXPORT_SHARED void FreeUInt32Array(/** nint */ uint32_t* uInt32Array);
 EXPORT_SHARED void FreeUInt8Array(/** nint */ uint8_t* uInt8Array);
+EXPORT_SHARED void FreeVector2Array(/** nint */ vector2_t* vector2Array);
 EXPORT_SHARED void FreeVoidPointerArray(/** nint */void** voidPointerArray);
 EXPORT_SHARED void FreeWeaponTArray(/** nint */ weapon_t* weaponArray, uint32_t size);
 EXPORT_SHARED void FreeString(const char* string);

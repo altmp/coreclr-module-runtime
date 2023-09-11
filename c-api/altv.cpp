@@ -38,6 +38,11 @@ void FreeUInt8Array(uint8_t uInt8Array[]) {
     delete[] uInt8Array;
 }
 
+void FreeVector2Array(vector2_t* vector2Array)
+{
+    delete[] vector2Array;
+}
+
 void FreeVoidPointerArray(void* voidPointerArray[]) {
     delete[] voidPointerArray;
 }
