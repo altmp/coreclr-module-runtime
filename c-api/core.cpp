@@ -354,7 +354,11 @@ alt::IVirtualEntity* Core_CreateVirtualEntity(alt::ICore* core, alt::IVirtualEnt
     std::unordered_map<std::string, alt::MValue> data = {};
 
     for (uint64_t i = 0; i < size; i++) {
-        data[keys[i]] = values[i]->get()->Clone();
+        if (values[i] == nullptr || values[i]->get() == nullptr) {
+            data[keys[i]] = core->CreateMValueNil();
+        } else {
+            data[keys[i]] = values[i]->get()->Clone();
+        }
     }
 
     auto virtualEntity = core->CreateVirtualEntity(group, pos, streamingDistance, data);

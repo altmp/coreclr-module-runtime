@@ -135,6 +135,7 @@ void Checkpoint_SetMultipleStreamSyncedMetaData(alt::ICheckpoint* checkpoint, co
     std::unordered_map<std::string, alt::MValue> data = {};
 
     for (uint64_t i = 0; i < size; i++) {
+        if (values[i]->get() == nullptr) continue;
         data[keys[i]] = values[i]->get()->Clone();
     }
 
