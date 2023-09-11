@@ -82,13 +82,13 @@ typedef void (* TickDelegate_t)();
 typedef void (* ServerEventDelegate_t)(const char* name, alt::MValueConst** args, uint64_t size);
 
 typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type,
-                                      bool state);
+                                      uint8_t state);
 
 typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, alt::MValueConst** args, uint64_t);
 
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
 
-typedef void (* PlayerConnectDeniedDelegate_t)(alt::CPlayerConnectDeniedEvent::Reason reason, const char* name, const char* ip, uint64_t passwortHash, bool isDebug, const char* branch, uint32_t majorVersion, const char* cdnUrl, int64_t discordId);
+typedef void (* PlayerConnectDeniedDelegate_t)(alt::CPlayerConnectDeniedEvent::Reason reason, const char* name, const char* ip, uint64_t passwortHash, uint8_t isDebug, const char* branch, uint32_t majorVersion, const char* cdnUrl, int64_t discordId);
 
 typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
 
@@ -122,7 +122,7 @@ typedef void (* MetaChangeDelegate_t)(void* entity, alt::IBaseObject::Type type,
                                       alt::MValueConst* value);
 
 typedef void (* ColShapeDelegate_t)(void* colShape, void* entity, alt::IBaseObject::Type baseObjectType,
-                                    bool state);
+                                    uint8_t state);
 
 typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, alt::IPlayer* source, void* target,
                                         alt::IBaseObject::Type targetBaseObjectType,
@@ -155,9 +155,9 @@ typedef void (* VehicleDetachDelegate_t)(const alt::CEvent* event, alt::IVehicle
 typedef void (* VehicleDamageDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, void* attacker, alt::IBaseObject::Type attackerBaseObjectType,
     uint32_t bodyHealthDamage, uint32_t additionalBodyHealthDamage, uint32_t engineHealthDamage, uint32_t petrolTankDamage, uint32_t weaponHash);
 
-typedef void (* VehicleHornDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, alt::IPlayer* reporter, bool toggle);
+typedef void (* VehicleHornDelegate_t)(const alt::CEvent* event, alt::IVehicle* target, alt::IPlayer* reporter, uint8_t toggle);
 
-typedef void (* VehicleSirenDelegate_t)( alt::IVehicle* target, bool toggle);
+typedef void (* VehicleSirenDelegate_t)( alt::IVehicle* target, uint8_t toggle);
 
 typedef void (* ConnectionQueueAddDelegate_t)(alt::IConnectionInfo* connectionInfo);
 
