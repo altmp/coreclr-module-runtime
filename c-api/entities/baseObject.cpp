@@ -62,6 +62,7 @@ void BaseObject_SetMultipleMetaData(alt::IBaseObject* baseObject, const char* ke
     std::unordered_map<std::string, alt::MValue> data = {};
 
     for (uint64_t i = 0; i < size; i++) {
+        if (values[i]->get() == nullptr) continue;
         data[keys[i]] = values[i]->get()->Clone();
     }
 
@@ -81,6 +82,7 @@ void BaseObject_SetMultipleSyncedMetaData(alt::IBaseObject* baseObject, const ch
     std::unordered_map<std::string, alt::MValue> data = {};
 
     for (uint64_t i = 0; i < size; i++) {
+        if (values[i]->get() == nullptr) continue;
         data[keys[i]] = values[i]->get()->Clone();
     }
 
