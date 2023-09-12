@@ -328,7 +328,8 @@ public:
 
     PlayerHealDelegate_t OnPlayerHealDelegate = nullptr;
 
-    std::vector<CustomInvoker*>* invokers;
+    std::vector<CustomInvoker*> invokers;
+    std::mutex invokersLock = {};
     CoreClr* coreClr;
     alt::ICore* server;
     alt::IResource* resource;
