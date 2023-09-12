@@ -30,7 +30,8 @@ public:
     void OnCreateBaseObject(alt::IBaseObject* object) override;
     void OnRemoveBaseObject(alt::IBaseObject* object) override;
 
-    std::vector<CustomInvoker*>* invokers;
+    std::vector<CustomInvoker*> invokers;
+    std::mutex invokersLock = {};
 
     TickDelegate_t OnTickDelegate = nullptr;
     ServerEventDelegate_t OnServerEventDelegate = nullptr;
