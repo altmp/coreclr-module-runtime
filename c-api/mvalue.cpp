@@ -521,23 +521,16 @@ uint8_t MValueConst_GetType(alt::MValueConst *mValueConst) {
     return (uint8_t) mValue->GetType();
 }
 
-CustomInvoker *Invoker_Create(CSharpResourceImpl *resource, MValueFunctionCallback val) {
+CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
-    resource->invokers->push_back(invoker);
+    std::unique_lock lock(resource->invokersLock);
+    resource->invokers.push_back(invoker);
     return invoker;
 }
 
-void Invoker_Destroy(CSharpResourceImpl *resource, CustomInvoker *val) {
-    std::vector<CustomInvoker*>* newInvokers = {};
-    for (alt::Size i = 0, length = resource->invokers->size(); i < length; i++) {
-        auto invoker = (*resource->invokers)[i];
-        if (invoker != val) {
-            newInvokers->push_back(invoker);
-        }
-    }
-    std::vector<CustomInvoker *> *oldInvokers = resource->invokers;
-    resource->invokers = newInvokers;
-    delete oldInvokers;
+void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val) {
+    std::unique_lock lock(resource->invokersLock);
+    resource->invokers.erase(std::remove(resource->invokers.begin(), resource->invokers.end(), val), resource->invokers.end());
 }
 
 
