@@ -79,9 +79,11 @@ const char* ConnectionInfo_GetSocialName(alt::IConnectionInfo* connectionInfo, i
     return AllocateString(connectionInfo->GetSocialName(), size);
 }
 
-const char* ConnectionInfo_GetCloudAuthHash(alt::IConnectionInfo* connectionInfo, int32_t& size)
+void ConnectionInfo_RequestCloudID(alt::IConnectionInfo* connectionInfo, RequestAuthCallback_t delegate)
 {
-    return AllocateString(connectionInfo->GetCloudAuthHash(), size);
+    connectionInfo->RequestCloudID([delegate](uint8_t ok, const std::string& result) {
+        delegate(ok, result.c_str());
+    });
 }
 
 uint8_t ConnectionInfo_IsAccepted(alt::IConnectionInfo* connectionInfo)
