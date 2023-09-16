@@ -73,8 +73,7 @@ namespace cache
 										_dlcProps(13, { 0, 0, 0 }),
 										_headOverlays(13, { 0, 0, 0, 0, 0 }),
 										_faceFeatures(20, 0.0f),
-										_socialClubName(base->GetSocialClubName()),
-										_cloudAuthHash(base->GetCloudAuthHash())
+										_socialClubName(base->GetSocialClubName())
 #elif ALT_CLIENT_API
 										_talking(base->IsTalking()),
 										_micLevel(base->GetMicLevel()),
@@ -510,11 +509,6 @@ namespace cache
     	std::string _socialClubName;
     	std::string GetSocialClubName() const override {
     		return _socialClubName;
-    	}
-
-    	std::string _cloudAuthHash;
-    	std::string GetCloudAuthHash() const override {
-    		return _cloudAuthHash;
     	}
 
     	std::vector<std::pair<IEntity*, int32_t>> GetStreamedEntities() const override { return {}; }
