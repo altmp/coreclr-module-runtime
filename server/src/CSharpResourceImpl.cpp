@@ -70,6 +70,8 @@ void CSharpResourceImpl::ResetDelegates()
     OnClientDeleteObjectDelegate = [](auto var, auto var2) {};
 
     OnPlayerHealDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+
+    OnGivePedScriptedTaskDelegate = [](auto var, auto var2, auto var3) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -743,6 +745,20 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                                  playerHealEvent->GetNewArmour());
             break;
         }
+    case alt::CEvent::Type::GIVE_PED_SCRIPTED_TASK:
+        {
+            auto givePedScriptedTaskEvent = dynamic_cast<const alt::CGivePedScriptedTaskEvent*>(ev);
+
+            auto target = givePedScriptedTaskEvent->GetTarget();
+            auto source = givePedScriptedTaskEvent->GetSource();
+
+            if (target == nullptr) return;
+            if (source == nullptr) return;
+
+            OnGivePedScriptedTaskDelegate(source, target, givePedScriptedTaskEvent->GetTaskType());
+
+            break;
+        }
     default:
         {
             std::cout << "Unhandled server event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -1251,6 +1267,11 @@ void CSharpResourceImpl_SetClientDeleteObjectDelegate(CSharpResourceImpl* resour
 void CSharpResourceImpl_SetPlayerHealDelegate(CSharpResourceImpl* resource, PlayerHealDelegate_t delegate)
 {
     resource->OnPlayerHealDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetGivePedScriptedTaskDelegate(CSharpResourceImpl* resource, GivePedScriptedTaskDelegate_t delegate)
+{
+    resource->OnGivePedScriptedTaskDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)
