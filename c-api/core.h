@@ -114,7 +114,7 @@ EXPORT_SERVER void Core_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseOb
 EXPORT_SERVER void Core_DestroyCheckpoint(alt::ICore* server, alt::ICheckpoint* baseObject);
 EXPORT_SERVER void Core_DestroyVoiceChannel(alt::ICore* server, alt::IVoiceChannel* baseObject);
 EXPORT_SERVER void Core_DestroyColShape(alt::ICore* server, alt::IColShape* baseObject);
-EXPORT_SERVER int32_t Core_GetNetTime(alt::ICore* server);
+EXPORT_SHARED int32_t Core_GetNetTime(alt::ICore* server);
 EXPORT_SERVER const char* Core_GetRootDirectory(alt::ICore* server, int32_t& size);
 EXPORT_SERVER void Core_StartResource(alt::ICore* server, const char* text);
 EXPORT_SERVER void Core_StopResource(alt::ICore* server, const char* text);

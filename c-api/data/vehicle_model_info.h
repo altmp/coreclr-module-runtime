@@ -3,7 +3,8 @@
 #include "cpp-sdk/ICore.h"
 #include "bone_info.h"
 
-struct ClrVehicleModelInfo {
+struct ClrVehicleModelInfo
+{
     char* title = nullptr;
     alt::VehicleModelInfo::Type modelType;
     uint8_t wheelsCount;
@@ -24,26 +25,28 @@ struct ClrVehicleModelInfo {
     uint32_t boneSize;
 
     uint8_t canAttachCars;
+    uint32_t handlingNameHash;
 
     ClrVehicleModelInfo() = default;
 
     ClrVehicleModelInfo(alt::VehicleModelInfo info) :
-            modelType(info.modelType),
-            wheelsCount(info.wheelsCount),
-            hasArmoredWindows(info.hasArmoredWindows),
-            primaryColor(info.primaryColor),
-            secondaryColor(info.secondaryColor),
-            pearlColor(info.pearlColor),
-            wheelsColor(info.wheelsColor),
-            interiorColor(info.interiorColor),
-            dashboardColor(info.dashboardColor),
-            extras(info.extras),
-            defaultExtras(info.defaultExtras),
-            hasAutoAttachTrailer(info.hasAutoAttachTrailer),
-            canAttachCars(info.canAttachCars){
-
+        modelType(info.modelType),
+        wheelsCount(info.wheelsCount),
+        hasArmoredWindows(info.hasArmoredWindows),
+        primaryColor(info.primaryColor),
+        secondaryColor(info.secondaryColor),
+        pearlColor(info.pearlColor),
+        wheelsColor(info.wheelsColor),
+        interiorColor(info.interiorColor),
+        dashboardColor(info.dashboardColor),
+        extras(info.extras),
+        defaultExtras(info.defaultExtras),
+        hasAutoAttachTrailer(info.hasAutoAttachTrailer),
+        canAttachCars(info.canAttachCars),
+        handlingNameHash(info.handlingNameHash)
+    {
         size_t modkitsSize = std::size(info.modkits);
-        for(size_t i = 0; i < modkitsSize; i++)
+        for (size_t i = 0; i < modkitsSize; i++)
         {
             modkits[i] = info.modkits[i] != 0xFFFF;
         }
@@ -54,12 +57,14 @@ struct ClrVehicleModelInfo {
         const auto vehModelBones = info.bones;
         boneSize = vehModelBones.size();
         bones = new ClrBoneInfo[boneSize];
-        for (uint32_t i = 0; i < boneSize; i++) {
+        for (uint32_t i = 0; i < boneSize; i++)
+        {
             bones[i] = ClrBoneInfo(vehModelBones[i]);
         }
     }
 
-    ~ClrVehicleModelInfo() {
+    ~ClrVehicleModelInfo()
+    {
         delete[] title;
     }
 };

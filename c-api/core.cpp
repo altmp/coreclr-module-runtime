@@ -468,6 +468,10 @@ alt::IColShape* Core_CreateColShapePolygon(alt::ICore* core, float minZ, float m
     return colShape;
 }
 
+int32_t Core_GetNetTime(alt::ICore* core) {
+    return core->GetNetTime();
+}
+
 #ifdef ALT_SERVER_API
 uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
     return core->SubscribeCommand(cmd, cb);
@@ -683,10 +687,6 @@ void Core_DestroyVoiceChannel(alt::ICore* core, alt::IVoiceChannel* baseObject) 
 
 void Core_DestroyColShape(alt::ICore* core, alt::IColShape* baseObject) {
     return core->DestroyBaseObject(baseObject);
-}
-
-int32_t Core_GetNetTime(alt::ICore* core) {
-    return core->GetNetTime();
 }
 
 const char* Core_GetRootDirectory(alt::ICore* core, int32_t& size) {
