@@ -71,7 +71,7 @@ void CSharpResourceImpl::ResetDelegates()
 
     OnPlayerHealDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
 
-    OnGivePedScriptedTaskDelegate = [](auto var, auto var2, auto var3) {};
+    OnGivePedScriptedTaskDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -755,7 +755,7 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             if (target == nullptr) return;
             if (source == nullptr) return;
 
-            OnGivePedScriptedTaskDelegate(source, target, givePedScriptedTaskEvent->GetTaskType());
+            OnGivePedScriptedTaskDelegate(givePedScriptedTaskEvent, source, target, givePedScriptedTaskEvent->GetTaskType());
 
             break;
         }
