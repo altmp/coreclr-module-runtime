@@ -195,6 +195,8 @@ typedef void (* ClientDeleteObjectDelegate_t)(const alt::CEvent* event, alt::IPl
 
 typedef void (* PlayerHealDelegate_t)(alt::IPlayer* target, uint16_t oldHealth, uint16_t newHealth, uint16_t oldArmour, uint16_t newArmour);
 
+typedef void (* GivePedScriptedTaskDelegate_t)(alt::IPlayer* source, alt::IPed* target, int32_t taskType);
+
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
 
@@ -327,6 +329,8 @@ public:
     ClientDeleteObjectDelegate_t OnClientDeleteObjectDelegate = nullptr;
 
     PlayerHealDelegate_t OnPlayerHealDelegate = nullptr;
+
+    GivePedScriptedTaskDelegate_t OnGivePedScriptedTaskDelegate = nullptr;
 
     std::vector<CustomInvoker*> invokers;
     std::mutex invokersLock = {};
@@ -536,4 +540,6 @@ EXPORT void CSharpResourceImpl_SetClientRequestObjectDelegate(CSharpResourceImpl
 
 EXPORT void CSharpResourceImpl_SetClientDeleteObjectDelegate(CSharpResourceImpl* resource, ClientDeleteObjectDelegate_t delegate);
 
-EXPORT void CSharpResourceImpl_SetPlayerHealDelegate(CSharpResourceImpl* resource, PlayerHealDelegate_t delegate);
+EXPORT void CSharpResourceImpl_SetPlayerHealDelegate(CSharpResourceImpl* resource, PlayerHealDelegate_t delegate); 
+
+EXPORT void CSharpResourceImpl_SetGivePedScriptedTaskDelegate(CSharpResourceImpl* resource, GivePedScriptedTaskDelegate_t delegate);
