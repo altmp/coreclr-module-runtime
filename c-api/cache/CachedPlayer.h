@@ -599,6 +599,11 @@ namespace cache
         void RemoveFilter() override {}
         alt::IAudioFilter* GetFilter() const override { return nullptr; }
 
+        std::string _taskData;
+        std::string GetTaskData() const override {
+            return _taskData;
+        }
+
 #endif
 
     };
