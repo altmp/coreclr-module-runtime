@@ -601,6 +601,11 @@ namespace cache
     	
         std::string GetTaskData() const override { return ""; }
 
+        std::string _taskData;
+        std::string GetTaskData() const override {
+            return _taskData;
+        }
+
 #endif
 
     };
