@@ -14,40 +14,40 @@ namespace cache
     public:
 
         CachedPlayer(IPlayer* base) : CachedBaseObject(base), CachedWorldObject(base), CachedEntity(base),
-    									_name(base->GetName()),
-										_health(base->GetHealth()),
-										_maxHealth(base->GetMaxHealth()),
-										_currentWeapon(base->GetCurrentWeapon()),
-										_dead(base->IsDead()),
-										_jumping(base->IsJumping()),
-										_inRagdoll(base->IsInRagdoll()),
-										_aiming(base->IsAiming()),
-										_shooting(base->IsShooting()),
-										_reloading(base->IsReloading()),
-    									_enteringVehicle(base->IsEnteringVehicle()),
-    									_leavingVehicle(base->IsLeavingVehicle()),
-    									_onLadder(base->IsOnLadder()),
-    									_inMelee(base->IsInMelee()),
-    									_inCover(base->IsInCover()),
-										_armour(base->GetArmour()),
-										_maxArmour(base->GetMaxArmour()),
-										_moveSpeed(base->GetMoveSpeed()),
-										_aimPos(base->GetAimPos()),
-										_headRotation(base->GetHeadRotation()),
-										_inVehicle(base->IsInVehicle()),
-										_vehicle(base->GetVehicle()),
-										_seat(base->GetSeat()),
-										_entityAimingAt(base->GetEntityAimingAt()),
-										_entityAimOffset(base->GetEntityAimOffset()),
-										_flashlightActive(base->IsFlashlightActive()),
-										_currentAnimationDict(base->GetCurrentAnimationDict()),
-										_currentAnimationName(base->GetCurrentAnimationName()),
-										_spawned(base->IsSpawned()),
-										_forwardSpeed(base->GetForwardSpeed()),
-										_strafeSpeed(base->GetStrafeSpeed()),
-    									_parachuting(base->IsParachuting()),
+                                      _name(base->GetName()),
+                                      _health(base->GetHealth()),
+                                      _maxHealth(base->GetMaxHealth()),
+    	                              _currentWeaponTintIndex(base->GetCurrentWeaponTintIndex()),
+                                      _currentWeapon(base->GetCurrentWeapon()),
+                                      _dead(base->IsDead()),
+                                      _jumping(base->IsJumping()),
+                                      _inRagdoll(base->IsInRagdoll()),
+                                      _aiming(base->IsAiming()),
+                                      _shooting(base->IsShooting()),
+                                      _reloading(base->IsReloading()),
+                                      _enteringVehicle(base->IsEnteringVehicle()),
+                                      _leavingVehicle(base->IsLeavingVehicle()),
+                                      _onLadder(base->IsOnLadder()),
+                                      _inMelee(base->IsInMelee()),
+                                      _inCover(base->IsInCover()),
+                                      _armour(base->GetArmour()),
+                                      _maxArmour(base->GetMaxArmour()),
+                                      _moveSpeed(base->GetMoveSpeed()),
+                                      _aimPos(base->GetAimPos()),
+                                      _headRotation(base->GetHeadRotation()),
+                                      _inVehicle(base->IsInVehicle()),
+                                      _vehicle(base->GetVehicle()),
+                                      _seat(base->GetSeat()),
+                                      _entityAimingAt(base->GetEntityAimingAt()),
+                                      _entityAimOffset(base->GetEntityAimOffset()),
+                                      _flashlightActive(base->IsFlashlightActive()), _superJumpEnabled(false), _crouching(false), _stealthy(false),
+                                      _currentAnimationDict(base->GetCurrentAnimationDict()),
+                                      _currentAnimationName(base->GetCurrentAnimationName()),
+                                      _spawned(base->IsSpawned()),
+                                      _forwardSpeed(base->GetForwardSpeed()),
+                                      _strafeSpeed(base->GetStrafeSpeed()),
+                                      _parachuting(base->IsParachuting()),
 #ifdef ALT_SERVER_API
-										_currentWeaponTintIndex(base->GetCurrentWeaponTintIndex()),
 										_superJumpEnabled(base->IsSuperJumpEnabled()),
 										_crouching(base->IsCrouching()),
 										_stealthy(base->IsStealthy()),
@@ -75,10 +75,10 @@ namespace cache
 										_faceFeatures(20, 0.0f),
 										_socialClubName(base->GetSocialClubName())
 #elif ALT_CLIENT_API
-										_talking(base->IsTalking()),
-										_micLevel(base->GetMicLevel()),
-										_spatialVolume(base->GetSpatialVolume()),
-										_nonSpatialVolume(base->GetNonSpatialVolume())
+                                      _talking(base->IsTalking()),
+                                      _micLevel(base->GetMicLevel()),
+                                      _spatialVolume(base->GetSpatialVolume()),
+                                      _nonSpatialVolume(base->GetNonSpatialVolume())
 #endif
         {
 #ifdef ALT_SERVER_API
@@ -598,6 +598,8 @@ namespace cache
         void AddFilter(alt::IAudioFilter* filter) override {}
         void RemoveFilter() override {}
         alt::IAudioFilter* GetFilter() const override { return nullptr; }
+    	
+        std::string GetTaskData() const override { return ""; }
 
 #endif
 
