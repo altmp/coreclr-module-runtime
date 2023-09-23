@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 10494575567167650847UL;
+inline uint64_t capiHash = 3088291357268716232UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -531,6 +531,7 @@ inline uint64_t capiHashes[] = {
     15449156962697427469UL,
     3333598534924196965UL,
     1924883508304421034UL,
+    15465454396501521389UL,
     2228995248668686637UL,
     14799984366573861130UL,
     13836779891982146248UL,
@@ -2254,6 +2255,7 @@ inline void* capiPointers[] = {
     (void*) Player_GetMicLevel,
     (void*) Player_GetNonSpatialVolume,
     (void*) Player_GetSpatialVolume,
+    (void*) Player_GetTaskData,
     (void*) Player_IsTalking,
     (void*) Player_RemoveFilter,
     (void*) Player_SetNonSpatialVolume,

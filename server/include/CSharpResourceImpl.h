@@ -86,14 +86,14 @@ typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity
 
 typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, alt::MValueConst** args, uint64_t);
 
-typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, uint16_t playerId, const char* reason);
+typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, const char* reason);
 
 typedef void (* PlayerConnectDeniedDelegate_t)(alt::CPlayerConnectDeniedEvent::Reason reason, const char* name, const char* ip, uint64_t passwortHash, uint8_t isDebug, const char* branch, uint32_t majorVersion, const char* cdnUrl, int64_t discordId);
 
 typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
 
 typedef void (* PlayerDamageDelegate_t)(alt::IPlayer* player, void* attacker,
-                                        alt::IBaseObject::Type attackerType, uint16_t attackerId, uint32_t weapon,
+                                        alt::IBaseObject::Type attackerType, uint32_t weapon,
                                         uint16_t healthDamage, uint16_t armourDamage);
 
 typedef void (* PlayerDeathDelegate_t)(alt::IPlayer* player, void* killer, alt::IBaseObject::Type killerType,
@@ -196,6 +196,18 @@ typedef void (* ClientDeleteObjectDelegate_t)(const alt::CEvent* event, alt::IPl
 typedef void (* PlayerHealDelegate_t)(alt::IPlayer* target, uint16_t oldHealth, uint16_t newHealth, uint16_t oldArmour, uint16_t newArmour);
 
 typedef void (* GivePedScriptedTaskDelegate_t)(const alt::CEvent* event, alt::IPlayer* source, alt::IPed* target, uint32_t taskType);
+
+typedef void (* PedDamageDelegate_t)(alt::IPed* target, void* attacker,
+                                        alt::IBaseObject::Type attackerType, uint32_t weapon,
+                                        uint16_t healthDamage, uint16_t armourDamage);
+
+typedef void (* PedDeathDelegate_t)(alt::IPed* target, void* killer, alt::IBaseObject::Type killerType,
+                                       uint32_t weapon);
+
+typedef void (* PedHealDelegate_t)(alt::IPed* target, uint16_t oldHealth, uint16_t newHealth, uint16_t oldArmour, uint16_t newArmour);
+
+typedef void (* PlayerStartTalkingDelegate_t)(alt::IPlayer* player);
+typedef void (* PlayerStopTalkingDelegate_t)(alt::IPlayer* player);
 
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
@@ -331,6 +343,13 @@ public:
     PlayerHealDelegate_t OnPlayerHealDelegate = nullptr;
 
     GivePedScriptedTaskDelegate_t OnGivePedScriptedTaskDelegate = nullptr;
+
+    PedDamageDelegate_t OnPedDamageDelegate = nullptr;
+    PedDeathDelegate_t OnPedDeathDelegate = nullptr;
+    PedHealDelegate_t OnPedHealDelegate = nullptr;
+
+    PlayerStartTalkingDelegate_t OnPlayerStartTalkingDelegate = nullptr;
+    PlayerStopTalkingDelegate_t OnPlayerStopTalkingDelegate = nullptr;
 
     std::vector<CustomInvoker*> invokers;
     std::mutex invokersLock = {};
@@ -543,3 +562,12 @@ EXPORT void CSharpResourceImpl_SetClientDeleteObjectDelegate(CSharpResourceImpl*
 EXPORT void CSharpResourceImpl_SetPlayerHealDelegate(CSharpResourceImpl* resource, PlayerHealDelegate_t delegate);
 
 EXPORT void CSharpResourceImpl_SetGivePedScriptedTaskDelegate(CSharpResourceImpl* resource, GivePedScriptedTaskDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPedDamageDelegate(CSharpResourceImpl* resource, PedDamageDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPedDeathDelegate(CSharpResourceImpl* resource, PedDeathDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPedHealDelegate(CSharpResourceImpl* resource, PedHealDelegate_t delegate);
+
+EXPORT void CSharpResourceImpl_SetPlayerStartTalkingDelegate(CSharpResourceImpl* resource, PlayerStartTalkingDelegate_t delegate);
+EXPORT void CSharpResourceImpl_SetPlayerStopTalkingDelegate(CSharpResourceImpl* resource, PlayerStopTalkingDelegate_t delegate);

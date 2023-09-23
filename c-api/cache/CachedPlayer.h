@@ -40,7 +40,7 @@ namespace cache
                                       _seat(base->GetSeat()),
                                       _entityAimingAt(base->GetEntityAimingAt()),
                                       _entityAimOffset(base->GetEntityAimOffset()),
-                                      _flashlightActive(base->IsFlashlightActive()), _superJumpEnabled(false), _crouching(false), _stealthy(false),
+                                      _flashlightActive(base->IsFlashlightActive()),
                                       _currentAnimationDict(base->GetCurrentAnimationDict()),
                                       _currentAnimationName(base->GetCurrentAnimationName()),
                                       _spawned(base->IsSpawned()),
@@ -598,8 +598,6 @@ namespace cache
         void AddFilter(alt::IAudioFilter* filter) override {}
         void RemoveFilter() override {}
         alt::IAudioFilter* GetFilter() const override { return nullptr; }
-    	
-        std::string GetTaskData() const override { return ""; }
 
         std::string _taskData;
         std::string GetTaskData() const override {
