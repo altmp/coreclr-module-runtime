@@ -1000,6 +1000,16 @@ void Core_SetMigrationDistance(alt::ICore* core, uint32_t limit)
 {
     core->SetMigrationDistance(limit);
 }
+
+void Core_TriggerClientRPCAnswer(alt::ICore* core, alt::IPlayer* target, uint16_t answerID, alt::MValueConst* args[],
+    int size, const char* error)
+{
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    core->TriggerClientRPCAnswer(target, answerID, mValues, error);
+}
 #endif
 
 #ifdef ALT_CLIENT_API
@@ -1997,6 +2007,15 @@ void Core_GetAllWeaponData(alt::ICore* core, uint32_t weaponHashes[], uint64_t s
     for (uint64_t i = 0; i < size; i++) {
         weaponHashes[i] = weaponData[i]->GetNameHash();
     }
+}
+
+uint16_t Core_TriggerServerRPCEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size)
+{
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    return core->TriggerServerRPCEvent(ev, mValues);
 }
 #endif
 

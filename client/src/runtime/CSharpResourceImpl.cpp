@@ -586,6 +586,24 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                  size);
             break;
         }
+    case alt::CEvent::Type::SERVER_SCRIPT_RPC_ANSWER_EVENT:
+        {
+            auto serverScriptRPCAnswerEvent = dynamic_cast<const alt::CServerScriptRPCAnswerEvent*>(ev);
+
+            auto answers = serverScriptRPCAnswerEvent->GetAnswer();
+            auto size = answers.size();
+            auto constAnswers = new alt::MValueConst*[size];
+
+            for (uint64_t i = 0; i < size; i++)
+            {
+                constAnswers[i] = &answers[i];
+            }
+            OnServerScriptRPCAnswerDelegate(serverScriptRPCAnswerEvent->GetAnswerID(),
+                                            constAnswers,
+                                            size,
+                                            serverScriptRPCAnswerEvent->GetAnswerError().c_str());
+            break;
+        }
     default:
         {
             std::cout << "Unhandled client event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -1012,4 +1030,6 @@ void CSharpResourceImpl::ResetDelegates() {
     OnPlayerBulletHitDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 
     OnVoiceConnectionDelegate = [](auto var) {};
+
+    OnServerScriptRPCAnswerDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 }

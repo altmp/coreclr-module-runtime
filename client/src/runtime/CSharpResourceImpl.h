@@ -102,6 +102,8 @@ public:
 
     VoiceConnectionDelegate_t OnVoiceConnectionDelegate = nullptr;
 
+    ServerScriptRPCAnswerDelegate_t OnServerScriptRPCAnswerDelegate = nullptr;
+
 
     bool MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)
     {

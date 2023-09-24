@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 3088291357268716232UL;
+inline uint64_t capiHash = 11229478147648242923UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -245,6 +245,7 @@ inline uint64_t capiHashes[] = {
     1817218062913323235UL,
     4092140335578989631UL,
     718150788563346996UL,
+    5920144219377072122UL,
     3268039739443301173UL,
     17753040748478874447UL,
     5389506501733691988UL,
@@ -286,6 +287,7 @@ inline uint64_t capiHashes[] = {
     8121512912272945641UL,
     1513529985252499227UL,
     5521055548998327457UL,
+    13554094634858443749UL,
     8576321635222028243UL,
     12745100726667735891UL,
     11607888672861240667UL,
@@ -1374,6 +1376,7 @@ inline uint64_t capiHashes[] = {
     4821179867491879744UL,
     9578627964183564598UL,
     14557546483922608997UL,
+    9224620724544415249UL,
     4092140335578989631UL,
     17237210604041123822UL,
     11965009764904998252UL,
@@ -1390,6 +1393,9 @@ inline uint64_t capiHashes[] = {
     6004628797499736605UL,
     12798418058428333585UL,
     8026011842118229214UL,
+    9846613369628943706UL,
+    2674464925851684396UL,
+    5065438074644693875UL,
     18440396865533386791UL,
     2348810001298180138UL,
     13016512038826983106UL,
@@ -1969,6 +1975,7 @@ inline void* capiPointers[] = {
     (void*) Core_ToggleVoiceInput,
     (void*) Core_TriggerServerEvent,
     (void*) Core_TriggerServerEventUnreliable,
+    (void*) Core_TriggerServerRPCEvent,
     (void*) Core_TriggerWebViewEvent,
     (void*) Core_UnloadYtyp,
     (void*) Core_WorldToScreen,
@@ -2010,6 +2017,7 @@ inline void* capiPointers[] = {
     (void*) Event_SetRemoveBaseObjectDelegate,
     (void*) Event_SetRmlEventDelegate,
     (void*) Event_SetServerEventDelegate,
+    (void*) Event_SetServerScriptRPCAnswerDelegate,
     (void*) Event_SetStreamSyncedMetaChangeDelegate,
     (void*) Event_SetSyncedMetaChangeDelegate,
     (void*) Event_SetTaskChangeDelegate,
@@ -3098,6 +3106,7 @@ inline void* capiPointers[] = {
     (void*) Core_TriggerClientEventUnreliable,
     (void*) Core_TriggerClientEventUnreliableForAll,
     (void*) Core_TriggerClientEventUnreliableForSome,
+    (void*) Core_TriggerClientRPCAnswer,
     (void*) Core_TriggerServerEvent,
     (void*) Core_UnregisterMetric,
     (void*) Entity_AttachToEntity,
@@ -3114,6 +3123,9 @@ inline void* capiPointers[] = {
     (void*) Entity_SetStreamed,
     (void*) Entity_SetStreamSyncedMetaData,
     (void*) Entity_SetVisible,
+    (void*) Event_ClientScriptRPCEvent_Answer,
+    (void*) Event_ClientScriptRPCEvent_AnswerWithError,
+    (void*) Event_ClientScriptRPCEvent_WillAnswer,
     (void*) Event_WeaponDamageEvent_SetDamageValue,
     (void*) Metric_Begin,
     (void*) Metric_End,

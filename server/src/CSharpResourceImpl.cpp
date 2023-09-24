@@ -76,6 +76,8 @@ void CSharpResourceImpl::ResetDelegates()
     OnPedDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPedDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPedHealDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+
+    OnClientScriptRPCDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -836,6 +838,32 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             OnPlayerStopTalkingDelegate(player);
             break;
         }
+    case alt::CEvent::Type::CLIENT_SCRIPT_RPC_EVENT:
+        {
+            auto clientScriptRPCEvent = dynamic_cast<const alt::CClientScriptRPCEvent*>(ev);
+
+            auto target = clientScriptRPCEvent->GetTarget();
+            if (target == nullptr) return;
+
+            auto name = clientScriptRPCEvent->GetName();
+            auto args = clientScriptRPCEvent->GetArgs();
+            auto size = args.size();
+            auto constArgs = new alt::MValueConst*[size];
+
+            for (uint64_t i = 0; i < size; i++)
+            {
+                constArgs[i] = &args[i];
+            }
+
+            OnClientScriptRPCDelegate(clientScriptRPCEvent,
+                                      target,
+                                      name.c_str(),
+                                      constArgs,
+                                      size,
+                                      clientScriptRPCEvent->GetAnswerID()
+                                      );
+            break;
+        }
     default:
         {
             std::cout << "Unhandled server event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -1375,6 +1403,11 @@ void CSharpResourceImpl_SetPlayerStartTalkingDelegate(CSharpResourceImpl* resour
 void CSharpResourceImpl_SetPlayerStopTalkingDelegate(CSharpResourceImpl* resource, PlayerStopTalkingDelegate_t delegate)
 {
     resource->OnPlayerStopTalkingDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetClientScriptRPCDelegate(CSharpResourceImpl* resource, ClientScriptRPCDelegate_t delegate)
+{
+    resource->OnClientScriptRPCDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)
