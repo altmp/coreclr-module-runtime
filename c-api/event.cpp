@@ -17,14 +17,11 @@ uint8_t Event_ClientScriptRPCEvent_WillAnswer(alt::CEvent* event)
     return rpcEvent->WillAnswer();
 }
 
-uint8_t Event_ClientScriptRPCEvent_Answer(alt::CEvent* event, alt::ICore* core, alt::MValueConst* args[], int size)
+uint8_t Event_ClientScriptRPCEvent_Answer(alt::CEvent* event, alt::MValueConst* answer)
 {
-    alt::MValueArgs mValues = alt::MValueArgs(size);
-    for (int i = 0; i < size; i++) {
-        ToMValueArg(mValues, core, args[i], i);
-    }
+    if (answer == nullptr) return false;
     auto rpcEvent = dynamic_cast<alt::CClientScriptRPCEvent*>(event);
-    return rpcEvent->Answer(mValues);
+    return rpcEvent->Answer(answer->get()->Clone());
 }
 
 uint8_t Event_ClientScriptRPCEvent_AnswerWithError(alt::CEvent* event, const char* error)

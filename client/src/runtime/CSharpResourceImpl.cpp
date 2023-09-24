@@ -591,16 +591,8 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto serverScriptRPCAnswerEvent = dynamic_cast<const alt::CServerScriptRPCAnswerEvent*>(ev);
 
             auto answers = serverScriptRPCAnswerEvent->GetAnswer();
-            auto size = answers.size();
-            auto constAnswers = new alt::MValueConst*[size];
-
-            for (uint64_t i = 0; i < size; i++)
-            {
-                constAnswers[i] = &answers[i];
-            }
             OnServerScriptRPCAnswerDelegate(serverScriptRPCAnswerEvent->GetAnswerID(),
-                                            constAnswers,
-                                            size,
+                                            AllocMValue(answers),
                                             serverScriptRPCAnswerEvent->GetAnswerError().c_str());
             break;
         }
@@ -1031,5 +1023,5 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnVoiceConnectionDelegate = [](auto var) {};
 
-    OnServerScriptRPCAnswerDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnServerScriptRPCAnswerDelegate = [](auto var, auto var2, auto var3) {};
 }

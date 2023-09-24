@@ -1001,14 +1001,10 @@ void Core_SetMigrationDistance(alt::ICore* core, uint32_t limit)
     core->SetMigrationDistance(limit);
 }
 
-void Core_TriggerClientRPCAnswer(alt::ICore* core, alt::IPlayer* target, uint16_t answerID, alt::MValueConst* args[],
-    int size, const char* error)
+void Core_TriggerClientRPCAnswer(alt::ICore* core, alt::IPlayer* target, uint16_t answerID, alt::MValueConst* answer, const char* error)
 {
-    alt::MValueArgs mValues = alt::MValueArgs(size);
-    for (int i = 0; i < size; i++) {
-        ToMValueArg(mValues, core, args[i], i);
-    }
-    core->TriggerClientRPCAnswer(target, answerID, mValues, error);
+    if(answer == nullptr) return;
+    core->TriggerClientRPCAnswer(target, answerID, answer->get()->Clone(), error);
 }
 #endif
 
