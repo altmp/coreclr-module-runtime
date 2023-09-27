@@ -468,6 +468,10 @@ alt::IColShape* Core_CreateColShapePolygon(alt::ICore* core, float minZ, float m
     return colShape;
 }
 
+int32_t Core_GetNetTime(alt::ICore* core) {
+    return core->GetNetTime();
+}
+
 #ifdef ALT_SERVER_API
 uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb) {
     return core->SubscribeCommand(cmd, cb);
@@ -683,10 +687,6 @@ void Core_DestroyVoiceChannel(alt::ICore* core, alt::IVoiceChannel* baseObject) 
 
 void Core_DestroyColShape(alt::ICore* core, alt::IColShape* baseObject) {
     return core->DestroyBaseObject(baseObject);
-}
-
-int32_t Core_GetNetTime(alt::ICore* core) {
-    return core->GetNetTime();
 }
 
 const char* Core_GetRootDirectory(alt::ICore* core, int32_t& size) {
@@ -999,6 +999,12 @@ uint32_t Core_GetMigrationDistance(alt::ICore* core)
 void Core_SetMigrationDistance(alt::ICore* core, uint32_t limit)
 {
     core->SetMigrationDistance(limit);
+}
+
+void Core_TriggerClientRPCAnswer(alt::ICore* core, alt::IPlayer* target, uint16_t answerID, alt::MValueConst* answer, const char* error)
+{
+    if(answer == nullptr) return;
+    core->TriggerClientRPCAnswer(target, answerID, answer->get()->Clone(), error);
 }
 #endif
 
@@ -1997,6 +2003,15 @@ void Core_GetAllWeaponData(alt::ICore* core, uint32_t weaponHashes[], uint64_t s
     for (uint64_t i = 0; i < size; i++) {
         weaponHashes[i] = weaponData[i]->GetNameHash();
     }
+}
+
+uint16_t Core_TriggerServerRPCEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size)
+{
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    return core->TriggerServerRPCEvent(ev, mValues);
 }
 #endif
 

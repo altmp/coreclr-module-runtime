@@ -1,5 +1,6 @@
 #include "event.h"
 
+#include "mvalue.h"
 #include "utils/macros.h"
 
 CAPI_START()
@@ -7,7 +8,26 @@ CAPI_START()
 #ifdef ALT_SERVER_API
 
 void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue) {
-    ((alt::CWeaponDamageEvent*) event)->SetDamageValue(damageValue);
+    dynamic_cast<alt::CWeaponDamageEvent*>(event)->SetDamageValue(damageValue);
+}
+
+uint8_t Event_ClientScriptRPCEvent_WillAnswer(alt::CEvent* event)
+{
+    auto rpcEvent = dynamic_cast<alt::CClientScriptRPCEvent*>(event);
+    return rpcEvent->WillAnswer();
+}
+
+uint8_t Event_ClientScriptRPCEvent_Answer(alt::CEvent* event, alt::MValueConst* answer)
+{
+    if (answer == nullptr) return false;
+    auto rpcEvent = dynamic_cast<alt::CClientScriptRPCEvent*>(event);
+    return rpcEvent->Answer(answer->get()->Clone());
+}
+
+uint8_t Event_ClientScriptRPCEvent_AnswerWithError(alt::CEvent* event, const char* error)
+{
+    auto rpcEvent = dynamic_cast<alt::CClientScriptRPCEvent*>(event);
+    return rpcEvent->AnswerWithError(error);
 }
 #endif
 
@@ -89,6 +109,8 @@ SetDelegate(PlayerStartLeaveVehicle);
 SetDelegate(PlayerBulletHit);
 SetDelegate(VoiceConnection);
 SetDelegate(AudioEvent);
+
+SetDelegate(ServerScriptRPCAnswer)
 
 #endif
 

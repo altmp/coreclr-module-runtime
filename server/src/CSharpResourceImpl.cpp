@@ -15,12 +15,12 @@ void CSharpResourceImpl::ResetDelegates()
 {
     MainDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnClientEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerConnectDelegate = [](auto var, auto var2) {};
     OnPlayerConnectDeniedDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8, auto var9) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
     OnResourceErrorDelegate = [](auto var) {};
-    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
+    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
     OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
@@ -70,6 +70,14 @@ void CSharpResourceImpl::ResetDelegates()
     OnClientDeleteObjectDelegate = [](auto var, auto var2) {};
 
     OnPlayerHealDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+
+    OnGivePedScriptedTaskDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+
+    OnPedDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
+    OnPedDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnPedHealDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+
+    OnClientScriptRPCDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -189,7 +197,6 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             auto playerConnectEvent = dynamic_cast<const alt::CPlayerConnectEvent*>(ev);
             auto connectPlayer = playerConnectEvent->GetTarget();
             OnPlayerConnectDelegate(connectPlayer,
-                                    connectPlayer->GetID(),
                                     playerConnectEvent->GetReason().c_str());
             break;
         }
@@ -235,7 +242,6 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                 OnPlayerDamageDelegate(damageEvent->GetTarget(),
                                        entityPtr,
                                        entity->GetType(),
-                                       entity->GetID(),
                                        damageEvent->GetWeapon(),
                                        damageEvent->GetHealthDamage(),
                                        damageEvent->GetArmourDamage());
@@ -245,7 +251,6 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                 OnPlayerDamageDelegate(damageEvent->GetTarget(),
                                        nullptr,
                                        alt::IBaseObject::Type::PLAYER,
-                                       0,
                                        damageEvent->GetWeapon(),
                                        damageEvent->GetHealthDamage(),
                                        damageEvent->GetArmourDamage());
@@ -741,6 +746,122 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                                  playerHealEvent->GetNewHealth(),
                                  playerHealEvent->GetOldArmour(),
                                  playerHealEvent->GetNewArmour());
+            break;
+        }
+    case alt::CEvent::Type::GIVE_PED_SCRIPTED_TASK:
+        {
+            auto givePedScriptedTaskEvent = dynamic_cast<const alt::CGivePedScriptedTaskEvent*>(ev);
+
+            auto target = givePedScriptedTaskEvent->GetTarget();
+            auto source = givePedScriptedTaskEvent->GetSource();
+
+            if (target == nullptr) return;
+            if (source == nullptr) return;
+
+            OnGivePedScriptedTaskDelegate(givePedScriptedTaskEvent, source, target, givePedScriptedTaskEvent->GetTaskType());
+
+            break;
+        }
+    case alt::CEvent::Type::PED_DAMAGE:
+        {
+            auto damageEvent = dynamic_cast<const alt::CPedDamageEvent*>(ev);
+            auto entity = damageEvent->GetAttacker();
+            auto entityPtr = GetEntityPointer(entity);
+            if (entity != nullptr && entityPtr != nullptr)
+            {
+                OnPedDamageDelegate(damageEvent->GetTarget(),
+                                       entityPtr,
+                                       entity->GetType(),
+                                       damageEvent->GetWeapon(),
+                                       damageEvent->GetHealthDamage(),
+                                       damageEvent->GetArmourDamage());
+            }
+            else
+            {
+                OnPedDamageDelegate(damageEvent->GetTarget(),
+                                       nullptr,
+                                       alt::IBaseObject::Type::PLAYER,
+                                       damageEvent->GetWeapon(),
+                                       damageEvent->GetHealthDamage(),
+                                       damageEvent->GetArmourDamage());
+            }
+            break;
+        }
+    case alt::CEvent::Type::PED_DEATH:
+        {
+            auto deathEvent = dynamic_cast<const alt::CPedDeathEvent*>(ev);
+            auto entity = deathEvent->GetKiller();
+
+            auto type = alt::IBaseObject::Type::PLAYER;
+            void* entityPtr = nullptr;
+
+            if (entity != nullptr)
+            {
+                entityPtr = GetEntityPointer(entity);
+                type = entity->GetType();
+            }
+
+            OnPedDeathDelegate(deathEvent->GetTarget(),
+                                  entityPtr,
+                                  type,
+                                  deathEvent->GetWeapon());
+            break;
+        }
+    case alt::CEvent::Type::PED_HEAL:
+        {
+            auto healEvent = dynamic_cast<const alt::CPedHealEvent*>(ev);
+
+            auto target = healEvent->GetTarget();
+            if (target == nullptr) return;
+            OnPedHealDelegate(target,
+                                 healEvent->GetOldHealth(),
+                                 healEvent->GetNewHealth(),
+                                 healEvent->GetOldArmour(),
+                                 healEvent->GetNewArmour());
+            break;
+        }
+    case alt::CEvent::Type::PLAYER_START_TALKING:
+        {
+            auto playerStartTalkingEvent = dynamic_cast<const alt::CPlayerStartTalkingEvent*>(ev);
+
+            auto player = playerStartTalkingEvent->GetPlayer();
+            if (player == nullptr) return;
+            OnPlayerStartTalkingDelegate(player);
+            break;
+        }
+    case alt::CEvent::Type::PLAYER_STOP_TALKING:
+        {
+            auto playerStopTalkingEvent = dynamic_cast<const alt::CPlayerStopTalkingEvent*>(ev);
+
+            auto player = playerStopTalkingEvent->GetPlayer();
+            if (player == nullptr) return;
+            OnPlayerStopTalkingDelegate(player);
+            break;
+        }
+    case alt::CEvent::Type::CLIENT_SCRIPT_RPC_EVENT:
+        {
+            auto clientScriptRPCEvent = dynamic_cast<const alt::CClientScriptRPCEvent*>(ev);
+
+            auto target = clientScriptRPCEvent->GetTarget();
+            if (target == nullptr) return;
+
+            auto name = clientScriptRPCEvent->GetName();
+            auto args = clientScriptRPCEvent->GetArgs();
+            auto size = args.size();
+            auto constArgs = new alt::MValueConst*[size];
+
+            for (uint64_t i = 0; i < size; i++)
+            {
+                constArgs[i] = &args[i];
+            }
+
+            OnClientScriptRPCDelegate(clientScriptRPCEvent,
+                                      target,
+                                      name.c_str(),
+                                      constArgs,
+                                      size,
+                                      clientScriptRPCEvent->GetAnswerID()
+                                      );
             break;
         }
     default:
@@ -1251,6 +1372,42 @@ void CSharpResourceImpl_SetClientDeleteObjectDelegate(CSharpResourceImpl* resour
 void CSharpResourceImpl_SetPlayerHealDelegate(CSharpResourceImpl* resource, PlayerHealDelegate_t delegate)
 {
     resource->OnPlayerHealDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetGivePedScriptedTaskDelegate(CSharpResourceImpl* resource, GivePedScriptedTaskDelegate_t delegate)
+{
+    resource->OnGivePedScriptedTaskDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPedDamageDelegate(CSharpResourceImpl* resource, PedDamageDelegate_t delegate)
+{
+    resource->OnPedDamageDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPedDeathDelegate(CSharpResourceImpl* resource, PedDeathDelegate_t delegate)
+{
+    resource->OnPedDeathDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPedHealDelegate(CSharpResourceImpl* resource, PedHealDelegate_t delegate)
+{
+    resource->OnPedHealDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerStartTalkingDelegate(CSharpResourceImpl* resource,
+    PlayerStartTalkingDelegate_t delegate)
+{
+    resource->OnPlayerStartTalkingDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerStopTalkingDelegate(CSharpResourceImpl* resource, PlayerStopTalkingDelegate_t delegate)
+{
+    resource->OnPlayerStopTalkingDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetClientScriptRPCDelegate(CSharpResourceImpl* resource, ClientScriptRPCDelegate_t delegate)
+{
+    resource->OnClientScriptRPCDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)

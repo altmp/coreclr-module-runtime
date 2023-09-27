@@ -846,6 +846,11 @@ alt::IAudioFilter* Player_GetFilter(alt::IPlayer* player)
     return player->GetFilter();
 }
 
+const char* Player_GetTaskData(alt::IPlayer* player, int32_t& size)
+{
+    return AllocateString(player->GetTaskData(), size);
+}
+
 #endif
 
 CAPI_END()
