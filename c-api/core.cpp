@@ -1006,6 +1006,16 @@ void Core_TriggerClientRPCAnswer(alt::ICore* core, alt::IPlayer* target, uint16_
     if(answer == nullptr) return;
     core->TriggerClientRPCAnswer(target, answerID, answer->get()->Clone(), error);
 }
+
+uint16_t Core_TriggerClientRPCEvent(alt::ICore* core, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
+    int size)
+{
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    return core->TriggerClientRPCEvent(target, ev, mValues);
+}
 #endif
 
 #ifdef ALT_CLIENT_API
@@ -2003,6 +2013,12 @@ void Core_GetAllWeaponData(alt::ICore* core, uint32_t weaponHashes[], uint64_t s
     for (uint64_t i = 0; i < size; i++) {
         weaponHashes[i] = weaponData[i]->GetNameHash();
     }
+}
+
+void Core_TriggerServerRPCAnswer(alt::ICore* core, uint16_t answerID, alt::MValueConst* answer, const char* error)
+{
+    if(answer == nullptr) return;
+    core->TriggerServerRPCAnswer(answerID, answer->get()->Clone(), error);
 }
 
 uint16_t Core_TriggerServerRPCEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size)

@@ -398,5 +398,7 @@ EXPORT_SERVER void Core_SetColShapeTickRate(alt::ICore* core, uint32_t limit);
 EXPORT_SERVER uint32_t Core_GetMigrationDistance(alt::ICore* core);
 EXPORT_SERVER void Core_SetMigrationDistance(alt::ICore* core, uint32_t limit);
 
-EXPORT_SERVER void Core_TriggerClientRPCAnswer(alt::ICore* server, alt::IPlayer* target, uint16_t answerID, alt::MValueConst* answer, const char* error);
-EXPORT_CLIENT uint16_t Core_TriggerServerRPCEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
+EXPORT_SERVER void Core_TriggerClientRPCAnswer(alt::ICore* core, alt::IPlayer* target, uint16_t answerID, alt::MValueConst* answer, const char* error);
+EXPORT_SERVER uint16_t Core_TriggerClientRPCEvent(alt::ICore* core, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
+EXPORT_CLIENT void Core_TriggerServerRPCAnswer(alt::ICore* core, uint16_t answerID, alt::MValueConst* answer, const char* error);
+EXPORT_CLIENT uint16_t Core_TriggerServerRPCEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size);

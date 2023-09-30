@@ -21,9 +21,9 @@
 
 EXPORT_SHARED void Event_Cancel(alt::CCancellableEvent* event);
 EXPORT_SERVER void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue);
-EXPORT_SERVER uint8_t Event_ClientScriptRPCEvent_WillAnswer(alt::CEvent* event);
-EXPORT_SERVER uint8_t Event_ClientScriptRPCEvent_Answer(alt::CEvent* event, alt::MValueConst* answer);
-EXPORT_SERVER uint8_t Event_ClientScriptRPCEvent_AnswerWithError(alt::CEvent* event, const char* error);
+EXPORT_SHARED uint8_t Event_ScriptRPCEvent_WillAnswer(alt::CEvent* event);
+EXPORT_SHARED uint8_t Event_ScriptRPCEvent_Answer(alt::CEvent* event, alt::MValueConst* answer);
+EXPORT_SHARED uint8_t Event_ScriptRPCEvent_AnswerWithError(alt::CEvent* event, const char* error);
 EXPORT_SHARED uint8_t Event_WasCancelled(alt::CCancellableEvent* event);
 
 #ifdef ALT_CLIENT_API
@@ -95,5 +95,6 @@ EXPORT_CLIENT void Event_SetPlayerStartLeaveVehicleDelegate(CSharpResourceImpl* 
 
 EXPORT_CLIENT void Event_SetPlayerBulletHitDelegate(CSharpResourceImpl* resource, /** ClientEvents.PlayerBulletHitModuleDelegate */ PlayerBulletHitDelegate_t delegate);
 EXPORT_CLIENT void Event_SetVoiceConnectionDelegate(CSharpResourceImpl* resource, /** ClientEvents.VoiceConnectionModuleDelegate */ VoiceConnectionDelegate_t delegate);
-EXPORT_CLIENT void Event_SetServerScriptRPCAnswerDelegate(CSharpResourceImpl* resource, /** ClientEvents.ServerScriptRPCAnswerModuleDelegate */ ServerScriptRPCAnswerDelegate_t delegate);
+EXPORT_CLIENT void Event_SetScriptRPCDelegate(CSharpResourceImpl* resource, /** ClientEvents.ScriptRPCModuleDelegate */ ScriptRPCDelegate_t delegate);
+EXPORT_CLIENT void Event_SetScriptRPCAnswerDelegate(CSharpResourceImpl* resource, /** ClientEvents.ScriptRPCAnswerModuleDelegate */ ScriptRPCAnswerDelegate_t delegate);
 #endif

@@ -10,29 +10,29 @@ CAPI_START()
 void Event_WeaponDamageEvent_SetDamageValue(alt::CEvent* event, uint32_t damageValue) {
     dynamic_cast<alt::CWeaponDamageEvent*>(event)->SetDamageValue(damageValue);
 }
-
-uint8_t Event_ClientScriptRPCEvent_WillAnswer(alt::CEvent* event)
-{
-    auto rpcEvent = dynamic_cast<alt::CClientScriptRPCEvent*>(event);
-    return rpcEvent->WillAnswer();
-}
-
-uint8_t Event_ClientScriptRPCEvent_Answer(alt::CEvent* event, alt::MValueConst* answer)
-{
-    if (answer == nullptr) return false;
-    auto rpcEvent = dynamic_cast<alt::CClientScriptRPCEvent*>(event);
-    return rpcEvent->Answer(answer->get()->Clone());
-}
-
-uint8_t Event_ClientScriptRPCEvent_AnswerWithError(alt::CEvent* event, const char* error)
-{
-    auto rpcEvent = dynamic_cast<alt::CClientScriptRPCEvent*>(event);
-    return rpcEvent->AnswerWithError(error);
-}
 #endif
 
 void Event_Cancel(alt::CCancellableEvent* event) {
     event->Cancel();
+}
+
+uint8_t Event_ScriptRPCEvent_WillAnswer(alt::CEvent* event)
+{
+    auto rpcEvent = dynamic_cast<alt::CScriptRPCEvent*>(event);
+    return rpcEvent->WillAnswer();
+}
+
+uint8_t Event_ScriptRPCEvent_Answer(alt::CEvent* event, alt::MValueConst* answer)
+{
+    if (answer == nullptr) return false;
+    auto rpcEvent = dynamic_cast<alt::CScriptRPCEvent*>(event);
+    return rpcEvent->Answer(answer->get()->Clone());
+}
+
+uint8_t Event_ScriptRPCEvent_AnswerWithError(alt::CEvent* event, const char* error)
+{
+    auto rpcEvent = dynamic_cast<alt::CScriptRPCEvent*>(event);
+    return rpcEvent->AnswerWithError(error);
 }
 
 uint8_t Event_WasCancelled(alt::CCancellableEvent* event) {
@@ -110,7 +110,8 @@ SetDelegate(PlayerBulletHit);
 SetDelegate(VoiceConnection);
 SetDelegate(AudioEvent);
 
-SetDelegate(ServerScriptRPCAnswer)
+SetDelegate(ScriptRPC)
+SetDelegate(ScriptRPCAnswer)
 
 #endif
 

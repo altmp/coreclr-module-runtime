@@ -209,7 +209,9 @@ typedef void (* PedHealDelegate_t)(alt::IPed* target, uint16_t oldHealth, uint16
 typedef void (* PlayerStartTalkingDelegate_t)(alt::IPlayer* player);
 typedef void (* PlayerStopTalkingDelegate_t)(alt::IPlayer* player);
 
-typedef void (* ClientScriptRPCDelegate_t)(const alt::CEvent* event, alt::IPlayer* target, const char* name, alt::MValueConst** args, uint64_t size, uint16_t answerID);
+typedef void (* ScriptRPCDelegate_t)(const alt::CEvent* event, alt::IPlayer* target, const char* name, alt::MValueConst** args, uint64_t size, uint16_t answerID);
+
+typedef void (* ScriptRPCAnswerDelegate_t)(alt::IPlayer* target, uint16_t answerID, alt::MValueConst* answer, const char* answerError);
 
 class CSharpResourceImpl : public alt::IResource::Impl {
     void OnEvent(const alt::CEvent* ev) override;
@@ -353,7 +355,9 @@ public:
     PlayerStartTalkingDelegate_t OnPlayerStartTalkingDelegate = nullptr;
     PlayerStopTalkingDelegate_t OnPlayerStopTalkingDelegate = nullptr;
 
-    ClientScriptRPCDelegate_t OnClientScriptRPCDelegate = nullptr;
+    ScriptRPCDelegate_t OnScriptRPCDelegate = nullptr;
+
+    ScriptRPCAnswerDelegate_t OnScriptRPCAnswerDelegate = nullptr;
 
     std::vector<CustomInvoker*> invokers;
     std::mutex invokersLock = {};
@@ -576,4 +580,7 @@ EXPORT void CSharpResourceImpl_SetPedHealDelegate(CSharpResourceImpl* resource, 
 EXPORT void CSharpResourceImpl_SetPlayerStartTalkingDelegate(CSharpResourceImpl* resource, PlayerStartTalkingDelegate_t delegate);
 EXPORT void CSharpResourceImpl_SetPlayerStopTalkingDelegate(CSharpResourceImpl* resource, PlayerStopTalkingDelegate_t delegate);
 
-EXPORT void CSharpResourceImpl_SetClientScriptRPCDelegate(CSharpResourceImpl* resource, ClientScriptRPCDelegate_t delegate);
+EXPORT void CSharpResourceImpl_SetScriptRPCDelegate(CSharpResourceImpl* resource, ScriptRPCDelegate_t delegate);
+EXPORT void CSharpResourceImpl_SetScriptRPCAnswerDelegate(CSharpResourceImpl* resource, ScriptRPCAnswerDelegate_t delegate);
+
+
