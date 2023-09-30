@@ -21,7 +21,8 @@ namespace cache
 #ifdef ALT_SERVER_API
                                       _streamed(base->GetStreamed()),
                                       _collision(base->HasCollision()),
-                                      _timestamp(base->GetTimestamp())
+                                      _timestamp(base->GetTimestamp()),
+                                      _streamingDistance(base->GetStreamingDistance())
 #elif ALT_CLIENT_API
                                       _scriptId(base->GetScriptID()),
                                       _remoteId(base->GetRemoteID()),
@@ -209,6 +210,13 @@ namespace cache
         uint32_t GetTimestamp() const override
         {
             return _timestamp;
+        }
+
+        uint32_t _streamingDistance;
+
+        uint32_t GetStreamingDistance() const override
+        {
+            return _streamingDistance;
         }
 
         void SetMultipleStreamSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}

@@ -549,7 +549,7 @@ void Core_TriggerClientEventUnreliableForAll(alt::ICore* core, const char* ev, a
     core->TriggerClientEventUnreliableForAll(ev, mValues);
 }
 
-alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t &id) {
+alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t streamingDistance, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -558,14 +558,14 @@ alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t p
     rotation.roll = rot.roll;
     rotation.pitch = rot.pitch;
     rotation.yaw = rot.yaw;
-    auto vehicle = core->CreateVehicle(model, position, rotation);
+    auto vehicle = core->CreateVehicle(model, position, rotation, streamingDistance);
     if (vehicle != nullptr) {
         id = vehicle->GetID();
     }
     return vehicle;
 }
 
-alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t &id)
+alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t streamingDistance, uint32_t &id)
 {
     alt::Position position;
     position.x = pos.x;
@@ -577,7 +577,7 @@ alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rota
     rotation.pitch = rot.pitch;
     rotation.yaw = rot.yaw;
 
-    auto ped = core->CreatePed(model, position, rotation);
+    auto ped = core->CreatePed(model, position, rotation, streamingDistance);
     if (ped != nullptr) {
         id = ped->GetID();
     }
@@ -822,7 +822,7 @@ alt::IMarker* Core_CreateMarker(alt::ICore* core, alt::IPlayer* target, uint8_t 
 }
 
 alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation,
-    uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t& id)
+    uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t streamingDistance, uint32_t& id)
 {
     alt::Position pos;
     pos.x = position.x;
@@ -834,7 +834,7 @@ alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t model, position_t pos
     rot.pitch = rotation.pitch;
     rot.yaw = rotation.yaw;
 
-    auto networkObject = core->CreateObject(model, pos, rot, alpha, textureVariation, lodDistance);
+    auto networkObject = core->CreateObject(model, pos, rot, alpha, textureVariation, lodDistance, streamingDistance);
     if (networkObject != nullptr) {
         id = networkObject->GetID();
     }

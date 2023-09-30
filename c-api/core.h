@@ -87,8 +87,8 @@ EXPORT_SERVER void Core_TriggerClientEventUnreliable(alt::ICore* core, alt::IPla
 EXPORT_SERVER void Core_TriggerClientEventUnreliableForSome(alt::ICore* core, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[], int argsSize);
 EXPORT_SERVER void Core_TriggerClientEventUnreliableForAll(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size);
 
-EXPORT_SERVER alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t &id);
-EXPORT_SERVER alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t &id);
+EXPORT_SERVER alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t streamingDistance, uint32_t &id);
+EXPORT_SERVER alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t streamingDistance, uint32_t &id);
 #ifdef ALT_SERVER_API
 EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, position_t pos, float radius, float height, rgba_t color, uint32_t streamingDistance, uint32_t &id);
 #endif
@@ -347,7 +347,7 @@ EXPORT_CLIENT alt::IFont* Core_RegisterFont(alt::ICore* core, alt::IResource* re
 
 EXPORT_CLIENT uint8_t Core_IsFullScreen(alt::ICore* core);
 
-EXPORT_SERVER alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation, uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t& id);
+EXPORT_SERVER alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation, uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t streamingDistance, uint32_t& id);
 
 EXPORT_SERVER alt::Metric* Core_RegisterMetric(alt::ICore* core, const char* metricName, uint8_t type, const char* keys[], const char* values[], uint64_t size);
 EXPORT_SERVER void Core_UnregisterMetric(alt::ICore* core, alt::Metric* metric);
