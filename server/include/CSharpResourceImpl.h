@@ -362,7 +362,7 @@ public:
     std::vector<CustomInvoker*> invokers;
     std::mutex invokersLock = {};
     CoreClr* coreClr;
-    alt::ICore* server;
+    alt::ICore* core;
     alt::IResource* resource;
 };
 

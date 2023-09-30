@@ -13,11 +13,11 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT bool altMain(alt::ICore* server)
+EXPORT bool altMain(alt::ICore* core)
 {
-    alt::ICore::SetInstance(server);
-    auto* cSharpScriptRuntime = new CSharpScriptRuntime(server);
-    server->RegisterScriptRuntime("csharp", cSharpScriptRuntime);
+    alt::ICore::SetInstance(core);
+    auto* cSharpScriptRuntime = new CSharpScriptRuntime(core);
+    core->RegisterScriptRuntime("csharp", cSharpScriptRuntime);
     return true;
 }
 

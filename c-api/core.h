@@ -28,11 +28,11 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED void Core_LogInfo(alt::ICore* server, const char* str);
-EXPORT_SHARED void Core_LogDebug(alt::ICore* server, const char* str);
-EXPORT_SHARED void Core_LogWarning(alt::ICore* server, const char* str);
-EXPORT_SHARED void Core_LogError(alt::ICore* server, const char* str);
-EXPORT_SHARED void Core_LogColored(alt::ICore* server, const char* str);
+EXPORT_SHARED void Core_LogInfo(alt::ICore* core, const char* str);
+EXPORT_SHARED void Core_LogDebug(alt::ICore* core, const char* str);
+EXPORT_SHARED void Core_LogWarning(alt::ICore* core, const char* str);
+EXPORT_SHARED void Core_LogError(alt::ICore* core, const char* str);
+EXPORT_SHARED void Core_LogColored(alt::ICore* core, const char* str);
 
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueNil(alt::ICore* core);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueBool(alt::ICore* core, uint8_t value);
@@ -61,7 +61,7 @@ EXPORT_SHARED uint8_t Core_IsDebug(alt::ICore* core);
 EXPORT_SHARED const char* Core_GetVersion(alt::ICore* core,int32_t &size);
 EXPORT_SHARED const char* Core_GetBranch(alt::ICore* core, int32_t &size);
 
-EXPORT_SHARED void Core_DestroyBaseObject(alt::ICore* server, alt::IBaseObject* baseObject);
+EXPORT_SHARED void Core_DestroyBaseObject(alt::ICore* core, alt::IBaseObject* baseObject);
 EXPORT_SHARED alt::MValueConst* Core_GetMetaData(alt::ICore* core, const char* key);
 EXPORT_SHARED void Core_SetMetaData(alt::ICore* core, const char* key, alt::MValueConst* val);
 EXPORT_SHARED uint8_t Core_HasMetaData(alt::ICore* core, const char* key);
@@ -69,33 +69,33 @@ EXPORT_SHARED void Core_DeleteMetaData(alt::ICore* core, const char* key);
 EXPORT_SHARED alt::MValueConst* Core_GetSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SHARED uint8_t Core_HasSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SHARED void Core_TriggerLocalEvent(alt::ICore* core, const char* event, alt::MValueConst* args[], int size);
-EXPORT_SHARED uint8_t Core_FileExists(alt::ICore* server, const char* path);
-EXPORT_SHARED const char* Core_FileRead(alt::ICore* server, const char* path, int32_t& size);
+EXPORT_SHARED uint8_t Core_FileExists(alt::ICore* core, const char* path);
+EXPORT_SHARED const char* Core_FileRead(alt::ICore* core, const char* path, int32_t& size);
 EXPORT_SHARED alt::ICore* Core_GetCoreInstance();
 EXPORT_SHARED void Core_ToggleEvent(alt::ICore* core, uint8_t event, uint8_t state);
 EXPORT_SHARED uint8_t Core_GetEventEnumSize();
 EXPORT_SHARED uint8_t Core_GetVoiceConnectionState(alt::ICore* core);
 
-EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* server, const char* cmd, alt::CommandCallback cb);
-EXPORT_SERVER void Core_TriggerServerEvent(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
+EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb);
+EXPORT_SERVER void Core_TriggerServerEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size);
 
-EXPORT_SERVER void Core_TriggerClientEvent(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
-EXPORT_SERVER void Core_TriggerClientEventForSome(alt::ICore* server, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[], int argsSize);
-EXPORT_SERVER void Core_TriggerClientEventForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
+EXPORT_SERVER void Core_TriggerClientEvent(alt::ICore* core, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
+EXPORT_SERVER void Core_TriggerClientEventForSome(alt::ICore* core, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[], int argsSize);
+EXPORT_SERVER void Core_TriggerClientEventForAll(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size);
 
-EXPORT_SERVER void Core_TriggerClientEventUnreliable(alt::ICore* server, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
-EXPORT_SERVER void Core_TriggerClientEventUnreliableForSome(alt::ICore* server, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[], int argsSize);
-EXPORT_SERVER void Core_TriggerClientEventUnreliableForAll(alt::ICore* server, const char* ev, alt::MValueConst* args[], int size);
+EXPORT_SERVER void Core_TriggerClientEventUnreliable(alt::ICore* core, alt::IPlayer* target, const char* ev, alt::MValueConst* args[], int size);
+EXPORT_SERVER void Core_TriggerClientEventUnreliableForSome(alt::ICore* core, alt::IPlayer* targets[], int targetsSize, const char* ev, alt::MValueConst* args[], int argsSize);
+EXPORT_SERVER void Core_TriggerClientEventUnreliableForAll(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size);
 
-EXPORT_SERVER alt::IVehicle* Core_CreateVehicle(alt::ICore* server, uint32_t model, position_t pos, rotation_t rot, uint32_t &id);
+EXPORT_SERVER alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t &id);
 EXPORT_SERVER alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t &id);
 #ifdef ALT_SERVER_API
-EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, position_t pos, float radius, float height, rgba_t color, uint32_t streamingDistance, uint32_t &id);
+EXPORT_SERVER alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, position_t pos, float radius, float height, rgba_t color, uint32_t streamingDistance, uint32_t &id);
 #endif
-EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* server, uint8_t global, uint8_t type, position_t pos, alt::IPlayer* targets[], int targetsSize, uint32_t &id);
-EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* server, uint8_t global, uint8_t type, alt::IEntity* attachTo, alt::IPlayer* targets[], int targetsSize, uint32_t &id);
+EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* core, uint8_t global, uint8_t type, position_t pos, alt::IPlayer* targets[], int targetsSize, uint32_t &id);
+EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* core, uint8_t global, uint8_t type, alt::IEntity* attachTo, alt::IPlayer* targets[], int targetsSize, uint32_t &id);
 
-EXPORT_SERVER ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* server, uint32_t hash);
+EXPORT_SERVER ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* core, uint32_t hash);
 EXPORT_SERVER ClrPedModelInfo* Core_GetPedModelInfo(alt::ICore* core, uint32_t hash);
 EXPORT_SERVER ClrWeaponModelInfo* Core_GetWeaponModelByHash(alt::ICore* core, uint32_t hash);
 EXPORT_SERVER void Core_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo);
@@ -103,22 +103,22 @@ EXPORT_SERVER void Core_DeallocPedModelInfo(ClrPedModelInfo* modelInfo);
 EXPORT_SERVER void Core_DeallocWeaponModelInfo(ClrWeaponModelInfo* modelInfo);
 
 
-EXPORT_SERVER alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* server, uint8_t spatial, float maxDistance, uint32_t &id);
-EXPORT_SHARED alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* server, position_t pos, float radius, float height, uint32_t &id);
-EXPORT_SHARED alt::IColShape* Core_CreateColShapeSphere(alt::ICore* server, position_t pos, float radius, uint32_t &id);
-EXPORT_SHARED alt::IColShape* Core_CreateColShapeCircle(alt::ICore* server, position_t pos, float radius, uint32_t &id);
-EXPORT_SHARED alt::IColShape* Core_CreateColShapeCube(alt::ICore* server, position_t pos, position_t pos2, uint32_t &id);
-EXPORT_SHARED alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* server, float x1, float y1, float x2, float y2, float z, uint32_t &id);
-EXPORT_SHARED alt::IColShape* Core_CreateColShapePolygon(alt::ICore* server, float minZ, float maxZ, vector2_t points[], int pointSize, uint32_t &id);
-EXPORT_SERVER void Core_DestroyVehicle(alt::ICore* server, alt::IVehicle* baseObject);
-EXPORT_SERVER void Core_DestroyCheckpoint(alt::ICore* server, alt::ICheckpoint* baseObject);
-EXPORT_SERVER void Core_DestroyVoiceChannel(alt::ICore* server, alt::IVoiceChannel* baseObject);
-EXPORT_SERVER void Core_DestroyColShape(alt::ICore* server, alt::IColShape* baseObject);
-EXPORT_SHARED int32_t Core_GetNetTime(alt::ICore* server);
-EXPORT_SERVER const char* Core_GetRootDirectory(alt::ICore* server, int32_t& size);
-EXPORT_SERVER void Core_StartResource(alt::ICore* server, const char* text);
-EXPORT_SERVER void Core_StopResource(alt::ICore* server, const char* text);
-EXPORT_SERVER void Core_RestartResource(alt::ICore* server, const char* text);
+EXPORT_SERVER alt::IVoiceChannel* Core_CreateVoiceChannel(alt::ICore* core, uint8_t spatial, float maxDistance, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapeCylinder(alt::ICore* core, position_t pos, float radius, float height, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapeSphere(alt::ICore* core, position_t pos, float radius, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapeCircle(alt::ICore* core, position_t pos, float radius, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapeCube(alt::ICore* core, position_t pos, position_t pos2, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapeRectangle(alt::ICore* core, float x1, float y1, float x2, float y2, float z, uint32_t &id);
+EXPORT_SHARED alt::IColShape* Core_CreateColShapePolygon(alt::ICore* core, float minZ, float maxZ, vector2_t points[], int pointSize, uint32_t &id);
+EXPORT_SERVER void Core_DestroyVehicle(alt::ICore* core, alt::IVehicle* baseObject);
+EXPORT_SERVER void Core_DestroyCheckpoint(alt::ICore* core, alt::ICheckpoint* baseObject);
+EXPORT_SERVER void Core_DestroyVoiceChannel(alt::ICore* core, alt::IVoiceChannel* baseObject);
+EXPORT_SERVER void Core_DestroyColShape(alt::ICore* core, alt::IColShape* baseObject);
+EXPORT_SHARED int32_t Core_GetNetTime(alt::ICore* core);
+EXPORT_SERVER const char* Core_GetRootDirectory(alt::ICore* core, int32_t& size);
+EXPORT_SERVER void Core_StartResource(alt::ICore* core, const char* text);
+EXPORT_SERVER void Core_StopResource(alt::ICore* core, const char* text);
+EXPORT_SERVER void Core_RestartResource(alt::ICore* core, const char* text);
 EXPORT_SERVER void Core_SetSyncedMetaData(alt::ICore* core, const char* key, alt::MValueConst* val);
 EXPORT_SERVER void Core_DeleteSyncedMetaData(alt::ICore* core, const char* key);
 EXPORT_SERVER uint64_t Core_HashPassword(alt::ICore* core, const char* password);
@@ -139,7 +139,7 @@ EXPORT_SERVER void Core_GetClosestEntities(alt::ICore* core, vector3_t position,
 EXPORT_CLIENT uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path);
 EXPORT_CLIENT const char* Core_Client_FileRead(alt::ICore* core, alt::IResource* resource, const char* path, int32_t& size);
 
-EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* server, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, rgba_t iconColor, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id);
+EXPORT_CLIENT alt::ICheckpoint* Core_CreateCheckpoint(alt::ICore* core, uint8_t type, vector3_t pos, vector3_t nextPos, float radius, float height, rgba_t color, rgba_t iconColor, uint32_t streamingDistance, alt::IResource* resource, uint32_t &id);
 #endif
 EXPORT_CLIENT alt::IBlip* Core_Client_CreatePointBlip(alt::ICore* core, vector3_t position, alt::IResource* resource, uint32_t &id);
 EXPORT_CLIENT alt::IBlip* Core_Client_CreateRadiusBlip(alt::ICore* core, vector3_t position, float radius, alt::IResource* resource, uint32_t &id);

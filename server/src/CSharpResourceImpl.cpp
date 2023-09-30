@@ -2,12 +2,12 @@
 #include "../../c-api/utils/entity.h"
 #include "../../c-api/mvalue.h"
 
-CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource)
+CSharpResourceImpl::CSharpResourceImpl(alt::ICore* core, CoreClr* coreClr, alt::IResource* resource)
     : alt::IResource::Impl()
 {
     ResetDelegates();
     this->resource = resource;
-    this->server = server;
+    this->core = core;
     this->invokers = {};
     this->coreClr = coreClr;
 }
@@ -96,7 +96,7 @@ bool CSharpResourceImpl::Start()
         return false;
     }
     if (MainDelegate == nullptr) return false;
-    MainDelegate(this->server, this->resource, this->resource->GetName().c_str(), resource->GetMain().c_str());
+    MainDelegate(this->core, this->resource, this->resource->GetName().c_str(), resource->GetMain().c_str());
     return true;
 }
 
