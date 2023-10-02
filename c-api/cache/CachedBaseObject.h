@@ -16,7 +16,7 @@ namespace cache
         {
         };
 
-        CachedBaseObject(IBaseObject* base) : _type(base->GetType())
+        CachedBaseObject(IBaseObject* base) : _type(base->GetType()), _id(base->GetID())
         {
             auto keys = base->GetMetaDataKeys();
             for (const auto& key : keys)
@@ -66,6 +66,27 @@ namespace cache
         bool IsRemoved() const
         {
             return false;
+        }
+        
+        bool HasSyncedMetaData(const std::string & key) const override
+        {
+            return false;
+        }
+        
+        alt::MValueConst GetSyncedMetaData(const std::string & key) const override
+        {
+            return alt::ICore::Instance().CreateMValueNil();
+        }
+
+        uint32_t _id;
+        uint32_t GetID() const override
+        {
+            return _id;
+        }
+        
+        std::vector<std::string> GetSyncedMetaDataKeys() const override
+        {
+            return {};
         }
 
         void SetMultipleMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}

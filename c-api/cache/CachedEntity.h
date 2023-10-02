@@ -12,7 +12,7 @@ namespace cache
     class CachedEntity : public virtual CachedWorldObject, public virtual CachedBaseObject, public virtual alt::IEntity
     {
     public:
-        CachedEntity(IEntity* base) : CachedBaseObject(base), CachedWorldObject(base), _id(base->GetID()),
+        CachedEntity(IEntity* base) : CachedBaseObject(base), CachedWorldObject(base),
                                       _networkOwner(base->GetNetworkOwner()),
                                       _model(base->GetModel()),
                                       _rotation(base->GetRotation()),
@@ -41,14 +41,7 @@ namespace cache
                 _streamSyncedMetaData[key] = base->GetStreamSyncedMetaData(key);
             }
         }
-
-        uint32_t _id;
-
-        uint32_t GetID() const override
-        {
-            return _id;
-        }
-
+        
         uint16_t GetSyncID() const override { return static_cast<uint16_t>(_id)/*only temp*/; }
 
         alt::IPlayer* _networkOwner;
@@ -213,13 +206,14 @@ namespace cache
         }
 
         uint32_t _streamingDistance;
-
         uint32_t GetStreamingDistance() const override
         {
             return _streamingDistance;
         }
 
         void SetMultipleStreamSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
+
+        void SetStreamingDistance(uint32_t streamingDistance) override {}
 #endif
 
 
