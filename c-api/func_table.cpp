@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 10237860134860447738UL;
+inline uint64_t capiHash = 1329516003325097705UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1398,6 +1398,7 @@ inline uint64_t capiHashes[] = {
     5985306302153035853UL,
     6937824812303569788UL,
     6004628797499736605UL,
+    13173445283048314724UL,
     12798418058428333585UL,
     8026011842118229214UL,
     18440396865533386791UL,
@@ -3132,6 +3133,7 @@ inline void* capiPointers[] = {
     (void*) Entity_SetMultipleStreamSyncedMetaData,
     (void*) Entity_SetNetOwner,
     (void*) Entity_SetStreamed,
+    (void*) Entity_SetStreamingDistance,
     (void*) Entity_SetStreamSyncedMetaData,
     (void*) Entity_SetVisible,
     (void*) Event_WeaponDamageEvent_SetDamageValue,
