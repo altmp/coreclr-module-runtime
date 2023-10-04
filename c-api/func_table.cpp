@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 1329516003325097705UL;
+inline uint64_t capiHash = 3415677601440942791UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1049,12 +1049,13 @@ inline uint64_t capiHashes[] = {
     13630176403103570557UL,
     3926770362965932159UL,
     7276494048261315747UL,
+    12468229273898885542UL,
     11611786081777275389UL,
     12434012012299018294UL,
     14291068473487208197UL,
     9480713887250028309UL,
     16862996593036574459UL,
-    6921054663232355759UL,
+    13737530370025977174UL,
     7482854450085275693UL,
     2139798095052897524UL,
     15652019729912249391UL,
@@ -2784,12 +2785,13 @@ inline void* capiPointers[] = {
     (void*) Core_FileRead,
     (void*) Core_GetAllResources,
     (void*) Core_GetBaseObjectByID,
+    (void*) Core_GetBaseObjectTypeSize,
     (void*) Core_GetBlips,
     (void*) Core_GetBranch,
     (void*) Core_GetCheckpoints,
     (void*) Core_GetColShapes,
     (void*) Core_GetCoreInstance,
-    (void*) Core_GetEventEnumSize,
+    (void*) Core_GetEventTypeSize,
     (void*) Core_GetMarkers,
     (void*) Core_GetMetaData,
     (void*) Core_GetNetTime,

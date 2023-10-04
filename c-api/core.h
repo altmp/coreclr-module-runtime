@@ -73,7 +73,8 @@ EXPORT_SHARED uint8_t Core_FileExists(alt::ICore* core, const char* path);
 EXPORT_SHARED const char* Core_FileRead(alt::ICore* core, const char* path, int32_t& size);
 EXPORT_SHARED alt::ICore* Core_GetCoreInstance();
 EXPORT_SHARED void Core_ToggleEvent(alt::ICore* core, uint8_t event, uint8_t state);
-EXPORT_SHARED uint8_t Core_GetEventEnumSize();
+EXPORT_SHARED uint8_t Core_GetEventTypeSize();
+EXPORT_SHARED uint8_t Core_GetBaseObjectTypeSize();
 EXPORT_SHARED uint8_t Core_GetVoiceConnectionState(alt::ICore* core);
 
 EXPORT_SERVER uint8_t Core_SubscribeCommand(alt::ICore* core, const char* cmd, alt::CommandCallback cb);

@@ -286,13 +286,17 @@ void Core_ToggleEvent(alt::ICore* core, uint8_t event, uint8_t state) {
     return core->ToggleEvent((alt::CEvent::Type) event, state);
 }
 
-uint8_t Core_GetEventEnumSize() {
-    return (uint8_t) alt::CEvent::Type::SIZE;
+uint8_t Core_GetEventTypeSize() {
+    return static_cast<uint8_t>(alt::CEvent::Type::SIZE);
+}
+
+uint8_t Core_GetBaseObjectTypeSize() {
+    return static_cast<uint8_t>(alt::IBaseObject::Type::SIZE);
 }
 
 uint8_t Core_GetVoiceConnectionState(alt::ICore* core)
 {
-    return (uint8_t) core->GetVoiceConnectionState();
+    return static_cast<uint8_t>(core->GetVoiceConnectionState());
 }
 
 alt::IObject** Core_GetNetworkObjects(alt::ICore* core, uint64_t& size)
