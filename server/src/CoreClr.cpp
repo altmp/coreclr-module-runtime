@@ -178,7 +178,7 @@ CoreClr::~CoreClr()
     }
 }
 
-/*bool CoreClr::GetDelegate(alt::ICore* server, void* runtimeHost, unsigned int domainId, const char* moduleName,
+/*bool CoreClr::GetDelegate(alt::ICore* core, void* runtimeHost, unsigned int domainId, const char* moduleName,
                           const char* classPath, const char* methodName, void** callback) {
     if (runtimeHost == nullptr || domainId == 0) {
         server->LogInfo(std::string("coreclr-module: Core CLR host not loaded"));
@@ -199,7 +199,7 @@ CoreClr::~CoreClr()
 }*/
 
 //TODO: don't include own dll or exe ect that is in the directory
-/*alt::Array<std::string> CoreClr::getTrustedAssemblies(alt::ICore* server, const char* appPath) {
+/*alt::Array<std::string> CoreClr::getTrustedAssemblies(alt::ICore* core, const char* appPath) {
     alt::Array<std::string> assemblies;
     const char* const tpaExtensions[] = {".ni.dll", ".dll", ".ni.exe", ".exe", ".winmd"};
 
@@ -277,7 +277,7 @@ CoreClr::~CoreClr()
 }*/
 
 //TODO: use APP_PATHS via path from main assembly because all assemblies are most likely in same path
-/*void CoreClr::CreateAppDomain(alt::ICore* server, alt::IResource* resource, const char* appPath, void** runtimeHost,
+/*void CoreClr::CreateAppDomain(alt::ICore* core, alt::IResource* resource, const char* appPath, void** runtimeHost,
                               unsigned int* domainId, bool executable, uint64_t resourceIndex, const char* domainName) {
     std::string tpaList = "";
 
@@ -351,7 +351,7 @@ CoreClr::~CoreClr()
     }
 }*/
 
-/*int CoreClr::Execute(alt::ICore* server, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
+/*int CoreClr::Execute(alt::ICore* core, alt::IResource* resource, const char* appPath, uint64_t resourceIndex,
                      void** runtimeHost,
                      const unsigned int* domainId) {
     auto executablePath = std::string(appPath) + PATH_SEPARATOR + resource->GetMain();
@@ -382,7 +382,7 @@ CoreClr::~CoreClr()
     return result;
 }*/
 
-/*void CoreClr::Shutdown(alt::ICore* server, void* runtimeHost,
+/*void CoreClr::Shutdown(alt::ICore* core, void* runtimeHost,
                        unsigned int domainId) {
     if (cxt != nullptr) {
         _closeFxr(cxt);
@@ -397,12 +397,12 @@ CoreClr::~CoreClr()
     }
 }*/
 
-void CoreClr::GetPath(alt::ICore* server, const char* defaultPath)
+void CoreClr::GetPath(alt::ICore* core, const char* defaultPath)
 {
     auto directory = opendir(defaultPath);
     if (directory == nullptr)
     {
-        server->LogInfo(std::string("coreclr-module: dotnet core sdk not found in ") + defaultPath);
+        core->LogInfo(std::string("coreclr-module: dotnet core sdk not found in ") + defaultPath);
         return;
     }
     struct dirent* entry;
@@ -413,12 +413,12 @@ void CoreClr::GetPath(alt::ICore* server, const char* defaultPath)
     {
         if (entry->d_type == DT_DIR && memcmp(entry->d_name, ".", 1) != 0 && memcmp(entry->d_name, "..", 2) != 0)
         {
-            server->LogInfo(std::string("coreclr-module: version found: ") + entry->d_name);
+            core->LogInfo(std::string("coreclr-module: version found: ") + entry->d_name);
             if (greatest == nullptr)
             {
                 if (semver_parse(entry->d_name, &greatest_version))
                 {
-                    server->LogInfo(std::string("coreclr-module: invalid version found: ") + entry->d_name);
+                    core->LogInfo(std::string("coreclr-module: invalid version found: ") + entry->d_name);
                     continue;
                 }
                 greatest = entry->d_name;
@@ -426,7 +426,7 @@ void CoreClr::GetPath(alt::ICore* server, const char* defaultPath)
             }
             if (semver_parse(entry->d_name, &compare_version))
             {
-                server->LogInfo(std::string("coreclr-module: invalid version found: ") + entry->d_name);
+                core->LogInfo(std::string("coreclr-module: invalid version found: ") + entry->d_name);
                 continue;
             }
             if (semver_compare(compare_version, greatest_version) > 0)
@@ -452,14 +452,14 @@ void CoreClr::GetPath(alt::ICore* server, const char* defaultPath)
     }
     if (greatest == nullptr)
     {
-        server->LogInfo(std::string("coreclr-module: No dotnet sdk version found"));
+        core->LogInfo(std::string("coreclr-module: No dotnet sdk version found"));
         return;
     }
     else
     {
         semver_free(&greatest_version);
     }
-    server->LogInfo(std::string("coreclr-module: greatest version: ") + greatest);
+    core->LogInfo(std::string("coreclr-module: greatest version: ") + greatest);
     size_t size = strlen(defaultPath) + strlen(greatest) + 1;
     runtimeDirectory = (char*)malloc(size);
     memset(runtimeDirectory, '\0', size);
@@ -473,7 +473,7 @@ void CoreClr::GetPath(alt::ICore* server, const char* defaultPath)
 }
 
 //TODO: https://github.com/rashiph/DecompliedDotNetLibraries/blob/6056fc6ff7ae8fb3057c936d9ebf36da73f990a6/mscorlib/System/__HResults.cs
-/*bool CoreClr::PrintError(alt::ICore* server, int errorCode) {
+/*bool CoreClr::PrintError(alt::ICore* core, int errorCode) {
     if (errorCode == -2146234304) {
         server->LogInfo(
                 std::string(
@@ -638,7 +638,7 @@ bool CoreClr::ExecuteManagedResource(const char* resourcePath, const char* resou
         const char* resourcePath;
         const char* resourceName;
         const char* resourceMain;
-        alt::ICore* serverPointer;
+        alt::ICore* corePointer;
         alt::IResource* resourcePointer;
         const function_table_t* funcTable;
     };

@@ -1,12 +1,13 @@
 #include "CSharpResourceImpl.h"
 #include "../../c-api/utils/entity.h"
+#include "../../c-api/mvalue.h"
 
-CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource)
+CSharpResourceImpl::CSharpResourceImpl(alt::ICore* core, CoreClr* coreClr, alt::IResource* resource)
     : alt::IResource::Impl()
 {
     ResetDelegates();
     this->resource = resource;
-    this->server = server;
+    this->core = core;
     this->invokers = {};
     this->coreClr = coreClr;
 }
@@ -77,7 +78,9 @@ void CSharpResourceImpl::ResetDelegates()
     OnPedDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPedHealDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
 
-    OnClientScriptRPCDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
+    OnScriptRPCDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
+
+    OnScriptRPCAnswerDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -93,7 +96,7 @@ bool CSharpResourceImpl::Start()
         return false;
     }
     if (MainDelegate == nullptr) return false;
-    MainDelegate(this->server, this->resource, this->resource->GetName().c_str(), resource->GetMain().c_str());
+    MainDelegate(this->core, this->resource, this->resource->GetName().c_str(), resource->GetMain().c_str());
     return true;
 }
 
@@ -838,15 +841,15 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             OnPlayerStopTalkingDelegate(player);
             break;
         }
-    case alt::CEvent::Type::CLIENT_SCRIPT_RPC_EVENT:
+    case alt::CEvent::Type::SCRIPT_RPC_EVENT:
         {
-            auto clientScriptRPCEvent = dynamic_cast<const alt::CClientScriptRPCEvent*>(ev);
+            auto scriptRPCEvent = dynamic_cast<const alt::CScriptRPCEvent*>(ev);
 
-            auto target = clientScriptRPCEvent->GetTarget();
+            auto target = scriptRPCEvent->GetTarget();
             if (target == nullptr) return;
 
-            auto name = clientScriptRPCEvent->GetName();
-            auto args = clientScriptRPCEvent->GetArgs();
+            auto name = scriptRPCEvent->GetName();
+            auto args = scriptRPCEvent->GetArgs();
             auto size = args.size();
             auto constArgs = new alt::MValueConst*[size];
 
@@ -855,12 +858,27 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                 constArgs[i] = &args[i];
             }
 
-            OnClientScriptRPCDelegate(clientScriptRPCEvent,
-                                      target,
-                                      name.c_str(),
-                                      constArgs,
-                                      size,
-                                      clientScriptRPCEvent->GetAnswerID()
+            OnScriptRPCDelegate(scriptRPCEvent,
+                                target,
+                                name.c_str(),
+                                constArgs,
+                                size,
+                                scriptRPCEvent->GetAnswerID()
+                                );
+            break;
+        }
+    case alt::CEvent::Type::SCRIPT_RPC_ANSWER_EVENT:
+        {
+            auto scriptRPCAnswerEvent = dynamic_cast<const alt::CScriptRPCAnswerEvent*>(ev);
+
+            auto target = scriptRPCAnswerEvent->GetTarget();
+            if (target == nullptr) return;
+
+            auto answers = scriptRPCAnswerEvent->GetAnswer();
+            OnScriptRPCAnswerDelegate(target,
+                                      scriptRPCAnswerEvent->GetAnswerID(),
+                                      AllocMValue(answers),
+                                      scriptRPCAnswerEvent->GetAnswerError().c_str()
                                       );
             break;
         }
@@ -1405,9 +1423,14 @@ void CSharpResourceImpl_SetPlayerStopTalkingDelegate(CSharpResourceImpl* resourc
     resource->OnPlayerStopTalkingDelegate = delegate;
 }
 
-void CSharpResourceImpl_SetClientScriptRPCDelegate(CSharpResourceImpl* resource, ClientScriptRPCDelegate_t delegate)
+void CSharpResourceImpl_SetScriptRPCDelegate(CSharpResourceImpl* resource, ScriptRPCDelegate_t delegate)
 {
-    resource->OnClientScriptRPCDelegate = delegate;
+    resource->OnScriptRPCDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetScriptRPCAnswerDelegate(CSharpResourceImpl* resource, ScriptRPCAnswerDelegate_t delegate)
+{
+    resource->OnScriptRPCAnswerDelegate = delegate;
 }
 
 bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)

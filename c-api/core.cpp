@@ -549,7 +549,7 @@ void Core_TriggerClientEventUnreliableForAll(alt::ICore* core, const char* ev, a
     core->TriggerClientEventUnreliableForAll(ev, mValues);
 }
 
-alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t &id) {
+alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t streamingDistance, uint32_t &id) {
     alt::Position position;
     position.x = pos.x;
     position.y = pos.y;
@@ -558,14 +558,14 @@ alt::IVehicle* Core_CreateVehicle(alt::ICore* core, uint32_t model, position_t p
     rotation.roll = rot.roll;
     rotation.pitch = rot.pitch;
     rotation.yaw = rot.yaw;
-    auto vehicle = core->CreateVehicle(model, position, rotation);
+    auto vehicle = core->CreateVehicle(model, position, rotation, streamingDistance);
     if (vehicle != nullptr) {
         id = vehicle->GetID();
     }
     return vehicle;
 }
 
-alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t &id)
+alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rotation_t rot, uint32_t streamingDistance, uint32_t &id)
 {
     alt::Position position;
     position.x = pos.x;
@@ -577,7 +577,7 @@ alt::IPed* Core_CreatePed(alt::ICore* core, uint32_t model, position_t pos, rota
     rotation.pitch = rot.pitch;
     rotation.yaw = rot.yaw;
 
-    auto ped = core->CreatePed(model, position, rotation);
+    auto ped = core->CreatePed(model, position, rotation, streamingDistance);
     if (ped != nullptr) {
         id = ped->GetID();
     }
@@ -822,7 +822,7 @@ alt::IMarker* Core_CreateMarker(alt::ICore* core, alt::IPlayer* target, uint8_t 
 }
 
 alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t model, position_t position, rotation_t rotation,
-    uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t& id)
+    uint8_t alpha, uint8_t textureVariation, uint16_t lodDistance, uint32_t streamingDistance, uint32_t& id)
 {
     alt::Position pos;
     pos.x = position.x;
@@ -834,7 +834,7 @@ alt::IObject* Core_CreateObject(alt::ICore* core, uint32_t model, position_t pos
     rot.pitch = rotation.pitch;
     rot.yaw = rotation.yaw;
 
-    auto networkObject = core->CreateObject(model, pos, rot, alpha, textureVariation, lodDistance);
+    auto networkObject = core->CreateObject(model, pos, rot, alpha, textureVariation, lodDistance, streamingDistance);
     if (networkObject != nullptr) {
         id = networkObject->GetID();
     }
@@ -1005,6 +1005,16 @@ void Core_TriggerClientRPCAnswer(alt::ICore* core, alt::IPlayer* target, uint16_
 {
     if(answer == nullptr) return;
     core->TriggerClientRPCAnswer(target, answerID, answer->get()->Clone(), error);
+}
+
+uint16_t Core_TriggerClientRPCEvent(alt::ICore* core, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
+    int size)
+{
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    return core->TriggerClientRPCEvent(target, ev, mValues);
 }
 #endif
 
@@ -1617,8 +1627,8 @@ alt::IWebSocketClient* Core_CreateWebsocketClient(alt::ICore* core, alt::IResour
     return webSocketClient;
 }
 
-alt::IAudio* Core_CreateAudio(alt::ICore* core, const char* source, float volume, uint8_t isRadio, const char* basePath, alt::IResource* resource, uint32_t &id) {
-    auto audio = core->CreateAudio(source, volume, isRadio, basePath, resource);
+alt::IAudio* Core_CreateAudio(alt::ICore* core, const char* source, float volume, uint8_t isRadio, uint8_t clearCache, const char* basePath, alt::IResource* resource, uint32_t &id) {
+    auto audio = core->CreateAudio(source, volume, isRadio, clearCache, basePath, resource);
     if (audio != nullptr) {
         id = audio->GetID();
     }
@@ -2003,6 +2013,12 @@ void Core_GetAllWeaponData(alt::ICore* core, uint32_t weaponHashes[], uint64_t s
     for (uint64_t i = 0; i < size; i++) {
         weaponHashes[i] = weaponData[i]->GetNameHash();
     }
+}
+
+void Core_TriggerServerRPCAnswer(alt::ICore* core, uint16_t answerID, alt::MValueConst* answer, const char* error)
+{
+    if(answer == nullptr) return;
+    core->TriggerServerRPCAnswer(answerID, answer->get()->Clone(), error);
 }
 
 uint16_t Core_TriggerServerRPCEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size)

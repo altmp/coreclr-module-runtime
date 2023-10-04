@@ -77,4 +77,5 @@ typedef void (* PlayerStartLeaveVehicleDelegate_t)(void* target, void* player, u
 typedef void (* PlayerBulletHitDelegate_t)(uint32_t weapon, void* victim, alt::IBaseObject::Type victimType, position_t pos);
 
 typedef void (* VoiceConnectionDelegate_t)(uint8_t state);
-typedef void (* ServerScriptRPCAnswerDelegate_t)(uint16_t answerId, alt::MValueConst* answer, const char* answerError);
+typedef void (* ScriptRPCDelegate_t)(const alt::CEvent* event, const char* name, alt::MValueConst** args, uint64_t size, uint16_t answerID);
+typedef void (* ScriptRPCAnswerDelegate_t)(uint16_t answerId, alt::MValueConst* answer, const char* answerError);

@@ -586,14 +586,36 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
                                  size);
             break;
         }
-    case alt::CEvent::Type::SERVER_SCRIPT_RPC_ANSWER_EVENT:
+    case alt::CEvent::Type::SCRIPT_RPC_EVENT:
         {
-            auto serverScriptRPCAnswerEvent = dynamic_cast<const alt::CServerScriptRPCAnswerEvent*>(ev);
+            auto scriptRPCEvent = dynamic_cast<const alt::CScriptRPCEvent*>(ev);
 
-            auto answers = serverScriptRPCAnswerEvent->GetAnswer();
-            OnServerScriptRPCAnswerDelegate(serverScriptRPCAnswerEvent->GetAnswerID(),
-                                            AllocMValue(answers),
-                                            serverScriptRPCAnswerEvent->GetAnswerError().c_str());
+            auto name = scriptRPCEvent->GetName();
+            auto args = scriptRPCEvent->GetArgs();
+            auto size = args.size();
+            auto constArgs = new alt::MValueConst*[size];
+
+            for (uint64_t i = 0; i < size; i++)
+            {
+                constArgs[i] = &args[i];
+            }
+
+            OnScriptRPCDelegate(scriptRPCEvent,
+                                name.c_str(),
+                                constArgs,
+                                size,
+                                scriptRPCEvent->GetAnswerID()
+                                );
+            break;
+        }
+    case alt::CEvent::Type::SCRIPT_RPC_ANSWER_EVENT:
+        {
+            auto scriptRPCAnswerEvent = dynamic_cast<const alt::CScriptRPCAnswerEvent*>(ev);
+
+            auto answers = scriptRPCAnswerEvent->GetAnswer();
+            OnScriptRPCAnswerDelegate(scriptRPCAnswerEvent->GetAnswerID(),
+                                      AllocMValue(answers),
+                                      scriptRPCAnswerEvent->GetAnswerError().c_str());
             break;
         }
     default:
@@ -1023,5 +1045,6 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnVoiceConnectionDelegate = [](auto var) {};
 
-    OnServerScriptRPCAnswerDelegate = [](auto var, auto var2, auto var3) {};
+    OnScriptRPCDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+    OnScriptRPCAnswerDelegate = [](auto var, auto var2, auto var3) {};
 }
