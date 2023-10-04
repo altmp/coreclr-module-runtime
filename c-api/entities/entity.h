@@ -54,3 +54,4 @@ EXPORT_SERVER void Entity_SetMultipleStreamSyncedMetaData(alt::IEntity* entity, 
 EXPORT_SERVER uint32_t Entity_GetTimestamp(alt::IEntity* entity);
 
 EXPORT_SERVER uint32_t Entity_GetStreamingDistance(alt::IEntity* entity);
+EXPORT_SERVER void Entity_SetStreamingDistance(alt::IEntity* entity, uint32_t streamingDistance);
