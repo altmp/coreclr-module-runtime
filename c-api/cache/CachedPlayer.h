@@ -73,7 +73,8 @@ namespace cache
 										_dlcProps(13, { 0, 0, 0 }),
 										_headOverlays(13, { 0, 0, 0, 0, 0 }),
 										_faceFeatures(20, 0.0f),
-										_socialClubName(base->GetSocialClubName())
+										_socialClubName(base->GetSocialClubName()),
+    									_cloudID(base->GetCloudID())
 #elif ALT_CLIENT_API
                                       _talking(base->IsTalking()),
                                       _micLevel(base->GetMicLevel()),
@@ -571,7 +572,10 @@ namespace cache
     	}
         void SetNetworkOwnershipDisabled(bool disabled) override {}
 
-        void RequestCloudID(RequestAuthCallback callback) const override {}
+    	std::string _cloudID;
+    	std::string GetCloudID() const override {
+    		return _cloudID;
+    	}
 #endif
 
 
