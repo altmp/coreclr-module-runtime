@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 557522308693843528UL;
+inline uint64_t capiHash = 17234525495073991761UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1336,6 +1336,7 @@ inline uint64_t capiHashes[] = {
     12784287737200780200UL,
     12414549446254212526UL,
     6795936790869684439UL,
+    5931751806478777368UL,
     3581368898059030296UL,
     6049887365767315904UL,
     17973186281360658901UL,
@@ -3072,6 +3073,7 @@ inline void* capiPointers[] = {
     (void*) Core_GetEntitiesInDimensionCount,
     (void*) Core_GetEntitiesInRange,
     (void*) Core_GetEntitiesInRangeCount,
+    (void*) Core_GetLoadedVehicleModels,
     (void*) Core_GetMaxStreamingObjects,
     (void*) Core_GetMaxStreamingPeds,
     (void*) Core_GetMaxStreamingVehicles,

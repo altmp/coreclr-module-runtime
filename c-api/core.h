@@ -97,6 +97,7 @@ EXPORT_SERVER alt::IBlip* Core_CreateBlip(alt::ICore* core, uint8_t global, uint
 EXPORT_SERVER alt::IBlip* Core_CreateBlipAttached(alt::ICore* core, uint8_t global, uint8_t type, alt::IEntity* attachTo, alt::IPlayer* targets[], int targetsSize, uint32_t &id);
 
 EXPORT_SERVER ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* core, uint32_t hash);
+EXPORT_SERVER void Core_GetLoadedVehicleModels(alt::ICore* core, uint32_t*& loadedVehicleModelsOut, uint64_t& size);
 EXPORT_SERVER ClrPedModelInfo* Core_GetPedModelInfo(alt::ICore* core, uint32_t hash);
 EXPORT_SERVER ClrWeaponModelInfo* Core_GetWeaponModelByHash(alt::ICore* core, uint32_t hash);
 EXPORT_SERVER void Core_DeallocVehicleModelInfo(ClrVehicleModelInfo* modelInfo);

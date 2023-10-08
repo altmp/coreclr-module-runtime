@@ -644,6 +644,16 @@ ClrVehicleModelInfo* Core_GetVehicleModelInfo(alt::ICore* core, uint32_t hash) {
     return new ClrVehicleModelInfo(core->GetVehicleModelByHash(hash));
 }
 
+void Core_GetLoadedVehicleModels(alt::ICore* core, uint32_t*& loadedVehicleModelsOut, uint64_t& size) {
+    auto loadedVehicleModels = core->GetLoadedVehicleModels();
+    size = loadedVehicleModels.size();
+    auto valuesArr = new uint32_t[size];
+    for (auto i = 0; i < size; i++) {
+        valuesArr[i] = loadedVehicleModels[i];
+    }
+    loadedVehicleModelsOut = valuesArr;
+}
+
 ClrPedModelInfo* Core_GetPedModelInfo(alt::ICore* core, uint32_t hash) {
     return new ClrPedModelInfo(core->GetPedModelByHash(hash));
 }
@@ -1020,6 +1030,8 @@ uint16_t Core_TriggerClientRPCEvent(alt::ICore* core, alt::IPlayer* target, cons
     }
     return core->TriggerClientRPCEvent(target, ev, mValues);
 }
+
+
 #endif
 
 #ifdef ALT_CLIENT_API
