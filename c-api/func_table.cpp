@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 3415677601440942791UL;
+inline uint64_t capiHash = 17234525495073991761UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1298,6 +1298,7 @@ inline uint64_t capiHashes[] = {
     1577439110274874884UL,
     14204191833155309704UL,
     5988681596904693572UL,
+    7998061229071288348UL,
     4175744399917476392UL,
     3151831504154255688UL,
     11409383581668438027UL,
@@ -1310,7 +1311,6 @@ inline uint64_t capiHashes[] = {
     12079559810042444284UL,
     15232547943166326905UL,
     8806505177995284480UL,
-    1770482245441276749UL,
     13680172646316204766UL,
     16420035482870248864UL,
     6946126881626778655UL,
@@ -1336,6 +1336,7 @@ inline uint64_t capiHashes[] = {
     12784287737200780200UL,
     12414549446254212526UL,
     6795936790869684439UL,
+    5931751806478777368UL,
     3581368898059030296UL,
     6049887365767315904UL,
     17973186281360658901UL,
@@ -1435,6 +1436,7 @@ inline uint64_t capiHashes[] = {
     8762610273524807230UL,
     1189077145064378629UL,
     5651306477145172672UL,
+    16882896624777621388UL,
     11764387330920927539UL,
     7011145495489366030UL,
     4212976016289999495UL,
@@ -1483,7 +1485,6 @@ inline uint64_t capiHashes[] = {
     12300710546613769705UL,
     6739305111416325852UL,
     937601034617427157UL,
-    5929208054092149177UL,
     7259744676523289652UL,
     5085700603299897862UL,
     10836018786747292423UL,
@@ -3034,6 +3035,7 @@ inline void* capiPointers[] = {
     (void*) ConnectionInfo_GetBranch,
     (void*) ConnectionInfo_GetBuild,
     (void*) ConnectionInfo_GetCdnUrl,
+    (void*) ConnectionInfo_GetCloudID,
     (void*) ConnectionInfo_GetDiscordUserID,
     (void*) ConnectionInfo_GetHwIdExHash,
     (void*) ConnectionInfo_GetHwIdHash,
@@ -3046,7 +3048,6 @@ inline void* capiPointers[] = {
     (void*) ConnectionInfo_GetSocialName,
     (void*) ConnectionInfo_GetText,
     (void*) ConnectionInfo_IsAccepted,
-    (void*) ConnectionInfo_RequestCloudID,
     (void*) ConnectionInfo_SetText,
     (void*) Core_CreateBlip,
     (void*) Core_CreateBlipAttached,
@@ -3072,6 +3073,7 @@ inline void* capiPointers[] = {
     (void*) Core_GetEntitiesInDimensionCount,
     (void*) Core_GetEntitiesInRange,
     (void*) Core_GetEntitiesInRangeCount,
+    (void*) Core_GetLoadedVehicleModels,
     (void*) Core_GetMaxStreamingObjects,
     (void*) Core_GetMaxStreamingPeds,
     (void*) Core_GetMaxStreamingVehicles,
@@ -3171,6 +3173,7 @@ inline void* capiPointers[] = {
     (void*) Player_GetAmmoSpecialType,
     (void*) Player_GetAuthToken,
     (void*) Player_GetClothes,
+    (void*) Player_GetCloudID,
     (void*) Player_GetCurrentWeaponTintIndex,
     (void*) Player_GetDecorations,
     (void*) Player_GetDiscordId,
@@ -3219,7 +3222,6 @@ inline void* capiPointers[] = {
     (void*) Player_RemoveHeadOverlay,
     (void*) Player_RemoveWeapon,
     (void*) Player_RemoveWeaponComponent,
-    (void*) Player_RequestCloudID,
     (void*) Player_SetAmmo,
     (void*) Player_SetAmmoFlags,
     (void*) Player_SetAmmoMax,
