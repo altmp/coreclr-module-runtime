@@ -406,3 +406,5 @@ EXPORT_CLIENT void Core_TriggerServerRPCAnswer(alt::ICore* core, uint16_t answer
 EXPORT_CLIENT uint16_t Core_TriggerServerRPCEvent(alt::ICore* core, const char* ev, alt::MValueConst* args[], int size);
 
 EXPORT_SERVER void Core_AddClientConfigKey(alt::ICore* core, const char* key);
+
+EXPORT_SERVER uint8_t Core_HasBenefit(alt::ICore* core, uint8_t benefit);

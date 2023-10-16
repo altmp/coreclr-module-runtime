@@ -731,6 +731,11 @@ const char* Player_GetCloudID(alt::IPlayer* player, int32_t& size)
     return AllocateString(player->GetCloudID(), size);
 }
 
+uint8_t Player_GetCloudAuthResult(alt::IPlayer* player)
+{
+    return static_cast<uint8_t>(player->GetCloudAuthResult());
+}
+
 #endif
 
 #if ALT_CLIENT_API

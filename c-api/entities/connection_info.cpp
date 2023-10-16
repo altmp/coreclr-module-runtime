@@ -84,6 +84,11 @@ const char* ConnectionInfo_GetCloudID(alt::IConnectionInfo* connectionInfo, int3
     return AllocateString(connectionInfo->GetCloudID(), size);
 }
 
+uint8_t ConnectionInfo_GetCloudAuthResult(alt::IConnectionInfo* connectionInfo)
+{
+    return static_cast<uint8_t>(connectionInfo->GetCloudAuthResult());
+}
+
 uint8_t ConnectionInfo_IsAccepted(alt::IConnectionInfo* connectionInfo)
 {
     return connectionInfo->IsAccepted();

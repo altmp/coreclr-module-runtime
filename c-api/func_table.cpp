@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 7681312693895341258UL;
+inline uint64_t capiHash = 16823132029177673361UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1298,6 +1298,7 @@ inline uint64_t capiHashes[] = {
     1577439110274874884UL,
     14204191833155309704UL,
     5988681596904693572UL,
+    7415605567391116903UL,
     7998061229071288348UL,
     4175744399917476392UL,
     3151831504154255688UL,
@@ -1354,6 +1355,7 @@ inline uint64_t capiHashes[] = {
     3248388327195984217UL,
     4351657857321681174UL,
     5867649830401585497UL,
+    6859249960286086898UL,
     11016797678327133571UL,
     5640834261493040151UL,
     14370739159812248240UL,
@@ -1437,6 +1439,7 @@ inline uint64_t capiHashes[] = {
     8762610273524807230UL,
     1189077145064378629UL,
     5651306477145172672UL,
+    12981308539590504679UL,
     16882896624777621388UL,
     11764387330920927539UL,
     7011145495489366030UL,
@@ -3036,6 +3039,7 @@ inline void* capiPointers[] = {
     (void*) ConnectionInfo_GetBranch,
     (void*) ConnectionInfo_GetBuild,
     (void*) ConnectionInfo_GetCdnUrl,
+    (void*) ConnectionInfo_GetCloudAuthResult,
     (void*) ConnectionInfo_GetCloudID,
     (void*) ConnectionInfo_GetDiscordUserID,
     (void*) ConnectionInfo_GetHwIdExHash,
@@ -3092,6 +3096,7 @@ inline void* capiPointers[] = {
     (void*) Core_GetSyncSendThreadCount,
     (void*) Core_GetVehicleModelInfo,
     (void*) Core_GetWeaponModelByHash,
+    (void*) Core_HasBenefit,
     (void*) Core_HashPassword,
     (void*) Core_RegisterMetric,
     (void*) Core_RestartResource,
@@ -3175,6 +3180,7 @@ inline void* capiPointers[] = {
     (void*) Player_GetAmmoSpecialType,
     (void*) Player_GetAuthToken,
     (void*) Player_GetClothes,
+    (void*) Player_GetCloudAuthResult,
     (void*) Player_GetCloudID,
     (void*) Player_GetCurrentWeaponTintIndex,
     (void*) Player_GetDecorations,
