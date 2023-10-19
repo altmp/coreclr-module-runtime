@@ -736,6 +736,17 @@ uint8_t Player_GetCloudAuthResult(alt::IPlayer* player)
     return static_cast<uint8_t>(player->GetCloudAuthResult());
 }
 
+const char* Player_GetBloodDamageBase64(alt::IPlayer* player, int32_t& size)
+{
+    return AllocateString(player->GetBloodDamageBase64(), size);
+}
+
+void Player_SetBloodDamageBase64(alt::IPlayer* player, const char* bloodDamage)
+{
+    player->SetBloodDamageBase64(bloodDamage);
+}
+
+
 #endif
 
 #if ALT_CLIENT_API

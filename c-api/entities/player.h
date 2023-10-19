@@ -254,3 +254,6 @@ EXPORT_CLIENT alt::IAudioFilter* Player_GetFilter(alt::IPlayer* player);
 EXPORT_SHARED uint8_t Player_IsParachuting(alt::IPlayer* player);
 
 EXPORT_CLIENT const char* Player_GetTaskData(alt::IPlayer* player, int32_t& size);
+
+EXPORT_SERVER const char* Player_GetBloodDamageBase64(alt::IPlayer* player, int32_t& size);
+EXPORT_SERVER void Player_SetBloodDamageBase64(alt::IPlayer* player, const char* bloodDamage);

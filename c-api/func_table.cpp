@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 16823132029177673361UL;
+inline uint64_t capiHash = 14520310097856707558UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1438,6 +1438,7 @@ inline uint64_t capiHashes[] = {
     11704988286424373327UL,
     8762610273524807230UL,
     1189077145064378629UL,
+    3564984624015930350UL,
     5651306477145172672UL,
     12981308539590504679UL,
     16882896624777621388UL,
@@ -1496,6 +1497,7 @@ inline uint64_t capiHashes[] = {
     8083052449033648842UL,
     8622364715578198845UL,
     5448975639456714442UL,
+    12124194162167268069UL,
     11224074188063298114UL,
     1968418760268978302UL,
     9083292309969581317UL,
@@ -3179,6 +3181,7 @@ inline void* capiPointers[] = {
     (void*) Player_GetAmmoMax50,
     (void*) Player_GetAmmoSpecialType,
     (void*) Player_GetAuthToken,
+    (void*) Player_GetBloodDamageBase64,
     (void*) Player_GetClothes,
     (void*) Player_GetCloudAuthResult,
     (void*) Player_GetCloudID,
@@ -3237,6 +3240,7 @@ inline void* capiPointers[] = {
     (void*) Player_SetAmmoMax50,
     (void*) Player_SetAmmoSpecialType,
     (void*) Player_SetArmor,
+    (void*) Player_SetBloodDamageBase64,
     (void*) Player_SetClothes,
     (void*) Player_SetCurrentWeapon,
     (void*) Player_SetDateTime,
