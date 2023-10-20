@@ -21,7 +21,7 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_CLIENT uint16_t LocalObject_GetID(alt::ILocalObject* localObject);
+EXPORT_CLIENT uint32_t LocalObject_GetID(alt::ILocalObject* localObject);
 EXPORT_CLIENT alt::IObject* LocalObject_GetObject(alt::ILocalObject* localObject);
 EXPORT_CLIENT void LocalObject_ResetAlpha(alt::ILocalObject* localObject);
 

@@ -14,7 +14,7 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED uint16_t Ped_GetID(alt::IPed* ped);
+EXPORT_SHARED uint32_t Ped_GetID(alt::IPed* ped);
 EXPORT_SHARED alt::IEntity* Ped_GetEntity(alt::IPed* ped);
 
 EXPORT_SHARED uint16_t Ped_GetHealth(alt::IPed* ped);

@@ -22,7 +22,7 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED uint16_t Player_GetID(alt::IPlayer* player);
+EXPORT_SHARED uint32_t Player_GetID(alt::IPlayer* player);
 EXPORT_SHARED alt::IEntity* Player_GetEntity(alt::IPlayer* player);
 
 EXPORT_SHARED const char* Player_GetName(alt::IPlayer* player, int32_t& size);

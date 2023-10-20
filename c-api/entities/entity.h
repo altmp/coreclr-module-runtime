@@ -14,7 +14,7 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED uint16_t Entity_GetID(alt::IEntity* entity);
+EXPORT_SHARED uint32_t Entity_GetID(alt::IEntity* entity);
 EXPORT_SHARED alt::IWorldObject* Entity_GetWorldObject(alt::IEntity* entity);
 
 EXPORT_SHARED uint32_t Entity_GetModel(alt::IEntity* entity);

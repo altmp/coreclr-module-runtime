@@ -5,7 +5,7 @@
 
 CAPI_START()
 
-uint16_t Entity_GetID(alt::IEntity* entity) {
+uint32_t Entity_GetID(alt::IEntity* entity) {
     return entity->GetID();
 }
 

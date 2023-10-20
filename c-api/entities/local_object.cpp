@@ -10,7 +10,7 @@ CAPI_START()
 
 #ifdef ALT_CLIENT_API
 
-uint16_t LocalObject_GetID(alt::ILocalObject* localObject) {
+uint32_t LocalObject_GetID(alt::ILocalObject* localObject) {
     return localObject->GetID();
 }
 

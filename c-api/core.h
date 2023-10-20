@@ -133,9 +133,9 @@ EXPORT_SERVER void Core_SetWorldProfiler(alt::ICore* core, uint8_t state);
 EXPORT_SERVER uint64_t Core_GetEntitiesInDimensionCount(alt::ICore* core, int32_t dimension, uint64_t allowedTypes);
 EXPORT_SERVER uint64_t Core_GetEntitiesInRangeCount(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, uint64_t allowedTypes);
 EXPORT_SERVER uint64_t Core_GetClosestEntitiesCount(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, int32_t limit, uint64_t allowedTypes);
-EXPORT_SERVER void Core_GetEntitiesInDimension(alt::ICore* core, int32_t dimension, uint64_t allowedTypes, alt::IBaseObject* entities[], uint8_t types[], uint64_t size);
-EXPORT_SERVER void Core_GetEntitiesInRange(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, uint64_t allowedTypes, alt::IBaseObject* entities[], uint8_t types[], uint64_t size);
-EXPORT_SERVER void Core_GetClosestEntities(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, int32_t limit, uint64_t allowedTypes, alt::IBaseObject* entities[], uint8_t types[], uint64_t size);
+EXPORT_SERVER void Core_GetEntitiesInDimension(alt::ICore* core, int32_t dimension, uint64_t allowedTypes, void**& entities, uint8_t types[], uint64_t size);
+EXPORT_SERVER void Core_GetEntitiesInRange(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, uint64_t allowedTypes, void**& entities, uint8_t types[], uint64_t size);
+EXPORT_SERVER void Core_GetClosestEntities(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, int32_t limit, uint64_t allowedTypes, void**& entities, uint8_t types[], uint64_t size);
 
 #ifdef ALT_CLIENT_API
 EXPORT_CLIENT uint8_t Core_Client_FileExists(alt::ICore* core, alt::IResource* resource, const char* path);
