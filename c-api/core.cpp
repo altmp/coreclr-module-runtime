@@ -770,19 +770,21 @@ uint64_t Core_GetClosestEntitiesCount(alt::ICore* core, vector3_t position, int3
     return core->GetClosestEntities(pos, range, dimension, limit, allowedTypes).size();
 }
 
-void Core_GetEntitiesInDimension(alt::ICore* core, int32_t dimension, uint64_t allowedTypes, alt::IBaseObject* entities[], uint8_t types[], uint64_t size) {
+void Core_GetEntitiesInDimension(alt::ICore* core, int32_t dimension, uint64_t allowedTypes, void**& entities, uint8_t types[], uint64_t size) {
     auto entitiesArray = core->GetEntitiesInDimension(dimension, allowedTypes);
     if (entitiesArray.size() < size) {
         size = entitiesArray.size();
     }
 
+    auto entityArr = new void*[size];
     for (uint64_t i = 0; i < size; i++) {
-        entities[i] = entitiesArray[i];
+        entityArr[i] = Util_GetBaseObjectPointer(entitiesArray[i]);
         types[i] = (uint8_t) entitiesArray[i]->GetType();
     }
+    entities = entityArr;
 }
 
-void Core_GetEntitiesInRange(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, uint64_t allowedTypes, alt::IBaseObject* entities[], uint8_t types[], uint64_t size) {
+void Core_GetEntitiesInRange(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, uint64_t allowedTypes, void**& entities, uint8_t types[], uint64_t size) {
     alt::Position pos;
     pos.x = position.x;
     pos.y = position.y;
@@ -792,13 +794,16 @@ void Core_GetEntitiesInRange(alt::ICore* core, vector3_t position, int32_t range
     if (entitiesArray.size() < size) {
         size = entitiesArray.size();
     }
+
+    auto entityArr = new void*[size];
     for (uint64_t i = 0; i < size; i++) {
-        entities[i] = entitiesArray[i];
+        entityArr[i] = Util_GetBaseObjectPointer(entitiesArray[i]);
         types[i] = (uint8_t) entitiesArray[i]->GetType();
     }
+    entities = entityArr;
 }
 
-void Core_GetClosestEntities(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, int32_t limit, uint64_t allowedTypes, alt::IBaseObject* entities[], uint8_t types[], uint64_t size) {
+void Core_GetClosestEntities(alt::ICore* core, vector3_t position, int32_t range, int32_t dimension, int32_t limit, uint64_t allowedTypes, void**& entities, uint8_t types[], uint64_t size) {
     alt::Position pos;
     pos.x = position.x;
     pos.y = position.y;
@@ -808,10 +813,13 @@ void Core_GetClosestEntities(alt::ICore* core, vector3_t position, int32_t range
     if (entitiesArray.size() < size) {
         size = entitiesArray.size();
     }
+
+    auto entityArr = new void*[size];
     for (uint64_t i = 0; i < size; i++) {
-        entities[i] = entitiesArray[i];
+        entityArr[i] = Util_GetBaseObjectPointer(entitiesArray[i]);
         types[i] = (uint8_t) entitiesArray[i]->GetType();
     }
+    entities = entityArr;
 }
 
 alt::IMarker* Core_CreateMarker(alt::ICore* core, alt::IPlayer* target, uint8_t type, position_t position, rgba_t color,
