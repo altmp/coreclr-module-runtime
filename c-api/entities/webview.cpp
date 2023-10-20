@@ -1,5 +1,14 @@
 #include "webview.h"
 #include "../utils/strings.h"
+#include "../../c-api/mvalue.h"
+#include "../utils/macros.h"
+
+CAPI_START()
+
+uint32_t WebView_GetID(alt::IWebView* webView)
+{
+    return webView->GetID();
+}
 
 #ifdef ALT_CLIENT_API
 alt::IBaseObject* WebView_GetBaseObject(alt::IWebView* webview) {
@@ -71,4 +80,22 @@ void WebView_Focus(alt::IWebView* webview) {
 void WebView_Unfocus(alt::IWebView* webview) {
     webview->Unfocus();
 }
+
+void WebView_AddOutput(alt::IWebView* webView, alt::IAudioOutput* output)
+{
+    webView->AddOutput(output);
+}
+
+void WebView_RemoveOutput(alt::IWebView* webView, alt::IAudioOutput* output)
+{
+    webView->RemoveOutput(output);
+}
+
+alt::MValueConst* WebView_GetOutputs(alt::IWebView* webView)
+{
+    auto mValue = webView->GetOutputs();
+    return AllocMValue(std::move(mValue));
+}
 #endif
+
+CAPI_END()

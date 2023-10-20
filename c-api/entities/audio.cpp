@@ -1,27 +1,22 @@
 #include "audio.h"
 #include "../utils/strings.h"
 #include "../utils/entity.h"
+#include "../utils/macros.h"
+
+CAPI_START()
+
+uint32_t Audio_GetID(alt::IAudio* audio)
+{
+    return audio->GetID();
+}
 
 #ifdef ALT_CLIENT_API
 alt::IBaseObject* Audio_GetBaseObject(alt::IAudio* audio) {
     return dynamic_cast<alt::IBaseObject*>(audio);
 }
 
-
-uint32_t Audio_GetCategory(alt::IAudio* audio) {
-    return audio->GetCategory();
-}
-
-void Audio_SetCategory(alt::IAudio* audio, uint32_t value) {
-    audio->SetCategory(value);
-}
-
 double Audio_GetCurrentTime(alt::IAudio* audio) {
     return audio->GetCurrentTime();
-}
-
-uint8_t Audio_IsFrontendPlay(alt::IAudio* audio) {
-    return audio->IsFrontendPlay();
 }
 
 uint8_t Audio_GetLooped(alt::IAudio* audio) {
@@ -57,20 +52,12 @@ void Audio_SetVolume(alt::IAudio* audio, float value) {
 }
 
 
-void Audio_AddOutput_ScriptId(alt::IAudio* audio, uint32_t value) {
-    audio->AddOutput(value);
+void Audio_AddOutput(alt::IAudio* audio, alt::IAudioOutput* output) {
+    audio->AddOutput(output);
 }
 
-void Audio_AddOutput_Entity(alt::IAudio* audio, alt::IEntity* value) {
-    audio->AddOutput(value);
-}
-
-void Audio_RemoveOutput_ScriptId(alt::IAudio* audio, uint32_t value) {
-    audio->RemoveOutput(value);
-}
-
-void Audio_RemoveOutput_Entity(alt::IAudio* audio, alt::IEntity* value) {
-    audio->RemoveOutput(value);
+void Audio_RemoveOutput(alt::IAudio* audio, alt::IAudioOutput* output) {
+    audio->RemoveOutput(output);
 }
 
 void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint8_t*& entityTypesArray, uint32_t*& scriptIdArray, uint32_t& size) {
@@ -87,14 +74,14 @@ void Audio_GetOutputs(alt::IAudio* audio, void**& entityArray, uint8_t*& entityT
 
         auto mValue = outputs->Get(i);
         if (mValue->GetType() == alt::IMValue::Type::BASE_OBJECT) {
-            auto baseObject = dynamic_cast<const alt::IMValueBaseObject*>(mValue.Get())->Value();
+            auto baseObject = dynamic_cast<const alt::IMValueBaseObject*>(mValue.get())->Value();
 
             if (!baseObject) continue;
 
-            auto entityPtr = GetEntityPointer(baseObject.get());
+            auto entityPtr = Util_GetBaseObjectPointer(baseObject.get());
             if (entityPtr != nullptr) entityArr[i] = entityPtr;
         } else if (mValue->GetType() == alt::IMValue::Type::UINT) {
-            auto valueRef = dynamic_cast<const alt::IMValueUInt*>(mValue.Get())->Value();
+            auto valueRef = dynamic_cast<const alt::IMValueUInt*>(mValue.get())->Value();
             scriptIdArr[i] = valueRef;
         }
     }
@@ -120,3 +107,5 @@ void Audio_Seek(alt::IAudio* audio, double time) {
     audio->Seek(time);
 }
 #endif
+
+CAPI_END()

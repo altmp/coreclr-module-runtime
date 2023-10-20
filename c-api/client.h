@@ -20,5 +20,5 @@
 #endif
 
 EXPORT_CLIENT ONLY_MANUAL void SetResourceLoadDelegates(/** delegate **/ const CoreClrDelegate_t resourceExecute, /** delegate **/ const CoreClrDelegate_t resourceExecuteUnload, /** delegate **/ const CoreClrDelegate_t stopRuntime);
-EXPORT_CLIENT ONLY_MANUAL bool GetCachedAssembly(const char* name, int* bufferSize, void** buffer);
+EXPORT_CLIENT ONLY_MANUAL uint8_t GetCachedAssembly(const char* name, int* bufferSize, void** buffer);
 EXPORT_CLIENT void* GetNativeFuncTable();

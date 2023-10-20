@@ -2,8 +2,12 @@
 
 #include "../utils/strings.h"
 #include "../utils/uint.h"
+#include "../mvalue.h"
+#include "../utils/macros.h"
 
-uint16_t Player_GetID(alt::IPlayer* player) {
+CAPI_START()
+
+uint32_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();
 }
 
@@ -123,6 +127,8 @@ void* Player_GetEntityAimingAt(alt::IPlayer* player, alt::IBaseObject::Type &typ
                 return dynamic_cast<alt::IPlayer*>(entity);
             case alt::IBaseObject::Type::VEHICLE:
                 return dynamic_cast<alt::IVehicle*>(entity);
+            case alt::IBaseObject::Type::PED:
+                return dynamic_cast<alt::IPed*>(entity);
             default:
                 return nullptr;
         }
@@ -161,16 +167,45 @@ float Player_GetForwardSpeed(alt::IPlayer* player) {
 float Player_GetStrafeSpeed(alt::IPlayer* player) {
     return player->GetStrafeSpeed();
 }
-EXPORT_SHARED float Player_GetStrafeSpeed(alt::IPlayer* player);
+
+uint8_t Player_IsEnteringVehicle(alt::IPlayer* player)
+{
+    return player->IsEnteringVehicle();
+}
+
+uint8_t Player_IsLeavingVehicle(alt::IPlayer* player)
+{
+    return player->IsLeavingVehicle();
+}
+
+uint8_t Player_IsOnLadder(alt::IPlayer* player)
+{
+    return player->IsOnLadder();
+}
+
+uint8_t Player_IsInMelee(alt::IPlayer* player)
+{
+    return player->IsInMelee();
+}
+
+uint8_t Player_IsInCover(alt::IPlayer* player)
+{
+    return player->IsInCover();
+}
+
+uint8_t Player_IsParachuting(alt::IPlayer* player)
+{
+    return player->IsParachuting();
+}
 
 #ifdef ALT_SERVER_API
 alt::MValueConst* Player_GetLocalMetaData(alt::IPlayer* player, const char* key) {
-    return new alt::MValueConst(player->GetLocalMetaData(key));
+    return AllocMValue(player->GetLocalMetaData(key));
 }
 
 void Player_SetLocalMetaData(alt::IPlayer* player, const char* key, alt::MValueConst* val) {
     if (val == nullptr) return;
-    player->SetLocalMetaData(key, val->Get()->Clone());
+    player->SetLocalMetaData(key, val->get()->Clone());
 }
 
 uint8_t Player_HasLocalMetaData(alt::IPlayer* player, const char* key) {
@@ -242,10 +277,9 @@ uint8_t Player_RemoveWeapon(alt::IPlayer* player, uint32_t weapon) {
     return player->RemoveWeapon(weapon);
 }
 
-void Player_RemoveAllWeapons(alt::IPlayer* player) {
-    player->RemoveAllWeapons();
+void Player_RemoveAllWeapons(alt::IPlayer* player, uint8_t removeAllAmmo) {
+    player->RemoveAllWeapons(removeAllAmmo);
 }
-
 
 void Player_AddWeaponComponent(alt::IPlayer* player, uint32_t weapon, uint32_t component) {
     player->AddWeaponComponent(weapon, component);
@@ -279,6 +313,11 @@ void Player_SetCurrentWeapon(alt::IPlayer* player, uint32_t weapon) {
 
 uint64_t Player_GetWeaponCount(alt::IPlayer* player) {
     return player->GetWeapons().size();
+}
+
+uint8_t Player_HasWeapon(alt::IPlayer* player, uint32_t weapon)
+{
+    return player->HasWeapon(weapon);
 }
 
 void Player_GetWeapons(alt::IPlayer* player, weapon_t*& weapons, uint32_t& size) {
@@ -393,26 +432,8 @@ void Player_ClearProps(alt::IPlayer* player, uint8_t component) {
 
 
 uint8_t Player_IsEntityInStreamingRange(alt::IPlayer* player, alt::IEntity* entity) {
-    return player->IsEntityInStreamingRange(entity->GetID());
+    return player->IsEntityInStreamingRange(entity->GetSyncID());
 }
-
-
-void Player_AttachToEntity(alt::IPlayer* player, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot) {
-    alt::Position position{pos.x, pos.y, pos.z};
-    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    player->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
-}
-
-void Player_AttachToEntity_BoneString(alt::IPlayer* player, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot) {
-    alt::Position position{pos.x, pos.y, pos.z};
-    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    player->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
-}
-
-void Player_Detach(alt::IPlayer* player) {
-    player->Detach();
-}
-
 
 uint8_t Player_GetInvincible(alt::IPlayer* player) {
     return player->GetInvincible();
@@ -561,6 +582,171 @@ uint8_t Player_GetSendNames(alt::IPlayer* player){
     return player->GetSendNames();
 }
 
+void Player_PlayAnimation(alt::IPlayer* player, const char* animDict, const char* animName, float blendInSpeed,
+    float blendOutSpeed, int duration, int flags, float playbackRate, uint8_t lockX, uint8_t lockY, uint8_t lockZ)
+{
+    player->PlayAnimation(animDict, animName, blendInSpeed, blendOutSpeed, duration, flags, playbackRate, lockX, lockY, lockZ);
+}
+
+void Player_ClearTasks(alt::IPlayer* player)
+{
+    player->ClearTasks();
+}
+
+const char* Player_GetSocialClubName(alt::IPlayer* player, int32_t& size)
+{
+    return AllocateString(player->GetSocialClubName(), size);
+}
+
+void Player_SetAmmo(alt::IPlayer* player, uint32_t ammoHash, uint16_t ammo)
+{
+    player->SetAmmo(ammoHash, ammo);
+}
+
+uint16_t Player_GetAmmo(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return player->GetAmmo(ammoHash);
+}
+
+void Player_SetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash, uint16_t ammo)
+{
+    player->SetWeaponAmmo(weaponHash, ammo);
+}
+
+uint16_t Player_GetWeaponAmmo(alt::IPlayer* player, uint32_t weaponHash)
+{
+    return player->GetWeaponAmmo(weaponHash);
+}
+
+void Player_SetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash, uint32_t ammoSpecialType)
+{
+    player->SetAmmoSpecialType(ammoHash, (alt::AmmoSpecialType)ammoSpecialType);
+}
+
+uint32_t Player_GetAmmoSpecialType(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return (uint32_t)player->GetAmmoSpecialType(ammoHash);
+}
+
+void Player_SetAmmoFlags(alt::IPlayer* player, uint32_t ammoHash, uint8_t infiniteAmmo, uint8_t addSmokeOnExplosion, uint8_t fuse,
+    uint8_t fixedAfterExplosion)
+{
+    player->SetAmmoFlags(ammoHash,
+        {
+            static_cast<bool>(infiniteAmmo),
+            static_cast<bool>(addSmokeOnExplosion),
+            static_cast<bool>(fuse),
+            static_cast<bool>(fixedAfterExplosion)
+        });
+}
+
+ClrAmmoFlags* Player_GetAmmoFlags(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return new ClrAmmoFlags(player->GetAmmoFlags(ammoHash));
+}
+
+void Player_DeallocAmmoFlags(ClrAmmoFlags* ammoFlags)
+{
+    delete ammoFlags;
+}
+
+void Player_SetAmmoMax(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax)
+{
+    player->SetAmmoMax(ammoHash, ammoMax);
+}
+
+int32_t Player_GetAmmoMax(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return player->GetAmmoMax(ammoHash);
+}
+
+void Player_SetAmmoMax50(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax50)
+{
+    player->SetAmmoMax50(ammoHash, ammoMax50);
+}
+
+int32_t Player_GetAmmoMax50(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return player->GetAmmoMax50(ammoHash);
+}
+
+void Player_SetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash, int32_t ammoMax100)
+{
+    player->SetAmmoMax100(ammoHash, ammoMax100);
+}
+
+int32_t Player_GetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash)
+{
+    return player->GetAmmoMax100(ammoHash);
+}
+
+void Player_AddDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay)
+{
+    player->AddDecoration(collection, overlay);
+}
+
+void Player_RemoveDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay)
+{
+    player->RemoveDecoration(collection, overlay);
+}
+
+void Player_ClearDecorations(alt::IPlayer* player)
+{
+    player->ClearDecorations();
+}
+
+ClrDecoration** Player_GetDecorations(alt::IPlayer* player, uint64_t& size)
+{
+    auto decorations = player->GetDecorations();
+    size = decorations.size();
+    auto out = new ClrDecoration*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = new ClrDecoration(decorations[i]);
+    }
+
+    return out;
+}
+
+void Player_DeallocVehicleModelInfo(ClrDecoration** decoInfo) {
+    delete[] decoInfo;
+}
+
+void Player_PlayScenario(alt::IPlayer* player, const char* name)
+{
+    player->PlayScenario(name);
+}
+
+uint8_t Player_IsNetworkOwnershipDisabled(alt::IPlayer* player)
+{
+    return player->IsNetworkOwnershipDisabled();
+}
+
+void Player_SetNetworkOwnershipDisabled(alt::IPlayer* player, uint8_t state)
+{
+    player->SetNetworkOwnershipDisabled(state);
+}
+
+const char* Player_GetCloudID(alt::IPlayer* player, int32_t& size)
+{
+    return AllocateString(player->GetCloudID(), size);
+}
+
+uint8_t Player_GetCloudAuthResult(alt::IPlayer* player)
+{
+    return static_cast<uint8_t>(player->GetCloudAuthResult());
+}
+
+const char* Player_GetBloodDamageBase64(alt::IPlayer* player, int32_t& size)
+{
+    return AllocateString(player->GetBloodDamageBase64(), size);
+}
+
+void Player_SetBloodDamageBase64(alt::IPlayer* player, const char* bloodDamage)
+{
+    player->SetBloodDamageBase64(bloodDamage);
+}
+
+
 #endif
 
 #if ALT_CLIENT_API
@@ -595,7 +781,7 @@ alt::ILocalPlayer* Player_GetLocal() {
     return alt::ICore::Instance().GetLocalPlayer();
 }
 
-uint16_t LocalPlayer_GetID(alt::ILocalPlayer* player) {
+uint32_t LocalPlayer_GetID(alt::ILocalPlayer* player) {
     return player->GetID();
 }
 
@@ -609,7 +795,11 @@ uint16_t LocalPlayer_GetCurrentAmmo(alt::ILocalPlayer* localPlayer) {
 
 uint32_t LocalPlayer_GetCurrentWeaponHash(alt::ILocalPlayer* localPlayer) {
     const auto data = localPlayer->GetCurrentWeaponData();
-    return data.get()->GetNameHash();
+    if (!data)
+    {
+        return 0;
+    }
+    return data->GetNameHash();
 }
 
 uint16_t LocalPlayer_GetWeaponAmmo(alt::ILocalPlayer* localPlayer, uint32_t weaponHash) {
@@ -622,7 +812,12 @@ uint8_t LocalPlayer_HasWeapon(alt::ILocalPlayer* localPlayer, uint32_t weaponHas
 
 void LocalPlayer_GetWeapons(alt::ILocalPlayer* localPlayer, const uint32_t*& weapons, uint32_t& size) {
     auto arr = localPlayer->GetWeapons();
-    weapons = AllocateUInt32Array(arr, size);
+    std::vector<uint32_t> hashes {};
+    for (auto crr : arr)
+    {
+        hashes.push_back(crr.hash);
+    }
+    weapons = AllocateUInt32Array(hashes, size);
 }
 
 void LocalPlayer_GetWeaponComponents(alt::ILocalPlayer* localPlayer, uint32_t weaponHash, const uint32_t*& weaponComponents, uint32_t& size) {
@@ -650,6 +845,26 @@ void LocalPlayer_SetMaxStamina(alt::ILocalPlayer* localPlayer, float stamina)
     localPlayer->SetMaxStamina(stamina);
 }
 
+void Player_AddFilter(alt::IPlayer* player, alt::IAudioFilter* filter)
+{
+    player->AddFilter(filter);
+}
 
+void Player_RemoveFilter(alt::IPlayer* player)
+{
+    player->RemoveFilter();
+}
+
+alt::IAudioFilter* Player_GetFilter(alt::IPlayer* player)
+{
+    return player->GetFilter();
+}
+
+const char* Player_GetTaskData(alt::IPlayer* player, int32_t& size)
+{
+    return AllocateString(player->GetTaskData(), size);
+}
 
 #endif
+
+CAPI_END()

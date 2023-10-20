@@ -7,7 +7,6 @@
 #endif
 
 #include "cpp-sdk/SDK.h"
-#include "cpp-sdk/types/IConnectionInfo.h"
 #include "../utils/export.h"
 #include "../data/types.h"
 
@@ -15,6 +14,7 @@
 #pragma clang diagnostic pop
 #endif
 
+EXPORT_SHARED uint32_t WebView_GetID(alt::IWebView* webView);
 
 EXPORT_CLIENT alt::IBaseObject* WebView_GetBaseObject(alt::IWebView* webView);
 EXPORT_CLIENT uint8_t WebView_IsFocused(alt::IWebView* webView);
@@ -31,3 +31,6 @@ EXPORT_CLIENT void WebView_SetExtraHeader(alt::IWebView* webView, const char* ke
 EXPORT_CLIENT void WebView_SetZoomLevel(alt::IWebView* webView, float value);
 EXPORT_CLIENT void WebView_Focus(alt::IWebView* webView);
 EXPORT_CLIENT void WebView_Unfocus(alt::IWebView* webView);
+EXPORT_CLIENT void WebView_AddOutput(alt::IWebView* webView, alt::IAudioOutput* output);
+EXPORT_CLIENT void WebView_RemoveOutput(alt::IWebView* webView, alt::IAudioOutput* output);
+EXPORT_CLIENT alt::MValueConst* WebView_GetOutputs(alt::IWebView* webView);

@@ -1,25 +1,19 @@
 #include "voice_channel.h"
 
+#include "../mvalue.h"
+#include "../utils/macros.h"
+
+CAPI_START()
+
+uint32_t VoiceChannel_GetID(alt::IVoiceChannel* voiceChannel)
+{
+    return voiceChannel->GetID();
+}
+
 #ifdef ALT_SERVER_API
+
 alt::IBaseObject* VoiceChannel_GetBaseObject(alt::IVoiceChannel* channel) {
     return dynamic_cast<alt::IBaseObject*>(channel);
-}
-
-alt::MValueConst* VoiceChannel_GetMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
-    return new alt::MValueConst(voiceChannel->GetMetaData(key));
-}
-
-void VoiceChannel_SetMetaData(alt::IVoiceChannel* channel, const char* key, alt::MValueConst* val) {
-    if (val == nullptr) return;
-    channel->SetMetaData(key, val->Get()->Clone());
-}
-
-uint8_t VoiceChannel_HasMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
-    return voiceChannel->HasMetaData(key);
-}
-
-void VoiceChannel_DeleteMetaData(alt::IVoiceChannel* voiceChannel, const char* key) {
-    voiceChannel->DeleteMetaData(key);
 }
 
 void VoiceChannel_AddPlayer(alt::IVoiceChannel* channel, alt::IPlayer* player) {
@@ -57,4 +51,43 @@ uint8_t VoiceChannel_IsSpatial(alt::IVoiceChannel* channel) {
 float VoiceChannel_GetMaxDistance(alt::IVoiceChannel* channel) {
     return channel->GetMaxDistance();
 }
+
+uint32_t VoiceChannel_GetFilter(alt::IVoiceChannel* channel)
+{
+    return channel->GetFilter();
+}
+
+void VoiceChannel_SetFilter(alt::IVoiceChannel* channel, uint32_t filter)
+{
+    channel->SetFilter(filter);
+}
+
+int32_t VoiceChannel_GetPriority(alt::IVoiceChannel* channel)
+{
+    return channel->GetPriority();
+}
+
+void VoiceChannel_SetPriority(alt::IVoiceChannel* channel, int32_t priority)
+{
+    channel->SetPriority(priority);
+}
+
+alt::IPlayer** VoiceChannel_GetPlayers(alt::IVoiceChannel* channel, uint64_t& size)
+{
+    const auto players = channel->GetPlayers();
+    size = players.size();
+    const auto out = new alt::IPlayer*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = players[i];
+    }
+
+    return out;
+}
+
+uint64_t VoiceChannel_GetPlayerCount(alt::IVoiceChannel* channel)
+{
+    return channel->GetPlayerCount();
+}
 #endif
+
+CAPI_END()

@@ -1,8 +1,11 @@
 #include "vehicle.h"
 #include "../utils/strings.h"
 #include "../cache/CachedVehicle.h"
+#include "../utils/macros.h"
 
-uint16_t Vehicle_GetID(alt::IVehicle* entity) {
+CAPI_START()
+
+uint32_t Vehicle_GetID(alt::IVehicle* entity) {
     return entity->GetID();
 }
 
@@ -18,13 +21,18 @@ int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle) {
     return vehicle->GetPetrolTankHealth();
 }
 
+float Vehicle_GetSteeringAngle(alt::IVehicle* vehicle)
+{
+    return vehicle->GetSteeringAngle();
+}
+
 
 #ifdef ALT_SERVER_API
 alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
     return vehicle->GetDriver();
 }
 
-uint8_t Vehicle_GetDriverID(alt::IVehicle* vehicle, uint16_t& id) {
+uint8_t Vehicle_GetDriverID(alt::IVehicle* vehicle, uint32_t& id) {
     auto driver = vehicle->GetDriver();
     if (driver == nullptr) return false;
     id = driver->GetID();
@@ -638,27 +646,6 @@ void Vehicle_Repair(alt::IVehicle* vehicle) {
     vehicle->SetFixed();
 }
 
-
-void Vehicle_AttachToEntity(alt::IVehicle* vehicle, alt::IEntity* entity, int16_t otherBone, int16_t ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
-{
-    alt::Position position{pos.x, pos.y, pos.z};
-    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
-}
-
-void Vehicle_AttachToEntity_BoneString(alt::IVehicle* vehicle, alt::IEntity* entity, const char* otherBone, const char* ownBone, position_t pos, rotation_t rot, uint8_t collision, uint8_t noFixedRot)
-{
-    alt::Position position{pos.x, pos.y, pos.z};
-    alt::Rotation rotation{rot.roll, rot.pitch, rot.yaw};
-    vehicle->AttachToEntity(entity, otherBone, ownBone, position, rotation, collision, noFixedRot);
-}
-
-void Vehicle_Detach(alt::IVehicle* vehicle)
-{
-    vehicle->Detach();
-}
-
-
 void Vehicle_GetVelocity(alt::IVehicle* vehicle, position_t &velocity) {
     auto vehicleVelocity = vehicle->GetVelocity();
     velocity.x = vehicleVelocity[0];
@@ -890,6 +877,31 @@ void Vehicle_SetHybridExtraState(alt::IVehicle* vehicle, uint8_t state) {
     vehicle->SetHybridExtraState(state);
 }
 
+alt::Quaternion Vehicle_GetQuaternion(alt::IVehicle* vehicle)
+{
+    return vehicle->GetQuaternion();
+}
+
+void Vehicle_SetQuaternion(alt::IVehicle* vehicle, alt::Quaternion quaternion)
+{
+    vehicle->SetQuaternion(quaternion);
+}
+
+uint8_t Vehicle_IsHornActive(alt::IVehicle* vehicle)
+{
+    return vehicle->IsHornActive();
+}
+
+float Vehicle_GetAccelerationLevel(alt::IVehicle* vehicle)
+{
+    return vehicle->GetAccelerationLevel();
+}
+
+float Vehicle_GetBrakeLevel(alt::IVehicle* vehicle)
+{
+    return vehicle->GetBrakeLevel();
+}
+
 #endif
 
 #ifdef ALT_CLIENT_API
@@ -914,12 +926,21 @@ uint16_t Vehicle_GetMaxGear(alt::IVehicle* vehicle) {
     return vehicle->GetMaxGear();
 }
 
+void Vehicle_SetSteeringAngle(alt::IVehicle* vehicle, float value)
+{
+    vehicle->SetSteeringAngle(value);
+}
+
 void Vehicle_SetMaxGear(alt::IVehicle* vehicle, uint16_t value) {
     vehicle->SetMaxGear(value);
 }
 
 float Vehicle_GetCurrentRPM(alt::IVehicle* vehicle) {
     return vehicle->GetCurrentRPM();
+}
+
+void Vehicle_SetCurrentRPM(alt::IVehicle* vehicle, float rpm) {
+    vehicle->SetCurrentRPM(rpm);
 }
 
 uint8_t Vehicle_GetSeatCount(alt::IVehicle* vehicle) {
@@ -1067,6 +1088,16 @@ void Vehicle_SetBatteryLightState(alt::IVehicle* vehicle, uint8_t state) {
 
 void Vehicle_ResetDashboardLights(alt::IVehicle* vehicle) {
     vehicle->ResetDashboardLights();
+}
+
+float Vehicle_GetSuspensionHeight(alt::IVehicle* vehicle)
+{
+    return vehicle->GetSuspensionHeight();
+}
+
+void Vehicle_SetSuspensionHeight(alt::IVehicle* vehicle, float value)
+{
+    vehicle->SetSuspensionHeight(value);
 }
 
 void Vehicle_ResetHandling(alt::IVehicle* vehicle) {
@@ -1673,3 +1704,5 @@ void Vehicle_Handling_SetDamageFlags(alt::IVehicle* vehicle, uint32_t value) {
 }
 
 #endif
+
+CAPI_END()

@@ -12,49 +12,90 @@ namespace cache
         Type _type;
 
     public:
-
-        ~CachedBaseObject() override {
+        ~CachedBaseObject() override
+        {
         };
-        
-        CachedBaseObject(IBaseObject* base) : _type(base->GetType()) {
+
+        CachedBaseObject(IBaseObject* base) : _type(base->GetType()), _id(base->GetID())
+        {
             auto keys = base->GetMetaDataKeys();
-            for (const auto& key : keys) {
+            for (const auto& key : keys)
+            {
                 _metaData[key] = base->GetMetaData(key);
             }
         }
-        
-        Type GetType() const override {
+
+        Type GetType() const override
+        {
             return _type;
         }
 
         std::unordered_map<std::string, alt::MValueConst> _metaData = {};
-        bool HasMetaData(const std::string& key) const override {
+
+        bool HasMetaData(const std::string& key) const override
+        {
             return _metaData.find(key) != _metaData.end();
         }
-        
-        alt::MValueConst GetMetaData(const std::string& key) const override {
+
+        alt::MValueConst GetMetaData(const std::string& key) const override
+        {
             const auto find = _metaData.find(key);
             if (find == _metaData.end()) return alt::ICore::Instance().CreateMValueNil();
             return find->second;
         }
-        
-        std::vector<std::string> GetMetaDataKeys() const override {
+
+        std::vector<std::string> GetMetaDataKeys() const override
+        {
             std::vector<std::string> keys(_metaData.size());
-            for(const auto &kv : _metaData) {
-                keys.push_back(kv.first);  
+            for (const auto& kv : _metaData)
+            {
+                keys.push_back(kv.first);
             }
 
             return keys;
         }
-        
-        void SetMetaData(const std::string& key, alt::MValue val) override {
-        }
-        
-        void DeleteMetaData(const std::string& key) override {
+
+        void SetMetaData(const std::string& key, alt::MValue val) override
+        {
         }
 
-		bool IsRemoved() const {
-			return false;
-		}
+        void DeleteMetaData(const std::string& key) override
+        {
+        }
+
+        bool IsRemoved() const
+        {
+            return false;
+        }
+        
+        bool HasSyncedMetaData(const std::string & key) const override
+        {
+            return false;
+        }
+        
+        alt::MValueConst GetSyncedMetaData(const std::string & key) const override
+        {
+            return alt::ICore::Instance().CreateMValueNil();
+        }
+
+        uint32_t _id;
+        uint32_t GetID() const override
+        {
+            return _id;
+        }
+        
+        std::vector<std::string> GetSyncedMetaDataKeys() const override
+        {
+            return {};
+        }
+
+        void SetMultipleMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
+
+#ifdef ALT_SERVER_API
+        void SetMultipleSyncedMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {}
+        void SetSyncedMetaData(const std::string& key, alt::MValue val) override {}
+        void DeleteSyncedMetaData(const std::string& key) override {}
+#endif
+
     };
 } // namespace alt

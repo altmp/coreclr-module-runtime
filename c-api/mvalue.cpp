@@ -1,5 +1,32 @@
 #include "mvalue.h"
 #include "utils/strings.h"
+#include <list>
+
+#include "utils/macros.h"
+
+CAPI_START()
+
+static std::list<alt::MValueConst> mvalues;
+static std::mutex mvalueLock;
+
+alt::MValueConst* AllocMValue(alt::MValueConst val) {
+    std::unique_lock lock(mvalueLock);
+    mvalues.push_back(val);
+    return &mvalues.back();
+}
+
+void FreeMValue(alt::MValueConst* val) {
+    std::unique_lock lock(mvalueLock);
+    if (mvalues.empty()) return;
+    for (auto it = mvalues.begin(); it != mvalues.end(); ++it)
+    {
+        if (&*it == val)
+        {
+            mvalues.erase(it);
+            break;
+        }
+    }
+}
 
 void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, alt::MValueConst *val);
 void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *val, alt::Size i);
@@ -9,7 +36,7 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
         mValues[i] = core->CreateMValueNil();
         return;
     }
-    auto mValue = val->Get();
+    auto mValue = val->get();
     switch (mValue->GetType()) {
         case alt::IMValue::Type::NONE:
             mValues[i] = core->CreateMValueNone();
@@ -51,13 +78,11 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
             alt::MValueDict dict = core->CreateMValueDict();
 
             alt::MValueConst innerVal;
-            alt::IMValueDict::Iterator *it = cVal->Begin();
             std::string key;
-            while (it != nullptr) {
-                innerVal = it->GetValue();
-                key = it->GetKey();
+            for (auto it = cVal->Begin(); it != cVal->End(); ++it) {
+                innerVal = it->second;
+                key = it->first;
                 ToMValueDict(dict, key, core, &innerVal);
-                it = cVal->Next();
             }
             mValues[i] = dict;
             return;
@@ -73,7 +98,7 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
             return;
         }
         case alt::IMValue::Type::FUNCTION:
-            mValues[i] = mValue;
+            mValues[i] = *val;
             return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
         case alt::IMValue::Type::VECTOR3:
             mValues[i] = core->CreateMValueVector3(dynamic_cast<const alt::IMValueVector3*>(mValue)->Value());
@@ -100,7 +125,7 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
         mValues->SetConst(i, core->CreateMValueNil());
         return;
     }
-    auto mValue = val->Get();
+    auto mValue = val->get();
     switch (mValue->GetType()) {
         case alt::IMValue::Type::NONE:
             mValues->SetConst(i, core->CreateMValueNone());
@@ -142,13 +167,11 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
             alt::MValueDict dict = core->CreateMValueDict();
 
             alt::MValueConst innerVal;
-            alt::IMValueDict::Iterator *it = cVal->Begin();
             std::string key;
-            while (it != nullptr) {
-                innerVal = it->GetValue();
-                key = it->GetKey();
+            for (auto it = cVal->Begin(); it != cVal->End(); ++it) {
+                innerVal = it->second;
+                key = it->first;
                 ToMValueDict(dict, key, core, &innerVal);
-                it = cVal->Next();
             }
             mValues->SetConst(i, dict);
             return;
@@ -164,7 +187,7 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
             return;
         }
         case alt::IMValue::Type::FUNCTION:
-            mValues->SetConst(i, mValue);
+            mValues->SetConst(i, *val);
             return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
         case alt::IMValue::Type::VECTOR3:
             mValues->SetConst(i, core->CreateMValueVector3(dynamic_cast<const alt::IMValueVector3*>(mValue)->Value()));
@@ -191,7 +214,7 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
         mValues->SetConst(key, core->CreateMValueNil());
         return;
     }
-    auto mValue = val->Get();
+    auto mValue = val->get();
     switch (mValue->GetType()) {
         case alt::IMValue::Type::NONE:
             mValues->SetConst(key, core->CreateMValueNone());
@@ -233,13 +256,11 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
             alt::MValueDict dict = core->CreateMValueDict();
 
             alt::MValueConst innerVal;
-            alt::IMValueDict::Iterator *it = cVal->Begin();
             std::string innerKey;
-            while (it != nullptr) {
-                innerVal = it->GetValue();
-                innerKey = it->GetKey();
+            for (auto it = cVal->Begin(); it != cVal->End(); ++it) {
+                innerVal = it->second;
+                innerKey = it->first;
                 ToMValueDict(dict, innerKey, core, &innerVal);
-                it = cVal->Next();
             }
             mValues->SetConst(key, dict);
             return;
@@ -255,7 +276,7 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
             return;
         }
         case alt::IMValue::Type::FUNCTION:
-            mValues->SetConst(key, mValue);
+            mValues->SetConst(key, *val);
             return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
         case alt::IMValue::Type::VECTOR3:
             mValues->SetConst(key, core->CreateMValueVector3(dynamic_cast<const alt::IMValueVector3*>(mValue)->Value()));
@@ -278,15 +299,15 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
 }
 
 void MValueConst_AddRef(alt::MValueConst *mValueConst) {
-    (*mValueConst)->AddRef();
+    // (*mValueConst)->AddRef();
 }
 
 void MValueConst_RemoveRef(alt::MValueConst *mValueConst) {
-    (*mValueConst)->RemoveRef();
+    // (*mValueConst)->RemoveRef();
 }
 
 uint8_t MValueConst_GetBool(alt::MValueConst *mValueConst) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BOOL) {
         return dynamic_cast<const alt::IMValueBool *>(mValue)->Value();
     }
@@ -294,7 +315,7 @@ uint8_t MValueConst_GetBool(alt::MValueConst *mValueConst) {
 }
 
 int64_t MValueConst_GetInt(alt::MValueConst *mValueConst) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::INT) {
         return dynamic_cast<const alt::IMValueInt *>(mValue)->Value();
     }
@@ -302,7 +323,7 @@ int64_t MValueConst_GetInt(alt::MValueConst *mValueConst) {
 }
 
 uint64_t MValueConst_GetUInt(alt::MValueConst *mValueConst) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::UINT) {
         return dynamic_cast<const alt::IMValueUInt *>(mValue)->Value();
     }
@@ -310,7 +331,7 @@ uint64_t MValueConst_GetUInt(alt::MValueConst *mValueConst) {
 }
 
 double MValueConst_GetDouble(alt::MValueConst *mValueConst) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::DOUBLE) {
         return dynamic_cast<const alt::IMValueDouble *>(mValue)->Value();
     }
@@ -318,7 +339,7 @@ double MValueConst_GetDouble(alt::MValueConst *mValueConst) {
 }
 
 const char* MValueConst_GetString(alt::MValueConst *mValueConst, int32_t &size) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::STRING) {
         auto string = dynamic_cast<const alt::IMValueString *>(mValue)->Value();
         return AllocateString(string, size);
@@ -327,7 +348,7 @@ const char* MValueConst_GetString(alt::MValueConst *mValueConst, int32_t &size) 
 }
 
 uint64_t MValueConst_GetListSize(alt::MValueConst *mValueConst) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::LIST) {
         auto list = dynamic_cast<const alt::IMValueList *>(mValue);
         if (list == nullptr) return 0;
@@ -337,12 +358,12 @@ uint64_t MValueConst_GetListSize(alt::MValueConst *mValueConst) {
 }
 
 uint8_t MValueConst_GetList(alt::MValueConst *mValueConst, alt::MValueConst *values[]) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::LIST) {
         auto list = dynamic_cast<const alt::IMValueList *>(mValue);
         for (uint64_t i = 0, length = list->GetSize(); i < length; i++) {
             alt::MValueConst mValueElement = list->Get(i);
-            values[i] = new alt::MValueConst(mValueElement);
+            values[i] = AllocMValue(mValueElement);
         }
         return true;
     }
@@ -350,7 +371,7 @@ uint8_t MValueConst_GetList(alt::MValueConst *mValueConst, alt::MValueConst *val
 }
 
 uint64_t MValueConst_GetDictSize(alt::MValueConst *mValueConst) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::DICT) {
         auto dict = dynamic_cast<const alt::IMValueDict *>(mValue);
         if (dict == nullptr) return 0;
@@ -361,30 +382,29 @@ uint64_t MValueConst_GetDictSize(alt::MValueConst *mValueConst) {
 
 uint8_t MValueConst_GetDict(alt::MValueConst *mValueConst, const char *keys[],
                             alt::MValueConst *values[]) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::DICT) {
         auto dict = dynamic_cast<const alt::IMValueDict *>(mValue);
-        auto next = dict->Begin();
-        if (next == nullptr) return true;
+        if (dict == nullptr) return true;
         uint64_t i = 0;
-        do {
-            auto key = next->GetKey();
+        for (auto next = dict->Begin(); next != dict->End(); ++next) {
+            auto key = next->first;
             auto keySize = key.size();
             auto keyArray = new char[keySize + 1];
             memcpy(keyArray, key.c_str(), keySize);
             keyArray[keySize] = '\0';
             keys[i] = keyArray;
-            alt::MValueConst mValueElement = next->GetValue();
-            values[i] = new alt::MValueConst(mValueElement);
+            alt::MValueConst mValueElement = next->second;
+            values[i] = AllocMValue(mValueElement);
             i++;
-        } while ((next = dict->Next()) != nullptr);
+        }
         return true;
     }
     return false;
 }
 
 void *MValueConst_GetEntity(alt::MValueConst *mValueConst, alt::IBaseObject::Type &type) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BASE_OBJECT) {
         auto entityPointer = dynamic_cast<const alt::IMValueBaseObject *>(mValue)->Value();
         if (entityPointer) {
@@ -415,6 +435,8 @@ void *MValueConst_GetEntity(alt::MValueConst *mValueConst, alt::IBaseObject::Typ
                     return entityPointer->As<alt::IRmlDocument>();
                 case alt::IBaseObject::Type::WEBSOCKET_CLIENT:
                     return entityPointer->As<alt::IWebSocketClient>();
+                case alt::IBaseObject::Type::PED:
+                    return entityPointer->As<alt::IPed>();
                 default:
                     return nullptr;
             }
@@ -425,9 +447,9 @@ void *MValueConst_GetEntity(alt::MValueConst *mValueConst, alt::IBaseObject::Typ
 
 alt::MValueConst *
 MValueConst_CallFunction(alt::ICore *core, alt::MValueConst *mValueConst, alt::MValueConst *val[], uint64_t size) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::FUNCTION) {
-        alt::MValueArgs value = alt::Array<alt::MValueConst>(size);
+        alt::MValueArgs value = std::vector<alt::MValueConst>(size);
         for (uint64_t i = 0; i < size; i++) {
             if (val == nullptr) {
                 value[i] = core->CreateMValueNil();
@@ -436,14 +458,14 @@ MValueConst_CallFunction(alt::ICore *core, alt::MValueConst *mValueConst, alt::M
             }
         }
         auto mValueFunction = dynamic_cast<const alt::IMValueFunction *>(mValue);
-        auto result = new alt::MValueConst(mValueFunction->Call(value));
+        auto result = AllocMValue(mValueFunction->Call(value));
         return result;
     }
     return nullptr;
 }
 
 void MValueConst_GetVector3(alt::MValueConst *mValueConst, position_t &position) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::VECTOR3) {
         auto vector = dynamic_cast<const alt::IMValueVector3 *>(mValue)->Value();
         position.x = vector[0];
@@ -453,7 +475,7 @@ void MValueConst_GetVector3(alt::MValueConst *mValueConst, position_t &position)
 }
 
 void MValueConst_GetRGBA(alt::MValueConst *mValueConst, rgba_t &rgba) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::RGBA) {
         auto rgbaValue = dynamic_cast<const alt::IMValueRGBA *>(mValue)->Value();
         rgba.r = rgbaValue.r;
@@ -464,7 +486,7 @@ void MValueConst_GetRGBA(alt::MValueConst *mValueConst, rgba_t &rgba) {
 }
 
 void MValueConst_GetByteArray(alt::MValueConst *mValueConst, uint64_t size, void *data) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BYTE_ARRAY) {
         auto byteArrayMValue = dynamic_cast<const alt::IMValueByteArray *>(mValue);
         auto byteArraySize = byteArrayMValue->GetSize();
@@ -477,7 +499,7 @@ void MValueConst_GetByteArray(alt::MValueConst *mValueConst, uint64_t size, void
 }
 
 uint64_t MValueConst_GetByteArraySize(alt::MValueConst *mValueConst) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BYTE_ARRAY) {
         return dynamic_cast<const alt::IMValueByteArray *>(mValue)->GetSize();
     }
@@ -490,31 +512,26 @@ uint64_t MValueConst_GetByteArraySize(alt::MValueConst *mValueConst) {
 }*/
 
 void MValueConst_Delete(alt::MValueConst *mValueConst) {
-    delete mValueConst;
+    FreeMValue(mValueConst);
 }
 
 uint8_t MValueConst_GetType(alt::MValueConst *mValueConst) {
-    auto mValue = mValueConst->Get();
+    auto mValue = mValueConst->get();
     if (mValue == nullptr) return (uint8_t) alt::IMValue::Type::NIL;
     return (uint8_t) mValue->GetType();
 }
 
-CustomInvoker *Invoker_Create(CSharpResourceImpl *resource, MValueFunctionCallback val) {
+CustomInvoker* Invoker_Create(CSharpResourceImpl* resource, MValueFunctionCallback val) {
     auto invoker = new CustomInvoker(val);
-    resource->invokers->Push(invoker);
+    std::unique_lock lock(resource->invokersLock);
+    resource->invokers.push_back(invoker);
     return invoker;
 }
 
-void Invoker_Destroy(CSharpResourceImpl *resource, CustomInvoker *val) {
-    auto newInvokers = new alt::Array<CustomInvoker *>();
-    for (alt::Size i = 0, length = resource->invokers->GetSize(); i < length; i++) {
-        auto invoker = (*resource->invokers)[i];
-        if (invoker != val) {
-            newInvokers->Push(invoker);
-        }
-    }
-    alt::Array<CustomInvoker *> *oldInvokers = resource->invokers;
-    resource->invokers = newInvokers;
-    delete val;
-    delete oldInvokers;
+void Invoker_Destroy(CSharpResourceImpl* resource, CustomInvoker* val) {
+    std::unique_lock lock(resource->invokersLock);
+    resource->invokers.erase(std::remove(resource->invokers.begin(), resource->invokers.end(), val), resource->invokers.end());
 }
+
+
+CAPI_END()
