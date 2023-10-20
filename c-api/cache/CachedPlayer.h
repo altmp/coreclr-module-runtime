@@ -74,7 +74,9 @@ namespace cache
 										_headOverlays(13, { 0, 0, 0, 0, 0 }),
 										_faceFeatures(20, 0.0f),
 										_socialClubName(base->GetSocialClubName()),
-    									_cloudID(base->GetCloudID())
+    									_cloudID(base->GetCloudID()),
+    									_cloudAuthResult(base->GetCloudAuthResult()),
+										_bloodDamageBase64(base->GetBloodDamageBase64())
 #elif ALT_CLIENT_API
                                       _talking(base->IsTalking()),
                                       _micLevel(base->GetMicLevel()),
@@ -570,12 +572,23 @@ namespace cache
     	{
     		return false;
     	}
-        void SetNetworkOwnershipDisabled(bool disabled) override {}
+    	void SetNetworkOwnershipDisabled(bool disabled) override {}
 
     	std::string _cloudID;
     	std::string GetCloudID() const override {
     		return _cloudID;
     	}
+
+        alt::CloudAuthResult _cloudAuthResult;
+    	alt::CloudAuthResult GetCloudAuthResult() const override {
+    		return _cloudAuthResult;
+    	}
+
+    	std::string _bloodDamageBase64;
+    	std::string GetBloodDamageBase64() const override {
+    		return _bloodDamageBase64;
+    	}
+        void SetBloodDamageBase64(const std::string& _base64) override {}
 #endif
 
 

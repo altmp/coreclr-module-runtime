@@ -34,6 +34,7 @@ EXPORT_SERVER const char* ConnectionInfo_GetText(alt::IConnectionInfo* connectio
 EXPORT_SERVER void ConnectionInfo_SetText(alt::IConnectionInfo* connectionInfo, const char* text);
 
 EXPORT_SERVER const char* ConnectionInfo_GetCloudID(alt::IConnectionInfo* connectionInfo, int32_t& size);
+EXPORT_SERVER uint8_t ConnectionInfo_GetCloudAuthResult(alt::IConnectionInfo* connectionInfo);
 
 EXPORT_SERVER void ConnectionInfo_Accept(alt::IConnectionInfo* connectionInfo, uint8_t sendNames);
 EXPORT_SERVER void ConnectionInfo_Decline(alt::IConnectionInfo* connectionInfo, const char* reason);

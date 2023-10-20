@@ -1031,6 +1031,15 @@ uint16_t Core_TriggerClientRPCEvent(alt::ICore* core, alt::IPlayer* target, cons
     return core->TriggerClientRPCEvent(target, ev, mValues);
 }
 
+void Core_AddClientConfigKey(alt::ICore* core, const char* key)
+{
+    core->AddClientConfigKey(key);
+}
+
+uint8_t Core_HasBenefit(alt::ICore* core, uint8_t benefit)
+{
+    return core->HasBenefit(static_cast<alt::Benefit>(benefit));
+}
 
 #endif
 

@@ -245,6 +245,7 @@ EXPORT_SERVER uint8_t Player_IsNetworkOwnershipDisabled(alt::IPlayer* player);
 EXPORT_SERVER void Player_SetNetworkOwnershipDisabled(alt::IPlayer* player, uint8_t state);
 
 EXPORT_SERVER const char* Player_GetCloudID(alt::IPlayer* player, int32_t& size);
+EXPORT_SERVER uint8_t Player_GetCloudAuthResult(alt::IPlayer* player);
 
 EXPORT_CLIENT void Player_AddFilter(alt::IPlayer* player, alt::IAudioFilter* filter);
 EXPORT_CLIENT void Player_RemoveFilter(alt::IPlayer* player);
@@ -253,3 +254,6 @@ EXPORT_CLIENT alt::IAudioFilter* Player_GetFilter(alt::IPlayer* player);
 EXPORT_SHARED uint8_t Player_IsParachuting(alt::IPlayer* player);
 
 EXPORT_CLIENT const char* Player_GetTaskData(alt::IPlayer* player, int32_t& size);
+
+EXPORT_SERVER const char* Player_GetBloodDamageBase64(alt::IPlayer* player, int32_t& size);
+EXPORT_SERVER void Player_SetBloodDamageBase64(alt::IPlayer* player, const char* bloodDamage);
