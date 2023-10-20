@@ -8,16 +8,8 @@ typedef void (* ServerEventDelegate_t)(const char* name, alt::MValueConst** args
 typedef void (* WebViewEventDelegate_t)(alt::IWebView*, const char* name, alt::MValueConst** args, uint64_t size);
 typedef void (* ConsoleCommandDelegate_t)(const char* name, const char* args[], uint64_t size);
 typedef void (* WebSocketEventDelegate_t)(alt::IWebSocketClient*, const char* name, alt::MValueConst** args, uint64_t size);
-typedef void (* RmlEventDelegate_t)(alt::IRmlElement*, const char* name, alt::IMValueDict* args, uint64_t size);
-
-typedef void (* CreatePlayerDelegate_t)(alt::IPlayer*, uint16_t id);
-typedef void (* RemovePlayerDelegate_t)(alt::IPlayer*);
-
-typedef void (* CreateObjectDelegate_t)(alt::IObject*, uint16_t id);
-typedef void (* RemoveObjectDelegate_t)(alt::IObject*);
-
-typedef void (* CreateVehicleDelegate_t)(alt::IVehicle*, uint16_t id);
-typedef void (* RemoveVehicleDelegate_t)(alt::IVehicle*);
+typedef void (* RmlEventDelegate_t)(alt::IRmlElement*, const char* name, alt::MValueConst* args);
+typedef void (* AudioEventDelegate_t)(alt::IAudio*, const char* name, alt::MValueConst** args, uint64_t size);
 
 typedef void (* PlayerSpawnDelegate_t)();
 typedef void (* PlayerDisconnectDelegate_t)();
@@ -45,14 +37,18 @@ typedef void (* GlobalSyncedMetaChangeDelegate_t)(const char* key, alt::MValueCo
 typedef void (* LocalMetaChangeDelegate_t)(const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
 typedef void (* StreamSyncedMetaChangeDelegate_t)(void* target, alt::IBaseObject::Type type, const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
 typedef void (* SyncedMetaChangeDelegate_t)(void* target, alt::IBaseObject::Type type, const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
+typedef void (* MetaChangeDelegate_t)(void* target, alt::IBaseObject::Type type, const char* key, alt::MValueConst* value, alt::MValueConst* oldValue);
 
 typedef void (* NetOwnerChangeDelegate_t)(void* target, alt::IBaseObject::Type targetBaseObjectType, alt::IPlayer* newOwner, alt::IPlayer* oldOwner);
-typedef void (* RemoveEntityDelegate_t)(void* target, alt::IBaseObject::Type targetBaseObjectType);
 
 typedef void (* TaskChangeDelegate_t)(uint32_t oldTask, uint32_t newTask);
 
 typedef void (* WindowFocusChangeDelegate_t)(uint8_t state);
 typedef void (* WindowResolutionChangeDelegate_t)(vector2_t oldRes, vector2_t newRes);
+
+typedef void (* WorldObjectPositionChangeDelegate_t)(void* target, alt::IBaseObject::Type type, position_t position);
+typedef void (* WorldObjectStreamInDelegate_t)(void* target, alt::IBaseObject::Type type);
+typedef void (* WorldObjectStreamOutDelegate_t)(void* target, alt::IBaseObject::Type type);
 
 typedef void (* PlayerWeaponShootDelegate_t)(uint32_t weapon, uint16_t totalAmmo, uint16_t ammoInClip);
 
@@ -61,22 +57,25 @@ typedef void (* PlayerWeaponChangeDelegate_t)(uint32_t oldWeapon, uint32_t newWe
 typedef void (* WeaponDamageDelegate_t)(const alt::CEvent* event, void* target,
                                         alt::IBaseObject::Type targetBaseObjectType,
                                         uint32_t weaponHash, uint32_t damageValue, position_t shotOffset,
-                                        alt::CWeaponDamageEvent::BodyPart bodyPart);
+                                        alt::CWeaponDamageEvent::BodyPart bodyPart,
+                                        void* sourceEntity,
+                                        alt::IBaseObject::Type sourceEntityType);
 
-typedef void (* CreateBlipDelegate_t)(alt::IBlip*);
-typedef void (* CreateWebViewDelegate_t)(alt::IWebView*);
-typedef void (* CreateCheckpointDelegate_t)(alt::ICheckpoint*);
-typedef void (* CreateWebSocketClientDelegate_t)(alt::IWebSocketClient*);
-typedef void (* CreateHttpClientDelegate_t)(alt::IHttpClient*);
-typedef void (* CreateAudioDelegate_t)(alt::IAudio*);
-typedef void (* CreateRmlElementDelegate_t)(alt::IRmlElement*);
-typedef void (* CreateRmlDocumentDelegate_t)(alt::IRmlDocument*);
+typedef void (* CreateBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType, uint32_t id);
 
-typedef void (* RemoveBlipDelegate_t)(alt::IBlip*);
-typedef void (* RemoveWebViewDelegate_t)(alt::IWebView*);
-typedef void (* RemoveCheckpointDelegate_t)(alt::ICheckpoint*);
-typedef void (* RemoveWebSocketClientDelegate_t)(alt::IWebSocketClient*);
-typedef void (* RemoveHttpClientDelegate_t)(alt::IHttpClient*);
-typedef void (* RemoveAudioDelegate_t)(alt::IAudio*);
-typedef void (* RemoveRmlElementDelegate_t)(alt::IRmlElement*);
-typedef void (* RemoveRmlDocumentDelegate_t)(alt::IRmlDocument*);
+typedef void (* RemoveBaseObjectDelegate_t)(void* baseObject, alt::IBaseObject::Type targetBaseObjectType);
+
+
+typedef void (* CheckpointDelegate_t)(alt::ICheckpoint* checkpoint, void* entity, alt::IBaseObject::Type type, uint8_t state);
+typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt::IBaseObject::Type type, uint8_t state);
+
+typedef void (* EntityHitEntityDelegate_t)(void* target, alt::IBaseObject::Type targetType, void* damager, alt::IBaseObject::Type damagerType, uint32_t weaponHash);
+
+typedef void (* PlayerStartEnterVehicleDelegate_t)(void* target, void* player, uint8_t seat);
+typedef void (* PlayerStartLeaveVehicleDelegate_t)(void* target, void* player, uint8_t seat);
+
+typedef void (* PlayerBulletHitDelegate_t)(uint32_t weapon, void* victim, alt::IBaseObject::Type victimType, position_t pos);
+
+typedef void (* VoiceConnectionDelegate_t)(uint8_t state);
+typedef void (* ScriptRPCDelegate_t)(const alt::CEvent* event, const char* name, alt::MValueConst** args, uint64_t size, uint16_t answerID);
+typedef void (* ScriptRPCAnswerDelegate_t)(uint16_t answerId, alt::MValueConst* answer, const char* answerError);

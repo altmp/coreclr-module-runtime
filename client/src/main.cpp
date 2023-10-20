@@ -21,7 +21,7 @@ EXPORT alt::IScriptRuntime* CreateScriptRuntimeCSharp(ICore* core)
         cs::Log::Info << "Main thread is " << std::this_thread::get_id() << cs::Log::Endl;
         cs::Log::Info << "Starting initialization" << cs::Log::Endl;
         auto* runtime = new CSharpScriptRuntime(core);
-        core->RegisterScriptRuntime("csharp", runtime);
+        // core->RegisterScriptRuntime("csharp", runtime);
         cs::Log::Info << "Initialized successfully" << cs::Log::Endl;
         return runtime;
     } catch(std::exception& e) {

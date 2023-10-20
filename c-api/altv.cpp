@@ -1,6 +1,7 @@
 #include "altv.h"
 
 #include "data/types.h"
+#include "utils/macros.h"
 #include "version/version.h"
 #if defined ALTV_CSHARP_SHARED || defined ALT_SERVER_API
 #include "cpp-sdk/version/version.h"
@@ -19,27 +20,11 @@
 #pragma clang diagnostic pop
 #endif
 
-using alt::Array;
+CAPI_START()
 
-void FreeUIntArray(alt::Array<uint32_t>* array) {
-    array->~Array<uint32_t>();
+void FreeUIntArray(std::vector<uint32_t>* array) {
+    array->clear();
 }
-
-/*void FreeStringViewArray(alt::Array<std::stringView>* array) {
-    array->~Array<std::stringView>();
-}*/
-
-/*void FreeStringArray(alt::Array<std::string>* array) {
-    array->~Array<std::string>();
-}*/
-
-/*void FreeMValueArray(alt::Array<alt::MValue>* array) {
-    array->~Array<alt::MValue>();
-}*/
-
-/*void FreePlayerPointerArray(alt::Array<alt::IPlayer*>* array) {
-    array->~Array<alt::IPlayer*>();
-}*/
 
 void FreeCharArray(char charArray[]) {
     delete[] charArray;
@@ -51,6 +36,11 @@ void FreeUInt32Array(uint32_t uInt32Array[]) {
 
 void FreeUInt8Array(uint8_t uInt8Array[]) {
     delete[] uInt8Array;
+}
+
+void FreeVector2Array(vector2_t* vector2Array)
+{
+    delete[] vector2Array;
 }
 
 void FreeVoidPointerArray(void* voidPointerArray[]) {
@@ -75,8 +65,77 @@ void FreeResourceArray(alt::IResource** resourceArray) {
     delete[] resourceArray;
 }
 
-void FreeObjectArray(alt::IObject** objectArray) {
+void FreePlayerArray(alt::IPlayer** playerArray) {
+    delete[] playerArray;
+}
+
+void FreeBlipArray(alt::IBlip** blipArray)
+{
+    delete[] blipArray;
+}
+
+void FreeVehicleArray(alt::IVehicle** vehicleArray)
+{
+    delete[] vehicleArray;
+}
+
+void FreePedArray(alt::IPed** pedArray)
+{
+    delete[] pedArray;
+}
+
+void FreeNetworkObjectArray(alt::IObject** networkObjectArray)
+{
+    delete[] networkObjectArray;
+}
+
+void FreeColShapeArray(alt::IColShape** colShapeArray)
+{
+    delete[] colShapeArray;
+}
+
+void FreeMarkerArray(alt::IMarker** markerArray)
+{
+    delete[] markerArray;
+}
+
+void FreeTextLabelArray(alt::ITextLabel** textLabelArray)
+{
+    delete[] textLabelArray;
+}
+
+void FreeCheckpointArray(alt::ICheckpoint** checkPointArray)
+{
+    delete[] checkPointArray;
+}
+
+void FreeVirtualEntityArray(alt::IVirtualEntity** virtualEntityArray)
+{
+    delete[] virtualEntityArray;
+}
+
+void FreeVirtualEntityGroupArray(alt::IVirtualEntityGroup** virtualEntityGroupArray)
+{
+    delete[] virtualEntityGroupArray;
+}
+
+void FreeConnectionInfoArray(alt::IConnectionInfo** connectionInfoArray)
+{
+    delete[] connectionInfoArray;
+}
+
+void FreeLocalObjectArray(alt::ILocalObject** objectArray) {
     delete[] objectArray;
+}
+
+void FreeAudioArray(alt::IAudio** audioArray)
+{
+    delete[] audioArray;
+}
+
+void FreeAudioOutputArray(alt::IAudioOutput** audioOutputArray)
+{
+    delete[] audioOutputArray;
 }
 
 void FreeMValueConstArray(alt::MValueConst** mValueConstArray) {
@@ -112,6 +171,16 @@ void FreeRmlElementArray(alt::IRmlElement** rmlElementArray) {
     delete[] rmlElementArray;
 }
 
+void FreeLocalVehicleArray(alt::ILocalVehicle** localVehicleArray)
+{
+    delete[] localVehicleArray;
+}
+
+void FreeLocalPedArray(alt::ILocalPed** localPedArray)
+{
+    delete[] localPedArray;
+}
+
 void* Win_GetTaskDialog() {
     char *pValue;
     size_t len;
@@ -131,3 +200,5 @@ void* Win_GetTaskDialog() {
 }
 
 #endif
+
+CAPI_END()

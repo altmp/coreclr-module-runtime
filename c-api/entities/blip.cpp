@@ -1,15 +1,39 @@
 #include "blip.h"
 
+#include "../utils/macros.h"
+
+CAPI_START()
+
+uint32_t Blip_GetID(alt::IBlip* blip)
+{
+    return blip->GetID();
+}
+
 alt::IWorldObject* Blip_GetWorldObject(alt::IBlip* blip) {
     return dynamic_cast<alt::IWorldObject*>(blip);
+}
+
+uint8_t Blip_IsVisible(alt::IBlip* blip)
+{
+    return blip->IsVisible();
+}
+
+void Blip_SetVisible(alt::IBlip* blip, uint8_t toggle)
+{
+    blip->SetVisible(toggle);
 }
 
 uint8_t Blip_IsGlobal(alt::IBlip* blip) {
     return blip->IsGlobal();
 }
 
-uint8_t Blip_GetType(alt::IBlip* blip) {
+uint8_t Blip_GetBlipType(alt::IBlip* blip) {
     return (uint8_t) blip->GetBlipType();
+}
+
+void Blip_SetBlipType(alt::IBlip* blip, uint8_t blipType)
+{
+    blip->SetBlipType((alt::IBlip::BlipType) blipType);
 }
 
 void Blip_GetScaleXY(alt::IBlip* blip, vector2_t &scale) {
@@ -25,27 +49,27 @@ void Blip_SetScaleXY(alt::IBlip* blip, vector2_t scale) {
     blip->SetScaleXY(blipScale);
 }
 
-int16_t Blip_GetDisplay(alt::IBlip* blip) {
+uint32_t Blip_GetDisplay(alt::IBlip* blip) {
     return blip->GetDisplay();
 }
 
-void Blip_SetDisplay(alt::IBlip* blip, int16_t display) {
+void Blip_SetDisplay(alt::IBlip* blip, uint32_t display) {
     blip->SetDisplay(display);
 }
 
-uint16_t Blip_GetSprite(alt::IBlip* blip) {
+uint32_t Blip_GetSprite(alt::IBlip* blip) {
     return blip->GetSprite();
 }
 
-void Blip_SetSprite(alt::IBlip* blip, uint16_t sprite) {
+void Blip_SetSprite(alt::IBlip* blip, uint32_t sprite) {
     blip->SetSprite(sprite);
 }
 
-uint8_t Blip_GetColor(alt::IBlip* blip) {
+uint32_t Blip_GetColor(alt::IBlip* blip) {
     return blip->GetColor();
 }
 
-void Blip_SetColor(alt::IBlip* blip, uint8_t color) {
+void Blip_SetColor(alt::IBlip* blip, uint32_t color) {
     blip->SetColor(color);
 }
 
@@ -66,11 +90,11 @@ void Blip_SetSecondaryColor(alt::IBlip* blip, rgba_t color) {
     blip->SetSecondaryColor(blipSecondaryColor);
 }
 
-uint8_t Blip_GetAlpha(alt::IBlip* blip) {
+uint32_t Blip_GetAlpha(alt::IBlip* blip) {
     return blip->GetAlpha();
 }
 
-void Blip_SetAlpha(alt::IBlip* blip, uint8_t alpha) {
+void Blip_SetAlpha(alt::IBlip* blip, uint32_t alpha) {
     blip->SetAlpha(alpha);
 }
 
@@ -154,11 +178,11 @@ void Blip_SetAsShortRange(alt::IBlip* blip, uint8_t state) {
     blip->SetAsShortRange(state);
 }
 
-uint16_t Blip_GetPriority(alt::IBlip* blip) {
+uint32_t Blip_GetPriority(alt::IBlip* blip) {
     return blip->GetPriority();
 }
 
-void Blip_SetPriority(alt::IBlip* blip, uint16_t priority) {
+void Blip_SetPriority(alt::IBlip* blip, uint32_t priority) {
     blip->SetPriority(priority);
 }
 
@@ -259,11 +283,11 @@ void Blip_SetCrewIndicatorVisible(alt::IBlip* blip, uint8_t state) {
     blip->SetCrewIndicatorVisible(state);
 }
 
-uint16_t Blip_GetCategory(alt::IBlip* blip) {
+uint32_t Blip_GetCategory(alt::IBlip* blip) {
     return blip->GetCategory();
 }
 
-void Blip_SetCategory(alt::IBlip* blip, uint16_t category) {
+void Blip_SetCategory(alt::IBlip* blip, uint32_t category) {
     blip->SetCategory(category);
 }
 
@@ -287,8 +311,6 @@ void Blip_Fade(alt::IBlip* blip, uint32_t opacity, uint32_t duration) {
     blip->Fade(opacity, duration);
 }
 
-
-#ifdef ALT_SERVER_API
 uint8_t Blip_IsAttached(alt::IBlip* blip) {
     return blip->IsAttached();
 }
@@ -298,25 +320,96 @@ void* Blip_AttachedTo(alt::IBlip* blip, alt::IBaseObject::Type &type) {
     if (entity != nullptr) {
         type = entity->GetType();
         switch (type) {
-            case alt::IBaseObject::Type::PLAYER:
-                return dynamic_cast<alt::IPlayer*>(entity);
-            case alt::IBaseObject::Type::VEHICLE:
-                return dynamic_cast<alt::IVehicle*>(entity);
-            default:
-                return nullptr;
+        case alt::IBaseObject::Type::PLAYER:
+            return dynamic_cast<alt::IPlayer*>(entity);
+        case alt::IBaseObject::Type::VEHICLE:
+            return dynamic_cast<alt::IVehicle*>(entity);
+        case alt::IBaseObject::Type::PED:
+            return dynamic_cast<alt::IPed*>(entity);
+        default:
+            return nullptr;
         }
     }
     return nullptr;
 }
-#endif
+
+uint8_t Blip_IsHiddenOnLegend(alt::IBlip* blip)
+{
+    return blip->IsHiddenOnLegend();
+}
+
+void Blip_SetHiddenOnLegend(alt::IBlip* blip, uint8_t state)
+{
+    blip->SetHiddenOnLegend(state);
+}
+
+uint8_t Blip_IsMinimalOnEdge(alt::IBlip* blip)
+{
+    return blip->IsMinimalOnEdge();
+}
+
+void Blip_SetMinimalOnEdge(alt::IBlip* blip, uint8_t state)
+{
+    blip->SetMinimalOnEdge(state);
+}
+
+uint8_t Blip_IsUseHeightIndicatorOnEdge(alt::IBlip* blip)
+{
+    return blip->IsUseHeightIndicatorOnEdge();
+}
+
+void Blip_SetUseHeightIndicatorOnEdge(alt::IBlip* blip, uint8_t state)
+{
+    blip->SetUseHeightIndicatorOnEdge(state);
+}
+
+uint8_t Blip_IsShortHeightThreshold(alt::IBlip* blip)
+{
+    return blip->IsShortHeightThreshold();
+}
+
+void Blip_SetShortHeightThreshold(alt::IBlip* blip, uint8_t state)
+{
+    blip->SetShortHeightThreshold(state);
+}
 
 #ifdef ALT_CLIENT_API
-uint32_t Blip_GetScriptID(alt::IBlip* blip) {
-    return blip->GetScriptID();
+uint32_t Blip_GetGameID(alt::IBlip* blip) {
+    return blip->GetGameID();
 }
 
-uint8_t Blip_IsRemote(alt::IBlip* blip) {
-    return blip->IsRemote();
+uint8_t Blip_IsStreamedIn(alt::IBlip* blip) {
+    return blip->IsStreamedIn();
 }
-
 #endif
+
+#if ALT_SERVER_API
+void Blip_SetGlobal(alt::IBlip* blip, uint8_t state)
+{
+    blip->SetGlobal(state);
+}
+
+void Blip_AddTargetPlayer(alt::IBlip* blip, alt::IPlayer* player)
+{
+    blip->AddTargetPlayer(player);
+}
+
+void Blip_RemoveTargetPlayer(alt::IBlip* blip, alt::IPlayer* player)
+{
+    blip->RemoveTargetPlayer(player);
+}
+
+alt::IPlayer** Blip_GetTargets(alt::IBlip* blip, uint64_t& size)
+{
+    auto targets = blip->GetTargets();
+    size = targets.size();
+    auto out = new alt::IPlayer*[size];
+    for (auto i = 0; i < size; i++) {
+        out[i] = targets[i];
+    }
+
+    return out;
+}
+#endif
+
+CAPI_END()

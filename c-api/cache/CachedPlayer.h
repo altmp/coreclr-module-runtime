@@ -14,34 +14,40 @@ namespace cache
     public:
 
         CachedPlayer(IPlayer* base) : CachedBaseObject(base), CachedWorldObject(base), CachedEntity(base),
-    									_name(base->GetName()),
-										_health(base->GetHealth()),
-										_maxHealth(base->GetMaxHealth()),
-										_currentWeapon(base->GetCurrentWeapon()),
-										_dead(base->IsDead()),
-										_jumping(base->IsJumping()),
-										_inRagdoll(base->IsInRagdoll()),
-										_aiming(base->IsAiming()),
-										_shooting(base->IsShooting()),
-										_reloading(base->IsReloading()),
-										_armour(base->GetArmour()),
-										_maxArmour(base->GetMaxArmour()),
-										_moveSpeed(base->GetMoveSpeed()),
-										_aimPos(base->GetAimPos()),
-										_headRotation(base->GetHeadRotation()),
-										_inVehicle(base->IsInVehicle()),
-										_vehicle(base->GetVehicle()),
-										_seat(base->GetSeat()),
-										_entityAimingAt(base->GetEntityAimingAt()),
-										_entityAimOffset(base->GetEntityAimOffset()),
-										_flashlightActive(base->IsFlashlightActive()),
-										_currentAnimationDict(base->GetCurrentAnimationDict()),
-										_currentAnimationName(base->GetCurrentAnimationName()),
-										_spawned(base->IsSpawned()),
-										_forwardSpeed(base->GetForwardSpeed()),
-										_strafeSpeed(base->GetStrafeSpeed()),
+                                      _name(base->GetName()),
+                                      _health(base->GetHealth()),
+                                      _maxHealth(base->GetMaxHealth()),
+    	                              _currentWeaponTintIndex(base->GetCurrentWeaponTintIndex()),
+                                      _currentWeapon(base->GetCurrentWeapon()),
+                                      _dead(base->IsDead()),
+                                      _jumping(base->IsJumping()),
+                                      _inRagdoll(base->IsInRagdoll()),
+                                      _aiming(base->IsAiming()),
+                                      _shooting(base->IsShooting()),
+                                      _reloading(base->IsReloading()),
+                                      _enteringVehicle(base->IsEnteringVehicle()),
+                                      _leavingVehicle(base->IsLeavingVehicle()),
+                                      _onLadder(base->IsOnLadder()),
+                                      _inMelee(base->IsInMelee()),
+                                      _inCover(base->IsInCover()),
+                                      _armour(base->GetArmour()),
+                                      _maxArmour(base->GetMaxArmour()),
+                                      _moveSpeed(base->GetMoveSpeed()),
+                                      _aimPos(base->GetAimPos()),
+                                      _headRotation(base->GetHeadRotation()),
+                                      _inVehicle(base->IsInVehicle()),
+                                      _vehicle(base->GetVehicle()),
+                                      _seat(base->GetSeat()),
+                                      _entityAimingAt(base->GetEntityAimingAt()),
+                                      _entityAimOffset(base->GetEntityAimOffset()),
+                                      _flashlightActive(base->IsFlashlightActive()),
+                                      _currentAnimationDict(base->GetCurrentAnimationDict()),
+                                      _currentAnimationName(base->GetCurrentAnimationName()),
+                                      _spawned(base->IsSpawned()),
+                                      _forwardSpeed(base->GetForwardSpeed()),
+                                      _strafeSpeed(base->GetStrafeSpeed()),
+                                      _parachuting(base->IsParachuting()),
 #ifdef ALT_SERVER_API
-										_currentWeaponTintIndex(base->GetCurrentWeaponTintIndex()),
 										_superJumpEnabled(base->IsSuperJumpEnabled()),
 										_crouching(base->IsCrouching()),
 										_stealthy(base->IsStealthy()),
@@ -66,13 +72,16 @@ namespace cache
 										_props(13, { 0, 0 }),
 										_dlcProps(13, { 0, 0, 0 }),
 										_headOverlays(13, { 0, 0, 0, 0, 0 }),
-										_faceFeatures(20, 0.0f)
-
+										_faceFeatures(20, 0.0f),
+										_socialClubName(base->GetSocialClubName()),
+    									_cloudID(base->GetCloudID()),
+    									_cloudAuthResult(base->GetCloudAuthResult()),
+										_bloodDamageBase64(base->GetBloodDamageBase64())
 #elif ALT_CLIENT_API
-										_talking(base->IsTalking()),
-										_micLevel(base->GetMicLevel()),
-										_spatialVolume(base->GetSpatialVolume()),
-										_nonSpatialVolume(base->GetNonSpatialVolume())
+                                      _talking(base->IsTalking()),
+                                      _micLevel(base->GetMicLevel()),
+                                      _spatialVolume(base->GetSpatialVolume()),
+                                      _nonSpatialVolume(base->GetNonSpatialVolume())
 #endif
         {
 #ifdef ALT_SERVER_API
@@ -93,10 +102,13 @@ namespace cache
 #endif
         }
 
-        std::string _name;
-        std::string GetName() const override {
-			return _name;
-		}
+
+        void SetMultipleMetaData(const std::unordered_map<std::string, alt::MValue>& values) override {};
+
+    	std::string _name;
+    	std::string GetName() const override {
+    		return _name;
+    	}
 
         uint16_t _health;
         uint16_t GetHealth() const override {
@@ -111,7 +123,7 @@ namespace cache
         bool HasWeaponComponent(uint32_t weapon, uint32_t component) const override {
 	        return false;
         }
-    	
+
         std::vector<unsigned> GetCurrentWeaponComponents() const override {
 			return {};
 		}
@@ -119,7 +131,7 @@ namespace cache
         uint8_t GetWeaponTintIndex(uint32_t weapon) const override {
 	        return 0;
         }
-    	
+
         uint8_t _currentWeaponTintIndex;
         uint8_t GetCurrentWeaponTintIndex() const override {
 			return _currentWeaponTintIndex;
@@ -153,12 +165,37 @@ namespace cache
         bool _shooting;
         bool IsShooting() const override {
 			return _shooting;
-		}
+        }
 
-        bool _reloading;
-        bool IsReloading() const override {
-			return _reloading;
-		}
+    	bool _reloading;
+    	bool IsReloading() const override {
+    		return _reloading;
+    	}
+
+    	bool _enteringVehicle;
+    	bool IsEnteringVehicle() const override {
+    		return _enteringVehicle;
+    	}
+
+    	bool _leavingVehicle;
+    	bool IsLeavingVehicle() const override {
+    		return _leavingVehicle;
+    	}
+
+    	bool _onLadder;
+    	bool IsOnLadder() const override {
+    		return _onLadder;
+    	}
+
+    	bool _inMelee;
+    	bool IsInMelee() const override {
+    		return _inMelee;
+    	}
+
+    	bool _inCover;
+    	bool IsInCover() const override {
+    		return _inCover;
+    	}
 
         uint16_t _armour;
         uint16_t GetArmour() const override {
@@ -255,6 +292,10 @@ namespace cache
 			return _strafeSpeed;
         }
 
+    	bool _parachuting;
+    	bool IsParachuting() const override {
+    		return _parachuting;
+    	}
 #ifdef ALT_SERVER_API
         bool _connected;
         bool IsConnected() const override {
@@ -312,7 +353,7 @@ namespace cache
         bool RemoveWeapon(uint32_t weapon) override {
 	        return false;
         }
-        void RemoveAllWeapons() override {}
+        void RemoveAllWeapons(bool removeAllAmmo) override {}
         void SetDateTime(int day, int month, int year, int hour, int minute, int second) override {}
         void SetWeather(uint32_t weather) override {}
         void Kick(const std::string& reason) override {}
@@ -393,7 +434,7 @@ namespace cache
         }
         void SetHeadBlendData(uint32_t shapeFirstID, uint32_t shapeSecondID, uint32_t shapeThirdID, uint32_t skinFirstID, uint32_t skinSecondID, uint32_t skinThirdID, float shapeMix,
             float skinMix, float thirdMix) override {}
-    	
+
         alt::HeadBlendData _headBlendData;
         alt::HeadBlendData GetHeadBlendData() const override {
 			return _headBlendData;
@@ -422,31 +463,31 @@ namespace cache
         std::vector<alt::Weapon> GetWeapons() const override {
 			return {};
 		}
-    	
+
     	std::unordered_map<std::string, alt::MValue> _localMetaData = {};
-        
+
     	bool HasLocalMetaData(const std::string& key) const override {
     		return _localMetaData.find(key) != _localMetaData.end();
     	}
-        
-    	alt::MValue GetLocalMetaData(const std::string& key) const override {
+
+    	alt::MValueConst GetLocalMetaData(const std::string& key) const override {
     		const auto find = _localMetaData.find(key);
     		if (find == _localMetaData.end()) return alt::ICore::Instance().CreateMValueNil();
     		return find->second;
     	}
-        
+
     	std::vector<std::string> GetLocalMetaDataKeys() const override {
     		std::vector<std::string> keys(_localMetaData.size());
     		for(const auto &kv : _localMetaData) {
-    			keys.push_back(kv.first);  
+    			keys.push_back(kv.first);
     		}
 
     		return keys;
     	}
-    	
+
         void SetLocalMetaData(const std::string& key, alt::MValue val) override {}
     	void DeleteLocalMetaData(const std::string& key) override {}
-    	
+
         uint32_t _interiorLocation;
         uint32_t GetInteriorLocation() const override {
 			return _interiorLocation;
@@ -458,14 +499,98 @@ namespace cache
 		}
 
         void SetLastDamagedBodyPart(uint32_t bodyPart) override {}
-    	
+
         void SetSendNames(bool state) override {}
         bool _sendNames;
         bool GetSendNames() const override {
 			return _sendNames;
 		}
+
+    	void PlayAnimation(const std::string& animDict, const std::string& animName, float blendInSpeed, float blendOutSpeed, int duration, int flags, float playbackRate, bool lockX, bool lockY, bool lockZ) override {}
+    	void ClearTasks() override {}
+
+    	std::string _socialClubName;
+    	std::string GetSocialClubName() const override {
+    		return _socialClubName;
+    	}
+
+    	std::vector<std::pair<IEntity*, int32_t>> GetStreamedEntities() const override { return {}; }
+
+    	uint16_t GetAmmo(uint32_t ammoHash) const override {
+    		return 0;
+    	}
+
+        void SetAmmo(uint32_t ammoHash, uint16_t ammo) override {}
+        void SetWeaponAmmo(uint32_t weaponHash, uint16_t ammo) override {}
+
+        uint16_t GetWeaponAmmo(uint32_t weaponHash) const override {
+    		return 0;
+    	}
+
+        bool HasWeapon(uint32_t weapon) const override
+    	{
+    		return false;
+    	}
+
+        void SetAmmoSpecialType(uint32_t ammoHash, alt::AmmoSpecialType ammoSpecialType) override {}
+    	alt::AmmoSpecialType GetAmmoSpecialType(uint32_t ammoHash) const override
+    	{
+        	return {};
+    	}
+        void SetAmmoFlags(uint32_t ammoHash, alt::AmmoFlags ammoFlags) override {}
+    	alt::AmmoFlags GetAmmoFlags(uint32_t ammoHash) const override
+        {
+        	return {};
+        }
+        void SetAmmoMax(uint32_t ammoHash, int32_t ammoMax) override {}
+    	int32_t GetAmmoMax(uint32_t ammoHash) const override
+        {
+        	return 0;
+        }
+        void SetAmmoMax50(uint32_t ammoHash, int32_t ammoMax50) override {}
+    	int32_t GetAmmoMax50(uint32_t ammoHash) const override
+        {
+        	return 0;
+        }
+        void SetAmmoMax100(uint32_t ammoHash, int32_t ammoMax100) override {}
+        int32_t GetAmmoMax100(uint32_t ammoHash) const override
+        {
+	        return 0;
+        }
+
+        void AddDecoration(uint32_t collection, uint32_t overlay) override {}
+        void RemoveDecoration(uint32_t collection, uint32_t overlay) override {}
+        void ClearDecorations() override {}
+    	std::vector<alt::CDecoration> GetDecorations() const override
+    	{
+    		return {};
+    	}
+
+    	void PlayScenario(const std::string& name) override {}
+
+        bool IsNetworkOwnershipDisabled() const override
+    	{
+    		return false;
+    	}
+    	void SetNetworkOwnershipDisabled(bool disabled) override {}
+
+    	std::string _cloudID;
+    	std::string GetCloudID() const override {
+    		return _cloudID;
+    	}
+
+        alt::CloudAuthResult _cloudAuthResult;
+    	alt::CloudAuthResult GetCloudAuthResult() const override {
+    		return _cloudAuthResult;
+    	}
+
+    	std::string _bloodDamageBase64;
+    	std::string GetBloodDamageBase64() const override {
+    		return _bloodDamageBase64;
+    	}
+        void SetBloodDamageBase64(const std::string& _base64) override {}
 #endif
-    	
+
 
 #ifdef ALT_CLIENT_API
     	bool _talking;
@@ -486,6 +611,15 @@ namespace cache
 	        return _nonSpatialVolume;
         }
         void SetNonSpatialVolume(float volume) override {}
+
+        void AddFilter(alt::IAudioFilter* filter) override {}
+        void RemoveFilter() override {}
+        alt::IAudioFilter* GetFilter() const override { return nullptr; }
+
+        std::string _taskData;
+        std::string GetTaskData() const override {
+            return _taskData;
+        }
 
 #endif
 

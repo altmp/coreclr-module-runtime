@@ -23,7 +23,7 @@ public:
     }
 
     alt::MValue Call(alt::MValueArgs args) const override {
-        uint64_t size = args.GetSize();
+        uint64_t size = args.size();
         if (size == 0) {
             alt::MValueConst* resultConstPtr = mValueFunctionCallback(nullptr, 0);
             alt::MValue result = *((alt::MValue*) resultConstPtr);

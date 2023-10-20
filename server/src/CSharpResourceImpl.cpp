@@ -1,17 +1,14 @@
 #include "CSharpResourceImpl.h"
-#include "../../cpp-sdk/events/CPlayerRequestControlEvent.h"
-#include "../../cpp-sdk/events/CPlayerChangeAnimationEvent.h"
-#include "../../cpp-sdk/events/CPlayerChangeInteriorEvent.h"
-#include "../../cpp-sdk/events/CPlayerDimensionChangeEvent.h"
 #include "../../c-api/utils/entity.h"
+#include "../../c-api/mvalue.h"
 
-CSharpResourceImpl::CSharpResourceImpl(alt::ICore* server, CoreClr* coreClr, alt::IResource* resource)
+CSharpResourceImpl::CSharpResourceImpl(alt::ICore* core, CoreClr* coreClr, alt::IResource* resource)
     : alt::IResource::Impl()
 {
     ResetDelegates();
     this->resource = resource;
-    this->server = server;
-    this->invokers = new alt::Array<CustomInvoker*>();
+    this->core = core;
+    this->invokers = {};
     this->coreClr = coreClr;
 }
 
@@ -19,20 +16,17 @@ void CSharpResourceImpl::ResetDelegates()
 {
     MainDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnClientEventDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnPlayerConnectDelegate = [](auto var, auto var2, auto var3) {};
-    OnPlayerBeforeConnectDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerConnectDelegate = [](auto var, auto var2) {};
     OnPlayerConnectDeniedDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8, auto var9) {};
     OnResourceStartDelegate = [](auto var) {};
     OnResourceStopDelegate = [](auto var) {};
     OnResourceErrorDelegate = [](auto var) {};
-    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
+    OnPlayerDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
     OnPlayerDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnExplosionDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7) {};
     OnWeaponDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
                                 auto var8) {};
     OnPlayerDisconnectDelegate = [](auto var, auto var2) {};
-    OnPlayerRemoveDelegate = [](auto var) {};
-    OnVehicleRemoveDelegate = [](auto var) {};
     OnServerEventDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerChangeVehicleSeatDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerEnterVehicleDelegate = [](auto var, auto var2, auto var3) {};
@@ -40,24 +34,11 @@ void CSharpResourceImpl::ResetDelegates()
     OnPlayerLeaveVehicleDelegate = [](auto var, auto var2, auto var3) {};
     OnStopDelegate = []() {};
     OnTickDelegate = []() {};
-    OnCreatePlayerDelegate = [](auto var, auto var2) {};
-    OnRemovePlayerDelegate = [](auto var) {};
-    OnCreateObjectDelegate = [](auto var, auto var2) {};
-    OnRemoveObjectDelegate = [](auto var) {};
-    OnCreateVehicleDelegate = [](auto var, auto var2) {};
-    OnRemoveVehicleDelegate = [](auto var) {};
-    OnCreateBlipDelegate = [](auto var) {};
-    OnRemoveBlipDelegate = [](auto var) {};
-    OnCreateCheckpointDelegate = [](auto var) {};
-    OnRemoveCheckpointDelegate = [](auto var) {};
-    OnCreateVoiceChannelDelegate = [](auto var) {};
-    OnRemoveVoiceChannelDelegate = [](auto var) {};
     OnConsoleCommandDelegate = [](auto var, auto var2, auto var3) {};
     OnMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnSyncedMetaChangeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
-    OnCreateColShapeDelegate = [](auto var) {};
-    OnRemoveColShapeDelegate = [](auto var) {};
     OnColShapeDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnCheckpointDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnVehicleDestroyDelegate = [](auto var) {};
     OnFireDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnStartProjectileDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
@@ -67,11 +48,39 @@ void CSharpResourceImpl::ResetDelegates()
     OnVehicleDetachDelegate = [](auto var, auto var2, auto var3) {};
     OnVehicleDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7,
         auto var8, auto var9) {};
+    OnVehicleHornDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnVehicleSirenDelegate = [](auto var, auto var2) {};
     OnConnectionQueueAddDelegate = [](auto var){};
     OnConnectionQueueRemoveDelegate = [](auto var){};
     OnServerStartedDelegate = []() {};
     OnPlayerRequestControlDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerDimensionChangeDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerSpawnDelegate = [](auto var) {};
+
+    OnVoiceConnectionDelegate = [](auto var) {};
+
+    OnCreateBaseObjectDelegate = [](auto var, auto var2, auto var3) {};
+    OnRemoveBaseObjectDelegate = [](auto var, auto var2) {};
+
+    OnRequestSyncedSceneDelegate = [](auto var, auto var2, auto var3) {};
+    OnStartSyncedSceneDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6, auto var7, auto var8, auto var9) {};
+    OnStopSyncedSceneDelegate = [](auto var, auto var2) {};
+    OnUpdateSyncedSceneDelegate = [](auto var, auto var2, auto var3) {};
+
+    OnClientRequestObjectDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnClientDeleteObjectDelegate = [](auto var, auto var2) {};
+
+    OnPlayerHealDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+
+    OnGivePedScriptedTaskDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+
+    OnPedDamageDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
+    OnPedDeathDelegate = [](auto var, auto var2, auto var3, auto var4) {};
+    OnPedHealDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5) {};
+
+    OnScriptRPCDelegate = [](auto var, auto var2, auto var3, auto var4, auto var5, auto var6) {};
+
+    OnScriptRPCAnswerDelegate = [](auto var, auto var2, auto var3, auto var4) {};
 }
 
 bool CSharpResourceImpl::Start()
@@ -87,7 +96,7 @@ bool CSharpResourceImpl::Start()
         return false;
     }
     if (MainDelegate == nullptr) return false;
-    MainDelegate(this->server, this->resource, this->resource->GetName().c_str(), resource->GetMain().c_str());
+    MainDelegate(this->core, this->resource, this->resource->GetName().c_str(), resource->GetMain().c_str());
     return true;
 }
 
@@ -158,7 +167,7 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
         {
             auto clientScriptEvent = dynamic_cast<const alt::CClientScriptEvent*>(ev);
             alt::MValueArgs clientArgs = clientScriptEvent->GetArgs();
-            uint64_t size = clientArgs.GetSize();
+            uint64_t size = clientArgs.size();
             if (size == 0)
             {
                 OnClientEventDelegate(clientScriptEvent->GetTarget(),
@@ -188,23 +197,10 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
         }
     case alt::CEvent::Type::PLAYER_CONNECT:
         {
-            auto connectPlayer = dynamic_cast<const alt::CPlayerConnectEvent*>(ev)->GetTarget();
+            auto playerConnectEvent = dynamic_cast<const alt::CPlayerConnectEvent*>(ev);
+            auto connectPlayer = playerConnectEvent->GetTarget();
             OnPlayerConnectDelegate(connectPlayer,
-                                    connectPlayer->GetID(),
-                                    ""); //TODO: maybe better solution
-            break;
-        }
-    case alt::CEvent::Type::PLAYER_BEFORE_CONNECT:
-        {
-            auto beforeConnectEvent = dynamic_cast<const alt::CPlayerBeforeConnectEvent*>(ev);
-            auto clrInfo = new ClrConnectionInfo(beforeConnectEvent->GetConnectionInfo());
-
-            OnPlayerBeforeConnectDelegate(beforeConnectEvent,
-                                          clrInfo,
-                                          "");
-
-            clrInfo->dealloc();
-            delete clrInfo;
+                                    playerConnectEvent->GetReason().c_str());
             break;
         }
     case alt::CEvent::Type::PLAYER_CONNECT_DENIED:
@@ -249,7 +245,6 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                 OnPlayerDamageDelegate(damageEvent->GetTarget(),
                                        entityPtr,
                                        entity->GetType(),
-                                       entity->GetID(),
                                        damageEvent->GetWeapon(),
                                        damageEvent->GetHealthDamage(),
                                        damageEvent->GetArmourDamage());
@@ -259,7 +254,6 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                 OnPlayerDamageDelegate(damageEvent->GetTarget(),
                                        nullptr,
                                        alt::IBaseObject::Type::PLAYER,
-                                       0,
                                        damageEvent->GetWeapon(),
                                        damageEvent->GetHealthDamage(),
                                        damageEvent->GetArmourDamage());
@@ -291,7 +285,7 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             auto fireEvent = dynamic_cast<const alt::CFireEvent*>(ev);
             auto source = fireEvent->GetSource();
             auto fires = fireEvent->GetFires();
-            uint64_t length = fires.GetSize();
+            uint64_t length = fires.size();
 
             if (length == 0)
             {
@@ -370,7 +364,7 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
         {
             auto serverScriptEvent = dynamic_cast<const alt::CServerScriptEvent*>(ev);
             alt::MValueArgs serverArgs = serverScriptEvent->GetArgs();
-            uint64_t size = serverArgs.GetSize();
+            uint64_t size = serverArgs.size();
             if (size == 0)
             {
                 OnServerEventDelegate(serverScriptEvent->GetName().c_str(),
@@ -486,21 +480,21 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
         {
             auto colShapeEvent = dynamic_cast<const alt::CColShapeEvent*>(ev);
             auto entity = colShapeEvent->GetEntity();
-            auto entityPointer = GetEntityPointer(entity);
-            if (entity != nullptr && entityPointer != nullptr)
+            auto worldObjectPointer = GetWorldObjectPointer(entity);
+            if (entity != nullptr && worldObjectPointer != nullptr)
             {
                 auto colShapePointer = colShapeEvent->GetTarget();
                 if (colShapePointer->GetType() == alt::IBaseObject::Type::COLSHAPE)
                 {
                     OnColShapeDelegate(colShapePointer,
-                                       entityPointer,
+                                       worldObjectPointer,
                                        entity->GetType(),
                                        colShapeEvent->GetState());
                 }
                 else if (colShapePointer->GetType() == alt::IBaseObject::Type::CHECKPOINT)
                 {
                     OnCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(colShapePointer),
-                                         entityPointer,
+                                         worldObjectPointer,
                                          entity->GetType(),
                                          colShapeEvent->GetState());
                 }
@@ -597,6 +591,24 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                                     vehicleDamageEvent->GetDamagedWith());
             break;
         }
+    case alt::CEvent::Type::VEHICLE_HORN:
+        {
+            auto vehicleHornEvent = dynamic_cast<const alt::CVehicleHornEvent*>(ev);
+
+            OnVehicleHornDelegate(vehicleHornEvent,
+                                  vehicleHornEvent->GetTarget(),
+                                  vehicleHornEvent->GetReporter(),
+                                  vehicleHornEvent->GetToggle());
+            break;
+        }
+    case alt::CEvent::Type::VEHICLE_SIREN:
+        {
+            auto vehicleSirenEvent = dynamic_cast<const alt::CVehicleSirenEvent*>(ev);
+
+            OnVehicleSirenDelegate(vehicleSirenEvent->GetTarget(),
+                                   vehicleSirenEvent->GetToggle());
+            break;
+        }
     case alt::CEvent::Type::CONNECTION_QUEUE_ADD:
         {
             auto connectionQueueAddEvent = dynamic_cast<const alt::CConnectionQueueAddEvent*>(ev);
@@ -634,6 +646,242 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
                                             playerDimensionChangeEvent->GetNewDimension());
             break;
         }
+    case alt::CEvent::Type::PLAYER_SPAWN:
+        {
+            auto playerSpawnEvent = dynamic_cast<const alt::CPlayerSpawnEvent*>(ev);
+
+            OnPlayerSpawnDelegate(playerSpawnEvent->GetPlayer());
+            break;
+        }
+    case alt::CEvent::Type::VOICE_CONNECTION_EVENT:
+        {
+            auto voiceConnectionEvent = dynamic_cast<const alt::CVoiceConnectionEvent*>(ev);
+
+            OnVoiceConnectionDelegate(static_cast<uint8_t>(voiceConnectionEvent->GetState()));
+
+            break;
+        }
+    case alt::CEvent::Type::REQUEST_SYNCED_SCENE:
+        {
+            auto requestSyncedSceneEvent = dynamic_cast<const alt::CRequestSyncedSceneEvent*>(ev);
+
+            OnRequestSyncedSceneDelegate(requestSyncedSceneEvent, requestSyncedSceneEvent->GetSource(), requestSyncedSceneEvent->GetSceneID());
+            break;
+        }
+    case alt::CEvent::Type::START_SYNCED_SCENE:
+        {
+            auto startSyncedSceneEvent = dynamic_cast<const alt::CStartSyncedSceneEvent*>(ev);
+            position_t startPosition = {startSyncedSceneEvent->GetStartPosition().x, startSyncedSceneEvent->GetStartPosition().y, startSyncedSceneEvent->GetStartPosition().z};
+            rotation_t startRotation = {startSyncedSceneEvent->GetStartRotation().roll, startSyncedSceneEvent->GetStartRotation().pitch, startSyncedSceneEvent->GetStartRotation().yaw};
+
+            auto entities = new alt::IEntity*[startSyncedSceneEvent->GetEntityAndAnimHashPairs().size()];
+            auto types = new alt::IBaseObject::Type[startSyncedSceneEvent->GetEntityAndAnimHashPairs().size()];
+            auto animHashes = new uint32_t[startSyncedSceneEvent->GetEntityAndAnimHashPairs().size()];
+            uint64_t size = 0;
+
+            for (const auto& hash_pair : startSyncedSceneEvent->GetEntityAndAnimHashPairs())
+            {
+                auto entity = hash_pair.first.get();
+                entities[size] = entity;
+                types[size] = entity->GetType();
+                animHashes[size] = hash_pair.second;
+                size = size + 1;
+            }
+
+            OnStartSyncedSceneDelegate(startSyncedSceneEvent->GetSource(),
+                                       startSyncedSceneEvent->GetSceneID(),
+                                       startPosition,
+                                       startRotation,
+                                       startSyncedSceneEvent->GetAnimDictHash(),
+                                       entities,
+                                       types,
+                                       animHashes,
+                                       size);
+            break;
+        }
+    case alt::CEvent::Type::STOP_SYNCED_SCENE:
+        {
+            auto stopSyncedSceneEvent = dynamic_cast<const alt::CStopSyncedSceneEvent*>(ev);
+
+            OnStopSyncedSceneDelegate(stopSyncedSceneEvent->GetSource(), stopSyncedSceneEvent->GetSceneID());
+            break;
+        }
+    case alt::CEvent::Type::UPDATE_SYNCED_SCENE:
+        {
+            auto updateSyncedSceneEvent = dynamic_cast<const alt::CUpdateSyncedSceneEvent*>(ev);
+            OnUpdateSyncedSceneDelegate(updateSyncedSceneEvent->GetSource(), updateSyncedSceneEvent->GetStartRate(), updateSyncedSceneEvent->GetSceneID());
+            break;
+        }
+    case alt::CEvent::Type::CLIENT_REQUEST_OBJECT_EVENT:
+        {
+            auto clientRequestObjectEvent = dynamic_cast<const alt::CClientRequestObjectEvent*>(ev);
+
+            auto target = clientRequestObjectEvent->GetTarget();
+            if (target == nullptr) return;
+
+            OnClientRequestObjectDelegate(
+                clientRequestObjectEvent,
+                target,
+                clientRequestObjectEvent->GetModel(),
+                {clientRequestObjectEvent->GetPosition().x, clientRequestObjectEvent->GetPosition().y, clientRequestObjectEvent->GetPosition().z});
+            break;
+        }
+    case alt::CEvent::Type::CLIENT_DELETE_OBJECT_EVENT:
+        {
+            auto clientDeleteObjectEvent = dynamic_cast<const alt::CClientDeleteObjectEvent*>(ev);
+
+            auto target = clientDeleteObjectEvent->GetTarget();
+            if (target == nullptr) return;
+
+            OnClientDeleteObjectDelegate(
+                clientDeleteObjectEvent,
+                target);
+            break;
+        }
+    case alt::CEvent::Type::PLAYER_HEAL:
+        {
+            auto playerHealEvent = dynamic_cast<const alt::CPlayerHealEvent*>(ev);
+
+            auto target = playerHealEvent->GetTarget();
+            if (target == nullptr) return;
+            OnPlayerHealDelegate(target,
+                                 playerHealEvent->GetOldHealth(),
+                                 playerHealEvent->GetNewHealth(),
+                                 playerHealEvent->GetOldArmour(),
+                                 playerHealEvent->GetNewArmour());
+            break;
+        }
+    case alt::CEvent::Type::GIVE_PED_SCRIPTED_TASK:
+        {
+            auto givePedScriptedTaskEvent = dynamic_cast<const alt::CGivePedScriptedTaskEvent*>(ev);
+
+            auto target = givePedScriptedTaskEvent->GetTarget();
+            auto source = givePedScriptedTaskEvent->GetSource();
+
+            if (target == nullptr) return;
+            if (source == nullptr) return;
+
+            OnGivePedScriptedTaskDelegate(givePedScriptedTaskEvent, source, target, givePedScriptedTaskEvent->GetTaskType());
+
+            break;
+        }
+    case alt::CEvent::Type::PED_DAMAGE:
+        {
+            auto damageEvent = dynamic_cast<const alt::CPedDamageEvent*>(ev);
+            auto entity = damageEvent->GetAttacker();
+            auto entityPtr = GetEntityPointer(entity);
+            if (entity != nullptr && entityPtr != nullptr)
+            {
+                OnPedDamageDelegate(damageEvent->GetTarget(),
+                                       entityPtr,
+                                       entity->GetType(),
+                                       damageEvent->GetWeapon(),
+                                       damageEvent->GetHealthDamage(),
+                                       damageEvent->GetArmourDamage());
+            }
+            else
+            {
+                OnPedDamageDelegate(damageEvent->GetTarget(),
+                                       nullptr,
+                                       alt::IBaseObject::Type::PLAYER,
+                                       damageEvent->GetWeapon(),
+                                       damageEvent->GetHealthDamage(),
+                                       damageEvent->GetArmourDamage());
+            }
+            break;
+        }
+    case alt::CEvent::Type::PED_DEATH:
+        {
+            auto deathEvent = dynamic_cast<const alt::CPedDeathEvent*>(ev);
+            auto entity = deathEvent->GetKiller();
+
+            auto type = alt::IBaseObject::Type::PLAYER;
+            void* entityPtr = nullptr;
+
+            if (entity != nullptr)
+            {
+                entityPtr = GetEntityPointer(entity);
+                type = entity->GetType();
+            }
+
+            OnPedDeathDelegate(deathEvent->GetTarget(),
+                                  entityPtr,
+                                  type,
+                                  deathEvent->GetWeapon());
+            break;
+        }
+    case alt::CEvent::Type::PED_HEAL:
+        {
+            auto healEvent = dynamic_cast<const alt::CPedHealEvent*>(ev);
+
+            auto target = healEvent->GetTarget();
+            if (target == nullptr) return;
+            OnPedHealDelegate(target,
+                                 healEvent->GetOldHealth(),
+                                 healEvent->GetNewHealth(),
+                                 healEvent->GetOldArmour(),
+                                 healEvent->GetNewArmour());
+            break;
+        }
+    case alt::CEvent::Type::PLAYER_START_TALKING:
+        {
+            auto playerStartTalkingEvent = dynamic_cast<const alt::CPlayerStartTalkingEvent*>(ev);
+
+            auto player = playerStartTalkingEvent->GetPlayer();
+            if (player == nullptr) return;
+            OnPlayerStartTalkingDelegate(player);
+            break;
+        }
+    case alt::CEvent::Type::PLAYER_STOP_TALKING:
+        {
+            auto playerStopTalkingEvent = dynamic_cast<const alt::CPlayerStopTalkingEvent*>(ev);
+
+            auto player = playerStopTalkingEvent->GetPlayer();
+            if (player == nullptr) return;
+            OnPlayerStopTalkingDelegate(player);
+            break;
+        }
+    case alt::CEvent::Type::SCRIPT_RPC_EVENT:
+        {
+            auto scriptRPCEvent = dynamic_cast<const alt::CScriptRPCEvent*>(ev);
+
+            auto target = scriptRPCEvent->GetTarget();
+            if (target == nullptr) return;
+
+            auto name = scriptRPCEvent->GetName();
+            auto args = scriptRPCEvent->GetArgs();
+            auto size = args.size();
+            auto constArgs = new alt::MValueConst*[size];
+
+            for (uint64_t i = 0; i < size; i++)
+            {
+                constArgs[i] = &args[i];
+            }
+
+            OnScriptRPCDelegate(scriptRPCEvent,
+                                target,
+                                name.c_str(),
+                                constArgs,
+                                size,
+                                scriptRPCEvent->GetAnswerID()
+                                );
+            break;
+        }
+    case alt::CEvent::Type::SCRIPT_RPC_ANSWER_EVENT:
+        {
+            auto scriptRPCAnswerEvent = dynamic_cast<const alt::CScriptRPCAnswerEvent*>(ev);
+
+            auto target = scriptRPCAnswerEvent->GetTarget();
+            if (target == nullptr) return;
+
+            auto answers = scriptRPCAnswerEvent->GetAnswer();
+            OnScriptRPCAnswerDelegate(target,
+                                      scriptRPCAnswerEvent->GetAnswerID(),
+                                      AllocMValue(answers),
+                                      scriptRPCAnswerEvent->GetAnswerError().c_str()
+                                      );
+            break;
+        }
     default:
         {
             std::cout << "Unhandled server event #" << static_cast<int>(ev->GetType()) << " got called" << std::endl;
@@ -651,44 +899,92 @@ void CSharpResourceImpl::OnCreateBaseObject(alt::IBaseObject* object)
         case alt::IBaseObject::Type::PLAYER:
             {
                 const auto player = dynamic_cast<alt::IPlayer*>(object);
-                OnCreatePlayerDelegate(player, player->GetID());
+                OnCreateBaseObjectDelegate(player, player->GetType(), player->GetID());
                 break;
             }
         case alt::IBaseObject::Type::VEHICLE:
             {
                 const auto vehicle = dynamic_cast<alt::IVehicle*>(object);
-                OnCreateVehicleDelegate(vehicle, vehicle->GetID());
+                OnCreateBaseObjectDelegate(vehicle, vehicle->GetType(), vehicle->GetID());
                 break;
             }
         case alt::IBaseObject::Type::BLIP:
             {
-                OnCreateBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+                auto blip = dynamic_cast<alt::IBlip*>(object);
+                OnCreateBaseObjectDelegate(blip, blip->GetType(), blip->GetID());
                 break;
             }
         case alt::IBaseObject::Type::VOICE_CHANNEL:
             {
-                OnCreateVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+                auto voiceChannel = dynamic_cast<alt::IVoiceChannel*>(object);
+                OnCreateBaseObjectDelegate(voiceChannel, voiceChannel->GetType(), voiceChannel->GetID());
                 break;
             }
         case alt::IBaseObject::Type::COLSHAPE:
             {
-                OnCreateColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
+                auto colShape = dynamic_cast<alt::IColShape*>(object);
+                OnCreateBaseObjectDelegate(colShape, colShape->GetType(), colShape->GetID());
                 break;
             }
         case alt::IBaseObject::Type::CHECKPOINT:
             {
-                OnCreateCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                auto checkPoint = dynamic_cast<alt::ICheckpoint*>(object);
+                OnCreateBaseObjectDelegate(checkPoint, checkPoint->GetType(), checkPoint->GetID());
+                break;
+            }
+        case alt::IBaseObject::Type::LOCAL_OBJECT:
+            {
+                const auto altObject = dynamic_cast<alt::ILocalObject*>(object);
+                OnCreateBaseObjectDelegate(altObject, altObject->GetType(), altObject->GetID());
+                break;
+            }
+        case alt::IBaseObject::Type::PED:
+            {
+                const auto ped = dynamic_cast<alt::IPed*>(object);
+                OnCreateBaseObjectDelegate(ped, ped->GetType(), ped->GetID());
+                break;
+            }
+        case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+            {
+                const auto virtualEntity = dynamic_cast<alt::IVirtualEntity*>(object);
+                OnCreateBaseObjectDelegate(virtualEntity, virtualEntity->GetType(), virtualEntity->GetID());
+                break;
+            }
+        case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
+            {
+                const auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
+                OnCreateBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType(),
+                                           virtualEntityGroup->GetID());
                 break;
             }
         case alt::IBaseObject::Type::OBJECT:
             {
-                const auto altObject = dynamic_cast<alt::IObject*>(object);
-                OnCreateObjectDelegate(altObject, altObject->GetID());
+                const auto iOject = dynamic_cast<alt::IObject*>(object);
+                OnCreateBaseObjectDelegate(iOject, iOject->GetType(), iOject->GetID());
+                break;
+            }
+        case alt::IBaseObject::Type::MARKER:
+            {
+                auto marker = dynamic_cast<alt::IMarker*>(object);
+                OnCreateBaseObjectDelegate(marker, marker->GetType(), marker->GetID());
+                break;
+            }
+        case alt::IBaseObject::Type::TEXT_LABEL:
+            {
+                auto textLabel = dynamic_cast<alt::ITextLabel*>(object);
+                OnCreateBaseObjectDelegate(textLabel, textLabel->GetType(), textLabel->GetID());
+                break;
+            }
+        case alt::IBaseObject::Type::CONNECTION_INFO:
+            {
+                auto connectionInfo = dynamic_cast<alt::IConnectionInfo*>(object);
+                OnCreateBaseObjectDelegate(connectionInfo, connectionInfo->GetType(), connectionInfo->GetID());
                 break;
             }
         default:
             {
-                std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) << " for create base object got called" << std::endl;
+                std::cout << "Unhandled type #" << static_cast<int>(object->GetType()) <<
+                    " for create base object got called" << std::endl;
                 break;
             }
         }
@@ -703,37 +999,86 @@ void CSharpResourceImpl::OnRemoveBaseObject(alt::IBaseObject* object)
         {
         case alt::IBaseObject::Type::PLAYER:
             {
-                OnRemovePlayerDelegate(dynamic_cast<alt::IPlayer*>(object));
+                const auto player = dynamic_cast<alt::IPlayer*>(object);
+                OnRemoveBaseObjectDelegate(player, player->GetType());
                 break;
             }
         case alt::IBaseObject::Type::VEHICLE:
             {
-                OnRemoveVehicleDelegate(dynamic_cast<alt::IVehicle*>(object));
+                const auto vehicle = dynamic_cast<alt::IVehicle*>(object);
+                OnRemoveBaseObjectDelegate(vehicle, vehicle->GetType());
                 break;
             }
         case alt::IBaseObject::Type::BLIP:
             {
-                OnRemoveBlipDelegate(dynamic_cast<alt::IBlip*>(object));
+                auto blip = dynamic_cast<alt::IBlip*>(object);
+                OnRemoveBaseObjectDelegate(blip, blip->GetType());
                 break;
             }
         case alt::IBaseObject::Type::VOICE_CHANNEL:
             {
-                OnRemoveVoiceChannelDelegate(dynamic_cast<alt::IVoiceChannel*>(object));
+                auto voiceChannel = dynamic_cast<alt::IVoiceChannel*>(object);
+                OnRemoveBaseObjectDelegate(voiceChannel, voiceChannel->GetType());
                 break;
             }
         case alt::IBaseObject::Type::COLSHAPE:
             {
-                OnRemoveColShapeDelegate(dynamic_cast<alt::IColShape*>(object));
+                auto colShape = dynamic_cast<alt::IColShape*>(object);
+                OnRemoveBaseObjectDelegate(colShape, colShape->GetType());
                 break;
             }
         case alt::IBaseObject::Type::CHECKPOINT:
             {
-                OnRemoveCheckpointDelegate(dynamic_cast<alt::ICheckpoint*>(object));
+                auto checkPoint = dynamic_cast<alt::ICheckpoint*>(object);
+                OnRemoveBaseObjectDelegate(checkPoint, checkPoint->GetType());
+                break;
+            }
+        case alt::IBaseObject::Type::LOCAL_OBJECT:
+            {
+                const auto altObject = dynamic_cast<alt::ILocalObject*>(object);
+                OnRemoveBaseObjectDelegate(altObject, altObject->GetType());
+                break;
+            }
+        case alt::IBaseObject::Type::PED:
+            {
+                const auto ped = dynamic_cast<alt::IPed*>(object);
+                OnRemoveBaseObjectDelegate(ped, ped->GetType());
+                break;
+            }
+        case alt::IBaseObject::Type::VIRTUAL_ENTITY:
+            {
+                const auto virtualEntity = dynamic_cast<alt::IVirtualEntity*>(object);
+                OnRemoveBaseObjectDelegate(virtualEntity, virtualEntity->GetType());
+                break;
+            }
+        case alt::IBaseObject::Type::VIRTUAL_ENTITY_GROUP:
+            {
+                const auto virtualEntityGroup = dynamic_cast<alt::IVirtualEntityGroup*>(object);
+                OnRemoveBaseObjectDelegate(virtualEntityGroup, virtualEntityGroup->GetType());
                 break;
             }
         case alt::IBaseObject::Type::OBJECT:
             {
-                OnRemoveObjectDelegate(dynamic_cast<alt::IObject*>(object));
+                const auto iObject = dynamic_cast<alt::IObject*>(object);
+                OnRemoveBaseObjectDelegate(iObject, iObject->GetType());
+                break;
+            }
+        case alt::IBaseObject::Type::MARKER:
+            {
+                const auto marker = dynamic_cast<alt::IMarker*>(object);
+                OnRemoveBaseObjectDelegate(marker, marker->GetType());
+                break;
+            }
+        case alt::IBaseObject::Type::TEXT_LABEL:
+            {
+                const auto textLabel = dynamic_cast<alt::ITextLabel*>(object);
+                OnRemoveBaseObjectDelegate(textLabel, textLabel->GetType());
+                break;
+            }
+        case alt::IBaseObject::Type::CONNECTION_INFO:
+            {
+                const auto connectionInfo = dynamic_cast<alt::IConnectionInfo*>(object);
+                OnRemoveBaseObjectDelegate(connectionInfo, connectionInfo->GetType());
                 break;
             }
         default:
@@ -799,12 +1144,6 @@ void CSharpResourceImpl_SetPlayerConnectDelegate(CSharpResourceImpl* resource,
     resource->OnPlayerConnectDelegate = delegate;
 }
 
-void CSharpResourceImpl_SetPlayerBeforeConnectDelegate(CSharpResourceImpl* resource,
-                                                       PlayerBeforeConnectDelegate_t delegate)
-{
-    resource->OnPlayerBeforeConnectDelegate = delegate;
-}
-
 void CSharpResourceImpl_SetPlayerConnectDeniedDelegate(CSharpResourceImpl* resource,
                                                        PlayerConnectDeniedDelegate_t delegate)
 {
@@ -850,18 +1189,6 @@ void CSharpResourceImpl_SetPlayerDisconnectDelegate(CSharpResourceImpl* resource
     resource->OnPlayerDisconnectDelegate = delegate;
 }
 
-void CSharpResourceImpl_SetPlayerRemoveDelegate(CSharpResourceImpl* resource,
-                                                PlayerRemoveDelegate_t delegate)
-{
-    resource->OnPlayerRemoveDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetVehicleRemoveDelegate(CSharpResourceImpl* resource,
-                                                 VehicleRemoveDelegate_t delegate)
-{
-    resource->OnVehicleRemoveDelegate = delegate;
-}
-
 void CSharpResourceImpl_SetPlayerChangeVehicleSeatDelegate(CSharpResourceImpl* resource,
                                                            PlayerChangeVehicleSeatDelegate_t delegate)
 {
@@ -886,78 +1213,6 @@ void CSharpResourceImpl_SetPlayerLeaveVehicleDelegate(CSharpResourceImpl* resour
     resource->OnPlayerLeaveVehicleDelegate = delegate;
 }
 
-void CSharpResourceImpl_SetCreatePlayerDelegate(CSharpResourceImpl* resource,
-                                                CreatePlayerDelegate_t delegate)
-{
-    resource->OnCreatePlayerDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemovePlayerDelegate(CSharpResourceImpl* resource,
-                                                RemovePlayerDelegate_t delegate)
-{
-    resource->OnRemovePlayerDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateObjectDelegate(CSharpResourceImpl* resource,
-                                                CreateObjectDelegate_t delegate)
-{
-    resource->OnCreateObjectDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveObjectDelegate(CSharpResourceImpl* resource,
-                                                RemoveObjectDelegate_t delegate)
-{
-    resource->OnRemoveObjectDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateVehicleDelegate(CSharpResourceImpl* resource,
-                                                 CreateVehicleDelegate_t delegate)
-{
-    resource->OnCreateVehicleDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveVehicleDelegate(CSharpResourceImpl* resource,
-                                                 RemoveVehicleDelegate_t delegate)
-{
-    resource->OnRemoveVehicleDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateBlipDelegate(CSharpResourceImpl* resource,
-                                              CreateBlipDelegate_t delegate)
-{
-    resource->OnCreateBlipDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveBlipDelegate(CSharpResourceImpl* resource,
-                                              RemoveBlipDelegate_t delegate)
-{
-    resource->OnRemoveBlipDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateCheckpointDelegate(CSharpResourceImpl* resource,
-                                                    CreateCheckpointDelegate_t delegate)
-{
-    resource->OnCreateCheckpointDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveCheckpointDelegate(CSharpResourceImpl* resource,
-                                                    RemoveCheckpointDelegate_t delegate)
-{
-    resource->OnRemoveCheckpointDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateVoiceChannelDelegate(CSharpResourceImpl* resource,
-                                                      CreateVoiceChannelDelegate_t delegate)
-{
-    resource->OnCreateVoiceChannelDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveVoiceChannelDelegate(CSharpResourceImpl* resource,
-                                                      RemoveVoiceChannelDelegate_t delegate)
-{
-    resource->OnRemoveVoiceChannelDelegate = delegate;
-}
-
 void CSharpResourceImpl_SetConsoleCommandDelegate(CSharpResourceImpl* resource,
                                                   ConsoleCommandDelegate_t delegate)
 {
@@ -974,18 +1229,6 @@ void CSharpResourceImpl_SetSyncedMetaChangeDelegate(CSharpResourceImpl* resource
                                                     MetaChangeDelegate_t delegate)
 {
     resource->OnSyncedMetaChangeDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetCreateColShapeDelegate(CSharpResourceImpl* resource,
-                                                  CreateColShapeDelegate_t delegate)
-{
-    resource->OnCreateColShapeDelegate = delegate;
-}
-
-void CSharpResourceImpl_SetRemoveColShapeDelegate(CSharpResourceImpl* resource,
-                                                  RemoveColShapeDelegate_t delegate)
-{
-    resource->OnRemoveColShapeDelegate = delegate;
 }
 
 void CSharpResourceImpl_SetColShapeDelegate(CSharpResourceImpl* resource,
@@ -1042,6 +1285,16 @@ void CSharpResourceImpl_SetVehicleDamageDelegate(CSharpResourceImpl* resource,
     resource->OnVehicleDamageDelegate = delegate;
 }
 
+void CSharpResourceImpl_SetVehicleHornDelegate(CSharpResourceImpl* resource, VehicleHornDelegate_t delegate)
+{
+    resource->OnVehicleHornDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVehicleSirenDelegate(CSharpResourceImpl* resource, VehicleSirenDelegate_t delegate)
+{
+    resource->OnVehicleSirenDelegate = delegate;
+}
+
 void CSharpResourceImpl_SetConnectionQueueAddDelegate(CSharpResourceImpl* resource,
                                                       ConnectionQueueAddDelegate_t delegate)
 {
@@ -1084,7 +1337,103 @@ void CSharpResourceImpl_SetPlayerChangeInteriorDelegate(CSharpResourceImpl* reso
     resource->OnPlayerChangeInteriorDelegate = delegate;
 }
 
-bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Array<std::string> files)
+void CSharpResourceImpl_SetPlayerSpawnDelegate(CSharpResourceImpl* resource, PlayerSpawnDelegate_t delegate)
+{
+    resource->OnPlayerSpawnDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetVoiceConnectionDelegate(CSharpResourceImpl* resource, VoiceConnectionDelegate_t delegate)
+{
+    resource->OnVoiceConnectionDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetCreateBaseObjectDelegate(CSharpResourceImpl* resource, CreateBaseObjectDelegate_t delegate)
+{
+    resource->OnCreateBaseObjectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRemoveBaseObjectDelegate(CSharpResourceImpl* resource, RemoveBaseObjectDelegate_t delegate)
+{
+    resource->OnRemoveBaseObjectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetRequestSyncedSceneDelegate(CSharpResourceImpl* resource, RequestSyncedSceneDelegate_t delegate)
+{
+    resource->OnRequestSyncedSceneDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetStartSyncedSceneDelegate(CSharpResourceImpl* resource, StartSyncedSceneDelegate_t delegate)
+{
+    resource->OnStartSyncedSceneDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetStopSyncedSceneDelegate(CSharpResourceImpl* resource, StopSyncedSceneDelegate_t delegate)
+{
+    resource->OnStopSyncedSceneDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetUpdateSyncedSceneDelegate(CSharpResourceImpl* resource, UpdateSyncedSceneDelegate_t delegate)
+{
+    resource->OnUpdateSyncedSceneDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetClientRequestObjectDelegate(CSharpResourceImpl* resource, ClientRequestObjectDelegate_t delegate)
+{
+    resource->OnClientRequestObjectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetClientDeleteObjectDelegate(CSharpResourceImpl* resource, ClientDeleteObjectDelegate_t delegate)
+{
+    resource->OnClientDeleteObjectDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerHealDelegate(CSharpResourceImpl* resource, PlayerHealDelegate_t delegate)
+{
+    resource->OnPlayerHealDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetGivePedScriptedTaskDelegate(CSharpResourceImpl* resource, GivePedScriptedTaskDelegate_t delegate)
+{
+    resource->OnGivePedScriptedTaskDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPedDamageDelegate(CSharpResourceImpl* resource, PedDamageDelegate_t delegate)
+{
+    resource->OnPedDamageDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPedDeathDelegate(CSharpResourceImpl* resource, PedDeathDelegate_t delegate)
+{
+    resource->OnPedDeathDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPedHealDelegate(CSharpResourceImpl* resource, PedHealDelegate_t delegate)
+{
+    resource->OnPedHealDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerStartTalkingDelegate(CSharpResourceImpl* resource,
+    PlayerStartTalkingDelegate_t delegate)
+{
+    resource->OnPlayerStartTalkingDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetPlayerStopTalkingDelegate(CSharpResourceImpl* resource, PlayerStopTalkingDelegate_t delegate)
+{
+    resource->OnPlayerStopTalkingDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetScriptRPCDelegate(CSharpResourceImpl* resource, ScriptRPCDelegate_t delegate)
+{
+    resource->OnScriptRPCDelegate = delegate;
+}
+
+void CSharpResourceImpl_SetScriptRPCAnswerDelegate(CSharpResourceImpl* resource, ScriptRPCAnswerDelegate_t delegate)
+{
+    resource->OnScriptRPCAnswerDelegate = delegate;
+}
+
+bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, std::vector<std::string> files)
 {
     const std::string clientMain = resource->GetClientMain();
     const std::string suffix = ".dll";
@@ -1102,43 +1451,17 @@ bool CSharpResourceImpl::MakeClient(alt::IResource::CreationInfo* info, alt::Arr
 
 void* CSharpResourceImpl::GetBaseObjectPointer(alt::IBaseObject* baseObject)
 {
-    if (baseObject != nullptr)
-    {
-        switch (baseObject->GetType())
-        {
-        case alt::IBaseObject::Type::PLAYER:
-            return dynamic_cast<alt::IPlayer*>(baseObject);
-        case alt::IBaseObject::Type::VEHICLE:
-            return dynamic_cast<alt::IVehicle*>(baseObject);
-        case alt::IBaseObject::Type::BLIP:
-            return dynamic_cast<alt::IBlip*>(baseObject);
-        case alt::IBaseObject::Type::COLSHAPE:
-            return dynamic_cast<alt::IColShape*>(baseObject);
-        case alt::IBaseObject::Type::CHECKPOINT:
-            return dynamic_cast<alt::ICheckpoint*>(baseObject);
-        default:
-            return nullptr;
-        }
-    }
-    return nullptr;
+    return Util_GetBaseObjectPointer(baseObject);
+}
+
+void* CSharpResourceImpl::GetWorldObjectPointer(alt::IWorldObject* worldObject)
+{
+    return Util_GetWorldObjectPointer(worldObject);
 }
 
 void* CSharpResourceImpl::GetEntityPointer(alt::IEntity* entity)
 {
-    if (entity != nullptr)
-    {
-        switch (entity->GetType())
-        {
-        case alt::IBaseObject::Type::PLAYER:
-        case alt::IBaseObject::Type::LOCAL_PLAYER:
-            return dynamic_cast<alt::IPlayer*>(entity);
-        case alt::IBaseObject::Type::VEHICLE:
-            return dynamic_cast<alt::IVehicle*>(entity);
-        default:
-            return nullptr;
-        }
-    }
-    return nullptr;
+    return Util_GetEntityPointer(entity);
 }
 
 alt::IBaseObject::Type CSharpResourceImpl::GetEntityType(alt::IEntity* entity)

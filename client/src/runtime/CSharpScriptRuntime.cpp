@@ -13,11 +13,11 @@ CSharpScriptRuntime::CSharpScriptRuntime(alt::ICore* core) : clr(core), core(cor
     try {
         if (!config["disableRestrictedSandbox"]->AsBool(false)) return;
 
-        const int result = MessageBox(nullptr, L"You've enabled disableRestrictedSandbox in altv.cfg\r\n"
+        const int result = MessageBox(nullptr, L"You've enabled disableRestrictedSandbox in altv.toml\r\n"
             "ONLY JOIN TRUSTED SERVERS, AS WITHOUT SANDBOXING THEY CAN ACCESS YOUR PERSONAL DATA.\r\n"
             "Are you sure you want to disable sandboxing?", L"Do you want to disable restricted sandbox?",  MB_YESNO | MB_ICONWARNING);
         if (result != IDYES) return;
-        
+
         cs::Log::Warning << "C# sandbox disabled" << cs::Log::Endl;
         clr.sandbox = false;
     } catch(std::exception& e) {
