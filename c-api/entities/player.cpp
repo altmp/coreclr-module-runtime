@@ -7,7 +7,7 @@
 
 CAPI_START()
 
-uint16_t Player_GetID(alt::IPlayer* player) {
+uint32_t Player_GetID(alt::IPlayer* player) {
     return player->GetID();
 }
 

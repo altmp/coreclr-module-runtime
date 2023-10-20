@@ -14,7 +14,7 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED uint16_t Object_GetID(alt::IObject* object);
+EXPORT_SHARED uint32_t Object_GetID(alt::IObject* object);
 EXPORT_SHARED alt::IEntity* Object_GetEntity(alt::IObject* object);
 
 EXPORT_SHARED uint8_t Object_GetAlpha(alt::IObject* object);

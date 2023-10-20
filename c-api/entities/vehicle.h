@@ -14,14 +14,14 @@
 #pragma clang diagnostic pop
 #endif
 
-EXPORT_SHARED uint16_t Vehicle_GetID(alt::IVehicle* vehicle);
+EXPORT_SHARED uint32_t Vehicle_GetID(alt::IVehicle* vehicle);
 EXPORT_SHARED alt::IEntity* Vehicle_GetEntity(alt::IVehicle* vehicle);
 
 EXPORT_SHARED uint8_t Vehicle_GetWheelsCount(alt::IVehicle* vehicle);
 EXPORT_SHARED int32_t Vehicle_GetPetrolTankHealth(alt::IVehicle* vehicle);
 
 EXPORT_SERVER alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle);
-EXPORT_SERVER uint8_t Vehicle_GetDriverID(alt::IVehicle* vehicle, uint16_t& id);
+EXPORT_SERVER uint8_t Vehicle_GetDriverID(alt::IVehicle* vehicle, uint32_t& id);
 
 EXPORT_SERVER uint8_t Vehicle_IsDestroyed(alt::IVehicle* vehicle);
 

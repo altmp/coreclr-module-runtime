@@ -4,7 +4,7 @@
 
 CAPI_START()
 
-uint16_t Object_GetID(alt::IObject* object)
+uint32_t Object_GetID(alt::IObject* object)
 {
     return object->GetID();
 }

@@ -5,7 +5,7 @@
 
 CAPI_START()
 
-uint16_t Vehicle_GetID(alt::IVehicle* entity) {
+uint32_t Vehicle_GetID(alt::IVehicle* entity) {
     return entity->GetID();
 }
 
@@ -32,7 +32,7 @@ alt::IPlayer* Vehicle_GetDriver(alt::IVehicle* vehicle) {
     return vehicle->GetDriver();
 }
 
-uint8_t Vehicle_GetDriverID(alt::IVehicle* vehicle, uint16_t& id) {
+uint8_t Vehicle_GetDriverID(alt::IVehicle* vehicle, uint32_t& id) {
     auto driver = vehicle->GetDriver();
     if (driver == nullptr) return false;
     id = driver->GetID();

@@ -6,7 +6,7 @@
 
 CAPI_START()
 
-uint16_t Ped_GetID(alt::IPed* ped) {
+uint32_t Ped_GetID(alt::IPed* ped) {
     return ped->GetID();
 }
 
