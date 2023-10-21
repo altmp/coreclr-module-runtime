@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 16677003916101455049UL;
+inline uint64_t capiHash = 13325244553859733034UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1489,6 +1489,7 @@ inline uint64_t capiHashes[] = {
     2232062854990357196UL,
     3139723963307924640UL,
     1204109734587833282UL,
+    8805714842908729165UL,
     12300710546613769705UL,
     6739305111416325852UL,
     937601034617427157UL,
@@ -3234,6 +3235,7 @@ inline void* capiPointers[] = {
     (void*) Player_RemoveAllWeapons,
     (void*) Player_RemoveDecoration,
     (void*) Player_RemoveFaceFeature,
+    (void*) Player_RemoveHeadBlendData,
     (void*) Player_RemoveHeadOverlay,
     (void*) Player_RemoveWeapon,
     (void*) Player_RemoveWeaponComponent,

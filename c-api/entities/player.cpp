@@ -520,6 +520,11 @@ void Player_SetHeadBlendData(alt::IPlayer* player, uint32_t shapeFirstID, uint32
     player->SetHeadBlendData(shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID, skinThirdID, shapeMix, skinMix, thirdMix);
 }
 
+void Player_RemoveHeadBlendData(alt::IPlayer* player)
+{
+    player->RemoveHeadBlendData();
+}
+
 void Player_GetHeadBlendData(alt::IPlayer* player, head_blend_data_t &headBlendData) {
     auto playerHeadBlendData = player->GetHeadBlendData();
     headBlendData.shapeFirstID = playerHeadBlendData.shapeFirstID;

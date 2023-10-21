@@ -152,6 +152,7 @@ EXPORT_SERVER void Player_GetHeadBlendPaletteColor(alt::IPlayer* player, uint8_t
 EXPORT_SERVER void Player_SetHeadBlendData(alt::IPlayer* player, uint32_t shapeFirstID, uint32_t shapeSecondID, uint32_t shapeThirdID,
     uint32_t skinFirstID, uint32_t skinSecondID, uint32_t skinThirdID,
     float shapeMix, float skinMix, float thirdMix);
+EXPORT_SERVER void Player_RemoveHeadBlendData(alt::IPlayer* player);
 EXPORT_SERVER void Player_GetHeadBlendData(alt::IPlayer* player, head_blend_data_t& headBlendData);
 
 EXPORT_SERVER uint8_t Player_SetEyeColor(alt::IPlayer* player, uint16_t eyeColor);
