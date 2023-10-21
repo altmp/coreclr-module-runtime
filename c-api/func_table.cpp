@@ -1,6 +1,10 @@
 #include "func_table.h"
 
+<<<<<<< HEAD
 inline uint64_t capiHash = 4677548953854785821UL;
+=======
+inline uint64_t capiHash = 16677003916101455049UL;
+>>>>>>> release
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1058,6 +1062,11 @@ inline uint64_t capiHashes[] = {
     13737530370025977174UL,
     7482854450085275693UL,
     2139798095052897524UL,
+<<<<<<< HEAD
+=======
+    2001253713694863162UL,
+    3166577616070768315UL,
+>>>>>>> release
     15652019729912249391UL,
     8454955647873390265UL,
     5411021830103603795UL,
@@ -2801,6 +2810,11 @@ inline void* capiPointers[] = {
     (void*) Core_GetEventTypeSize,
     (void*) Core_GetMarkers,
     (void*) Core_GetMetaData,
+<<<<<<< HEAD
+=======
+    (void*) Core_GetMValueArgsSize,
+    (void*) Core_GetMValueSize,
+>>>>>>> release
     (void*) Core_GetNetTime,
     (void*) Core_GetNetworkObjects,
     (void*) Core_GetPeds,
