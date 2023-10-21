@@ -1,4 +1,4 @@
-﻿#include <json.hpp>
+#include <json.hpp>
 #include <Log.h>
 #include <sha1.hpp>
 #include <sha512.hpp>
