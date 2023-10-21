@@ -133,6 +133,20 @@ alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* val
     return AllocMValue(std::move(mValue));
 }
 
+uint64_t Core_GetMValueSize(alt::ICore* core, alt::MValueConst* args)
+{
+    return core->GetMValueSize(args->get()->Clone());
+}
+
+uint64_t Core_GetMValueArgsSize(alt::ICore* core, alt::MValueConst* args[], int size)
+{
+    alt::MValueArgs mValues = alt::MValueArgs(size);
+    for (int i = 0; i < size; i++) {
+        ToMValueArg(mValues, core, args[i], i);
+    }
+    return core->GetMValueArgsSize(mValues);
+}
+
 alt::IPlayer** Core_GetPlayers(alt::ICore* core, uint64_t& size) {
     auto players = core->GetBaseObjects(alt::IBaseObject::Type::PLAYER);
     size = players.size();

@@ -48,6 +48,8 @@ EXPORT_SHARED alt::MValueConst* Core_CreateMValueVector2(alt::ICore* core, vecto
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueRgba(alt::ICore* core, rgba_t value);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueByteArray(alt::ICore* core, uint64_t size, const void* data);
 EXPORT_SHARED alt::MValueConst* Core_CreateMValueFunction(alt::ICore* core, CustomInvoker* value);
+EXPORT_SHARED uint64_t Core_GetMValueSize(alt::ICore* core, alt::MValueConst* args);
+EXPORT_SHARED uint64_t Core_GetMValueArgsSize(alt::ICore* core, alt::MValueConst* args[], int size);
 
 EXPORT_SHARED alt::IPlayer** Core_GetPlayers(alt::ICore* core, uint64_t& size);
 EXPORT_SHARED alt::IVehicle** Core_GetVehicles(alt::ICore* core, uint64_t& size);
