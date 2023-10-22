@@ -366,7 +366,10 @@ namespace cache
         bool SetClothes(uint8_t component, uint16_t drawable, uint8_t texture, uint8_t palette) override {
 	        return false;
         }
-    	std::vector<alt::DlcCloth> _dlcClothes = {};
+
+        bool ClearClothes(uint8_t component) override {}
+
+        std::vector<alt::DlcCloth> _dlcClothes = {};
     	alt::DlcCloth GetDlcClothes(uint8_t component) const override {
     		if (_dlcClothes.size() <= component) return { 0, 0, 0, 0 };
     		return _dlcClothes[component];
