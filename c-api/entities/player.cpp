@@ -404,6 +404,10 @@ uint8_t Player_SetDlcClothes(alt::IPlayer* player, uint8_t component, uint16_t d
     return player->SetDlcClothes(component, drawable, texture, palette, dlc);
 }
 
+uint8_t Player_ClearClothes(alt::IPlayer* player, uint8_t component)
+{
+    return player->ClearClothes(component);
+}
 
 void Player_GetProps(alt::IPlayer* player, uint8_t component, prop_t& prop) {
     auto props = player->GetProps(component);
