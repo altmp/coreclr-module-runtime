@@ -1,10 +1,6 @@
 #include "func_table.h"
 
-<<<<<<< HEAD
-inline uint64_t capiHash = 4677548953854785821UL;
-=======
-inline uint64_t capiHash = 16677003916101455049UL;
->>>>>>> release
+inline uint64_t capiHash = 13325244553859733034UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1062,11 +1058,8 @@ inline uint64_t capiHashes[] = {
     13737530370025977174UL,
     7482854450085275693UL,
     2139798095052897524UL,
-<<<<<<< HEAD
-=======
     2001253713694863162UL,
     3166577616070768315UL,
->>>>>>> release
     15652019729912249391UL,
     8454955647873390265UL,
     5411021830103603795UL,
@@ -1496,6 +1489,7 @@ inline uint64_t capiHashes[] = {
     2232062854990357196UL,
     3139723963307924640UL,
     1204109734587833282UL,
+    8805714842908729165UL,
     12300710546613769705UL,
     6739305111416325852UL,
     937601034617427157UL,
@@ -2810,11 +2804,8 @@ inline void* capiPointers[] = {
     (void*) Core_GetEventTypeSize,
     (void*) Core_GetMarkers,
     (void*) Core_GetMetaData,
-<<<<<<< HEAD
-=======
     (void*) Core_GetMValueArgsSize,
     (void*) Core_GetMValueSize,
->>>>>>> release
     (void*) Core_GetNetTime,
     (void*) Core_GetNetworkObjects,
     (void*) Core_GetPeds,
@@ -3244,6 +3235,7 @@ inline void* capiPointers[] = {
     (void*) Player_RemoveAllWeapons,
     (void*) Player_RemoveDecoration,
     (void*) Player_RemoveFaceFeature,
+    (void*) Player_RemoveHeadBlendData,
     (void*) Player_RemoveHeadOverlay,
     (void*) Player_RemoveWeapon,
     (void*) Player_RemoveWeaponComponent,
