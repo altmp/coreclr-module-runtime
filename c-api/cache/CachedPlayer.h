@@ -435,6 +435,8 @@ namespace cache
         void SetHeadBlendData(uint32_t shapeFirstID, uint32_t shapeSecondID, uint32_t shapeThirdID, uint32_t skinFirstID, uint32_t skinSecondID, uint32_t skinThirdID, float shapeMix,
             float skinMix, float thirdMix) override {}
 
+        void RemoveHeadBlendData() override {}
+
         alt::HeadBlendData _headBlendData;
         alt::HeadBlendData GetHeadBlendData() const override {
 			return _headBlendData;
