@@ -367,7 +367,9 @@ namespace cache
 	        return false;
         }
 
-        bool ClearClothes(uint8_t component) override {}
+        bool ClearClothes(uint8_t component) override {
+	        return false;
+        }
 
         std::vector<alt::DlcCloth> _dlcClothes = {};
     	alt::DlcCloth GetDlcClothes(uint8_t component) const override {
