@@ -165,7 +165,7 @@ typedef void (* ConnectionQueueRemoveDelegate_t)(alt::IConnectionInfo* connectio
 
 typedef void (* ServerStartedDelegate_t)();
 
-typedef void (* PlayerRequestControlDelegate_t)(void* target, alt::IBaseObject::Type targetBaseObjectType, alt::IPlayer* player);
+typedef void (* PlayerRequestControlDelegate_t)(const alt::CEvent* event, void* target, alt::IBaseObject::Type targetBaseObjectType, alt::IPlayer* player);
 
 typedef void (* PlayerDimensionChangeDelegate_t)(alt::IPlayer* player, int32_t oldDimension, int32_t newDimension);
 
