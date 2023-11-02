@@ -53,7 +53,7 @@ void CSharpResourceImpl::ResetDelegates()
     OnConnectionQueueAddDelegate = [](auto var){};
     OnConnectionQueueRemoveDelegate = [](auto var){};
     OnServerStartedDelegate = []() {};
-    OnPlayerRequestControlDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerRequestControlDelegate = [](auto var, auto var2, auto var3, auto var4) {};
     OnPlayerDimensionChangeDelegate = [](auto var, auto var2, auto var3) {};
     OnPlayerSpawnDelegate = [](auto var) {};
 
@@ -632,7 +632,8 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
         {
             auto playerRequestControlEvent = dynamic_cast<const alt::CPlayerRequestControlEvent*>(ev);
             auto targetPtr = GetEntityPointer(playerRequestControlEvent->GetTarget());
-            OnPlayerRequestControlDelegate(targetPtr,
+            OnPlayerRequestControlDelegate(playerRequestControlEvent,
+                                           targetPtr,
                                            playerRequestControlEvent->GetTarget()->GetType(),
                                            playerRequestControlEvent->GetPlayer());
             break;
