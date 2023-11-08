@@ -127,6 +127,19 @@ void CoreClr::DownloadRuntime(alt::IHttpClient* httpClient, Progress& progress) 
             return;
         } catch (std::runtime_error& e) {
             cs::Log::Error << "Failed to extract zip: " << e.what() << cs::Log::Endl;
+            
+            auto path = GetDataDirectoryPath() / "runtime.zip";
+            try
+            {
+                cs::Log::Info << "Writing debug ZIP to: " << path.string() << cs::Log::Endl;
+                std::ofstream os(path);
+                os << response.body;
+                os.close();
+                cs::Log::Info << "Writing debug ZIP finished" << cs::Log::Endl;
+            } catch(std::runtime_error& e)
+            {
+                cs::Log::Info << "Writing debug ZIP failed: " << e.what() << cs::Log::Endl;
+            }
         }
     }
 }
