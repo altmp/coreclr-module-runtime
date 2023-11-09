@@ -259,3 +259,5 @@ EXPORT_CLIENT const char* Player_GetTaskData(alt::IPlayer* player, int32_t& size
 
 EXPORT_SERVER const char* Player_GetBloodDamageBase64(alt::IPlayer* player, int32_t& size);
 EXPORT_SERVER void Player_SetBloodDamageBase64(alt::IPlayer* player, const char* bloodDamage);
+
+EXPORT_SERVER void Player_RemoveHeadBlendPaletteColor(alt::IPlayer* player);

@@ -596,6 +596,8 @@ namespace cache
     		return _bloodDamageBase64;
     	}
         void SetBloodDamageBase64(const std::string& _base64) override {}
+
+    	void RemoveHeadBlendPaletteColor() override {}
 #endif
 
 

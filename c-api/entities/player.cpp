@@ -755,6 +755,10 @@ void Player_SetBloodDamageBase64(alt::IPlayer* player, const char* bloodDamage)
     player->SetBloodDamageBase64(bloodDamage);
 }
 
+void Player_RemoveHeadBlendPaletteColor(alt::IPlayer* player)
+{
+    player->RemoveHeadBlendPaletteColor();
+}
 
 #endif
 
