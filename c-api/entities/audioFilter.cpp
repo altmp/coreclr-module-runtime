@@ -35,9 +35,9 @@ uint32_t AudioFilter_AddRotateEffect(alt::IAudioFilter* audioFilter, float rate,
     return audioFilter->AddRotateEffect(rate, priority);
 }
 
-uint32_t AudioFilter_AddVolumeEffect(alt::IAudioFilter* audioFilter, float volume, int priority)
+uint32_t AudioFilter_AddVolumeEffect(alt::IAudioFilter* audioFilter, float volume, int priority, int channel)
 {
-    return audioFilter->AddVolumeEffect(volume, priority);
+    return audioFilter->AddVolumeEffect(volume, priority, channel);
 }
 
 uint32_t AudioFilter_AddPeakeqEffect(alt::IAudioFilter* audioFilter, int lBand, float bandwidth, float q, float center,
