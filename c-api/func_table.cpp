@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 15809758987028017478UL;
+inline uint64_t capiHash = 554522947139118248UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -154,6 +154,9 @@ inline uint64_t capiHashes[] = {
     9678094278922411472UL,
     6070013237365852957UL,
     17183361268059997356UL,
+    10058355141969516360UL,
+    5989408698388544472UL,
+    3048778071876483320UL,
     16078537130538515891UL,
     1389091625205062844UL,
     14148467334937601992UL,
@@ -1914,6 +1917,9 @@ inline void* capiPointers[] = {
     (void*) Core_GetPedBonePos,
     (void*) Core_GetPermissionState,
     (void*) Core_GetPing,
+    (void*) Core_GetPoolCount,
+    (void*) Core_GetPoolEntities,
+    (void*) Core_GetPoolSize,
     (void*) Core_GetScreenResolution,
     (void*) Core_GetServerIp,
     (void*) Core_GetServerPort,
