@@ -35,9 +35,9 @@ struct ClrWeaponModelInfo {
         std::copy(info.ammoType.begin(), info.ammoType.end(), ammoType);
         ammoType[info.ammoType.length()] = '\0';
 
-        modelName = new char[info.modelName.length() + 1];
-        std::copy(info.modelName.begin(), info.modelName.end(), modelName);
-        modelName[info.modelName.length()] = '\0';
+        modelName = new char[info.model.length() + 1];
+        std::copy(info.model.begin(), info.model.end(), modelName);
+        modelName[info.model.length()] = '\0';
 
         ammoModelName = new char[info.ammoModelName.length() + 1];
         std::copy(info.ammoModelName.begin(), info.ammoModelName.end(), ammoModelName);
