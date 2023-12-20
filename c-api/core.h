@@ -411,3 +411,7 @@ EXPORT_CLIENT uint16_t Core_TriggerServerRPCEvent(alt::ICore* core, const char* 
 EXPORT_SERVER void Core_AddClientConfigKey(alt::ICore* core, const char* key);
 
 EXPORT_SERVER uint8_t Core_HasBenefit(alt::ICore* core, uint8_t benefit);
+
+EXPORT_CLIENT uint32_t Core_GetPoolSize(alt::ICore* core, const char* pool);
+EXPORT_CLIENT uint32_t Core_GetPoolCount(alt::ICore* core, const char* pool);
+EXPORT_CLIENT void Core_GetPoolEntities(alt::ICore* core, const char* pool, const uint32_t*& poolEntities, uint32_t& size);

@@ -22,7 +22,7 @@ EXPORT_CLIENT uint32_t AudioFilter_GetAudCategory(alt::IAudioFilter* audioFilter
 EXPORT_CLIENT void AudioFilter_SetAudCategory(alt::IAudioFilter* audioFilter, uint32_t category);
 
 EXPORT_CLIENT uint32_t AudioFilter_AddRotateEffect(alt::IAudioFilter* audioFilter, float rate, int priority);
-EXPORT_CLIENT uint32_t AudioFilter_AddVolumeEffect(alt::IAudioFilter* audioFilter, float volume, int priority);
+EXPORT_CLIENT uint32_t AudioFilter_AddVolumeEffect(alt::IAudioFilter* audioFilter, float volume, int priority, int channel);
 EXPORT_CLIENT uint32_t AudioFilter_AddPeakeqEffect(alt::IAudioFilter* audioFilter, int lBand, float bandwidth, float q, float center, float gain, int priority);
 EXPORT_CLIENT uint32_t AudioFilter_AddDampEffect(alt::IAudioFilter* audioFilter, float target, float quiet, float rate, float gain, float delay, int priority);
 EXPORT_CLIENT uint32_t AudioFilter_AddAutowahEffect(alt::IAudioFilter* audioFilter, float dryMix, float wetMix, float feedback, float rate, float range, float freq, int priority);

@@ -118,6 +118,7 @@ EXPORT_SERVER void Player_GetClothes(alt::IPlayer* player, uint8_t component, cl
 EXPORT_SERVER uint8_t Player_SetClothes(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint8_t palette);
 EXPORT_SERVER void Player_GetDlcClothes(alt::IPlayer* player, uint8_t component, dlccloth_t& cloth);
 EXPORT_SERVER uint8_t Player_SetDlcClothes(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture, uint8_t palette, uint32_t dlc);
+EXPORT_SERVER uint8_t Player_ClearClothes(alt::IPlayer* player, uint8_t component);
 
 EXPORT_SERVER void Player_GetProps(alt::IPlayer* player, uint8_t component, prop_t& prop);
 EXPORT_SERVER uint8_t Player_SetProps(alt::IPlayer* player, uint8_t component, uint16_t drawable, uint8_t texture);
@@ -258,3 +259,5 @@ EXPORT_CLIENT const char* Player_GetTaskData(alt::IPlayer* player, int32_t& size
 
 EXPORT_SERVER const char* Player_GetBloodDamageBase64(alt::IPlayer* player, int32_t& size);
 EXPORT_SERVER void Player_SetBloodDamageBase64(alt::IPlayer* player, const char* bloodDamage);
+
+EXPORT_SERVER void Player_RemoveHeadBlendPaletteColor(alt::IPlayer* player);

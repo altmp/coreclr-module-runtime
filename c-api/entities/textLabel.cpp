@@ -1,6 +1,7 @@
 #include "textLabel.h"
 
 #include "../utils/macros.h"
+#include "../utils/strings.h"
 
 CAPI_START()
 
@@ -41,6 +42,75 @@ void TextLabel_SetColor(alt::ITextLabel* textLabel, rgba_t color)
     textLabelColor.b = color.b;
     textLabelColor.a = color.a;
     textLabel->SetColor(textLabelColor);
+}
+
+void TextLabel_GetOutlineColor(alt::ITextLabel* textLabel, rgba_t& color)
+{
+    auto outlineColor = textLabel->GetOutlineColor();
+    color.r = outlineColor.r;
+    color.g = outlineColor.g;
+    color.b = outlineColor.b;
+    color.a = outlineColor.a;
+}
+
+void TextLabel_SetOutlineColor(alt::ITextLabel* textLabel, rgba_t color)
+{
+    alt::RGBA outlineColor;
+    outlineColor.r = color.r;
+    outlineColor.g = color.g;
+    outlineColor.b = color.b;
+    outlineColor.a = color.a;
+    textLabel->SetOutlineColor(outlineColor);
+}
+
+float TextLabel_GetOutlineWidth(alt::ITextLabel* textLabel)
+{
+    return textLabel->GetOutlineWidth();
+}
+
+void TextLabel_SetOutlineWidth(alt::ITextLabel* textLabel, float width)
+{
+    textLabel->SetOutlineWidth(width);
+}
+
+float TextLabel_GetFontSize(alt::ITextLabel* textLabel)
+{
+    return textLabel->GetFontSize();
+}
+
+void TextLabel_SetFontSize(alt::ITextLabel* textLabel, float size)
+{
+    textLabel->SetFontSize(size);
+}
+
+uint8_t TextLabel_GetAlign(alt::ITextLabel* textLabel)
+{
+    return static_cast<uint8_t>(textLabel->GetAlign());
+}
+
+void TextLabel_SetAlign(alt::ITextLabel* textLabel, uint8_t align)
+{
+    textLabel->SetAlign(static_cast<alt::ITextLabel::Alignment>(align));
+}
+
+const char* TextLabel_GetText(alt::ITextLabel* textLabel, int32_t& size)
+{
+    return AllocateString(textLabel->GetText(), size);
+}
+
+void TextLabel_SetText(alt::ITextLabel* textLabel, const char* text)
+{
+    textLabel->SetText(text);
+}
+
+const char* TextLabel_GetFont(alt::ITextLabel* textLabel, int32_t& size)
+{
+    return AllocateString(textLabel->GetFont(), size);
+}
+
+void TextLabel_SetFont(alt::ITextLabel* textLabel, const char* font)
+{
+    textLabel->SetFont(font);
 }
 
 uint8_t TextLabel_IsVisible(alt::ITextLabel* textLabel)

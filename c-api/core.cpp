@@ -7,6 +7,7 @@
 #include "data/weapon_model_info.h"
 #include "utils/entity.h"
 #include "utils/macros.h"
+#include "utils/uint.h"
 
 CAPI_START()
 
@@ -2075,6 +2076,21 @@ uint16_t Core_TriggerServerRPCEvent(alt::ICore* core, const char* ev, alt::MValu
         ToMValueArg(mValues, core, args[i], i);
     }
     return core->TriggerServerRPCEvent(ev, mValues);
+}
+
+uint32_t Core_GetPoolSize(alt::ICore* core, const char* pool)
+{
+    return core->GetPoolSize(pool);
+}
+
+uint32_t Core_GetPoolCount(alt::ICore* core, const char* pool)
+{
+    return core->GetPoolCount(pool);
+}
+
+void Core_GetPoolEntities(alt::ICore* core, const char* pool, const uint32_t*& poolEntities, uint32_t& size)
+{
+    poolEntities = AllocateUInt32Array(core->GetPoolEntities(pool), size);
 }
 #endif
 
