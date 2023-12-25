@@ -183,7 +183,7 @@ typedef void (* VoiceConnectionDelegate_t)(uint8_t state);
 
 typedef void (* RequestSyncedSceneDelegate_t)(const alt::CEvent* event, alt::IPlayer* source, int32_t sceneId);
 
-typedef void (* StartSyncedSceneDelegate_t)(alt::IPlayer* source, int32_t sceneId, position_t startPosition, rotation_t startRotation, uint32_t animDictHash, alt::IEntity* entities[], alt::IBaseObject::Type types[], uint32_t animHash[], uint64_t size);
+typedef void (* StartSyncedSceneDelegate_t)(alt::IPlayer* source, int32_t sceneId, position_t startPosition, rotation_t startRotation, uint32_t animDictHash, void* entities[], alt::IBaseObject::Type types[], uint32_t animHash[], uint64_t size);
 
 typedef void (* StopSyncedSceneDelegate_t)(alt::IPlayer* source, int32_t sceneId);
 
