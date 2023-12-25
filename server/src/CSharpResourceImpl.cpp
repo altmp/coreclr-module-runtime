@@ -675,7 +675,7 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             position_t startPosition = {startSyncedSceneEvent->GetStartPosition().x, startSyncedSceneEvent->GetStartPosition().y, startSyncedSceneEvent->GetStartPosition().z};
             rotation_t startRotation = {startSyncedSceneEvent->GetStartRotation().roll, startSyncedSceneEvent->GetStartRotation().pitch, startSyncedSceneEvent->GetStartRotation().yaw};
 
-            auto entities = new alt::IEntity*[startSyncedSceneEvent->GetEntityAndAnimHashPairs().size()];
+            auto entities = new void*[startSyncedSceneEvent->GetEntityAndAnimHashPairs().size()];
             auto types = new alt::IBaseObject::Type[startSyncedSceneEvent->GetEntityAndAnimHashPairs().size()];
             auto animHashes = new uint32_t[startSyncedSceneEvent->GetEntityAndAnimHashPairs().size()];
             uint64_t size = 0;
@@ -683,7 +683,7 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             for (const auto& hash_pair : startSyncedSceneEvent->GetEntityAndAnimHashPairs())
             {
                 auto entity = hash_pair.first.get();
-                entities[size] = entity;
+                entities[size] = Util_GetEntityPointer(entity);
                 types[size] = entity->GetType();
                 animHashes[size] = hash_pair.second;
                 size = size + 1;
