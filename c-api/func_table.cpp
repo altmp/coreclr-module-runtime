@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 554522947139118248UL;
+inline uint64_t capiHash = 9602013249028565151UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1664,6 +1664,7 @@ inline uint64_t capiHashes[] = {
     277481303661922113UL,
     1070345202824576095UL,
     4149223353503655708UL,
+    15010482901293452804UL,
     16890059088943800731UL,
     5545167983491514394UL,
     13734895793996634557UL,
@@ -3427,6 +3428,7 @@ inline void* capiPointers[] = {
     (void*) Vehicle_Repair,
     (void*) Vehicle_SetArmoredWindowHealth,
     (void*) Vehicle_SetArmoredWindowShootCount,
+    (void*) Vehicle_SetBadge,
     (void*) Vehicle_SetBoatAnchor,
     (void*) Vehicle_SetBodyAdditionalHealth,
     (void*) Vehicle_SetBodyHealth,

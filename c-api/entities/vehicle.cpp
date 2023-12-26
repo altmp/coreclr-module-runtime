@@ -902,6 +902,40 @@ float Vehicle_GetBrakeLevel(alt::IVehicle* vehicle)
     return vehicle->GetBrakeLevel();
 }
 
+void Vehicle_SetBadge(alt::IVehicle* vehicle, uint32_t textureDictionary, uint32_t texture,
+                      vehicleBadgePosition_t vehicleBadgePosition[], uint16_t size)
+{
+    const auto altVehicleBadgePositions = new alt::VehicleBadgePosition[4];
+
+    for (int i = 0; i < size; ++i)
+    {
+        auto offset = vehicleBadgePosition[i].offset;
+        auto direction = vehicleBadgePosition[i].direction;
+        auto side = vehicleBadgePosition[i].side;
+
+        altVehicleBadgePositions[i] = alt::VehicleBadgePosition(
+            vehicleBadgePosition[i].alpha,
+            vehicleBadgePosition[i].size,
+            vehicleBadgePosition[i].boneIndex,
+            alt::Vector3f(offset.x, offset.y, offset.z),
+            alt::Vector3f(direction.x, direction.y, direction.z),
+            alt::Vector3f(side.x, side.y, side.z)
+        );
+
+        altVehicleBadgePositions[i].active = vehicleBadgePosition[i].active;
+    }
+
+    if (size < 4)
+    {
+        for (int i = size; i < 4; ++i)
+        {
+            altVehicleBadgePositions[i] = alt::VehicleBadgePosition();
+        }
+    }
+
+    vehicle->SetBadge(textureDictionary, texture, altVehicleBadgePositions);
+}
+
 #endif
 
 #ifdef ALT_CLIENT_API
