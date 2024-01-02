@@ -716,7 +716,7 @@ ClrDecoration** Player_GetDecorations(alt::IPlayer* player, uint64_t& size)
     return out;
 }
 
-void Player_DeallocVehicleModelInfo(ClrDecoration** decoInfo) {
+void Player_DeallocDecoration(ClrDecoration** decoInfo) {
     delete[] decoInfo;
 }
 
