@@ -2137,6 +2137,17 @@ alt::IAudioFilter* Core_GetVoiceFilter(alt::ICore* core, uint32_t playerRemodeId
 {
     return core->GetVoiceFilter(playerRemodeId);
 }
+
+void Core_UpdateClipContext(alt::ICore* core, const char* keys[], const char* values[], uint64_t size)
+{
+    std::unordered_map<std::string, std::string> context = {};
+
+    for (uint64_t i = 0; i < size; i++) {
+        context[keys[i]] = values[i];
+    }
+
+    return core->UpdateClipContext(context);
+}
 #endif
 
 CAPI_END()

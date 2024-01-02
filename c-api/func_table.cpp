@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 3200807633316865025UL;
+inline uint64_t capiHash = 18144996551249947726UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -261,6 +261,7 @@ inline uint64_t capiHashes[] = {
     5920144219377072122UL,
     3268039739443301173UL,
     17753040748478874447UL,
+    17801058509158105354UL,
     5389506501733691988UL,
     4168880360490742954UL,
     12755828446518747613UL,
@@ -2035,6 +2036,7 @@ inline void* capiPointers[] = {
     (void*) Core_TriggerServerRPCEvent,
     (void*) Core_TriggerWebViewEvent,
     (void*) Core_UnloadYtyp,
+    (void*) Core_UpdateClipContext,
     (void*) Core_WorldToScreen,
     (void*) CustomTexture_GetBaseObject,
     (void*) CustomTexture_GetID,
