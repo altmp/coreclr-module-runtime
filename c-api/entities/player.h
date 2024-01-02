@@ -239,7 +239,7 @@ EXPORT_SERVER void Player_RemoveDecoration(alt::IPlayer* player, uint32_t collec
 EXPORT_SERVER void Player_ClearDecorations(alt::IPlayer* player);
 
 EXPORT_SERVER ClrDecoration** Player_GetDecorations(alt::IPlayer* player, uint64_t& size);
-EXPORT_SERVER void Player_DeallocVehicleModelInfo(ClrDecoration** decoInfo);
+EXPORT_SERVER void Player_DeallocDecoration(ClrDecoration** decoInfo);
 
 EXPORT_SERVER void Player_PlayScenario(alt::IPlayer* player, const char* name);
 

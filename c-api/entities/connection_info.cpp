@@ -49,8 +49,12 @@ const char* ConnectionInfo_GetBranch(alt::IConnectionInfo* connectionInfo, int32
     return AllocateString(connectionInfo->GetBranch(), size);
 }
 
-uint32_t ConnectionInfo_GetBuild(alt::IConnectionInfo* connectionInfo) {
-    return connectionInfo->GetBuild();
+uint16_t ConnectionInfo_GetVersionMajor(alt::IConnectionInfo* connectionInfo) {
+    return connectionInfo->GetVersionMajor();
+}
+
+uint16_t ConnectionInfo_GetVersionMinor(alt::IConnectionInfo* connectionInfo) {
+    return connectionInfo->GetVersionMinor();
 }
 
 const char* ConnectionInfo_GetCdnUrl(alt::IConnectionInfo* connectionInfo, int32_t& size) {

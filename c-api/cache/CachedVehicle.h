@@ -788,6 +788,8 @@ namespace cache
         {
 	        return _brakeLevel;
         }
+
+	    void SetBadge(uint32_t textureDictionary, uint32_t texture, alt::VehicleBadgePosition positions[4]) override {}
 #endif
 #ifdef ALT_CLIENT_API
     	float _wheelSpeed;

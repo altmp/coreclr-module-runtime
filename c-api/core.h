@@ -415,3 +415,17 @@ EXPORT_SERVER uint8_t Core_HasBenefit(alt::ICore* core, uint8_t benefit);
 EXPORT_CLIENT uint32_t Core_GetPoolSize(alt::ICore* core, const char* pool);
 EXPORT_CLIENT uint32_t Core_GetPoolCount(alt::ICore* core, const char* pool);
 EXPORT_CLIENT void Core_GetPoolEntities(alt::ICore* core, const char* pool, const uint32_t*& poolEntities, uint32_t& size);
+
+EXPORT_CLIENT void Core_GetVoicePlayers(alt::ICore* core, const uint32_t*& voicePlayers, uint32_t& size);
+EXPORT_CLIENT void Core_RemoveVoicePlayer(alt::ICore* core, uint32_t playerRemodeId);
+
+EXPORT_CLIENT float Core_GetVoiceSpatialVolume(alt::ICore* core, uint32_t playerRemodeId);
+EXPORT_CLIENT void Core_SetVoiceSpatialVolume(alt::ICore* core, uint32_t playerRemodeId, float volume);
+
+EXPORT_CLIENT float Core_GetVoiceNonSpatialVolume(alt::ICore* core, uint32_t playerRemodeId);
+EXPORT_CLIENT void Core_SetVoiceNonSpatialVolume(alt::ICore* core, uint32_t playerRemodeId, float volume);
+
+EXPORT_CLIENT void Core_AddVoiceFilter(alt::ICore* core, uint32_t playerRemodeId, alt::IAudioFilter* filter);
+EXPORT_CLIENT void Core_RemoveVoiceFilter(alt::ICore* core, uint32_t playerRemodeId);
+EXPORT_CLIENT alt::IAudioFilter* Core_GetVoiceFilter(alt::ICore* core, uint32_t playerRemodeId);
+EXPORT_CLIENT void Core_UpdateClipContext(alt::ICore* core, const char* keys[], const char* values[], uint64_t size);
