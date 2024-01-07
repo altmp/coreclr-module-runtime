@@ -156,6 +156,45 @@ void Entity_SetStreamingDistance(alt::IEntity* entity, uint32_t streamingDistanc
 uint32_t Entity_GetScriptID(alt::IEntity* entity) {
     return entity->GetScriptID();
 }
+
+void Entity_GetSyncInfo(alt::IEntity* entity, sync_info_t& syncInfo)
+{
+    auto entitySyncInfo = entity->GetSyncInfo();
+
+    sync_info_t outSyncInfo;
+
+    outSyncInfo.active = entitySyncInfo.active;
+    outSyncInfo.receivedTick = entitySyncInfo.receivedTick;
+    outSyncInfo.fullyReceivedTick = entitySyncInfo.fullyReceivedTick;
+    outSyncInfo.sendTick = entitySyncInfo.sendTick;
+    outSyncInfo.ackedSendTick = entitySyncInfo.ackedSendTick;
+    outSyncInfo.propertyCount = entitySyncInfo.propertyCount;
+    outSyncInfo.componentCount = entitySyncInfo.componentCount;
+
+    if (outSyncInfo.propertyCount > 0) {
+        outSyncInfo.propertiesUpdateTick = new uint32_t[outSyncInfo.propertyCount];
+
+        for (int i = 0; i < outSyncInfo.propertyCount; ++i)
+        {
+            outSyncInfo.propertiesUpdateTick[i] = entitySyncInfo.propertiesUpdateTick[i];
+        }
+    } else {
+        outSyncInfo.propertiesUpdateTick = nullptr;
+    }
+
+    if (outSyncInfo.componentCount > 0) {
+        outSyncInfo.componentPropertyIndex = new uint32_t[outSyncInfo.componentCount];
+
+        for (int i = 0; i < outSyncInfo.componentCount; ++i)
+        {
+            outSyncInfo.componentPropertyIndex[i] = entitySyncInfo.componentPropertyIndex[i];
+        }
+    } else {
+        outSyncInfo.componentPropertyIndex = nullptr;
+    }
+
+    syncInfo = outSyncInfo;
+}
 #endif
 
 CAPI_END()
