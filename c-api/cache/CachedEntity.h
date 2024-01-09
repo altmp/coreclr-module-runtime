@@ -25,6 +25,7 @@ namespace cache
                                       _streamingDistance(base->GetStreamingDistance())
 #elif ALT_CLIENT_API
                                       _scriptId(base->GetScriptID()),
+                                      _syncInfo(base->GetSyncInfo()),
                                       _remoteId(base->GetRemoteID()),
                                       _isRemote(base->IsRemote())
 #endif
@@ -41,7 +42,7 @@ namespace cache
                 _streamSyncedMetaData[key] = base->GetStreamSyncedMetaData(key);
             }
         }
-        
+
         uint16_t GetSyncID() const override { return static_cast<uint16_t>(_id)/*only temp*/; }
 
         alt::IPlayer* _networkOwner;
@@ -221,6 +222,11 @@ namespace cache
         uint32_t _scriptId;
         uint32_t GetScriptID() const override {
             return _scriptId;
+        }
+
+        alt::SyncInfo _syncInfo;
+        alt::SyncInfo GetSyncInfo() const override {
+            return _syncInfo;
         }
 
         uint32_t _remoteId;

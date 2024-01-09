@@ -9,6 +9,7 @@
 #include "cpp-sdk/SDK.h"
 #include "../utils/export.h"
 #include "../data/types.h"
+#include "../data/sync_info.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -38,6 +39,7 @@ EXPORT_SERVER uint8_t Entity_GetStreamed(alt::IEntity* entity);
 EXPORT_SERVER void Entity_SetStreamed(alt::IEntity* entity, uint8_t state);
 
 EXPORT_CLIENT uint32_t Entity_GetScriptID(alt::IEntity* entity);
+EXPORT_CLIENT void Entity_GetSyncInfo(alt::IEntity* entity, /** nint* */  sync_info_t& syncInfo);
 
 EXPORT_SHARED uint8_t Entity_IsFrozen(alt::IEntity* entity);
 EXPORT_SHARED void Entity_SetFrozen(alt::IEntity* entity, uint8_t state);

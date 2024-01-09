@@ -565,7 +565,7 @@ namespace cache
 	        return 0;
         }
 
-        void AddDecoration(uint32_t collection, uint32_t overlay) override {}
+        void AddDecoration(uint32_t collection, uint32_t overlay, uint8_t count = 1) override {}
         void RemoveDecoration(uint32_t collection, uint32_t overlay) override {}
         void ClearDecorations() override {}
     	std::vector<alt::CDecoration> GetDecorations() const override

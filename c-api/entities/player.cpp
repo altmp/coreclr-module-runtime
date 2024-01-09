@@ -689,9 +689,9 @@ int32_t Player_GetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash)
     return player->GetAmmoMax100(ammoHash);
 }
 
-void Player_AddDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay)
+void Player_AddDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay, uint8_t count)
 {
-    player->AddDecoration(collection, overlay);
+    player->AddDecoration(collection, overlay, count);
 }
 
 void Player_RemoveDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay)

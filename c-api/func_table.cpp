@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 13630124142623987997UL;
+inline uint64_t capiHash = 12612033657027659340UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -266,6 +266,7 @@ inline uint64_t capiHashes[] = {
     4168880360490742954UL,
     12755828446518747613UL,
     11915813456855488252UL,
+    18237250479106097113UL,
     14079997901958077241UL,
     18259284189737259993UL,
     13707820718504089625UL,
@@ -1128,6 +1129,7 @@ inline uint64_t capiHashes[] = {
     7782187912558785270UL,
     10646355260907021718UL,
     9817201133426969670UL,
+    756563802353195975UL,
     247876811202044668UL,
     2025110884526748511UL,
     15676846424137302955UL,
@@ -1449,7 +1451,7 @@ inline uint64_t capiHashes[] = {
     1890144317981520558UL,
     15651278310887155719UL,
     487582698440451683UL,
-    11189476182745634495UL,
+    4335399707847968795UL,
     9305362021789278268UL,
     1935399752104807234UL,
     992364219024894490UL,
@@ -2041,6 +2043,7 @@ inline void* capiPointers[] = {
     (void*) CustomTexture_GetBaseObject,
     (void*) CustomTexture_GetID,
     (void*) Entity_GetScriptID,
+    (void*) Entity_GetSyncInfo,
     (void*) Event_SetAnyResourceErrorDelegate,
     (void*) Event_SetAnyResourceStartDelegate,
     (void*) Event_SetAnyResourceStopDelegate,
@@ -2903,6 +2906,7 @@ inline void* capiPointers[] = {
     (void*) FreeResourceArray,
     (void*) FreeString,
     (void*) FreeStringArray,
+    (void*) FreeSyncInfo,
     (void*) FreeTextLabelArray,
     (void*) FreeUInt32Array,
     (void*) FreeUInt8Array,
