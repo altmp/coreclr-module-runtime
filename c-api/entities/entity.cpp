@@ -171,27 +171,27 @@ void Entity_GetSyncInfo(alt::IEntity* entity, sync_info_t& syncInfo)
     outSyncInfo.propertyCount = entitySyncInfo.propertyCount;
     outSyncInfo.componentCount = entitySyncInfo.componentCount;
 
-    if (outSyncInfo.propertyCount > 0) {
-        outSyncInfo.propertiesUpdateTick = new uint32_t[outSyncInfo.propertyCount];
+    const auto componentPropertyIndex = new uint32_t*[entitySyncInfo.componentCount];
+    const auto propertyUpdateCount = new uint32_t[entitySyncInfo.componentCount];
+    uint32_t lastPropertyIdx = 0;
+    for (uint32_t i = 0; i < entitySyncInfo.componentCount; i++)
+    {
+        const uint32_t endIdx = i == entitySyncInfo.componentCount - 1
+        ? entitySyncInfo.propertyCount
+        : entitySyncInfo.componentPropertyIndex[i];
 
-        for (int i = 0; i < outSyncInfo.propertyCount; ++i)
+        uint32_t* propertiesUpdateTick = new uint32_t[endIdx - lastPropertyIdx];
+        for (uint32_t j = lastPropertyIdx; j < endIdx; j++)
         {
-            outSyncInfo.propertiesUpdateTick[i] = entitySyncInfo.propertiesUpdateTick[i];
+            propertiesUpdateTick[j-lastPropertyIdx] = entitySyncInfo.propertiesUpdateTick[j];
         }
-    } else {
-        outSyncInfo.propertiesUpdateTick = nullptr;
+        propertyUpdateCount[i] = endIdx - lastPropertyIdx;
+        componentPropertyIndex[i] = propertiesUpdateTick;
+        lastPropertyIdx = endIdx;
     }
 
-    if (outSyncInfo.componentCount > 0) {
-        outSyncInfo.componentPropertyIndex = new uint32_t[outSyncInfo.componentCount];
-
-        for (int i = 0; i < outSyncInfo.componentCount; ++i)
-        {
-            outSyncInfo.componentPropertyIndex[i] = entitySyncInfo.componentPropertyIndex[i];
-        }
-    } else {
-        outSyncInfo.componentPropertyIndex = nullptr;
-    }
+    outSyncInfo.propertyUpdateCount = propertyUpdateCount;
+    outSyncInfo.propertyUpdateTicks = componentPropertyIndex;
 
     syncInfo = outSyncInfo;
 }

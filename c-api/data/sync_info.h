@@ -8,6 +8,6 @@ typedef struct {
     uint32_t ackedSendTick;
     uint16_t propertyCount;
     uint8_t componentCount;
-    uint32_t* propertiesUpdateTick;
-    uint32_t* componentPropertyIndex;
+    uint32_t* propertyUpdateCount;
+    uint32_t** propertyUpdateTicks;
 } sync_info_t;

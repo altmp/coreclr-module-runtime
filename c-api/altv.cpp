@@ -54,8 +54,14 @@ void FreeWeaponTArray(weapon_t* weaponArray, uint32_t size) {
 }
 
 void FreeSyncInfo(sync_info_t syncInfo) {
-    if (syncInfo.propertyCount > 0) delete[] syncInfo.propertiesUpdateTick;
-    if (syncInfo.componentCount > 0) delete[] syncInfo.componentPropertyIndex;
+    if (syncInfo.componentCount > 0)
+    {
+        for (int i = 0; i < syncInfo.componentCount; ++i)
+        {
+            delete[]syncInfo.propertyUpdateTicks[i];
+        }
+        delete[] syncInfo.propertyUpdateTicks;
+    }
 }
 
 void FreeString(const char* string) {
