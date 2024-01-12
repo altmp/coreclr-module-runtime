@@ -1,5 +1,6 @@
 #include "altv.h"
 
+#include "data/sync_info.h"
 #include "data/types.h"
 #include "utils/macros.h"
 #include "version/version.h"
@@ -50,6 +51,17 @@ void FreeVoidPointerArray(void* voidPointerArray[]) {
 void FreeWeaponTArray(weapon_t* weaponArray, uint32_t size) {
     for (int i = 0; i < size; i++) if (weaponArray[i].componentsCount > 0) delete[] weaponArray[i].components;
     delete[] weaponArray;
+}
+
+void FreeSyncInfo(sync_info_t syncInfo) {
+    if (syncInfo.componentCount > 0)
+    {
+        for (int i = 0; i < syncInfo.componentCount; ++i)
+        {
+            delete[]syncInfo.propertyUpdateTicks[i];
+        }
+        delete[] syncInfo.propertyUpdateTicks;
+    }
 }
 
 void FreeString(const char* string) {

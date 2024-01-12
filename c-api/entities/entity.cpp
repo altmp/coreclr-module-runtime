@@ -156,6 +156,45 @@ void Entity_SetStreamingDistance(alt::IEntity* entity, uint32_t streamingDistanc
 uint32_t Entity_GetScriptID(alt::IEntity* entity) {
     return entity->GetScriptID();
 }
+
+void Entity_GetSyncInfo(alt::IEntity* entity, sync_info_t& syncInfo)
+{
+    auto entitySyncInfo = entity->GetSyncInfo();
+
+    sync_info_t outSyncInfo;
+
+    outSyncInfo.active = entitySyncInfo.active;
+    outSyncInfo.receivedTick = entitySyncInfo.receivedTick;
+    outSyncInfo.fullyReceivedTick = entitySyncInfo.fullyReceivedTick;
+    outSyncInfo.sendTick = entitySyncInfo.sendTick;
+    outSyncInfo.ackedSendTick = entitySyncInfo.ackedSendTick;
+    outSyncInfo.propertyCount = entitySyncInfo.propertyCount;
+    outSyncInfo.componentCount = entitySyncInfo.componentCount;
+
+    const auto componentPropertyIndex = new uint32_t*[entitySyncInfo.componentCount];
+    const auto propertyUpdateCount = new uint32_t[entitySyncInfo.componentCount];
+    uint32_t lastPropertyIdx = 0;
+    for (uint32_t i = 0; i < entitySyncInfo.componentCount; i++)
+    {
+        const uint32_t endIdx = i == entitySyncInfo.componentCount - 1
+        ? entitySyncInfo.propertyCount
+        : entitySyncInfo.componentPropertyIndex[i];
+
+        uint32_t* propertiesUpdateTick = new uint32_t[endIdx - lastPropertyIdx];
+        for (uint32_t j = lastPropertyIdx; j < endIdx; j++)
+        {
+            propertiesUpdateTick[j-lastPropertyIdx] = entitySyncInfo.propertiesUpdateTick[j];
+        }
+        propertyUpdateCount[i] = endIdx - lastPropertyIdx;
+        componentPropertyIndex[i] = propertiesUpdateTick;
+        lastPropertyIdx = endIdx;
+    }
+
+    outSyncInfo.propertyUpdateCount = propertyUpdateCount;
+    outSyncInfo.propertyUpdateTicks = componentPropertyIndex;
+
+    syncInfo = outSyncInfo;
+}
 #endif
 
 CAPI_END()

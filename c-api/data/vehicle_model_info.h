@@ -5,6 +5,7 @@
 
 struct ClrVehicleModelInfo
 {
+    uint32_t modelHash;
     char* title = nullptr;
     alt::VehicleModelInfo::Type modelType;
     uint8_t wheelsCount;
@@ -30,6 +31,7 @@ struct ClrVehicleModelInfo
     ClrVehicleModelInfo() = default;
 
     ClrVehicleModelInfo(alt::VehicleModelInfo info) :
+        modelHash(info.modelHash),
         modelType(info.modelType),
         wheelsCount(info.wheelsCount),
         hasArmoredWindows(info.hasArmoredWindows),

@@ -111,7 +111,7 @@ void Marker_SetDirection(alt::IMarker* marker, position_t dir)
     markerDir.x = dir.x;
     markerDir.y = dir.y;
     markerDir.z = dir.z;
-    marker->SetScale(markerDir);
+    marker->SetDirection(markerDir);
 }
 
 uint32_t Marker_GetStreamingDistance(alt::IMarker* marker)

@@ -3,6 +3,7 @@
 #include "utils/export.h"
 #include "utils/strings.h"
 #include "cpp-sdk/SDK.h"
+#include "data/sync_info.h"
 #include "data/types.h"
 
 EXPORT_SHARED void FreeUIntArray(std::vector<uint32_t> *array);
@@ -16,6 +17,7 @@ EXPORT_SHARED void FreeUInt8Array(/** nint */ uint8_t* uInt8Array);
 EXPORT_SHARED void FreeVector2Array(/** nint */ vector2_t* vector2Array);
 EXPORT_SHARED void FreeVoidPointerArray(/** nint */void** voidPointerArray);
 EXPORT_SHARED void FreeWeaponTArray(/** nint */ weapon_t* weaponArray, uint32_t size);
+EXPORT_SHARED void FreeSyncInfo(/** nint */ sync_info_t syncInfo);
 EXPORT_SHARED void FreeString(const char* string);
 EXPORT_SHARED void FreeStringArray(const char** stringArray, uint32_t size);
 EXPORT_SHARED void FreeResourceArray(alt::IResource** resourceArray);

@@ -35,45 +35,6 @@
 #pragma clang diagnostic pop
 #endif
 
-struct ClrConnectionInfo {
-    char* name = nullptr;
-    uint64_t socialId = 0;
-    uint64_t hwidHash = 0;
-    uint64_t hwidExHash = 0;
-    char* authToken = nullptr;
-    bool isDebug = 0;
-    char* branch = nullptr;
-    uint32_t build = 0;
-    char* cdnUrl = nullptr;
-    uint64_t passwordHash = 0;
-
-    ClrConnectionInfo() = default;
-
-    ClrConnectionInfo(alt::IConnectionInfo* info) :
-    socialId(info->GetSocialId()), hwidHash(info->GetHwIdHash()), hwidExHash(info->GetHwIdExHash()),
-    isDebug(info->GetIsDebug()),
-    build(info->GetBuild()), passwordHash(info->GetPasswordHash()) {
-        name = new char[info->GetName().length() + 1];
-        strcpy(name, info->GetName().c_str());
-
-        authToken = new char[info->GetAuthToken().length() + 1];
-        strcpy(authToken, info->GetAuthToken().c_str());
-
-        branch = new char[info->GetBranch().length() + 1];
-        strcpy(branch, info->GetBranch().c_str());
-
-        cdnUrl = new char[info->GetCdnUrl().length() + 1];
-        strcpy(cdnUrl, info->GetCdnUrl().c_str());
-    }
-
-    void dealloc() const {
-        delete[] name;
-        delete[] authToken;
-        delete[] branch;
-        delete[] cdnUrl;
-    }
-};
-
 typedef void (* MainDelegate_t)(alt::ICore* server, alt::IResource* resource, const char* resourceName,
                                 const char* entryPoint);
 
@@ -88,7 +49,7 @@ typedef void (* ClientEventDelegate_t)(alt::IPlayer* player, const char* name, a
 
 typedef void (* PlayerConnectDelegate_t)(alt::IPlayer* player, const char* reason);
 
-typedef void (* PlayerConnectDeniedDelegate_t)(alt::CPlayerConnectDeniedEvent::Reason reason, const char* name, const char* ip, uint64_t passwortHash, uint8_t isDebug, const char* branch, uint32_t majorVersion, const char* cdnUrl, int64_t discordId);
+typedef void (* PlayerConnectDeniedDelegate_t)(alt::CPlayerConnectDeniedEvent::Reason reason, const char* name, const char* ip, uint64_t passwortHash, uint8_t isDebug, const char* branch, uint16_t versionMajor, uint16_t versionMinor, const char* cdnUrl, int64_t discordId);
 
 typedef void (* ResourceEventDelegate_t)(alt::IResource* resource);
 
@@ -183,7 +144,7 @@ typedef void (* VoiceConnectionDelegate_t)(uint8_t state);
 
 typedef void (* RequestSyncedSceneDelegate_t)(const alt::CEvent* event, alt::IPlayer* source, int32_t sceneId);
 
-typedef void (* StartSyncedSceneDelegate_t)(alt::IPlayer* source, int32_t sceneId, position_t startPosition, rotation_t startRotation, uint32_t animDictHash, alt::IEntity* entities[], alt::IBaseObject::Type types[], uint32_t animHash[], uint64_t size);
+typedef void (* StartSyncedSceneDelegate_t)(alt::IPlayer* source, int32_t sceneId, position_t startPosition, rotation_t startRotation, uint32_t animDictHash, void* entities[], alt::IBaseObject::Type types[], uint32_t animHash[], uint64_t size);
 
 typedef void (* StopSyncedSceneDelegate_t)(alt::IPlayer* source, int32_t sceneId);
 

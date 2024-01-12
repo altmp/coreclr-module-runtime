@@ -7,6 +7,7 @@
 #include "data/weapon_model_info.h"
 #include "utils/entity.h"
 #include "utils/macros.h"
+#include "utils/uint.h"
 
 CAPI_START()
 
@@ -2075,6 +2076,82 @@ uint16_t Core_TriggerServerRPCEvent(alt::ICore* core, const char* ev, alt::MValu
         ToMValueArg(mValues, core, args[i], i);
     }
     return core->TriggerServerRPCEvent(ev, mValues);
+}
+
+uint32_t Core_GetPoolSize(alt::ICore* core, const char* pool)
+{
+    return core->GetPoolSize(pool);
+}
+
+uint32_t Core_GetPoolCount(alt::ICore* core, const char* pool)
+{
+    return core->GetPoolCount(pool);
+}
+
+void Core_GetPoolEntities(alt::ICore* core, const char* pool, const uint32_t*& poolEntities, uint32_t& size)
+{
+    poolEntities = AllocateUInt32Array(core->GetPoolEntities(pool), size);
+}
+
+void Core_GetVoicePlayers(alt::ICore* core, const uint32_t*& voicePlayers, uint32_t& size)
+{
+    voicePlayers = AllocateUInt32Array(core->GetVoicePlayers(), size);
+}
+
+void Core_RemoveVoicePlayer(alt::ICore* core, uint32_t playerRemodeId)
+{
+    core->RemoveVoicePlayer(playerRemodeId);
+}
+
+float Core_GetVoiceSpatialVolume(alt::ICore* core, uint32_t playerRemodeId)
+{
+    return core->GetVoiceSpatialVolume(playerRemodeId);
+}
+
+void Core_SetVoiceSpatialVolume(alt::ICore* core, uint32_t playerRemodeId, float volume)
+{
+    core->SetVoiceSpatialVolume(playerRemodeId, volume);
+}
+
+float Core_GetVoiceNonSpatialVolume(alt::ICore* core, uint32_t playerRemodeId)
+{
+    return core->GetVoiceNonSpatialVolume(playerRemodeId);
+}
+
+void Core_SetVoiceNonSpatialVolume(alt::ICore* core, uint32_t playerRemodeId, float volume)
+{
+    core->SetVoiceNonSpatialVolume(playerRemodeId, volume);
+}
+
+void Core_AddVoiceFilter(alt::ICore* core, uint32_t playerRemodeId, alt::IAudioFilter* filter)
+{
+    core->AddVoiceFilter(playerRemodeId, filter);
+}
+
+void Core_RemoveVoiceFilter(alt::ICore* core, uint32_t playerRemodeId)
+{
+    core->RemoveVoiceFilter(playerRemodeId);
+}
+
+alt::IAudioFilter* Core_GetVoiceFilter(alt::ICore* core, uint32_t playerRemodeId)
+{
+    return core->GetVoiceFilter(playerRemodeId);
+}
+
+void Core_UpdateClipContext(alt::ICore* core, const char* keys[], const char* values[], uint64_t size)
+{
+    std::unordered_map<std::string, std::string> context = {};
+
+    for (uint64_t i = 0; i < size; i++) {
+        context[keys[i]] = values[i];
+    }
+
+    return core->UpdateClipContext(context);
+}
+
+uint64_t Core_GetServerTime(alt::ICore* core)
+{
+    return core->GetServerTime();
 }
 #endif
 

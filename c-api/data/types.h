@@ -37,3 +37,14 @@ typedef struct {
     uint8_t b;
     uint8_t a;
 } rgba_t;
+
+typedef struct
+{
+    uint8_t active;
+    uint8_t alpha;
+    float size;
+    int16_t boneIndex;
+    vector3_t offset;
+    vector3_t direction;
+    vector3_t side;
+} vehicleBadgePosition_t;

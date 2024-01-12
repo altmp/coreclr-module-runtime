@@ -21,6 +21,26 @@ EXPORT_SHARED uint8_t TextLabel_IsGlobal(alt::ITextLabel* textLabel);
 EXPORT_SHARED alt::IPlayer* TextLabel_GetTarget(alt::ITextLabel* textLabel);
 EXPORT_SHARED void TextLabel_GetColor(alt::ITextLabel* textLabel, rgba_t& color);
 EXPORT_SHARED void TextLabel_SetColor(alt::ITextLabel* textLabel, rgba_t color);
+
+
+EXPORT_SHARED void TextLabel_GetOutlineColor(alt::ITextLabel* textLabel, rgba_t& color);
+EXPORT_SHARED void TextLabel_SetOutlineColor(alt::ITextLabel* textLabel, rgba_t color);
+
+EXPORT_SHARED float TextLabel_GetOutlineWidth(alt::ITextLabel* textLabel);
+EXPORT_SHARED void TextLabel_SetOutlineWidth(alt::ITextLabel* textLabel, float width);
+
+EXPORT_SHARED float TextLabel_GetFontSize(alt::ITextLabel* textLabel);
+EXPORT_SHARED void TextLabel_SetFontSize(alt::ITextLabel* textLabel, float size);
+
+EXPORT_SHARED uint8_t TextLabel_GetAlign(alt::ITextLabel* textLabel);
+EXPORT_SHARED void TextLabel_SetAlign(alt::ITextLabel* textLabel, uint8_t align);
+
+EXPORT_SHARED const char* TextLabel_GetText(alt::ITextLabel* textLabel, int32_t& size);
+EXPORT_SHARED void TextLabel_SetText(alt::ITextLabel* textLabel, const char* text);
+
+EXPORT_SHARED const char* TextLabel_GetFont(alt::ITextLabel* textLabel, int32_t& size);
+EXPORT_SHARED void TextLabel_SetFont(alt::ITextLabel* textLabel, const char* font);
+
 EXPORT_SHARED uint8_t TextLabel_IsVisible(alt::ITextLabel* textLabel);
 EXPORT_SHARED void TextLabel_SetVisible(alt::ITextLabel* textLabel, uint8_t visible);
 EXPORT_SHARED float TextLabel_GetScale(alt::ITextLabel* textLabel);

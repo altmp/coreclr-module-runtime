@@ -404,6 +404,10 @@ uint8_t Player_SetDlcClothes(alt::IPlayer* player, uint8_t component, uint16_t d
     return player->SetDlcClothes(component, drawable, texture, palette, dlc);
 }
 
+uint8_t Player_ClearClothes(alt::IPlayer* player, uint8_t component)
+{
+    return player->ClearClothes(component);
+}
 
 void Player_GetProps(alt::IPlayer* player, uint8_t component, prop_t& prop) {
     auto props = player->GetProps(component);
@@ -685,9 +689,9 @@ int32_t Player_GetAmmoMax100(alt::IPlayer* player, uint32_t ammoHash)
     return player->GetAmmoMax100(ammoHash);
 }
 
-void Player_AddDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay)
+void Player_AddDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay, uint8_t count)
 {
-    player->AddDecoration(collection, overlay);
+    player->AddDecoration(collection, overlay, count);
 }
 
 void Player_RemoveDecoration(alt::IPlayer* player, uint32_t collection, uint32_t overlay)
@@ -712,7 +716,7 @@ ClrDecoration** Player_GetDecorations(alt::IPlayer* player, uint64_t& size)
     return out;
 }
 
-void Player_DeallocVehicleModelInfo(ClrDecoration** decoInfo) {
+void Player_DeallocDecoration(ClrDecoration** decoInfo) {
     delete[] decoInfo;
 }
 
@@ -751,6 +755,10 @@ void Player_SetBloodDamageBase64(alt::IPlayer* player, const char* bloodDamage)
     player->SetBloodDamageBase64(bloodDamage);
 }
 
+void Player_RemoveHeadBlendPaletteColor(alt::IPlayer* player)
+{
+    player->RemoveHeadBlendPaletteColor();
+}
 
 #endif
 

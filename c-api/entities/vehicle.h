@@ -473,3 +473,5 @@ EXPORT_SERVER float Vehicle_GetBrakeLevel(alt::IVehicle* vehicle);
 
 EXPORT_CLIENT float Vehicle_GetSuspensionHeight(alt::IVehicle* vehicle);
 EXPORT_CLIENT void Vehicle_SetSuspensionHeight(alt::IVehicle* vehicle, float value);
+
+EXPORT_SERVER void Vehicle_SetBadge(alt::IVehicle* vehicle, uint32_t textureDictionary, uint32_t texture, vehicleBadgePosition_t vehicleBadgePosition[], uint16_t size);

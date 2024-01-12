@@ -25,7 +25,8 @@ EXPORT_SERVER uint64_t ConnectionInfo_GetHwIdExHash(alt::IConnectionInfo* connec
 EXPORT_SERVER const char* ConnectionInfo_GetAuthToken(alt::IConnectionInfo* connectionInfo, int32_t& size);
 EXPORT_SERVER uint8_t ConnectionInfo_GetIsDebug(alt::IConnectionInfo* connectionInfo);
 EXPORT_SERVER const char* ConnectionInfo_GetBranch(alt::IConnectionInfo* connectionInfo, int32_t& size);
-EXPORT_SERVER uint32_t ConnectionInfo_GetBuild(alt::IConnectionInfo* connectionInfo);
+EXPORT_SERVER uint16_t ConnectionInfo_GetVersionMajor(alt::IConnectionInfo* connectionInfo);
+EXPORT_SERVER uint16_t ConnectionInfo_GetVersionMinor(alt::IConnectionInfo* connectionInfo);
 EXPORT_SERVER const char* ConnectionInfo_GetCdnUrl(alt::IConnectionInfo* connectionInfo, int32_t& size);
 EXPORT_SERVER uint64_t ConnectionInfo_GetPasswordHash(alt::IConnectionInfo* connectionInfo);
 EXPORT_SERVER const char* ConnectionInfo_GetIp(alt::IConnectionInfo* connectionInfo, int32_t& size);

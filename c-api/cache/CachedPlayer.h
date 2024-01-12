@@ -366,7 +366,12 @@ namespace cache
         bool SetClothes(uint8_t component, uint16_t drawable, uint8_t texture, uint8_t palette) override {
 	        return false;
         }
-    	std::vector<alt::DlcCloth> _dlcClothes = {};
+
+        bool ClearClothes(uint8_t component) override {
+	        return false;
+        }
+
+        std::vector<alt::DlcCloth> _dlcClothes = {};
     	alt::DlcCloth GetDlcClothes(uint8_t component) const override {
     		if (_dlcClothes.size() <= component) return { 0, 0, 0, 0 };
     		return _dlcClothes[component];
@@ -560,7 +565,7 @@ namespace cache
 	        return 0;
         }
 
-        void AddDecoration(uint32_t collection, uint32_t overlay) override {}
+        void AddDecoration(uint32_t collection, uint32_t overlay, uint8_t count = 1) override {}
         void RemoveDecoration(uint32_t collection, uint32_t overlay) override {}
         void ClearDecorations() override {}
     	std::vector<alt::CDecoration> GetDecorations() const override
@@ -591,6 +596,8 @@ namespace cache
     		return _bloodDamageBase64;
     	}
         void SetBloodDamageBase64(const std::string& _base64) override {}
+
+    	void RemoveHeadBlendPaletteColor() override {}
 #endif
 
 
