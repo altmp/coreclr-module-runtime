@@ -2148,6 +2148,11 @@ void Core_UpdateClipContext(alt::ICore* core, const char* keys[], const char* va
 
     return core->UpdateClipContext(context);
 }
+
+uint64_t Core_GetServerTime(alt::ICore* core)
+{
+    return core->GetServerTime();
+}
 #endif
 
 CAPI_END()
