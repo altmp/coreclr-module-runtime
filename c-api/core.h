@@ -429,3 +429,5 @@ EXPORT_CLIENT void Core_AddVoiceFilter(alt::ICore* core, uint32_t playerRemodeId
 EXPORT_CLIENT void Core_RemoveVoiceFilter(alt::ICore* core, uint32_t playerRemodeId);
 EXPORT_CLIENT alt::IAudioFilter* Core_GetVoiceFilter(alt::ICore* core, uint32_t playerRemodeId);
 EXPORT_CLIENT void Core_UpdateClipContext(alt::ICore* core, const char* keys[], const char* values[], uint64_t size);
+
+EXPORT_CLIENT uint64_t Core_GetServerTime(alt::ICore* core);
