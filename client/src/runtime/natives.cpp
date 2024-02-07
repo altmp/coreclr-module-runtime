@@ -1018,6 +1018,17 @@ void Native_setArenaThemeAndVariationForTakenPhoto(bool& success, int32_t _p0, i
 	success = true;
 }
 
+void Native_setOnIslandXForTakenPhoto(bool& success, int32_t _p0) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xADD6627C4D325458);
+	ctx->Reset();
+	ctx->Push(_p0);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 uint8_t Native_saveHighQualityPhoto(bool& success, int32_t _unused) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3DEC726C25A11BAC);
 	ctx->Reset();
@@ -3442,6 +3453,17 @@ void Native_setParticleFxNonLoopedAlpha(bool& success, float _alpha) {
 	success = true;
 }
 
+void Native_setParticleFxNonLoopedScale(bool& success, float _scale) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xB7EF5850C39FABCA);
+	ctx->Reset();
+	ctx->Push(_scale);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_setParticleFxNonLoopedEmitterSize(bool& success, float _p0, float _p1, float _scale) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1E2E01C00837D26E);
 	ctx->Reset();
@@ -3770,6 +3792,18 @@ void Native_setParticleFxLoopedFarClipDist(bool& success, int32_t _ptfxHandle, f
 	success = true;
 }
 
+void Native_setParticleFxLoopedCameraBias(bool& success, int32_t _ptfxHandle, float _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x4100BF0346A8D2C3);
+	ctx->Reset();
+	ctx->Push(_ptfxHandle);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_setParticleFxCamInsideVehicle(bool& success, uint8_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEEC4047028426510);
 	ctx->Reset();
@@ -3968,6 +4002,20 @@ void Native_setPtfxForceVehicleInteriorFlag(bool& success, int32_t _p0) {
 	success = true;
 }
 
+void Native_registerPostfxBulletImpact(bool& success, float _weaponWorldPosX, float _weaponWorldPosY, float _weaponWorldPosZ, float _intensity) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x170911F37F646F29);
+	ctx->Reset();
+	ctx->Push(_weaponWorldPosX);
+	ctx->Push(_weaponWorldPosY);
+	ctx->Push(_weaponWorldPosZ);
+	ctx->Push(_intensity);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_forcePostfxBulletImpactsAfterHud(bool& success, uint8_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9B079E5221D984D3);
 	ctx->Reset();
@@ -4011,6 +4059,22 @@ void Native_resetParticleFxOverride(bool& success, const char* _name) {
 		return ;
 	}
 	success = true;
+}
+
+int32_t Native_startVehicleParticleFxLooped(bool& success, uint32_t _vehicle, const char* _effectName, uint8_t _frontBack, uint8_t _leftRight, uint8_t _localOnly) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xDF269BE2909E181A);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push(SaveString(_effectName));
+	ctx->Push((int32_t) _frontBack);
+	ctx->Push((int32_t) _leftRight);
+	ctx->Push((int32_t) _localOnly);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
 }
 
 void Native_setWeatherPtfxUseOverrideSettings(bool& success, uint8_t _p0) {
@@ -4539,6 +4603,17 @@ void Native_useSnowFootVfxWhenUnsheltered(bool& success, uint8_t _toggle) {
 	success = true;
 }
 
+void Native_forceAllowSnowFootVfxOnIce(bool& success, uint8_t _toggle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xA342A3763B3AFB6C);
+	ctx->Reset();
+	ctx->Push((int32_t) _toggle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_useSnowWheelVfxWhenUnsheltered(bool& success, uint8_t _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4CC7F0FEA5283FE0);
 	ctx->Reset();
@@ -4554,6 +4629,17 @@ void Native_disableRegionVfx(bool& success, int32_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEFD97FF47B745B8D);
 	ctx->Reset();
 	ctx->Push(_p0);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_forceGroundSnowPass(bool& success, uint8_t _toggle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x6E9EF3A33C8899F8);
+	ctx->Reset();
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -4791,6 +4877,18 @@ void Native_disableMoonCycleOverride(bool& success) {
 
 int32_t Native_requestScaleformMovie(bool& success, const char* _scaleformName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x11FE353CF9733E6F);
+	ctx->Reset();
+	ctx->Push(SaveString(_scaleformName));
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
+}
+
+int32_t Native_requestScaleformMovieWithIgnoreSuperWidescreen(bool& success, const char* _scaleformName) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x65E7E78842E74CDB);
 	ctx->Reset();
 	ctx->Push(SaveString(_scaleformName));
 	if (!native->Invoke(ctx)) {
@@ -5476,6 +5574,18 @@ void Native_setTvChannelPlaylistAtHour(bool& success, int32_t _tvChannel, const 
 	success = true;
 }
 
+void Native_setTvChannelPlaylistDirty(bool& success, int32_t _tvChannel, uint8_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xEE831F15A8D0D94A);
+	ctx->Reset();
+	ctx->Push(_tvChannel);
+	ctx->Push((int32_t) _p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_clearTvChannelPlaylist(bool& success, int32_t _tvChannel) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBEB3D46BB7F043C0);
 	ctx->Reset();
@@ -5798,6 +5908,17 @@ uint8_t Native_isMobileInterferenceActive(bool& success) {
 	}
 	success = true;
 	return ctx->ResultBool();
+}
+
+int32_t Native_getCurrentTvShowPlayTime(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xDD3AA743AB7D4D75);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
 }
 
 void Native_createNewScriptedConversation(bool& success) {
@@ -6455,11 +6576,11 @@ int32_t Native_getSoundIdFromNetworkId(bool& success, int32_t _netId) {
 	return ctx->ResultInt();
 }
 
-void Native_setVariableOnSound(bool& success, int32_t _soundId, const char* _unkVariable, float _p2) {
+void Native_setVariableOnSound(bool& success, int32_t _soundId, const char* _variable, float _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAD6B3148A78AE9B6);
 	ctx->Reset();
 	ctx->Push(_soundId);
-	ctx->Push(SaveString(_unkVariable));
+	ctx->Push(SaveString(_variable));
 	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -6468,10 +6589,10 @@ void Native_setVariableOnSound(bool& success, int32_t _soundId, const char* _unk
 	success = true;
 }
 
-void Native_setVariableOnStream(bool& success, const char* _unkVariable, float _p1) {
+void Native_setVariableOnStream(bool& success, const char* _variable, float _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2F9D3834AEB9EF79);
 	ctx->Reset();
-	ctx->Push(SaveString(_unkVariable));
+	ctx->Push(SaveString(_variable));
 	ctx->Push(_p1);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -6492,10 +6613,10 @@ void Native_overrideUnderwaterStream(bool& success, const char* _p0, uint8_t _p1
 	success = true;
 }
 
-void Native_setVariableOnUnderWaterStream(bool& success, const char* _unkVariableName, float _value) {
+void Native_setVariableOnUnderWaterStream(bool& success, const char* _variableName, float _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x733ADF241531E5C2);
 	ctx->Reset();
-	ctx->Push(SaveString(_unkVariableName));
+	ctx->Push(SaveString(_variableName));
 	ctx->Push(_value);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -7667,10 +7788,10 @@ void Native_setCutsceneAudioOverride(bool& success, const char* _name) {
 	success = true;
 }
 
-void Native_setVariableOnSynchSceneAudio(bool& success, const char* _unkVariableName, float _value) {
+void Native_setVariableOnSynchSceneAudio(bool& success, const char* _variableName, float _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBCC29F935ED07688);
 	ctx->Reset();
-	ctx->Push(SaveString(_unkVariableName));
+	ctx->Push(SaveString(_variableName));
 	ctx->Push(_value);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -8269,6 +8390,18 @@ void Native_enableStallWarningSounds(bool& success, uint32_t _vehicle, uint8_t _
 	success = true;
 }
 
+void Native_enableDragRaceStationaryWarningSounds(bool& success, uint32_t _vehicle, uint8_t _enable) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xBEFB80290414FD4F);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push((int32_t) _enable);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 uint8_t Native_isGameInControlOfMusic(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6D28DC1671E334FD);
 	ctx->Reset();
@@ -8380,11 +8513,11 @@ uint8_t Native_isAudioSceneActive(bool& success, const char* _scene) {
 	return ctx->ResultBool();
 }
 
-void Native_setAudioSceneVariable(bool& success, const char* _scene, const char* _unkVariable, float _value) {
+void Native_setAudioSceneVariable(bool& success, const char* _scene, const char* _variable, float _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEF21A9EF089A2668);
 	ctx->Reset();
 	ctx->Push(SaveString(_scene));
-	ctx->Push(SaveString(_unkVariable));
+	ctx->Push(SaveString(_variable));
 	ctx->Push(_value);
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -9706,6 +9839,18 @@ void Native_setCamDofMaxNearInFocusDistanceBlendLevel(bool& success, int32_t _ca
 	success = true;
 }
 
+void Native_setCamDofShouldKeepLookAtTargetInFocus(bool& success, int32_t _camera, uint8_t _state) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x7CF3AF51DCFE4108);
+	ctx->Reset();
+	ctx->Push(_camera);
+	ctx->Push((int32_t) _state);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_attachCamToEntity(bool& success, int32_t _cam, uint32_t _entity, float _xOffset, float _yOffset, float _zOffset, uint8_t _isRelative) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFEDB7D269E8C60E3);
 	ctx->Reset();
@@ -11007,6 +11152,28 @@ void Native_setThirdPersonCamOrbitDistanceLimitsThisUpdate(bool& success, float 
 		return ;
 	}
 	success = true;
+}
+
+float Native_getThirdPersonCamMinOrbitDistanceSpring(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xBC456FB703431785);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0.f;
+	}
+	success = true;
+	return ctx->ResultFloat();
+}
+
+float Native_getThirdPersonCamMaxOrbitDistanceSpring(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xD4592A16D36673ED);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0.f;
+	}
+	success = true;
+	return ctx->ResultFloat();
 }
 
 void Native_setInVehicleCamStateThisUpdate(bool& success, uint32_t _p0, int32_t _p1) {
@@ -12601,6 +12768,17 @@ int32_t Native_getCutsceneTotalDuration(bool& success) {
 
 int32_t Native_getCutsceneEndTime(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x971D7B15BCDBEF99);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
+}
+
+int32_t Native_getCutscenePlayDuration(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x5D583F71C901F2A3);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -14261,6 +14439,18 @@ uint8_t Native_hasEntityCollidedWithAnything(bool& success, uint32_t _entity) {
 	return ctx->ResultBool();
 }
 
+uint32_t Native_getLastEntityHitByEntity(bool& success, uint32_t _entity) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xA75EE4F689B85391);
+	ctx->Reset();
+	ctx->Push(_entity);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultUint();
+}
+
 uint32_t Native_getLastMaterialHitByEntity(bool& success, uint32_t _entity) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5C3D0A935F535C4C);
 	ctx->Reset();
@@ -14778,6 +14968,18 @@ uint32_t Native_getNearestPlayerToEntityOnTeam(bool& success, uint32_t _entity, 
 	}
 	success = true;
 	return ctx->ResultUint();
+}
+
+int32_t Native_getNearestParticipantToEntity(bool& success, uint32_t _entity) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xFFBD7052D65BE0FF);
+	ctx->Reset();
+	ctx->Push(_entity);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
 }
 
 int32_t Native_getEntityType(bool& success, uint32_t _entity) {
@@ -15366,6 +15568,37 @@ void Native_attachEntityToEntityPhysically(bool& success, uint32_t _entity1, uin
 	success = true;
 }
 
+void Native_attachEntityToEntityPhysicallyOverrideInverseMass(bool& success, uint32_t _firstEntityIndex, uint32_t _secondEntityIndex, int32_t _firstEntityBoneIndex, int32_t _secondEntityBoneIndex, float _secondEntityOffsetX, float _secondEntityOffsetY, float _secondEntityOffsetZ, float _firstEntityOffsetX, float _firstEntityOffsetY, float _firstEntityOffsetZ, float _vecRotationX, float _vecRotationY, float _vecRotationZ, float _physicalStrength, uint8_t _constrainRotation, uint8_t _doInitialWarp, uint8_t _collideWithEntity, uint8_t _addInitialSeperation, int32_t _rotOrder, float _invMassScaleA, float _invMassScaleB) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x168A09D1B25B0BA4);
+	ctx->Reset();
+	ctx->Push(_firstEntityIndex);
+	ctx->Push(_secondEntityIndex);
+	ctx->Push(_firstEntityBoneIndex);
+	ctx->Push(_secondEntityBoneIndex);
+	ctx->Push(_secondEntityOffsetX);
+	ctx->Push(_secondEntityOffsetY);
+	ctx->Push(_secondEntityOffsetZ);
+	ctx->Push(_firstEntityOffsetX);
+	ctx->Push(_firstEntityOffsetY);
+	ctx->Push(_firstEntityOffsetZ);
+	ctx->Push(_vecRotationX);
+	ctx->Push(_vecRotationY);
+	ctx->Push(_vecRotationZ);
+	ctx->Push(_physicalStrength);
+	ctx->Push((int32_t) _constrainRotation);
+	ctx->Push((int32_t) _doInitialWarp);
+	ctx->Push((int32_t) _collideWithEntity);
+	ctx->Push((int32_t) _addInitialSeperation);
+	ctx->Push(_rotOrder);
+	ctx->Push(_invMassScaleA);
+	ctx->Push(_invMassScaleB);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_processEntityAttachments(bool& success, uint32_t _entity) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF4080490ADC51C6F);
 	ctx->Reset();
@@ -15861,12 +16094,13 @@ void Native_setEntityHeading(bool& success, uint32_t _entity, float _heading) {
 	success = true;
 }
 
-void Native_setEntityHealth(bool& success, uint32_t _entity, int32_t _health, int32_t _p2) {
+void Native_setEntityHealth(bool& success, uint32_t _entity, int32_t _health, uint32_t _instigator, uint32_t _weaponType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6B76DC1F3AE6E6A3);
 	ctx->Reset();
 	ctx->Push(_entity);
 	ctx->Push(_health);
-	ctx->Push(_p2);
+	ctx->Push(_instigator);
+	ctx->Push(_weaponType);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -16530,6 +16764,20 @@ vector3_t Native_getEntityBoneObjectRotation(bool& success, uint32_t _entity, in
 	return { resultVec.x, resultVec.y, resultVec.z };
 }
 
+vector3_t Native_getEntityBoneObjectPostion(bool& success, uint32_t _entity, int32_t _boneIndex) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xCF1247CC86961FD6);
+	ctx->Reset();
+	ctx->Push(_entity);
+	ctx->Push(_boneIndex);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return { 0, 0, 0 };
+	}
+	success = true;
+	auto resultVec = ctx->ResultVector3();
+	return { resultVec.x, resultVec.y, resultVec.z };
+}
+
 int32_t Native_getEntityBoneCount(bool& success, uint32_t _entity) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB328DCC3A3AA401B);
 	ctx->Reset();
@@ -16982,7 +17230,7 @@ uint32_t Native_getHashNameForProp(bool& success, uint32_t _entity, int32_t _com
 	return ctx->ResultUint();
 }
 
-int32_t Native_getItemVariantsCount(bool& success, uint32_t _componentHash) {
+int32_t Native_getShopPedApparelVariantComponentCount(bool& success, uint32_t _componentHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC17AD0E5752BECDA);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -17006,11 +17254,11 @@ int32_t Native_getShopPedApparelVariantPropCount(bool& success, uint32_t _propHa
 	return ctx->ResultInt();
 }
 
-void Native_getVariantComponent(bool& success, uint32_t _componentHash, int32_t _unkVariantComponentIndex, uint32_t& _nameHash, int32_t& _enumValue, int32_t& _componentType) {
+void Native_getVariantComponent(bool& success, uint32_t _componentHash, int32_t _variantComponentIndex, uint32_t& _nameHash, int32_t& _enumValue, int32_t& _componentType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6E11F282F11863B6);
 	ctx->Reset();
 	ctx->Push(_componentHash);
-	ctx->Push(_unkVariantComponentIndex);
+	ctx->Push(_variantComponentIndex);
 	auto ptr_nameHash = _nameHash;
 	ctx->Push(&ptr_nameHash);
 	auto ptr_enumValue = _enumValue;
@@ -17027,11 +17275,11 @@ void Native_getVariantComponent(bool& success, uint32_t _componentHash, int32_t 
 	_componentType = ptr_componentType;
 }
 
-void Native_getVariantProp(bool& success, uint32_t _componentHash, int32_t _unkVariantPropIndex, uint32_t& _nameHash, int32_t& _enumValue, int32_t& _anchorPoint) {
+void Native_getVariantProp(bool& success, uint32_t _componentHash, int32_t _variantPropIndex, uint32_t& _nameHash, int32_t& _enumValue, int32_t& _anchorPoint) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xD81B7F27BC773E66);
 	ctx->Reset();
 	ctx->Push(_componentHash);
-	ctx->Push(_unkVariantPropIndex);
+	ctx->Push(_variantPropIndex);
 	auto ptr_nameHash = _nameHash;
 	ctx->Push(&ptr_nameHash);
 	auto ptr_enumValue = _enumValue;
@@ -17114,7 +17362,7 @@ void Native_getForcedProp(bool& success, uint32_t _componentHash, int32_t _force
 	_anchorPoint = ptr_anchorPoint;
 }
 
-uint8_t Native_isTagRestricted(bool& success, uint32_t _componentHash, uint32_t _restrictionTagHash, int32_t _componentId) {
+uint8_t Native_doesShopPedApparelHaveRestrictionTag(bool& success, uint32_t _componentHash, uint32_t _restrictionTagHash, int32_t _componentId) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x341DE7ED1D2A1BFD);
 	ctx->Reset();
 	ctx->Push(_componentHash);
@@ -17209,11 +17457,11 @@ int32_t Native_getShopPedOutfitLocate(bool& success, int32_t _p0) {
 	return ctx->ResultInt();
 }
 
-uint8_t Native_getShopPedOutfitPropVariant(bool& success, uint32_t _outfitHash, int32_t _unkVariantIndex, int32_t& _outPropVariant) {
+uint8_t Native_getShopPedOutfitPropVariant(bool& success, uint32_t _outfitHash, int32_t _variantIndex, int32_t& _outPropVariant) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA9F9C2E0FDE11CBB);
 	ctx->Reset();
 	ctx->Push(_outfitHash);
-	ctx->Push(_unkVariantIndex);
+	ctx->Push(_variantIndex);
 	auto ptr_outPropVariant = _outPropVariant;
 	ctx->Push(&ptr_outPropVariant);
 	if (!native->Invoke(ctx)) {
@@ -17225,11 +17473,11 @@ uint8_t Native_getShopPedOutfitPropVariant(bool& success, uint32_t _outfitHash, 
 	return ctx->ResultBool();
 }
 
-uint8_t Native_getShopPedOutfitComponentVariant(bool& success, uint32_t _outfitHash, int32_t _unkVariantIndex, int32_t& _outComponentVariant) {
+uint8_t Native_getShopPedOutfitComponentVariant(bool& success, uint32_t _outfitHash, int32_t _variantIndex, int32_t& _outComponentVariant) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x19F2A026EDF0013F);
 	ctx->Reset();
 	ctx->Push(_outfitHash);
-	ctx->Push(_unkVariantIndex);
+	ctx->Push(_variantIndex);
 	auto ptr_outComponentVariant = _outComponentVariant;
 	ctx->Push(&ptr_outComponentVariant);
 	if (!native->Invoke(ctx)) {
@@ -19305,6 +19553,17 @@ void Native_useVehicleTargetingReticule(bool& success, int32_t _p0) {
 	success = true;
 }
 
+void Native_useVehicleTargetingReticuleOnVehicles(bool& success, uint8_t _enable) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x1BC0EA2912708625);
+	ctx->Reset();
+	ctx->Push((int32_t) _enable);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_addValidVehicleHitHash(bool& success, int32_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xE4C3B169876D33D7);
 	ctx->Reset();
@@ -19691,6 +19950,17 @@ void Native_setTextJustification(bool& success, int32_t _justifyType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4E096588B13FFECA);
 	ctx->Reset();
 	ctx->Push(_justifyType);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_setTextLineHeightMult(bool& success, float _lineHeightMult) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x9F4624F76E6953D1);
+	ctx->Reset();
+	ctx->Push(_lineHeightMult);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -20804,6 +21074,18 @@ void Native_showGoldTickOnBlip(bool& success, int32_t _blip, uint8_t _toggle) {
 	success = true;
 }
 
+void Native_showForSaleIconOnBlip(bool& success, int32_t _blip, uint8_t _toggle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x19BD6E3C0E16A8FA);
+	ctx->Reset();
+	ctx->Push(_blip);
+	ctx->Push((int32_t) _toggle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_showHeadingIndicatorOnBlip(bool& success, int32_t _blip, uint8_t _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5FBCA48327B914DF);
 	ctx->Reset();
@@ -21053,6 +21335,19 @@ void Native_clearFakeConeArray(bool& success) {
 	success = true;
 }
 
+void Native_setBlipGpsRouteDisplayDistance(bool& success, int32_t _blip, int32_t _blipChangeParam46, uint8_t _blipChangeParam47) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x25D984CFB64ED6DE);
+	ctx->Reset();
+	ctx->Push(_blip);
+	ctx->Push(_blipChangeParam46);
+	ctx->Push((int32_t) _blipChangeParam47);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 uint8_t Native_setMinimapComponent(bool& success, int32_t _componentId, uint8_t _toggle, int32_t _overrideColor) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75A9A10948D1DEA6);
 	ctx->Reset();
@@ -21234,8 +21529,28 @@ void Native_setUseIslandMap(bool& success, uint8_t _toggle) {
 	success = true;
 }
 
+void Native_setPauseExteriorRenderingWhileInInterior(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x35CCE12EAECB4A51);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_dontTiltMinimapThisFrame(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6D14BFDC33B34F55);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_dontZoomMinimapWhenRunningThisFrame(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x89DA85D949CE57A0);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -21468,7 +21783,7 @@ void Native_hudForceSpecialVehicleWeaponWheel(bool& success) {
 	success = true;
 }
 
-void Native_blockWeaponWheelThisFrame(bool& success) {
+void Native_hudSuppressWeaponWheelResultsThisFrame(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0AFC4AF510774B47);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
@@ -22134,7 +22449,7 @@ void Native_clearReminderMessage(bool& success) {
 	success = true;
 }
 
-int32_t Native_getScreenCoordFromWorldCoord2(bool& success, float _worldX, float _worldY, float _worldZ, float& _screenX, float& _screenY) {
+int32_t Native_getHudScreenPositionFromWorldPosition(bool& success, float _worldX, float _worldY, float _worldZ, float& _screenX, float& _screenY) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF9904D11F1ACBEC3);
 	ctx->Reset();
 	ctx->Push(_worldX);
@@ -23506,9 +23821,10 @@ uint8_t Native_isOnlinePoliciesMenuActive(bool& success) {
 	return ctx->ResultBool();
 }
 
-void Native_openSocialClubMenu(bool& success) {
+void Native_openSocialClubMenu(bool& success, uint32_t _menu) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x75D3691713C3B05A);
 	ctx->Reset();
+	ctx->Push(_menu);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -26110,6 +26426,17 @@ uint8_t Native_haveCreditsReachedEnd(bool& success) {
 	return ctx->ResultBool();
 }
 
+uint8_t Native_areCreditsRunning(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xD19C0826DC20CF1C);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
 void Native_terminateAllScriptsWithThisName(bool& success, const char* _scriptName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9DC711BC69C548DF);
 	ctx->Reset();
@@ -26934,6 +27261,31 @@ uint8_t Native_getCoordsOfProjectileTypeInArea(bool& success, float _x1, float _
 	_projectilePos.x = converted_projectilePos.x;
 	_projectilePos.y = converted_projectilePos.y;
 	_projectilePos.z = converted_projectilePos.z;
+	return ctx->ResultBool();
+}
+
+uint8_t Native_getCoordsOfProjectileTypeInAngledArea(bool& success, float _vecAngledAreaPoint1X, float _vecAngledAreaPoint1Y, float _vecAngledAreaPoint1Z, float _vecAngledAreaPoint2X, float _vecAngledAreaPoint2Y, float _vecAngledAreaPoint2Z, float _distanceOfOppositeFace, uint32_t _weaponType, vector3_t& _positionOut, uint8_t _bIsPlayer) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x3DA8C28346B62CED);
+	ctx->Reset();
+	ctx->Push(_vecAngledAreaPoint1X);
+	ctx->Push(_vecAngledAreaPoint1Y);
+	ctx->Push(_vecAngledAreaPoint1Z);
+	ctx->Push(_vecAngledAreaPoint2X);
+	ctx->Push(_vecAngledAreaPoint2Y);
+	ctx->Push(_vecAngledAreaPoint2Z);
+	ctx->Push(_distanceOfOppositeFace);
+	ctx->Push(_weaponType);
+	alt::INative::Vector3 converted_positionOut { _positionOut.x, 0, _positionOut.y, 0, _positionOut.z };
+	ctx->Push(&converted_positionOut);
+	ctx->Push((int32_t) _bIsPlayer);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	_positionOut.x = converted_positionOut.x;
+	_positionOut.y = converted_positionOut.y;
+	_positionOut.z = converted_positionOut.z;
 	return ctx->ResultBool();
 }
 
@@ -28901,6 +29253,30 @@ int32_t Native_getContentIdIndex(bool& success, uint32_t _contentId) {
 	return ctx->ResultInt();
 }
 
+void Native_setContentPropType(bool& success, uint32_t _model, int32_t _type) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xBA4583AF4C678A9B);
+	ctx->Reset();
+	ctx->Push(_model);
+	ctx->Push(_type);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+int32_t Native_getContentPropType(bool& success, uint32_t _model) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x8BAF8AD59F47AAFC);
+	ctx->Reset();
+	ctx->Push(_model);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
+}
+
 void Native_createMobilePhone(bool& success, int32_t _phoneType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA4E8E696C532FBC7);
 	ctx->Reset();
@@ -29456,6 +29832,17 @@ void Native_networkEarnFromPickup(bool& success, int32_t _amount) {
 	success = true;
 }
 
+void Native_networkEarnFromCashingOut(bool& success, int32_t _amount) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x718FBBF67414FA36);
+	ctx->Reset();
+	ctx->Push(_amount);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_networkEarnFromGangattackPickup(bool& success, int32_t _amount) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA03D4ACE0A3284CE);
 	ctx->Reset();
@@ -29651,17 +30038,6 @@ void Native_networkEarnFromNotBadsport(bool& success, int32_t _amount) {
 	success = true;
 }
 
-void Native_networkEarnFromRockstar(bool& success, int32_t _amount) {
-	static auto native = alt::ICore::Instance().GetNativeByHash(0x02CE1D6AC0FC73EA);
-	ctx->Reset();
-	ctx->Push(_amount);
-	if (!native->Invoke(ctx)) {
-		success = false;
-		return ;
-	}
-	success = true;
-}
-
 void Native_networkEarnFromVehicle(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3, int32_t _p4, int32_t _p5, int32_t _p6, int32_t _p7) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB539BD8A4C1EECF8);
 	ctx->Reset();
@@ -29742,6 +30118,19 @@ void Native_networkEarnFromJobBonus(bool& success, int32_t _p0, int32_t& _p1, in
 	success = true;
 	_p1 = ptr_p1;
 	_p2 = ptr_p2;
+}
+
+void Native_networkEarnFromCriminalMastermind(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xFA009A62990671D4);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
 }
 
 void Native_networkEarnHeistAward(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
@@ -29834,10 +30223,12 @@ void Native_networkEarnFromContraband(bool& success, int32_t _amount, int32_t _p
 	success = true;
 }
 
-void Native_networkEarnFromDestroyingContraband(bool& success, int32_t _p0) {
+void Native_networkEarnFromDestroyingContraband(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x84C0116D012E8FC2);
 	ctx->Reset();
 	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -29845,7 +30236,7 @@ void Native_networkEarnFromDestroyingContraband(bool& success, int32_t _p0) {
 	success = true;
 }
 
-void Native_networkEarnFromSmugglerWork(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3, int32_t _p4) {
+void Native_networkEarnFromSmugglerWork(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3, int32_t _p4, int32_t _p5) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6B7E4FB50D5F3D65);
 	ctx->Reset();
 	ctx->Push(_p0);
@@ -29853,6 +30244,7 @@ void Native_networkEarnFromSmugglerWork(bool& success, int32_t _p0, int32_t _p1,
 	ctx->Push(_p2);
 	ctx->Push(_p3);
 	ctx->Push(_p4);
+	ctx->Push(_p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30173,13 +30565,14 @@ void Native_networkBuyAirstrike(bool& success, int32_t _cost, uint8_t _p1, uint8
 	success = true;
 }
 
-void Native_networkBuyBackupGang(bool& success, int32_t _p0, int32_t _p1, uint8_t _p2, uint8_t _p3) {
+void Native_networkBuyBackupGang(bool& success, int32_t _p0, int32_t _p1, uint8_t _p2, uint8_t _p3, int32_t _npcProvider) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA3EDDAA42411D3B9);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push((int32_t) _p2);
 	ctx->Push((int32_t) _p3);
+	ctx->Push(_npcProvider);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30596,6 +30989,19 @@ const char* Native_processCashGift(bool& success, int32_t& _p0, int32_t& _p1, co
 	return AllocateString(ctx->ResultString());
 }
 
+void Native_networkSpentMoveSubmarine(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xCD4D66B43B1DD28D);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_networkSpentPlayerHealthcare(bool& success, int32_t _p0, int32_t _p1, uint8_t _p2, uint8_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7C99101F7FCE2EE5);
 	ctx->Reset();
@@ -30761,12 +31167,13 @@ void Native_networkSpentMoveYacht(bool& success, int32_t _amount, uint8_t _p1, u
 	success = true;
 }
 
-void Native_networkSpentRenameOrganization(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
+void Native_networkSpentRenameOrganization(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xFC4EE00A7B3BFB76);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
+	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30872,13 +31279,14 @@ void Native_networkSpentPaHeliPickup(bool& success, int32_t _p0, int32_t _p1, in
 	success = true;
 }
 
-void Native_networkSpentPurchaseOfficeProperty(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
+void Native_networkSpentPurchaseOfficeProperty(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3, int32_t _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x69EF772B192614C1);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
+	ctx->Push(_p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -30886,13 +31294,14 @@ void Native_networkSpentPurchaseOfficeProperty(bool& success, int32_t _p0, int32
 	success = true;
 }
 
-void Native_networkSpentUpgradeOfficeProperty(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
+void Native_networkSpentUpgradeOfficeProperty(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3, int32_t _p4) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8E243837643D9583);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
 	ctx->Push(_p3);
+	ctx->Push(_p4);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -33158,6 +33567,517 @@ void Native_networkYohanSourceGoods(bool& success, int32_t _p0, int32_t _p1, int
 	success = true;
 }
 
+void Native_networkSpendBuyMfgarage(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xA2ED36DCF0FCA413);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpendUpgradeMfgarage(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xCF8F346DDDC66643);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpendBuySupplies(bool& success, int32_t _p0, uint8_t _p1, uint8_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xB48185C0CA67B16B);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpendBuyAcidLab(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xF1E26A7924327152);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpendUpgradeAcidLabEquipment(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x110EE9D486C23126);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpendUpgradeAcidLabArmor(bool& success, int32_t _p0, uint8_t _p1, uint8_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xA7D541C9ACD63133);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpendUpgradeAcidLabScoop(bool& success, int32_t _p0, uint8_t _p1, uint8_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x2940558E05BCC2EC);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpendUpgradeAcidLabMines(bool& success, int32_t _p0, uint8_t _p1, uint8_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x4B99AB08C92C54E4);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpendRenameAcidLab(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x842B1C5AF61ACDE9);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpendRenameAcidProduct(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x446798F7495DD7D8);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnAwardJuggaloMission(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xDDF047577F1A02A7);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnAwardAcidLab(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xD1A8165767AD2D23);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnAwardDailyStash(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xC30650FA74A19D02);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnAwardDeadDrop(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xD01EBAEA1F905EF6);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnAwardRandomEvent(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xBEAFBB1B98B7EF55);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnAwardTaxi(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xA914768AD35CD3A5);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnStreetDealer(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xA81017EE1324FDFE);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnSellAcid(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x79B656937DF6DF5D);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnSetupParticipationAcidLab(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xE3942D59E8A7F70D);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnSourceParticipationAcidLab(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x136F11B5DF1B304D);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnSellParticipationAcidLab(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xCA3EF9B09A8D76B4);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnJuggaloStoryMission(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xE01D10BA8CD53621);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnJuggaloStoryMissionParticipation(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x40FF6CCCC476185C);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnFooliganJob(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xCE4452AE85F5E252);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnFooliganJobParticipation(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xC376B92D0E060970);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnTaxiJob(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x991E1588FAD9019D);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnDailyStashHouseCompleted(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xCABC9874AFA70D6D);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnDailyStashHouseParticipation(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x9C0C6BD0F94CE391);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnAvenger(bool& success, int32_t _amount, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x55F006B9D4A46C1D);
+	ctx->Reset();
+	ctx->Push(_amount);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnSmugglerOps(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xDEA273D5F8A9661A);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnBonusObjective(bool& success, int32_t _amount, int32_t _p1, int32_t _p2) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xDCEF983C24191997);
+	ctx->Reset();
+	ctx->Push(_amount);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkEarnProgressHub(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xF8332B06F0EECC9C);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpentAirFreight(bool& success, int32_t _hangarCargoSourcingPrice, uint8_t _fromBank, uint8_t _fromBankAndWallet, int32_t _cost, int32_t _warehouseId, int32_t _warehouseSlot) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x8C7E8D6F96C9E948);
+	ctx->Reset();
+	ctx->Push(_hangarCargoSourcingPrice);
+	ctx->Push((int32_t) _fromBank);
+	ctx->Push((int32_t) _fromBankAndWallet);
+	ctx->Push(_cost);
+	ctx->Push(_warehouseId);
+	ctx->Push(_warehouseSlot);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpentSkipCargoSourceSetup(bool& success, int32_t _amount, uint8_t _fromBank, uint8_t _fromBankAndWallet, int32_t _cost) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xED1B407BADA42CEC);
+	ctx->Reset();
+	ctx->Push(_amount);
+	ctx->Push((int32_t) _fromBank);
+	ctx->Push((int32_t) _fromBankAndWallet);
+	ctx->Push(_cost);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpentStealthModule(bool& success, int32_t _amount, uint8_t _fromBank, uint8_t _fromBankAndWallet, uint32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x95CE79A6939C537A);
+	ctx->Reset();
+	ctx->Push(_amount);
+	ctx->Push((int32_t) _fromBank);
+	ctx->Push((int32_t) _fromBankAndWallet);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpentMissileJammer(bool& success, int32_t _amount, uint8_t _fromBank, uint8_t _fromBankAndWallet, uint32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xD687100F616163F4);
+	ctx->Reset();
+	ctx->Push(_amount);
+	ctx->Push((int32_t) _fromBank);
+	ctx->Push((int32_t) _fromBankAndWallet);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSpentGeneric(bool& success, int32_t _price, uint8_t _p1, uint8_t _p2, uint32_t _stat, uint32_t _spent, const char* _p5, const char* _p6, int32_t& _data) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x2803B027479FB640);
+	ctx->Reset();
+	ctx->Push(_price);
+	ctx->Push((int32_t) _p1);
+	ctx->Push((int32_t) _p2);
+	ctx->Push(_stat);
+	ctx->Push(_spent);
+	ctx->Push(SaveString(_p5));
+	ctx->Push(SaveString(_p6));
+	auto ptr_data = _data;
+	ctx->Push(&ptr_data);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+	_data = ptr_data;
+}
+
+void Native_networkEarnGeneric(bool& success, int32_t _amount, uint32_t _earn, const char* _p2, const char* _p3, int32_t& _data) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xBF7B5BB7ED890380);
+	ctx->Reset();
+	ctx->Push(_amount);
+	ctx->Push(_earn);
+	ctx->Push(SaveString(_p2));
+	ctx->Push(SaveString(_p3));
+	auto ptr_data = _data;
+	ctx->Push(&ptr_data);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+	_data = ptr_data;
+}
+
+void Native_networkClearTransactionTelemetryNonce(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xE03B9F95556E48E9);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 int32_t Native_networkGetVcBankBalance(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x76EF28DA05EA395A);
 	ctx->Reset();
@@ -33237,9 +34157,10 @@ const char* Native_networkGetStringBankBalance(bool& success) {
 	return AllocateString(ctx->ResultString());
 }
 
-const char* Native_networkGetStringBankWalletBalance(bool& success) {
+const char* Native_networkGetStringBankWalletBalance(bool& success, int32_t _character) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x700AF71AE615E6DD);
 	ctx->Reset();
+	ctx->Push(_character);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return nullptr;
@@ -34107,6 +35028,17 @@ uint8_t Native_networkHaveCommunicationPrivileges(bool& success, int32_t _p0, ui
 	return ctx->ResultBool();
 }
 
+uint8_t Native_networkHavePlatformCommunicationPrivileges(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xE1E02509169C124E);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
 uint8_t Native_networkCheckOnlinePrivileges(bool& success, int32_t _p0, uint8_t _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x78321BEA235FD8CD);
 	ctx->Reset();
@@ -34421,13 +35353,12 @@ uint8_t Native_networkCanEnterMultiplayer(bool& success) {
 	return ctx->ResultBool();
 }
 
-uint8_t Native_networkSessionDoFreeroamQuickmatch(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _maxPlayers) {
+uint8_t Native_networkSessionDoFreeroamQuickmatch(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x330ED4D05491934F);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
-	ctx->Push(_maxPlayers);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -34436,12 +35367,12 @@ uint8_t Native_networkSessionDoFreeroamQuickmatch(bool& success, int32_t _p0, in
 	return ctx->ResultBool();
 }
 
-uint8_t Native_networkSessionDoFriendMatchmaking(bool& success, int32_t _p0, int32_t _p1, int32_t _maxPlayers) {
+uint8_t Native_networkSessionDoFriendMatchmaking(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2CFC76E0D087C994);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
-	ctx->Push(_maxPlayers);
+	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -34557,6 +35488,19 @@ uint8_t Native_networkSessionIsSolo(bool& success) {
 uint8_t Native_networkSessionIsPrivate(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCEF70AA5B3F89BA1);
 	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
+uint8_t Native_networkSessionLeaveIncludingReason(bool& success, int32_t _leaveFlags, int32_t _leaveReason) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xE0128328CF1FD9F4);
+	ctx->Reset();
+	ctx->Push(_leaveFlags);
+	ctx->Push(_leaveReason);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -34704,6 +35648,17 @@ void Native_networkSessionSetUniqueCrewLimit(bool& success, int32_t _p0) {
 		return ;
 	}
 	success = true;
+}
+
+int32_t Native_networkSessionGetUniqueCrewLimit(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xCDC936BF35EDCB73);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
 }
 
 void Native_networkSessionSetUniqueCrewLimitTransition(bool& success, int32_t _p0) {
@@ -35266,6 +36221,17 @@ uint8_t Native_networkIsSessionActive(bool& success) {
 
 uint8_t Native_networkIsInSession(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xCA97246103B63917);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
+uint8_t Native_networkIsAmericasVersion(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x0292BD7F3766CEBC);
 	ctx->Reset();
 	if (!native->Invoke(ctx)) {
 		success = false;
@@ -36952,6 +37918,19 @@ int32_t Native_networkGetRandomIntRanged(bool& success, int32_t _rangeStart, int
 	return ctx->ResultInt();
 }
 
+float Native_networkGetRandomFloatRanged(bool& success, float _rangeStart, float _rangeEnd) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x04BD27B5ACB67067);
+	ctx->Reset();
+	ctx->Push(_rangeStart);
+	ctx->Push(_rangeEnd);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0.f;
+	}
+	success = true;
+	return ctx->ResultFloat();
+}
+
 uint8_t Native_networkPlayerIsCheater(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x655B91F1495A9090);
 	ctx->Reset();
@@ -36977,47 +37956,6 @@ int32_t Native_networkPlayerGetCheaterReason(bool& success) {
 uint8_t Native_networkPlayerIsBadsport(bool& success) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x19D8DA0E5A68045A);
 	ctx->Reset();
-	if (!native->Invoke(ctx)) {
-		success = false;
-		return 0;
-	}
-	success = true;
-	return ctx->ResultBool();
-}
-
-uint8_t Native_triggerPlayerCrcHackerCheck(bool& success, uint32_t _player, int32_t _p1, uint32_t _scriptHash) {
-	static auto native = alt::ICore::Instance().GetNativeByHash(0x46FB3ED415C7641C);
-	ctx->Reset();
-	ctx->Push(_player);
-	ctx->Push(_p1);
-	ctx->Push(_scriptHash);
-	if (!native->Invoke(ctx)) {
-		success = false;
-		return 0;
-	}
-	success = true;
-	return ctx->ResultBool();
-}
-
-uint8_t Native_triggerTuningCrcHackerCheck(bool& success, uint32_t _player, const char* _p1, const char* _p2) {
-	static auto native = alt::ICore::Instance().GetNativeByHash(0xA12D3A5A3753CC23);
-	ctx->Reset();
-	ctx->Push(_player);
-	ctx->Push(SaveString(_p1));
-	ctx->Push(SaveString(_p2));
-	if (!native->Invoke(ctx)) {
-		success = false;
-		return 0;
-	}
-	success = true;
-	return ctx->ResultBool();
-}
-
-uint8_t Native_triggerFileCrcHackerCheck(bool& success, uint32_t _player, const char* _p1) {
-	static auto native = alt::ICore::Instance().GetNativeByHash(0xF287F506767CC8A9);
-	ctx->Reset();
-	ctx->Push(_player);
-	ctx->Push(SaveString(_p1));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -37171,11 +38109,11 @@ int32_t Native_networkGetScriptStatus(bool& success) {
 	return ctx->ResultInt();
 }
 
-void Native_networkRegisterHostBroadcastVariables(bool& success, int32_t& _unkVars, int32_t _numVars, const char* _debugName) {
+void Native_networkRegisterHostBroadcastVariables(bool& success, int32_t& _vars, int32_t _numVars, const char* _debugName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3E9B2F01C50DF595);
 	ctx->Reset();
-	auto ptr_unkVars = _unkVars;
-	ctx->Push(&ptr_unkVars);
+	auto ptr_vars = _vars;
+	ctx->Push(&ptr_vars);
 	ctx->Push(_numVars);
 	ctx->Push(SaveString(_debugName));
 	if (!native->Invoke(ctx)) {
@@ -37183,14 +38121,14 @@ void Native_networkRegisterHostBroadcastVariables(bool& success, int32_t& _unkVa
 		return ;
 	}
 	success = true;
-	_unkVars = ptr_unkVars;
+	_vars = ptr_vars;
 }
 
-void Native_networkRegisterPlayerBroadcastVariables(bool& success, int32_t& _unkVars, int32_t _numVars, const char* _debugName) {
+void Native_networkRegisterPlayerBroadcastVariables(bool& success, int32_t& _vars, int32_t _numVars, const char* _debugName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3364AA97340CA215);
 	ctx->Reset();
-	auto ptr_unkVars = _unkVars;
-	ctx->Push(&ptr_unkVars);
+	auto ptr_vars = _vars;
+	ctx->Push(&ptr_vars);
 	ctx->Push(_numVars);
 	ctx->Push(SaveString(_debugName));
 	if (!native->Invoke(ctx)) {
@@ -37198,7 +38136,7 @@ void Native_networkRegisterPlayerBroadcastVariables(bool& success, int32_t& _unk
 		return ;
 	}
 	success = true;
-	_unkVars = ptr_unkVars;
+	_vars = ptr_vars;
 }
 
 void Native_networkRegisterHighFrequencyHostBroadcastVariables(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
@@ -37637,6 +38575,17 @@ void Native_networkSetCurrentPublicContentId(bool& success, const char* _mission
 	success = true;
 }
 
+void Native_networkSetCurrentChatOption(bool& success, int32_t _newChatOption) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x3DAD00265FBF356B);
+	ctx->Reset();
+	ctx->Push(_newChatOption);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_networkSetCurrentSpawnLocationOption(bool& success, uint32_t _mpSettingSpawn) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAA6D5451DC3448B6);
 	ctx->Reset();
@@ -37652,6 +38601,17 @@ void Native_networkSetVehicleDrivenInTestDrive(bool& success, uint8_t _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8C70252FC40F320B);
 	ctx->Reset();
 	ctx->Push((int32_t) _toggle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_networkSetVehicleDrivenLocation(bool& success, uint32_t _location) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xA0CE91E47531D3BB);
+	ctx->Reset();
+	ctx->Push(_location);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -38591,6 +39551,56 @@ void Native_networkIgnoreRemoteWaypoints(bool& success) {
 	success = true;
 }
 
+uint8_t Native_networkDoesCommunicationGroupExist(bool& success, int32_t _communicationType) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xDBDF80673BBA3D65);
+	ctx->Reset();
+	ctx->Push(_communicationType);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
+int32_t Native_networkGetCommunicationGroupFlags(bool& success, int32_t _communicationType) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x40DF02F371F40883);
+	ctx->Reset();
+	ctx->Push(_communicationType);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
+}
+
+void Native_networkSetCommunicationGroupFlags(bool& success, int32_t _communicationType, int32_t _communicationGroupFlag) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xE549F846DE7D32D5);
+	ctx->Reset();
+	ctx->Push(_communicationType);
+	ctx->Push(_communicationGroupFlag);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+uint8_t Native_networkIsPlayerOnBlocklist(bool& success, int32_t& _gamerHandle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xAD4326FCA30D62F8);
+	ctx->Reset();
+	auto ptr_gamerHandle = _gamerHandle;
+	ctx->Push(&ptr_gamerHandle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	_gamerHandle = ptr_gamerHandle;
+	return ctx->ResultBool();
+}
+
 uint8_t Native_networkSetScriptAutomuted(bool& success, int32_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB309EBEA797E001F);
 	ctx->Reset();
@@ -39458,21 +40468,19 @@ uint8_t Native_networkClanIsRockstarClan(bool& success, int32_t& _clanDesc, int3
 	return ctx->ResultBool();
 }
 
-void Native_networkClanGetUiFormattedTag(bool& success, int32_t& _clanDesc, int32_t _bufferSize, const char*& _formattedTag) {
+void Native_networkClanGetUiFormattedTag(bool& success, int32_t& _clanDesc, int32_t _bufferSize, const char* _formattedTag) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xF45352426FF3A4F0);
 	ctx->Reset();
 	auto ptr_clanDesc = _clanDesc;
 	ctx->Push(&ptr_clanDesc);
 	ctx->Push(_bufferSize);
-	auto ptr_formattedTag = SaveString(_formattedTag);
-	ctx->Push(&ptr_formattedTag);
+	ctx->Push(SaveString(_formattedTag));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
 	}
 	success = true;
 	_clanDesc = ptr_clanDesc;
-	_formattedTag = ptr_formattedTag;
 }
 
 int32_t Native_networkClanGetLocalMembershipsCount(bool& success) {
@@ -39650,20 +40658,18 @@ uint8_t Native_networkClanHasCrewinfoMetadataBeenReceived(bool& success) {
 	return ctx->ResultBool();
 }
 
-uint8_t Native_networkClanGetEmblemTxdName(bool& success, int32_t& _netHandle, const char*& _txdName) {
+uint8_t Native_networkClanGetEmblemTxdName(bool& success, int32_t& _netHandle, const char* _txdName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5835D9CD92E83184);
 	ctx->Reset();
 	auto ptr_netHandle = _netHandle;
 	ctx->Push(&ptr_netHandle);
-	auto ptr_txdName = SaveString(_txdName);
-	ctx->Push(&ptr_txdName);
+	ctx->Push(SaveString(_txdName));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
 	_netHandle = ptr_netHandle;
-	_txdName = ptr_txdName;
 	return ctx->ResultBool();
 }
 
@@ -39891,11 +40897,12 @@ void Native_setNetworkIdVisibleInCutsceneHack(bool& success, int32_t _netId, uin
 	success = true;
 }
 
-void Native_setNetworkIdVisibleInCutsceneRemainHack(bool& success, int32_t _p0, int32_t _p1) {
+void Native_setNetworkIdVisibleInCutsceneRemainHack(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x76B3F29D3F967692);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
+	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -39947,6 +40954,18 @@ uint8_t Native_isNetworkIdOwnedByParticipant(bool& success, int32_t _netId) {
 	}
 	success = true;
 	return ctx->ResultBool();
+}
+
+void Native_setRemotePlayerVisibleInCutscene(bool& success, uint32_t _player, uint8_t _locallyVisible) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x96320E6549DAE7B4);
+	ctx->Reset();
+	ctx->Push(_player);
+	ctx->Push((int32_t) _locallyVisible);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
 }
 
 void Native_setLocalPlayerVisibleInCutscene(bool& success, uint8_t _p0, uint8_t _p1) {
@@ -40774,6 +41793,18 @@ void Native_setNetworkVehicleRespotTimer(bool& success, int32_t _netId, int32_t 
 		return ;
 	}
 	success = true;
+}
+
+uint8_t Native_isNetworkVehicleRunningRespotTimer(bool& success, int32_t _networkID) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xDD7CEF5B3A4DA8A6);
+	ctx->Reset();
+	ctx->Push(_networkID);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
 }
 
 void Native_setNetworkVehicleAsGhost(bool& success, uint32_t _vehicle, uint8_t _toggle) {
@@ -43289,6 +44320,17 @@ void Native_ugcReleaseAllCachedDescriptions(bool& success) {
 	success = true;
 }
 
+uint8_t Native_ugcHasPermissionToWrite(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xC33E7CBC06EC1A8D);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
 uint8_t Native_ugcPublish(bool& success, const char* _contentId, const char* _baseContentId, const char* _contentTypeName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1DE0F5F50D723CAA);
 	ctx->Reset();
@@ -43809,6 +44851,28 @@ uint8_t Native_networkHasRosPrivilegeSpecialEditionContent(bool& success) {
 	return ctx->ResultBool();
 }
 
+uint8_t Native_networkHasRosPrivilegeMpTextCommunication(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xD9719341663C385F);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
+uint8_t Native_networkHasRosPrivilegeMpVoiceCommunication(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x8956A309BE90057C);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
 int32_t Native_networkStartCommunicationPermissionsCheck(bool& success, int32_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x36391F397731595D);
 	ctx->Reset();
@@ -44074,10 +45138,11 @@ vector3_t Native_networkGetLastVelReceivedOverNetwork(bool& success, uint32_t _e
 	return { resultVec.x, resultVec.y, resultVec.z };
 }
 
-vector3_t Native_networkGetPredictedVelocity(bool& success, uint32_t _entity) {
+vector3_t Native_networkGetPredictedVelocity(bool& success, uint32_t _entity, float _maxSpeedToPredict) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAA5FAFCD2C5F5E47);
 	ctx->Reset();
 	ctx->Push(_entity);
+	ctx->Push(_maxSpeedToPredict);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return { 0, 0, 0 };
@@ -44254,11 +45319,12 @@ uint8_t Native_slideObject(bool& success, uint32_t _object, float _toX, float _t
 	return ctx->ResultBool();
 }
 
-void Native_setObjectTargettable(bool& success, uint32_t _object, uint8_t _targettable) {
+void Native_setObjectTargettable(bool& success, uint32_t _object, uint8_t _targettable, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8A7391690F5AFD81);
 	ctx->Reset();
 	ctx->Push(_object);
 	ctx->Push((int32_t) _targettable);
+	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -46084,6 +47150,18 @@ uint8_t Native_setTintIndexClosestBuildingOfType(bool& success, float _x, float 
 	return ctx->ResultBool();
 }
 
+void Native_setPropTintIndex(bool& success, int32_t _p0, int32_t _p1) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x31574B1B41268673);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 uint8_t Native_setPropLightColor(bool& success, uint32_t _object, uint8_t _p1, int32_t _r, int32_t _g, int32_t _b) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5F048334B4A4E774);
 	ctx->Reset();
@@ -46886,7 +47964,7 @@ void Native_shutdownPcScriptedControls(bool& success) {
 	success = true;
 }
 
-void Native_disableInputGroup(bool& success, int32_t _control) {
+void Native_allowAlternativeScriptControlsLayout(bool& success, int32_t _control) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7F4724035FDCA1DD);
 	ctx->Reset();
 	ctx->Push(_control);
@@ -47275,6 +48353,18 @@ uint8_t Native_getClosestRoad(bool& success, float _x, float _y, float _z, float
 	return ctx->ResultBool();
 }
 
+uint8_t Native_loadAllPathNodes(bool& success, uint8_t _set) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xC2AB6BFE34E92F8B);
+	ctx->Reset();
+	ctx->Push((int32_t) _set);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
 void Native_setAllowStreamPrologueNodes(bool& success, uint8_t _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x228E5C6AD4D74BFD);
 	ctx->Reset();
@@ -47431,6 +48521,30 @@ uint8_t Native_getRandomVehicleNode(bool& success, float _x, float _y, float _z,
 	_outPosition.z = converted_outPosition.z;
 	_nodeId = ptr_nodeId;
 	return ctx->ResultBool();
+}
+
+vector3_t Native_getSpawnCoordsForVehicleNode(bool& success, int32_t _nodeAddress, float _towardsCoorsX, float _towardsCoorsY, float _towardsCoorsZ, vector3_t& _centrePoint, float& _heading) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x809549AFC7AEC597);
+	ctx->Reset();
+	ctx->Push(_nodeAddress);
+	ctx->Push(_towardsCoorsX);
+	ctx->Push(_towardsCoorsY);
+	ctx->Push(_towardsCoorsZ);
+	alt::INative::Vector3 converted_centrePoint { _centrePoint.x, 0, _centrePoint.y, 0, _centrePoint.z };
+	ctx->Push(&converted_centrePoint);
+	auto ptr_heading = _heading;
+	ctx->Push(&ptr_heading);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return { 0, 0, 0 };
+	}
+	success = true;
+	_centrePoint.x = converted_centrePoint.x;
+	_centrePoint.y = converted_centrePoint.y;
+	_centrePoint.z = converted_centrePoint.z;
+	_heading = ptr_heading;
+	auto resultVec = ctx->ResultVector3();
+	return { resultVec.x, resultVec.y, resultVec.z };
 }
 
 void Native_getStreetNameAtCoord(bool& success, float _x, float _y, float _z, uint32_t& _streetName, uint32_t& _crossingRoad) {
@@ -49850,6 +50964,25 @@ uint8_t Native_setPedPinnedDown(bool& success, uint32_t _ped, uint8_t _pinned, i
 	return ctx->ResultBool();
 }
 
+uint8_t Native_hasPedClearLosToEntity(bool& success, uint32_t _ped, uint32_t _entity, float _x, float _y, float _z, int32_t _p5, uint8_t _p6, uint8_t _p7) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xA32ABFEB2A03B306);
+	ctx->Reset();
+	ctx->Push(_ped);
+	ctx->Push(_entity);
+	ctx->Push(_x);
+	ctx->Push(_y);
+	ctx->Push(_z);
+	ctx->Push(_p5);
+	ctx->Push((int32_t) _p6);
+	ctx->Push((int32_t) _p7);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
 int32_t Native_getSeatPedIsTryingToEnter(bool& success, uint32_t _ped) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6F4C85ACD641BCD2);
 	ctx->Reset();
@@ -50346,13 +51479,14 @@ void Native_setPedGravity(bool& success, uint32_t _ped, uint8_t _toggle) {
 	success = true;
 }
 
-void Native_applyDamageToPed(bool& success, uint32_t _ped, int32_t _damageAmount, uint8_t _p2, int32_t _p3) {
+void Native_applyDamageToPed(bool& success, uint32_t _ped, int32_t _damageAmount, uint8_t _p2, int32_t _p3, uint32_t _weaponType) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x697157CED63F18D4);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_damageAmount);
 	ctx->Push((int32_t) _p2);
 	ctx->Push(_p3);
+	ctx->Push(_weaponType);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52658,7 +53792,7 @@ void Native_applyPedBloodSpecific(bool& success, uint32_t _ped, int32_t _p1, flo
 	success = true;
 }
 
-void Native_applyPedDamageDecal(bool& success, uint32_t _ped, int32_t _damageZone, float _xOffset, float _yOffset, float _heading, float _scale, float _alpha, int32_t _unkVariation, uint8_t _fadeIn, const char* _decalName) {
+void Native_applyPedDamageDecal(bool& success, uint32_t _ped, int32_t _damageZone, float _xOffset, float _yOffset, float _heading, float _scale, float _alpha, int32_t _variation, uint8_t _fadeIn, const char* _decalName) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x397C38AA7B4A5F83);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -52668,7 +53802,7 @@ void Native_applyPedDamageDecal(bool& success, uint32_t _ped, int32_t _damageZon
 	ctx->Push(_heading);
 	ctx->Push(_scale);
 	ctx->Push(_alpha);
-	ctx->Push(_unkVariation);
+	ctx->Push(_variation);
 	ctx->Push((int32_t) _fadeIn);
 	ctx->Push(SaveString(_decalName));
 	if (!native->Invoke(ctx)) {
@@ -52792,6 +53926,18 @@ void Native_setPedWetnessEnabledThisFrame(bool& success, uint32_t _ped) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xB5485E4907B53019);
 	ctx->Reset();
 	ctx->Push(_ped);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_setPedWetness(bool& success, uint32_t _ped, float _wetLevel) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xAC0BB4D87777CAE2);
+	ctx->Reset();
+	ctx->Push(_ped);
+	ctx->Push(_wetLevel);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -52935,7 +54081,7 @@ void Native_givePedNmMessage(bool& success, uint32_t _ped) {
 	success = true;
 }
 
-int32_t Native_addScenarioBlockingArea(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, uint8_t _p6, uint8_t _p7, uint8_t _p8, uint8_t _p9) {
+int32_t Native_addScenarioBlockingArea(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, uint8_t _p6, uint8_t _p7, uint8_t _p8, uint8_t _p9, int32_t _p10) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1B5C85C612E5256E);
 	ctx->Reset();
 	ctx->Push(_x1);
@@ -52948,6 +54094,7 @@ int32_t Native_addScenarioBlockingArea(bool& success, float _x1, float _y1, floa
 	ctx->Push((int32_t) _p7);
 	ctx->Push((int32_t) _p8);
 	ctx->Push((int32_t) _p9);
+	ctx->Push(_p10);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
@@ -53175,6 +54322,17 @@ uint8_t Native_isPedGesturing(bool& success, int32_t _p0) {
 	}
 	success = true;
 	return ctx->ResultBool();
+}
+
+void Native_resetFacialIdleAnim(bool& success, uint32_t _ped) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x007FDE5A7897E426);
+	ctx->Reset();
+	ctx->Push(_ped);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
 }
 
 void Native_playFacialAnim(bool& success, uint32_t _ped, const char* _animName, const char* _animDict) {
@@ -57682,6 +58840,17 @@ void Native_setPlayerTargetingMode(bool& success, int32_t _targetMode) {
 	success = true;
 }
 
+int32_t Native_getPlayerTargetingMode(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x875BDD898B99C8CE);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
+}
+
 void Native_setPlayerTargetLevel(bool& success, int32_t _targetLevel) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5702B917B99DB1CD);
 	ctx->Reset();
@@ -58363,6 +59532,17 @@ void Native_setPlayerHealthRechargeMaxPercent(bool& success, uint32_t _player, f
 	success = true;
 }
 
+void Native_disablePlayerHealthRecharge(bool& success, uint32_t _player) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xBCB06442F7E52666);
+	ctx->Reset();
+	ctx->Push(_player);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_setPlayerFallDistanceToTriggerRagdollOverride(bool& success, uint32_t _player, float _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEFD79FA81DFBA9CB);
 	ctx->Reset();
@@ -58692,7 +59872,7 @@ uint8_t Native_canPedHearPlayer(bool& success, uint32_t _player, uint32_t _ped) 
 	return ctx->ResultBool();
 }
 
-void Native_simulatePlayerInputGait(bool& success, uint32_t _player, float _amount, int32_t _gaitType, float _speed, uint8_t _p4, uint8_t _p5) {
+void Native_simulatePlayerInputGait(bool& success, uint32_t _player, float _amount, int32_t _gaitType, float _speed, uint8_t _p4, uint8_t _p5, int32_t _p6) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x477D5D63E63ECA5D);
 	ctx->Reset();
 	ctx->Push(_player);
@@ -58701,6 +59881,7 @@ void Native_simulatePlayerInputGait(bool& success, uint32_t _player, float _amou
 	ctx->Push(_speed);
 	ctx->Push((int32_t) _p4);
 	ctx->Push((int32_t) _p5);
+	ctx->Push(_p6);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -59930,6 +61111,23 @@ int32_t Native_bgGetScriptIdFromNameHash(bool& success, uint32_t _p0) {
 	return ctx->ResultInt();
 }
 
+void Native_sendTuScriptEventNew(bool& success, int32_t _eventGroup, int32_t& _eventData, int32_t _eventDataSize, int32_t _playerBits, uint32_t _eventType) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x71A6F836422FDD2B);
+	ctx->Reset();
+	ctx->Push(_eventGroup);
+	auto ptr_eventData = _eventData;
+	ctx->Push(&ptr_eventData);
+	ctx->Push(_eventDataSize);
+	ctx->Push(_playerBits);
+	ctx->Push(_eventType);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+	_eventData = ptr_eventData;
+}
+
 int32_t Native_startShapeTestLosProbe(bool& success, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, int32_t _flags, uint32_t _entity, int32_t _p8) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7EE9F5D83DD4F90E);
 	ctx->Reset();
@@ -60234,19 +61432,17 @@ uint8_t Native_scInboxMessageGetDataBool(bool& success, int32_t _p0, const char*
 	return ctx->ResultBool();
 }
 
-uint8_t Native_scInboxMessageGetDataString(bool& success, int32_t _p0, const char* _context, const char*& _out) {
+uint8_t Native_scInboxMessageGetDataString(bool& success, int32_t _p0, const char* _context, const char* _out) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7572EF42FC6A9B6D);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(SaveString(_context));
-	auto ptr_out = SaveString(_out);
-	ctx->Push(&ptr_out);
+	ctx->Push(SaveString(_out));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	_out = ptr_out;
 	return ctx->ResultBool();
 }
 
@@ -60312,20 +61508,6 @@ uint8_t Native_scInboxMessageGetUgcdata(bool& success, int32_t _p0, int32_t& _p1
 	}
 	success = true;
 	_p1 = ptr_p1;
-	return ctx->ResultBool();
-}
-
-uint8_t Native_scInboxSendBountyToRecipList(bool& success, int32_t& _data) {
-	static auto native = alt::ICore::Instance().GetNativeByHash(0x6AFD2CD753FEEF83);
-	ctx->Reset();
-	auto ptr_data = _data;
-	ctx->Push(&ptr_data);
-	if (!native->Invoke(ctx)) {
-		success = false;
-		return 0;
-	}
-	success = true;
-	_data = ptr_data;
 	return ctx->ResultBool();
 }
 
@@ -60580,18 +61762,16 @@ uint8_t Native_scGamerdataGetBool(bool& success, const char* _name) {
 	return ctx->ResultBool();
 }
 
-uint8_t Native_scGamerdataGetString(bool& success, const char* _name, const char*& _value) {
+uint8_t Native_scGamerdataGetString(bool& success, const char* _name, const char* _value) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x7FFCBFEE44ECFABF);
 	ctx->Reset();
 	ctx->Push(SaveString(_name));
-	auto ptr_value = SaveString(_value);
-	ctx->Push(&ptr_value);
+	ctx->Push(SaveString(_value));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	_value = ptr_value;
 	return ctx->ResultBool();
 }
 
@@ -60913,32 +62093,28 @@ uint8_t Native_scCommunityEventGetExtraDataFloat(bool& success, const char* _p0,
 	return ctx->ResultBool();
 }
 
-uint8_t Native_scCommunityEventGetExtraDataString(bool& success, const char* _p0, const char*& _p1) {
+uint8_t Native_scCommunityEventGetExtraDataString(bool& success, const char* _p0, const char* _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x9DE5D2F723575ED0);
 	ctx->Reset();
 	ctx->Push(SaveString(_p0));
-	auto ptr_p1 = SaveString(_p1);
-	ctx->Push(&ptr_p1);
+	ctx->Push(SaveString(_p1));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	_p1 = ptr_p1;
 	return ctx->ResultBool();
 }
 
-uint8_t Native_scCommunityEventGetDisplayName(bool& success, const char*& _p0) {
+uint8_t Native_scCommunityEventGetDisplayName(bool& success, const char* _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC2C97EA97711D1AE);
 	ctx->Reset();
-	auto ptr_p0 = SaveString(_p0);
-	ctx->Push(&ptr_p0);
+	ctx->Push(SaveString(_p0));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	_p0 = ptr_p0;
 	return ctx->ResultBool();
 }
 
@@ -60998,34 +62174,30 @@ uint8_t Native_scCommunityEventGetExtraDataFloatForType(bool& success, const cha
 	return ctx->ResultBool();
 }
 
-uint8_t Native_scCommunityEventGetExtraDataStringForType(bool& success, const char* _p0, const char*& _p1, const char* _p2) {
+uint8_t Native_scCommunityEventGetExtraDataStringForType(bool& success, const char* _p0, const char* _p1, const char* _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x1D12A56FC95BE92E);
 	ctx->Reset();
 	ctx->Push(SaveString(_p0));
-	auto ptr_p1 = SaveString(_p1);
-	ctx->Push(&ptr_p1);
+	ctx->Push(SaveString(_p1));
 	ctx->Push(SaveString(_p2));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	_p1 = ptr_p1;
 	return ctx->ResultBool();
 }
 
-uint8_t Native_scCommunityEventGetDisplayNameForType(bool& success, const char*& _p0, const char* _p1) {
+uint8_t Native_scCommunityEventGetDisplayNameForType(bool& success, const char* _p0, const char* _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x33DF47CC0642061B);
 	ctx->Reset();
-	auto ptr_p0 = SaveString(_p0);
-	ctx->Push(&ptr_p0);
+	ctx->Push(SaveString(_p0));
 	ctx->Push(SaveString(_p1));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	_p0 = ptr_p0;
 	return ctx->ResultBool();
 }
 
@@ -61073,34 +62245,30 @@ uint8_t Native_scCommunityEventGetExtraDataFloatById(bool& success, int32_t _p0,
 	return ctx->ResultBool();
 }
 
-uint8_t Native_scCommunityEventGetExtraDataStringById(bool& success, int32_t _p0, const char* _p1, const char*& _p2) {
+uint8_t Native_scCommunityEventGetExtraDataStringById(bool& success, int32_t _p0, const char* _p1, const char* _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x699E4A5C8C893A18);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(SaveString(_p1));
-	auto ptr_p2 = SaveString(_p2);
-	ctx->Push(&ptr_p2);
+	ctx->Push(SaveString(_p2));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	_p2 = ptr_p2;
 	return ctx->ResultBool();
 }
 
-uint8_t Native_scCommunityEventGetDisplayNameById(bool& success, int32_t _p0, const char*& _p1) {
+uint8_t Native_scCommunityEventGetDisplayNameById(bool& success, int32_t _p0, const char* _p1) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x19853B5B17D77BCA);
 	ctx->Reset();
 	ctx->Push(_p0);
-	auto ptr_p1 = SaveString(_p1);
-	ctx->Push(&ptr_p1);
+	ctx->Push(SaveString(_p1));
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return 0;
 	}
 	success = true;
-	_p1 = ptr_p1;
 	return ctx->ResultBool();
 }
 
@@ -61454,6 +62622,20 @@ uint8_t Native_statGetLoadSafeToProgressToMpFromSp(bool& success) {
 	}
 	success = true;
 	return ctx->ResultBool();
+}
+
+uint32_t Native_getStatHashForCharacterStat(bool& success, int32_t _dataType, int32_t _statIndex, int32_t _charSlot) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xD69CE161FE614531);
+	ctx->Reset();
+	ctx->Push(_dataType);
+	ctx->Push(_statIndex);
+	ctx->Push(_charSlot);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultUint();
 }
 
 uint8_t Native_statSetInt(bool& success, uint32_t _statName, int32_t _value, uint8_t _save) {
@@ -61958,6 +63140,19 @@ uint32_t Native_getPackedNgIntStatKey(bool& success, int32_t _index, uint8_t _sp
 	return ctx->ResultUint();
 }
 
+uint8_t Native_getPackedStatBoolCode(bool& success, int32_t _index, int32_t _characterSlot) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xDA7EBFC49AE3F1B0);
+	ctx->Reset();
+	ctx->Push(_index);
+	ctx->Push(_characterSlot);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
 int32_t Native_getPackedStatIntCode(bool& success, int32_t _index, int32_t _characterSlot) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0BC900A6FE73770C);
 	ctx->Reset();
@@ -61969,6 +63164,19 @@ int32_t Native_getPackedStatIntCode(bool& success, int32_t _index, int32_t _char
 	}
 	success = true;
 	return ctx->ResultInt();
+}
+
+void Native_setPackedStatBoolCode(bool& success, int32_t _index, uint8_t _value, int32_t _characterSlot) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xDB8A58AEAA67CD07);
+	ctx->Reset();
+	ctx->Push(_index);
+	ctx->Push((int32_t) _value);
+	ctx->Push(_characterSlot);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
 }
 
 void Native_setPackedStatIntCode(bool& success, int32_t _index, int32_t _value, int32_t _characterSlot) {
@@ -61989,6 +63197,38 @@ void Native_playstatsBackgroundScriptAction(bool& success, const char* _action, 
 	ctx->Reset();
 	ctx->Push(SaveString(_action));
 	ctx->Push(_value);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_playstatsFlowLow(bool& success, float _posX, float _posY, float _posZ, const char* _p3, int32_t _p4, int32_t _amount) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xE6A27CDA42887F93);
+	ctx->Reset();
+	ctx->Push(_posX);
+	ctx->Push(_posY);
+	ctx->Push(_posZ);
+	ctx->Push(SaveString(_p3));
+	ctx->Push(_p4);
+	ctx->Push(_amount);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_playstatsFlowMedium(bool& success, float _x, float _y, float _z, const char* _interiorAction, int32_t _p4, uint32_t _p5) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xC4493521BAA12CCE);
+	ctx->Reset();
+	ctx->Push(_x);
+	ctx->Push(_y);
+	ctx->Push(_z);
+	ctx->Push(SaveString(_interiorAction));
+	ctx->Push(_p4);
+	ctx->Push(_p5);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -62041,11 +63281,12 @@ void Native_playstatsStartedSessionInOfflinemode(bool& success) {
 	success = true;
 }
 
-void Native_playstatsActivityDone(bool& success, int32_t _p0, int32_t _activityId) {
+void Native_playstatsActivityDone(bool& success, int32_t _p0, int32_t _activityId, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA071E0ED98F91286);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_activityId);
+	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -62543,6 +63784,20 @@ void Native_playstatsPegasusAsPersonalAircraft(bool& success, uint32_t _modelHas
 	success = true;
 }
 
+void Native_playstatsShopmenuNav(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xF96E9EA876D9DC92);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	ctx->Push(_p3);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_playstatsFmEventChallenges(bool& success, int32_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x6A60E43998228229);
 	ctx->Reset();
@@ -62839,32 +64094,6 @@ uint8_t Native_leaderboards2ReadByHandle(bool& success, int32_t& _p0, int32_t& _
 	success = true;
 	_p0 = ptr_p0;
 	_p1 = ptr_p1;
-	return ctx->ResultBool();
-}
-
-uint8_t Native_leaderboards2ReadByRow(bool& success, int32_t& _p0, int32_t& _p1, int32_t _p2, int32_t& _p3, int32_t _p4, int32_t& _p5, int32_t _p6) {
-	static auto native = alt::ICore::Instance().GetNativeByHash(0xA9CDB1E3F0A49883);
-	ctx->Reset();
-	auto ptr_p0 = _p0;
-	ctx->Push(&ptr_p0);
-	auto ptr_p1 = _p1;
-	ctx->Push(&ptr_p1);
-	ctx->Push(_p2);
-	auto ptr_p3 = _p3;
-	ctx->Push(&ptr_p3);
-	ctx->Push(_p4);
-	auto ptr_p5 = _p5;
-	ctx->Push(&ptr_p5);
-	ctx->Push(_p6);
-	if (!native->Invoke(ctx)) {
-		success = false;
-		return 0;
-	}
-	success = true;
-	_p0 = ptr_p0;
-	_p1 = ptr_p1;
-	_p3 = ptr_p3;
-	_p5 = ptr_p5;
 	return ctx->ResultBool();
 }
 
@@ -64029,10 +65258,12 @@ void Native_playstatsHitContrabandDestroyLimit(bool& success, int32_t _p0) {
 	success = true;
 }
 
-void Native_startBeingBoss(bool& success, int32_t _p0) {
+void Native_startBeingBoss(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x3EBEAC6C3F81F6BD);
 	ctx->Reset();
 	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -64053,11 +65284,12 @@ void Native_startBeingGoon(bool& success, int32_t _p0, int32_t _p1, int32_t _p2)
 	success = true;
 }
 
-void Native_endBeingBoss(bool& success, int32_t _p0, int32_t _p1) {
+void Native_endBeingBoss(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xA3C53804BDB68ED2);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
+	ctx->Push(_p2);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -64876,27 +66108,17 @@ void Native_playstatsHeist3Hack(bool& success, int32_t _p0, int32_t _p1, int32_t
 	success = true;
 }
 
-void Native_playstatsNpcPhone(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3, int32_t _p4, int32_t _p5, int32_t _p6, int32_t _p7, int32_t _p8, int32_t _p9, int32_t _p10, int32_t _p11, int32_t _p12) {
+void Native_playstatsNpcPhone(bool& success, int32_t& _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x0077F15613D36993);
 	ctx->Reset();
-	ctx->Push(_p0);
-	ctx->Push(_p1);
-	ctx->Push(_p2);
-	ctx->Push(_p3);
-	ctx->Push(_p4);
-	ctx->Push(_p5);
-	ctx->Push(_p6);
-	ctx->Push(_p7);
-	ctx->Push(_p8);
-	ctx->Push(_p9);
-	ctx->Push(_p10);
-	ctx->Push(_p11);
-	ctx->Push(_p12);
+	auto ptr_p0 = _p0;
+	ctx->Push(&ptr_p0);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
 	}
 	success = true;
+	_p0 = ptr_p0;
 }
 
 void Native_playstatsArcadeCabinet(bool& success, int32_t _p0) {
@@ -64993,12 +66215,13 @@ void Native_playstatsKillYourself(bool& success) {
 	success = true;
 }
 
-void Native_playstatsFmMissionEnd(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
+void Native_playstatsFmMissionEnd(bool& success, int32_t _p0, int32_t _p1, int32_t _p2, int32_t _p3) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x46A70777BE6CEAB9);
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
 	ctx->Push(_p2);
+	ctx->Push(_p3);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -65206,6 +66429,21 @@ void Native_playstatsHubExit(bool& success, int32_t _p0) {
 	success = true;
 }
 
+void Native_playstatsVehDel(bool& success, int32_t _bossId1, int32_t _bossId2, int32_t _bossType, int32_t _vehicleID, int32_t _reason) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x10A691F5756416D0);
+	ctx->Reset();
+	ctx->Push(_bossId1);
+	ctx->Push(_bossId2);
+	ctx->Push(_bossType);
+	ctx->Push(_vehicleID);
+	ctx->Push(_reason);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_playstatsInventory(bool& success, int32_t _p0) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x887DAD63CF5B7908);
 	ctx->Reset();
@@ -65215,6 +66453,113 @@ void Native_playstatsInventory(bool& success, int32_t _p0) {
 		return ;
 	}
 	success = true;
+}
+
+void Native_playstatsAcidMissionEnd(bool& success, int32_t _p0) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x8A23D1324F6B2BAC);
+	ctx->Reset();
+	ctx->Push(_p0);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_playstatsAcidRnd(bool& success, int32_t _p0) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xCEACCF0550FDC5BA);
+	ctx->Reset();
+	ctx->Push(_p0);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_playstatsIdle(bool& success, int32_t _p0, int32_t _p1, int32_t _p2) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xEC9553A178E8F1D1);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_p2);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_playstatsPlayerStyle(bool& success, int32_t _p0) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x48FAC5DC7AC6EA99);
+	ctx->Reset();
+	ctx->Push(_p0);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_playstatsRandomEvent(bool& success, int32_t _p0) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x7EA06F970F999394);
+	ctx->Reset();
+	ctx->Push(_p0);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_playstatsAlert(bool& success, int32_t& _data) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x5649CA22AF74E019);
+	ctx->Reset();
+	auto ptr_data = _data;
+	ctx->Push(&ptr_data);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+	_data = ptr_data;
+}
+
+void Native_playstatsAttritionStageEnd(bool& success, int32_t _p0) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xBD642335A732F1A8);
+	ctx->Reset();
+	ctx->Push(_p0);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_playstatsShowroomNav(bool& success, int32_t _p0, int32_t _p1, uint32_t _entity) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x961D4157B9B428DB);
+	ctx->Reset();
+	ctx->Push(_p0);
+	ctx->Push(_p1);
+	ctx->Push(_entity);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_playstatsShowroomOverview(bool& success, int32_t& _data) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x151D6C04C9E2742F);
+	ctx->Reset();
+	auto ptr_data = _data;
+	ctx->Push(&ptr_data);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+	_data = ptr_data;
 }
 
 void Native_loadAllObjectsNow(bool& success) {
@@ -66707,7 +68052,7 @@ void Native_taskOpenVehicleDoor(bool& success, uint32_t _ped, uint32_t _vehicle,
 	success = true;
 }
 
-void Native_taskEnterVehicle(bool& success, uint32_t _ped, uint32_t _vehicle, int32_t _timeout, int32_t _seat, float _speed, int32_t _flag, const char* _overrideEntryClipsetName) {
+void Native_taskEnterVehicle(bool& success, uint32_t _ped, uint32_t _vehicle, int32_t _timeout, int32_t _seat, float _speed, int32_t _flag, const char* _overrideEntryClipsetName, int32_t _p7) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xC20E50AA46D09CA8);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -66717,6 +68062,7 @@ void Native_taskEnterVehicle(bool& success, uint32_t _ped, uint32_t _vehicle, in
 	ctx->Push(_speed);
 	ctx->Push(_flag);
 	ctx->Push(SaveString(_overrideEntryClipsetName));
+	ctx->Push(_p7);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -68622,7 +69968,7 @@ void Native_taskClimbLadder(bool& success, uint32_t _ped, uint8_t _fast) {
 	success = true;
 }
 
-void Native_taskRappelDownWallUsingClipsetOverride(bool& success, uint32_t _ped, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, float _minZ, int32_t _ropeHandle, const char* _clipSet, int32_t _p10) {
+void Native_taskRappelDownWallUsingClipsetOverride(bool& success, uint32_t _ped, float _x1, float _y1, float _z1, float _x2, float _y2, float _z2, float _minZ, int32_t _ropeHandle, const char* _clipSet, int32_t _p10, int32_t _p11) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xEAF66ACDDC794793);
 	ctx->Reset();
 	ctx->Push(_ped);
@@ -68636,6 +69982,7 @@ void Native_taskRappelDownWallUsingClipsetOverride(bool& success, uint32_t _ped,
 	ctx->Push(_ropeHandle);
 	ctx->Push(SaveString(_clipSet));
 	ctx->Push(_p10);
+	ctx->Push(_p11);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70641,12 +71988,12 @@ const char* Native_getTaskMoveNetworkState(bool& success, uint32_t _ped) {
 	return AllocateString(ctx->ResultString());
 }
 
-void Native_setTaskMoveNetworkAnimSet(bool& success, uint32_t _ped, uint32_t _clipSet, uint32_t _unkVariableClipSet) {
+void Native_setTaskMoveNetworkAnimSet(bool& success, uint32_t _ped, uint32_t _clipSet, uint32_t _variableClipSet) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x8423541E8B3A1589);
 	ctx->Reset();
 	ctx->Push(_ped);
 	ctx->Push(_clipSet);
-	ctx->Push(_unkVariableClipSet);
+	ctx->Push(_variableClipSet);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -70756,6 +72103,18 @@ uint8_t Native_setTaskMoveNetworkEnableCollisionOnNetworkCloneWhenFixed(bool& su
 	}
 	success = true;
 	return ctx->ResultBool();
+}
+
+void Native_setScriptTaskEnableCollisionOnNetworkCloneWhenFixed(bool& success, uint32_t _ped, uint8_t _enable) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x32F6EEF031F943DC);
+	ctx->Reset();
+	ctx->Push(_ped);
+	ctx->Push((int32_t) _enable);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
 }
 
 uint8_t Native_isMoveBlendRatioStill(bool& success, uint32_t _ped) {
@@ -71618,6 +72977,30 @@ void Native_setVehicleDontTerminateTaskWhenAchieved(bool& success, uint32_t _veh
 	success = true;
 }
 
+void Native_setVehicleMaxLaunchEngineRevs(bool& success, uint32_t _vehicle, float _modifier) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x5AE614ECA5FDD423);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push(_modifier);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+float Native_getVehicleThrottle(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x92D96892FC06AF22);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0.f;
+	}
+	success = true;
+	return ctx->ResultFloat();
+}
+
 void Native_explodeVehicle(bool& success, uint32_t _vehicle, uint8_t _isAudible, uint8_t _isInvisible) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xBA71116ADF5B514C);
 	ctx->Reset();
@@ -71697,6 +73080,18 @@ void Native_detonateVehiclePhoneExplosiveDevice(bool& success) {
 		return ;
 	}
 	success = true;
+}
+
+uint8_t Native_haveVehicleRearDoorsBeenBlownOpenByStickybomb(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x6B407F2525E93644);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
 }
 
 void Native_setTaxiLights(bool& success, uint32_t _vehicle, uint8_t _state) {
@@ -72015,6 +73410,18 @@ void Native_setBoatIgnoreLandProbes(bool& success, int32_t _p0, int32_t _p1) {
 	ctx->Reset();
 	ctx->Push(_p0);
 	ctx->Push(_p1);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_setBoundsAffectWaterProbes(bool& success, uint32_t _vehicle, uint8_t _toggle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x85FC953F6C6CBDE1);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push((int32_t) _toggle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -72373,6 +73780,17 @@ uint8_t Native_isVehicleBeingBroughtToHalt(bool& success, uint32_t _vehicle) {
 	}
 	success = true;
 	return ctx->ResultBool();
+}
+
+void Native_lowerForkliftForks(bool& success, uint32_t _forklift) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x923A293361DF44E5);
+	ctx->Reset();
+	ctx->Push(_forklift);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
 }
 
 void Native_setForkliftForkHeight(bool& success, uint32_t _vehicle, float _height) {
@@ -73020,10 +74438,10 @@ void Native_setRandomTrains(bool& success, uint8_t _toggle) {
 	success = true;
 }
 
-uint32_t Native_createMissionTrain(bool& success, int32_t _unkVariation, float _x, float _y, float _z, uint8_t _direction, int32_t _p5, int32_t _p6) {
+uint32_t Native_createMissionTrain(bool& success, int32_t _variation, float _x, float _y, float _z, uint8_t _direction, int32_t _p5, int32_t _p6) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x63C6CCA8E68AE8C8);
 	ctx->Reset();
-	ctx->Push(_unkVariation);
+	ctx->Push(_variation);
 	ctx->Push(_x);
 	ctx->Push(_y);
 	ctx->Push(_z);
@@ -75496,6 +76914,54 @@ void Native_requestVehicleHighDetailModel(bool& success, uint32_t _vehicle) {
 	success = true;
 }
 
+int32_t Native_getVehicleModelNumDriveGears(bool& success, uint32_t _vehicleModel) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x61F02E4E9A7A61EA);
+	ctx->Reset();
+	ctx->Push(_vehicleModel);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
+}
+
+int32_t Native_getVehicleMaxDriveGearCount(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x24910C3D66BA770D);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
+}
+
+int32_t Native_getVehicleCurrentDriveGear(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x56185A25D45A0DCD);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
+}
+
+float Native_getVehicleCurrentRevRatio(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xF9DDA40BC293A61E);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0.f;
+	}
+	success = true;
+	return ctx->ResultFloat();
+}
+
 void Native_removeVehicleHighDetailModel(bool& success, uint32_t _vehicle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x00689CDE5F7C6787);
 	ctx->Reset();
@@ -75559,6 +77025,18 @@ void Native_setVehicleTowTruckArmPosition(bool& success, uint32_t _vehicle, floa
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_position);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_setAttachedVehicleToTowTruckArm(bool& success, uint32_t _towTruck, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x48BD57D0DD17786A);
+	ctx->Reset();
+	ctx->Push(_towTruck);
+	ctx->Push(_vehicle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -75871,6 +77349,18 @@ void Native_setVehicleBrakeLights(bool& success, uint32_t _vehicle, uint8_t _tog
 	success = true;
 }
 
+void Native_setVehicleTailLights(bool& success, uint32_t _vehicle, uint8_t _toggle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x5815BD2763178DF4);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push((int32_t) _toggle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_setVehicleHandbrake(bool& success, uint32_t _vehicle, uint8_t _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x684785568EF26A22);
 	ctx->Reset();
@@ -75951,6 +77441,18 @@ uint8_t Native_getVehicleTrailerVehicle(bool& success, uint32_t _vehicle, uint32
 	success = true;
 	_trailer = ptr_trailer;
 	return ctx->ResultBool();
+}
+
+uint32_t Native_getVehicleTrailerParentVehicle(bool& success, uint32_t _trailer) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x80D9D32636369C92);
+	ctx->Reset();
+	ctx->Push(_trailer);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultUint();
 }
 
 void Native_setVehicleUsesLargeRearRamp(bool& success, uint32_t _vehicle, uint8_t _toggle) {
@@ -76856,6 +78358,30 @@ void Native_overridePlaneDamageThrehsold(bool& success, uint32_t _vehicle, float
 	success = true;
 }
 
+void Native_setTransmissionReducedGearRatio(bool& success, uint32_t _vehicle, uint8_t _toggle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x337EF33DA3DDB990);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push((int32_t) _toggle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+int32_t Native_getVehicleDesiredDriveGear(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xFD8CE53356B5D745);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
+}
+
 uint8_t Native_getIsLeftVehicleHeadlightDamaged(bool& success, uint32_t _vehicle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x5EF77C9ADD3B11A3);
 	ctx->Reset();
@@ -77713,11 +79239,11 @@ uint32_t Native_getEntityAttachedToCargobob(bool& success, int32_t _p0) {
 	return ctx->ResultUint();
 }
 
-void Native_attachVehicleToCargobob(bool& success, uint32_t _vehicle, uint32_t _cargobob, int32_t _p2, float _x, float _y, float _z) {
+void Native_attachVehicleToCargobob(bool& success, uint32_t _cargobob, uint32_t _vehicle, int32_t _p2, float _x, float _y, float _z) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4127F1D84E347769);
 	ctx->Reset();
-	ctx->Push(_vehicle);
 	ctx->Push(_cargobob);
+	ctx->Push(_vehicle);
 	ctx->Push(_p2);
 	ctx->Push(_x);
 	ctx->Push(_y);
@@ -79334,6 +80860,17 @@ void Native_setVehicleUseBoostButtonForWheelRetract(bool& success, uint8_t _togg
 	success = true;
 }
 
+void Native_setVehicleUseHornButtonForNitrous(bool& success, uint8_t _toggle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x1980F68872CC2C3D);
+	ctx->Reset();
+	ctx->Push((int32_t) _toggle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_vehicleSetParachuteModelOverride(bool& success, uint32_t _vehicle, uint32_t _modelHash) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4D610C6B56031351);
 	ctx->Reset();
@@ -79798,6 +81335,30 @@ uint8_t Native_areFoldingWingsDeployed(bool& success, uint32_t _vehicle) {
 	return ctx->ResultBool();
 }
 
+void Native_setDeployMissileBays(bool& success, uint32_t _vehicle, uint8_t _deploy) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x0C02468829E4AA65);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push((int32_t) _deploy);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+uint8_t Native_areMissileBaysDeployed(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xEA4743874D515F13);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
 void Native_setDipStraightDownWhenCrashingPlane(bool& success, uint32_t _vehicle, uint8_t _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0xAA653AE61924B0A0);
 	ctx->Reset();
@@ -79978,6 +81539,102 @@ void Native_setOverrideNitrousLevel(bool& success, uint32_t _vehicle, uint8_t _t
 	success = true;
 }
 
+void Native_setNitrousIsActive(bool& success, uint32_t _vehicle, uint8_t _enabled) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x465EEA70AF251045);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push((int32_t) _enabled);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_setOverrideTractionLossMultiplier(bool& success, uint32_t _vehicle, float _modifier) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xAFD262ACCA64479A);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push(_modifier);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_setDriftSlipAngleLimits(bool& success, uint32_t _vehicle, float _durationScalar, float _amplitudeScalar, float _slipAngleLimit) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xDAF4C98C18AC6F06);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push(_durationScalar);
+	ctx->Push(_amplitudeScalar);
+	ctx->Push(_slipAngleLimit);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_setMinimumTimeBetweenGearShifts(bool& success, uint32_t _vehicle, int32_t _time) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x16CFBC5E7EB32861);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push(_time);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_fullyChargeNitrous(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x1A2BCC8C636F9226);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+float Native_getRemainingNitrousDuration(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xBEC4B8653462450E);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0.f;
+	}
+	success = true;
+	return ctx->ResultFloat();
+}
+
+uint8_t Native_isNitrousActive(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x491E822B2C464FE4);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
+void Native_clearNitrous(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xC889AE921400E1ED);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_setIncreaseWheelCrushDamage(bool& success, uint32_t _vehicle, uint8_t _toggle) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x2970EAA18FD5E42F);
 	ctx->Reset();
@@ -80029,6 +81686,17 @@ void Native_hideTombstone(bool& success, uint32_t _vehicle, uint8_t _toggle) {
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push((int32_t) _toggle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_applyEmpEffect(bool& success, uint32_t _vehicle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x249249D74F813EB2);
+	ctx->Reset();
+	ctx->Push(_vehicle);
 	if (!native->Invoke(ctx)) {
 		success = false;
 		return ;
@@ -80100,6 +81768,19 @@ float Native_getTyreWearRate(bool& success, uint32_t _vehicle, int32_t _wheelInd
 
 void Native_setTyreWearRate(bool& success, uint32_t _vehicle, int32_t _wheelIndex, float _multiplier) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x01894E2EDE923CA2);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push(_wheelIndex);
+	ctx->Push(_multiplier);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+void Native_setTyreWearRateScale(bool& success, uint32_t _vehicle, int32_t _wheelIndex, float _multiplier) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x392183BB9EA57697);
 	ctx->Reset();
 	ctx->Push(_vehicle);
 	ctx->Push(_wheelIndex);
@@ -80194,6 +81875,60 @@ void Native_setCheckForEnoughRoomForPed(bool& success, uint32_t _vehicle, uint8_
 		return ;
 	}
 	success = true;
+}
+
+void Native_setAllowCollisionWhenInVehicle(bool& success, uint32_t _vehicle, uint8_t _toggle) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x27D27223E8EF22ED);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push((int32_t) _toggle);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
+uint8_t Native_isVehicleGen9ExclusiveModel(bool& success, uint32_t _vehicleModel) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x6638C0F19DE692FE);
+	ctx->Reset();
+	ctx->Push(_vehicleModel);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultBool();
+}
+
+int32_t Native_getVehicleMaxExhaustBoneCount(bool& success) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x3EE18B00CD86C54F);
+	ctx->Reset();
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	return ctx->ResultInt();
+}
+
+uint8_t Native_getVehicleExhaustBone(bool& success, uint32_t _vehicle, int32_t _index, int32_t& _boneIndex, uint8_t& _axisX) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0xE728F090D538CB18);
+	ctx->Reset();
+	ctx->Push(_vehicle);
+	ctx->Push(_index);
+	auto ptr_boneIndex = _boneIndex;
+	ctx->Push(&ptr_boneIndex);
+	auto ptr_axisX = (int32_t) _axisX;
+	ctx->Push(&ptr_axisX);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return 0;
+	}
+	success = true;
+	_boneIndex = ptr_boneIndex;
+	_axisX = (bool) ptr_axisX;
+	return ctx->ResultBool();
 }
 
 uint8_t Native_getWaterHeight(bool& success, float _x, float _y, float _z, float& _height) {
@@ -81613,6 +83348,18 @@ void Native_requestWeaponHighDetailModel(bool& success, uint32_t _weaponObject) 
 	success = true;
 }
 
+void Native_setWeaponPedDamageModifier(bool& success, uint32_t _weapon, float _damageModifier) {
+	static auto native = alt::ICore::Instance().GetNativeByHash(0x1091922715B68DF0);
+	ctx->Reset();
+	ctx->Push(_weapon);
+	ctx->Push(_damageModifier);
+	if (!native->Invoke(ctx)) {
+		success = false;
+		return ;
+	}
+	success = true;
+}
+
 void Native_setWeaponDamageModifier(bool& success, uint32_t _weaponHash, float _damageMultiplier) {
 	static auto native = alt::ICore::Instance().GetNativeByHash(0x4757F00BC6323CFE);
 	ctx->Reset();
@@ -82074,6 +83821,7 @@ inline uint64_t hashes[] = {
     0xD801CC02177FA3F1UL,
     0x1BBC135A4D25EDDEUL,
     0xF3F776ADA161E47DUL,
+    0xADD6627C4D325458UL,
     0x3DEC726C25A11BACUL,
     0x0C0C4E81E1AC60A0UL,
     0x759650634F07B6B4UL,
@@ -82256,6 +84004,7 @@ inline uint64_t hashes[] = {
     0x02B1F2A72E0F5325UL,
     0x26143A59EF48B262UL,
     0x77168D722C58B2FCUL,
+    0xB7EF5850C39FABCAUL,
     0x1E2E01C00837D26EUL,
     0x8CDE909A0370BB3AUL,
     0xE184F4F0DC5910E7UL,
@@ -82276,6 +84025,7 @@ inline uint64_t hashes[] = {
     0x726845132380142EUL,
     0xB44250AAA456492DUL,
     0xDCB194B85EF7B541UL,
+    0x4100BF0346A8D2C3UL,
     0xEEC4047028426510UL,
     0xACEE6F360FC1F6B6UL,
     0x96EF97DAEB89BEF5UL,
@@ -82294,10 +84044,12 @@ inline uint64_t hashes[] = {
     0xBA3D194057C79A7BUL,
     0x5DBF05DB5926D089UL,
     0xC6730E0D14E50703UL,
+    0x170911F37F646F29UL,
     0x9B079E5221D984D3UL,
     0x6C38AF3693A69A91UL,
     0xEA1E2D93F6F75ED9UL,
     0x89C8553DD3274AAEUL,
+    0xDF269BE2909E181AUL,
     0xA46B73FAA3460AE1UL,
     0xF78B803082D4386FUL,
     0x9C30613D50A6ADEFUL,
@@ -82339,8 +84091,10 @@ inline uint64_t hashes[] = {
     0x03300B57FCAC6DDBUL,
     0x98EDF76A7271E4F2UL,
     0xAEEDAD1420C65CC0UL,
+    0xA342A3763B3AFB6CUL,
     0x4CC7F0FEA5283FE0UL,
     0xEFD97FF47B745B8DUL,
+    0x6E9EF3A33C8899F8UL,
     0xD7021272EB0A451EUL,
     0x2C933ABF17A1DF41UL,
     0x82E7FFCD5B2326B3UL,
@@ -82363,6 +84117,7 @@ inline uint64_t hashes[] = {
     0x2C328AF17210F009UL,
     0x2BF72AD5B41AA739UL,
     0x11FE353CF9733E6FUL,
+    0x65E7E78842E74CDBUL,
     0xC514489CFB8AF806UL,
     0xBD06C611BB9048C2UL,
     0x85F01B8D5B90570EUL,
@@ -82415,6 +84170,7 @@ inline uint64_t hashes[] = {
     0xFDDC2B4ED3C69DF0UL,
     0xF7B38B8305F1FE8BUL,
     0x2201C576FACAEBE8UL,
+    0xEE831F15A8D0D94AUL,
     0xBEB3D46BB7F043C0UL,
     0x1F710BFF7DAE6261UL,
     0x0AD973CA1E077B60UL,
@@ -82441,6 +84197,7 @@ inline uint64_t hashes[] = {
     0x6C5AE23EFA885092UL,
     0x7497D2CE2C30D24CUL,
     0xC8B1B2425604CDD0UL,
+    0xDD3AA743AB7D4D75UL,
     0xD2C91A0B572AAE56UL,
     0xC5EF963405593646UL,
     0x95D9F4BC443956E7UL,
@@ -82646,6 +84403,7 @@ inline uint64_t hashes[] = {
     0x3A539D52857EA82DUL,
     0x62A456AA4769EF34UL,
     0xC15907D667F7CFB2UL,
+    0xBEFB80290414FD4FUL,
     0x6D28DC1671E334FDUL,
     0x3BD3F52BA9B1E4E8UL,
     0xB138AAB8A70D3C69UL,
@@ -82765,6 +84523,7 @@ inline uint64_t hashes[] = {
     0xC669EEA5D031B7DEUL,
     0xC3654A441402562DUL,
     0x2C654B4943BDDF7CUL,
+    0x7CF3AF51DCFE4108UL,
     0xFEDB7D269E8C60E3UL,
     0x61A3DBA14AB7F411UL,
     0x149916F50C34A40DUL,
@@ -82869,6 +84628,8 @@ inline uint64_t hashes[] = {
     0x8F993D26E0CA5E8EUL,
     0xA516C198B7DCA1E1UL,
     0xDF2E1F7742402E81UL,
+    0xBC456FB703431785UL,
+    0xD4592A16D36673EDUL,
     0xE9EA16D6E54CDCA4UL,
     0xDE2EF5DA284CC8DFUL,
     0x59424BD75174C9B1UL,
@@ -83003,6 +84764,7 @@ inline uint64_t hashes[] = {
     0xE625BEABBAFFDAB9UL,
     0xEE53B14A19E480D4UL,
     0x971D7B15BCDBEF99UL,
+    0x5D583F71C901F2A3UL,
     0x40C8656EDAEDD569UL,
     0x7C0A893088881D57UL,
     0x991251AFC3981F84UL,
@@ -83129,6 +84891,7 @@ inline uint64_t hashes[] = {
     0x394BDE2A7BBA031EUL,
     0x0267D00AF114F17AUL,
     0x8BAD02F0368D9E14UL,
+    0xA75EE4F689B85391UL,
     0x5C3D0A935F535C4CUL,
     0xE465D4AB7CA6AE72UL,
     0x40FDEDB72F8293B2UL,
@@ -83167,6 +84930,7 @@ inline uint64_t hashes[] = {
     0x44A8FCB8ED227738UL,
     0x7196842CB375CDB3UL,
     0x4DC9A62F844D9337UL,
+    0xFFBD7052D65BE0FFUL,
     0x8ACD366038D14505UL,
     0xF6F5161F4534EDFFUL,
     0x731EC8A916BD11A1UL,
@@ -83207,6 +84971,7 @@ inline uint64_t hashes[] = {
     0x5C48B75732C8456CUL,
     0xFD1695C5D3B05439UL,
     0xC3675780C92F90F9UL,
+    0x168A09D1B25B0BA4UL,
     0xF4080490ADC51C6FUL,
     0xFB71170B7E76ACBAUL,
     0xA72CD9CA74A5ECBAUL,
@@ -83291,6 +85056,7 @@ inline uint64_t hashes[] = {
     0xCE6294A232D03786UL,
     0x46F8696933A63C9BUL,
     0xBD8D32550E5CEBFEUL,
+    0xCF1247CC86961FD6UL,
     0xB328DCC3A3AA401BUL,
     0x6CE177D014502E8AUL,
     0xB17BC6453F6CF5ACUL,
@@ -83507,6 +85273,7 @@ inline uint64_t hashes[] = {
     0x157F93B036700462UL,
     0xAF754F20EB5CD51AUL,
     0x0C698D8F099174C7UL,
+    0x1BC0EA2912708625UL,
     0xE4C3B169876D33D7UL,
     0xEB81A3DADD503187UL,
     0x4F7D8A9BFB0B43E9UL,
@@ -83540,6 +85307,7 @@ inline uint64_t hashes[] = {
     0xC02F4DBFB51D988BUL,
     0x6B3C4650BC8BEE47UL,
     0x4E096588B13FFECAUL,
+    0x9F4624F76E6953D1UL,
     0x63145D9C883A1A70UL,
     0xA50ABC31E3CDFAFFUL,
     0x038C1F517D7FDCF8UL,
@@ -83632,6 +85400,7 @@ inline uint64_t hashes[] = {
     0x75A16C3DA34F1245UL,
     0x74513EA3E505181EUL,
     0xCAC2031EBF79B1A8UL,
+    0x19BD6E3C0E16A8FAUL,
     0x5FBCA48327B914DFUL,
     0xB81656BC81FE24D1UL,
     0x23C3EB807312F01AUL,
@@ -83653,6 +85422,7 @@ inline uint64_t hashes[] = {
     0xF83D0FEBE75E62C9UL,
     0x35A3CD97B2C0A6D2UL,
     0x8410C5E0CD847B9DUL,
+    0x25D984CFB64ED6DEUL,
     0x75A9A10948D1DEA6UL,
     0x6B50FC8749632EC1UL,
     0x60E892BA4F5BDCA4UL,
@@ -83669,7 +85439,9 @@ inline uint64_t hashes[] = {
     0x5FBAE526203990C9UL,
     0x20FE7FDFEEAD38C0UL,
     0x5E1460624D194A38UL,
+    0x35CCE12EAECB4A51UL,
     0x6D14BFDC33B34F55UL,
+    0x89DA85D949CE57A0UL,
     0x55F5A5F07134DE60UL,
     0xC3B07BA00A83B0F1UL,
     0x276B6CE369C33678UL,
@@ -84065,6 +85837,7 @@ inline uint64_t hashes[] = {
     0xB938B7E6D3C0620CUL,
     0xB51B9AB9EF81868CUL,
     0x075F1D57402C93BAUL,
+    0xD19C0826DC20CF1CUL,
     0x9DC711BC69C548DFUL,
     0x9243BAC96D64C050UL,
     0x1F464EF988465A81UL,
@@ -84126,6 +85899,7 @@ inline uint64_t hashes[] = {
     0xF0BC12401061DEA0UL,
     0x34318593248C8FB2UL,
     0x8D7A43EC6A5FEA45UL,
+    0x3DA8C28346B62CEDUL,
     0xDFB4138EEFED7B81UL,
     0x82FDE6A57EE4EE44UL,
     0x1A8B5F3C01E2B477UL,
@@ -84280,6 +86054,8 @@ inline uint64_t hashes[] = {
     0x693478ACBD7F18E7UL,
     0x4B82FA6F2D624634UL,
     0xECF041186C5A94DCUL,
+    0xBA4583AF4C678A9BUL,
+    0x8BAF8AD59F47AAFCUL,
     0xA4E8E696C532FBC7UL,
     0x3BC861DF703E5097UL,
     0xCBDD322A73D6D932UL,
@@ -84326,6 +86102,7 @@ inline uint64_t hashes[] = {
     0xCD0F5B5D932AE473UL,
     0x9777734DAD16992FUL,
     0xED1517D3AF17C698UL,
+    0x718FBBF67414FA36UL,
     0xA03D4ACE0A3284CEUL,
     0xFA700D8A9905F78AUL,
     0xF514621E8EA463D0UL,
@@ -84342,12 +86119,12 @@ inline uint64_t hashes[] = {
     0x849648349D77F5C5UL,
     0x515B4A22E4D3C6D7UL,
     0x4337511FA8221D36UL,
-    0x02CE1D6AC0FC73EAUL,
     0xB539BD8A4C1EECF8UL,
     0x3F4D00167E41E0ADUL,
     0x6EA318C91C1A8786UL,
     0xFB6DB092FBAE29E6UL,
     0x6816FB4416760775UL,
+    0xFA009A62990671D4UL,
     0x9D4FDBB035229669UL,
     0x11B0A20C493F7E36UL,
     0xCDA1C62BE2777802UL,
@@ -84410,6 +86187,7 @@ inline uint64_t hashes[] = {
     0x6A445B64ED7ABEB5UL,
     0x9B5016A6433A68C5UL,
     0x20194D48EAEC9A41UL,
+    0xCD4D66B43B1DD28DUL,
     0x7C99101F7FCE2EE5UL,
     0xD5BB406F4E04019FUL,
     0x948705F6F9C50824UL,
@@ -84601,6 +86379,45 @@ inline uint64_t hashes[] = {
     0x2C5809EB9DF57257UL,
     0x71BEC32FA466E105UL,
     0x59498BC8B1C8B15CUL,
+    0xA2ED36DCF0FCA413UL,
+    0xCF8F346DDDC66643UL,
+    0xB48185C0CA67B16BUL,
+    0xF1E26A7924327152UL,
+    0x110EE9D486C23126UL,
+    0xA7D541C9ACD63133UL,
+    0x2940558E05BCC2ECUL,
+    0x4B99AB08C92C54E4UL,
+    0x842B1C5AF61ACDE9UL,
+    0x446798F7495DD7D8UL,
+    0xDDF047577F1A02A7UL,
+    0xD1A8165767AD2D23UL,
+    0xC30650FA74A19D02UL,
+    0xD01EBAEA1F905EF6UL,
+    0xBEAFBB1B98B7EF55UL,
+    0xA914768AD35CD3A5UL,
+    0xA81017EE1324FDFEUL,
+    0x79B656937DF6DF5DUL,
+    0xE3942D59E8A7F70DUL,
+    0x136F11B5DF1B304DUL,
+    0xCA3EF9B09A8D76B4UL,
+    0xE01D10BA8CD53621UL,
+    0x40FF6CCCC476185CUL,
+    0xCE4452AE85F5E252UL,
+    0xC376B92D0E060970UL,
+    0x991E1588FAD9019DUL,
+    0xCABC9874AFA70D6DUL,
+    0x9C0C6BD0F94CE391UL,
+    0x55F006B9D4A46C1DUL,
+    0xDEA273D5F8A9661AUL,
+    0xDCEF983C24191997UL,
+    0xF8332B06F0EECC9CUL,
+    0x8C7E8D6F96C9E948UL,
+    0xED1B407BADA42CECUL,
+    0x95CE79A6939C537AUL,
+    0xD687100F616163F4UL,
+    0x2803B027479FB640UL,
+    0xBF7B5BB7ED890380UL,
+    0xE03B9F95556E48E9UL,
     0x76EF28DA05EA395AUL,
     0xA40F9C2623F6A8B5UL,
     0x5CBAD97E059E1B94UL,
@@ -84680,6 +86497,7 @@ inline uint64_t hashes[] = {
     0x1353F87E89946207UL,
     0x72D918C99BCACC54UL,
     0xAEEF48CDF5B6CE7CUL,
+    0xE1E02509169C124EUL,
     0x78321BEA235FD8CDUL,
     0x595F028698072DD9UL,
     0x83F28CE49FBBFFBAUL,
@@ -84717,6 +86535,7 @@ inline uint64_t hashes[] = {
     0x74732C6CA90DA2B4UL,
     0xF3929C2379B60CCEUL,
     0xCEF70AA5B3F89BA1UL,
+    0xE0128328CF1FD9F4UL,
     0xA02E59562D711006UL,
     0xB9351A07A0D458B1UL,
     0xFA8904DC5F304220UL,
@@ -84729,6 +86548,7 @@ inline uint64_t hashes[] = {
     0x56CE820830EF040BUL,
     0xCAE55F48D3D7875CUL,
     0xF49ABC20D8552257UL,
+    0xCDC936BF35EDCB73UL,
     0x4811BBAC21C5FCD5UL,
     0x5539C3EBF104A53AUL,
     0x702BC4D605522539UL,
@@ -84779,6 +86599,7 @@ inline uint64_t hashes[] = {
     0x10FAB35428CCC9D7UL,
     0xD83C2B94E7508980UL,
     0xCA97246103B63917UL,
+    0x0292BD7F3766CEBCUL,
     0x9DE624D2FC4B603FUL,
     0xF4435D66A8E2905EUL,
     0x4EEBC3694E49C572UL,
@@ -84914,12 +86735,10 @@ inline uint64_t hashes[] = {
     0xF1B84178F8674195UL,
     0x599E4FA1F87EB5FFUL,
     0xE30CF56F1EFA5F43UL,
+    0x04BD27B5ACB67067UL,
     0x655B91F1495A9090UL,
     0x172F75B6EE2233BAUL,
     0x19D8DA0E5A68045AUL,
-    0x46FB3ED415C7641CUL,
-    0xA12D3A5A3753CC23UL,
-    0xF287F506767CC8A9UL,
     0x472841A026D26D8BUL,
     0xEC5E3AF5289DCA81UL,
     0x7F562DBC212E81F9UL,
@@ -84969,8 +86788,10 @@ inline uint64_t hashes[] = {
     0x4CACA84440FA26F6UL,
     0x42B2DAA6B596F5F8UL,
     0x2C863ACDCD12B3DBUL,
+    0x3DAD00265FBF356BUL,
     0xAA6D5451DC3448B6UL,
     0x8C70252FC40F320BUL,
+    0xA0CE91E47531D3BBUL,
     0xEA23C49EAA83ACFBUL,
     0x2D95C7E2D7E07307UL,
     0x8A8694B48715B000UL,
@@ -85045,6 +86866,10 @@ inline uint64_t hashes[] = {
     0x82377B65E943F72DUL,
     0xC927EC229934AF60UL,
     0x4C2A9FDC22377075UL,
+    0xDBDF80673BBA3D65UL,
+    0x40DF02F371F40883UL,
+    0xE549F846DE7D32D5UL,
+    0xAD4326FCA30D62F8UL,
     0xB309EBEA797E001FUL,
     0x26F07DD83A5F7F98UL,
     0xE870F9F1F7B4F1FAUL,
@@ -85153,6 +86978,7 @@ inline uint64_t hashes[] = {
     0x66D6A5E9C511214AUL,
     0x3FA36981311FA4FFUL,
     0xA1607996431332DFUL,
+    0x96320E6549DAE7B4UL,
     0xD1065D68947E7B6EUL,
     0xE5F773C1A1D9D168UL,
     0x7619364C82D3BF14UL,
@@ -85221,6 +87047,7 @@ inline uint64_t hashes[] = {
     0x63F9EE203C3619F2UL,
     0xFAC18E7356BD3210UL,
     0xEC51713AB6EC36E8UL,
+    0xDD7CEF5B3A4DA8A6UL,
     0x6274C4712850841EUL,
     0xA2A707979FE754DCUL,
     0x838DA0936A24ED4DUL,
@@ -85418,6 +87245,7 @@ inline uint64_t hashes[] = {
     0x40F7E66472DF3E5CUL,
     0x5A34CD9C3C5BEC44UL,
     0x68103E2247887242UL,
+    0xC33E7CBC06EC1A8DUL,
     0x1DE0F5F50D723CAAUL,
     0x274A1519DFC1094FUL,
     0xD05D1A6C74DA3498UL,
@@ -85461,6 +87289,8 @@ inline uint64_t hashes[] = {
     0xC22912B1D85F26B1UL,
     0x593570C289A77688UL,
     0x91B87C55093DE351UL,
+    0xD9719341663C385FUL,
+    0x8956A309BE90057CUL,
     0x36391F397731595DUL,
     0xDEB2B99A1AF1A2A6UL,
     0x9465E683B12D3F6BUL,
@@ -85634,6 +87464,7 @@ inline uint64_t hashes[] = {
     0xE84EB93729C5F36AUL,
     0x971DA0055324D033UL,
     0xF12E33034D887F66UL,
+    0x31574B1B41268673UL,
     0x5F048334B4A4E774UL,
     0xADF084FB8F075D06UL,
     0x3B2FD68DB5F8331CUL,
@@ -85718,6 +87549,7 @@ inline uint64_t hashes[] = {
     0xA2AE5C478B96E3B6UL,
     0x4F5070AA58F69279UL,
     0x132F52BBA570FE92UL,
+    0xC2AB6BFE34E92F8BUL,
     0x228E5C6AD4D74BFDUL,
     0xF74B1FFA4A15FBEAUL,
     0xF7B79A50B905A30DUL,
@@ -85728,6 +87560,7 @@ inline uint64_t hashes[] = {
     0xAA76052DDA9BFC3EUL,
     0xE04B48F2CC926253UL,
     0x93E0DB8440B73A7DUL,
+    0x809549AFC7AEC597UL,
     0x2EB41072B4C1E4C0UL,
     0xF90125F1F79ECDF8UL,
     0x72751156E7678833UL,
@@ -85917,6 +87750,7 @@ inline uint64_t hashes[] = {
     0x6A03BF943D767C93UL,
     0x9F65DBC537E59AD5UL,
     0xAAD6D1ACF08F4612UL,
+    0xA32ABFEB2A03B306UL,
     0x6F4C85ACD641BCD2UL,
     0x814FA8BE5449445DUL,
     0x93C8B64DEB84728CUL,
@@ -86143,6 +87977,7 @@ inline uint64_t hashes[] = {
     0x9C720776DAA43E7EUL,
     0x44CB6447D2571AA0UL,
     0xB5485E4907B53019UL,
+    0xAC0BB4D87777CAE2UL,
     0x6585D955A68452A5UL,
     0x27B0405F59637D1FUL,
     0x5F5D1665E352A839UL,
@@ -86172,6 +88007,7 @@ inline uint64_t hashes[] = {
     0x5B6010B3CBC29095UL,
     0xCEDA60A74219D064UL,
     0xC30BDAEE47256C13UL,
+    0x007FDE5A7897E426UL,
     0xE1E65CA8AC9C00EDUL,
     0x5687C7F05B39E401UL,
     0xFFC24B988B938B38UL,
@@ -86534,6 +88370,7 @@ inline uint64_t hashes[] = {
     0x3C49C870E66F0A28UL,
     0x5C8B2F450EE4328EUL,
     0xB1906895227793F3UL,
+    0x875BDD898B99C8CEUL,
     0x5702B917B99DB1CDUL,
     0xB9CF1F793A9F1BF1UL,
     0xCB645E85E97EA48BUL,
@@ -86590,6 +88427,7 @@ inline uint64_t hashes[] = {
     0x5DB660B38DD98A31UL,
     0x8BC515BAE4AAF8FFUL,
     0xC388A0F065F5BC34UL,
+    0xBCB06442F7E52666UL,
     0xEFD79FA81DFBA9CBUL,
     0xCE07B9F7817AADA3UL,
     0x2D83BC011CA14A3CUL,
@@ -86722,6 +88560,7 @@ inline uint64_t hashes[] = {
     0x0F6F1EBBC4E1D5E6UL,
     0x22E21FBCFC88C149UL,
     0x829CD22E043A2577UL,
+    0x71A6F836422FDD2BUL,
     0x7EE9F5D83DD4F90EUL,
     0x377906D8A31E5586UL,
     0x052837721A854EC7UL,
@@ -86745,7 +88584,6 @@ inline uint64_t hashes[] = {
     0xDA024BDBD600F44AUL,
     0xA68D3D229F4F3B06UL,
     0x69D82604A1A5A254UL,
-    0x6AFD2CD753FEEF83UL,
     0x87E0052F08BD64E6UL,
     0x040ADDCBAFA1018AUL,
     0x16DA8172459434AAUL,
@@ -86834,6 +88672,7 @@ inline uint64_t hashes[] = {
     0xECB41AC6AB754401UL,
     0x9B4BD21D69B1E609UL,
     0xC0E0D686DDFC6EAEUL,
+    0xD69CE161FE614531UL,
     0xB3271D7AB655B441UL,
     0x4851997F37FE9B3CUL,
     0x4B33C4243DE0C432UL,
@@ -86870,9 +88709,13 @@ inline uint64_t hashes[] = {
     0x61E111E323419E07UL,
     0xD16C2AD6B8E32854UL,
     0x2B4CDCA6F07FF3DAUL,
+    0xDA7EBFC49AE3F1B0UL,
     0x0BC900A6FE73770CUL,
+    0xDB8A58AEAA67CD07UL,
     0x1581503AE529CD2EUL,
     0x5009DFD741329729UL,
+    0xE6A27CDA42887F93UL,
+    0xC4493521BAA12CCEUL,
     0x93054C88E6AA7C44UL,
     0x46F917F6B4128FE4UL,
     0xC7F2DE41D102BFB4UL,
@@ -86912,6 +88755,7 @@ inline uint64_t hashes[] = {
     0x46326E13DA4E0546UL,
     0x47B32F5611E6E483UL,
     0x9572BD4DD6B72122UL,
+    0xF96E9EA876D9DC92UL,
     0x6A60E43998228229UL,
     0xBFAFDB5FAAA5C5ABUL,
     0x8C9D11605E59D955UL,
@@ -86936,7 +88780,6 @@ inline uint64_t hashes[] = {
     0x2FB19228983E832CUL,
     0x918B101666F9CB83UL,
     0xC30713A383BFBF0EUL,
-    0xA9CDB1E3F0A49883UL,
     0xBA2C7DB0C129449AUL,
     0x5CE587FB5A42C8C4UL,
     0x7EEC7E4F6984A16AUL,
@@ -87124,7 +88967,17 @@ inline uint64_t hashes[] = {
     0x70F52471E758EBAEUL,
     0xFEA3F7E83C0610FAUL,
     0x5A46ACE5C4661132UL,
+    0x10A691F5756416D0UL,
     0x887DAD63CF5B7908UL,
+    0x8A23D1324F6B2BACUL,
+    0xCEACCF0550FDC5BAUL,
+    0xEC9553A178E8F1D1UL,
+    0x48FAC5DC7AC6EA99UL,
+    0x7EA06F970F999394UL,
+    0x5649CA22AF74E019UL,
+    0xBD642335A732F1A8UL,
+    0x961D4157B9B428DBUL,
+    0x151D6C04C9E2742FUL,
     0xBD6E84632DD4CB3FUL,
     0x4448EB75B4904BDBUL,
     0xC4582015556D1C46UL,
@@ -87531,6 +89384,7 @@ inline uint64_t hashes[] = {
     0xA7FFBA498E4AAF67UL,
     0xB4F47213DF45A64CUL,
     0x0FFB3C758E8C07B9UL,
+    0x32F6EEF031F943DCUL,
     0x349CE7B56DAFD95CUL,
     0xF133BBBE91E1691FUL,
     0xD4D8636C0199A939UL,
@@ -87598,6 +89452,8 @@ inline uint64_t hashes[] = {
     0xB81F6D4A8F5EEBA8UL,
     0x203B527D1B77904CUL,
     0x76D26A22750E849EUL,
+    0x5AE614ECA5FDD423UL,
+    0x92D96892FC06AF22UL,
     0xBA71116ADF5B514CUL,
     0xF19D095E42D430CCUL,
     0x2E0A74E1002380B1UL,
@@ -87605,6 +89461,7 @@ inline uint64_t hashes[] = {
     0xAA3F739ABDDCF21FUL,
     0x6ADAABD3068C5235UL,
     0xEF49CF0270307CBEUL,
+    0x6B407F2525E93644UL,
     0x598803E85E8448D9UL,
     0x7504C0F113AB50FCUL,
     0xCEE4490CD57BB3C2UL,
@@ -87630,6 +89487,7 @@ inline uint64_t hashes[] = {
     0x3E71D0B300B7AA79UL,
     0x093D6DDCA5B8FBAEUL,
     0xED5EDE9E676643C9UL,
+    0x85FC953F6C6CBDE1UL,
     0x75DBEC174AEEAD10UL,
     0x26C10ECBDA5D043BUL,
     0x24F4121D07579880UL,
@@ -87658,6 +89516,7 @@ inline uint64_t hashes[] = {
     0x8664170EF165C4A6UL,
     0x7C06330BFDDA182EUL,
     0xC69BB1D832A710EFUL,
+    0x923A293361DF44E5UL,
     0x37EBBF3117BD6A25UL,
     0x57715966069157ADUL,
     0x62CA17B74C435651UL,
@@ -87907,12 +89766,17 @@ inline uint64_t hashes[] = {
     0x9B0F3DCA3DB0F4CDUL,
     0x61E1DD6125A3EEE6UL,
     0xA6E9FDCB2C76785EUL,
+    0x61F02E4E9A7A61EAUL,
+    0x24910C3D66BA770DUL,
+    0x56185A25D45A0DCDUL,
+    0xF9DDA40BC293A61EUL,
     0x00689CDE5F7C6787UL,
     0x1F25887F3C104278UL,
     0x81A15811460FAB3AUL,
     0x1BBE0523B8DB9A21UL,
     0xACE699C71AB9DEB5UL,
     0xFE54B92A344583CAUL,
+    0x48BD57D0DD17786AUL,
     0x29A16F8D621C4508UL,
     0xC2DB6B6708350ED8UL,
     0xD0E9CE05A1E68CD8UL,
@@ -87936,6 +89800,7 @@ inline uint64_t hashes[] = {
     0x6DEE944E1EE90CFBUL,
     0xB5D45264751B7DF0UL,
     0x92B35082E0B42F66UL,
+    0x5815BD2763178DF4UL,
     0x684785568EF26A22UL,
     0xE4E2FD323574965CUL,
     0x48ADC8A773564670UL,
@@ -87943,6 +89808,7 @@ inline uint64_t hashes[] = {
     0x51DB102F4A3BA5E0UL,
     0xA4A9A4C40E615885UL,
     0x1CDD6BADC297830DUL,
+    0x80D9D32636369C92UL,
     0xCAC66558B944DA67UL,
     0x09606148B6C71DEFUL,
     0x1A78AD3D8240536FUL,
@@ -88013,6 +89879,8 @@ inline uint64_t hashes[] = {
     0xEEBFC7A7EFDC35B4UL,
     0xE495D1EF4C91FD20UL,
     0x5EE5632F47AE9695UL,
+    0x337EF33DA3DDB990UL,
+    0xFD8CE53356B5D745UL,
     0x5EF77C9ADD3B11A3UL,
     0xA7ECB73355EB2F20UL,
     0xEC69ADF931AAE0C3UL,
@@ -88215,6 +90083,7 @@ inline uint64_t hashes[] = {
     0x9D30687C57BAA0BBUL,
     0x86B4B6212CB8B627UL,
     0x41290B40FA63E6DAUL,
+    0x1980F68872CC2C3DUL,
     0x4D610C6B56031351UL,
     0xA74AD2439468C883UL,
     0x0419B167EE128F33UL,
@@ -88252,6 +90121,8 @@ inline uint64_t hashes[] = {
     0x8DC9675797123522UL,
     0xB251E0B33E58B424UL,
     0xAEF12960FA943792UL,
+    0x0C02468829E4AA65UL,
+    0xEA4743874D515F13UL,
     0xAA653AE61924B0A0UL,
     0xC60060EB0D8AC7B1UL,
     0x70A252F60A3E036BUL,
@@ -88267,17 +90138,27 @@ inline uint64_t hashes[] = {
     0x04F2FA6E234162F7UL,
     0x143921E45EC44D62UL,
     0xC8E9B6B71B8E660DUL,
+    0x465EEA70AF251045UL,
+    0xAFD262ACCA64479AUL,
+    0xDAF4C98C18AC6F06UL,
+    0x16CFBC5E7EB32861UL,
+    0x1A2BCC8C636F9226UL,
+    0xBEC4B8653462450EUL,
+    0x491E822B2C464FE4UL,
+    0xC889AE921400E1EDUL,
     0x2970EAA18FD5E42FUL,
     0x211E95CE9903940CUL,
     0x5BBCF35BF6E456F7UL,
     0x71AFB258CCED3A27UL,
     0xAE71FB656C600587UL,
+    0x249249D74F813EB2UL,
     0x0506ED94363AD905UL,
     0x8F0D5BA1C2CC91D7UL,
     0x55EAB010FAEE9380UL,
     0x74C68EF97645E79DUL,
     0x6E387895952F4F71UL,
     0x01894E2EDE923CA2UL,
+    0x392183BB9EA57697UL,
     0xC970D0E0FC31D768UL,
     0xF8B49F5BA7F850E7UL,
     0x3A375167F5782A65UL,
@@ -88285,6 +90166,10 @@ inline uint64_t hashes[] = {
     0x2F5A72430E78C8D3UL,
     0xEC0C1D4922AF9754UL,
     0xEF9D388F8D377F44UL,
+    0x27D27223E8EF22EDUL,
+    0x6638C0F19DE692FEUL,
+    0x3EE18B00CD86C54FUL,
+    0xE728F090D538CB18UL,
     0xF6829842C06AE524UL,
     0x8EE6B53CE13A9794UL,
     0xFFA5D878809819DBUL,
@@ -88392,6 +90277,7 @@ inline uint64_t hashes[] = {
     0x8378627201D5497DUL,
     0xB4C8D77C80C0421EUL,
     0x48164DBB970AC3F0UL,
+    0x1091922715B68DF0UL,
     0x4757F00BC6323CFEUL,
     0x4AE5AC8B852D642CUL,
     0xE6D2CEDD370FF98EUL,
@@ -88496,6 +90382,7 @@ inline void* pointers[] = {
     (void*) Native_freeMemoryForHighQualityPhoto,
     (void*) Native_setTakenPhotoIsMugshot,
     (void*) Native_setArenaThemeAndVariationForTakenPhoto,
+    (void*) Native_setOnIslandXForTakenPhoto,
     (void*) Native_saveHighQualityPhoto,
     (void*) Native_getStatusOfSaveHighQualityPhoto,
     (void*) Native_beginCreateLowQualityCopyOfPhoto,
@@ -88678,6 +90565,7 @@ inline void* pointers[] = {
     (void*) Native_startParticleFxNonLoopedOnEntityBone,
     (void*) Native_setParticleFxNonLoopedColour,
     (void*) Native_setParticleFxNonLoopedAlpha,
+    (void*) Native_setParticleFxNonLoopedScale,
     (void*) Native_setParticleFxNonLoopedEmitterSize,
     (void*) Native_setParticleFxForceVehicleInterior,
     (void*) Native_startParticleFxLoopedAtCoord,
@@ -88698,6 +90586,7 @@ inline void* pointers[] = {
     (void*) Native_setParticleFxLoopedAlpha,
     (void*) Native_setParticleFxLoopedScale,
     (void*) Native_setParticleFxLoopedFarClipDist,
+    (void*) Native_setParticleFxLoopedCameraBias,
     (void*) Native_setParticleFxCamInsideVehicle,
     (void*) Native_setParticleFxCamInsideNonplayerVehicle,
     (void*) Native_setParticleFxShootoutBoat,
@@ -88716,10 +90605,12 @@ inline void* pointers[] = {
     (void*) Native_setParticleFxFootOverrideName,
     (void*) Native_setSkidmarkRangeScale,
     (void*) Native_setPtfxForceVehicleInteriorFlag,
+    (void*) Native_registerPostfxBulletImpact,
     (void*) Native_forcePostfxBulletImpactsAfterHud,
     (void*) Native_useParticleFxAsset,
     (void*) Native_setParticleFxOverride,
     (void*) Native_resetParticleFxOverride,
+    (void*) Native_startVehicleParticleFxLooped,
     (void*) Native_setWeatherPtfxUseOverrideSettings,
     (void*) Native_setWeatherPtfxOverrideCurrLevel,
     (void*) Native_washDecalsInRange,
@@ -88761,8 +90652,10 @@ inline void* pointers[] = {
     (void*) Native_renderShadowedLightsWithNoShadows,
     (void*) Native_requestEarlyLightCheck,
     (void*) Native_useSnowFootVfxWhenUnsheltered,
+    (void*) Native_forceAllowSnowFootVfxOnIce,
     (void*) Native_useSnowWheelVfxWhenUnsheltered,
     (void*) Native_disableRegionVfx,
+    (void*) Native_forceGroundSnowPass,
     (void*) Native_presetInteriorAmbientCache,
     (void*) Native_setTimecycleModifier,
     (void*) Native_setTimecycleModifierStrength,
@@ -88785,6 +90678,7 @@ inline void* pointers[] = {
     (void*) Native_enableMoonCycleOverride,
     (void*) Native_disableMoonCycleOverride,
     (void*) Native_requestScaleformMovie,
+    (void*) Native_requestScaleformMovieWithIgnoreSuperWidescreen,
     (void*) Native_requestScaleformMovieInstance,
     (void*) Native_requestScaleformMovieSkipRenderWhilePaused,
     (void*) Native_hasScaleformMovieLoaded,
@@ -88837,6 +90731,7 @@ inline void* pointers[] = {
     (void*) Native_drawTvChannel,
     (void*) Native_setTvChannelPlaylist,
     (void*) Native_setTvChannelPlaylistAtHour,
+    (void*) Native_setTvChannelPlaylistDirty,
     (void*) Native_clearTvChannelPlaylist,
     (void*) Native_isPlaylistOnChannel,
     (void*) Native_isTvshowCurrentlyPlaying,
@@ -88863,6 +90758,7 @@ inline void* pointers[] = {
     (void*) Native_stopPedRingtone,
     (void*) Native_isMobilePhoneCallOngoing,
     (void*) Native_isMobileInterferenceActive,
+    (void*) Native_getCurrentTvShowPlayTime,
     (void*) Native_createNewScriptedConversation,
     (void*) Native_addLineToConversation,
     (void*) Native_addPedToConversation,
@@ -89068,6 +90964,7 @@ inline void* pointers[] = {
     (void*) Native_playVehicleDoorOpenSound,
     (void*) Native_playVehicleDoorCloseSound,
     (void*) Native_enableStallWarningSounds,
+    (void*) Native_enableDragRaceStationaryWarningSounds,
     (void*) Native_isGameInControlOfMusic,
     (void*) Native_setGpsActive,
     (void*) Native_playMissionCompleteAudio,
@@ -89187,6 +91084,7 @@ inline void* pointers[] = {
     (void*) Native_setCamDofFocusDistanceBias,
     (void*) Native_setCamDofMaxNearInFocusDistance,
     (void*) Native_setCamDofMaxNearInFocusDistanceBlendLevel,
+    (void*) Native_setCamDofShouldKeepLookAtTargetInFocus,
     (void*) Native_attachCamToEntity,
     (void*) Native_attachCamToPedBone,
     (void*) Native_hardAttachCamToPedBone,
@@ -89291,6 +91189,8 @@ inline void* pointers[] = {
     (void*) Native_setThirdPersonCamRelativeHeadingLimitsThisUpdate,
     (void*) Native_setThirdPersonCamRelativePitchLimitsThisUpdate,
     (void*) Native_setThirdPersonCamOrbitDistanceLimitsThisUpdate,
+    (void*) Native_getThirdPersonCamMinOrbitDistanceSpring,
+    (void*) Native_getThirdPersonCamMaxOrbitDistanceSpring,
     (void*) Native_setInVehicleCamStateThisUpdate,
     (void*) Native_disableOnFootFirstPersonViewThisUpdate,
     (void*) Native_disableFirstPersonFlashEffectThisUpdate,
@@ -89425,6 +91325,7 @@ inline void* pointers[] = {
     (void*) Native_getCutsceneTime,
     (void*) Native_getCutsceneTotalDuration,
     (void*) Native_getCutsceneEndTime,
+    (void*) Native_getCutscenePlayDuration,
     (void*) Native_wasCutsceneSkipped,
     (void*) Native_hasCutsceneFinished,
     (void*) Native_isCutsceneActive,
@@ -89551,6 +91452,7 @@ inline void* pointers[] = {
     (void*) Native_hasEntityClearLosToEntityAdjustForCover,
     (void*) Native_hasEntityClearLosToEntityInFront,
     (void*) Native_hasEntityCollidedWithAnything,
+    (void*) Native_getLastEntityHitByEntity,
     (void*) Native_getLastMaterialHitByEntity,
     (void*) Native_getCollisionNormalOfLastHitForEntity,
     (void*) Native_forceEntityAiAndAnimationUpdate,
@@ -89589,6 +91491,7 @@ inline void* pointers[] = {
     (void*) Native_getWorldPositionOfEntityBone,
     (void*) Native_getNearestPlayerToEntity,
     (void*) Native_getNearestPlayerToEntityOnTeam,
+    (void*) Native_getNearestParticipantToEntity,
     (void*) Native_getEntityType,
     (void*) Native_getEntityPopulationType,
     (void*) Native_isAnEntity,
@@ -89629,6 +91532,7 @@ inline void* pointers[] = {
     (void*) Native_attachEntityBoneToEntityBone,
     (void*) Native_attachEntityBoneToEntityBoneYForward,
     (void*) Native_attachEntityToEntityPhysically,
+    (void*) Native_attachEntityToEntityPhysicallyOverrideInverseMass,
     (void*) Native_processEntityAttachments,
     (void*) Native_getEntityBoneIndexByName,
     (void*) Native_clearEntityLastDamageEntity,
@@ -89713,6 +91617,7 @@ inline void* pointers[] = {
     (void*) Native_getEntityBoneRotation,
     (void*) Native_getEntityBonePostion,
     (void*) Native_getEntityBoneObjectRotation,
+    (void*) Native_getEntityBoneObjectPostion,
     (void*) Native_getEntityBoneCount,
     (void*) Native_enableEntityBulletCollision,
     (void*) Native_setEntityCanOnlyBeDamagedByEntity,
@@ -89748,7 +91653,7 @@ inline void* pointers[] = {
     (void*) Native_getShopPedProp,
     (void*) Native_getHashNameForComponent,
     (void*) Native_getHashNameForProp,
-    (void*) Native_getItemVariantsCount,
+    (void*) Native_getShopPedApparelVariantComponentCount,
     (void*) Native_getShopPedApparelVariantPropCount,
     (void*) Native_getVariantComponent,
     (void*) Native_getVariantProp,
@@ -89756,7 +91661,7 @@ inline void* pointers[] = {
     (void*) Native_getShopPedApparelForcedPropCount,
     (void*) Native_getForcedComponent,
     (void*) Native_getForcedProp,
-    (void*) Native_isTagRestricted,
+    (void*) Native_doesShopPedApparelHaveRestrictionTag,
     (void*) Native_doesCurrentPedComponentHaveRestrictionTag,
     (void*) Native_doesCurrentPedPropHaveRestrictionTag,
     (void*) Native_setupShopPedOutfitQuery,
@@ -89929,6 +91834,7 @@ inline void* pointers[] = {
     (void*) Native_isRadarHidden,
     (void*) Native_isMinimapRendering,
     (void*) Native_useVehicleTargetingReticule,
+    (void*) Native_useVehicleTargetingReticuleOnVehicles,
     (void*) Native_addValidVehicleHitHash,
     (void*) Native_clearValidVehicleHitHashes,
     (void*) Native_setBlipRoute,
@@ -89962,6 +91868,7 @@ inline void* pointers[] = {
     (void*) Native_setTextCentre,
     (void*) Native_setTextRightJustify,
     (void*) Native_setTextJustification,
+    (void*) Native_setTextLineHeightMult,
     (void*) Native_setTextWrap,
     (void*) Native_setTextLeading,
     (void*) Native_setTextProportional,
@@ -90054,6 +91961,7 @@ inline void* pointers[] = {
     (void*) Native_showHeightOnBlip,
     (void*) Native_showTickOnBlip,
     (void*) Native_showGoldTickOnBlip,
+    (void*) Native_showForSaleIconOnBlip,
     (void*) Native_showHeadingIndicatorOnBlip,
     (void*) Native_showOutlineIndicatorOnBlip,
     (void*) Native_showFriendIndicatorOnBlip,
@@ -90075,6 +91983,7 @@ inline void* pointers[] = {
     (void*) Native_setupFakeConeData,
     (void*) Native_removeFakeConeData,
     (void*) Native_clearFakeConeArray,
+    (void*) Native_setBlipGpsRouteDisplayDistance,
     (void*) Native_setMinimapComponent,
     (void*) Native_setMinimapSonarSweep,
     (void*) Native_showAccountPicker,
@@ -90091,7 +92000,9 @@ inline void* pointers[] = {
     (void*) Native_hideMinimapExteriorMapThisFrame,
     (void*) Native_hideMinimapInteriorMapThisFrame,
     (void*) Native_setUseIslandMap,
+    (void*) Native_setPauseExteriorRenderingWhileInInterior,
     (void*) Native_dontTiltMinimapThisFrame,
+    (void*) Native_dontZoomMinimapWhenRunningThisFrame,
     (void*) Native_dontZoomMinimapWhenSnipingThisFrame,
     (void*) Native_setWidescreenFormat,
     (void*) Native_displayAreaName,
@@ -90113,7 +92024,7 @@ inline void* pointers[] = {
     (void*) Native_displayHelpTextThisFrame,
     (void*) Native_hudForceWeaponWheel,
     (void*) Native_hudForceSpecialVehicleWeaponWheel,
-    (void*) Native_blockWeaponWheelThisFrame,
+    (void*) Native_hudSuppressWeaponWheelResultsThisFrame,
     (void*) Native_hudGetWeaponWheelCurrentlyHighlighted,
     (void*) Native_hudSetWeaponWheelTopSlot,
     (void*) Native_hudGetWeaponWheelTopSlot,
@@ -90171,7 +92082,7 @@ inline void* pointers[] = {
     (void*) Native_setHudComponentPosition,
     (void*) Native_getHudComponentPosition,
     (void*) Native_clearReminderMessage,
-    (void*) Native_getScreenCoordFromWorldCoord2,
+    (void*) Native_getHudScreenPositionFromWorldPosition,
     (void*) Native_openReportugcMenu,
     (void*) Native_forceCloseReportugcMenu,
     (void*) Native_isReportugcMenuOpen,
@@ -90487,6 +92398,7 @@ inline void* pointers[] = {
     (void*) Native_setCreditsActive,
     (void*) Native_setCreditsFadeOutWithScreen,
     (void*) Native_haveCreditsReachedEnd,
+    (void*) Native_areCreditsRunning,
     (void*) Native_terminateAllScriptsWithThisName,
     (void*) Native_networkSetScriptIsSafeForNetworkGame,
     (void*) Native_addHospitalRestart,
@@ -90548,6 +92460,7 @@ inline void* pointers[] = {
     (void*) Native_isProjectileTypeInAngledArea,
     (void*) Native_isProjectileTypeWithinDistance,
     (void*) Native_getCoordsOfProjectileTypeInArea,
+    (void*) Native_getCoordsOfProjectileTypeInAngledArea,
     (void*) Native_getCoordsOfProjectileTypeWithinDistance,
     (void*) Native_getProjectileOfProjectileTypeWithinDistance,
     (void*) Native_isBulletInAngledArea,
@@ -90702,6 +92615,8 @@ inline void* pointers[] = {
     (void*) Native_useActiveCameraForTimeslicingCentre,
     (void*) Native_setContentIdIndex,
     (void*) Native_getContentIdIndex,
+    (void*) Native_setContentPropType,
+    (void*) Native_getContentPropType,
     (void*) Native_createMobilePhone,
     (void*) Native_destroyMobilePhone,
     (void*) Native_setMobilePhoneScale,
@@ -90748,6 +92663,7 @@ inline void* pointers[] = {
     (void*) Native_networkDeferCashTransactionsUntilShopSave,
     (void*) Native_canPayAmountToBoss,
     (void*) Native_networkEarnFromPickup,
+    (void*) Native_networkEarnFromCashingOut,
     (void*) Native_networkEarnFromGangattackPickup,
     (void*) Native_networkEarnAssassinateTargetKilled,
     (void*) Native_networkEarnFromRobArmoredCars,
@@ -90764,12 +92680,12 @@ inline void* pointers[] = {
     (void*) Native_networkEarnFromProperty,
     (void*) Native_networkEarnFromAiTargetKill,
     (void*) Native_networkEarnFromNotBadsport,
-    (void*) Native_networkEarnFromRockstar,
     (void*) Native_networkEarnFromVehicle,
     (void*) Native_networkEarnFromPersonalVehicle,
     (void*) Native_networkEarnFromDailyObjectives,
     (void*) Native_networkEarnFromAmbientJob,
     (void*) Native_networkEarnFromJobBonus,
+    (void*) Native_networkEarnFromCriminalMastermind,
     (void*) Native_networkEarnHeistAward,
     (void*) Native_networkEarnFirstTimeBonus,
     (void*) Native_networkEarnGoon,
@@ -90832,6 +92748,7 @@ inline void* pointers[] = {
     (void*) Native_networkSpentFromRockstar,
     (void*) Native_networkSpendEarnedFromBankAndWallets,
     (void*) Native_processCashGift,
+    (void*) Native_networkSpentMoveSubmarine,
     (void*) Native_networkSpentPlayerHealthcare,
     (void*) Native_networkSpentNoCops,
     (void*) Native_networkSpentCargoSourcing,
@@ -91023,6 +92940,45 @@ inline void* pointers[] = {
     (void*) Native_networkEarnBikerShop,
     (void*) Native_networkEarnBiker,
     (void*) Native_networkYohanSourceGoods,
+    (void*) Native_networkSpendBuyMfgarage,
+    (void*) Native_networkSpendUpgradeMfgarage,
+    (void*) Native_networkSpendBuySupplies,
+    (void*) Native_networkSpendBuyAcidLab,
+    (void*) Native_networkSpendUpgradeAcidLabEquipment,
+    (void*) Native_networkSpendUpgradeAcidLabArmor,
+    (void*) Native_networkSpendUpgradeAcidLabScoop,
+    (void*) Native_networkSpendUpgradeAcidLabMines,
+    (void*) Native_networkSpendRenameAcidLab,
+    (void*) Native_networkSpendRenameAcidProduct,
+    (void*) Native_networkEarnAwardJuggaloMission,
+    (void*) Native_networkEarnAwardAcidLab,
+    (void*) Native_networkEarnAwardDailyStash,
+    (void*) Native_networkEarnAwardDeadDrop,
+    (void*) Native_networkEarnAwardRandomEvent,
+    (void*) Native_networkEarnAwardTaxi,
+    (void*) Native_networkEarnStreetDealer,
+    (void*) Native_networkEarnSellAcid,
+    (void*) Native_networkEarnSetupParticipationAcidLab,
+    (void*) Native_networkEarnSourceParticipationAcidLab,
+    (void*) Native_networkEarnSellParticipationAcidLab,
+    (void*) Native_networkEarnJuggaloStoryMission,
+    (void*) Native_networkEarnJuggaloStoryMissionParticipation,
+    (void*) Native_networkEarnFooliganJob,
+    (void*) Native_networkEarnFooliganJobParticipation,
+    (void*) Native_networkEarnTaxiJob,
+    (void*) Native_networkEarnDailyStashHouseCompleted,
+    (void*) Native_networkEarnDailyStashHouseParticipation,
+    (void*) Native_networkEarnAvenger,
+    (void*) Native_networkEarnSmugglerOps,
+    (void*) Native_networkEarnBonusObjective,
+    (void*) Native_networkEarnProgressHub,
+    (void*) Native_networkSpentAirFreight,
+    (void*) Native_networkSpentSkipCargoSourceSetup,
+    (void*) Native_networkSpentStealthModule,
+    (void*) Native_networkSpentMissileJammer,
+    (void*) Native_networkSpentGeneric,
+    (void*) Native_networkEarnGeneric,
+    (void*) Native_networkClearTransactionTelemetryNonce,
     (void*) Native_networkGetVcBankBalance,
     (void*) Native_networkGetVcWalletBalance,
     (void*) Native_networkGetVcBalance,
@@ -91102,6 +93058,7 @@ inline void* pointers[] = {
     (void*) Native_networkHasAgeRestrictions,
     (void*) Native_networkHaveUserContentPrivileges,
     (void*) Native_networkHaveCommunicationPrivileges,
+    (void*) Native_networkHavePlatformCommunicationPrivileges,
     (void*) Native_networkCheckOnlinePrivileges,
     (void*) Native_networkCheckUserContentPrivileges,
     (void*) Native_networkCheckCommunicationPrivileges,
@@ -91139,6 +93096,7 @@ inline void* pointers[] = {
     (void*) Native_networkSessionIsClosedCrew,
     (void*) Native_networkSessionIsSolo,
     (void*) Native_networkSessionIsPrivate,
+    (void*) Native_networkSessionLeaveIncludingReason,
     (void*) Native_networkSessionEnd,
     (void*) Native_networkSessionLeave,
     (void*) Native_networkSessionKickPlayer,
@@ -91151,6 +93109,7 @@ inline void* pointers[] = {
     (void*) Native_networkSessionGetMatchmakingGroupFree,
     (void*) Native_networkSessionAddActiveMatchmakingGroup,
     (void*) Native_networkSessionSetUniqueCrewLimit,
+    (void*) Native_networkSessionGetUniqueCrewLimit,
     (void*) Native_networkSessionSetUniqueCrewLimitTransition,
     (void*) Native_networkSessionSetUniqueCrewOnlyCrewsTransition,
     (void*) Native_networkSessionSetCrewLimitMaxMembersTransition,
@@ -91201,6 +93160,7 @@ inline void* pointers[] = {
     (void*) Native_networkIsGameInProgress,
     (void*) Native_networkIsSessionActive,
     (void*) Native_networkIsInSession,
+    (void*) Native_networkIsAmericasVersion,
     (void*) Native_networkIsSessionStarted,
     (void*) Native_networkIsSessionBusy,
     (void*) Native_networkCanSessionEnd,
@@ -91336,12 +93296,10 @@ inline void* pointers[] = {
     (void*) Native_networkSeedRandomNumberGenerator,
     (void*) Native_networkGetRandomInt,
     (void*) Native_networkGetRandomIntRanged,
+    (void*) Native_networkGetRandomFloatRanged,
     (void*) Native_networkPlayerIsCheater,
     (void*) Native_networkPlayerGetCheaterReason,
     (void*) Native_networkPlayerIsBadsport,
-    (void*) Native_triggerPlayerCrcHackerCheck,
-    (void*) Native_triggerTuningCrcHackerCheck,
-    (void*) Native_triggerFileCrcHackerCheck,
     (void*) Native_remoteCheaterPlayerDetected,
     (void*) Native_badSportPlayerLeftDetected,
     (void*) Native_networkAddInvalidObjectModel,
@@ -91391,8 +93349,10 @@ inline void* pointers[] = {
     (void*) Native_networkGetAssistedDamageOfEntity,
     (void*) Native_networkGetEntityKillerOfPlayer,
     (void*) Native_networkSetCurrentPublicContentId,
+    (void*) Native_networkSetCurrentChatOption,
     (void*) Native_networkSetCurrentSpawnLocationOption,
     (void*) Native_networkSetVehicleDrivenInTestDrive,
+    (void*) Native_networkSetVehicleDrivenLocation,
     (void*) Native_networkResurrectLocalPlayer,
     (void*) Native_networkSetLocalPlayerInvincibleTime,
     (void*) Native_networkIsLocalPlayerInvincible,
@@ -91467,6 +93427,10 @@ inline void* pointers[] = {
     (void*) Native_networkGetPlayerOwnsWaypoint,
     (void*) Native_networkCanSetWaypoint,
     (void*) Native_networkIgnoreRemoteWaypoints,
+    (void*) Native_networkDoesCommunicationGroupExist,
+    (void*) Native_networkGetCommunicationGroupFlags,
+    (void*) Native_networkSetCommunicationGroupFlags,
+    (void*) Native_networkIsPlayerOnBlocklist,
     (void*) Native_networkSetScriptAutomuted,
     (void*) Native_networkHasAutomuteOverride,
     (void*) Native_networkHasHeadset,
@@ -91575,6 +93539,7 @@ inline void* pointers[] = {
     (void*) Native_areCutsceneEntitiesNetworked,
     (void*) Native_setNetworkIdPassControlInTutorial,
     (void*) Native_isNetworkIdOwnedByParticipant,
+    (void*) Native_setRemotePlayerVisibleInCutscene,
     (void*) Native_setLocalPlayerVisibleInCutscene,
     (void*) Native_setLocalPlayerInvisibleLocally,
     (void*) Native_setLocalPlayerVisibleLocally,
@@ -91643,6 +93608,7 @@ inline void* pointers[] = {
     (void*) Native_networkIsPlayerInMpCutscene,
     (void*) Native_networkHideProjectileInCutscene,
     (void*) Native_setNetworkVehicleRespotTimer,
+    (void*) Native_isNetworkVehicleRunningRespotTimer,
     (void*) Native_setNetworkVehicleAsGhost,
     (void*) Native_setNetworkVehicleMaxPositionDeltaMultiplier,
     (void*) Native_setNetworkEnableHighSpeedEdgeFallDetection,
@@ -91840,6 +93806,7 @@ inline void* pointers[] = {
     (void*) Native_ugcGetCachedDescription,
     (void*) Native_ugcReleaseCachedDescription,
     (void*) Native_ugcReleaseAllCachedDescriptions,
+    (void*) Native_ugcHasPermissionToWrite,
     (void*) Native_ugcPublish,
     (void*) Native_ugcSetBookmarked,
     (void*) Native_ugcSetDeleted,
@@ -91883,6 +93850,8 @@ inline void* pointers[] = {
     (void*) Native_networkHasRosPrivilegeEndDate,
     (void*) Native_networkHasRosPrivilegePlayedLastGen,
     (void*) Native_networkHasRosPrivilegeSpecialEditionContent,
+    (void*) Native_networkHasRosPrivilegeMpTextCommunication,
+    (void*) Native_networkHasRosPrivilegeMpVoiceCommunication,
     (void*) Native_networkStartCommunicationPermissionsCheck,
     (void*) Native_networkStartUserContentPermissionsCheck,
     (void*) Native_networkSkipRadioResetNextClose,
@@ -92056,6 +94025,7 @@ inline void* pointers[] = {
     (void*) Native_getObjectTintIndex,
     (void*) Native_setObjectTintIndex,
     (void*) Native_setTintIndexClosestBuildingOfType,
+    (void*) Native_setPropTintIndex,
     (void*) Native_setPropLightColor,
     (void*) Native_isPropLightOverriden,
     (void*) Native_setObjectIsVisibleInMirrors,
@@ -92121,7 +94091,7 @@ inline void* pointers[] = {
     (void*) Native_initPcScriptedControls,
     (void*) Native_switchPcScriptedControls,
     (void*) Native_shutdownPcScriptedControls,
-    (void*) Native_disableInputGroup,
+    (void*) Native_allowAlternativeScriptControlsLayout,
     (void*) Native_setRoadsInArea,
     (void*) Native_setRoadsInAngledArea,
     (void*) Native_setPedPathsInArea,
@@ -92140,6 +94110,7 @@ inline void* pointers[] = {
     (void*) Native_getVehicleNodeIsGpsAllowed,
     (void*) Native_getVehicleNodeIsSwitchedOff,
     (void*) Native_getClosestRoad,
+    (void*) Native_loadAllPathNodes,
     (void*) Native_setAllowStreamPrologueNodes,
     (void*) Native_setAllowStreamHeistIslandNodes,
     (void*) Native_areNodesLoadedForArea,
@@ -92150,6 +94121,7 @@ inline void* pointers[] = {
     (void*) Native_adjustAmbientPedSpawnDensitiesThisFrame,
     (void*) Native_setPedPathsBackToOriginal,
     (void*) Native_getRandomVehicleNode,
+    (void*) Native_getSpawnCoordsForVehicleNode,
     (void*) Native_getStreetNameAtCoord,
     (void*) Native_generateDirectionsToCoord,
     (void*) Native_setIgnoreNoGpsFlag,
@@ -92339,6 +94311,7 @@ inline void* pointers[] = {
     (void*) Native_isPedInHighCover,
     (void*) Native_isPedGoingIntoCover,
     (void*) Native_setPedPinnedDown,
+    (void*) Native_hasPedClearLosToEntity,
     (void*) Native_getSeatPedIsTryingToEnter,
     (void*) Native_getVehiclePedIsTryingToEnter,
     (void*) Native_getPedSourceOfDeath,
@@ -92565,6 +94538,7 @@ inline void* pointers[] = {
     (void*) Native_clearPedWetness,
     (void*) Native_setPedWetnessHeight,
     (void*) Native_setPedWetnessEnabledThisFrame,
+    (void*) Native_setPedWetness,
     (void*) Native_clearPedEnvDirt,
     (void*) Native_setPedSweat,
     (void*) Native_addPedDecorationFromHashes,
@@ -92594,6 +94568,7 @@ inline void* pointers[] = {
     (void*) Native_setPedShouldIgnoreScenarioNavChecks,
     (void*) Native_setPedShouldProbeForScenarioExitsInOneFrame,
     (void*) Native_isPedGesturing,
+    (void*) Native_resetFacialIdleAnim,
     (void*) Native_playFacialAnim,
     (void*) Native_setFacialClipset,
     (void*) Native_setFacialIdleAnimOverride,
@@ -92956,6 +94931,7 @@ inline void* pointers[] = {
     (void*) Native_givePlayerRagdollControl,
     (void*) Native_setPlayerLockon,
     (void*) Native_setPlayerTargetingMode,
+    (void*) Native_getPlayerTargetingMode,
     (void*) Native_setPlayerTargetLevel,
     (void*) Native_getIsUsingFpsThirdPersonCover,
     (void*) Native_getIsUsingHoodCamera,
@@ -93012,6 +94988,7 @@ inline void* pointers[] = {
     (void*) Native_setPlayerHealthRechargeMultiplier,
     (void*) Native_getPlayerHealthRechargeMaxPercent,
     (void*) Native_setPlayerHealthRechargeMaxPercent,
+    (void*) Native_disablePlayerHealthRecharge,
     (void*) Native_setPlayerFallDistanceToTriggerRagdollOverride,
     (void*) Native_setPlayerWeaponDamageModifier,
     (void*) Native_setPlayerWeaponDefenseModifier,
@@ -93144,6 +95121,7 @@ inline void* pointers[] = {
     (void*) Native_bgDoesLaunchParamExist,
     (void*) Native_bgGetLaunchParamValue,
     (void*) Native_bgGetScriptIdFromNameHash,
+    (void*) Native_sendTuScriptEventNew,
     (void*) Native_startShapeTestLosProbe,
     (void*) Native_startExpensiveSynchronousShapeTestLosProbe,
     (void*) Native_startShapeTestBoundingBox,
@@ -93167,7 +95145,6 @@ inline void* pointers[] = {
     (void*) Native_scInboxMessagePushGamerT0RecipList,
     (void*) Native_scInboxSendUgcstatupdateToRecipList,
     (void*) Native_scInboxMessageGetUgcdata,
-    (void*) Native_scInboxSendBountyToRecipList,
     (void*) Native_scInboxGetBountyDataAtIndex,
     (void*) Native_scEmailRetrieveEmails,
     (void*) Native_scEmailGetRetrievalStatus,
@@ -93256,6 +95233,7 @@ inline void* pointers[] = {
     (void*) Native_statLoadDirtyReadDetected,
     (void*) Native_statClearDirtyReadDetected,
     (void*) Native_statGetLoadSafeToProgressToMpFromSp,
+    (void*) Native_getStatHashForCharacterStat,
     (void*) Native_statSetInt,
     (void*) Native_statSetFloat,
     (void*) Native_statSetBool,
@@ -93292,9 +95270,13 @@ inline void* pointers[] = {
     (void*) Native_getPackedIntStatKey,
     (void*) Native_getPackedTuIntStatKey,
     (void*) Native_getPackedNgIntStatKey,
+    (void*) Native_getPackedStatBoolCode,
     (void*) Native_getPackedStatIntCode,
+    (void*) Native_setPackedStatBoolCode,
     (void*) Native_setPackedStatIntCode,
     (void*) Native_playstatsBackgroundScriptAction,
+    (void*) Native_playstatsFlowLow,
+    (void*) Native_playstatsFlowMedium,
     (void*) Native_playstatsNpcInvite,
     (void*) Native_playstatsAwardXp,
     (void*) Native_playstatsRankUp,
@@ -93334,6 +95316,7 @@ inline void* pointers[] = {
     (void*) Native_playstatsAppendDirectorMetric,
     (void*) Native_playstatsAwardBadSport,
     (void*) Native_playstatsPegasusAsPersonalAircraft,
+    (void*) Native_playstatsShopmenuNav,
     (void*) Native_playstatsFmEventChallenges,
     (void*) Native_playstatsFmEventVehicletarget,
     (void*) Native_playstatsFmEventUrbanwarfare,
@@ -93358,7 +95341,6 @@ inline void* pointers[] = {
     (void*) Native_leaderboardsReadSuccessful,
     (void*) Native_leaderboards2ReadFriendsByRow,
     (void*) Native_leaderboards2ReadByHandle,
-    (void*) Native_leaderboards2ReadByRow,
     (void*) Native_leaderboards2ReadByRank,
     (void*) Native_leaderboards2ReadByRadius,
     (void*) Native_leaderboards2ReadByScoreInt,
@@ -93546,7 +95528,17 @@ inline void* pointers[] = {
     (void*) Native_playstatsAwardNav,
     (void*) Native_playstatsInstMissionEnd,
     (void*) Native_playstatsHubExit,
+    (void*) Native_playstatsVehDel,
     (void*) Native_playstatsInventory,
+    (void*) Native_playstatsAcidMissionEnd,
+    (void*) Native_playstatsAcidRnd,
+    (void*) Native_playstatsIdle,
+    (void*) Native_playstatsPlayerStyle,
+    (void*) Native_playstatsRandomEvent,
+    (void*) Native_playstatsAlert,
+    (void*) Native_playstatsAttritionStageEnd,
+    (void*) Native_playstatsShowroomNav,
+    (void*) Native_playstatsShowroomOverview,
     (void*) Native_loadAllObjectsNow,
     (void*) Native_loadScene,
     (void*) Native_networkUpdateLoadScene,
@@ -93953,6 +95945,7 @@ inline void* pointers[] = {
     (void*) Native_getTaskMoveNetworkSignalBool,
     (void*) Native_getTaskMoveNetworkEvent,
     (void*) Native_setTaskMoveNetworkEnableCollisionOnNetworkCloneWhenFixed,
+    (void*) Native_setScriptTaskEnableCollisionOnNetworkCloneWhenFixed,
     (void*) Native_isMoveBlendRatioStill,
     (void*) Native_isMoveBlendRatioWalking,
     (void*) Native_isMoveBlendRatioRunning,
@@ -94020,6 +96013,8 @@ inline void* pointers[] = {
     (void*) Native_setVehicleDoorsLockedForTeam,
     (void*) Native_setVehicleDoorsLockedForAllTeams,
     (void*) Native_setVehicleDontTerminateTaskWhenAchieved,
+    (void*) Native_setVehicleMaxLaunchEngineRevs,
+    (void*) Native_getVehicleThrottle,
     (void*) Native_explodeVehicle,
     (void*) Native_setVehicleOutOfControl,
     (void*) Native_setVehicleTimedExplosion,
@@ -94027,6 +96022,7 @@ inline void* pointers[] = {
     (void*) Native_clearVehiclePhoneExplosiveDevice,
     (void*) Native_hasVehiclePhoneExplosiveDevice,
     (void*) Native_detonateVehiclePhoneExplosiveDevice,
+    (void*) Native_haveVehicleRearDoorsBeenBlownOpenByStickybomb,
     (void*) Native_setTaxiLights,
     (void*) Native_isTaxiLightOn,
     (void*) Native_isVehicleInGarageArea,
@@ -94052,6 +96048,7 @@ inline void* pointers[] = {
     (void*) Native_getSubmarineIsUnderDesignDepth,
     (void*) Native_getSubmarineNumberOfAirLeaks,
     (void*) Native_setBoatIgnoreLandProbes,
+    (void*) Native_setBoundsAffectWaterProbes,
     (void*) Native_setBoatAnchor,
     (void*) Native_canAnchorBoatHere,
     (void*) Native_canAnchorBoatHereIgnorePlayers,
@@ -94080,6 +96077,7 @@ inline void* pointers[] = {
     (void*) Native_setIgnorePlanesSmallPitchChange,
     (void*) Native_stopBringingVehicleToHalt,
     (void*) Native_isVehicleBeingBroughtToHalt,
+    (void*) Native_lowerForkliftForks,
     (void*) Native_setForkliftForkHeight,
     (void*) Native_isEntityAttachedToHandlerFrame,
     (void*) Native_isAnyEntityAttachedToHandlerFrame,
@@ -94329,12 +96327,17 @@ inline void* pointers[] = {
     (void*) Native_getLandingGearState,
     (void*) Native_isAnyVehicleNearPoint,
     (void*) Native_requestVehicleHighDetailModel,
+    (void*) Native_getVehicleModelNumDriveGears,
+    (void*) Native_getVehicleMaxDriveGearCount,
+    (void*) Native_getVehicleCurrentDriveGear,
+    (void*) Native_getVehicleCurrentRevRatio,
     (void*) Native_removeVehicleHighDetailModel,
     (void*) Native_isVehicleHighDetail,
     (void*) Native_requestVehicleAsset,
     (void*) Native_hasVehicleAssetLoaded,
     (void*) Native_removeVehicleAsset,
     (void*) Native_setVehicleTowTruckArmPosition,
+    (void*) Native_setAttachedVehicleToTowTruckArm,
     (void*) Native_attachVehicleToTowTruck,
     (void*) Native_detachVehicleFromTowTruck,
     (void*) Native_detachVehicleFromAnyTowTruck,
@@ -94358,6 +96361,7 @@ inline void* pointers[] = {
     (void*) Native_setVehicleReduceGripLevel,
     (void*) Native_setVehicleIndicatorLights,
     (void*) Native_setVehicleBrakeLights,
+    (void*) Native_setVehicleTailLights,
     (void*) Native_setVehicleHandbrake,
     (void*) Native_setVehicleBrake,
     (void*) Native_instantlyFillVehiclePopulation,
@@ -94365,6 +96369,7 @@ inline void* pointers[] = {
     (void*) Native_networkEnableEmptyCrowdingVehiclesRemoval,
     (void*) Native_networkCapEmptyCrowdingVehiclesRemoval,
     (void*) Native_getVehicleTrailerVehicle,
+    (void*) Native_getVehicleTrailerParentVehicle,
     (void*) Native_setVehicleUsesLargeRearRamp,
     (void*) Native_setVehicleRudderBroken,
     (void*) Native_setConvertibleRoofLatchState,
@@ -94435,6 +96440,8 @@ inline void* pointers[] = {
     (void*) Native_getVehicleColoursWhichCanBeSet,
     (void*) Native_getVehicleCauseOfDestruction,
     (void*) Native_overridePlaneDamageThrehsold,
+    (void*) Native_setTransmissionReducedGearRatio,
+    (void*) Native_getVehicleDesiredDriveGear,
     (void*) Native_getIsLeftVehicleHeadlightDamaged,
     (void*) Native_getIsRightVehicleHeadlightDamaged,
     (void*) Native_getBothVehicleHeadlightsDamaged,
@@ -94637,6 +96644,7 @@ inline void* pointers[] = {
     (void*) Native_vehicleSetJetWashForceEnabled,
     (void*) Native_setVehicleWeaponCanTargetObjects,
     (void*) Native_setVehicleUseBoostButtonForWheelRetract,
+    (void*) Native_setVehicleUseHornButtonForNitrous,
     (void*) Native_vehicleSetParachuteModelOverride,
     (void*) Native_vehicleSetParachuteModelTintIndex,
     (void*) Native_vehicleSetOverrideExtenableSideRatio,
@@ -94674,6 +96682,8 @@ inline void* pointers[] = {
     (void*) Native_findSpawnCoordinatesForHeli,
     (void*) Native_setDeployFoldingWings,
     (void*) Native_areFoldingWingsDeployed,
+    (void*) Native_setDeployMissileBays,
+    (void*) Native_areMissileBaysDeployed,
     (void*) Native_setDipStraightDownWhenCrashingPlane,
     (void*) Native_setTurretHidden,
     (void*) Native_setHoverModeWingRatio,
@@ -94689,17 +96699,27 @@ inline void* pointers[] = {
     (void*) Native_getLastShuntVehicle,
     (void*) Native_setDisableVehicleExplosionsDamage,
     (void*) Native_setOverrideNitrousLevel,
+    (void*) Native_setNitrousIsActive,
+    (void*) Native_setOverrideTractionLossMultiplier,
+    (void*) Native_setDriftSlipAngleLimits,
+    (void*) Native_setMinimumTimeBetweenGearShifts,
+    (void*) Native_fullyChargeNitrous,
+    (void*) Native_getRemainingNitrousDuration,
+    (void*) Native_isNitrousActive,
+    (void*) Native_clearNitrous,
     (void*) Native_setIncreaseWheelCrushDamage,
     (void*) Native_setDisableWeaponBladeForces,
     (void*) Native_setUseDoubleClickForCarJump,
     (void*) Native_getDoesVehicleHaveTombstone,
     (void*) Native_hideTombstone,
+    (void*) Native_applyEmpEffect,
     (void*) Native_getIsVehicleDisabledByEmp,
     (void*) Native_setDisableRetractingWeaponBlades,
     (void*) Native_getTyreHealth,
     (void*) Native_setTyreHealth,
     (void*) Native_getTyreWearRate,
     (void*) Native_setTyreWearRate,
+    (void*) Native_setTyreWearRateScale,
     (void*) Native_setTyreMaximumGripDifferenceDueToWearRate,
     (void*) Native_setAircraftIgnoreHightmapOptimisation,
     (void*) Native_setReducedSuspensionForce,
@@ -94707,6 +96727,10 @@ inline void* pointers[] = {
     (void*) Native_getDriftTyresSet,
     (void*) Native_networkUseHighPrecisionTrainBlending,
     (void*) Native_setCheckForEnoughRoomForPed,
+    (void*) Native_setAllowCollisionWhenInVehicle,
+    (void*) Native_isVehicleGen9ExclusiveModel,
+    (void*) Native_getVehicleMaxExhaustBoneCount,
+    (void*) Native_getVehicleExhaustBone,
     (void*) Native_getWaterHeight,
     (void*) Native_getWaterHeightNoWaves,
     (void*) Native_testProbeAgainstWater,
@@ -94814,6 +96838,7 @@ inline void* pointers[] = {
     (void*) Native_setPedChanceOfFiringBlanks,
     (void*) Native_setPedShootOrdnanceWeapon,
     (void*) Native_requestWeaponHighDetailModel,
+    (void*) Native_setWeaponPedDamageModifier,
     (void*) Native_setWeaponDamageModifier,
     (void*) Native_setWeaponAoeModifier,
     (void*) Native_setWeaponEffectDurationModifier,
