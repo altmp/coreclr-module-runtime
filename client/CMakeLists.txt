@@ -6,8 +6,9 @@ project(${TARGET_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
 set(CMAKE_BUILD_TYPE RelWithDebInfo)
-set(CSHARP_MODULE_DEFS 
+set(CSHARP_MODULE_DEFS
     # Compliation
     -DCXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}"
     -D_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
@@ -34,9 +35,9 @@ endif()
 if(DYNAMIC_BUILD)
     set(SDK_PROJECT_NAME csharp-alt-sdk)
     include(../cpp-sdk/CMakeLists.txt)
-    
+
     add_library(${TARGET_NAME} SHARED "${PROJECT_SOURCE_FILES}" "${CAPI_FILES}")
-    target_compile_definitions(${PROJECT_NAME} PRIVATE 
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
         ${CSHARP_MODULE_DEFS}
         -DALTV_CSHARP_SHARED
     )
@@ -44,7 +45,7 @@ if(DYNAMIC_BUILD)
     add_dependencies(${TARGET_NAME} csharp-alt-sdk)
 else()
     add_library(${TARGET_NAME}-static STATIC "${PROJECT_SOURCE_FILES}" "${CAPI_FILES}")
-    target_compile_definitions(${PROJECT_NAME}-static PRIVATE 
+    target_compile_definitions(${PROJECT_NAME}-static PRIVATE
         ${CSHARP_MODULE_DEFS}
     )
     include_directories(${TARGET_NAME}-static PRIVATE "src" "thirdparty" ${ALTV_CSHARP_CPP_SDK})
