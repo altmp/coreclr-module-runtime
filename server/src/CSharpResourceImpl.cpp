@@ -853,7 +853,12 @@ case alt::CEvent::Type::SYNCED_META_CHANGE:
             auto name = scriptRPCEvent->GetName();
             auto args = scriptRPCEvent->GetArgs();
             auto size = args.size();
+
+#ifdef _WIN32
             auto constArgs = new alt::MValueConst*[size];
+#else
+            alt::MValueConst* constArgs[size];
+#endif
 
             for (uint64_t i = 0; i < size; i++)
             {

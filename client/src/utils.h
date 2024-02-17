@@ -5,6 +5,7 @@
 #include <string>
 #include <codecvt>
 #include <future>
+#include <Log.h>
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
@@ -100,24 +101,34 @@ namespace utils
     }
     
     inline alt::IHttpClient::HttpResponse download_file_sync(alt::IHttpClient* httpClient, const std::string& url) {
-        std::promise<alt::IHttpClient::HttpResponse> promise;
-        std::future<alt::IHttpClient::HttpResponse> future = promise.get_future();
+        auto attempt = 0;
+        
+        while (true)
+        {
+            if (++attempt > 5) throw std::runtime_error("Failed to download file " + url);
+            
+            std::promise<alt::IHttpClient::HttpResponse> promise;
+            std::future<alt::IHttpClient::HttpResponse> future = promise.get_future();
     
-        httpClient->Get([](alt::IHttpClient::HttpResponse response, const void* data) {
-            const auto innerPromise = (std::promise<alt::IHttpClient::HttpResponse>*) data;
+            httpClient->Get([](alt::IHttpClient::HttpResponse response, const void* data) {
+                const auto innerPromise = (std::promise<alt::IHttpClient::HttpResponse>*) data;
             
-            if (response.statusCode != 200) {
-                innerPromise->set_exception(std::make_exception_ptr(std::runtime_error("Failed to download file")));
-                return;
-            }
+                if (response.statusCode != 200) {
+                    std::stringstream ss;
+                    ss << "HTTP " << response.statusCode << " " << response.body;
+                    innerPromise->set_exception(std::make_exception_ptr(std::runtime_error(ss.str())));
+                    return;
+                }
             
-            innerPromise->set_value(response);
-        }, url, &promise);
+                innerPromise->set_value(response);
+            }, url, &promise);
 
-        try {
-            return future.get();
-        } catch(const std::exception&) {
-            throw std::runtime_error("Failed to download file " + url);
+            try {
+                return future.get();
+            } catch(const std::exception& e) {
+                cs::Log::Warning << "Failed to download file " << url << ", attempt " << attempt << ": " << e.what() << cs::Log::Endl;
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+            }
         }
     }
 
