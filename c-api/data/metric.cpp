@@ -27,4 +27,19 @@ void Metric_End(alt::Metric* metric)
 {
     metric->End();
 }
+
+void Metric_End2(alt::Metric* metric)
+{
+    metric->End2();
+}
+
+void Metric_Add(alt::Metric* metric, uint64_t value)
+{
+    metric->Add(value);
+}
+
+void Metric_Inc(alt::Metric* metric)
+{
+    metric->Inc();
+}
 #endif

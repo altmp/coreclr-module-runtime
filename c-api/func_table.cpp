@@ -1,6 +1,6 @@
 #include "func_table.h"
 
-inline uint64_t capiHash = 18234026019486245283UL;
+inline uint64_t capiHash = 78812385462098472UL;
 inline uint64_t capiHashes[] = {
     0,
     #ifdef ALT_CLIENT_API
@@ -1438,10 +1438,13 @@ inline uint64_t capiHashes[] = {
     12798418058428333585UL,
     8026011842118229214UL,
     18440396865533386791UL,
+    16053290375636538610UL,
     2348810001298180138UL,
     13016512038826983106UL,
+    18410039824979474410UL,
     8652629169459184520UL,
     16033500183040421617UL,
+    9564264321313118159UL,
     13198892627580896636UL,
     17585830173881425980UL,
     16593704804065749058UL,
@@ -3216,10 +3219,13 @@ inline void* capiPointers[] = {
     (void*) Entity_SetStreamSyncedMetaData,
     (void*) Entity_SetVisible,
     (void*) Event_WeaponDamageEvent_SetDamageValue,
+    (void*) Metric_Add,
     (void*) Metric_Begin,
     (void*) Metric_End,
+    (void*) Metric_End2,
     (void*) Metric_GetName,
     (void*) Metric_GetValue,
+    (void*) Metric_Inc,
     (void*) Metric_SetValue,
     (void*) Object_ActivatePhysics,
     (void*) Object_PlaceOnGroundProperly,
