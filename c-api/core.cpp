@@ -1040,8 +1040,14 @@ void Core_SetMigrationDistance(alt::ICore* core, uint32_t limit)
 
 void Core_TriggerClientRPCAnswer(alt::ICore* core, alt::IPlayer* target, uint16_t answerID, alt::MValueConst* answer, const char* error)
 {
-    if(answer == nullptr) return;
-    core->TriggerClientRPCAnswer(target, answerID, answer->get()->Clone(), error);
+    if (answer == nullptr)
+    {
+        core->TriggerClientRPCAnswer(target, answerID, nullptr, error);
+    }
+    else
+    {
+        core->TriggerClientRPCAnswer(target, answerID, answer->get()->Clone(), error);
+    }
 }
 
 uint16_t Core_TriggerClientRPCEvent(alt::ICore* core, alt::IPlayer* target, const char* ev, alt::MValueConst* args[],
