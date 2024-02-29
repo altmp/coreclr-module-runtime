@@ -13,8 +13,8 @@ typedef void (* AudioEventDelegate_t)(alt::IAudio*, const char* name, alt::MValu
 
 typedef void (* PlayerSpawnDelegate_t)();
 typedef void (* PlayerDisconnectDelegate_t)();
-typedef void (* PlayerEnterVehicleDelegate_t)(alt::IVehicle*, uint8_t seat);
-typedef void (* PlayerLeaveVehicleDelegate_t)(alt::IVehicle*, uint8_t seat);
+typedef void (* PlayerEnterVehicleDelegate_t)(void*, uint8_t type, uint8_t seat);
+typedef void (* PlayerLeaveVehicleDelegate_t)(void*, uint8_t type, uint8_t seat);
 
 typedef void (* GameEntityCreateDelegate_t)(void*, uint8_t type);
 typedef void (* GameEntityDestroyDelegate_t)(void*, uint8_t type);

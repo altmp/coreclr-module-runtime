@@ -17,6 +17,12 @@ void* Util_GetEntityPointer(alt::IBaseObject* entity)
             return dynamic_cast<alt::IObject*>(entity);
         case alt::IBaseObject::Type::LOCAL_OBJECT:
             return dynamic_cast<alt::ILocalObject*>(entity);
+#ifdef ALT_CLIENT_API
+        case alt::IBaseObject::Type::LOCAL_PED:
+            return dynamic_cast<alt::ILocalPed*>(entity);
+        case alt::IBaseObject::Type::LOCAL_VEHICLE:
+            return dynamic_cast<alt::ILocalVehicle*>(entity);
+#endif
         default:
             return nullptr;
         }

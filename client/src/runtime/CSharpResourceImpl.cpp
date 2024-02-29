@@ -165,14 +165,18 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
     case alt::CEvent::Type::PLAYER_ENTER_VEHICLE:
         {
             auto playerEnterVehicleEvent = dynamic_cast<const alt::CPlayerEnterVehicleEvent*>(ev);
-            OnPlayerEnterVehicleDelegate(playerEnterVehicleEvent->GetTarget(),
+            auto target = playerEnterVehicleEvent->GetTarget();
+            OnPlayerEnterVehicleDelegate(Util_GetBaseObjectPointer(target),
+                                         static_cast<uint8_t>(target->GetType()),
                                          playerEnterVehicleEvent->GetSeat());
             break;
         }
     case alt::CEvent::Type::PLAYER_LEAVE_VEHICLE:
         {
             auto playerLeaveVehicleEvent = dynamic_cast<const alt::CPlayerLeaveVehicleEvent*>(ev);
-            OnPlayerLeaveVehicleDelegate(playerLeaveVehicleEvent->GetTarget(),
+            auto target = playerLeaveVehicleEvent->GetTarget();
+            OnPlayerLeaveVehicleDelegate(Util_GetBaseObjectPointer(target),
+                                         static_cast<uint8_t>(target->GetType()),
                                          playerLeaveVehicleEvent->GetSeat());
             break;
         }
@@ -271,30 +275,8 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto gameEntityCreateEvent = dynamic_cast<const alt::CGameEntityCreateEvent*>(ev);
             auto entity = gameEntityCreateEvent->GetTarget();
             auto type = static_cast<uint8_t>(entity->GetType());
-            void* ptr;
 
-            switch (entity->GetType())
-            {
-            case alt::IBaseObject::Type::PLAYER:
-                ptr = dynamic_cast<alt::IPlayer*>(entity);
-                break;
-            case alt::IBaseObject::Type::VEHICLE:
-                ptr = dynamic_cast<alt::IVehicle*>(entity);
-                break;
-            case alt::IBaseObject::Type::LOCAL_OBJECT:
-                ptr = dynamic_cast<alt::ILocalObject*>(entity);
-                break;
-            case alt::IBaseObject::Type::PED:
-                ptr = dynamic_cast<alt::IPed*>(entity);
-                break;
-            case alt::IBaseObject::Type::OBJECT:
-                ptr = dynamic_cast<alt::IObject*>(entity);
-                break;
-            default:
-                ptr = nullptr;
-            }
-
-            OnGameEntityCreateDelegate(ptr,
+            OnGameEntityCreateDelegate(Util_GetEntityPointer(entity),
                                        type);
             break;
         }
@@ -303,30 +285,8 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
             auto gameEntityDestroyEvent = dynamic_cast<const alt::CGameEntityDestroyEvent*>(ev);
             auto entity = gameEntityDestroyEvent->GetTarget();
             auto type = static_cast<uint8_t>(entity->GetType());
-            void* ptr;
 
-            switch (entity->GetType())
-            {
-            case alt::IBaseObject::Type::PLAYER:
-                ptr = dynamic_cast<alt::IPlayer*>(entity);
-                break;
-            case alt::IBaseObject::Type::VEHICLE:
-                ptr = dynamic_cast<alt::IVehicle*>(entity);
-                break;
-            case alt::IBaseObject::Type::LOCAL_OBJECT:
-                ptr = dynamic_cast<alt::ILocalObject*>(entity);
-                break;
-            case alt::IBaseObject::Type::PED:
-                ptr = dynamic_cast<alt::IPed*>(entity);
-                break;
-            case alt::IBaseObject::Type::OBJECT:
-                ptr = dynamic_cast<alt::IObject*>(entity);
-                break;
-            default:
-                ptr = nullptr;
-            }
-
-            OnGameEntityDestroyDelegate(ptr,
+            OnGameEntityDestroyDelegate(Util_GetEntityPointer(entity),
                                         type);
             break;
         }
@@ -987,8 +947,8 @@ void CSharpResourceImpl::ResetDelegates() {
 
     OnPlayerSpawnDelegate = [](){};
     OnPlayerDisconnectDelegate = [](){};
-    OnPlayerEnterVehicleDelegate = [](auto var, auto var2) {};
-    OnPlayerLeaveVehicleDelegate = [](auto var, auto var2) {};
+    OnPlayerEnterVehicleDelegate = [](auto var, auto var2, auto var3) {};
+    OnPlayerLeaveVehicleDelegate = [](auto var, auto var2, auto var3) {};
 
     OnGameEntityCreateDelegate = [](auto var, auto var2) {};
     OnGameEntityDestroyDelegate = [](auto var, auto var2) {};
