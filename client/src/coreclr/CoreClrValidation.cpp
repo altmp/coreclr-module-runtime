@@ -28,7 +28,7 @@ std::string CoreClr::GetLatestNugetVersion(alt::IHttpClient* httpClient, const s
         if (branch == "release") {
             if (it->find("-") == std::string::npos) return *it;
         } else {
-            if (it->find("-" + branch) != std::string::npos) return *it;
+            if (it->find("-" + branch + ".") != std::string::npos) return *it;
         }
     }
 
