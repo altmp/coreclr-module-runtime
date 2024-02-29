@@ -32,8 +32,8 @@ std::vector<std::string> NuGet::GetPackageVersions(const std::string& package) {
 
 nlohmann::json NuGet::GetCatalog(std::string package, const std::string& version) {
     utils::to_lower(package);
-    
-    static std::string url = GetIndexUrl("RegistrationsBaseUrl");
+
+    static std::string url = GetIndexUrl("RegistrationsBaseUrl/3.6.0");
     auto data = utils::download_file_sync(_httpClient, url + package + "/" + version + ".json");
     if (data.statusCode != 200) {
         throw std::runtime_error("Failed to get package "  + package + " registration");
@@ -48,7 +48,7 @@ nlohmann::json NuGet::GetCatalog(std::string package, const std::string& version
 
 std::string NuGet::DownloadPackage(std::string package, const std::string& version) {
     utils::to_lower(package);
-    
+
     static std::string url = GetIndexUrl("PackageBaseAddress/3.0.0");
     auto data = utils::download_file_sync(_httpClient, url + package + "/" + version + "/" + package + "." + version + ".nupkg");
     if (data.statusCode != 200) {
