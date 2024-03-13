@@ -13,11 +13,11 @@ typedef void (* AudioEventDelegate_t)(alt::IAudio*, const char* name, alt::MValu
 
 typedef void (* PlayerSpawnDelegate_t)();
 typedef void (* PlayerDisconnectDelegate_t)();
-typedef void (* PlayerEnterVehicleDelegate_t)(void*, uint8_t type, uint8_t seat);
-typedef void (* PlayerLeaveVehicleDelegate_t)(void*, uint8_t type, uint8_t seat);
+typedef void (* PlayerEnterVehicleDelegate_t)(void* vehicle, alt::IBaseObject::Type type, uint8_t seat);
+typedef void (* PlayerLeaveVehicleDelegate_t)(void* vehicle, alt::IBaseObject::Type type, uint8_t seat);
 
-typedef void (* GameEntityCreateDelegate_t)(void*, uint8_t type);
-typedef void (* GameEntityDestroyDelegate_t)(void*, uint8_t type);
+typedef void (* GameEntityCreateDelegate_t)(void* entity, alt::IBaseObject::Type type);
+typedef void (* GameEntityDestroyDelegate_t)(void* entity, alt::IBaseObject::Type type);
 
 typedef void (* AnyResourceErrorDelegate_t)(const char* name);
 typedef void (* AnyResourceStartDelegate_t)(const char* name);
@@ -26,9 +26,9 @@ typedef void (* AnyResourceStopDelegate_t)(const char* name);
 typedef void (* KeyUpDelegate_t)(uint32_t key);
 typedef void (* KeyDownDelegate_t)(uint32_t key);
 
-typedef void (* PlayerChangeVehicleSeatDelegate_t)(alt::IVehicle*, uint8_t oldSeat, uint8_t newSeat);
-typedef void (* PlayerChangeAnimationDelegate_t)(alt::IPlayer* player, uint32_t oldDict, uint32_t newDict, uint32_t oldName, uint32_t newName);
-typedef void (* PlayerChangeInteriorDelegate_t)(alt::IPlayer* player, uint32_t oldIntLoc, uint32_t newIntLoc);
+typedef void (* PlayerChangeVehicleSeatDelegate_t)(void* vehicle, alt::IBaseObject::Type type, uint8_t oldSeat, uint8_t newSeat);
+typedef void (* PlayerChangeAnimationDelegate_t)(void* player, alt::IBaseObject::Type playerType, uint32_t oldDict, uint32_t newDict, uint32_t oldName, uint32_t newName);
+typedef void (* PlayerChangeInteriorDelegate_t)(void* player, alt::IBaseObject::Type playerType, uint32_t oldIntLoc, uint32_t newIntLoc);
 
 typedef void (* ConnectionCompleteDelegate_t)();
 
@@ -71,8 +71,8 @@ typedef void (* ColShapeDelegate_t)(alt::IColShape* colShape, void* entity, alt:
 
 typedef void (* EntityHitEntityDelegate_t)(void* target, alt::IBaseObject::Type targetType, void* damager, alt::IBaseObject::Type damagerType, uint32_t weaponHash);
 
-typedef void (* PlayerStartEnterVehicleDelegate_t)(void* target, void* player, uint8_t seat);
-typedef void (* PlayerStartLeaveVehicleDelegate_t)(void* target, void* player, uint8_t seat);
+typedef void (* PlayerStartEnterVehicleDelegate_t)(void* target, alt::IBaseObject::Type targetType, void* player, alt::IBaseObject::Type playerType, uint8_t seat);
+typedef void (* PlayerStartLeaveVehicleDelegate_t)(void* target, alt::IBaseObject::Type targetType, void* player, alt::IBaseObject::Type playerType, uint8_t seat);
 
 typedef void (* PlayerBulletHitDelegate_t)(uint32_t weapon, void* victim, alt::IBaseObject::Type victimType, position_t pos);
 
