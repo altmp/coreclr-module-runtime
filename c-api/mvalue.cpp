@@ -388,12 +388,7 @@ uint8_t MValueConst_GetDict(alt::MValueConst *mValueConst, const char *keys[],
         if (dict == nullptr) return true;
         uint64_t i = 0;
         for (auto next = dict->Begin(); next != dict->End(); ++next) {
-            auto key = next->first;
-            auto keySize = key.size();
-            auto keyArray = new char[keySize + 1];
-            memcpy(keyArray, key.c_str(), keySize);
-            keyArray[keySize] = '\0';
-            keys[i] = keyArray;
+            keys[i] = next->first;
             alt::MValueConst mValueElement = next->second;
             values[i] = AllocMValue(mValueElement);
             i++;

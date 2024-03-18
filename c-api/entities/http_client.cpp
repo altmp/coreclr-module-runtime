@@ -29,15 +29,9 @@ void MarshalStringDict(alt::IMValueDict* map, const char**& keys, const char**& 
     for(auto it = map->Begin(); it != map->End(); ++it)
     {
         auto key = it->first;
+        keys[i] = key;
+
         auto value = std::dynamic_pointer_cast<const alt::IMValueString>(it->second)->Value();
-
-        auto keyStr = key.c_str();
-        auto keySize = key.size();
-        auto allocKey = new char[keySize + 1];
-        for (auto j = 0; j < keySize; j++) allocKey[j] = keyStr[j];
-        allocKey[keySize] = '\0';
-        keys[i] = allocKey;
-
         auto valueStr = value.c_str();
         auto valueSize = value.size();
         auto allocValue = new char[valueSize + 1];
