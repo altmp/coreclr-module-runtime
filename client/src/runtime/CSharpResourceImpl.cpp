@@ -36,6 +36,8 @@ void CSharpResourceImpl::OnEvent(const alt::CEvent* ev)
 {
     if (ev == nullptr) return;
     auto scope = resource->PushNativesScope();
+
+    // TODO: no need in dynamic_cast for events
     switch (ev->GetType())
     {
     case alt::CEvent::Type::SERVER_SCRIPT_EVENT:

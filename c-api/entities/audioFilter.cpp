@@ -12,6 +12,7 @@ uint32_t AudioFilter_GetID(alt::IAudioFilter* audioFilter)
 #ifdef ALT_CLIENT_API
 alt::IBaseObject* AudioFilter_GetBaseObject(alt::IAudioFilter* audioFilter)
 {
+    // TODO: most likely no need in dynamic_cast
     return dynamic_cast<alt::IBaseObject*>(audioFilter);
 }
 
