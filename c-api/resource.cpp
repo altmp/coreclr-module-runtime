@@ -37,7 +37,7 @@ void Resource_GetExports(alt::IResource* resource, const char* keys[],
     uint64_t i = 0;
     for (auto next = dict->Begin(); next != dict->End(); ++next) {
         alt::MValueConst mValueElement = next->second;
-        keys[i] = next->first;
+        keys[i] = next->first.c_str();
         values[i] = &mValueElement;
     }
 }

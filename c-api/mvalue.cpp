@@ -36,8 +36,6 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
         mValues[i] = core->CreateMValueNil();
         return;
     }
-
-    // TODO: use mValue->Clone() ?
     auto mValue = val->get();
     switch (mValue->GetType()) {
         case alt::IMValue::Type::NONE:
@@ -47,22 +45,22 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
             mValues[i] = core->CreateMValueNil();
             return;
         case alt::IMValue::Type::BOOL:
-            mValues[i] = core->CreateMValueBool(static_cast<const alt::IMValueBool*>(mValue)->Value());
+            mValues[i] = core->CreateMValueBool(dynamic_cast<const alt::IMValueBool*>(mValue)->Value());
             return;
         case alt::IMValue::Type::INT:
-            mValues[i] = core->CreateMValueInt(static_cast<const alt::IMValueInt*>(mValue)->Value());
+            mValues[i] = core->CreateMValueInt(dynamic_cast<const alt::IMValueInt*>(mValue)->Value());
             return;
         case alt::IMValue::Type::UINT:
-            mValues[i] = core->CreateMValueUInt(static_cast<const alt::IMValueUInt*>(mValue)->Value());
+            mValues[i] = core->CreateMValueUInt(dynamic_cast<const alt::IMValueUInt*>(mValue)->Value());
             return;
         case alt::IMValue::Type::DOUBLE:
-            mValues[i] = core->CreateMValueDouble(static_cast<const alt::IMValueDouble*>(mValue)->Value());
+            mValues[i] = core->CreateMValueDouble(dynamic_cast<const alt::IMValueDouble*>(mValue)->Value());
             return;
         case alt::IMValue::Type::STRING:
-            mValues[i] = core->CreateMValueString(static_cast<const alt::IMValueString*>(mValue)->Value());
+            mValues[i] = core->CreateMValueString(dynamic_cast<const alt::IMValueString*>(mValue)->Value());
             return;
         case alt::IMValue::Type::LIST: {
-            auto cVal = static_cast<const alt::IMValueList*>(mValue);
+            auto cVal = dynamic_cast<const alt::IMValueList*>(mValue);
             auto length = cVal->GetSize();
             alt::MValueList list = core->CreateMValueList(length);
 
@@ -76,7 +74,7 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
             return;
         }
         case alt::IMValue::Type::DICT: {
-            auto cVal = static_cast<const alt::IMValueDict*>(mValue);
+            auto cVal = dynamic_cast<const alt::IMValueDict*>(mValue);
             alt::MValueDict dict = core->CreateMValueDict();
 
             alt::MValueConst innerVal;
@@ -91,7 +89,7 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
         }
         case alt::IMValue::Type::BASE_OBJECT:
         {
-            auto baseobject = static_cast<const alt::IMValueBaseObject*>(mValue)->Value();
+            auto baseobject = dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value();
             if (baseobject) {
                 mValues[i] = core->CreateMValueBaseObject(baseobject);
             }else{
@@ -101,20 +99,20 @@ void ToMValueArg(alt::MValueArgs& mValues, alt::ICore *core, alt::MValueConst *v
         }
         case alt::IMValue::Type::FUNCTION:
             mValues[i] = *val;
-            return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(static_cast<const alt::IMValueFunction*>(mValue)->Call);
+            return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
         case alt::IMValue::Type::VECTOR3:
-            mValues[i] = core->CreateMValueVector3(static_cast<const alt::IMValueVector3*>(mValue)->Value());
+            mValues[i] = core->CreateMValueVector3(dynamic_cast<const alt::IMValueVector3*>(mValue)->Value());
             return;
         case alt::IMValue::Type::RGBA:
-            mValues[i] = core->CreateMValueRGBA(static_cast<const alt::IMValueRGBA*>(mValue)->Value());
+            mValues[i] = core->CreateMValueRGBA(dynamic_cast<const alt::IMValueRGBA*>(mValue)->Value());
             return;
         case alt::IMValue::Type::BYTE_ARRAY: {
-            auto cVal = static_cast<const alt::IMValueByteArray *>(mValue);
+            auto cVal = dynamic_cast<const alt::IMValueByteArray *>(mValue);
             mValues[i] = core->CreateMValueByteArray(cVal->GetData(), cVal->GetSize());
             return;
         }
         case alt::IMValue::Type::VECTOR2:
-            mValues[i] = core->CreateMValueVector2(static_cast<const alt::IMValueVector2*>(mValue)->Value());
+            mValues[i] = core->CreateMValueVector2(dynamic_cast<const alt::IMValueVector2*>(mValue)->Value());
             return;
         default:
             mValues[i] = core->CreateMValueNone();
@@ -127,8 +125,6 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
         mValues->SetConst(i, core->CreateMValueNil());
         return;
     }
-
-    // TODO: SetConst already does copy under the hood
     auto mValue = val->get();
     switch (mValue->GetType()) {
         case alt::IMValue::Type::NONE:
@@ -138,22 +134,22 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
             mValues->SetConst(i, core->CreateMValueNil());
             return;
         case alt::IMValue::Type::BOOL:
-            mValues->SetConst(i, core->CreateMValueBool(static_cast<const alt::IMValueBool*>(mValue)->Value()));
+            mValues->SetConst(i, core->CreateMValueBool(dynamic_cast<const alt::IMValueBool*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::INT:
-            mValues->SetConst(i, core->CreateMValueInt(static_cast<const alt::IMValueInt*>(mValue)->Value()));
+            mValues->SetConst(i, core->CreateMValueInt(dynamic_cast<const alt::IMValueInt*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::UINT:
-            mValues->SetConst(i, core->CreateMValueUInt(static_cast<const alt::IMValueUInt*>(mValue)->Value()));
+            mValues->SetConst(i, core->CreateMValueUInt(dynamic_cast<const alt::IMValueUInt*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::DOUBLE:
-            mValues->SetConst(i, core->CreateMValueDouble(static_cast<const alt::IMValueDouble*>(mValue)->Value()));
+            mValues->SetConst(i, core->CreateMValueDouble(dynamic_cast<const alt::IMValueDouble*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::STRING:
-            mValues->SetConst(i, core->CreateMValueString(static_cast<const alt::IMValueString*>(mValue)->Value()));
+            mValues->SetConst(i, core->CreateMValueString(dynamic_cast<const alt::IMValueString*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::LIST: {
-            auto cVal = static_cast<const alt::IMValueList*>(mValue);
+            auto cVal = dynamic_cast<const alt::IMValueList*>(mValue);
             auto length = cVal->GetSize();
             alt::MValueList list = core->CreateMValueList(length);
 
@@ -167,7 +163,7 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
             return;
         }
         case alt::IMValue::Type::DICT: {
-            auto cVal = static_cast<const alt::IMValueDict*>(mValue);
+            auto cVal = dynamic_cast<const alt::IMValueDict*>(mValue);
             alt::MValueDict dict = core->CreateMValueDict();
 
             alt::MValueConst innerVal;
@@ -182,7 +178,7 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
         }
         case alt::IMValue::Type::BASE_OBJECT:
         {
-            auto baseobject = static_cast<const alt::IMValueBaseObject*>(mValue)->Value();
+            auto baseobject = dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value();
             if (baseobject) {
                 mValues->SetConst(i, core->CreateMValueBaseObject(baseobject.get()));
             }else{
@@ -192,20 +188,20 @@ void ToMValueList(alt::MValueList& mValues, alt::ICore *core, alt::MValueConst *
         }
         case alt::IMValue::Type::FUNCTION:
             mValues->SetConst(i, *val);
-            return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(static_cast<const alt::IMValueFunction*>(mValue)->Call);
+            return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
         case alt::IMValue::Type::VECTOR3:
-            mValues->SetConst(i, core->CreateMValueVector3(static_cast<const alt::IMValueVector3*>(mValue)->Value()));
+            mValues->SetConst(i, core->CreateMValueVector3(dynamic_cast<const alt::IMValueVector3*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::RGBA:
-            mValues->SetConst(i, core->CreateMValueRGBA(static_cast<const alt::IMValueRGBA*>(mValue)->Value()));
+            mValues->SetConst(i, core->CreateMValueRGBA(dynamic_cast<const alt::IMValueRGBA*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::BYTE_ARRAY: {
-            auto cVal = static_cast<const alt::IMValueByteArray *>(mValue);
+            auto cVal = dynamic_cast<const alt::IMValueByteArray *>(mValue);
             mValues->SetConst(i, core->CreateMValueByteArray(cVal->GetData(), cVal->GetSize()));
             return;
         }
         case alt::IMValue::Type::VECTOR2:
-            mValues->SetConst(i, core->CreateMValueVector2(static_cast<const alt::IMValueVector2*>(mValue)->Value()));
+            mValues->SetConst(i, core->CreateMValueVector2(dynamic_cast<const alt::IMValueVector2*>(mValue)->Value()));
             return;
         default:
             mValues->SetConst(i, core->CreateMValueNone());
@@ -218,7 +214,6 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
         mValues->SetConst(key, core->CreateMValueNil());
         return;
     }
-    // TODO: SetConst already does copy under the hood
     auto mValue = val->get();
     switch (mValue->GetType()) {
         case alt::IMValue::Type::NONE:
@@ -228,22 +223,22 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
             mValues->SetConst(key, core->CreateMValueNil());
             return;
         case alt::IMValue::Type::BOOL:
-            mValues->SetConst(key, core->CreateMValueBool(static_cast<const alt::IMValueBool*>(mValue)->Value()));
+            mValues->SetConst(key, core->CreateMValueBool(dynamic_cast<const alt::IMValueBool*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::INT:
-            mValues->SetConst(key, core->CreateMValueInt(static_cast<const alt::IMValueInt*>(mValue)->Value()));
+            mValues->SetConst(key, core->CreateMValueInt(dynamic_cast<const alt::IMValueInt*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::UINT:
-            mValues->SetConst(key, core->CreateMValueUInt(static_cast<const alt::IMValueUInt*>(mValue)->Value()));
+            mValues->SetConst(key, core->CreateMValueUInt(dynamic_cast<const alt::IMValueUInt*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::DOUBLE:
-            mValues->SetConst(key, core->CreateMValueDouble(static_cast<const alt::IMValueDouble*>(mValue)->Value()));
+            mValues->SetConst(key, core->CreateMValueDouble(dynamic_cast<const alt::IMValueDouble*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::STRING:
-            mValues->SetConst(key, core->CreateMValueString(static_cast<const alt::IMValueString*>(mValue)->Value()));
+            mValues->SetConst(key, core->CreateMValueString(dynamic_cast<const alt::IMValueString*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::LIST: {
-            auto cVal = static_cast<const alt::IMValueList*>(mValue);
+            auto cVal = dynamic_cast<const alt::IMValueList*>(mValue);
             auto length = cVal->GetSize();
             alt::MValueList list = core->CreateMValueList(length);
 
@@ -257,7 +252,7 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
             return;
         }
         case alt::IMValue::Type::DICT: {
-            auto cVal = static_cast<const alt::IMValueDict*>(mValue);
+            auto cVal = dynamic_cast<const alt::IMValueDict*>(mValue);
             alt::MValueDict dict = core->CreateMValueDict();
 
             alt::MValueConst innerVal;
@@ -272,7 +267,7 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
         }
         case alt::IMValue::Type::BASE_OBJECT:
         {
-            auto baseobject = static_cast<const alt::IMValueBaseObject*>(mValue)->Value();
+            auto baseobject = dynamic_cast<const alt::IMValueBaseObject*>(mValue)->Value();
             if (baseobject) {
                 mValues->SetConst(key, core->CreateMValueBaseObject(baseobject.get()));
             }else{
@@ -282,20 +277,20 @@ void ToMValueDict(alt::MValueDict& mValues, std::string& key, alt::ICore *core, 
         }
         case alt::IMValue::Type::FUNCTION:
             mValues->SetConst(key, *val);
-            return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(static_cast<const alt::IMValueFunction*>(mValue)->Call);
+            return; //TODO: fix //core->CreateMValueNone();//core->CreateMValueFunction(dynamic_cast<const alt::IMValueFunction*>(mValue)->Call);
         case alt::IMValue::Type::VECTOR3:
-            mValues->SetConst(key, core->CreateMValueVector3(static_cast<const alt::IMValueVector3*>(mValue)->Value()));
+            mValues->SetConst(key, core->CreateMValueVector3(dynamic_cast<const alt::IMValueVector3*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::RGBA:
-            mValues->SetConst(key, core->CreateMValueRGBA(static_cast<const alt::IMValueRGBA*>(mValue)->Value()));
+            mValues->SetConst(key, core->CreateMValueRGBA(dynamic_cast<const alt::IMValueRGBA*>(mValue)->Value()));
             return;
         case alt::IMValue::Type::BYTE_ARRAY: {
-            auto cVal = static_cast<const alt::IMValueByteArray *>(mValue);
+            auto cVal = dynamic_cast<const alt::IMValueByteArray *>(mValue);
             mValues->SetConst(key, core->CreateMValueByteArray(cVal->GetData(), cVal->GetSize()));
             return;
         }
         case alt::IMValue::Type::VECTOR2:
-            mValues->SetConst(key, core->CreateMValueVector2(static_cast<const alt::IMValueVector2*>(mValue)->Value()));
+            mValues->SetConst(key, core->CreateMValueVector2(dynamic_cast<const alt::IMValueVector2*>(mValue)->Value()));
             return;
         default:
             mValues->SetConst(key, core->CreateMValueNone());
@@ -314,7 +309,7 @@ void MValueConst_RemoveRef(alt::MValueConst *mValueConst) {
 uint8_t MValueConst_GetBool(alt::MValueConst *mValueConst) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BOOL) {
-        return static_cast<const alt::IMValueBool *>(mValue)->Value();
+        return dynamic_cast<const alt::IMValueBool *>(mValue)->Value();
     }
     return false;
 }
@@ -322,7 +317,7 @@ uint8_t MValueConst_GetBool(alt::MValueConst *mValueConst) {
 int64_t MValueConst_GetInt(alt::MValueConst *mValueConst) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::INT) {
-        return static_cast<const alt::IMValueInt *>(mValue)->Value();
+        return dynamic_cast<const alt::IMValueInt *>(mValue)->Value();
     }
     return 0;
 }
@@ -330,7 +325,7 @@ int64_t MValueConst_GetInt(alt::MValueConst *mValueConst) {
 uint64_t MValueConst_GetUInt(alt::MValueConst *mValueConst) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::UINT) {
-        return static_cast<const alt::IMValueUInt *>(mValue)->Value();
+        return dynamic_cast<const alt::IMValueUInt *>(mValue)->Value();
     }
     return 0;
 }
@@ -338,7 +333,7 @@ uint64_t MValueConst_GetUInt(alt::MValueConst *mValueConst) {
 double MValueConst_GetDouble(alt::MValueConst *mValueConst) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::DOUBLE) {
-        return static_cast<const alt::IMValueDouble *>(mValue)->Value();
+        return dynamic_cast<const alt::IMValueDouble *>(mValue)->Value();
     }
     return 0.0;
 }
@@ -346,7 +341,7 @@ double MValueConst_GetDouble(alt::MValueConst *mValueConst) {
 const char* MValueConst_GetString(alt::MValueConst *mValueConst, int32_t &size) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::STRING) {
-        auto string = static_cast<const alt::IMValueString *>(mValue)->Value();
+        auto string = dynamic_cast<const alt::IMValueString *>(mValue)->Value();
         return AllocateString(string, size);
     }
     return nullptr;
@@ -355,7 +350,7 @@ const char* MValueConst_GetString(alt::MValueConst *mValueConst, int32_t &size) 
 uint64_t MValueConst_GetListSize(alt::MValueConst *mValueConst) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::LIST) {
-        auto list = static_cast<const alt::IMValueList *>(mValue);
+        auto list = dynamic_cast<const alt::IMValueList *>(mValue);
         if (list == nullptr) return 0;
         return list->GetSize();
     }
@@ -365,7 +360,7 @@ uint64_t MValueConst_GetListSize(alt::MValueConst *mValueConst) {
 uint8_t MValueConst_GetList(alt::MValueConst *mValueConst, alt::MValueConst *values[]) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::LIST) {
-        auto list = static_cast<const alt::IMValueList *>(mValue);
+        auto list = dynamic_cast<const alt::IMValueList *>(mValue);
         for (uint64_t i = 0, length = list->GetSize(); i < length; i++) {
             alt::MValueConst mValueElement = list->Get(i);
             values[i] = AllocMValue(mValueElement);
@@ -378,7 +373,7 @@ uint8_t MValueConst_GetList(alt::MValueConst *mValueConst, alt::MValueConst *val
 uint64_t MValueConst_GetDictSize(alt::MValueConst *mValueConst) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::DICT) {
-        auto dict = static_cast<const alt::IMValueDict *>(mValue);
+        auto dict = dynamic_cast<const alt::IMValueDict *>(mValue);
         if (dict == nullptr) return 0;
         return dict->GetSize();
     }
@@ -389,14 +384,15 @@ uint8_t MValueConst_GetDict(alt::MValueConst *mValueConst, const char *keys[],
                             alt::MValueConst *values[]) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::DICT) {
-        auto dict = static_cast<const alt::IMValueDict *>(mValue);
+        auto dict = dynamic_cast<const alt::IMValueDict *>(mValue);
         if (dict == nullptr) return true;
         uint64_t i = 0;
         for (auto next = dict->Begin(); next != dict->End(); ++next) {
             auto key = next->first;
-            auto keySize = strlen(key);
+            auto keySize = key.size();
             auto keyArray = new char[keySize + 1];
-            memcpy(keyArray, key, keySize + 1);
+            memcpy(keyArray, key.c_str(), keySize);
+            keyArray[keySize] = '\0';
             keys[i] = keyArray;
             alt::MValueConst mValueElement = next->second;
             values[i] = AllocMValue(mValueElement);
@@ -410,7 +406,7 @@ uint8_t MValueConst_GetDict(alt::MValueConst *mValueConst, const char *keys[],
 void *MValueConst_GetEntity(alt::MValueConst *mValueConst, alt::IBaseObject::Type &type) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BASE_OBJECT) {
-        auto entityPointer = static_cast<const alt::IMValueBaseObject *>(mValue)->Value();
+        auto entityPointer = dynamic_cast<const alt::IMValueBaseObject *>(mValue)->Value();
         if (entityPointer) {
             type = entityPointer->GetType();
             switch (type) {
@@ -461,7 +457,7 @@ MValueConst_CallFunction(alt::ICore *core, alt::MValueConst *mValueConst, alt::M
                 value[i] = *val[i];
             }
         }
-        auto mValueFunction = static_cast<const alt::IMValueFunction *>(mValue);
+        auto mValueFunction = dynamic_cast<const alt::IMValueFunction *>(mValue);
         auto result = AllocMValue(mValueFunction->Call(value));
         return result;
     }
@@ -471,7 +467,7 @@ MValueConst_CallFunction(alt::ICore *core, alt::MValueConst *mValueConst, alt::M
 void MValueConst_GetVector3(alt::MValueConst *mValueConst, position_t &position) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::VECTOR3) {
-        auto vector = static_cast<const alt::IMValueVector3 *>(mValue)->Value();
+        auto vector = dynamic_cast<const alt::IMValueVector3 *>(mValue)->Value();
         position.x = vector[0];
         position.y = vector[1];
         position.z = vector[2];
@@ -481,7 +477,7 @@ void MValueConst_GetVector3(alt::MValueConst *mValueConst, position_t &position)
 void MValueConst_GetRGBA(alt::MValueConst *mValueConst, rgba_t &rgba) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::RGBA) {
-        auto rgbaValue = static_cast<const alt::IMValueRGBA *>(mValue)->Value();
+        auto rgbaValue = dynamic_cast<const alt::IMValueRGBA *>(mValue)->Value();
         rgba.r = rgbaValue.r;
         rgba.g = rgbaValue.g;
         rgba.b = rgbaValue.b;
@@ -492,7 +488,7 @@ void MValueConst_GetRGBA(alt::MValueConst *mValueConst, rgba_t &rgba) {
 void MValueConst_GetByteArray(alt::MValueConst *mValueConst, uint64_t size, void *data) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BYTE_ARRAY) {
-        auto byteArrayMValue = static_cast<const alt::IMValueByteArray *>(mValue);
+        auto byteArrayMValue = dynamic_cast<const alt::IMValueByteArray *>(mValue);
         auto byteArraySize = byteArrayMValue->GetSize();
         if (byteArraySize < size) {
             size = byteArraySize;
@@ -505,7 +501,7 @@ void MValueConst_GetByteArray(alt::MValueConst *mValueConst, uint64_t size, void
 uint64_t MValueConst_GetByteArraySize(alt::MValueConst *mValueConst) {
     auto mValue = mValueConst->get();
     if (mValue != nullptr && mValue->GetType() == alt::IMValue::Type::BYTE_ARRAY) {
-        return static_cast<const alt::IMValueByteArray *>(mValue)->GetSize();
+        return dynamic_cast<const alt::IMValueByteArray *>(mValue)->GetSize();
     }
     return 0;
 }
