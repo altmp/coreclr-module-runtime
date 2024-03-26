@@ -193,7 +193,7 @@ uint8_t GetCachedAssembly(const char* name, int* bufferSize, void** buffer) {
     auto stream = std::ifstream(path, std::ios::binary);
     miniz_cpp::zip_file zip(stream);
     std::stringstream contentStream;
-    auto fileName = std::string("lib/net6.0/") + name + ".dll";
+    auto fileName = std::string("lib/net8.0/") + name + ".dll";
     if (!zip.has_file(fileName)) {
         cs::Log::Warning << "Nupkg was found, but no dll was found in it" << cs::Log::Endl;
         zip.printdir();
